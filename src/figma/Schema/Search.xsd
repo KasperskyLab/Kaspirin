@@ -1,0 +1,64 @@
+<!--
+    Copyright © 2024 AO Kaspersky Lab.
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+        http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+-->
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<xs:include schemaLocation="Common.xsd"/>
+
+	<xs:complexType name="Search">
+		<xs:group ref="elements_Search"/>
+		<xs:attributeGroup ref="attributes_Search"/>
+	</xs:complexType>
+
+	<xs:group name="elements_Search">
+		<xs:all>
+			<xs:element name="BackgroundDisabled" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BackgroundFocus" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BackgroundHover" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BackgroundNormal" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BorderColorDisabled" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BorderColorFocus" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BorderColorHover" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BorderColorNormal" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BorderThicknessDisabled" type="Thickness" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BorderThicknessFocus" type="Thickness" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BorderThicknessHover" type="Thickness" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BorderThicknessNormal" type="Thickness" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="CaretBrush" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="ClearButtonMargin" type="Thickness" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="CornerRadius" type="CornerRadius" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="Padding" type="Thickness" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="PlaceholderForeground" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="PlaceholderForegroundDisabled" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="SearchIconForeground" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="SearchIconForegroundDisabled" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="SearchIconMargin" type="Thickness" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="SpinnerMargin" type="Thickness" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="TextForeground" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="TextForegroundDisabled" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+		</xs:all>
+	</xs:group>
+
+	<xs:attributeGroup name="attributes_Search">
+		<xs:attribute name="ClearButtonIconName" type="xs:string" use="required"/>
+		<xs:attribute name="ClearButtonStyleId" type="xs:string" use="required"/>
+		<xs:attribute name="Height" type="xs:decimal" use="required"/>
+		<xs:attribute name="Id" type="xs:string" use="required"/>
+		<xs:attribute name="PlaceholderStyleId" type="xs:string" use="required"/>
+		<xs:attribute name="SearchIconName" type="xs:string" use="required"/>
+		<xs:attribute name="SpinnerStyleId" type="xs:string" use="required"/>
+		<xs:attribute name="TextStyleId" type="xs:string" use="required"/>
+	</xs:attributeGroup>
+</xs:schema>

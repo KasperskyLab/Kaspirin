@@ -1,0 +1,558 @@
+<!--
+    Copyright © 2024 AO Kaspersky Lab.
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+        http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+-->
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<xs:include schemaLocation="Badge.xsd"/>
+	<xs:include schemaLocation="Bullet.xsd"/>
+	<xs:include schemaLocation="Button.xsd"/>
+	<xs:include schemaLocation="CarouselItem.xsd"/>
+	<xs:include schemaLocation="CheckBoxRadioButton.xsd"/>
+	<xs:include schemaLocation="ChipsControl.xsd"/>
+	<xs:include schemaLocation="ChipsItem.xsd"/>
+	<xs:include schemaLocation="CodeInput.xsd"/>
+	<xs:include schemaLocation="ContentButton.xsd"/>
+	<xs:include schemaLocation="ContextMenu.xsd"/>
+	<xs:include schemaLocation="DateTimeInput.xsd"/>
+	<xs:include schemaLocation="DateTimePopupFooterButton.xsd"/>
+	<xs:include schemaLocation="DateTimePopupItemButton.xsd"/>
+	<xs:include schemaLocation="DateTimePopupPresenter.xsd"/>
+	<xs:include schemaLocation="Divider.xsd"/>
+	<xs:include schemaLocation="HyperLink.xsd"/>
+	<xs:include schemaLocation="Icon.xsd"/>
+	<xs:include schemaLocation="IconButton.xsd"/>
+	<xs:include schemaLocation="Illustration.xsd"/>
+	<xs:include schemaLocation="ImageGallery.xsd"/>
+	<xs:include schemaLocation="ImageGalleryButton.xsd"/>
+	<xs:include schemaLocation="ImageGalleryList.xsd"/>
+	<xs:include schemaLocation="ImageGalleryListButton.xsd"/>
+	<xs:include schemaLocation="InteractivityDialog.xsd"/>
+	<xs:include schemaLocation="InteractivityNotification.xsd"/>
+	<xs:include schemaLocation="InteractivityOverlay.xsd"/>
+	<xs:include schemaLocation="Island.xsd"/>
+	<xs:include schemaLocation="IslandButton.xsd"/>
+	<xs:include schemaLocation="IslandToggleButton.xsd"/>
+	<xs:include schemaLocation="ListMenuItem.xsd"/>
+	<xs:include schemaLocation="MenuItem.xsd"/>
+	<xs:include schemaLocation="NavigationMenuButton.xsd"/>
+	<xs:include schemaLocation="NavigationMenuFooterButton.xsd"/>
+	<xs:include schemaLocation="NotificationHint.xsd"/>
+	<xs:include schemaLocation="NotificationPanel.xsd"/>
+	<xs:include schemaLocation="NotificationSpinner.xsd"/>
+	<xs:include schemaLocation="NumberInput.xsd"/>
+	<xs:include schemaLocation="Palette.xsd"/>
+	<xs:include schemaLocation="PasswordInput.xsd"/>
+	<xs:include schemaLocation="Popup.xsd"/>
+	<xs:include schemaLocation="ProgressBar.xsd"/>
+	<xs:include schemaLocation="RoundProgress.xsd"/>
+	<xs:include schemaLocation="RoundTimer.xsd"/>
+	<xs:include schemaLocation="ScrollBar.xsd"/>
+	<xs:include schemaLocation="Search.xsd"/>
+	<xs:include schemaLocation="Select.xsd"/>
+	<xs:include schemaLocation="SelectableText.xsd"/>
+	<xs:include schemaLocation="SelectItem.xsd"/>
+	<xs:include schemaLocation="SelectPresenter.xsd"/>
+	<xs:include schemaLocation="Spinner.xsd"/>
+	<xs:include schemaLocation="SplitButton.xsd"/>
+	<xs:include schemaLocation="SsoButton.xsd"/>
+	<xs:include schemaLocation="StatusBullet.xsd"/>
+	<xs:include schemaLocation="StatusTag.xsd"/>
+	<xs:include schemaLocation="SvgIcon.xsd"/>
+	<xs:include schemaLocation="Switch.xsd"/>
+	<xs:include schemaLocation="TabMenu.xsd"/>
+	<xs:include schemaLocation="TabMenuItem.xsd"/>
+	<xs:include schemaLocation="Tag.xsd"/>
+	<xs:include schemaLocation="TextArea.xsd"/>
+	<xs:include schemaLocation="TextInput.xsd"/>
+	<xs:include schemaLocation="TextStyle.xsd"/>
+	<xs:include schemaLocation="TextViewer.xsd"/>
+	<xs:include schemaLocation="ToolTip.xsd"/>
+
+	<xs:element name="UiKit" type="UiKit"/>
+
+	<xs:complexType name="UiKit">
+		<xs:choice maxOccurs="unbounded">
+			<xs:element name="Controls" type="Controls"/>
+			<xs:element name="Palettes" type="Palettes"/>
+			<xs:element name="SvgIcons" type="SvgIcons"/>
+			<xs:element name="Illustrations" type="Illustrations"/>
+		</xs:choice>
+
+		<xs:attributeGroup ref="uiKitAttributes"/>
+	</xs:complexType>
+
+	<xs:attributeGroup name="uiKitAttributes">
+		<xs:attribute name="Source" type="xs:string" use="required"/>
+		<xs:attribute name="Page" type="xs:string" use="required"/>
+	</xs:attributeGroup>
+
+	<xs:complexType name="Controls">
+		<xs:choice maxOccurs="unbounded">
+			<xs:element name="Badges" type="Badges"/>
+			<xs:element name="Bullets" type="Bullets"/>
+			<xs:element name="Buttons" type="Buttons"/>
+			<xs:element name="CarouselItems" type="CarouselItems"/>
+			<xs:element name="CheckBoxes" type="CheckBoxes"/>
+			<xs:element name="ChipsControls" type="ChipsControls"/>
+			<xs:element name="ChipsItems" type="ChipsItems"/>
+			<xs:element name="CodeInputs" type="CodeInputs"/>
+			<xs:element name="ContentButtons" type="ContentButtons"/>
+			<xs:element name="ContextMenus" type="ContextMenus"/>
+			<xs:element name="DateTimeInputs" type="DateTimeInputs"/>
+			<xs:element name="DateTimePopupFooterButtons" type="DateTimePopupFooterButtons"/>
+			<xs:element name="DateTimePopupItemButtons" type="DateTimePopupItemButtons"/>
+			<xs:element name="DateTimePopupPresenters" type="DateTimePopupPresenters"/>
+			<xs:element name="Dividers" type="Dividers"/>
+			<xs:element name="HyperLinks" type="HyperLinks"/>
+			<xs:element name="IconButtons" type="IconButtons"/>
+			<xs:element name="Icons" type="Icons"/>
+			<xs:element name="ImageGalleries" type="ImageGalleries"/>
+			<xs:element name="ImageGalleryButtons" type="ImageGalleryButtons"/>
+			<xs:element name="ImageGalleryListButtons" type="ImageGalleryListButtons"/>
+			<xs:element name="ImageGalleryLists" type="ImageGalleryLists"/>
+			<xs:element name="InteractivityDialogs" type="InteractivityDialogs"/>
+			<xs:element name="InteractivityNotifications" type="InteractivityNotifications"/>
+			<xs:element name="InteractivityOverlays" type="InteractivityOverlays"/>
+			<xs:element name="IslandButtons" type="IslandButtons"/>
+			<xs:element name="Islands" type="Islands"/>
+			<xs:element name="IslandToggleButtons" type="IslandToggleButtons"/>
+			<xs:element name="ListMenuItems" type="ListMenuItems"/>
+			<xs:element name="MenuItems" type="MenuItems"/>
+			<xs:element name="NavigationMenuButtons" type="NavigationMenuButtons"/>
+			<xs:element name="NavigationMenuFooterButtons" type="NavigationMenuFooterButtons"/>
+			<xs:element name="NotificationHints" type="NotificationHints"/>
+			<xs:element name="NotificationPanels" type="NotificationPanels"/>
+			<xs:element name="NotificationSpinners" type="NotificationSpinners"/>
+			<xs:element name="NumberInputs" type="NumberInputs"/>
+			<xs:element name="PasswordInputs" type="PasswordInputs"/>
+			<xs:element name="Popups" type="Popups"/>
+			<xs:element name="ProgressBars" type="ProgressBars"/>
+			<xs:element name="RadioButtons" type="RadioButtons"/>
+			<xs:element name="RoundProgresses" type="RoundProgresses"/>
+			<xs:element name="RoundTimers" type="RoundTimers"/>
+			<xs:element name="ScrollBars" type="ScrollBars"/>
+			<xs:element name="Searches" type="Searches"/>
+			<xs:element name="SelectableTexts" type="SelectableTexts"/>
+			<xs:element name="SelectItems" type="SelectItems"/>
+			<xs:element name="SelectPresenters" type="SelectPresenters"/>
+			<xs:element name="Selects" type="Selects"/>
+			<xs:element name="Spinners" type="Spinners"/>
+			<xs:element name="SplitButtons" type="SplitButtons"/>
+			<xs:element name="SsoButtons" type="SsoButtons"/>
+			<xs:element name="StatusBullets" type="StatusBullets"/>
+			<xs:element name="StatusTags" type="StatusTags"/>
+			<xs:element name="Switches" type="Switches"/>
+			<xs:element name="TabMenuItems" type="TabMenuItems"/>
+			<xs:element name="TabMenus" type="TabMenus"/>
+			<xs:element name="Tags" type="Tags"/>
+			<xs:element name="TextAreas" type="TextAreas"/>
+			<xs:element name="TextInputs" type="TextInputs"/>
+			<xs:element name="TextStyles" type="TextStyles"/>
+			<xs:element name="TextViewers" type="TextViewers"/>
+			<xs:element name="ToolTips" type="ToolTips"/>
+		</xs:choice>
+	</xs:complexType>
+
+	<xs:complexType name="Badges">
+		<xs:sequence minOccurs="1" maxOccurs="unbounded">
+			<xs:element name="Badge" type="Badge"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="Bullets">
+		<xs:sequence minOccurs="1" maxOccurs="unbounded">
+			<xs:element name="Bullet" type="Bullet"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="Buttons">
+		<xs:sequence minOccurs="1" maxOccurs="unbounded">
+			<xs:element name="Button" type="Button"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="CarouselItems">
+		<xs:sequence minOccurs="1" maxOccurs="unbounded">
+			<xs:element name="CarouselItem" type="CarouselItem"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="CheckBoxes">
+		<xs:sequence minOccurs="1" maxOccurs="unbounded">
+			<xs:element name="CheckBox" type="CheckBoxRadioButton"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="ChipsControls">
+		<xs:sequence minOccurs="1" maxOccurs="unbounded">
+			<xs:element name="ChipsControl" type="ChipsControl"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="ChipsItems">
+		<xs:sequence minOccurs="1" maxOccurs="unbounded">
+			<xs:element name="ChipsItem" type="ChipsItem"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="CodeInputs">
+		<xs:sequence minOccurs="1" maxOccurs="unbounded">
+			<xs:element name="CodeInput" type="CodeInput"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="ContentButtons">
+		<xs:sequence minOccurs="1" maxOccurs="unbounded">
+			<xs:element name="ContentButton" type="ContentButton"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="ContextMenus">
+		<xs:sequence minOccurs="1" maxOccurs="unbounded">
+			<xs:element name="ContextMenu" type="ContextMenu"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="DateTimeInputs">
+		<xs:sequence minOccurs="1" maxOccurs="unbounded">
+			<xs:element name="DateTimeInput" type="DateTimeInput"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="DateTimePopupFooterButtons">
+		<xs:sequence minOccurs="1" maxOccurs="unbounded">
+			<xs:element name="DateTimePopupFooterButton" type="DateTimePopupFooterButton"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="DateTimePopupItemButtons">
+		<xs:sequence minOccurs="1" maxOccurs="unbounded">
+			<xs:element name="DateTimePopupItemButton" type="DateTimePopupItemButton"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="DateTimePopupPresenters">
+		<xs:sequence minOccurs="1" maxOccurs="unbounded">
+			<xs:element name="DateTimePopupPresenter" type="DateTimePopupPresenter"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="Dividers">
+		<xs:sequence minOccurs="1" maxOccurs="unbounded">
+			<xs:element name="Divider" type="Divider"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="HyperLinks">
+		<xs:sequence minOccurs="1" maxOccurs="unbounded">
+			<xs:element name="HyperLink" type="HyperLink"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="Icons">
+		<xs:sequence minOccurs="1" maxOccurs="unbounded">
+			<xs:element name="Icon" type="Icon"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="IconButtons">
+		<xs:sequence minOccurs="1" maxOccurs="unbounded">
+			<xs:element name="IconButton" type="IconButton"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="Illustrations">
+		<xs:sequence minOccurs="1" maxOccurs="unbounded">
+			<xs:element name="Illustration" type="Illustration"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="ImageGalleries">
+		<xs:sequence minOccurs="1" maxOccurs="unbounded">
+			<xs:element name="ImageGallery" type="ImageGallery"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="ImageGalleryButtons">
+		<xs:sequence minOccurs="1" maxOccurs="unbounded">
+			<xs:element name="ImageGalleryButton" type="ImageGalleryButton"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="ImageGalleryLists">
+		<xs:sequence minOccurs="1" maxOccurs="unbounded">
+			<xs:element name="ImageGalleryList" type="ImageGalleryList"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="ImageGalleryListButtons">
+		<xs:sequence minOccurs="1" maxOccurs="unbounded">
+			<xs:element name="ImageGalleryListButton" type="ImageGalleryListButton"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="InteractivityDialogs">
+		<xs:sequence minOccurs="1" maxOccurs="unbounded">
+			<xs:element name="InteractivityDialog" type="InteractivityDialog"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="InteractivityNotifications">
+		<xs:sequence minOccurs="1" maxOccurs="unbounded">
+			<xs:element name="InteractivityNotification" type="InteractivityNotification"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="InteractivityOverlays">
+		<xs:sequence minOccurs="1" maxOccurs="unbounded">
+			<xs:element name="InteractivityOverlay" type="InteractivityOverlay"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="Islands">
+		<xs:sequence minOccurs="1" maxOccurs="unbounded">
+			<xs:element name="Island" type="Island"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="IslandButtons">
+		<xs:sequence minOccurs="1" maxOccurs="unbounded">
+			<xs:element name="IslandButton" type="IslandButton"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="IslandToggleButtons">
+		<xs:sequence minOccurs="1" maxOccurs="unbounded">
+			<xs:element name="IslandToggleButton" type="IslandToggleButton"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="ListMenuItems">
+		<xs:sequence minOccurs="1" maxOccurs="unbounded">
+			<xs:element name="ListMenuItem" type="ListMenuItem"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="MenuItems">
+		<xs:sequence minOccurs="1" maxOccurs="unbounded">
+			<xs:element name="MenuItem" type="MenuItem"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="NavigationMenuButtons">
+		<xs:sequence minOccurs="1" maxOccurs="unbounded">
+			<xs:element name="NavigationMenuButton" type="NavigationMenuButton"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="NavigationMenuFooterButtons">
+		<xs:sequence minOccurs="1" maxOccurs="unbounded">
+			<xs:element name="NavigationMenuFooterButton" type="NavigationMenuFooterButton"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="NotificationHints">
+		<xs:sequence minOccurs="1" maxOccurs="unbounded">
+			<xs:element name="NotificationHint" type="NotificationHint"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="NotificationPanels">
+		<xs:sequence minOccurs="1" maxOccurs="unbounded">
+			<xs:element name="NotificationPanel" type="NotificationPanel"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="NotificationSpinners">
+		<xs:sequence minOccurs="1" maxOccurs="unbounded">
+			<xs:element name="NotificationSpinner" type="NotificationSpinner"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="NumberInputs">
+		<xs:sequence minOccurs="1" maxOccurs="unbounded">
+			<xs:element name="NumberInput" type="NumberInput"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="Palettes">
+		<xs:sequence minOccurs="1" maxOccurs="unbounded">
+			<xs:element name="Palette" type="Palette"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="PasswordInputs">
+		<xs:sequence minOccurs="1" maxOccurs="unbounded">
+			<xs:element name="PasswordInput" type="PasswordInput"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="Popups">
+		<xs:sequence minOccurs="1" maxOccurs="unbounded">
+			<xs:element name="Popup" type="Popup"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="ProgressBars">
+		<xs:sequence minOccurs="1" maxOccurs="unbounded">
+			<xs:element name="ProgressBar" type="ProgressBar"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="RadioButtons">
+		<xs:sequence minOccurs="1" maxOccurs="unbounded">
+			<xs:element name="RadioButton" type="CheckBoxRadioButton"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="RoundProgresses">
+		<xs:sequence minOccurs="1" maxOccurs="unbounded">
+			<xs:element name="RoundProgress" type="RoundProgress"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="RoundTimers">
+		<xs:sequence minOccurs="1" maxOccurs="unbounded">
+			<xs:element name="RoundTimer" type="RoundTimer"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="ScrollBars">
+		<xs:sequence minOccurs="1" maxOccurs="unbounded">
+			<xs:element name="ScrollBar" type="ScrollBar"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="Searches">
+		<xs:sequence minOccurs="1" maxOccurs="unbounded">
+			<xs:element name="Search" type="Search"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="SelectableTexts">
+		<xs:sequence minOccurs="1" maxOccurs="unbounded">
+			<xs:element name="SelectableText" type="SelectableText"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="SelectItems">
+		<xs:sequence minOccurs="1" maxOccurs="unbounded">
+			<xs:element name="SelectItem" type="SelectItem"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="SelectPresenters">
+		<xs:sequence minOccurs="1" maxOccurs="unbounded">
+			<xs:element name="SelectPresenter" type="SelectPresenter"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="Selects">
+		<xs:sequence minOccurs="1" maxOccurs="unbounded">
+			<xs:element name="Select" type="Select"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="Spinners">
+		<xs:sequence minOccurs="1" maxOccurs="unbounded">
+			<xs:element name="Spinner" type="Spinner"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="SplitButtons">
+		<xs:sequence minOccurs="1" maxOccurs="unbounded">
+			<xs:element name="SplitButton" type="SplitButton"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="SsoButtons">
+		<xs:sequence minOccurs="1" maxOccurs="unbounded">
+			<xs:element name="SsoButton" type="SsoButton"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="StatusBullets">
+		<xs:sequence minOccurs="1" maxOccurs="unbounded">
+			<xs:element name="StatusBullet" type="StatusBullet"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="StatusTags">
+		<xs:sequence minOccurs="1" maxOccurs="unbounded">
+			<xs:element name="StatusTag" type="StatusTag"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="SvgIcons">
+		<xs:sequence minOccurs="1" maxOccurs="unbounded">
+			<xs:element name="SvgIcon" type="SvgIcon"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="Switches">
+		<xs:sequence minOccurs="1" maxOccurs="unbounded">
+			<xs:element name="Switch" type="Switch"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="TabMenus">
+		<xs:sequence minOccurs="1" maxOccurs="unbounded">
+			<xs:element name="TabMenu" type="TabMenu"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="TabMenuItems">
+		<xs:sequence minOccurs="1" maxOccurs="unbounded">
+			<xs:element name="TabMenuItem" type="TabMenuItem"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="Tags">
+		<xs:sequence minOccurs="1" maxOccurs="unbounded">
+			<xs:element name="Tag" type="Tag"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="TextAreas">
+		<xs:sequence minOccurs="1" maxOccurs="unbounded">
+			<xs:element name="TextArea" type="TextArea"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="TextInputs">
+		<xs:sequence minOccurs="1" maxOccurs="unbounded">
+			<xs:element name="TextInput" type="TextInput"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="TextStyles">
+		<xs:sequence minOccurs="1" maxOccurs="unbounded">
+			<xs:element name="TextStyle" type="TextStyle"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="TextViewers">
+		<xs:sequence minOccurs="1" maxOccurs="unbounded">
+			<xs:element name="TextViewer" type="TextViewer"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="ToolTips">
+		<xs:sequence minOccurs="1" maxOccurs="unbounded">
+			<xs:element name="ToolTip" type="ToolTip"/>
+		</xs:sequence>
+	</xs:complexType>
+
+</xs:schema>

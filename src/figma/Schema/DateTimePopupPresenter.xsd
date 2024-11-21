@@ -1,0 +1,50 @@
+<!--
+    Copyright © 2024 AO Kaspersky Lab.
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+        http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+-->
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<xs:include schemaLocation="Common.xsd"/>
+
+	<xs:complexType name="DateTimePopupPresenter">
+		<xs:group ref="elements_DateTimePopupPresenter"/>
+		<xs:attributeGroup ref="attributes_DateTimePopupPresenter"/>
+	</xs:complexType>
+
+	<xs:group name="elements_DateTimePopupPresenter">
+		<xs:all>
+			<xs:element name="FooterButtonCancelMargin" type="Thickness" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="FooterButtonConfirmMargin" type="Thickness" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="ItemButtonPadding" type="Thickness" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="ItemButtonTextForeground" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="MarkerBackground" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="MarkerBorderColor" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="MarkerBorderThickness" type="Thickness" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="MarkerCornerRadius" type="CornerRadius" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="MarkerMargin" type="Thickness" minOccurs="1" maxOccurs="1"/>
+		</xs:all>
+	</xs:group>
+
+	<xs:attributeGroup name="attributes_DateTimePopupPresenter">
+		<xs:attribute name="FooterButtonCancelIconName" type="xs:string" use="required"/>
+		<xs:attribute name="FooterButtonConfirmIconName" type="xs:string" use="required"/>
+		<xs:attribute name="FooterButtonStyleId" type="xs:string" use="required"/>
+		<xs:attribute name="Id" type="xs:string" use="required"/>
+		<xs:attribute name="ItemButtonHeight" type="xs:decimal" use="required"/>
+		<xs:attribute name="ItemButtonStyleId" type="xs:string" use="required"/>
+		<xs:attribute name="ItemButtonTextStyleId" type="xs:string" use="required"/>
+		<xs:attribute name="ItemButtonWidth" type="xs:decimal" use="required"/>
+		<xs:attribute name="MarkerHeight" type="xs:decimal" use="required"/>
+	</xs:attributeGroup>
+</xs:schema>

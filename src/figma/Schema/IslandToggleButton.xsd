@@ -1,0 +1,230 @@
+<!--
+    Copyright © 2024 AO Kaspersky Lab.
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+        http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+-->
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<xs:include schemaLocation="Common.xsd"/>
+
+	<xs:complexType name="IslandToggleButton">
+		<xs:group ref="elements_IslandToggleButton"/>
+		<xs:attributeGroup ref="attributes_IslandToggleButton"/>
+	</xs:complexType>
+
+	<xs:group name="elements_IslandToggleButton">
+		<xs:all>
+			<xs:element name="BackgroundElevationDisabledCheckedLevel1"  type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BackgroundElevationDisabledCheckedLevel2" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BackgroundElevationDisabledLevel1"  type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BackgroundElevationDisabledLevel2" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BackgroundElevationHoverCheckedLevel1"  type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BackgroundElevationHoverCheckedLevel2" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BackgroundElevationHoverLevel1"  type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BackgroundElevationHoverLevel2" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BackgroundElevationNormalCheckedLevel1" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BackgroundElevationNormalCheckedLevel2" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BackgroundElevationNormalLevel1" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BackgroundElevationNormalLevel2" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BackgroundElevationPressedCheckedLevel1" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BackgroundElevationPressedCheckedLevel2" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BackgroundElevationPressedLevel1" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BackgroundElevationPressedLevel2" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BackgroundPrimaryDisabledCheckedLevel1" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BackgroundPrimaryDisabledCheckedLevel2" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BackgroundPrimaryDisabledLevel1" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BackgroundPrimaryDisabledLevel2" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BackgroundPrimaryHoverCheckedLevel1" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BackgroundPrimaryHoverCheckedLevel2" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BackgroundPrimaryHoverLevel1" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BackgroundPrimaryHoverLevel2" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BackgroundPrimaryNormalCheckedLevel1" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BackgroundPrimaryNormalCheckedLevel2" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BackgroundPrimaryNormalLevel1" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BackgroundPrimaryNormalLevel2" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BackgroundPrimaryPressedCheckedLevel1" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BackgroundPrimaryPressedCheckedLevel2" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BackgroundPrimaryPressedLevel1" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BackgroundPrimaryPressedLevel2" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BackgroundSecondaryDisabledCheckedLevel1" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BackgroundSecondaryDisabledCheckedLevel2" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BackgroundSecondaryDisabledLevel1" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BackgroundSecondaryDisabledLevel2" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BackgroundSecondaryHoverCheckedLevel1" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BackgroundSecondaryHoverCheckedLevel2" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BackgroundSecondaryHoverLevel1" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BackgroundSecondaryHoverLevel2" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BackgroundSecondaryNormalCheckedLevel1" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BackgroundSecondaryNormalCheckedLevel2" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BackgroundSecondaryNormalLevel1" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BackgroundSecondaryNormalLevel2" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BackgroundSecondaryPressedCheckedLevel1" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BackgroundSecondaryPressedCheckedLevel2" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BackgroundSecondaryPressedLevel1" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BackgroundSecondaryPressedLevel2" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BorderColorElevationDisabledCheckedLevel1" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BorderColorElevationDisabledCheckedLevel2" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BorderColorElevationDisabledLevel1" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BorderColorElevationDisabledLevel2" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BorderColorElevationHoverCheckedLevel1" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BorderColorElevationHoverCheckedLevel2" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BorderColorElevationHoverLevel1" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BorderColorElevationHoverLevel2" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BorderColorElevationNormalCheckedLevel1" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BorderColorElevationNormalCheckedLevel2" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BorderColorElevationNormalLevel1" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BorderColorElevationNormalLevel2" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BorderColorElevationPressedCheckedLevel1" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BorderColorElevationPressedCheckedLevel2" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BorderColorElevationPressedLevel1" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BorderColorElevationPressedLevel2" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BorderColorPrimaryDisabledCheckedLevel1" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BorderColorPrimaryDisabledCheckedLevel2" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BorderColorPrimaryDisabledLevel1" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BorderColorPrimaryDisabledLevel2" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BorderColorPrimaryHoverCheckedLevel1" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BorderColorPrimaryHoverCheckedLevel2" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BorderColorPrimaryHoverLevel1" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BorderColorPrimaryHoverLevel2" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BorderColorPrimaryNormalCheckedLevel1" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BorderColorPrimaryNormalCheckedLevel2" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BorderColorPrimaryNormalLevel1" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BorderColorPrimaryNormalLevel2" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BorderColorPrimaryPressedCheckedLevel1" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BorderColorPrimaryPressedCheckedLevel2" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BorderColorPrimaryPressedLevel1" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BorderColorPrimaryPressedLevel2" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BorderColorSecondaryDisabledCheckedLevel1" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BorderColorSecondaryDisabledCheckedLevel2" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BorderColorSecondaryDisabledLevel1" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BorderColorSecondaryDisabledLevel2" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BorderColorSecondaryHoverCheckedLevel1" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BorderColorSecondaryHoverCheckedLevel2" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BorderColorSecondaryHoverLevel1" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BorderColorSecondaryHoverLevel2" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BorderColorSecondaryNormalCheckedLevel1" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BorderColorSecondaryNormalCheckedLevel2" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BorderColorSecondaryNormalLevel1" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BorderColorSecondaryNormalLevel2" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BorderColorSecondaryPressedCheckedLevel1" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BorderColorSecondaryPressedCheckedLevel2" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BorderColorSecondaryPressedLevel1" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BorderColorSecondaryPressedLevel2" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BorderThicknessElevationDisabledCheckedLevel1" type="Thickness" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BorderThicknessElevationDisabledCheckedLevel2" type="Thickness" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BorderThicknessElevationDisabledLevel1" type="Thickness" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BorderThicknessElevationDisabledLevel2" type="Thickness" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BorderThicknessElevationHoverCheckedLevel1" type="Thickness" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BorderThicknessElevationHoverCheckedLevel2" type="Thickness" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BorderThicknessElevationHoverLevel1" type="Thickness" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BorderThicknessElevationHoverLevel2" type="Thickness" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BorderThicknessElevationNormalCheckedLevel1" type="Thickness" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BorderThicknessElevationNormalCheckedLevel2" type="Thickness" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BorderThicknessElevationNormalLevel1" type="Thickness" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BorderThicknessElevationNormalLevel2" type="Thickness" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BorderThicknessElevationPressedCheckedLevel1" type="Thickness" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BorderThicknessElevationPressedCheckedLevel2" type="Thickness" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BorderThicknessElevationPressedLevel1" type="Thickness" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BorderThicknessElevationPressedLevel2" type="Thickness" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BorderThicknessPrimaryDisabledCheckedLevel1" type="Thickness" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BorderThicknessPrimaryDisabledCheckedLevel2" type="Thickness" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BorderThicknessPrimaryDisabledLevel1" type="Thickness" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BorderThicknessPrimaryDisabledLevel2" type="Thickness" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BorderThicknessPrimaryHoverCheckedLevel1" type="Thickness" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BorderThicknessPrimaryHoverCheckedLevel2" type="Thickness" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BorderThicknessPrimaryHoverLevel1" type="Thickness" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BorderThicknessPrimaryHoverLevel2" type="Thickness" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BorderThicknessPrimaryNormalCheckedLevel1" type="Thickness" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BorderThicknessPrimaryNormalCheckedLevel2" type="Thickness" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BorderThicknessPrimaryNormalLevel1" type="Thickness" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BorderThicknessPrimaryNormalLevel2" type="Thickness" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BorderThicknessPrimaryPressedCheckedLevel1" type="Thickness" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BorderThicknessPrimaryPressedCheckedLevel2" type="Thickness" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BorderThicknessPrimaryPressedLevel1" type="Thickness" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BorderThicknessPrimaryPressedLevel2" type="Thickness" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BorderThicknessSecondaryDisabledCheckedLevel1" type="Thickness" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BorderThicknessSecondaryDisabledCheckedLevel2" type="Thickness" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BorderThicknessSecondaryDisabledLevel1" type="Thickness" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BorderThicknessSecondaryDisabledLevel2" type="Thickness" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BorderThicknessSecondaryHoverCheckedLevel1" type="Thickness" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BorderThicknessSecondaryHoverCheckedLevel2" type="Thickness" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BorderThicknessSecondaryHoverLevel1" type="Thickness" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BorderThicknessSecondaryHoverLevel2" type="Thickness" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BorderThicknessSecondaryNormalCheckedLevel1" type="Thickness" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BorderThicknessSecondaryNormalCheckedLevel2" type="Thickness" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BorderThicknessSecondaryNormalLevel1" type="Thickness" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BorderThicknessSecondaryNormalLevel2" type="Thickness" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BorderThicknessSecondaryPressedCheckedLevel1" type="Thickness" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BorderThicknessSecondaryPressedCheckedLevel2" type="Thickness" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BorderThicknessSecondaryPressedLevel1" type="Thickness" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BorderThicknessSecondaryPressedLevel2" type="Thickness" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="CornerRadiusLevel1" type="CornerRadius" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="CornerRadiusLevel2" type="CornerRadius" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="FocusLevel1" type="Focus" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="FocusLevel2" type="Focus" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="Padding" type="Thickness" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="ShadowElevationDisabledCheckedLevel1" type="Shadow" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="ShadowElevationDisabledCheckedLevel2" type="Shadow" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="ShadowElevationDisabledLevel1" type="Shadow" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="ShadowElevationDisabledLevel2" type="Shadow" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="ShadowElevationHoverCheckedLevel1" type="Shadow" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="ShadowElevationHoverCheckedLevel2" type="Shadow" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="ShadowElevationHoverLevel1" type="Shadow" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="ShadowElevationHoverLevel2" type="Shadow" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="ShadowElevationNormalCheckedLevel1" type="Shadow" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="ShadowElevationNormalCheckedLevel2" type="Shadow" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="ShadowElevationNormalLevel1" type="Shadow" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="ShadowElevationNormalLevel2" type="Shadow" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="ShadowElevationPressedCheckedLevel1" type="Shadow" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="ShadowElevationPressedCheckedLevel2" type="Shadow" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="ShadowElevationPressedLevel1" type="Shadow" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="ShadowElevationPressedLevel2" type="Shadow" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="ShadowPrimaryDisabledCheckedLevel1" type="Shadow" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="ShadowPrimaryDisabledCheckedLevel2" type="Shadow" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="ShadowPrimaryDisabledLevel1" type="Shadow" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="ShadowPrimaryDisabledLevel2" type="Shadow" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="ShadowPrimaryHoverCheckedLevel1" type="Shadow" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="ShadowPrimaryHoverCheckedLevel2" type="Shadow" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="ShadowPrimaryHoverLevel1" type="Shadow" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="ShadowPrimaryHoverLevel2" type="Shadow" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="ShadowPrimaryNormalCheckedLevel1" type="Shadow" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="ShadowPrimaryNormalCheckedLevel2" type="Shadow" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="ShadowPrimaryNormalLevel1" type="Shadow" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="ShadowPrimaryNormalLevel2" type="Shadow" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="ShadowPrimaryPressedCheckedLevel1" type="Shadow" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="ShadowPrimaryPressedCheckedLevel2" type="Shadow" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="ShadowPrimaryPressedLevel1" type="Shadow" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="ShadowPrimaryPressedLevel2" type="Shadow" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="ShadowSecondaryDisabledCheckedLevel1" type="Shadow" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="ShadowSecondaryDisabledCheckedLevel2" type="Shadow" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="ShadowSecondaryDisabledLevel1" type="Shadow" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="ShadowSecondaryDisabledLevel2" type="Shadow" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="ShadowSecondaryHoverCheckedLevel1" type="Shadow" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="ShadowSecondaryHoverCheckedLevel2" type="Shadow" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="ShadowSecondaryHoverLevel1" type="Shadow" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="ShadowSecondaryHoverLevel2" type="Shadow" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="ShadowSecondaryNormalCheckedLevel1" type="Shadow" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="ShadowSecondaryNormalCheckedLevel2" type="Shadow" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="ShadowSecondaryNormalLevel1" type="Shadow" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="ShadowSecondaryNormalLevel2" type="Shadow" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="ShadowSecondaryPressedCheckedLevel1" type="Shadow" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="ShadowSecondaryPressedCheckedLevel2" type="Shadow" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="ShadowSecondaryPressedLevel1" type="Shadow" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="ShadowSecondaryPressedLevel2" type="Shadow" minOccurs="0" maxOccurs="1"/>
+		</xs:all>
+	</xs:group>
+
+	<xs:attributeGroup name="attributes_IslandToggleButton">
+		<xs:attribute name="Id" type="xs:string" use="required"/>
+	</xs:attributeGroup>
+</xs:schema>

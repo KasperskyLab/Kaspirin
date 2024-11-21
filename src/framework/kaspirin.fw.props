@@ -1,0 +1,7 @@
+<Project>
+	<PropertyGroup>
+		<TargetFramework>net40</TargetFramework>
+	</PropertyGroup>
+	
+	<Import Project="$(SolutionDir)kaspirin.common.props" />
+</Project>

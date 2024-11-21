@@ -1,0 +1,27 @@
+﻿<Project>
+	<PropertyGroup>
+		<UseWPF>true</UseWPF>
+		<RootNamespace>Kaspirin.UI.Framework.UiKit.Tests</RootNamespace>
+		<AssemblyName>kaspirin.ui.framework.uikit.tests</AssemblyName>
+		<IsTestProject>true</IsTestProject>
+	</PropertyGroup>
+
+	<Import Project="$(SolutionDir)kaspirin.net.props" />
+	<Import Project="Sdk.props" Sdk="Microsoft.NET.Sdk" />
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.3.0" />
+		<PackageReference Include="MSTest.TestAdapter" />
+		<PackageReference Include="MSTest.TestFramework" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Using Include="Microsoft.VisualStudio.TestTools.UnitTesting" />
+	</ItemGroup>
+
+	<Import Project="Sdk.targets" Sdk="Microsoft.NET.Sdk" />
+
+	<Import Project="$(FrameworkProps)" />
+	<Import Project="$(FrameworkUIKitProps)" />
+
+</Project>

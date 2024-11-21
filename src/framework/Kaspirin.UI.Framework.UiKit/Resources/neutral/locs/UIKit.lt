@@ -1,0 +1,70 @@
+﻿DateTimeInputAction_SelectDateToolTip = 'Select date'
+DateTimeInputAction_SelectTimeToolTip = 'Select time'
+
+DateTimePopupPresenter_CancelToolTip = 'Cancel'
+DateTimePopupPresenter_ConfirmToolTip = 'Confirm'
+
+ImageGallery_Counter = $CurrentIndex + ' of ' + $TotalIndex
+
+InputContextMenu_Copy = 'Copy'
+InputContextMenu_Cut = 'Cut'
+InputContextMenu_Paste = 'Paste'
+
+NumberInputAction_DecreaseToolTip = 'Decrease'
+NumberInputAction_IncreaseToolTip = 'Increase'
+
+PasswordInputCapsLockAction_CapsLockOnToolTip = 'Caps Lock enabled'
+PasswordInputCopyAction_CopyToolTip = 'Copy'
+PasswordInputRevealAction_HideToolTip = 'Hide'
+PasswordInputRevealAction_ShowToolTip = 'Show'
+
+Search_ClearToolTip = 'Clear'
+Search_PlaceholderText = 'Search'
+Search_Pattern_PlaceholderTextAndShortcut = $PlaceholderText + ' (' + $Shortcut + ')'
+Search_Pattern_PlaceholderTextOnly = $PlaceholderText
+Search_Pattern_ShortcutOnly = $Shortcut
+
+Select_Placeholder = 'Select item'
+
+SelectableText_AfterCopy = 'Copied!'
+SelectableText_BeforeCopy = 'Click to copy'
+
+TextInputCopyAction_CopyToolTip = 'Copy'
+
+TimeConverter_AgoDays = $Value + ' ' + {$Value: 'day', 'days'} + ' ago'
+TimeConverter_AgoHours = $Value + ' ' + {$Value: 'hour', 'hours'} + ' ago'
+TimeConverter_AgoHoursShort = $HourCount + ' ' + {$HourCount: 'hour', 'hours'}
+TimeConverter_AgoMinutes = $Value + ' ' + {$Value: 'minute', 'minutes'} + ' ago'
+TimeConverter_AgoMinutesShort = $MinuteCount + ' ' + {$MinuteCount: 'minute', 'minutes'}
+TimeConverter_AgoMonths = $Value + ' ' + {$Value: 'month', 'months'} + ' ago'
+TimeConverter_AgoSeconds = 'Less than a minute ago'
+TimeConverter_AgoYears = $Value + ' ' + {$Value: 'year', 'years'} + ' ago'
+TimeConverter_AgoYesterday = 'Yesterday'
+TimeConverter_Days = $DayCount + ' ' + {$DayCount: 'day', 'days'}
+TimeConverter_Hours = $HourCount + ' ' + {$HourCount: 'hour', 'hours'}
+TimeConverter_InvalidValue = 'Unknown'
+TimeConverter_Minutes = $MinuteCount + ' ' + {$MinuteCount: 'minute', 'minutes'}
+TimeConverter_Months = $MonthCount + ' ' + {$MonthCount: 'month', 'months'} 
+TimeConverter_MonthsAndDays = TimeConverter_Months + ' ' + TimeConverter_Days
+TimeConverter_Never = 'Never'
+TimeConverter_PassedTimeDays = TimeConverter_Days
+TimeConverter_PassedTimeDaysAndHours = TimeConverter_Days + ' ' + TimeConverter_Hours
+TimeConverter_PassedTimeHours = TimeConverter_Hours
+TimeConverter_PassedTimeHoursAndMinutes = TimeConverter_Hours + ' ' + TimeConverter_Minutes
+TimeConverter_PassedTimeMinutes = TimeConverter_Minutes
+TimeConverter_PassedTimeMinutesAndSeconds = TimeConverter_Minutes + ' ' + TimeConverter_Seconds
+TimeConverter_PassedTimeSeconds = TimeConverter_Seconds
+TimeConverter_RangePatternDayDifference = $DayFrom + ' - ' + $DayTo + ' ' + $MonthTo + ', ' + $YearTo
+TimeConverter_RangePatternDayMonthDifference = $DayFrom + ' ' + $MonthFrom + ' - ' + $DayTo + ' ' + $MonthTo + ', ' + $YearTo
+TimeConverter_RangePatternDayMonthYearDifference = $DayFrom + ' ' + $MonthFrom + ', ' + $YearFrom + ' - ' + $DayTo + ' ' + $MonthTo + ', ' + $YearTo
+TimeConverter_RemainingTimeDays = 'About ' + TimeConverter_Days + ' left...'
+TimeConverter_RemainingTimeHours = 'About ' + TimeConverter_Hours + ' left...'
+TimeConverter_RemainingTimeLessMinute = 'Less than a minute left...'
+TimeConverter_RemainingTimeMinutes = 'About ' + TimeConverter_Minutes + ' left...'
+TimeConverter_Seconds = $SecondCount + ' ' + {$SecondCount: 'second', 'seconds'}
+TimeConverter_TimeSpan = $HourCount + ':' + $MinuteCount
+TimeConverter_Today = 'Today'
+TimeConverter_TodayPattern = 'Today, ' + $DateTime
+TimeConverter_Value = $Value
+TimeConverter_Yesterday = 'Yesterday'
+TimeConverter_YesterdayPattern = 'Yesterday, ' + $DateTime

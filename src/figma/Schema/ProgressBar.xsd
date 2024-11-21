@@ -1,0 +1,56 @@
+<!--
+    Copyright © 2024 AO Kaspersky Lab.
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+        http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+-->
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<xs:include schemaLocation="Common.xsd"/>
+
+	<xs:complexType name="ProgressBar">
+		<xs:group ref="elements_ProgressBar"/>
+		<xs:attributeGroup ref="attributes_ProgressBar"/>
+	</xs:complexType>
+
+	<xs:group name="elements_ProgressBar">
+		<xs:all>
+			<xs:element name="Background" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BackgroundDisabled" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="CornerRadius" type="CornerRadius" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="EstimationForeground" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="EstimationForegroundDisabled" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="GlowColor" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="IndicatorColorDanger" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="IndicatorColorDisabled" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="IndicatorColorInfo" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="IndicatorColorNeutral" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="IndicatorColorPositive" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="IndicatorColorWarning" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="Padding" type="Thickness" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="StateForeground" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="StateForegroundDisabled" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="StateMargin" type="Thickness" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="ValueForeground" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="ValueForegroundDisabled" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+		</xs:all>
+	</xs:group>
+
+	<xs:attributeGroup name="attributes_ProgressBar">
+		<xs:attribute name="EstimationTextStyleId" type="xs:string" use="required"/>
+		<xs:attribute name="GlowWidth" type="xs:decimal" use="required"/>
+		<xs:attribute name="Height" type="xs:decimal" use="required"/>
+		<xs:attribute name="Id" type="xs:string" use="required"/>
+		<xs:attribute name="StateTextStyleId" type="xs:string" use="required"/>
+		<xs:attribute name="ValueTextStyleId" type="xs:string" use="required"/>
+	</xs:attributeGroup>
+</xs:schema>

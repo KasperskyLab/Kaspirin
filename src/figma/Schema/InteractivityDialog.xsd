@@ -1,0 +1,83 @@
+<!--
+    Copyright © 2024 AO Kaspersky Lab.
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+        http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+-->
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<xs:include schemaLocation="Common.xsd"/>
+
+	<xs:complexType name="InteractivityDialog">
+		<xs:group ref="elements_InteractivityDialog"/>
+		<xs:attributeGroup ref="attributes_InteractivityDialog"/>
+	</xs:complexType>
+
+
+	<xs:group name="elements_InteractivityDialog">
+		<xs:all>
+			<xs:element name="Background" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BorderColor" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BorderThickness" type="Thickness" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="ButtonContainerMargin" type="Thickness" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="ButtonForeground" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="ButtonMargin" type="Thickness" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="ContentContainerMargin" type="Thickness" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="CornerRadius" type="CornerRadius" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="FooterButtonMargin" type="Thickness" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="FooterContainerMargin" type="Thickness" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="HeaderContainerMargin" type="Thickness" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="HeaderForeground" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="HeaderMargin" type="Thickness" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="IconMargin" type="Thickness" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="StatusBackgroundDanger" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="StatusBackgroundInfo" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="StatusBackgroundLoading" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="StatusBackgroundPositive" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="StatusBackgroundWarning" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="StatusForegroundDanger" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="StatusForegroundInfo" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="StatusForegroundPositive" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="StatusForegroundWarning" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="SubHeaderForeground" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="SubHeaderMargin" type="Thickness" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="TextForeground" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="TextMargin" type="Thickness" minOccurs="1" maxOccurs="1"/>
+		</xs:all>
+	</xs:group>
+
+	<xs:attributeGroup name="attributes_InteractivityDialog">
+		<xs:attribute name="ButtonCloseIconName" type="xs:string" use="required"/>
+		<xs:attribute name="ButtonHelpIconName" type="xs:string" use="required"/>
+		<xs:attribute name="ButtonStyleId" type="xs:string" use="required"/>
+		<xs:attribute name="DialogWidthMedium" type="xs:decimal" use="required"/>
+		<xs:attribute name="DialogWidthStandard" type="xs:decimal" use="required"/>
+		<xs:attribute name="DialogWidthWide" type="xs:decimal" use="required"/>
+		<xs:attribute name="FooterPrimaryButtonStyleId" type="xs:string" use="required"/>
+		<xs:attribute name="FooterReferenceButtonStyleId" type="xs:string" use="required"/>
+		<xs:attribute name="FooterSecondaryButtonStyleId" type="xs:string" use="required"/>
+		<xs:attribute name="HeaderStyleId" type="xs:string" use="required"/>
+		<xs:attribute name="IconHeight" type="xs:decimal" use="required"/>
+		<xs:attribute name="IconWidth" type="xs:decimal" use="required"/>
+		<xs:attribute name="Id" type="xs:string" use="required"/>
+		<xs:attribute name="OverlayStyleId" type="xs:string" use="required"/>
+		<xs:attribute name="SpinnerStyleId" type="xs:string" use="required"/>
+		<xs:attribute name="StatusBackgroundHeight" type="xs:decimal" use="required"/>
+		<xs:attribute name="StatusBackgroundWidth" type="xs:decimal" use="required"/>
+		<xs:attribute name="StatusIconNameDanger" type="xs:string" use="required"/>
+		<xs:attribute name="StatusIconNameInfo" type="xs:string" use="required"/>
+		<xs:attribute name="StatusIconNamePositive" type="xs:string" use="required"/>
+		<xs:attribute name="StatusIconNameWarning" type="xs:string" use="required"/>
+		<xs:attribute name="SubHeaderStyleId" type="xs:string" use="required"/>
+		<xs:attribute name="TextStyleId" type="xs:string" use="required"/>
+	</xs:attributeGroup>
+</xs:schema>

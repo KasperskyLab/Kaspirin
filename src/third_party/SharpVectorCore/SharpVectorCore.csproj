@@ -1,0 +1,16 @@
+﻿<Project>
+	<PropertyGroup>
+		<RootNamespace>SharpVectorCore</RootNamespace>
+		<AssemblyName>sharpvectorcore</AssemblyName>
+	</PropertyGroup>
+
+	<Import Project="$(SolutionDir)kaspirin.net.props" />
+
+	<PropertyGroup>
+		<Nullable>disable</Nullable>
+		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+	</PropertyGroup>
+
+	<Import Project="Sdk.props" Sdk="Microsoft.NET.Sdk" />
+	<Import Project="Sdk.targets" Sdk="Microsoft.NET.Sdk" />
+</Project>

@@ -1,0 +1,561 @@
+<!--
+    Copyright © 2024 AO Kaspersky Lab.
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+        http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+-->
+
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:behaviors="clr-namespace:Kaspirin.UI.Framework.UiKit.Controls.Behaviors"
+                    xmlns:controls="clr-namespace:Kaspirin.UI.Framework.UiKit.Controls"
+                    xmlns:converting="clr-namespace:Kaspirin.UI.Framework.UiKit.Localization.Markup.Converting"
+                    xmlns:internals="clr-namespace:Kaspirin.UI.Framework.UiKit.Controls.Internals"
+                    xmlns:markupCommon="clr-namespace:Kaspirin.UI.Framework.UiKit.MarkupExtensions.Common"
+                    xmlns:notifications="clr-namespace:Kaspirin.UI.Framework.UiKit.Notifications"
+                    xmlns:properties="clr-namespace:Kaspirin.UI.Framework.UiKit.Controls.Properties"
+                    xmlns:shortcuts="clr-namespace:Kaspirin.UI.Framework.UiKit.Input.Shortcuts"
+                    xmlns:textScale="clr-namespace:Kaspirin.UI.Framework.UiKit.Accessibility.TextScale"
+                    xmlns:uikit="clr-namespace:Kaspirin.UI.Framework.UiKit"
+                    xmlns:windows="clr-namespace:Kaspirin.UI.Framework.UiKit.Windows"
+                    xmlns:xi="clr-namespace:Kaspirin.UI.Framework.UiKit.Localization.Markup.Extensions.Images"
+                    xmlns:xl="clr-namespace:Kaspirin.UI.Framework.UiKit.Localization.Markup.Extensions.Strings"
+                    xmlns:xr="clr-namespace:Kaspirin.UI.Framework.UiKit.Localization.Markup.Extensions.Xaml">
+
+    <!--  region FlowDocumentViewer  -->
+
+    <Style x:Key="FlowDocumentViewerUniversal"
+           TargetType="{x:Type controls:FlowDocumentViewer}">
+        <Setter Property="Focusable" Value="False" />
+        <Setter Property="IsSelectionEnabled" Value="False" />
+        <Setter Property="HorizontalScrollBarVisibility" Value="Disabled" />
+        <Setter Property="VerticalScrollBarVisibility" Value="Auto" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type controls:FlowDocumentViewer}">
+                    <ScrollViewer x:Name="PART_ContentHost"
+                                  properties:ScrollViewerProps.OuterHorizontalScrollBar="True"
+                                  properties:ScrollViewerProps.OuterVerticalScrollBar="True" />
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--  endregion  -->
+
+    <!--  region Illustration  -->
+
+    <Style x:Key="IllustrationUniversal"
+           TargetType="{x:Type controls:Illustration}">
+        <Setter Property="Focusable" Value="False" />
+        <Setter Property="HorizontalAlignment" Value="Left" />
+        <Setter Property="OverridesDefaultStyle" Value="True" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="UseLayoutRounding" Value="True" />
+        <Setter Property="VerticalAlignment" Value="Top" />
+
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type controls:Illustration}">
+                    <Image x:Name="PART_Image"
+                           FlowDirection="LeftToRight"
+                           HorizontalAlignment="Center"
+                           Stretch="None"
+                           VerticalAlignment="Center" />
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsUnset" Value="True">
+                            <Setter Property="Visibility" Value="Collapsed" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--  endregion  -->
+
+    <!--  region Image  -->
+
+    <Style x:Key="ImageUniversal"
+           TargetType="{x:Type Image}">
+        <Setter Property="OverridesDefaultStyle" Value="True" />
+        <Setter Property="internals:ImageInternals.ImageObserver" Value="True" />
+        <Setter Property="FlowDirection" Value="{Binding FlowDirection, RelativeSource={RelativeSource AncestorType={x:Type Window}}}" />
+    </Style>
+
+    <!--  endregion  -->
+
+    <!--  region InputCommandAction  -->
+
+    <Style x:Key="InputCommandActionUniversal"
+           TargetType="{x:Type controls:InputCommandAction}">
+        <Setter Property="Focusable" Value="False" />
+        <Setter Property="HorizontalAlignment" Value="Center" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type controls:InputCommandAction}">
+                    <controls:IconButton x:Name="PART_ActionButton"
+                                         Command="{TemplateBinding Command}"
+                                         Icon="{TemplateBinding Icon}"
+                                         IconForeground="{TemplateBinding IconForeground}" />
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--  endregion  -->
+
+    <!--  region InputPopupAction  -->
+
+    <Style x:Key="InputPopupActionUniversal"
+           TargetType="{x:Type controls:InputPopupAction}">
+        <Setter Property="Focusable" Value="False" />
+        <Setter Property="HorizontalAlignment" Value="Center" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type controls:InputPopupAction}">
+                    <Grid>
+                        <controls:IconButton x:Name="PART_ActionButton"
+                                             Command="{TemplateBinding Command}"
+                                             Icon="{TemplateBinding Icon}"
+                                             IconForeground="{TemplateBinding IconForeground}" />
+
+                        <controls:Popup x:Name="PART_Popup"
+                                        IsPopupStaysOpen="False"
+                                        PopupContent="{TemplateBinding PopupContent}"
+                                        PopupContentTemplate="{TemplateBinding PopupContentTemplate}"
+                                        PopupPosition="{TemplateBinding PopupPosition}"
+                                        PopupTarget="{Binding ElementName=PART_ActionButton}" />
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--  endregion  -->
+
+    <!--  region InteractivityConfirmationDialog  -->
+
+    <Style x:Key="InteractivityConfirmationDialogUniversal"
+           TargetType="{x:Type controls:InteractivityConfirmationDialog}">
+        <Setter Property="Focusable" Value="False" />
+
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type controls:InteractivityConfirmationDialog}">
+                    <controls:InteractivityDialog CloseButtonCommand="{markupCommon:UIKitTemplateBinding CloseButtonCommand}"
+                                                  Content="{markupCommon:UIKitTemplateBinding Content}"
+                                                  Description="{markupCommon:UIKitTemplateBinding Description}"
+                                                  HasCloseButton="{markupCommon:UIKitTemplateBinding HasCloseButton}"
+                                                  HasHelpButton="{markupCommon:UIKitTemplateBinding HasHelpButton}"
+                                                  Header="{markupCommon:UIKitTemplateBinding Header}"
+                                                  HelpButtonCommand="{markupCommon:UIKitTemplateBinding HelpButtonCommand}"
+                                                  Icon="{markupCommon:UIKitTemplateBinding Icon}"
+                                                  SubHeader="{markupCommon:UIKitTemplateBinding SubHeader}"
+                                                  Type="{markupCommon:UIKitTemplateBinding Type}">
+                        <controls:InteractivityDialog.Footer>
+                            <controls:InteractivityDialogFooter PrimaryButtonCaption="{markupCommon:UIKitTemplateBinding ConfirmButtonCaption}"
+                                                                PrimaryButtonCommand="{markupCommon:UIKitTemplateBinding ConfirmButtonCommand}"
+                                                                SecondaryButtonCaption="{markupCommon:UIKitTemplateBinding CancelButtonCaption}"
+                                                                SecondaryButtonCommand="{markupCommon:UIKitTemplateBinding CancelButtonCommand}" />
+                        </controls:InteractivityDialog.Footer>
+                    </controls:InteractivityDialog>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--  endregion  -->
+
+    <!--  region IslandLayer  -->
+
+    <Style x:Key="IslandLayerUniversal"
+           TargetType="{x:Type controls:IslandLayer}">
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
+        <Setter Property="OverridesDefaultStyle" Value="True" />
+        <Setter Property="VerticalAlignment" Value="Stretch" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="UseLayoutRounding" Value="True" />
+        <Setter Property="Focusable" Value="False" />
+
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type controls:IslandLayer}">
+                    <ContentPresenter />
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--  endregion  -->
+
+    <!--  region NotificationLayer  -->
+
+    <Style x:Key="NotificationLayerUniversal"
+           TargetType="{x:Type notifications:NotificationLayer}">
+        <Setter Property="Focusable" Value="False" />
+
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type notifications:NotificationLayer}">
+                    <AdornerDecorator>
+                        <ContentPresenter x:Name="PART_Content" />
+                    </AdornerDecorator>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--  endregion  -->
+
+    <!--  region NotificationView  -->
+
+    <Style x:Key="NotificationViewUniversal"
+           TargetType="{x:Type notifications:NotificationView}">
+        <Setter Property="Focusable" Value="False" />
+
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type notifications:NotificationView}">
+                    <controls:IslandLayer Type="Elevation">
+                        <Grid>
+                            <Border x:Name="PART_BackgroundPresenter" />
+                            <ContentPresenter />
+                        </Grid>
+                    </controls:IslandLayer>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--  endregion  -->
+
+    <!--  region PasswordInputCapsLockAction  -->
+
+    <Style x:Key="PasswordInputCapsLockActionUniversal"
+           TargetType="{x:Type controls:PasswordInputCapsLockAction}">
+        <Setter Property="Focusable" Value="False" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="HorizontalAlignment" Value="Center" />
+        <Setter Property="ToolTip" Value="{xl:Loc PasswordInputCapsLockAction_CapsLockOnToolTip, Scope=UiKit}" />
+
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type controls:PasswordInputCapsLockAction}">
+                    <Grid Background="Transparent"
+                          Cursor="Arrow">
+                        <controls:IconButton x:Name="PART_ActionButton"
+                                             Focusable="False"
+                                             Icon="TextCapsLockSolid"
+                                             IsHitTestVisible="False" />
+
+                        <controls:Popup IsPopupOpen="{markupCommon:UIKitTemplateBinding IsPopupOpen}"
+                                        PopupContent="{markupCommon:UIKitTemplateBinding ToolTip}"
+                                        PopupPosition="Top"
+                                        PopupTarget="{Binding ElementName=PART_ActionButton}" />
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--  endregion  -->
+
+    <!--  region PasswordInputCopyAction  -->
+
+    <Style x:Key="PasswordInputCopyActionUniversal"
+           TargetType="{x:Type controls:PasswordInputCopyAction}">
+        <Setter Property="Focusable" Value="False" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="HorizontalAlignment" Value="Center" />
+        <Setter Property="ToolTip" Value="{xl:Loc PasswordInputCopyAction_CopyToolTip, Scope=UiKit}" />
+
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type controls:PasswordInputCopyAction}">
+                    <controls:IconButton x:Name="PART_ActionButton"
+                                         Icon="Copy" />
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--  endregion  -->
+
+    <!--  region PasswordInputRevealAction  -->
+
+    <Style x:Key="PasswordInputRevealActionUniversal"
+           TargetType="{x:Type controls:PasswordInputRevealAction}">
+        <Setter Property="Focusable" Value="False" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="HorizontalAlignment" Value="Center" />
+
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type controls:PasswordInputRevealAction}">
+                    <controls:IconButton x:Name="PART_ActionButton" />
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsRevealed" Value="True">
+                            <Setter Property="Icon" TargetName="PART_ActionButton" Value="EyeHide" />
+                            <Setter Property="ToolTip" Value="{xl:Loc PasswordInputRevealAction_HideToolTip, Scope=UiKit}" />
+                        </Trigger>
+                        <Trigger Property="IsRevealed" Value="False">
+                            <Setter Property="Icon" TargetName="PART_ActionButton" Value="EyeShow" />
+                            <Setter Property="ToolTip" Value="{xl:Loc PasswordInputRevealAction_ShowToolTip, Scope=UiKit}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--  endregion  -->
+
+    <!--  region Popup  -->
+
+    <Style x:Key="PopupUniversal"
+           TargetType="{x:Type Popup}">
+        <Setter Property="internals:PopupDpiAwareBehavior.IsEnabled" Value="True" />
+        <Setter Property="textScale:TextScaleBehavior.IsEnabled" Value="True" />
+    </Style>
+
+    <!--  endregion  -->
+
+    <!--  region QrCode  -->
+
+    <Style x:Key="QrCodeUniversal"
+           TargetType="{x:Type controls:QrCode}">
+        <Setter Property="Focusable" Value="False" />
+        <Setter Property="VerticalAlignment" Value="Stretch" />
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
+        <Setter Property="FlowDirection" Value="LeftToRight" />
+        <!--  Constant values  -->
+        <Setter Property="Background" Value="{x:Static uikit:UIKitConstants.QrCodeBackground}" />
+        <Setter Property="Foreground" Value="{x:Static uikit:UIKitConstants.QrCodeForeground}" />
+
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type controls:QrCode}">
+                    <Border Background="{markupCommon:UIKitTemplateBinding Background}">
+                        <Path x:Name="PART_PathContainer"
+                              Fill="{markupCommon:UIKitTemplateBinding Foreground}"
+                              HorizontalAlignment="Stretch"
+                              Stretch="Uniform"
+                              VerticalAlignment="Stretch" />
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--  endregion  -->
+
+    <!--  region RoundedPanel  -->
+
+    <Style x:Key="RoundedPanelUniversal"
+           TargetType="{x:Type controls:RoundedPanel}">
+        <Setter Property="Focusable" Value="False" />
+        <Setter Property="Background" Value="Transparent" />
+
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type controls:RoundedPanel}">
+                    <Grid x:Name="PART_Panel"
+                          Background="{markupCommon:UIKitTemplateBinding Background}">
+                        <Border BorderBrush="{markupCommon:UIKitTemplateBinding BorderBrush}"
+                                BorderThickness="{markupCommon:UIKitTemplateBinding BorderThickness}"
+                                CornerRadius="{markupCommon:UIKitTemplateBinding CornerRadius}"
+                                Panel.ZIndex="1" />
+
+                        <ContentPresenter Margin="{markupCommon:UIKitTemplateBinding Padding}" />
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--  endregion  -->
+
+    <!--  region RunUniversal  -->
+
+    <Style x:Key="RunUniversal"
+           TargetType="{x:Type Run}">
+        <Setter Property="internals:RunRemoveBehavior.IsEnabled" Value="True" />
+    </Style>
+
+    <!--  endregion  -->
+
+    <!--  region ScrollViewer  -->
+
+    <Style x:Key="ScrollViewerUniversal"
+           TargetType="{x:Type ScrollViewer}">
+        <Setter Property="Focusable" Value="False" />
+        <Setter Property="VerticalScrollBarVisibility" Value="Auto" />
+        <Setter Property="HorizontalScrollBarVisibility" Value="Disabled" />
+        <Setter Property="PanningMode" Value="Both" />
+        <Setter Property="internals:ScrollViewerInternals.ScrollViewerObserver" Value="True" />
+
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ScrollViewer}">
+                    <Border Background="{markupCommon:UIKitTemplateBinding Background}"
+                            BorderBrush="{markupCommon:UIKitTemplateBinding BorderBrush}"
+                            BorderThickness="{markupCommon:UIKitTemplateBinding BorderThickness}">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+
+                            <Grid x:Name="PART_ScrollContentPresenterContainer"
+                                  Margin="{markupCommon:UIKitTemplateBinding Padding}">
+                                <ScrollContentPresenter CanContentScroll="{markupCommon:UIKitTemplateBinding CanContentScroll}" />
+                            </Grid>
+
+                            <ScrollBar x:Name="PART_VerticalScrollBar"
+                                       HorizontalAlignment="Right"
+                                       Maximum="{markupCommon:UIKitTemplateBinding ScrollableHeight}"
+                                       Orientation="Vertical"
+                                       Panel.ZIndex="2"
+                                       Value="{markupCommon:UIKitTemplateBinding VerticalOffset}"
+                                       ViewportSize="{markupCommon:UIKitTemplateBinding ViewportHeight}"
+                                       Visibility="{markupCommon:UIKitTemplateBinding ComputedVerticalScrollBarVisibility}" />
+
+                            <ScrollBar x:Name="PART_HorizontalScrollBar"
+                                       Maximum="{markupCommon:UIKitTemplateBinding ScrollableWidth}"
+                                       Orientation="Horizontal"
+                                       Panel.ZIndex="2"
+                                       Value="{markupCommon:UIKitTemplateBinding HorizontalOffset}"
+                                       VerticalAlignment="Bottom"
+                                       ViewportSize="{markupCommon:UIKitTemplateBinding ViewportWidth}"
+                                       Visibility="{markupCommon:UIKitTemplateBinding ComputedHorizontalScrollBarVisibility}" />
+                        </Grid>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="properties:ScrollViewerProps.OuterHorizontalScrollBar" Value="True">
+                            <Setter Property="Grid.Row" TargetName="PART_HorizontalScrollBar" Value="1" />
+                        </Trigger>
+                        <Trigger Property="properties:ScrollViewerProps.OuterVerticalScrollBar" Value="True">
+                            <Setter Property="Grid.Column" TargetName="PART_VerticalScrollBar" Value="1" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--  endregion  -->
+
+    <!--  region TextInputCopyAction  -->
+
+    <Style x:Key="TextInputCopyActionUniversal"
+           TargetType="{x:Type controls:TextInputCopyAction}">
+        <Setter Property="Focusable" Value="False" />
+        <Setter Property="HorizontalAlignment" Value="Center" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="ToolTip" Value="{xl:Loc TextInputCopyAction_CopyToolTip, Scope=UiKit}" />
+
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type controls:TextInputCopyAction}">
+                    <controls:IconButton x:Name="PART_ActionButton"
+                                         Icon="Copy" />
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--  endregion  -->
+
+    <!--  region VirtualizedItemsControl  -->
+
+    <Style x:Key="VirtualizedItemsControlUniversal"
+           TargetType="{x:Type controls:VirtualizedItemsControl}">
+        <Setter Property="Focusable" Value="False" />
+        <Setter Property="VerticalAlignment" Value="Stretch" />
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
+
+        <Setter Property="ItemsPanel">
+            <Setter.Value>
+                <ItemsPanelTemplate>
+                    <VirtualizingStackPanel IsVirtualizing="True"
+                                            VirtualizationMode="Recycling" />
+                </ItemsPanelTemplate>
+            </Setter.Value>
+        </Setter>
+
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ItemsControl">
+                    <ScrollViewer x:Name="PART_ScrollViewer"
+                                  CanContentScroll="True"
+                                  Padding="{markupCommon:UIKitTemplateBinding Padding}">
+                        <ItemsPresenter />
+                    </ScrollViewer>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--  endregion  -->
+
+    <!--  region Window  -->
+
+    <Style x:Key="WindowUniversal"
+           TargetType="{x:Type Window}">
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="UseLayoutRounding" Value="True" />
+        <Setter Property="WindowStyle" Value="None" />
+        <Setter Property="AllowsTransparency" Value="True" />
+        <Setter Property="shortcuts:WindowShortcutBehavior.IsEnabled" Value="True" />
+        <Setter Property="textScale:TextScaleBehavior.IsEnabled" Value="True" />
+        <Setter Property="windows:WindowScreenMonitoringService.IsEnabled" Value="True" />
+        <Setter Property="behaviors:WindowDpiAwareBehavior.IsEnabled" Value="True" />
+        <Setter Property="behaviors:WindowFlowDirectionBehavior.IsEnabled" Value="True" />
+        <Setter Property="behaviors:WindowResizeBehavior.IsEnabled" Value="True" />
+        <Setter Property="behaviors:WindowLocationStoreBehavior.IsEnabled" Value="True" />
+    </Style>
+
+    <!--  endregion  -->
+
+    <!--  region WrapPanelAdaptable  -->
+
+    <Style x:Key="WrapPanelAdaptableUniversal"
+           TargetType="{x:Type controls:WrapPanelAdaptable}">
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="UseLayoutRounding" Value="True" />
+        <Setter Property="VerticalAlignment" Value="Top" />
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
+        <Setter Property="ColumnStrategies">
+            <Setter.Value>
+                <controls:WrapPanelColumnStrategyCollection>
+                    <controls:WrapPanelColumnStrategy Count="2" />
+                    <controls:WrapPanelColumnStrategy Count="3"
+                                                      FromWidth="900" />
+                    <controls:WrapPanelColumnStrategy Count="4"
+                                                      FromWidth="1400" />
+                </controls:WrapPanelColumnStrategyCollection>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--  endregion  -->
+
+</ResourceDictionary>

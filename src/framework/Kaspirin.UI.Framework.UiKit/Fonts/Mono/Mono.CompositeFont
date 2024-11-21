@@ -1,0 +1,14 @@
+﻿<FontFamily xmlns="http://schemas.microsoft.com/winfx/2006/xaml/composite-font"
+            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+            xmlns:s="clr-namespace:System;assembly=mscorlib"
+            Baseline="0.88">
+  <FontFamily.FamilyNames>
+    <s:String x:Key="en-US">Mono Composite</s:String>
+  </FontFamily.FamilyNames>
+
+  <FontFamily.FamilyMaps>
+    <FontFamilyMap Scale="1.0"
+                   Target="Consolas"
+                   Unicode="0000-FFFF" />
+  </FontFamily.FamilyMaps>
+</FontFamily>

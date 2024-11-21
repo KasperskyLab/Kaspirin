@@ -1,0 +1,58 @@
+<!--
+    Copyright © 2024 AO Kaspersky Lab.
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+        http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+-->
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<xs:include schemaLocation="Common.xsd"/>
+
+	<xs:complexType name="ListMenuItem">
+		<xs:group ref="elements_ListMenuItem"/>
+		<xs:attributeGroup ref="attributes_ListMenuItem"/>
+	</xs:complexType>
+
+	<xs:group name="elements_ListMenuItem">
+		<xs:all>
+			<xs:element name="BackgroundDisabled" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BackgroundHover" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BackgroundNormal" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BackgroundPressed" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BorderColorDisabled" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BorderColorHover" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BorderColorNormal" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BorderColorPressed" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BorderThicknessDisabled" type="Thickness" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BorderThicknessHover" type="Thickness" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BorderThicknessNormal" type="Thickness" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BorderThicknessPressed" type="Thickness" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="CornerRadius" type="CornerRadius" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="Focus" type="Focus" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="ForegroundDisabled" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="ForegroundHover" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="ForegroundNormal" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="ForegroundPressed" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="IconForegroundDisabled" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="IconForegroundHover" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="IconForegroundNormal" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="IconForegroundPressed" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="IconMargin" type="Thickness" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="Padding" type="Thickness" minOccurs="1" maxOccurs="1"/>
+		</xs:all>
+	</xs:group>
+
+	<xs:attributeGroup name="attributes_ListMenuItem">
+		<xs:attribute name="Id" type="xs:string" use="required"/>
+		<xs:attribute name="TextStyleId" type="xs:string" use="required"/>
+	</xs:attributeGroup>
+</xs:schema>

@@ -1,0 +1,42 @@
+<!--
+    Copyright © 2024 AO Kaspersky Lab.
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+        http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+-->
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<xs:include schemaLocation="Common.xsd"/>
+
+	<xs:complexType name="SelectItem">
+		<xs:group ref="elements_SelectItem"/>
+		<xs:attributeGroup ref="attributes_SelectItem"/>
+	</xs:complexType>
+
+	<xs:group name="elements_SelectItem">
+		<xs:all>
+			<xs:element name="BackgroundHover" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BackgroundNormal" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BackgroundPressed" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="IconForeground" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="IconMargin" type="Thickness" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="Padding" type="Thickness" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="SelectionBackground" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="TextForeground" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+		</xs:all>
+	</xs:group>
+
+	<xs:attributeGroup name="attributes_SelectItem">
+		<xs:attribute name="Id" type="xs:string" use="required"/>
+		<xs:attribute name="TextStyleId" type="xs:string" use="required"/>
+	</xs:attributeGroup>
+</xs:schema>

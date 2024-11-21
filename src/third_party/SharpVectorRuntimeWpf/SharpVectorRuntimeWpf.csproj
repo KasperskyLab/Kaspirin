@@ -1,0 +1,17 @@
+﻿<Project>
+	<PropertyGroup>
+		<UseWPF>true</UseWPF>
+		<RootNamespace>SharpVectorRuntimeWpf</RootNamespace>
+		<AssemblyName>sharpvectorruntimewpf</AssemblyName>
+	</PropertyGroup>
+
+	<Import Project="$(SolutionDir)kaspirin.net.props" />
+	<Import Project="Sdk.props" Sdk="Microsoft.NET.Sdk" />
+
+	<PropertyGroup>
+		<Nullable>disable</Nullable>
+		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+	</PropertyGroup>
+
+	<Import Project="Sdk.targets" Sdk="Microsoft.NET.Sdk" />
+</Project>

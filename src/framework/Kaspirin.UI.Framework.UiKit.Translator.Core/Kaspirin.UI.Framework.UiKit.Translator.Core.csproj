@@ -1,0 +1,60 @@
+﻿<Project>
+	<PropertyGroup>
+		<AssemblyName>kaspirin.ui.framework.uikit.translator.core</AssemblyName>
+		<RootNamespace>Kaspirin.UI.Framework.UiKit.Translator.Core</RootNamespace>
+	</PropertyGroup>
+
+	<Import Condition="'$(MSBuildRuntimeType)' != 'Core'" Project="$(SolutionDir)kaspirin.fw.props" />
+	<Import Condition="'$(MSBuildRuntimeType)' == 'Core'" Project="$(SolutionDir)kaspirin.net.props" />
+	
+	<Import Project="Sdk.props" Sdk="Microsoft.NET.Sdk" />
+
+	<PropertyGroup>
+		<Nullable>disable</Nullable>
+	</PropertyGroup>
+
+	<PropertyGroup>
+		<AssemblyAttributesPath>$(IntermediateOutputPath)\AssemblyInfo.g.cs</AssemblyAttributesPath>
+		<GenerateAdditionalSources>true</GenerateAdditionalSources>
+	</PropertyGroup>
+
+	<ItemGroup Condition="'$(MSBuildRuntimeType)' == 'Core'">
+		<PackageReference Include="Microsoft.Build.Framework" Version="15.1.1012" />
+		<PackageReference Include="Microsoft.Build.Utilities.Core" Version="15.1.1012" />
+	</ItemGroup>
+
+	<ItemGroup Condition="'$(MSBuildRuntimeType)' != 'Core'">
+		<Reference Include="Microsoft.Build.Framework" />
+		<Reference Include="Microsoft.Build.Utilities.v4.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<EmbeddedResource Include="$(RepoRoot)src\figma\Schema\*.xsd">
+			<Link>Schema\%(Filename).xsd</Link>
+			<SubType>Designer</SubType>
+		</EmbeddedResource>
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Remove="Transformations\*.xslt" />
+		<EmbeddedResource Include="Transformations\**\*.xslt" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Compile Remove="Translation\**\*.Template.cs" />
+		<EmbeddedResource Include="Translation\**\*.Template.cs" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<AssemblyAttributes Include="Kaspirin.UI.Framework.UiKit.Translator.Core.EmbeddedConfigurationAttribute">
+			<_Parameter1>SchemasDirectory</_Parameter1>
+			<_Parameter2>$(RepoRoot)src\figma\Schema</_Parameter2>
+		</AssemblyAttributes>
+		<AssemblyAttributes Include="Kaspirin.UI.Framework.UiKit.Translator.Core.EmbeddedConfigurationAttribute">
+			<_Parameter1>RootNamespace</_Parameter1>
+			<_Parameter2>$(RootNamespace)</_Parameter2>
+		</AssemblyAttributes>
+	</ItemGroup>
+
+	<Import Project="Sdk.targets" Sdk="Microsoft.NET.Sdk" />
+</Project>

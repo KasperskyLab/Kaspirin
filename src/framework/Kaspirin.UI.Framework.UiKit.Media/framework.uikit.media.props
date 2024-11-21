@@ -1,0 +1,5 @@
+<Project>
+	<ItemGroup>
+		<ProjectReference Include="$(MSBuildThisFileDirectory)Kaspirin.UI.Framework.UiKit.Media.csproj" />
+	</ItemGroup>
+</Project>

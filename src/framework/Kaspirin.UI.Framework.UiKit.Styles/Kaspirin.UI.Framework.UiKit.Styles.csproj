@@ -1,0 +1,19 @@
+﻿<Project>
+	<PropertyGroup>
+		<UseWPF>true</UseWPF>
+		<RootNamespace>Kaspirin.UI.Framework.UiKit.Styles</RootNamespace>
+		<AssemblyName>kaspirin.ui.framework.uikit.styles</AssemblyName>
+	</PropertyGroup>
+
+	<Import Project="$(SolutionDir)kaspirin.net.props" />
+	<Import Project="Sdk.props" Sdk="Microsoft.NET.Sdk" />
+
+	<ItemGroup>
+		<Resource Include="Resources\**\*.svg" />
+	</ItemGroup>
+
+	<Import Project="Sdk.targets" Sdk="Microsoft.NET.Sdk" />
+
+	<Import Project="$(FrameworkProps)" />
+	<Import Project="$(FrameworkUIKitProps)" />
+</Project>

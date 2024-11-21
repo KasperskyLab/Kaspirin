@@ -1,0 +1,288 @@
+<!--
+    Copyright © 2024 AO Kaspersky Lab.
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+        http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+-->
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+	<xs:simpleType name="BlendMode">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="PASS_THROUGH"/>
+			<xs:enumeration value="NORMAL"/>
+			<xs:enumeration value="DARKEN"/>
+			<xs:enumeration value="MULTIPLY"/>
+			<xs:enumeration value="LINEAR_BURN"/>
+			<xs:enumeration value="COLOR_BURN"/>
+			<xs:enumeration value="LIGHTEN"/>
+			<xs:enumeration value="SCREEN"/>
+			<xs:enumeration value="LINEAR_DODGE"/>
+			<xs:enumeration value="COLOR_DODGE"/>
+			<xs:enumeration value="OVERLAY"/>
+			<xs:enumeration value="SOFT_LIGHT"/>
+			<xs:enumeration value="HARD_LIGHT"/>
+			<xs:enumeration value="DIFFERENCE"/>
+			<xs:enumeration value="EXCLUSION"/>
+			<xs:enumeration value="HUE"/>
+			<xs:enumeration value="SATURATION"/>
+			<xs:enumeration value="COLOR"/>
+			<xs:enumeration value="LUMINOSITY"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:complexType name="Brush" abstract="true">
+		<xs:attributeGroup ref="brushAttributes"/>
+	</xs:complexType>
+
+	<xs:attributeGroup name="brushAttributes">
+		<xs:attribute name="BlendMode" type="BlendMode" use="required"/>
+	</xs:attributeGroup>
+
+	<xs:complexType name="CornerRadius">
+		<xs:attributeGroup ref="cornerRadiusAttributes"/>
+	</xs:complexType>
+
+	<xs:attributeGroup name="cornerRadiusAttributes">
+		<xs:attribute name="TopLeft" type="xs:decimal" use="required"/>
+		<xs:attribute name="TopRight" type="xs:decimal" use="required"/>
+		<xs:attribute name="BottomLeft" type="xs:decimal" use="required"/>
+		<xs:attribute name="BottomRight" type="xs:decimal" use="required"/>
+	</xs:attributeGroup>
+
+	<xs:complexType name="Focus">
+		<xs:group ref="focusElements"/>
+		<xs:attributeGroup ref="focusAttributes"/>
+	</xs:complexType>
+
+	<xs:group name="focusElements">
+		<xs:sequence>
+			<xs:element name="Color" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="CornerRadius" type="CornerRadius" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="Margin" type="Thickness" minOccurs="1" maxOccurs="1"/>
+		</xs:sequence>
+	</xs:group>
+
+	<xs:attributeGroup name="focusAttributes">
+		<xs:attribute name="Thickness" type="xs:decimal" use="required"/>
+		<xs:attribute name="Type" type="FocusVisualType" use="required"/>
+	</xs:attributeGroup>
+
+	<xs:simpleType name="FocusVisualType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="RECTANGLE"/>
+			<xs:enumeration value="ELLIPSE"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="FontStyle">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="NORMAL"/>
+			<xs:enumeration value="ITALIC"/>
+			<xs:enumeration value="OBLIQUE"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="FontWeight">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="THIN"/>
+			<xs:enumeration value="EXTRALIGHT"/>
+			<xs:enumeration value="LIGHT"/>
+			<xs:enumeration value="REGULAR"/>
+			<xs:enumeration value="MEDIUM"/>
+			<xs:enumeration value="DEMIBOLD"/>
+			<xs:enumeration value="SEMIBOLD"/>
+			<xs:enumeration value="BOLD"/>
+			<xs:enumeration value="EXTRABOLD"/>
+			<xs:enumeration value="BLACK"/>
+			<xs:enumeration value="EXTRABLACK"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:complexType name="GradientBrush">
+		<xs:complexContent>
+			<xs:extension base="Brush">
+				<xs:group ref="gradientBrushElements"/>
+				<xs:attributeGroup ref="gradientBrushAttributes"/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:group name="gradientBrushElements">
+		<xs:sequence>
+			<xs:element name="EndPoint" type="Point" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="GradientStops" type="GradientStops" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="StartPoint" type="Point" minOccurs="1" maxOccurs="1"/>
+		</xs:sequence>
+	</xs:group>
+
+	<xs:attributeGroup name="gradientBrushAttributes">
+		<xs:attribute name="Opacity" type="Opacity" use="required" />
+		<xs:attribute name="Type" type="GradientBrushType" use="required"/>
+	</xs:attributeGroup>
+
+	<xs:simpleType name="GradientBrushType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="GRADIENT_LINEAR"/>
+			<xs:enumeration value="GRADIENT_RADIAL"/>
+			<xs:enumeration value="GRADIENT_ANGULAR"/>
+			<xs:enumeration value="GRADIENT_DIAMOND"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:complexType name="GradientStops">
+		<xs:sequence>
+			<xs:element name="GradientStop" type="GradientStop" minOccurs="1" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="GradientStop">
+		<xs:group ref="gradientStopElements"/>
+		<xs:attributeGroup ref="gradientStopAttributes"/>
+	</xs:complexType>
+
+	<xs:group name="gradientStopElements">
+		<xs:sequence>
+			<xs:element name="Color" minOccurs="1" maxOccurs="1">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="SolidBrush" type="SolidBrush" minOccurs="1" maxOccurs="1"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:group>
+
+	<xs:attributeGroup name="gradientStopAttributes">
+		<xs:attribute name="Position" type="xs:decimal" use="required"/>
+	</xs:attributeGroup>
+
+	<xs:simpleType name="HorizontalAlignment">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="LEFT"/>
+			<xs:enumeration value="CENTER"/>
+			<xs:enumeration value="RIGHT"/>
+			<xs:enumeration value="STRETCH"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="Opacity">
+		<xs:restriction base="xs:decimal">
+			<xs:minInclusive value="0"/>
+			<xs:maxInclusive value="1"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="Orientation">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="HORIZONTAL"/>
+			<xs:enumeration value="VERTICAL"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:complexType name="Point">
+		<xs:attribute name="x" type="xs:decimal" use="required"/>
+		<xs:attribute name="y" type="xs:decimal" use="required"/>
+	</xs:complexType>
+
+	<xs:simpleType name="RgbaColor">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="#[0-9a-fA-F]{6}"/>
+			<xs:pattern value="#[0-9a-fA-F]{8}"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:complexType name="Shadow">
+		<xs:attributeGroup ref="shadowAttributes"/>
+	</xs:complexType>
+
+	<xs:attributeGroup name="shadowAttributes">
+		<xs:attribute name="BlurRadius" type="xs:decimal" use="required"/>
+		<xs:attribute name="Color" type="RgbaColor" use="required"/>
+		<xs:attribute name="Depth" type="xs:decimal" use="required"/>
+		<xs:attribute name="Direction" type="xs:decimal" use="required"/>
+	</xs:attributeGroup>
+
+	<xs:complexType name="SolidBrush">
+		<xs:complexContent>
+			<xs:extension base="Brush">
+				<xs:attributeGroup ref="solidBrushAttributes"/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:attributeGroup name="solidBrushAttributes">
+		<xs:attribute name="Color" type="RgbaColor" use="optional"/>
+		<xs:attribute name="Opacity" type="Opacity" use="optional" />
+		<xs:attribute name="PaletteStyleId" type="xs:string" use="optional"/>
+		<xs:attribute name="Type" type="SolidBrushType" use="required" fixed="SOLID"/>
+
+		<!--In XSD 1.1 there is an assertion syntax. It's very simple to implement necessary checks using assert:-->
+		<!--<xs:assert test="(@Color and @Opacity) or @PaletteStyleId"/>-->
+		<!--But unfortunately Microsoft supports only XSD 1.0 and it's highly unlikely that situation would change in the nearest future.-->
+		<!--TODO: validate somehow that either Color and Opacity attributes are present or either PaletteStyleId.-->
+	</xs:attributeGroup>
+
+	<xs:simpleType name="SolidBrushType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="SOLID"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:complexType name="SpecificBrush">
+		<xs:choice>
+			<xs:element name="GradientBrush" type="GradientBrush" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="SolidBrush" type="SolidBrush" minOccurs="0" maxOccurs="1"/>
+		</xs:choice>
+	</xs:complexType>
+
+	<xs:complexType name="Svg">
+		<xs:group ref="svgElements"/>
+	</xs:complexType>
+
+	<xs:group name="svgElements">
+		<xs:sequence>
+			<xs:element name="Svg" type="xs:string" minOccurs="1" maxOccurs="1"/>
+		</xs:sequence>
+	</xs:group>
+
+	<xs:simpleType name="TextDecorations">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="NONE"/>
+			<xs:enumeration value="BASELINE"/>
+			<xs:enumeration value="OVERLINE"/>
+			<xs:enumeration value="STRIKETHROUGH"/>
+			<xs:enumeration value="UNDERLINE"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:complexType name="Thickness">
+		<xs:attributeGroup ref="thicknessAttributes"/>
+	</xs:complexType>
+
+	<xs:attributeGroup name="thicknessAttributes">
+		<xs:attribute name="Bottom" type="xs:decimal" use="optional"/>
+		<xs:attribute name="Left" type="xs:decimal" use="optional"/>
+		<xs:attribute name="Right" type="xs:decimal" use="optional"/>
+		<xs:attribute name="Top" type="xs:decimal" use="optional"/>
+	</xs:attributeGroup>
+
+	<xs:simpleType name="VerticalAlignment">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="TOP"/>
+			<xs:enumeration value="CENTER"/>
+			<xs:enumeration value="BOTTOM"/>
+			<xs:enumeration value="STRETCH"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+</xs:schema>

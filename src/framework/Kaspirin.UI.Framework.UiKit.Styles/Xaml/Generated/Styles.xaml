@@ -1,0 +1,1317 @@
+<!--
+    Copyright © 2024 AO Kaspersky Lab.
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+        http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+-->
+
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:visuals="http://schemas.kaspirin.com/common/visuals">
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="StylesGenerated.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
+    <!--  region Badge  -->
+
+    <Style x:Key="BadgeDefault"
+           BasedOn="{StaticResource UiKitBadge}"
+           TargetType="{x:Type visuals:Badge}" />
+
+    <Style x:Key="{x:Type visuals:Badge}"
+           BasedOn="{StaticResource BadgeDefault}"
+           TargetType="{x:Type visuals:Badge}" />
+
+    <!--  endregion  -->
+
+    <!--  region BadgeCounter  -->
+
+    <Style x:Key="BadgeCounterDefault"
+           BasedOn="{StaticResource UiKitBadgeCounter}"
+           TargetType="{x:Type visuals:BadgeCounter}" />
+
+    <Style x:Key="{x:Type visuals:BadgeCounter}"
+           BasedOn="{StaticResource BadgeCounterDefault}"
+           TargetType="{x:Type visuals:BadgeCounter}" />
+
+    <!--  endregion  -->
+
+    <!--  region BadgeText  -->
+
+    <Style x:Key="BadgeTextDefault"
+           BasedOn="{StaticResource UiKitBadgeText}"
+           TargetType="{x:Type visuals:BadgeText}" />
+
+    <Style x:Key="{x:Type visuals:BadgeText}"
+           BasedOn="{StaticResource BadgeTextDefault}"
+           TargetType="{x:Type visuals:BadgeText}" />
+
+    <!--  endregion  -->
+
+    <!--#region BigButton-->
+
+    <Style x:Key="BigButtonNeutral"
+           BasedOn="{StaticResource UiKitBigButtonNeutralPrimary}"
+           TargetType="{x:Type visuals:BigButton}" />
+
+    <Style x:Key="BigButtonOutlineSecondary"
+           BasedOn="{StaticResource UiKitBigButtonBaseOutlineSecondary}"
+           TargetType="{x:Type visuals:BigButton}" />
+
+    <Style x:Key="BigButtonPrimary"
+           BasedOn="{StaticResource UiKitBigButtonBasePrimary}"
+           TargetType="{x:Type visuals:BigButton}" />
+
+    <Style x:Key="BigButtonSecondary"
+           BasedOn="{StaticResource UiKitBigButtonBaseSecondary}"
+           TargetType="{x:Type visuals:BigButton}" />
+
+    <Style x:Key="BigButtonStaticLight"
+           BasedOn="{StaticResource UiKitBigButtonStaticWhite}"
+           TargetType="{x:Type visuals:BigButton}" />
+
+    <Style x:Key="BigButtonDefault"
+           BasedOn="{StaticResource UiKitBigButtonBaseSecondary}"
+           TargetType="{x:Type visuals:BigButton}" />
+
+    <Style x:Key="{x:Type visuals:BigButton}"
+           BasedOn="{StaticResource BigButtonDefault}"
+           TargetType="{x:Type visuals:BigButton}" />
+
+    <!--#endregion-->
+
+    <!--  region BigIconButton  -->
+
+    <Style x:Key="BigIconButtonDefault"
+           BasedOn="{StaticResource UiKitIconButton24}"
+           TargetType="{x:Type visuals:BigIconButton}" />
+
+    <Style x:Key="{x:Type visuals:BigIconButton}"
+           BasedOn="{StaticResource BigIconButtonDefault}"
+           TargetType="{x:Type visuals:BigIconButton}" />
+
+    <!--  endregion  -->
+
+    <!--  region Bullet  -->
+
+    <Style x:Key="BulletRegular"
+           BasedOn="{StaticResource UiKitBulletRegular}"
+           TargetType="{x:Type visuals:Bullet}" />
+
+    <Style x:Key="BulletBold"
+           BasedOn="{StaticResource UiKitBulletBold}"
+           TargetType="{x:Type visuals:Bullet}" />
+
+    <Style x:Key="BulletDefault"
+           BasedOn="{StaticResource UiKitBulletRegular}"
+           TargetType="{x:Type visuals:Bullet}" />
+
+    <Style x:Key="{x:Type visuals:Bullet}"
+           BasedOn="{StaticResource BulletDefault}"
+           TargetType="{x:Type visuals:Bullet}" />
+
+    <!--  endregion  -->
+
+    <!--  region Button  -->
+
+    <Style x:Key="ButtonDanger"
+           BasedOn="{StaticResource UiKitButtonDangerPrimary}"
+           TargetType="{x:Type Button}" />
+
+    <Style x:Key="ButtonGhost"
+           BasedOn="{StaticResource UiKitButtonBaseGhost}"
+           TargetType="{x:Type Button}" />
+
+    <Style x:Key="ButtonGhostDanger"
+           BasedOn="{StaticResource UiKitButtonDangerGhost}"
+           TargetType="{x:Type Button}" />
+
+    <Style x:Key="ButtonGhostNeutral"
+           BasedOn="{StaticResource UiKitButtonNeutralGhost}"
+           TargetType="{x:Type Button}" />
+
+    <Style x:Key="ButtonNeutral"
+           BasedOn="{StaticResource UiKitButtonNeutralPrimary}"
+           TargetType="{x:Type Button}" />
+
+    <Style x:Key="ButtonOutlineDanger"
+           BasedOn="{StaticResource UiKitButtonDangerOutlineSecondary}"
+           TargetType="{x:Type Button}" />
+
+    <Style x:Key="ButtonOutlineSecondary"
+           BasedOn="{StaticResource UiKitButtonBaseOutlineSecondary}"
+           TargetType="{x:Type Button}" />
+
+    <Style x:Key="ButtonOutlineSecondaryStaticLight"
+           BasedOn="{StaticResource UiKitButtonStaticWhiteOutlineSecondary}"
+           TargetType="{x:Type Button}" />
+
+    <Style x:Key="ButtonPrimary"
+           BasedOn="{StaticResource UiKitButtonBasePrimary}"
+           TargetType="{x:Type Button}" />
+
+    <Style x:Key="ButtonSecondary"
+           BasedOn="{StaticResource UiKitButtonBaseSecondary}"
+           TargetType="{x:Type Button}" />
+
+    <Style x:Key="ButtonStaticLight"
+           BasedOn="{StaticResource UiKitButtonStaticWhite}"
+           TargetType="{x:Type Button}" />
+
+    <Style x:Key="ButtonDefault"
+           BasedOn="{StaticResource UiKitButtonBaseSecondary}"
+           TargetType="{x:Type Button}" />
+
+    <Style x:Key="{x:Type Button}"
+           BasedOn="{StaticResource ButtonDefault}"
+           TargetType="{x:Type Button}" />
+
+    <!--  endregion  -->
+
+    <!--  region Carousel  -->
+
+    <Style x:Key="CarouselNormal"
+           BasedOn="{StaticResource UiKitCarouselNormal}"
+           TargetType="{x:Type visuals:Carousel}" />
+
+    <Style x:Key="CarouselInvert"
+           BasedOn="{StaticResource UiKitCarouselInvert}"
+           TargetType="{x:Type visuals:Carousel}" />
+
+    <Style x:Key="CarouselDefault"
+           BasedOn="{StaticResource UiKitCarouselNormal}"
+           TargetType="{x:Type visuals:Carousel}" />
+
+    <Style x:Key="{x:Type visuals:Carousel}"
+           BasedOn="{StaticResource CarouselDefault}"
+           TargetType="{x:Type visuals:Carousel}" />
+
+    <!--  endregion  -->
+
+    <!--  region CarouselItem  -->
+
+    <Style x:Key="CarouselItemNormal"
+           BasedOn="{StaticResource UiKitCarouselItemNormal}"
+           TargetType="{x:Type visuals:CarouselItem}" />
+
+    <Style x:Key="CarouselItemInvert"
+           BasedOn="{StaticResource UiKitCarouselItemInvert}"
+           TargetType="{x:Type visuals:CarouselItem}" />
+
+    <Style x:Key="CarouselItemDefault"
+           BasedOn="{StaticResource UiKitCarouselItemNormal}"
+           TargetType="{x:Type visuals:CarouselItem}" />
+
+    <Style x:Key="{x:Type visuals:CarouselItem}"
+           BasedOn="{StaticResource CarouselItemDefault}"
+           TargetType="{x:Type visuals:CarouselItem}" />
+
+    <!--  endregion  -->
+
+    <!--  region CheckBox  -->
+
+    <Style x:Key="CheckBoxDefault"
+           BasedOn="{StaticResource UiKitCheckbox}"
+           TargetType="{x:Type CheckBox}" />
+
+    <Style x:Key="{x:Type CheckBox}"
+           BasedOn="{StaticResource CheckBoxDefault}"
+           TargetType="{x:Type CheckBox}" />
+
+    <!--  endregion  -->
+
+    <!--  region ChipsControl  -->
+
+    <Style x:Key="ChipsControlGrey"
+           BasedOn="{StaticResource UiKitChipsControlGrey}"
+           TargetType="{x:Type visuals:ChipsControl}" />
+
+    <Style x:Key="ChipsControlWhite"
+           BasedOn="{StaticResource UiKitChipsControlWhite}"
+           TargetType="{x:Type visuals:ChipsControl}" />
+
+    <Style x:Key="ChipsControlDefault"
+           BasedOn="{StaticResource UiKitChipsControlGrey}"
+           TargetType="{x:Type visuals:ChipsControl}" />
+
+    <Style x:Key="{x:Type visuals:ChipsControl}"
+           BasedOn="{StaticResource ChipsControlDefault}"
+           TargetType="{x:Type visuals:ChipsControl}" />
+
+    <!--  endregion  -->
+
+    <!--  region ChipsItem  -->
+
+    <Style x:Key="ChipsItemGrey"
+           BasedOn="{StaticResource UiKitChipsItemGrey}"
+           TargetType="{x:Type visuals:ChipsItem}" />
+
+    <Style x:Key="ChipsItemWhite"
+           BasedOn="{StaticResource UiKitChipsItemWhite}"
+           TargetType="{x:Type visuals:ChipsItem}" />
+
+    <Style x:Key="ChipsItemDefault"
+           BasedOn="{StaticResource UiKitChipsItemGrey}"
+           TargetType="{x:Type visuals:ChipsItem}" />
+
+    <Style x:Key="{x:Type visuals:ChipsItem}"
+           BasedOn="{StaticResource ChipsItemDefault}"
+           TargetType="{x:Type visuals:ChipsItem}" />
+
+    <!--  endregion  -->
+
+    <!--  region CodeInput  -->
+
+    <Style x:Key="CodeInputDefault"
+           BasedOn="{StaticResource UiKitCodeInput}"
+           TargetType="{x:Type visuals:CodeInput}" />
+
+    <Style x:Key="{x:Type visuals:CodeInput}"
+           BasedOn="{StaticResource CodeInputDefault}"
+           TargetType="{x:Type visuals:CodeInput}" />
+
+    <!--  endregion  -->
+
+    <!--  region ContentButton  -->
+
+    <Style x:Key="ContentButtonDefault"
+           BasedOn="{StaticResource UiKitContentButton}"
+           TargetType="{x:Type visuals:ContentButton}" />
+
+    <Style x:Key="{x:Type visuals:ContentButton}"
+           BasedOn="{StaticResource ContentButtonDefault}"
+           TargetType="{x:Type visuals:ContentButton}" />
+
+    <!--  endregion  -->
+
+    <!--  region ContextMenu  -->
+
+    <Style x:Key="ContextMenuDefault"
+           BasedOn="{StaticResource UiKitContextMenu}"
+           TargetType="{x:Type visuals:ContextMenu}" />
+
+    <Style x:Key="{x:Type visuals:ContextMenu}"
+           BasedOn="{StaticResource ContextMenuDefault}"
+           TargetType="{x:Type visuals:ContextMenu}" />
+
+    <!--  endregion  -->
+
+    <!--  region ContextMenuButton  -->
+
+    <Style x:Key="ContextMenuButtonDanger"
+           BasedOn="{StaticResource UiKitContextMenuButtonDangerPrimary}"
+           TargetType="{x:Type visuals:ContextMenuButton}" />
+
+    <Style x:Key="ContextMenuButtonGhost"
+           BasedOn="{StaticResource UiKitContextMenuButtonBaseGhost}"
+           TargetType="{x:Type visuals:ContextMenuButton}" />
+
+    <Style x:Key="ContextMenuButtonGhostDanger"
+           BasedOn="{StaticResource UiKitContextMenuButtonDangerGhost}"
+           TargetType="{x:Type visuals:ContextMenuButton}" />
+
+    <Style x:Key="ContextMenuButtonGhostNeutral"
+           BasedOn="{StaticResource UiKitContextMenuButtonNeutralGhost}"
+           TargetType="{x:Type visuals:ContextMenuButton}" />
+
+    <Style x:Key="ContextMenuButtonNeutral"
+           BasedOn="{StaticResource UiKitContextMenuButtonNeutralPrimary}"
+           TargetType="{x:Type visuals:ContextMenuButton}" />
+
+    <Style x:Key="ContextMenuButtonOutlineDanger"
+           BasedOn="{StaticResource UiKitContextMenuButtonDangerOutlineSecondary}"
+           TargetType="{x:Type visuals:ContextMenuButton}" />
+
+    <Style x:Key="ContextMenuButtonOutlineSecondary"
+           BasedOn="{StaticResource UiKitContextMenuButtonBaseOutlineSecondary}"
+           TargetType="{x:Type visuals:ContextMenuButton}" />
+
+    <Style x:Key="ContextMenuButtonOutlineSecondaryStaticLight"
+           BasedOn="{StaticResource UiKitContextMenuButtonStaticWhiteOutlineSecondary}"
+           TargetType="{x:Type visuals:ContextMenuButton}" />
+
+    <Style x:Key="ContextMenuButtonPrimary"
+           BasedOn="{StaticResource UiKitContextMenuButtonBasePrimary}"
+           TargetType="{x:Type visuals:ContextMenuButton}" />
+
+    <Style x:Key="ContextMenuButtonSecondary"
+           BasedOn="{StaticResource UiKitContextMenuButtonBaseSecondary}"
+           TargetType="{x:Type visuals:ContextMenuButton}" />
+
+    <Style x:Key="ContextMenuButtonStaticLight"
+           BasedOn="{StaticResource UiKitContextMenuButtonStaticWhite}"
+           TargetType="{x:Type visuals:ContextMenuButton}" />
+
+    <Style x:Key="ContextMenuButtonDefault"
+           BasedOn="{StaticResource UiKitContextMenuButtonBaseSecondary}"
+           TargetType="{x:Type visuals:ContextMenuButton}" />
+
+    <Style x:Key="{x:Type visuals:ContextMenuButton}"
+           BasedOn="{StaticResource ContextMenuButtonDefault}"
+           TargetType="{x:Type visuals:ContextMenuButton}" />
+
+    <!--  endregion  -->
+
+    <!--  region ContextMenuSelect  -->
+
+    <Style x:Key="ContextMenuSelectDanger"
+           BasedOn="{StaticResource UiKitContextMenuSelectDangerPrimary}"
+           TargetType="{x:Type visuals:ContextMenuSelect}" />
+
+    <Style x:Key="ContextMenuSelectGhost"
+           BasedOn="{StaticResource UiKitContextMenuSelectBaseGhost}"
+           TargetType="{x:Type visuals:ContextMenuSelect}" />
+
+    <Style x:Key="ContextMenuSelectGhostDanger"
+           BasedOn="{StaticResource UiKitContextMenuSelectDangerGhost}"
+           TargetType="{x:Type visuals:ContextMenuSelect}" />
+
+    <Style x:Key="ContextMenuSelectGhostNeutral"
+           BasedOn="{StaticResource UiKitContextMenuSelectNeutralGhost}"
+           TargetType="{x:Type visuals:ContextMenuSelect}" />
+
+    <Style x:Key="ContextMenuSelectNeutral"
+           BasedOn="{StaticResource UiKitContextMenuSelectNeutralPrimary}"
+           TargetType="{x:Type visuals:ContextMenuSelect}" />
+
+    <Style x:Key="ContextMenuSelectOutlineDanger"
+           BasedOn="{StaticResource UiKitContextMenuSelectDangerOutlineSecondary}"
+           TargetType="{x:Type visuals:ContextMenuSelect}" />
+
+    <Style x:Key="ContextMenuSelectOutlineSecondary"
+           BasedOn="{StaticResource UiKitContextMenuSelectBaseOutlineSecondary}"
+           TargetType="{x:Type visuals:ContextMenuSelect}" />
+
+    <Style x:Key="ContextMenuSelectOutlineSecondaryStaticLight"
+           BasedOn="{StaticResource UiKitContextMenuSelectStaticWhiteOutlineSecondary}"
+           TargetType="{x:Type visuals:ContextMenuSelect}" />
+
+    <Style x:Key="ContextMenuSelectPrimary"
+           BasedOn="{StaticResource UiKitContextMenuSelectBasePrimary}"
+           TargetType="{x:Type visuals:ContextMenuSelect}" />
+
+    <Style x:Key="ContextMenuSelectSecondary"
+           BasedOn="{StaticResource UiKitContextMenuSelectBaseSecondary}"
+           TargetType="{x:Type visuals:ContextMenuSelect}" />
+
+    <Style x:Key="ContextMenuSelectStaticLight"
+           BasedOn="{StaticResource UiKitContextMenuSelectStaticWhite}"
+           TargetType="{x:Type visuals:ContextMenuSelect}" />
+
+    <Style x:Key="ContextMenuSelectDefault"
+           BasedOn="{StaticResource UiKitContextMenuSelectBaseSecondary}"
+           TargetType="{x:Type visuals:ContextMenuSelect}" />
+
+    <Style x:Key="{x:Type visuals:ContextMenuSelect}"
+           BasedOn="{StaticResource ContextMenuSelectDefault}"
+           TargetType="{x:Type visuals:ContextMenuSelect}" />
+
+    <!--  endregion  -->
+
+    <!--  region DateTimeInput  -->
+
+    <Style x:Key="DateTimeInputDefault"
+           BasedOn="{StaticResource UiKitDateTimeInput}"
+           TargetType="{x:Type visuals:DateTimeInput}" />
+
+    <Style x:Key="{x:Type visuals:DateTimeInput}"
+           BasedOn="{StaticResource DateTimeInputDefault}"
+           TargetType="{x:Type visuals:DateTimeInput}" />
+
+    <!--  endregion  -->
+
+    <!--  region Divider  -->
+
+    <Style x:Key="DividerRegular"
+           BasedOn="{StaticResource UiKitDividerRegular}"
+           TargetType="{x:Type visuals:Divider}" />
+
+    <Style x:Key="DividerMedium"
+           BasedOn="{StaticResource UiKitDividerMedium}"
+           TargetType="{x:Type visuals:Divider}" />
+
+    <Style x:Key="DividerDefault"
+           BasedOn="{StaticResource UiKitDividerRegular}"
+           TargetType="{x:Type visuals:Divider}" />
+
+    <Style x:Key="{x:Type visuals:Divider}"
+           BasedOn="{StaticResource DividerDefault}"
+           TargetType="{x:Type visuals:Divider}" />
+
+    <!--  endregion  -->
+
+    <!--  region Hyperlink  -->
+
+    <Style x:Key="HyperlinkDanger"
+           BasedOn="{StaticResource UiKitHyperlinkDanger}"
+           TargetType="{x:Type Hyperlink}" />
+
+    <Style x:Key="HyperlinkDefault"
+           BasedOn="{StaticResource UiKitHyperlinkDefault}"
+           TargetType="{x:Type Hyperlink}" />
+
+    <Style x:Key="{x:Type Hyperlink}"
+           BasedOn="{StaticResource HyperlinkDefault}"
+           TargetType="{x:Type Hyperlink}" />
+
+    <!--  endregion  -->
+
+    <!--  region Icon12  -->
+
+    <Style x:Key="Icon12Default"
+           BasedOn="{StaticResource UiKitIcon12}"
+           TargetType="{x:Type visuals:Icon12}" />
+
+    <Style x:Key="{x:Type visuals:Icon12}"
+           BasedOn="{StaticResource Icon12Default}"
+           TargetType="{x:Type visuals:Icon12}" />
+
+    <!--  endregion  -->
+
+    <!--  region Icon16  -->
+
+    <Style x:Key="Icon16Default"
+           BasedOn="{StaticResource UiKitIcon16}"
+           TargetType="{x:Type visuals:Icon16}" />
+
+    <Style x:Key="{x:Type visuals:Icon16}"
+           BasedOn="{StaticResource Icon16Default}"
+           TargetType="{x:Type visuals:Icon16}" />
+
+    <!--  endregion  -->
+
+    <!--  region Icon24  -->
+
+    <Style x:Key="Icon24Default"
+           BasedOn="{StaticResource UiKitIcon24}"
+           TargetType="{x:Type visuals:Icon24}" />
+
+    <Style x:Key="{x:Type visuals:Icon24}"
+           BasedOn="{StaticResource Icon24Default}"
+           TargetType="{x:Type visuals:Icon24}" />
+
+    <!--  endregion  -->
+
+    <!--  region Icon32  -->
+
+    <Style x:Key="Icon32Default"
+           BasedOn="{StaticResource UiKitIcon32}"
+           TargetType="{x:Type visuals:Icon32}" />
+
+    <Style x:Key="{x:Type visuals:Icon32}"
+           BasedOn="{StaticResource Icon32Default}"
+           TargetType="{x:Type visuals:Icon32}" />
+
+    <!--  endregion  -->
+
+    <!--  region Icon48  -->
+
+    <Style x:Key="Icon48Default"
+           BasedOn="{StaticResource UiKitIcon48}"
+           TargetType="{x:Type visuals:Icon48}" />
+
+    <Style x:Key="{x:Type visuals:Icon48}"
+           BasedOn="{StaticResource Icon48Default}"
+           TargetType="{x:Type visuals:Icon48}" />
+
+    <!--  endregion  -->
+
+    <!--  region IconButton  -->
+
+    <Style x:Key="IconButtonDefault"
+           BasedOn="{StaticResource UiKitIconButton16}"
+           TargetType="{x:Type visuals:IconButton}" />
+
+    <Style x:Key="{x:Type visuals:IconButton}"
+           BasedOn="{StaticResource IconButtonDefault}"
+           TargetType="{x:Type visuals:IconButton}" />
+
+    <!--  endregion  -->
+
+    <!--  region ImageGallery  -->
+
+    <Style x:Key="ImageGalleryDefault"
+           BasedOn="{StaticResource UiKitImageGallery}"
+           TargetType="{x:Type visuals:ImageGallery}" />
+
+    <Style x:Key="{x:Type visuals:ImageGallery}"
+           BasedOn="{StaticResource ImageGalleryDefault}"
+           TargetType="{x:Type visuals:ImageGallery}" />
+
+    <!--  endregion  -->
+
+    <!--  region ImageGalleryList  -->
+
+    <Style x:Key="ImageGalleryListDefault"
+           BasedOn="{StaticResource UiKitImageGalleryList}"
+           TargetType="{x:Type visuals:ImageGalleryList}" />
+
+    <Style x:Key="{x:Type visuals:ImageGalleryList}"
+           BasedOn="{StaticResource ImageGalleryListDefault}"
+           TargetType="{x:Type visuals:ImageGalleryList}" />
+
+    <!--  endregion  -->
+
+    <!--  region InteractivityDialog  -->
+
+    <Style x:Key="InteractivityDialogDefault"
+           BasedOn="{StaticResource UiKitInteractivityDialog}"
+           TargetType="{x:Type visuals:InteractivityDialog}" />
+
+    <Style x:Key="{x:Type visuals:InteractivityDialog}"
+           BasedOn="{StaticResource InteractivityDialogDefault}"
+           TargetType="{x:Type visuals:InteractivityDialog}" />
+
+    <!--  endregion  -->
+
+    <!--  region InteractivityNotification  -->
+
+    <Style x:Key="InteractivityNotificationDefault"
+           BasedOn="{StaticResource UiKitInteractivityNotification}"
+           TargetType="{x:Type visuals:InteractivityNotification}" />
+
+    <Style x:Key="{x:Type visuals:InteractivityNotification}"
+           BasedOn="{StaticResource InteractivityNotificationDefault}"
+           TargetType="{x:Type visuals:InteractivityNotification}" />
+
+    <!--  endregion  -->
+
+    <!--  region InteractivityOverlay  -->
+
+    <Style x:Key="InteractivityOverlayPromo"
+           BasedOn="{StaticResource UiKitInteractivityOverlayPromo}"
+           TargetType="{x:Type visuals:InteractivityOverlay}" />
+
+    <Style x:Key="InteractivityOverlayModal"
+           BasedOn="{StaticResource UiKitInteractivityOverlayModal}"
+           TargetType="{x:Type visuals:InteractivityOverlay}" />
+
+    <Style x:Key="InteractivityOverlayDefault"
+           BasedOn="{StaticResource UiKitInteractivityOverlayPromo}"
+           TargetType="{x:Type visuals:InteractivityOverlay}" />
+
+    <Style x:Key="{x:Type visuals:InteractivityOverlay}"
+           BasedOn="{StaticResource InteractivityOverlayDefault}"
+           TargetType="{x:Type visuals:InteractivityOverlay}" />
+
+    <!--  endregion  -->
+
+    <!--  region Island  -->
+
+    <Style x:Key="IslandDefault"
+           BasedOn="{StaticResource UiKitIsland}"
+           TargetType="{x:Type visuals:Island}" />
+
+    <Style x:Key="{x:Type visuals:Island}"
+           BasedOn="{StaticResource IslandDefault}"
+           TargetType="{x:Type visuals:Island}" />
+
+    <!--  endregion  -->
+
+    <!--  region IslandButton  -->
+
+    <Style x:Key="IslandButtonDefault"
+           BasedOn="{StaticResource UiKitIslandButton}"
+           TargetType="{x:Type visuals:IslandButton}" />
+
+    <Style x:Key="{x:Type visuals:IslandButton}"
+           BasedOn="{StaticResource IslandButtonDefault}"
+           TargetType="{x:Type visuals:IslandButton}" />
+
+    <!--  endregion  -->
+
+    <!--  region IslandToggleButton  -->
+
+    <Style x:Key="IslandToggleButtonDefault"
+           BasedOn="{StaticResource UiKitIslandToggleButton}"
+           TargetType="{x:Type visuals:IslandToggleButton}" />
+
+    <Style x:Key="{x:Type visuals:IslandToggleButton}"
+           BasedOn="{StaticResource IslandToggleButtonDefault}"
+           TargetType="{x:Type visuals:IslandToggleButton}" />
+
+    <!--  endregion  -->
+
+    <!--  region ListMenu  -->
+
+    <Style x:Key="ListMenuDefault"
+           BasedOn="{StaticResource UiKitListMenu}"
+           TargetType="{x:Type visuals:ListMenu}" />
+
+    <Style x:Key="{x:Type visuals:ListMenu}"
+           BasedOn="{StaticResource ListMenuDefault}"
+           TargetType="{x:Type visuals:ListMenu}" />
+
+    <!--  endregion  -->
+
+    <!--  region ListMenuItem  -->
+
+    <Style x:Key="ListMenuItemDefault"
+           BasedOn="{StaticResource UiKitListMenuItem}"
+           TargetType="{x:Type visuals:ListMenuItem}" />
+
+    <Style x:Key="{x:Type visuals:ListMenuItem}"
+           BasedOn="{StaticResource ListMenuItemDefault}"
+           TargetType="{x:Type visuals:ListMenuItem}" />
+
+    <!--  endregion  -->
+
+    <!--  region MenuItem  -->
+
+    <Style x:Key="MenuItemDefault"
+           BasedOn="{StaticResource UiKitMenuItem}"
+           TargetType="{x:Type visuals:MenuItem}" />
+
+    <Style x:Key="{x:Type visuals:MenuItem}"
+           BasedOn="{StaticResource MenuItemDefault}"
+           TargetType="{x:Type visuals:MenuItem}" />
+
+    <!--  endregion  -->
+
+    <!--  region MenuItemDivider  -->
+
+    <Style x:Key="MenuItemDividerDefault"
+           BasedOn="{StaticResource UiKitMenuItem}"
+           TargetType="{x:Type visuals:MenuItemDivider}" />
+
+    <Style x:Key="{x:Type visuals:MenuItemDivider}"
+           BasedOn="{StaticResource MenuItemDividerDefault}"
+           TargetType="{x:Type visuals:MenuItemDivider}" />
+
+    <!--  endregion  -->
+
+    <!--  region MenuItemGroupHeader  -->
+
+    <Style x:Key="MenuItemGroupHeaderDefault"
+           BasedOn="{StaticResource UiKitMenuItem}"
+           TargetType="{x:Type visuals:MenuItemGroupHeader}" />
+
+    <Style x:Key="{x:Type visuals:MenuItemGroupHeader}"
+           BasedOn="{StaticResource MenuItemGroupHeaderDefault}"
+           TargetType="{x:Type visuals:MenuItemGroupHeader}" />
+
+    <!--  endregion  -->
+
+    <!--  region MenuItemRadioButton  -->
+
+    <Style x:Key="MenuItemRadioButtonDefault"
+           BasedOn="{StaticResource UiKitMenuItem}"
+           TargetType="{x:Type visuals:MenuItemRadioButton}" />
+
+    <Style x:Key="{x:Type visuals:MenuItemRadioButton}"
+           BasedOn="{StaticResource MenuItemRadioButtonDefault}"
+           TargetType="{x:Type visuals:MenuItemRadioButton}" />
+
+    <!--  endregion  -->
+
+    <!--  region NavigationMenuButton  -->
+
+    <Style x:Key="NavigationMenuButtonDefault"
+           BasedOn="{StaticResource UiKitNavigationMenuButton}"
+           TargetType="{x:Type visuals:NavigationMenuButton}" />
+
+    <Style x:Key="{x:Type visuals:NavigationMenuButton}"
+           BasedOn="{StaticResource NavigationMenuButtonDefault}"
+           TargetType="{x:Type visuals:NavigationMenuButton}" />
+
+    <Style x:Key="NavigationMenuFooterButtonDefault"
+           BasedOn="{StaticResource UiKitNavigationMenuFooterButton}"
+           TargetType="{x:Type visuals:NavigationMenuFooterButton}" />
+
+    <Style x:Key="{x:Type visuals:NavigationMenuFooterButton}"
+           BasedOn="{StaticResource NavigationMenuFooterButtonDefault}"
+           TargetType="{x:Type visuals:NavigationMenuFooterButton}" />
+
+    <!--  endregion  -->
+
+    <!--  region NotificationHint  -->
+
+    <Style x:Key="NotificationHintDefault"
+           BasedOn="{StaticResource UiKitNotificationHint}"
+           TargetType="{x:Type visuals:NotificationHint}" />
+
+    <Style x:Key="{x:Type visuals:NotificationHint}"
+           BasedOn="{StaticResource NotificationHintDefault}"
+           TargetType="{x:Type visuals:NotificationHint}" />
+
+    <!--  endregion  -->
+
+    <!--  region NotificationPanel  -->
+
+    <Style x:Key="NotificationPanelColorful"
+           BasedOn="{StaticResource UiKitNotificationPanelColorful}"
+           TargetType="{x:Type visuals:NotificationPanel}" />
+
+    <Style x:Key="NotificationPanelPlain"
+           BasedOn="{StaticResource UiKitNotificationPanelPlain}"
+           TargetType="{x:Type visuals:NotificationPanel}" />
+
+    <Style x:Key="NotificationPanelDefault"
+           BasedOn="{StaticResource UiKitNotificationPanelColorful}"
+           TargetType="{x:Type visuals:NotificationPanel}" />
+
+    <Style x:Key="{x:Type visuals:NotificationPanel}"
+           BasedOn="{StaticResource NotificationPanelDefault}"
+           TargetType="{x:Type visuals:NotificationPanel}" />
+
+    <!--  endregion  -->
+
+    <!--  region NotificationSpinner  -->
+
+    <Style x:Key="NotificationSpinnerVerticalSmall"
+           BasedOn="{StaticResource UiKitNotificationSpinnerVerticalSmall}"
+           TargetType="{x:Type visuals:NotificationSpinner}" />
+
+    <Style x:Key="NotificationSpinnerVerticalBig"
+           BasedOn="{StaticResource UiKitNotificationSpinnerVerticalBig}"
+           TargetType="{x:Type visuals:NotificationSpinner}" />
+
+    <Style x:Key="NotificationSpinnerHorizontalSmall"
+           BasedOn="{StaticResource UiKitNotificationSpinnerHorizontalSmall}"
+           TargetType="{x:Type visuals:NotificationSpinner}" />
+
+    <Style x:Key="NotificationSpinnerHorizontalBig"
+           BasedOn="{StaticResource UiKitNotificationSpinnerHorizontalBig}"
+           TargetType="{x:Type visuals:NotificationSpinner}" />
+
+    <Style x:Key="NotificationSpinnerDefault"
+           BasedOn="{StaticResource UiKitNotificationSpinnerHorizontalSmall}"
+           TargetType="{x:Type visuals:NotificationSpinner}" />
+
+    <Style x:Key="{x:Type visuals:NotificationSpinner}"
+           BasedOn="{StaticResource NotificationSpinnerDefault}"
+           TargetType="{x:Type visuals:NotificationSpinner}" />
+
+    <!--  endregion  -->
+
+    <!--  region NumberInput  -->
+
+    <Style x:Key="NumberInputDefault"
+           BasedOn="{StaticResource UiKitNumberInput}"
+           TargetType="{x:Type visuals:NumberInput}" />
+
+    <Style x:Key="{x:Type visuals:NumberInput}"
+           BasedOn="{StaticResource NumberInputDefault}"
+           TargetType="{x:Type visuals:NumberInput}" />
+
+    <!--  endregion  -->
+
+    <!--  region PasswordInput  -->
+
+    <Style x:Key="PasswordInputDefault"
+           BasedOn="{StaticResource UiKitPasswordInput}"
+           TargetType="{x:Type visuals:PasswordInput}" />
+
+    <Style x:Key="{x:Type visuals:PasswordInput}"
+           BasedOn="{StaticResource PasswordInputDefault}"
+           TargetType="{x:Type visuals:PasswordInput}" />
+
+    <!--  endregion  -->
+
+    <!--  region Popup  -->
+
+    <Style x:Key="PopupDanger"
+           BasedOn="{StaticResource UiKitPopupDanger}"
+           TargetType="{x:Type visuals:Popup}" />
+
+    <Style x:Key="PopupStandard"
+           BasedOn="{StaticResource UiKitPopupStandard}"
+           TargetType="{x:Type visuals:Popup}" />
+
+    <Style x:Key="PopupDefault"
+           BasedOn="{StaticResource UiKitPopupStandard}"
+           TargetType="{x:Type visuals:Popup}" />
+
+    <Style x:Key="{x:Type visuals:Popup}"
+           BasedOn="{StaticResource PopupDefault}"
+           TargetType="{x:Type visuals:Popup}" />
+
+    <!--  endregion  -->
+
+    <!--  region ProgressBar  -->
+
+    <Style x:Key="ProgressBarSmall"
+           BasedOn="{StaticResource UiKitProgressBarSmall}"
+           TargetType="{x:Type visuals:ProgressBar}" />
+
+    <Style x:Key="ProgressBarStandard"
+           BasedOn="{StaticResource UiKitProgressBarStandart}"
+           TargetType="{x:Type visuals:ProgressBar}" />
+
+    <Style x:Key="ProgressBarDefault"
+           BasedOn="{StaticResource UiKitProgressBarStandart}"
+           TargetType="{x:Type visuals:ProgressBar}" />
+
+    <Style x:Key="{x:Type visuals:ProgressBar}"
+           BasedOn="{StaticResource ProgressBarDefault}"
+           TargetType="{x:Type visuals:ProgressBar}" />
+
+    <!--  endregion  -->
+
+    <!--  region RadioButton  -->
+
+    <Style x:Key="RadioButtonDefault"
+           BasedOn="{StaticResource UiKitRadiobutton}"
+           TargetType="{x:Type RadioButton}" />
+
+    <Style x:Key="{x:Type RadioButton}"
+           BasedOn="{StaticResource RadioButtonDefault}"
+           TargetType="{x:Type RadioButton}" />
+
+    <!--  endregion  -->
+
+    <!--  region RoundProgress  -->
+
+    <Style x:Key="RoundProgressDefault"
+           BasedOn="{StaticResource UiKitRoundProgress}"
+           TargetType="{x:Type visuals:RoundProgress}" />
+
+    <Style x:Key="{x:Type visuals:RoundProgress}"
+           BasedOn="{StaticResource RoundProgressDefault}"
+           TargetType="{x:Type visuals:RoundProgress}" />
+
+    <!--  endregion  -->
+
+    <!--  region RoundTimer  -->
+
+    <Style x:Key="RoundTimerDefault"
+           BasedOn="{StaticResource UiKitRoundTimer}"
+           TargetType="{x:Type visuals:RoundTimer}" />
+
+    <Style x:Key="{x:Type visuals:RoundTimer}"
+           BasedOn="{StaticResource RoundTimerDefault}"
+           TargetType="{x:Type visuals:RoundTimer}" />
+
+    <!--  endregion  -->
+
+    <!--  region ScrollBar  -->
+
+    <Style x:Key="ScrollBarDefault"
+           BasedOn="{StaticResource UiKitScrollBar}"
+           TargetType="{x:Type ScrollBar}" />
+
+    <Style x:Key="{x:Type ScrollBar}"
+           BasedOn="{StaticResource ScrollBarDefault}"
+           TargetType="{x:Type ScrollBar}" />
+
+    <!--  endregion  -->
+
+    <!--  region Search  -->
+
+    <Style x:Key="SearchDefault"
+           BasedOn="{StaticResource UiKitSearch}"
+           TargetType="{x:Type visuals:Search}" />
+
+    <Style x:Key="{x:Type visuals:Search}"
+           BasedOn="{StaticResource SearchDefault}"
+           TargetType="{x:Type visuals:Search}" />
+
+    <!--  endregion  -->
+
+    <!--  region Select  -->
+
+    <Style x:Key="SelectDefault"
+           BasedOn="{StaticResource UiKitSelect}"
+           TargetType="{x:Type visuals:Select}" />
+
+    <Style x:Key="{x:Type visuals:Select}"
+           BasedOn="{StaticResource SelectDefault}"
+           TargetType="{x:Type visuals:Select}" />
+
+    <!--  endregion  -->
+
+    <!--  region SelectItem  -->
+
+    <Style x:Key="SelectItemDefault"
+           BasedOn="{StaticResource UiKitSelectItem}"
+           TargetType="{x:Type visuals:SelectItem}" />
+
+    <Style x:Key="{x:Type visuals:SelectItem}"
+           BasedOn="{StaticResource SelectItemDefault}"
+           TargetType="{x:Type visuals:SelectItem}" />
+
+    <!--  endregion  -->
+
+    <!--  region SelectableText  -->
+
+    <Style x:Key="SelectableTextDefault"
+           BasedOn="{StaticResource UiKitSelectableText}"
+           TargetType="{x:Type visuals:SelectableText}" />
+
+    <Style x:Key="{x:Type visuals:SelectableText}"
+           BasedOn="{StaticResource SelectableTextDefault}"
+           TargetType="{x:Type visuals:SelectableText}" />
+
+    <!--  endregion  -->
+
+    <!--  region Spinner  -->
+
+    <Style x:Key="SpinnerXBig"
+           BasedOn="{StaticResource UiKitSpinner64}"
+           TargetType="{x:Type visuals:Spinner}" />
+
+    <Style x:Key="SpinnerBig"
+           BasedOn="{StaticResource UiKitSpinner48}"
+           TargetType="{x:Type visuals:Spinner}" />
+
+    <Style x:Key="SpinnerNormal"
+           BasedOn="{StaticResource UiKitSpinner24}"
+           TargetType="{x:Type visuals:Spinner}" />
+
+    <Style x:Key="SpinnerXSmall"
+           BasedOn="{StaticResource UiKitSpinner16}"
+           TargetType="{x:Type visuals:Spinner}" />
+
+    <Style x:Key="SpinnerXXSmall"
+           BasedOn="{StaticResource UiKitSpinner12}"
+           TargetType="{x:Type visuals:Spinner}" />
+
+    <Style x:Key="SpinnerXXXSmall"
+           BasedOn="{StaticResource UiKitSpinner8}"
+           TargetType="{x:Type visuals:Spinner}" />
+
+    <Style x:Key="SpinnerDefault"
+           BasedOn="{StaticResource UiKitSpinner24}"
+           TargetType="{x:Type visuals:Spinner}" />
+
+    <Style x:Key="{x:Type visuals:Spinner}"
+           BasedOn="{StaticResource SpinnerDefault}"
+           TargetType="{x:Type visuals:Spinner}" />
+
+    <!--  endregion  -->
+
+    <!--#region SplitButton-->
+
+    <Style x:Key="SplitButtonDanger"
+           BasedOn="{StaticResource UiKitSplitButtonDangerPrimary}"
+           TargetType="{x:Type visuals:SplitButton}" />
+
+    <Style x:Key="SplitButtonNeutral"
+           BasedOn="{StaticResource UiKitSplitButtonNeutralPrimary}"
+           TargetType="{x:Type visuals:SplitButton}" />
+
+    <Style x:Key="SplitButtonOutlineSecondary"
+           BasedOn="{StaticResource UiKitSplitButtonBaseOutlineSecondary}"
+           TargetType="{x:Type visuals:SplitButton}" />
+
+    <Style x:Key="SplitButtonPrimary"
+           BasedOn="{StaticResource UiKitSplitButtonBasePrimary}"
+           TargetType="{x:Type visuals:SplitButton}" />
+
+    <Style x:Key="SplitButtonSecondary"
+           BasedOn="{StaticResource UiKitSplitButtonBaseSecondary}"
+           TargetType="{x:Type visuals:SplitButton}" />
+
+    <Style x:Key="SplitButtonDefault"
+           BasedOn="{StaticResource UiKitSplitButtonBaseSecondary}"
+           TargetType="{x:Type visuals:SplitButton}" />
+
+    <Style x:Key="{x:Type visuals:SplitButton}"
+           BasedOn="{StaticResource SplitButtonDefault}"
+           TargetType="{x:Type visuals:SplitButton}" />
+
+    <!--#endregion-->
+
+    <!--#region SsoButton-->
+
+    <Style x:Key="SsoButtonAppleColor"
+           BasedOn="{StaticResource UiKitSsoButtonAppleColor}"
+           TargetType="{x:Type visuals:SsoButton}" />
+
+    <Style x:Key="SsoButtonAppleWhite"
+           BasedOn="{StaticResource UiKitSsoButtonAppleWhite}"
+           TargetType="{x:Type visuals:SsoButton}" />
+
+    <Style x:Key="SsoButtonFacebookColor"
+           BasedOn="{StaticResource UiKitSsoButtonFacebookColor}"
+           TargetType="{x:Type visuals:SsoButton}" />
+
+    <Style x:Key="SsoButtonFacebookWhite"
+           BasedOn="{StaticResource UiKitSsoButtonFacebookWhite}"
+           TargetType="{x:Type visuals:SsoButton}" />
+
+    <Style x:Key="SsoButtonGoogleColor"
+           BasedOn="{StaticResource UiKitSsoButtonGoogleColor}"
+           TargetType="{x:Type visuals:SsoButton}" />
+
+    <Style x:Key="SsoButtonGoogleWhite"
+           BasedOn="{StaticResource UiKitSsoButtonGoogleWhite}"
+           TargetType="{x:Type visuals:SsoButton}" />
+
+    <Style x:Key="SsoButtonVKColor"
+           BasedOn="{StaticResource UiKitSsoButtonVKColor}"
+           TargetType="{x:Type visuals:SsoButton}" />
+
+    <Style x:Key="SsoButtonVKWhite"
+           BasedOn="{StaticResource UiKitSsoButtonVKWhite}"
+           TargetType="{x:Type visuals:SsoButton}" />
+
+    <Style x:Key="SsoButtonYandexIntColor"
+           BasedOn="{StaticResource UiKitSsoButtonYandexIntColor}"
+           TargetType="{x:Type visuals:SsoButton}" />
+
+    <Style x:Key="SsoButtonYandexIntWhite"
+           BasedOn="{StaticResource UiKitSsoButtonYandexIntWhite}"
+           TargetType="{x:Type visuals:SsoButton}" />
+
+    <Style x:Key="SsoButtonYandexRuColor"
+           BasedOn="{StaticResource UiKitSsoButtonYandexRuColor}"
+           TargetType="{x:Type visuals:SsoButton}" />
+
+    <Style x:Key="SsoButtonYandexRuWhite"
+           BasedOn="{StaticResource UiKitSsoButtonYandexRuWhite}"
+           TargetType="{x:Type visuals:SsoButton}" />
+
+    <Style x:Key="SsoButtonDefault"
+           BasedOn="{StaticResource UiKitSsoButtonAppleWhite}"
+           TargetType="{x:Type visuals:SsoButton}" />
+
+    <Style x:Key="{x:Type visuals:SsoButton}"
+           BasedOn="{StaticResource SsoButtonDefault}"
+           TargetType="{x:Type visuals:SsoButton}" />
+
+    <!--#endregion-->
+
+    <!--  region StatusBullet  -->
+
+    <Style x:Key="StatusBulletSmall"
+           BasedOn="{StaticResource UiKitStatusBulletSmall}"
+           TargetType="{x:Type visuals:StatusBullet}" />
+
+    <Style x:Key="StatusBulletStandard"
+           BasedOn="{StaticResource UiKitStatusBulletStandard}"
+           TargetType="{x:Type visuals:StatusBullet}" />
+
+    <Style x:Key="StatusBulletDefault"
+           BasedOn="{StaticResource UiKitStatusBulletStandard}"
+           TargetType="{x:Type visuals:StatusBullet}" />
+
+    <Style x:Key="{x:Type visuals:StatusBullet}"
+           BasedOn="{StaticResource StatusBulletDefault}"
+           TargetType="{x:Type visuals:StatusBullet}" />
+
+    <!--  endregion  -->
+
+    <!--  region StatusTag  -->
+
+    <Style x:Key="StatusTagDefault"
+           BasedOn="{StaticResource UiKitStatusTag}"
+           TargetType="{x:Type visuals:StatusTag}" />
+
+    <Style x:Key="{x:Type visuals:StatusTag}"
+           BasedOn="{StaticResource StatusTagDefault}"
+           TargetType="{x:Type visuals:StatusTag}" />
+
+    <!--  endregion  -->
+
+    <!--  region Switch  -->
+
+    <Style x:Key="SwitchMini"
+           BasedOn="{StaticResource UiKitSwitchSmall}"
+           TargetType="{x:Type visuals:Switch}" />
+
+    <Style x:Key="SwitchDefault"
+           BasedOn="{StaticResource UiKitSwitchBig}"
+           TargetType="{x:Type visuals:Switch}" />
+
+    <Style x:Key="{x:Type visuals:Switch}"
+           BasedOn="{StaticResource SwitchDefault}"
+           TargetType="{x:Type visuals:Switch}" />
+
+    <!--  endregion  -->
+
+    <!--  region TabMenu  -->
+
+    <Style x:Key="TabMenuPrimaryWhite"
+           BasedOn="{StaticResource UiKitTabMenuPrimaryWhite}"
+           TargetType="{x:Type visuals:TabMenu}" />
+
+    <Style x:Key="TabMenuPrimaryGrey"
+           BasedOn="{StaticResource UiKitTabMenuPrimaryGrey}"
+           TargetType="{x:Type visuals:TabMenu}" />
+
+    <Style x:Key="TabMenuSecondaryWhite"
+           BasedOn="{StaticResource UiKitTabMenuSecondaryWhite}"
+           TargetType="{x:Type visuals:TabMenu}" />
+
+    <Style x:Key="TabMenuSecondaryGrey"
+           BasedOn="{StaticResource UiKitTabMenuSecondaryGrey}"
+           TargetType="{x:Type visuals:TabMenu}" />
+
+    <Style x:Key="TabMenuDefault"
+           BasedOn="{StaticResource UiKitTabMenuSecondaryWhite}"
+           TargetType="{x:Type visuals:TabMenu}" />
+
+    <Style x:Key="{x:Type visuals:TabMenu}"
+           BasedOn="{StaticResource TabMenuDefault}"
+           TargetType="{x:Type visuals:TabMenu}" />
+
+    <!--  endregion  -->
+
+    <!--  region TabMenuItem  -->
+
+    <Style x:Key="TabMenuItemPrimary"
+           BasedOn="{StaticResource UiKitTabMenuItemPrimary}"
+           TargetType="{x:Type visuals:TabMenuItem}" />
+
+    <Style x:Key="TabMenuItemSecondaryGrey"
+           BasedOn="{StaticResource UiKitTabMenuItemSecondaryGrey}"
+           TargetType="{x:Type visuals:TabMenuItem}" />
+
+    <Style x:Key="TabMenuItemSecondaryWhite"
+           BasedOn="{StaticResource UiKitTabMenuItemSecondaryWhite}"
+           TargetType="{x:Type visuals:TabMenuItem}" />
+
+    <Style x:Key="TabMenuItemDefault"
+           BasedOn="{StaticResource UiKitTabMenuItemSecondaryWhite}"
+           TargetType="{x:Type visuals:TabMenuItem}" />
+
+    <Style x:Key="{x:Type visuals:TabMenuItem}"
+           BasedOn="{StaticResource TabMenuItemDefault}"
+           TargetType="{x:Type visuals:TabMenuItem}" />
+
+    <!--  endregion  -->
+
+    <!--  region Tag  -->
+
+    <Style x:Key="TagOutline"
+           BasedOn="{StaticResource UiKitTagOutline}"
+           TargetType="{x:Type visuals:Tag}" />
+
+    <Style x:Key="TagDefault"
+           BasedOn="{StaticResource UiKitTagDefault}"
+           TargetType="{x:Type visuals:Tag}" />
+
+    <Style x:Key="{x:Type visuals:Tag}"
+           BasedOn="{StaticResource TagDefault}"
+           TargetType="{x:Type visuals:Tag}" />
+
+    <!--  endregion  -->
+
+    <!--  region TextArea  -->
+
+    <Style x:Key="TextAreaDefault"
+           BasedOn="{StaticResource UiKitTextArea}"
+           TargetType="{x:Type visuals:TextArea}" />
+
+    <Style x:Key="{x:Type visuals:TextArea}"
+           BasedOn="{StaticResource TextAreaDefault}"
+           TargetType="{x:Type visuals:TextArea}" />
+
+    <!--  endregion  -->
+
+    <!--  region TextBlock  -->
+
+    <Style x:Key="TextBlockDefault"
+           BasedOn="{StaticResource UiKitTextStyleBaseText}"
+           TargetType="{x:Type TextBlock}" />
+
+    <Style x:Key="{x:Type TextBlock}"
+           BasedOn="{StaticResource TextBlockDefault}"
+           TargetType="{x:Type TextBlock}" />
+
+    <!--  endregion  -->
+
+    <!--  region TextInput  -->
+
+    <Style x:Key="TextInputDefault"
+           BasedOn="{StaticResource UiKitTextInput}"
+           TargetType="{x:Type visuals:TextInput}" />
+
+    <Style x:Key="{x:Type visuals:TextInput}"
+           BasedOn="{StaticResource TextInputDefault}"
+           TargetType="{x:Type visuals:TextInput}" />
+
+    <!--  endregion  -->
+
+    <!--  region TextViewer  -->
+
+    <Style x:Key="TextViewerDefault"
+           BasedOn="{StaticResource UiKitTextViewer}"
+           TargetType="{x:Type visuals:TextViewer}" />
+
+    <Style x:Key="{x:Type visuals:TextViewer}"
+           BasedOn="{StaticResource TextViewerDefault}"
+           TargetType="{x:Type visuals:TextViewer}" />
+
+    <!--  endregion  -->
+
+    <!--  region ToggleButton  -->
+
+    <Style x:Key="ToggleButtonDanger"
+           BasedOn="{StaticResource UiKitToggleButtonDangerPrimary}"
+           TargetType="{x:Type ToggleButton}" />
+
+    <Style x:Key="ToggleButtonGhost"
+           BasedOn="{StaticResource UiKitToggleButtonBaseGhost}"
+           TargetType="{x:Type ToggleButton}" />
+
+    <Style x:Key="ToggleButtonGhostDanger"
+           BasedOn="{StaticResource UiKitToggleButtonDangerGhost}"
+           TargetType="{x:Type ToggleButton}" />
+
+    <Style x:Key="ToggleButtonGhostNeutral"
+           BasedOn="{StaticResource UiKitToggleButtonNeutralGhost}"
+           TargetType="{x:Type ToggleButton}" />
+
+    <Style x:Key="ToggleButtonNeutral"
+           BasedOn="{StaticResource UiKitToggleButtonNeutralPrimary}"
+           TargetType="{x:Type ToggleButton}" />
+
+    <Style x:Key="ToggleButtonOutlineDanger"
+           BasedOn="{StaticResource UiKitToggleButtonDangerOutlineSecondary}"
+           TargetType="{x:Type ToggleButton}" />
+
+    <Style x:Key="ToggleButtonOutlineSecondary"
+           BasedOn="{StaticResource UiKitToggleButtonBaseOutlineSecondary}"
+           TargetType="{x:Type ToggleButton}" />
+
+    <Style x:Key="ToggleButtonOutlineSecondaryStaticLight"
+           BasedOn="{StaticResource UiKitToggleButtonStaticWhiteOutlineSecondary}"
+           TargetType="{x:Type ToggleButton}" />
+
+    <Style x:Key="ToggleButtonPrimary"
+           BasedOn="{StaticResource UiKitToggleButtonBasePrimary}"
+           TargetType="{x:Type ToggleButton}" />
+
+    <Style x:Key="ToggleButtonSecondary"
+           BasedOn="{StaticResource UiKitToggleButtonBaseSecondary}"
+           TargetType="{x:Type ToggleButton}" />
+
+    <Style x:Key="ToggleButtonStaticLight"
+           BasedOn="{StaticResource UiKitToggleButtonStaticWhite}"
+           TargetType="{x:Type ToggleButton}" />
+
+    <Style x:Key="ToggleButtonDefault"
+           BasedOn="{StaticResource UiKitToggleButtonBaseSecondary}"
+           TargetType="{x:Type ToggleButton}" />
+
+    <Style x:Key="{x:Type ToggleButton}"
+           BasedOn="{StaticResource ToggleButtonDefault}"
+           TargetType="{x:Type ToggleButton}" />
+
+    <!--  endregion  -->
+
+    <!--  region ToolTip  -->
+
+    <Style x:Key="ToolTipDefault"
+           BasedOn="{StaticResource UiKitTooltipStandard}"
+           TargetType="{x:Type ToolTip}" />
+
+    <Style x:Key="{x:Type ToolTip}"
+           BasedOn="{StaticResource ToolTipDefault}"
+           TargetType="{x:Type ToolTip}" />
+
+    <!--  endregion  -->
+
+</ResourceDictionary>

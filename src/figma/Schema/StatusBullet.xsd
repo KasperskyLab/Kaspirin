@@ -1,0 +1,42 @@
+<!--
+    Copyright © 2024 AO Kaspersky Lab.
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+        http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+-->
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<xs:include schemaLocation="Common.xsd"/>
+
+	<xs:complexType name="StatusBullet">
+		<xs:group ref="elements_StatusBullet"/>
+		<xs:attributeGroup ref="attributes_StatusBullet"/>
+	</xs:complexType>
+
+	<xs:group name="elements_StatusBullet">
+		<xs:all>
+			<xs:element name="BulletColorDanger" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BulletColorInfo" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BulletColorNeutral" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BulletColorPositive" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BulletColorWarning" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BulletMargin" type="Thickness" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BulletMark" type="Svg" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="Foreground" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+		</xs:all>
+	</xs:group>
+
+	<xs:attributeGroup name="attributes_StatusBullet">
+		<xs:attribute name="Id" type="xs:string" use="required"/>
+		<xs:attribute name="TextStyleId" type="xs:string" use="required"/>
+	</xs:attributeGroup>
+</xs:schema>

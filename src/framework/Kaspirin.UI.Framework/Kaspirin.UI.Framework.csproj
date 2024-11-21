@@ -1,0 +1,18 @@
+﻿<Project>
+	<PropertyGroup>
+		<UseWPF>true</UseWPF>
+		<UseWindowsForms>true</UseWindowsForms>
+		<RootNamespace>Kaspirin.UI.Framework</RootNamespace>
+		<AssemblyName>kaspirin.ui.framework</AssemblyName>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
+			<_Parameter1>kaspirin.ui.framework.uikit</_Parameter1>
+		</AssemblyAttribute>
+	</ItemGroup>
+
+	<Import Project="$(SolutionDir)kaspirin.net.props" />
+	<Import Project="Sdk.props" Sdk="Microsoft.NET.Sdk" />
+	<Import Project="Sdk.targets" Sdk="Microsoft.NET.Sdk" />
+</Project>

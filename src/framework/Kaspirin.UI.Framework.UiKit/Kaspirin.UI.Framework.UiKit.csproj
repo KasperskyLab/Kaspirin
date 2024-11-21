@@ -1,0 +1,42 @@
+﻿<Project>
+	<PropertyGroup>
+		<UseWPF>true</UseWPF>
+		<RootNamespace>Kaspirin.UI.Framework.UiKit</RootNamespace>
+		<AssemblyName>kaspirin.ui.framework.uikit</AssemblyName>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
+			<_Parameter1>kaspirin.ui.framework.uikit.styles</_Parameter1>
+		</AssemblyAttribute>
+		<AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
+			<_Parameter1>kaspirin.ui.framework.uikit.media</_Parameter1>
+		</AssemblyAttribute>
+		<AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
+			<_Parameter1>kaspirin.ui.framework.uikit.toolkit</_Parameter1>
+		</AssemblyAttribute>
+	</ItemGroup>
+
+	<Import Project="$(SolutionDir)kaspirin.net.props" />
+	<Import Project="Sdk.props" Sdk="Microsoft.NET.Sdk" />
+
+	<ItemGroup>
+		<Resource Include="Fonts\**\*.ttf" />
+		<Resource Include="Fonts\**\*.CompositeFont" />
+		<Resource Include="Resources\**\*.svg" />
+		<Resource Include="Resources\**\*.lt" />
+		<Resource Include="Resources\**\*.ps" />
+		<Resource Include="Resources\**\*.mp4" />
+		<Resource Include="Resources\**\*.jpg" />
+		<Resource Include="Resources\**\*.png" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="$(RepoRoot)src\third_party\SharpVectorConvertersWpf\SharpVectorConvertersWpf.csproj" />
+		<ProjectReference Include="$(RepoRoot)src\third_party\SharpVectorRenderingWpf\SharpVectorRenderingWpf.csproj" />
+	</ItemGroup>
+
+	<Import Project="Sdk.targets" Sdk="Microsoft.NET.Sdk" />
+
+	<Import Project="$(FrameworkProps)" />
+</Project>

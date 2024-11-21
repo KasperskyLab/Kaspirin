@@ -1,0 +1,66 @@
+// Copyright © 2024 AO Kaspersky Lab.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+using System;
+using System.Windows.Forms;
+
+namespace Kaspirin.UI.Framework.UiKit.Interactivity.Actions.NativeDialogs
+{
+    public class NativeDialogLauncher : INativeDialogLauncher
+    {
+        public NativeDialogLauncher(
+            IStatisticsSender statisticsSender)
+        {
+            _statisticsSender = Guard.EnsureArgumentIsNotNull(statisticsSender);
+        }
+
+        public void ShowDialog<TDialog>(Func<TDialog> createDialog, Action<TDialog> showDialog)
+            where TDialog : CommonDialog
+
+        {
+            Guard.ArgumentIsNotNull(createDialog);
+            Guard.ArgumentIsNotNull(showDialog);
+
+            Executers.InUiSync(() =>
+            {
+                try
+                {
+                    BeforeShow();
+
+                    var dialog = createDialog();
+
+                    Executers.InUiAsync(() => _statisticsSender.SendShownStatistic(dialog));
+
+                    showDialog(dialog);
+                }
+                finally
+                {
+                    AfterShow();
+                }
+            });
+        }
+
+        protected virtual void AfterShow()
+        {
+
+        }
+
+        protected virtual void BeforeShow()
+        {
+
+        }
+
+        private readonly IStatisticsSender _statisticsSender;
+    }
+}

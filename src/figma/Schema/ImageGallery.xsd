@@ -1,0 +1,53 @@
+<!--
+    Copyright © 2024 AO Kaspersky Lab.
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+        http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+-->
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<xs:include schemaLocation="Common.xsd"/>
+
+	<xs:complexType name="ImageGallery">
+		<xs:group ref="elements_ImageGallery"/>
+		<xs:attributeGroup ref="attributes_ImageGallery"/>
+	</xs:complexType>
+
+	<xs:group name="elements_ImageGallery">
+		<xs:all>
+			<xs:element name="CarouselContainerBackground" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="CarouselContainerCornerRadius" type="CornerRadius" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="CarouselContainerMargin" type="Thickness" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="CarouselContainerPadding" type="Thickness" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="CloseButtonMargin" type="Thickness" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="CounterContainerBackground" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="CounterContainerCornerRadius" type="CornerRadius" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="CounterContainerMargin" type="Thickness" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="CounterContainerPadding" type="Thickness" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="CounterTextForeground" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="LeftButtonMargin" type="Thickness" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="RightButtonMargin" type="Thickness" minOccurs="1" maxOccurs="1"/>
+		</xs:all>
+	</xs:group>
+
+	<xs:attributeGroup name="attributes_ImageGallery">
+		<xs:attribute name="CarouselStyleId" type="xs:string" use="required"/>
+		<xs:attribute name="CloseButtonIconName" type="xs:string" use="required"/>
+		<xs:attribute name="CloseButtonStyleId" type="xs:string" use="required"/>
+		<xs:attribute name="CounterTextStyleId" type="xs:string" use="required"/>
+		<xs:attribute name="Id" type="xs:string" use="required"/>
+		<xs:attribute name="LeftButtonIconName" type="xs:string" use="required"/>
+		<xs:attribute name="LeftButtonStyleId" type="xs:string" use="required"/>
+		<xs:attribute name="RightButtonIconName" type="xs:string" use="required"/>
+		<xs:attribute name="RightButtonStyleId" type="xs:string" use="required"/>
+	</xs:attributeGroup>
+</xs:schema>

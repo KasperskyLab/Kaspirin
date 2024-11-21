@@ -1,0 +1,35 @@
+<Project>
+	<PropertyGroup>
+		<SourceRoot>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)'))</SourceRoot>
+		<RepoRoot>$(SourceRoot)\..\..\</RepoRoot>
+		<TemporaryDirectory>$(SourceRoot)\_temp\</TemporaryDirectory>
+		<OutputDirectory>$(SourceRoot)\_out\</OutputDirectory>
+		<GeneratedDirectory>$(SourceRoot)_generated\$(Platform)\</GeneratedDirectory>
+		<GeneratedProjectDirectory>$(GeneratedDirectory)$(ProjectName)\</GeneratedProjectDirectory>
+		<BaseIntermediateOutputPath>$(TemporaryDirectory)$(Platform)\$(Configuration)\$(TargetFramework)\$(AssemblyName)\</BaseIntermediateOutputPath>
+		<IntermediateOutputPath>$(BaseIntermediateOutputPath)</IntermediateOutputPath>
+		<MSBuildProjectExtensionsPath>$(TemporaryDirectory)$(TargetFramework)\$(AssemblyName)\</MSBuildProjectExtensionsPath>
+		<OutputPath>$(OutputDirectory)$(TargetFramework)\$(Configuration)\</OutputPath>
+		<OutDir>$(OutputPath)</OutDir>
+		<DisableTransitiveProjectReferences>true</DisableTransitiveProjectReferences>
+		<Platforms>AnyCPU</Platforms>
+		<PlatformTarget>AnyCPU</PlatformTarget>
+		<GenerateAssemblyInfo>true</GenerateAssemblyInfo>
+		<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+		<AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
+		<SourcesDirectory>$(MSBuildThisFileDirectory)</SourcesDirectory>
+		<ProduceReferenceAssembly>false</ProduceReferenceAssembly>
+		<DebugType>pdbonly</DebugType>
+		<Nullable>enable</Nullable>
+		<WarningsAsErrors>Nullable</WarningsAsErrors>
+		<AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+		<LangVersion>10</LangVersion>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<AssemblyAttribute Include="System.Runtime.InteropServices.ComVisible">
+			<_Parameter1>false</_Parameter1>
+			<_Parameter1_IsLiteral>true</_Parameter1_IsLiteral>
+		</AssemblyAttribute>
+	</ItemGroup>
+</Project>

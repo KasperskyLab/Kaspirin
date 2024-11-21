@@ -1,0 +1,10 @@
+<Project>
+	<ItemGroup>
+		<Compile Include="$(MSBuildThisFileDirectory)GlobalUsings.cs">
+			<Link>GlobalUsings\Kaspirin.UI.Framework.GlobalUsings.cs</Link>
+		</Compile>
+	</ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="$(MSBuildThisFileDirectory)Kaspirin.UI.Framework.csproj" />
+	</ItemGroup>
+</Project>
