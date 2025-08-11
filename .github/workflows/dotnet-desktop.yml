@@ -42,8 +42,8 @@ jobs:
     - name: Upload dotnet test results
       uses: actions/upload-artifact@v4
       with:
-        name: dotnet-results-trx-$env:Configuration
-        path: TestResults-trx
+        name: dotnet-results-trx
+        path: $env:Configuration\TestResults-trx
       if: ${{ always() }}
 
     # Restore the application to populate the obj folder with RuntimeIdentifiers
