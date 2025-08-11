@@ -12,17 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using System;
 using System.Collections.Generic;
 
-namespace Kaspirin.UI.Framework.UiKit.Localization.Localizer
+namespace Kaspirin.UI.Framework.UiKit.Localization.Localizer;
+
+public interface IScope<TValue>
 {
-    public interface IScope
-    {
-        Uri ScopeUri { get; }
+    IEnumerable<string> Keys { get; }
 
-        IEnumerable<string> Keys { get; }
-
-        object GetValue(string key);
-    }
+    TValue GetValue(string key);
 }

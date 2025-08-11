@@ -17,47 +17,49 @@
 using System;
 using System.Runtime.InteropServices;
 
-namespace Kaspirin.UI.Framework.NativeMethods.Api.Dwmapi
+namespace Kaspirin.UI.Framework.NativeMethods.Api.Dwmapi;
+
+/// <summary>
+///     Provides API methods for functions from dwmapi.dll .
+/// </summary>
+public static partial class DwmapiDll
 {
+    #region dwmapi.h
+
     /// <summary>
-    ///     Provides API methods for functions from dwmapi.dll .
+    ///     The DwmSetWindowAttribute API method.
+    ///     <br /><seealso href="https://learn.microsoft.com/en-us/windows/win32/api/dwmapi/nf-dwmapi-dwmsetwindowattribute">Learn more</seealso>.
     /// </summary>
-    public static partial class DwmapiDll
-    {
-        #region dwmapi.h
+    [DllImport(DllName, PreserveSig = true)]
+    public static extern int DwmSetWindowAttribute(
+        IntPtr hWnd,
+        DwmWindowAttributeType attr,
+        IntPtr attrValue,
+        int attrSize);
 
-        /// <summary>
-        ///     The DwmSetWindowAttribute API method. <br /><seealso href="https://learn.microsoft.com/en-us/windows/win32/api/dwmapi/nf-dwmapi-dwmsetwindowattribute">Learn more</seealso>.
-        /// </summary>
-        [DllImport(DllName, PreserveSig = true)]
-        public static extern int DwmSetWindowAttribute(
-            IntPtr hWnd,
-            DwmWindowAttributeType attr,
-            IntPtr attrValue,
-            int attrSize);
+    /// <summary>
+    ///     The DwmGetWindowAttribute API method.
+    ///     <br /><seealso href="https://learn.microsoft.com/en-us/windows/win32/api/dwmapi/nf-dwmapi-dwmgetwindowattribute">Learn more</seealso>.
+    /// </summary>
+    [DllImport(DllName, PreserveSig = true)]
+    public static extern int DwmGetWindowAttribute(
+        IntPtr hWnd,
+        DwmWindowAttributeType attr,
+        out bool attrValue,
+        int attrSize);
 
-        /// <summary>
-        ///     The DwmGetWindowAttribute API method. <br /><seealso href="https://learn.microsoft.com/en-us/windows/win32/api/dwmapi/nf-dwmapi-dwmgetwindowattribute">Learn more</seealso>.
-        /// </summary>
-        [DllImport(DllName, PreserveSig = true)]
-        public static extern int DwmGetWindowAttribute(
-            IntPtr hWnd,
-            DwmWindowAttributeType attr,
-            out bool attrValue,
-            int attrSize);
+    /// <summary>
+    ///     The DwmGetWindowAttribute API method.
+    ///     <br /><seealso href="https://learn.microsoft.com/en-us/windows/win32/api/dwmapi/nf-dwmapi-dwmgetwindowattribute">Learn more</seealso>.
+    /// </summary>
+    [DllImport(DllName, PreserveSig = true)]
+    public static extern int DwmGetWindowAttribute(
+        IntPtr hWnd,
+        DwmWindowAttributeType attr,
+        out NativeRectangle attrValue,
+        int attrSize);
 
-        /// <summary>
-        ///     The DwmGetWindowAttribute API method. <br /><seealso href="https://learn.microsoft.com/en-us/windows/win32/api/dwmapi/nf-dwmapi-dwmgetwindowattribute">Learn more</seealso>.
-        /// </summary>
-        [DllImport(DllName, PreserveSig = true)]
-        public static extern int DwmGetWindowAttribute(
-            IntPtr hWnd,
-            DwmWindowAttributeType attr,
-            out NativeRectangle attrValue,
-            int attrSize);
+    #endregion
 
-        #endregion
-
-        private const string DllName = "dwmapi.dll";
-    }
+    private const string DllName = "dwmapi.dll";
 }

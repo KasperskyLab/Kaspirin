@@ -12,18 +12,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Kaspirin.UI.Framework.UiKit.Localization.Localizer.Strings.Parsing.Exceptions
-{
-    public sealed class UnexpectedSymbolException : SyntaxErrorException
-    {
-        public UnexpectedSymbolException(int startPosition, string fileName, string sourceText)
-        {
-            Position = new Position(startPosition, startPosition + 1, fileName, sourceText);
-            SourceText = sourceText;
-        }
+namespace Kaspirin.UI.Framework.UiKit.Localization.Localizer.Strings.Parsing.Exceptions;
 
-        public override string ErrorMessage => $"Unexpected symbol '{Position.GetText(SourceText)}\r\n{Position.GetStartLineTextWithPointer()}'";
-        public override Position Position { get; }
-        public string SourceText { get; }
+public sealed class UnexpectedSymbolException : SyntaxErrorException
+{
+    public UnexpectedSymbolException(int startPosition, string sourceName, string sourceText)
+    {
+        Position = new Position(startPosition, startPosition + 1, sourceName, sourceText);
+        SourceText = sourceText;
     }
+
+    public override string ErrorMessage => $"Unexpected symbol '{Position.GetText(SourceText)}\r\n{Position.GetStartLineTextWithPointer()}'";
+    public override Position Position { get; }
+    public string SourceText { get; }
 }

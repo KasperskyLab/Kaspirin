@@ -14,58 +14,57 @@
 
 using Microsoft.Win32;
 
-namespace Kaspirin.UI.Framework.Storage
+namespace Kaspirin.UI.Framework.Storage;
+
+/// <summary>
+///     Interface for working with the registry.
+/// </summary>
+public interface IRegistry
 {
     /// <summary>
-    ///     Interface for working with the registry.
+    ///     Retrieves the value from the registry associated with the specified key name and value name.
     /// </summary>
-    public interface IRegistry
-    {
-        /// <summary>
-        ///     Retrieves the value from the registry associated with the specified key name and value name.
-        /// </summary>
-        /// <param name="keyName">
-        ///     The name of the registry key.
-        /// </param>
-        /// <param name="valueName">
-        ///     The name of the value.
-        /// </param>
-        /// <param name="defaultValue">
-        ///     The default value that will be returned if the value is not found.
-        /// </param>
-        /// <returns>
-        ///     Returns <see langword="null" /> if the subsection specified in <paramref name="keyName" /> does
-        ///     not exist, otherwise the value associated with <paramref name="ValueName" />, or <paramref name="defaultValue" />
-        ///     if <paramref name="ValueName" /> not found.
-        /// </returns>
-        object? GetValue(string keyName, string valueName, object? defaultValue);
+    /// <param name="keyName">
+    ///     The name of the registry key.
+    /// </param>
+    /// <param name="valueName">
+    ///     The name of the value.
+    /// </param>
+    /// <param name="defaultValue">
+    ///     The default value that will be returned if the value is not found.
+    /// </param>
+    /// <returns>
+    ///     Returns <see langword="null" /> if the subsection specified in <paramref name="keyName" /> does
+    ///     not exist, otherwise the value associated with <paramref name="ValueName" />, or <paramref name="defaultValue" />
+    ///     if <paramref name="ValueName" /> not found.
+    /// </returns>
+    object? GetValue(string keyName, string valueName, object? defaultValue);
 
-        /// <summary>
-        ///     Sets the registry value associated with the specified key name and value name.
-        /// </summary>
-        /// <param name="keyName">
-        ///     The name of the registry key.
-        /// </param>
-        /// <param name="valueName">
-        ///     The name of the value.
-        /// </param>
-        /// <param name="value">
-        ///     The value for the installation.
-        /// </param>
-        void SetValue(string keyName, string valueName, object value);
+    /// <summary>
+    ///     Sets the registry value associated with the specified key name and value name.
+    /// </summary>
+    /// <param name="keyName">
+    ///     The name of the registry key.
+    /// </param>
+    /// <param name="valueName">
+    ///     The name of the value.
+    /// </param>
+    /// <param name="value">
+    ///     The value for the installation.
+    /// </param>
+    void SetValue(string keyName, string valueName, object value);
 
-        /// <summary>
-        ///     Creates a new registry key.
-        /// </summary>
-        /// <param name="rootHive">
-        ///     The root folder of the registry.
-        /// </param>
-        /// <param name="relativeKey">
-        ///     The relative path to the registry key.
-        /// </param>
-        /// <param name="registryView">
-        ///     Presentation of the registry.
-        /// </param>
-        void CreateKey(RegistryHive rootHive, string relativeKey, RegistryView registryView);
-    }
+    /// <summary>
+    ///     Creates a new registry key.
+    /// </summary>
+    /// <param name="rootHive">
+    ///     The root folder of the registry.
+    /// </param>
+    /// <param name="relativeKey">
+    ///     The relative path to the registry key.
+    /// </param>
+    /// <param name="registryView">
+    ///     Presentation of the registry.
+    /// </param>
+    void CreateKey(RegistryHive rootHive, string relativeKey, RegistryView registryView);
 }

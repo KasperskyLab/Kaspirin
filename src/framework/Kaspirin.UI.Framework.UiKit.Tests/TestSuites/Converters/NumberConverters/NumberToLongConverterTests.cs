@@ -12,16 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using Kaspirin.UI.Framework.UiKit.Converters.NumberConverters;
-using Kaspirin.UI.Framework.UiKit.Tests.Common;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Windows;
+using Kaspirin.UI.Framework.UiKit.Converters.NumberConverters;
 
 namespace Kaspirin.UI.Framework.UiKit.Tests.TestSuites.Converters.NumberConverters;
 
 [TestClass]
-public sealed class NumberToLongConverterTests : LocalizationManagerDependentTests
+public sealed class NumberToLongConverterTests : BaseTests
 {
     [TestMethod]
     public void Convert_NullValue_ReturnsUnsetValue()
@@ -105,7 +104,7 @@ public sealed class NumberToLongConverterTests : LocalizationManagerDependentTes
 
             // Assert
             Assert.IsInstanceOfType(result, targetType);
-            AssertAreEqualInFormatCulture(kvp.Value, (string?)result);
+            LocalizationAssert.AreEqualInFormatCulture(kvp.Value, (string?)result);
         }
     }
 
@@ -153,7 +152,7 @@ public sealed class NumberToLongConverterTests : LocalizationManagerDependentTes
 
             // Assert
             Assert.IsInstanceOfType(result, targetType);
-            AssertAreEqualInFormatCulture(kvp.Value, (string?)result);
+            LocalizationAssert.AreEqualInFormatCulture(kvp.Value, (string?)result);
         }
     }
 }

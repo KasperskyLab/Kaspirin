@@ -7,43 +7,43 @@
 // Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
+
 using System.Windows;
 
-namespace Kaspirin.UI.Framework.UiKit.Interactivity.Core
+namespace Kaspirin.UI.Framework.UiKit.Interactivity.Core;
+
+public class EventTrigger : EventTriggerBase<object>
 {
-    public class EventTrigger : EventTriggerBase<object>
+    public EventTrigger()
     {
-        public EventTrigger()
-        {
-        }
+    }
 
-        public EventTrigger(string eventName)
-        {
-            EventName = eventName;
-        }
+    public EventTrigger(string eventName)
+    {
+        EventName = eventName;
+    }
 
-        #region EventName
+    #region EventName
 
-        public string EventName
-        {
-            get => (string)GetValue(EventNameProperty);
-            set => SetValue(EventNameProperty, value);
-        }
+    public string EventName
+    {
+        get => (string)GetValue(EventNameProperty);
+        set => SetValue(EventNameProperty, value);
+    }
 
-        public static readonly DependencyProperty EventNameProperty = DependencyProperty.Register(
-            nameof(EventName),
-            typeof(string),
-            typeof(EventTrigger),
-            new PropertyMetadata(default(string), OnEventNameChanged));
+    public static readonly DependencyProperty EventNameProperty = DependencyProperty.Register(
+        nameof(EventName),
+        typeof(string),
+        typeof(EventTrigger),
+        new PropertyMetadata(default(string), OnEventNameChanged));
 
-        private static void OnEventNameChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-            => ((EventTrigger)d).OnEventNameChanged((string)e.OldValue, (string)e.NewValue);
+    private static void OnEventNameChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        => ((EventTrigger)d).OnEventNameChanged((string)e.OldValue, (string)e.NewValue);
 
-        #endregion
+    #endregion
 
-        protected override string GetEventName()
-        {
-            return EventName;
-        }
+    protected override string GetEventName()
+    {
+        return EventName;
     }
 }

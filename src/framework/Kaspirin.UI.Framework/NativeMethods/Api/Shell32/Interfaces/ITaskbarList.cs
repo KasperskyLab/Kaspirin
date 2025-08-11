@@ -17,29 +17,27 @@
 using System;
 using System.Runtime.InteropServices;
 
-namespace Kaspirin.UI.Framework.NativeMethods.Api.Shell32.Interfaces
+namespace Kaspirin.UI.Framework.NativeMethods.Api.Shell32.Interfaces;
+
+/// <summary>
+///     <seealso href="https://learn.microsoft.com/en-us/windows/win32/api/shobjidl_core/nn-shobjidl_core-itaskbarlist">Learn more</seealso>.
+/// </summary>
+[ComImport]
+[InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+[Guid(ShlGuids.IidITaskbarList)]
+public interface ITaskbarList
 {
-    /// <summary>
-    ///     
-    /// <seealso href="https://learn.microsoft.com/en-us/windows/win32/api/shobjidl_core/nn-shobjidl_core-itaskbarlist">Learn more</seealso>.
-    /// </summary>
-    [ComImport]
-    [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
-    [Guid(ShlGuids.IidITaskbarList)]
-    public interface ITaskbarList
-    {
-        void HrInit();
+    void HrInit();
 
-        void AddTab(
-            IntPtr hwnd);
+    void AddTab(
+        IntPtr hwnd);
 
-        void DeleteTab(
-            IntPtr hwnd);
+    void DeleteTab(
+        IntPtr hwnd);
 
-        void ActivateTab(
-            IntPtr hwnd);
+    void ActivateTab(
+        IntPtr hwnd);
 
-        void SetActiveAlt(
-            IntPtr hwnd);
-    }
+    void SetActiveAlt(
+        IntPtr hwnd);
 }

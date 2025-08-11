@@ -17,89 +17,88 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 
-namespace Kaspirin.UI.Framework.Disposables
+namespace Kaspirin.UI.Framework.Disposables;
+
+/// <summary>
+///     Creates <see cref="IDisposable" /> objects with the specified action that is performed when <see cref="IDisposable.Dispose" /> is called.
+/// </summary>
+public static class Disposable
 {
     /// <summary>
-    ///     Creates <see cref="IDisposable" /> objects with the specified action that is performed when <see cref="IDisposable.Dispose" /> is called.
+    ///     Creates an object <see cref="IDisposable" /> that executes <paramref name="disposeAction" />
+    ///     after calling <see cref="IDisposable.Dispose" /> for this object.
     /// </summary>
-    public static class Disposable
+    /// <param name="disposeAction">
+    ///     An action to perform.
+    /// </param>
+    /// <returns>
+    ///     The <see cref="IDisposable" /> object.
+    /// </returns>
+    public static IDisposable Create(Action disposeAction)
     {
-        /// <summary>
-        ///     Creates an object <see cref="IDisposable" /> that executes <paramref name="disposeAction" />
-        ///     after calling <see cref="IDisposable.Dispose" /> for this object.
-        /// </summary>
-        /// <param name="disposeAction">
-        ///     An action to perform.
-        /// </param>
-        /// <returns>
-        ///     The <see cref="IDisposable" /> object.
-        /// </returns>
-        public static IDisposable Create(Action disposeAction)
-        {
-            Guard.ArgumentIsNotNull(disposeAction);
+        Guard.ArgumentIsNotNull(disposeAction);
 
-            return new DisposableImpl(disposeAction);
+        return new DisposableImpl(disposeAction);
+    }
+
+    /// <summary>
+    ///     Creates an object <see cref="IDisposable" /> that executes <see cref="IDisposable.Dispose" />
+    ///     for each element <paramref name="disposables" /> after calling <see cref="IDisposable.Dispose" /> for this object.
+    /// </summary>
+    /// <param name="disposables">
+    ///     An array of objects <see cref="IDisposable" />.
+    /// </param>
+    /// <returns>
+    ///     The <see cref="IDisposable" /> object.
+    /// </returns>
+    public static IDisposable Composite(params IDisposable[] disposables)
+    {
+        Guard.ArgumentIsNotNull(disposables);
+
+        return new CompositeDisposableImpl(disposables);
+    }
+
+    /// <summary>
+    ///     An object <see cref="IDisposable" /> that does not perform any actions when called <see cref="IDisposable.Dispose" />.
+    /// </summary>
+    public static IDisposable Empty { get; } = new EmptyDisposableImpl();
+
+    private sealed class DisposableImpl : IDisposable
+    {
+        public DisposableImpl(Action disposeAction)
+        {
+            _disposeAction = disposeAction;
         }
 
-        /// <summary>
-        ///     Creates an object <see cref="IDisposable" /> that executes <see cref="IDisposable.Dispose" />
-        ///     for each element <paramref name="disposables" /> after calling <see cref="IDisposable.Dispose" /> for this object.
-        /// </summary>
-        /// <param name="disposables">
-        ///     An array of objects <see cref="IDisposable" />.
-        /// </param>
-        /// <returns>
-        ///     The <see cref="IDisposable" /> object.
-        /// </returns>
-        public static IDisposable Composite(params IDisposable[] disposables)
-        {
-            Guard.ArgumentIsNotNull(disposables);
+        public void Dispose() => Interlocked.Exchange(ref _disposeAction, null)?.Invoke();
 
-            return new CompositeDisposableImpl(disposables);
+        private Action? _disposeAction;
+    }
+
+    private sealed class CompositeDisposableImpl : IDisposable
+    {
+        public CompositeDisposableImpl(IEnumerable<IDisposable> disposables)
+        {
+            _disposables = disposables.ToArray();
         }
 
-        /// <summary>
-        ///     An object <see cref="IDisposable" /> that does not perform any actions when called <see cref="IDisposable.Dispose" />.
-        /// </summary>
-        public static IDisposable Empty { get; } = new EmptyDisposableImpl();
-
-        private sealed class DisposableImpl : IDisposable
+        public void Dispose()
         {
-            public DisposableImpl(Action disposeAction)
+            var disposables = Interlocked.Exchange(ref _disposables, null);
+            if (disposables != null)
             {
-                _disposeAction = disposeAction;
-            }
-
-            public void Dispose() => Interlocked.Exchange(ref _disposeAction, null)?.Invoke();
-
-            private Action? _disposeAction;
-        }
-
-        private sealed class CompositeDisposableImpl : IDisposable
-        {
-            public CompositeDisposableImpl(IEnumerable<IDisposable> disposables)
-            {
-                _disposables = disposables.ToArray();
-            }
-
-            public void Dispose()
-            {
-                var disposables = Interlocked.Exchange(ref _disposables, null);
-                if (disposables != null)
+                foreach (var disposable in disposables)
                 {
-                    foreach (var disposable in disposables)
-                    {
-                        disposable.Dispose();
-                    }
+                    disposable.Dispose();
                 }
             }
-
-            private IDisposable[]? _disposables;
         }
 
-        private sealed class EmptyDisposableImpl : IDisposable
-        {
-            public void Dispose() { }
-        }
+        private IDisposable[]? _disposables;
+    }
+
+    private sealed class EmptyDisposableImpl : IDisposable
+    {
+        public void Dispose() { }
     }
 }

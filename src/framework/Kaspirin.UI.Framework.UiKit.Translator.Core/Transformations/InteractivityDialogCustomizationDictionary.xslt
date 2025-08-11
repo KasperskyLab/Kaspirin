@@ -117,6 +117,12 @@
 						<xsl:with-param name="brushNode" select="StatusForegroundInfo"/>
 					</xsl:call-template>
 
+					<!--StatusForegroundLoading-->
+					<xsl:call-template name="generateBrush">
+						<xsl:with-param name="key">StatusForegroundLoading</xsl:with-param>
+						<xsl:with-param name="brushNode" select="StatusForegroundLoading"/>
+					</xsl:call-template>
+
 					<!--StatusForegroundPositive-->
 					<xsl:call-template name="generateBrush">
 						<xsl:with-param name="key">StatusForegroundPositive</xsl:with-param>
@@ -140,7 +146,7 @@
 						<xsl:with-param name="key">TextForeground</xsl:with-param>
 						<xsl:with-param name="brushNode" select="TextForeground"/>
 					</xsl:call-template>
-					
+
 				</ResourceDictionary>
 
 			</xsl:element>

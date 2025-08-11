@@ -15,19 +15,18 @@
 using System;
 using System.Windows.Markup;
 
-namespace Kaspirin.UI.Framework.UiKit.Fonts
+namespace Kaspirin.UI.Framework.UiKit.Fonts;
+
+[MarkupExtensionReturnType(typeof(UIKitFontBrushSettings))]
+public abstract class UIKitFontBrushExtension<TFontBrushEnum> : MarkupExtension
+    where TFontBrushEnum : struct, Enum
 {
-    [MarkupExtensionReturnType(typeof(UIKitFontBrushSettings))]
-    public abstract class UIKitFontBrushExtension<TFontBrushEnum> : MarkupExtension
-        where TFontBrushEnum : struct, Enum
+    public TFontBrushEnum Id { get; set; }
+
+    public override object? ProvideValue(IServiceProvider serviceProvider)
     {
-        public TFontBrushEnum Id { get; set; }
-
-        public override object? ProvideValue(IServiceProvider serviceProvider)
-        {
-            return new UIKitFontBrushSettings(Map(Id));
-        }
-
-        protected abstract string Map(TFontBrushEnum foregroundEnum);
+        return new UIKitFontBrushSettings(Map(Id));
     }
+
+    protected abstract string Map(TFontBrushEnum foregroundEnum);
 }

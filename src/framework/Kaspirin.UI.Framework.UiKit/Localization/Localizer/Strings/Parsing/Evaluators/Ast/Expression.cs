@@ -15,16 +15,15 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Kaspirin.UI.Framework.UiKit.Localization.Localizer.Strings.Parsing.Evaluators.Ast
-{
-    public class Expression
-    {
-        public Position Position => Operands.Any()
-            ? Operands.Select(o => o.Position).Aggregate((p1, p2) => p1 + p2)
-            : new Position();
-        public IEnumerable<Operand> Operands { get; }
-        public Expression(IEnumerable<Operand> operands) => Operands = operands;
+namespace Kaspirin.UI.Framework.UiKit.Localization.Localizer.Strings.Parsing.Evaluators.Ast;
 
-        public string GetText() => string.Join(" + ", Operands.Select(x => x.GetText()));
-    }
+public sealed class Expression
+{
+    public Position Position => Operands.Any()
+        ? Operands.Select(o => o.Position).Aggregate((p1, p2) => p1 + p2)
+        : new Position();
+    public IEnumerable<Operand> Operands { get; }
+    public Expression(IEnumerable<Operand> operands) => Operands = operands;
+
+    public string GetText() => string.Join(" + ", Operands.Select(x => x.GetText()));
 }

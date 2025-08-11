@@ -12,16 +12,22 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Kaspirin.UI.Framework.UiKit.Statistics.Internals
-{
-    internal sealed class EmptyStatisticsSender : IStatisticsSender
-    {
-        public void SendClickStatistic(object source)
-        {
-        }
+using Kaspirin.UI.Framework.UiKit.Controls;
+using Dialog = System.Windows.Forms.CommonDialog;
 
-        public void SendShownStatistic(object source)
-        {
-        }
+namespace Kaspirin.UI.Framework.UiKit.Statistics.Internals;
+
+internal sealed class EmptyStatisticsSender : IStatisticsSender
+{
+    public void SendMenuItemClicked(MenuItem source)
+    {
+    }
+
+    public void SendNotificationViewShown(NotificationView source)
+    {
+    }
+
+    public void SendDialogShown(Dialog source)
+    {
     }
 }

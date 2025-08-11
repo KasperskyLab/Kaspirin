@@ -30,7 +30,11 @@
 			<xs:element name="BackgroundPositive" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
 			<xs:element name="BackgroundWarning" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
 			<xs:element name="CornerRadius" type="CornerRadius" minOccurs="1" maxOccurs="1"/>
-			<xs:element name="Foreground" type="SpecificBrush" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="ForegroundDanger" type="SpecificBrush" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="ForegroundInfo" type="SpecificBrush" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="ForegroundNeutral" type="SpecificBrush" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="ForegroundPositive" type="SpecificBrush" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="ForegroundWarning" type="SpecificBrush" minOccurs="0" maxOccurs="1"/>
 			<xs:element name="Padding" type="Thickness" minOccurs="0" maxOccurs="1"/>
 		</xs:all>
 	</xs:group>

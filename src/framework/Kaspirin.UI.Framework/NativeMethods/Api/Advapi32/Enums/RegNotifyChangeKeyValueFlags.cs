@@ -12,25 +12,43 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-#pragma warning disable KCAIDE0002 // Enum has incorrect suffix
-
 using System;
 
-namespace Kaspirin.UI.Framework.NativeMethods.Api.Advapi32.Enums
+namespace Kaspirin.UI.Framework.NativeMethods.Api.Advapi32.Enums;
+
+/// <summary>
+///     <seealso href="https://learn.microsoft.com/en-us/windows/win32/api/winreg/nf-winreg-regnotifychangekeyvalue">Learn more</seealso>.
+/// </summary>
+[Flags]
+public enum RegNotifyChangeKeyValueFlags : uint
 {
     /// <summary>
-    ///     
-    /// <seealso href="https://learn.microsoft.com/en-us/windows/win32/api/winreg/nf-winreg-regnotifychangekeyvalue">Learn more</seealso>.
+    ///     The flag is not set.
     /// </summary>
-    [Flags]
-    public enum RegNotifyChangeKeyValueFlags : uint
-    {
-        None = 0,
-        REG_NOTIFY_CHANGE_NAME = 0x00000001,
-        REG_NOTIFY_CHANGE_ATTRIBUTES = 0x00000002,
-        REG_NOTIFY_CHANGE_LAST_SET = 0x00000004,
-        REG_NOTIFY_CHANGE_SECURITY = 0x00000008,
-        REG_NOTIFY_THREAD_AGNOSTIC = 0x10000000,
-    }
+    None = 0,
+
+    /// <summary>
+    ///     The REG_NOTIFY_CHANGE_NAME constant.
+    /// </summary>
+    ChangeName = 0x00000001,
+
+    /// <summary>
+    ///     The REG_NOTIFY_CHANGE_ATTRIBUTES constant.
+    /// </summary>
+    ChangeAttributes = 0x00000002,
+
+    /// <summary>
+    ///     The REG_NOTIFY_CHANGE_LAST_SET constant.
+    /// </summary>
+    ChangeLastSet = 0x00000004,
+
+    /// <summary>
+    ///     The REG_NOTIFY_CHANGE_SECURITY constant.
+    /// </summary>
+    ChangeSecurity = 0x00000008,
+
+    /// <summary>
+    ///     The REG_NOTIFY_THREAD_AGNOSTIC constant.
+    /// </summary>
+    ThreadAgnostic = 0x10000000,
 }

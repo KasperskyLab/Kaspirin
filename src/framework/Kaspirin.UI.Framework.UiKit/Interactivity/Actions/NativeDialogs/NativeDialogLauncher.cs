@@ -15,52 +15,51 @@
 using System;
 using System.Windows.Forms;
 
-namespace Kaspirin.UI.Framework.UiKit.Interactivity.Actions.NativeDialogs
+namespace Kaspirin.UI.Framework.UiKit.Interactivity.Actions.NativeDialogs;
+
+public class NativeDialogLauncher : INativeDialogLauncher
 {
-    public class NativeDialogLauncher : INativeDialogLauncher
+    public NativeDialogLauncher(
+        IStatisticsSender statisticsSender)
     {
-        public NativeDialogLauncher(
-            IStatisticsSender statisticsSender)
-        {
-            _statisticsSender = Guard.EnsureArgumentIsNotNull(statisticsSender);
-        }
-
-        public void ShowDialog<TDialog>(Func<TDialog> createDialog, Action<TDialog> showDialog)
-            where TDialog : CommonDialog
-
-        {
-            Guard.ArgumentIsNotNull(createDialog);
-            Guard.ArgumentIsNotNull(showDialog);
-
-            Executers.InUiSync(() =>
-            {
-                try
-                {
-                    BeforeShow();
-
-                    var dialog = createDialog();
-
-                    Executers.InUiAsync(() => _statisticsSender.SendShownStatistic(dialog));
-
-                    showDialog(dialog);
-                }
-                finally
-                {
-                    AfterShow();
-                }
-            });
-        }
-
-        protected virtual void AfterShow()
-        {
-
-        }
-
-        protected virtual void BeforeShow()
-        {
-
-        }
-
-        private readonly IStatisticsSender _statisticsSender;
+        _statisticsSender = Guard.EnsureArgumentIsNotNull(statisticsSender);
     }
+
+    public void ShowDialog<TDialog>(Func<TDialog> createDialog, Action<TDialog> showDialog)
+        where TDialog : CommonDialog
+
+    {
+        Guard.ArgumentIsNotNull(createDialog);
+        Guard.ArgumentIsNotNull(showDialog);
+
+        Executers.InUiSync(() =>
+        {
+            try
+            {
+                BeforeShow();
+
+                var dialog = createDialog();
+
+                Executers.InUiAsync(() => _statisticsSender.SendDialogShown(dialog));
+
+                showDialog(dialog);
+            }
+            finally
+            {
+                AfterShow();
+            }
+        });
+    }
+
+    protected virtual void AfterShow()
+    {
+
+    }
+
+    protected virtual void BeforeShow()
+    {
+
+    }
+
+    private readonly IStatisticsSender _statisticsSender;
 }

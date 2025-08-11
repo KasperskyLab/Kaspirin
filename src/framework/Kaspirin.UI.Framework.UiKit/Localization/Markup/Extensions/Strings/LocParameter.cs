@@ -16,26 +16,25 @@ using System;
 using System.Windows.Data;
 using System.Windows.Markup;
 
-namespace Kaspirin.UI.Framework.UiKit.Localization.Markup.Extensions.Strings
+namespace Kaspirin.UI.Framework.UiKit.Localization.Markup.Extensions.Strings;
+
+[MarkupExtensionReturnType(typeof(LocParameter))]
+public sealed class LocParameter : MarkupExtension
 {
-    [MarkupExtensionReturnType(typeof(LocParameter))]
-    public sealed class LocParameter : MarkupExtension
+    public LocParameter() : this(string.Empty) { }
+
+    public LocParameter(string paramName)
     {
-        public LocParameter() : this(string.Empty) { }
+        ParamName = Guard.EnsureArgumentIsNotNull(paramName);
+    }
 
-        public LocParameter(string paramName)
-        {
-            ParamName = Guard.EnsureArgumentIsNotNull(paramName);
-        }
+    [ConstructorArgument("paramName")]
+    public string ParamName { get; set; }
 
-        [ConstructorArgument("paramName")]
-        public string ParamName { get; set; }
+    public Binding? ParamSource { get; set; }
 
-        public Binding? ParamSource { get; set; }
-
-        public override object ProvideValue(IServiceProvider serviceProvider)
-        {
-            return this;
-        }
+    public override object ProvideValue(IServiceProvider serviceProvider)
+    {
+        return this;
     }
 }

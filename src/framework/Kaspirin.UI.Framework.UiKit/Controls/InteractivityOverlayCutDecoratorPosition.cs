@@ -12,17 +12,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Kaspirin.UI.Framework.UiKit.Controls
+namespace Kaspirin.UI.Framework.UiKit.Controls;
+
+public enum InteractivityOverlayCutDecoratorPosition
 {
-    public enum InteractivityOverlayCutDecoratorPosition
-    {
-        TopLeft,
-        TopCenter,
-        TopRight,
-        RightCenter,
-        BottomRight,
-        BottomCenter,
-        BottomLeft,
-        LeftCenter
-    }
+    TopLeft,
+    TopCenter,
+    TopRight,
+    RightCenter,
+    BottomRight,
+    BottomCenter,
+    BottomLeft,
+    LeftCenter
 }

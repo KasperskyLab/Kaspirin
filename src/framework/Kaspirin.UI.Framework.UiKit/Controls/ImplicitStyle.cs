@@ -14,35 +14,34 @@
 
 using System.Windows;
 
-namespace Kaspirin.UI.Framework.UiKit.Controls
+namespace Kaspirin.UI.Framework.UiKit.Controls;
+
+public static class ImplicitStyle
 {
-    public static class ImplicitStyle
+    #region Inherit
+
+    public static bool GetInherit(DependencyObject obj)
+        => (bool)obj.GetValue(InheritProperty);
+
+    public static void SetInherit(DependencyObject obj, bool value)
+        => obj.SetValue(InheritProperty, value);
+
+    public static readonly DependencyProperty InheritProperty = DependencyProperty.RegisterAttached(
+        "Inherit",
+        typeof(bool),
+        typeof(ImplicitStyle),
+        new PropertyMetadata(default(bool), OnInheritChanged));
+
+    private static void OnInheritChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
     {
-        #region Inherit
-
-        public static bool GetInherit(DependencyObject obj)
-            => (bool)obj.GetValue(InheritProperty);
-
-        public static void SetInherit(DependencyObject obj, bool value)
-            => obj.SetValue(InheritProperty, value);
-
-        public static readonly DependencyProperty InheritProperty = DependencyProperty.RegisterAttached(
-            "Inherit",
-            typeof(bool),
-            typeof(ImplicitStyle),
-            new PropertyMetadata(default(bool), OnInheritChanged));
-
-        private static void OnInheritChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        if (e.NewValue is true)
         {
-            if (e.NewValue is true)
-            {
-                d.WhenLoaded(() => SetStyles(d));
-            }
+            d.WhenLoaded(() => SetStyles(d));
         }
-
-        #endregion
-
-        private static void SetStyles(DependencyObject source)
-            => source.FindVisualParent<UIKitContentPresenter>()?.SetImplicitStyles(source);
     }
+
+    #endregion
+
+    private static void SetStyles(DependencyObject source)
+        => source.FindVisualParent<UIKitContentPresenter>()?.SetImplicitStyles(source);
 }

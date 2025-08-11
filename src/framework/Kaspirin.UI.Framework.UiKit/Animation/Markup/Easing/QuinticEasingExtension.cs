@@ -14,11 +14,14 @@
 
 using System.Windows.Media.Animation;
 
-namespace Kaspirin.UI.Framework.UiKit.Animation.Markup.Easing
+namespace Kaspirin.UI.Framework.UiKit.Animation.Markup.Easing;
+
+/// <summary>
+///     Markup extension for initializing the <see cref="QuinticEase" /> class in XAML.
+/// </summary>
+public sealed class QuinticEasingExtension : EasingExtensionBase
 {
-    public sealed class QuinticEasingExtension : EasingExtensionBase
-    {
-        protected override IEasingFunction CreateEasing()
-            => new QuinticEase { EasingMode = Mode };
-    }
+    /// <inheritdoc/>
+    protected override IEasingFunction CreateEasing()
+        => new QuinticEase { EasingMode = Mode };
 }

@@ -16,17 +16,15 @@ using System;
 using System.Runtime.InteropServices;
 using System.Text;
 
-namespace Kaspirin.UI.Framework.NativeMethods.Api.Kernel32.Delegates
-{
-    /// <summary>
-    ///     
-    /// <seealso href="https://learn.microsoft.com/en-us/windows/win32/api/winbase/nf-winbase-queryfullprocessimagenamew">Learn more</seealso>.
-    /// </summary>
-    [UnmanagedFunctionPointer(CallingConvention.Winapi, CharSet = CharSet.Unicode, SetLastError = true)]
-    [return: MarshalAs(UnmanagedType.Bool)]
-    internal delegate bool QueryFullProcessImageName(
-        [In] IntPtr process,
-        [In] int flags,
-        [Out][MarshalAs(UnmanagedType.LPWStr, SizeParamIndex = 3)] StringBuilder exeName,
-        [In, Out] ref int size);
-}
+namespace Kaspirin.UI.Framework.NativeMethods.Api.Kernel32.Delegates;
+
+/// <summary>
+///     <seealso href="https://learn.microsoft.com/en-us/windows/win32/api/winbase/nf-winbase-queryfullprocessimagenamew">Learn more</seealso>.
+/// </summary>
+[UnmanagedFunctionPointer(CallingConvention.Winapi, CharSet = CharSet.Unicode, SetLastError = true)]
+[return: MarshalAs(UnmanagedType.Bool)]
+internal delegate bool QueryFullProcessImageName(
+    [In] IntPtr process,
+    [In] int flags,
+    [Out][MarshalAs(UnmanagedType.LPWStr, SizeParamIndex = 3)] StringBuilder exeName,
+    [In, Out] ref int size);

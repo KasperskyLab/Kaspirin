@@ -106,10 +106,10 @@
 
 			</xsl:element>
 
-			<!--SelectPresenter_ArrowIcon_Foreground-->
+			<!--SelectPresenter_ArrowIcon_Brush-->
 			<xsl:call-template name="generateBrushSetter">
-				<xsl:with-param name="propertyId">SelectPresenter_ArrowIcon_Foreground</xsl:with-param>
-				<xsl:with-param name="brushName">ArrowIconForeground</xsl:with-param>
+				<xsl:with-param name="propertyId">SelectPresenter_ArrowIcon_Brush</xsl:with-param>
+				<xsl:with-param name="brushName">ArrowIconBrush</xsl:with-param>
 				<xsl:with-param name="scopeName" select="$id" />
 			</xsl:call-template>
 
@@ -162,10 +162,10 @@
 				<xsl:with-param name="resourceName" select="@TextStyleId"/>
 			</xsl:call-template>
 
-			<!--SelectPresenter_ItemIcon_Foreground-->
+			<!--SelectPresenter_ItemIcon_Brush-->
 			<xsl:call-template name="generateBrushSetter">
-				<xsl:with-param name="propertyId">SelectPresenter_ItemIcon_Foreground</xsl:with-param>
-				<xsl:with-param name="brushName">IconForeground</xsl:with-param>
+				<xsl:with-param name="propertyId">SelectPresenter_ItemIcon_Brush</xsl:with-param>
+				<xsl:with-param name="brushName">IconBrush</xsl:with-param>
 				<xsl:with-param name="scopeName" select="$id" />
 			</xsl:call-template>
 
@@ -257,10 +257,10 @@
 							<xsl:with-param name="thicknessNode" select="BorderThicknessDisabled" />
 						</xsl:call-template>
 
-						<!--SelectPresenter_ArrowIcon_Foreground-->
+						<!--SelectPresenter_ArrowIcon_Brush-->
 						<xsl:call-template name="generateBrushSetter">
-							<xsl:with-param name="propertyId">SelectPresenter_ArrowIcon_Foreground</xsl:with-param>
-							<xsl:with-param name="brushName">ArrowIconForegroundDisabled</xsl:with-param>
+							<xsl:with-param name="propertyId">SelectPresenter_ArrowIcon_Brush</xsl:with-param>
+							<xsl:with-param name="brushName">ArrowIconBrushDisabled</xsl:with-param>
 							<xsl:with-param name="scopeName" select="$id" />
 						</xsl:call-template>
 
@@ -271,10 +271,10 @@
 							<xsl:with-param name="scopeName" select="$id" />
 						</xsl:call-template>
 
-						<!--SelectPresenter_ItemIcon_Foreground-->
+						<!--SelectPresenter_ItemIcon_Brush-->
 						<xsl:call-template name="generateBrushSetter">
-							<xsl:with-param name="propertyId">SelectPresenter_ItemIcon_Foreground</xsl:with-param>
-							<xsl:with-param name="brushName">IconForegroundDisabled</xsl:with-param>
+							<xsl:with-param name="propertyId">SelectPresenter_ItemIcon_Brush</xsl:with-param>
+							<xsl:with-param name="brushName">IconBrushDisabled</xsl:with-param>
 							<xsl:with-param name="scopeName" select="$id" />
 						</xsl:call-template>
 

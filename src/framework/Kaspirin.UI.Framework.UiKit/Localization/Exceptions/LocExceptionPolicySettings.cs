@@ -12,14 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Kaspirin.UI.Framework.UiKit.Localization.Exceptions
-{
-    public sealed class LocExceptionPolicySettings
-    {
-        public LocExceptionHandler MarkupExceptionHandler { get; set; } = LocExceptionPolicy.Suppress;
-        public LocExceptionHandler LocalizerExceptionHandler { get; set; } = LocExceptionPolicy.Throw;
-        public LocExceptionHandler ResourceExceptionHandler { get; set; } = LocExceptionPolicy.Throw;
+namespace Kaspirin.UI.Framework.UiKit.Localization.Exceptions;
 
-        public static bool IsReleaseMode { get; set; }
-    }
+public sealed class LocExceptionPolicySettings
+{
+    public LocExceptionHandler MarkupExceptionHandler { get; set; } = LocExceptionPolicy.Throw;
+    public LocExceptionHandler LocalizerExceptionHandler { get; set; } = LocExceptionPolicy.Throw;
+    public LocExceptionHandler ResourceExceptionHandler { get; set; } = LocExceptionPolicy.Throw;
 }

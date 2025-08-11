@@ -14,17 +14,21 @@
 
 using System.Windows.Media.Animation;
 
-namespace Kaspirin.UI.Framework.UiKit.Animation.Markup.Easing
-{
-    public sealed class BackEasingExtension : EasingExtensionBase
-    {
-        public double Amplitude { get; set; }
+namespace Kaspirin.UI.Framework.UiKit.Animation.Markup.Easing;
 
-        protected override IEasingFunction CreateEasing()
-            => new BackEase
-            {
-                Amplitude = Amplitude,
-                EasingMode = Mode
-            };
-    }
+/// <summary>
+///     Extending the markup for initializing the <see cref="BackEase" /> class in XAML.
+/// </summary>
+public sealed class BackEasingExtension : EasingExtensionBase
+{
+    /// <inheritdoc cref="BackEase.Amplitude"/>
+    public double Amplitude { get; set; }
+
+    /// <inheritdoc/>
+    protected override IEasingFunction CreateEasing()
+        => new BackEase
+        {
+            Amplitude = Amplitude,
+            EasingMode = Mode
+        };
 }

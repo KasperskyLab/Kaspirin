@@ -157,7 +157,7 @@
 						<!--NotificationHint_Icon_Color-->
 						<xsl:call-template name="generateBrushSetter">
 							<xsl:with-param name="propertyId">NotificationHint_Icon_Color</xsl:with-param>
-							<xsl:with-param name="brushName">IconForegroundDanger</xsl:with-param>
+							<xsl:with-param name="brushName">IconBrushDanger</xsl:with-param>
 							<xsl:with-param name="scopeName" select="$id" />
 						</xsl:call-template>
 
@@ -185,7 +185,7 @@
 						<!--NotificationHint_Icon_Color-->
 						<xsl:call-template name="generateBrushSetter">
 							<xsl:with-param name="propertyId">NotificationHint_Icon_Color</xsl:with-param>
-							<xsl:with-param name="brushName">IconForegroundInfo</xsl:with-param>
+							<xsl:with-param name="brushName">IconBrushInfo</xsl:with-param>
 							<xsl:with-param name="scopeName" select="$id" />
 						</xsl:call-template>
 
@@ -213,7 +213,7 @@
 						<!--NotificationHint_Icon_Color-->
 						<xsl:call-template name="generateBrushSetter">
 							<xsl:with-param name="propertyId">NotificationHint_Icon_Color</xsl:with-param>
-							<xsl:with-param name="brushName">IconForegroundPositive</xsl:with-param>
+							<xsl:with-param name="brushName">IconBrushPositive</xsl:with-param>
 							<xsl:with-param name="scopeName" select="$id" />
 						</xsl:call-template>
 
@@ -241,7 +241,7 @@
 						<!--NotificationHint_Icon_Color-->
 						<xsl:call-template name="generateBrushSetter">
 							<xsl:with-param name="propertyId">NotificationHint_Icon_Color</xsl:with-param>
-							<xsl:with-param name="brushName">IconForegroundWarning</xsl:with-param>
+							<xsl:with-param name="brushName">IconBrushWarning</xsl:with-param>
 							<xsl:with-param name="scopeName" select="$id" />
 						</xsl:call-template>
 

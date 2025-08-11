@@ -12,46 +12,149 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-#pragma warning disable KCAIDE0002 // Enum has incorrect suffix
 
 using System;
 
-namespace Kaspirin.UI.Framework.NativeMethods.Api.User32.Enums
+namespace Kaspirin.UI.Framework.NativeMethods.Api.User32.Enums;
+
+/// <summary>
+///     <seealso href="https://learn.microsoft.com/en-us/windows/win32/winmsg/window-styles">Learn more</seealso>.
+/// </summary>
+[Flags]
+public enum WindowStyleFlags : uint
 {
     /// <summary>
-    ///     
-    /// <seealso href="https://learn.microsoft.com/en-us/windows/win32/winmsg/window-styles">Learn more</seealso>.
+    ///     The WS_BORDER constant.
     /// </summary>
-    [Flags]
-    public enum WindowStyleFlags : uint
-    {
-        WS_BORDER = 0x800000,
-        WS_CAPTION = 0xc00000,
-        WS_CHILD = 0x40000000,
-        WS_CHILDWINDOW = WS_CHILD,
-        WS_CLIPCHILDREN = 0x2000000,
-        WS_CLIPSIBLINGS = 0x4000000,
-        WS_DISABLED = 0x8000000,
-        WS_DLGFRAME = 0x400000,
-        WS_GROUP = 0x20000,
-        WS_HSCROLL = 0x100000,
-        WS_ICONIC = WS_MINIMIZE,
-        WS_MAXIMIZE = 0x1000000,
-        WS_MAXIMIZEBOX = 0x10000,
-        WS_MINIMIZE = 0x20000000,
-        WS_MINIMIZEBOX = 0x20000,
-        WS_OVERLAPPED = 0x0,
-        WS_OVERLAPPEDWINDOW = WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU | WS_SIZEBOX | WS_MINIMIZEBOX | WS_MAXIMIZEBOX,
-        WS_POPUP = 0x80000000,
-        WS_POPUPWINDOW = WS_POPUP | WS_BORDER | WS_SYSMENU,
-        WS_SIZEBOX = 0x40000,
-        WS_SYSMENU = 0x80000,
-        WS_TABSTOP = 0x10000,
-        WS_THICKFRAME = WS_SIZEBOX,
-        WS_TILED = WS_OVERLAPPED,
-        WS_TILEDWINDOW = WS_OVERLAPPEDWINDOW,
-        WS_VISIBLE = 0x10000000,
-        WS_VSCROLL = 0x200000
-    }
+    Border = 0x800000,
+
+    /// <summary>
+    ///     The WS_CAPTION constant.
+    /// </summary>
+    Caption = 0xc00000,
+
+    /// <summary>
+    ///     The WS_CHILD constant.
+    /// </summary>
+    Child = 0x40000000,
+
+    /// <summary>
+    ///     The WS_CHILDWINDOW constant.
+    /// </summary>
+    ChildWindow = Child,
+
+    /// <summary>
+    ///     The WS_CLIPCHILDREN constant.
+    /// </summary>
+    ClipChildren = 0x2000000,
+
+    /// <summary>
+    ///     The WS_CLIPSIBLINGS constant.
+    /// </summary>
+    ClipSiblings = 0x4000000,
+
+    /// <summary>
+    ///     The WS_DISABLED constant.
+    /// </summary>
+    Disabled = 0x8000000,
+
+    /// <summary>
+    ///     The WS_DLGFRAME constant.
+    /// </summary>
+    DlgFrame = 0x400000,
+
+    /// <summary>
+    ///     The WS_GROUP constant.
+    /// </summary>
+    Group = 0x20000,
+
+    /// <summary>
+    ///     The WS_HSCROLL constant.
+    /// </summary>
+    HScroll = 0x100000,
+
+    /// <summary>
+    ///     The WS_ICONIC constant.
+    /// </summary>
+    Iconic = Minimize,
+
+    /// <summary>
+    ///     The WS_MAXIMIZE constant.
+    /// </summary>
+    Maximize = 0x1000000,
+
+    /// <summary>
+    ///     The WS_MAXIMIZEBOX constant.
+    /// </summary>
+    MaximizeBox = 0x10000,
+
+    /// <summary>
+    ///     The WS_MINIMIZE constant.
+    /// </summary>
+    Minimize = 0x20000000,
+
+    /// <summary>
+    ///     The WS_MINIMIZEBOX constant.
+    /// </summary>
+    MinimizeBox = 0x20000,
+
+    /// <summary>
+    ///     The WS_OVERLAPPED constant.
+    /// </summary>
+    Overlapped = 0x0,
+
+    /// <summary>
+    ///     The WS_OVERLAPPEDWINDOW constant.
+    /// </summary>
+    OverlappedWindow = Overlapped | Caption | SysMenu | SizeBox | MinimizeBox | MaximizeBox,
+
+    /// <summary>
+    ///     The WS_POPUP constant.
+    /// </summary>
+    Popup = 0x80000000,
+
+    /// <summary>
+    ///     The WS_POPUPWINDOW constant.
+    /// </summary>
+    PopupWindow = Popup | Border | SysMenu,
+
+    /// <summary>
+    ///     The WS_SIZEBOX constant.
+    /// </summary>
+    SizeBox = 0x40000,
+
+    /// <summary>
+    ///     The WS_SYSMENU constant.
+    /// </summary>
+    SysMenu = 0x80000,
+
+    /// <summary>
+    ///     The WS_TABSTOP constant.
+    /// </summary>
+    TabStop = 0x10000,
+
+    /// <summary>
+    ///     The WS_THICKFRAME constant.
+    /// </summary>
+    ThickFrame = SizeBox,
+
+    /// <summary>
+    ///     The WS_TILED constant.
+    /// </summary>
+    Tiled = Overlapped,
+
+    /// <summary>
+    ///     The WS_TILEDWINDOW constant.
+    /// </summary>
+    TiledWindow = OverlappedWindow,
+
+    /// <summary>
+    ///     The WS_VISIBLE constant.
+    /// </summary>
+    Visible = 0x10000000,
+
+    /// <summary>
+    ///     The WS_VSCROLL constant.
+    /// </summary>
+    VScroll = 0x200000,
 }

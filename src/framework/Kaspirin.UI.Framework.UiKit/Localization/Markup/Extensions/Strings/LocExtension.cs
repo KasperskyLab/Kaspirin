@@ -12,132 +12,133 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Data;
 
-namespace Kaspirin.UI.Framework.UiKit.Localization.Markup.Extensions.Strings
+namespace Kaspirin.UI.Framework.UiKit.Localization.Markup.Extensions.Strings;
+
+public class LocExtension : BaseLocalizationMarkupExtension
 {
-    public class LocExtension : LocalizationMarkupBase
+    public LocExtension() : this(string.Empty) { }
+
+    public LocExtension(string key) : base(key) { }
+
+    public LocExtension(string key, string scope) : base(key, scope) { }
+
+    public LocParameter? Param { get; set; }
+
+    public LocParameterCollection? Params { get; set; }
+
+    public LocOption? Option { get; set; }
+
+    public string? ProvideConstantStringValue()
     {
-        public LocExtension() : this(string.Empty) { }
+        return ProvideValue()?.ToString();
+    }
 
-        public LocExtension(string key) : base(key) { }
+    protected override bool HasParameters => Param != null || Params?.Any() == true;
 
-        public LocExtension(string key, string scope) : base(key, scope) { }
+    protected override object ProvideFallback()
+    {
+        return $"[Unresolved Key='{Key}' Scope='{Scope}']";
+    }
 
-        public LocParameter? Param { get; set; }
-
-        public LocParameterCollection? Params { get; set; }
-
-        public LocOption? Option { get; set; }
-
-        public string? ProvideConstantStringValue()
+    protected override object? ProvideValue(object?[] parameterValues)
+    {
+        if (Params?.IgnoreUnsetParameters == false)
         {
-            return ProvideValue()?.ToString();
-        }
-
-        protected override bool HasParameters => Param != null || Params?.Any() == true;
-
-        protected override object ProvideFallback()
-        {
-            return $"[Unresolved Key='{Key}' Scope='{Scope}']";
-        }
-
-        protected override object? ProvideValue(object?[] parameterValues)
-        {
-            if (Params?.IgnoreUnsetParameters == false)
-            {
-                if (parameterValues.Any(p => p == DependencyProperty.UnsetValue) || ResourceDelivery.HasUnsetParameters(parameterValues))
-                {
-                    return DependencyProperty.UnsetValue;
-                }
-            }
-            else if (parameterValues.All(p => p == DependencyProperty.UnsetValue || ResourceDelivery.IsUnsetParameter(p)))
+            if (parameterValues.Any(p => p == DependencyProperty.UnsetValue) || ResourceDelivery.HasUnsetParameters(parameterValues))
             {
                 return DependencyProperty.UnsetValue;
             }
-
-            var paramKeys = GetAllParameters().Select(p => p.ParamName).ToList();
-
-            var parameters = paramKeys
-                .Zip(parameterValues, (key, value) => new { key, value })
-                .ToDictionary(kvp => kvp.key, kvp => kvp.value);
-
-            return ProvideLocalizer<IStringLocalizer>().GetString(Key, parameters, Option?.LocalizerOption);
+        }
+        else if (parameterValues.All(p => p == DependencyProperty.UnsetValue || ResourceDelivery.IsUnsetParameter(p)))
+        {
+            return DependencyProperty.UnsetValue;
         }
 
-        protected override object? ProvideValue()
-        {
-            var allParams = GetAllParameters();
+        var paramKeys = GetAllParameters().Select(p => p.ParamName).ToList();
 
-            var badParams = allParams.Where(p => p.ParamSource?.Source is not string).ToList();
-            if (badParams.Any())
+        var parameters = paramKeys
+            .Zip(parameterValues, (key, value) => new { key, value })
+            .ToDictionary(kvp => kvp.key, kvp => kvp.value);
+
+        return ProvideLocalizer<IStringLocalizer>().GetString(Key, parameters, Option?.LocalizerOption);
+    }
+
+    protected override object? ProvideValue()
+    {
+        var allParams = GetAllParameters();
+
+        var badParams = allParams.Where(p => p.ParamSource?.Source is not string).ToList();
+        if (badParams.Any())
+        {
+            throw new LocalizationMarkupException($"Can't get parameters values of non constants parameters: {string.Join(", ", badParams.Select(p => p.ParamName))}");
+        }
+
+        var paramsDictionary = allParams.ToDictionary(p => p.ParamName, p => p.ParamSource?.Source);
+
+        return ProvideLocalizer<IStringLocalizer>().GetString(Key, paramsDictionary, Option?.LocalizerOption);
+    }
+
+    protected override IList<Binding> PrepareParameterBindings()
+    {
+        var allParams = GetAllParameters();
+
+        var paramsBindings = new List<Binding>(allParams.Count);
+
+        foreach (var loc2Parameter in allParams)
+        {
+            var binding = loc2Parameter.ParamSource;
+
+            if (binding == null)
             {
-                throw new LocalizationMarkupException($"Can't get parameters values of non constants parameters: {string.Join(", ", badParams.Select(p => p.ParamName))}");
+                continue;
             }
 
-            return ProvideLocalizer<IStringLocalizer>()
-                    .GetString(Key, allParams.ToDictionary(p => p.ParamName, p => p.ParamSource?.Source), Option?.LocalizerOption);
-        }
-
-        protected override IList<Binding> PrepareParameterBindings()
-        {
-            var allParams = GetAllParameters();
-
-            var paramsBindings = new List<Binding>(allParams.Count);
-
-            foreach (var loc2Parameter in allParams)
+            if (binding.Source is ResourceDelivery resourceDelivery)
             {
-                var binding = loc2Parameter.ParamSource;
-
-                if (binding == null)
+                var newResourceDelivery = resourceDelivery.CreateCopyResourceDelivery();
+                binding = newResourceDelivery.CreateParameterBinding();
+            }
+            else
+            {
+                binding = binding.Clone();
+                if (binding.Converter == null && !string.IsNullOrEmpty(binding.StringFormat))
                 {
-                    continue;
-                }
-
-                if (binding.Source is ResourceDelivery resourceDelivery)
-                {
-                    var newResourceDelivery = resourceDelivery.CreateCopyResourceDelivery();
-                    binding = newResourceDelivery.CreateParameterBinding();
-                }
-                else
-                {
-                    binding = binding.Clone();
-                    if (binding.Converter == null && !string.IsNullOrEmpty(binding.StringFormat))
+                    binding.Converter = new DelegateConverter(sourceValue =>
                     {
-                        binding.Converter = new DelegateConverter(sourceValue =>
-                        {
-                            return string.Format(binding.StringFormat, sourceValue);
-                        });
-                    }
+                        return string.Format(binding.StringFormat, sourceValue);
+                    });
                 }
-
-                paramsBindings.Add(binding);
             }
 
-            return paramsBindings;
+            paramsBindings.Add(binding);
         }
 
-        protected ICollection<LocParameter> GetAllParameters()
+        return paramsBindings;
+    }
+
+    protected ICollection<LocParameter> GetAllParameters()
+    {
+        if (Param != null)
         {
-            if (Param != null)
-            {
-                return new List<LocParameter>(1) { Param };
-            }
-
-            if (Params != null)
-            {
-                return Params;
-            }
-
-            return new List<LocParameter>(0);
+            return new List<LocParameter>(1) { Param };
         }
 
-        protected override ILocalizer PrepareLocalizer()
+        if (Params != null)
         {
-            return LocalizationManager.Current.LocalizerFactory.Resolve<IStringLocalizer>(Scope);
+            return Params;
         }
+
+        return new List<LocParameter>(0);
+    }
+
+    protected override ILocalizer PrepareLocalizer()
+    {
+        return LocalizationManager.GetLocalizer<IStringLocalizer>(Scope);
     }
 }

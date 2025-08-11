@@ -12,22 +12,45 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
+namespace Kaspirin.UI.Framework.NativeMethods.Api.User32.Enums;
 
-namespace Kaspirin.UI.Framework.NativeMethods.Api.User32.Enums
+/// <summary>
+///     <seealso href="https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-getwindowlongw">Learn more</seealso>.
+/// </summary>
+public enum WindowPropertyIndex : int
 {
     /// <summary>
-    ///     
-    /// <seealso href="https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-getwindowlongw">Learn more</seealso>.
+    ///     The GWL_WNDPROC constant.
     /// </summary>
-    public enum WindowPropertyIndex : int
-    {
-        GWL_WNDPROC = -4,
-        GWL_HINSTANCE = -6,
-        GWL_HWNDPARENT = -8,
-        GWL_ID = -12,
-        GWL_STYLE = -16,
-        GWL_EXSTYLE = -20,
-        GWL_USERDATA = -21,
-    }
+    WndProc = -4,
+
+    /// <summary>
+    ///     The GWL_HINSTANCE constant.
+    /// </summary>
+    HInstance = -6,
+
+    /// <summary>
+    ///     The GWL_HWNDPARENT constant.
+    /// </summary>
+    HWndParent = -8,
+
+    /// <summary>
+    ///     The GWL_ID constant.
+    /// </summary>
+    Id = -12,
+
+    /// <summary>
+    ///     The GWL_STYLE constant.
+    /// </summary>
+    Style = -16,
+
+    /// <summary>
+    ///     The GWL_EXSTYLE constant.
+    /// </summary>
+    ExStyle = -20,
+
+    /// <summary>
+    ///     The GWL_USERDATA constant.
+    /// </summary>
+    UserData = -21,
 }

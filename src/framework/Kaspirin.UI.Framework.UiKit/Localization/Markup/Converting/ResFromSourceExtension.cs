@@ -17,65 +17,64 @@ using System.Windows;
 using System.Windows.Data;
 using System.Windows.Markup;
 
-namespace Kaspirin.UI.Framework.UiKit.Localization.Markup.Converting
+namespace Kaspirin.UI.Framework.UiKit.Localization.Markup.Converting;
+
+public abstract class ResFromSourceExtension : MarkupExtension, IResourceProvider, IBindingProvider
 {
-    public abstract class ResFromSourceExtension : MarkupExtension, IResourceProvider, IBindingProvider
+    public Binding? Source { get; set; }
+
+    public abstract object? GetResource(object? key);
+
+    public override object? ProvideValue(IServiceProvider serviceProvider)
     {
-        public Binding? Source { get; set; }
+        Guard.ArgumentIsNotNull(serviceProvider);
 
-        public abstract object? GetResource(object? key);
+        return ProvideBindingExpression(serviceProvider);
+    }
 
-        public override object? ProvideValue(IServiceProvider serviceProvider)
+    public BindingBase ProvideBinding()
+    {
+        return ProvideBinding(null);
+    }
+
+    public BindingBase ProvideBinding(object? targetObject)
+    {
+        Guard.IsNotNull(Source, "Source != null");
+
+        var resourceDelivery = new ResourceDelivery(this, Source.Clone());
+        var binding = resourceDelivery.CreateBinding(targetObject);
+        return binding;
+    }
+
+    private object? ProvideBindingExpression(IServiceProvider serviceProvider)
+    {
+        try
         {
-            Guard.ArgumentIsNotNull(serviceProvider);
+            var provideValueTarget = (IProvideValueTarget?)serviceProvider.GetService(typeof(IProvideValueTarget));
+            var targetObject = provideValueTarget?.TargetObject;
 
-            return ProvideBindingExpression(serviceProvider);
-        }
-
-        public BindingBase ProvideBinding()
-        {
-            return ProvideBinding(null);
-        }
-
-        public BindingBase ProvideBinding(object? targetObject)
-        {
-            Guard.IsNotNull(Source, "Source != null");
-
-            var resourceDelivery = new ResourceDelivery(this, Source.Clone());
-            var binding = resourceDelivery.CreateBinding(targetObject);
-            return binding;
-        }
-
-        private object? ProvideBindingExpression(IServiceProvider serviceProvider)
-        {
-            try
+            if (targetObject is DependencyObject or Setter or MarkupExtension)
             {
-                var provideValueTarget = (IProvideValueTarget?)serviceProvider.GetService(typeof(IProvideValueTarget));
-                var targetObject = provideValueTarget?.TargetObject;
+                var binding = ProvideBinding(targetObject);
 
-                if (targetObject is DependencyObject or Setter or MarkupExtension)
+                return targetObject switch
                 {
-                    var binding = ProvideBinding(targetObject);
-
-                    return targetObject switch
-                    {
-                        Setter => binding,
-                        _ => binding.ProvideValue(serviceProvider)
-                    };
-                }
-
-                // When a markup extension is evaluated inside a template, TargetObject is
-                // an instance of System.Windows.SharedDp, an internal WPF class.
-                // For the markup extension to be able to access its target, it has to be evaluated
-                // when the template is applied. So we need to defer its evaluation until this time.
-                return this;
-
+                    Setter => binding,
+                    _ => binding.ProvideValue(serviceProvider)
+                };
             }
-            catch (Exception e)
-            {
-                e.ProcessAsMarkupException("Failed to provide value.");
-                return null;
-            }
+
+            // When a markup extension is evaluated inside a template, TargetObject is
+            // an instance of System.Windows.SharedDp, an internal WPF class.
+            // For the markup extension to be able to access its target, it has to be evaluated
+            // when the template is applied. So we need to defer its evaluation until this time.
+            return this;
+
+        }
+        catch (Exception e)
+        {
+            e.ProcessAsMarkupException("Failed to provide value.");
+            return null;
         }
     }
 }

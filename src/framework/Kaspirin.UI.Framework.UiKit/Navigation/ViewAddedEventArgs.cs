@@ -14,18 +14,17 @@
 
 using System;
 
-namespace Kaspirin.UI.Framework.UiKit.Navigation
+namespace Kaspirin.UI.Framework.UiKit.Navigation;
+
+public sealed class ViewAddedEventArgs : EventArgs
 {
-    public sealed class ViewAddedEventArgs : EventArgs
+    internal ViewAddedEventArgs(string regionName, RegionView addedView)
     {
-        internal ViewAddedEventArgs(string regionName, RegionView addedView)
-        {
-            RegionName = Guard.EnsureArgumentIsNotNullOrEmpty(regionName);
-            AddedView = Guard.EnsureArgumentIsNotNull(addedView);
-        }
-
-        public string RegionName { get; }
-
-        public RegionView AddedView { get; }
+        RegionName = Guard.EnsureArgumentIsNotNullOrEmpty(regionName);
+        AddedView = Guard.EnsureArgumentIsNotNull(addedView);
     }
+
+    public string RegionName { get; }
+
+    public RegionView AddedView { get; }
 }

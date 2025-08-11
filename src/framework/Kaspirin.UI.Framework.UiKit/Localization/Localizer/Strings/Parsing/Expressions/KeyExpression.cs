@@ -14,15 +14,14 @@
 
 using System;
 
-namespace Kaspirin.UI.Framework.UiKit.Localization.Localizer.Strings.Parsing.Expressions
+namespace Kaspirin.UI.Framework.UiKit.Localization.Localizer.Strings.Parsing.Expressions;
+
+public sealed class KeyExpression : IExpression
 {
-    public class KeyExpression : IExpression
-    {
-        public KeyExpression(string key) => Key = key;
+    public KeyExpression(string key) => Key = key;
 
-        public string Key { get; }
+    public string Key { get; }
 
-        public string Resolve(Func<string, ValueExpression> keyResolver, Func<string, object?> variableResolver) =>
-            keyResolver(Key).Resolve(keyResolver, variableResolver);
-    }
+    public string Resolve(Func<string, ValueExpression> keyResolver, Func<string, object?> variableResolver) =>
+        keyResolver(Key).Resolve(keyResolver, variableResolver);
 }

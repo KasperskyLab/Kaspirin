@@ -18,90 +18,89 @@ using System.Text;
 using System.Windows.Documents;
 using System.Windows.Media;
 
-namespace Kaspirin.UI.Framework.UiKit.Controls
+namespace Kaspirin.UI.Framework.UiKit.Controls;
+
+public sealed class TextInputMaskPlaceholder : TextInputPlaceholder
 {
-    public sealed class TextInputMaskPlaceholder : TextInputPlaceholder
+    public TextInputMaskPlaceholder(IEnumerable<TextInputMaskItem> maskItems)
     {
-        public TextInputMaskPlaceholder(IEnumerable<TextInputMaskItem> maskItems)
+        _maskItems = maskItems.ToArray();
+        _displayText = new string(maskItems.Select(x => x.DisplayChar).ToArray());
+    }
+
+    public TextInputMaskItem[] GetMaskItems()
+        => _maskItems.ToArray();
+
+    public override IEnumerable<Inline> GetPlaceholderText(string? value, bool isRTL)
+    {
+        value ??= string.Empty;
+
+        if (isRTL)
         {
-            _maskItems = maskItems.ToArray();
-            _displayText = new string(maskItems.Select(x => x.DisplayChar).ToArray());
-        }
-
-        public TextInputMaskItem[] GetMaskItems()
-            => _maskItems.ToArray();
-
-        public override IEnumerable<Inline> GetPlaceholderText(string? value, bool isRTL)
-        {
-            value ??= string.Empty;
-
-            if (isRTL)
+            if (value.Length == 0)
             {
-                if (value.Length == 0)
-                {
-                    var visibleRun = new Run(_displayText);
-                    return new[] { visibleRun };
-                }
-                else
-                {
-                    var invisibleRun = new Run(_displayText) { Foreground = Brushes.Transparent };
-                    return new[] { invisibleRun };
-                }
+                var visibleRun = new Run(_displayText);
+                return new[] { visibleRun };
             }
             else
             {
-                var invisibleRun = new Run(value) { Foreground = Brushes.Transparent };
-                var visibleRun = new Run(_displayText.Substring(value.Length));
-
-                return new[] { invisibleRun, visibleRun };
+                var invisibleRun = new Run(_displayText) { Foreground = Brushes.Transparent };
+                return new[] { invisibleRun };
             }
         }
-
-        public override string? FilterInputText(string? inputText)
+        else
         {
-            if (inputText == null)
+            var invisibleRun = new Run(value) { Foreground = Brushes.Transparent };
+            var visibleRun = new Run(_displayText.Substring(value.Length));
+
+            return new[] { invisibleRun, visibleRun };
+        }
+    }
+
+    public override string? FilterInputText(string? inputText)
+    {
+        if (inputText == null)
+        {
+            return null;
+        }
+
+        if (inputText.Length == 0)
+        {
+            return inputText;
+        }
+
+        var inputCharStack = new Stack<char>(inputText.Reverse());
+        var inputStringBuilder = new StringBuilder();
+
+        foreach (var maskItem in _maskItems)
+        {
+            if (maskItem is TextInputMaskStaticItem staticItem)
             {
-                return null;
+                inputStringBuilder.Append(staticItem.DisplayChar);
             }
 
-            if (inputText.Length == 0)
+            if (maskItem is TextInputMaskRegexItem regexItem)
             {
-                return inputText;
-            }
-
-            var inputCharStack = new Stack<char>(inputText.Reverse());
-            var inputStringBuilder = new StringBuilder();
-
-            foreach (var maskItem in _maskItems)
-            {
-                if (maskItem is TextInputMaskStaticItem staticItem)
+                while (inputCharStack.Count != 0)
                 {
-                    inputStringBuilder.Append(staticItem.DisplayChar);
-                }
-
-                if (maskItem is TextInputMaskRegexItem regexItem)
-                {
-                    while (inputCharStack.Count != 0)
+                    var inputChar = inputCharStack.Pop();
+                    if (regexItem.Match(inputChar, out var result))
                     {
-                        var inputChar = inputCharStack.Pop();
-                        if (regexItem.Match(inputChar, out var result))
-                        {
-                            inputStringBuilder.Append(result);
-                            break;
-                        }
+                        inputStringBuilder.Append(result);
+                        break;
                     }
                 }
-
-                if (inputCharStack.Count == 0)
-                {
-                    break;
-                }
             }
 
-            return inputStringBuilder.ToString();
+            if (inputCharStack.Count == 0)
+            {
+                break;
+            }
         }
 
-        private readonly TextInputMaskItem[] _maskItems;
-        private readonly string _displayText;
+        return inputStringBuilder.ToString();
     }
+
+    private readonly TextInputMaskItem[] _maskItems;
+    private readonly string _displayText;
 }

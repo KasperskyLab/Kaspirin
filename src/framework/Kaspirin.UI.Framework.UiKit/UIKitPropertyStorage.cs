@@ -16,42 +16,45 @@ using System;
 using System.Collections.Concurrent;
 using System.Windows;
 
-namespace Kaspirin.UI.Framework.UiKit
+namespace Kaspirin.UI.Framework.UiKit;
+
+internal static class UIKitPropertyStorage
 {
-    internal static class UIKitPropertyStorage
+    public static DependencyProperty GetOrCreate(string propertyName, Type propertyType, object? defaultValue = null)
     {
-        public static DependencyProperty GetOrCreate(string propertyName, Type propertyType, object? defaultValue = null)
+        Guard.ArgumentIsNotNullOrEmpty(propertyName);
+        Guard.ArgumentIsNotNull(propertyType);
+
+        var property = _propertyStorage.GetOrAdd(propertyName, name =>
         {
-            Guard.ArgumentIsNotNullOrEmpty(propertyName);
-            Guard.ArgumentIsNotNull(propertyType);
+            defaultValue ??= (propertyType.IsValueType ? Activator.CreateInstance(propertyType) : null);
 
-            var property = _propertyStorage.GetOrAdd(propertyName, name =>
-            {
-                defaultValue ??= (propertyType.IsValueType ? Activator.CreateInstance(propertyType) : null);
+            return DependencyProperty.RegisterAttached(
+                name,
+                propertyType,
+                typeof(UIKitPropertyStorage),
+                new PropertyMetadata(defaultValue));
+        });
+        if (property.PropertyType != propertyType)
+        {
+            throw new InvalidOperationException(
+                $"Property '{propertyName}' already registered with type '{property.PropertyType}'. Expected type '{propertyType}'");
+        }
 
-                return DependencyProperty.RegisterAttached(name, propertyType, typeof(UIKitPropertyStorage), new PropertyMetadata(defaultValue));
-            });
-            if (property.PropertyType != propertyType)
-            {
-                throw new InvalidOperationException(
-                    $"Property '{propertyName}' already registered with type '{property.PropertyType}'. Expected type '{propertyType}'");
-            }
+        return property;
+    }
 
+    public static DependencyProperty Get(string propertyName)
+    {
+        Guard.ArgumentIsNotNullOrEmpty(propertyName);
+
+        if (_propertyStorage.TryGetValue(propertyName, out var property))
+        {
             return property;
         }
 
-        public static DependencyProperty Get(string propertyName)
-        {
-            Guard.ArgumentIsNotNullOrEmpty(propertyName);
-
-            if (_propertyStorage.TryGetValue(propertyName, out var property))
-            {
-                return property;
-            }
-
-            throw new InvalidOperationException($"Property '{propertyName}' is not registered'");
-        }
-
-        private static readonly ConcurrentDictionary<string, DependencyProperty> _propertyStorage = new();
+        throw new InvalidOperationException($"Property '{propertyName}' is not registered'");
     }
+
+    private static readonly ConcurrentDictionary<string, DependencyProperty> _propertyStorage = new();
 }

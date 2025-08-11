@@ -33,10 +33,11 @@
 		<xs:attribute name="Height" type="xs:decimal" use="required"/>
 		<xs:attribute name="Id" type="xs:string" use="required"/>
 		<xs:attribute name="IsAutoRTL" type="xs:boolean" use="required"/>
-		<xs:attribute name="Name" type="xs:string" use="optional"/>
+		<xs:attribute name="Name" type="xs:string" use="required"/>
 		<xs:attribute name="OriginName" type="xs:string" use="required"/>
+		<xs:attribute name="Prefix" type="xs:string" use="optional"/>
 		<xs:attribute name="Product" type="xs:string" use="required"/>
 		<xs:attribute name="Scope" type="xs:string" use="required"/>
-		<xs:attribute name="Width" type="xs:decimal" use="optional"/>
+		<xs:attribute name="Width" type="xs:decimal" use="required"/>
 	</xs:attributeGroup>
 </xs:schema>

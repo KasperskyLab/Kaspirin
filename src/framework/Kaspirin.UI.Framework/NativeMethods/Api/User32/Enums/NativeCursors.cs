@@ -12,31 +12,90 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
+namespace Kaspirin.UI.Framework.NativeMethods.Api.User32.Enums;
 
-namespace Kaspirin.UI.Framework.NativeMethods.Api.User32.Enums
+/// <summary>
+///     <seealso href="https://learn.microsoft.com/en-us/windows/win32/menurc/about-cursors">Learn more</seealso>.
+/// </summary>
+public enum NativeCursors : uint
 {
     /// <summary>
-    ///     
-    /// <seealso href="https://learn.microsoft.com/en-us/windows/win32/menurc/about-cursors">Learn more</seealso>.
+    ///     The IDC_ARROW constant.
     /// </summary>
-    public enum NativeCursors : uint
-    {
-        IDC_ARROW = 32512,
-        IDC_IBEAM = 32513,
-        IDC_WAIT = 32514,
-        IDC_CROSS = 32515,
-        IDC_UPARROW = 32516,
-        IDC_SIZENWSE = 32642,
-        IDC_SIZENESW = 32643,
-        IDC_SIZEWE = 32644,
-        IDC_SIZENS = 32645,
-        IDC_SIZEALL = 32646,
-        IDC_NO = 32648,
-        IDC_HAND = 32649,
-        IDC_APPSTARTING = 32650,
-        IDC_HELP = 32651,
-        IDC_PIN = 32671,
-        IDC_PERSON = 32672,
-    }
+    Arrow = 32512,
+
+    /// <summary>
+    ///     The IDC_IBEAM constant.
+    /// </summary>
+    IBeam = 32513,
+
+    /// <summary>
+    ///     The IDC_WAIT constant.
+    /// </summary>
+    Wait = 32514,
+
+    /// <summary>
+    ///     The IDC_CROSS constant.
+    /// </summary>
+    Cross = 32515,
+
+    /// <summary>
+    ///     The IDC_UPARROW constant.
+    /// </summary>
+    Uparrow = 32516,
+
+    /// <summary>
+    ///     The IDC_SIZENWSE constant.
+    /// </summary>
+    SizeNWSE = 32642,
+
+    /// <summary>
+    ///     The IDC_SIZENESW constant.
+    /// </summary>
+    SizeNESW = 32643,
+
+    /// <summary>
+    ///     The IDC_SIZEWE constant.
+    /// </summary>
+    SizeWE = 32644,
+
+    /// <summary>
+    ///     The IDC_SIZENS constant.
+    /// </summary>
+    SizeNS = 32645,
+
+    /// <summary>
+    ///     The IDC_SIZEALL constant.
+    /// </summary>
+    SizeAll = 32646,
+
+    /// <summary>
+    ///     The IDC_NO constant.
+    /// </summary>
+    No = 32648,
+
+    /// <summary>
+    ///     The IDC_HAND constant.
+    /// </summary>
+    Hand = 32649,
+
+    /// <summary>
+    ///     The IDC_APPSTARTING constant.
+    /// </summary>
+    AppStarting = 32650,
+
+    /// <summary>
+    ///     The IDC_HELP constant.
+    /// </summary>
+    Help = 32651,
+
+    /// <summary>
+    ///     The IDC_PIN constant.
+    /// </summary>
+    Pin = 32671,
+
+    /// <summary>
+    ///     The IDC_PERSON constant.
+    /// </summary>
+    Person = 32672,
 }

@@ -18,51 +18,50 @@ using System.Windows;
 using System.Windows.Data;
 using System.Windows.Markup;
 
-namespace Kaspirin.UI.Framework.UiKit.MarkupExtensions.DataBinding
+namespace Kaspirin.UI.Framework.UiKit.MarkupExtensions.DataBinding;
+
+public sealed class ConditionalBindingExtension : MarkupExtension
 {
-    public sealed class ConditionalBindingExtension : MarkupExtension
+    public BindingBase? Condition { get; set; }
+
+    public BindingBase? True { get; set; }
+
+    public BindingBase? False { get; set; }
+
+    public override object ProvideValue(IServiceProvider serviceProvider)
     {
-        public BindingBase? Condition { get; set; }
-
-        public BindingBase? True { get; set; }
-
-        public BindingBase? False { get; set; }
-
-        public override object ProvideValue(IServiceProvider serviceProvider)
+        if (Condition is null || True is null || False is null)
         {
-            if (Condition is null || True is null || False is null)
+            return DependencyProperty.UnsetValue;
+        }
+
+        var multibinding = new MultiBinding
+        {
+            Converter = new ConditionalBindingConverter()
+        };
+
+        multibinding.Bindings.Add(Condition);
+        multibinding.Bindings.Add(True);
+        multibinding.Bindings.Add(False);
+
+        return multibinding.ProvideValue(serviceProvider);
+    }
+
+    private sealed class ConditionalBindingConverter : MultiValueConverterMarkupExtension<ConditionalBindingConverter>
+    {
+        public override object? Convert(object?[] values, Type targetType, object? parameter, CultureInfo culture)
+        {
+            if (values?.Length != 3 || values[0] is not bool condition)
             {
                 return DependencyProperty.UnsetValue;
             }
 
-            var multibinding = new MultiBinding
-            {
-                Converter = new ConditionalBindingConverter()
-            };
+            var trueBinding = values[1];
+            var falseBinding = values[2];
 
-            multibinding.Bindings.Add(Condition);
-            multibinding.Bindings.Add(True);
-            multibinding.Bindings.Add(False);
-
-            return multibinding.ProvideValue(serviceProvider);
-        }
-
-        private sealed class ConditionalBindingConverter : MultiValueConverterMarkupExtension<ConditionalBindingConverter>
-        {
-            public override object? Convert(object?[] values, Type targetType, object? parameter, CultureInfo culture)
-            {
-                if (values?.Length != 3 || values[0] is not bool condition)
-                {
-                    return DependencyProperty.UnsetValue;
-                }
-
-                var trueBinding = values[1];
-                var falseBinding = values[2];
-
-                return condition
-                    ? trueBinding
-                    : falseBinding;
-            }
+            return condition
+                ? trueBinding
+                : falseBinding;
         }
     }
 }

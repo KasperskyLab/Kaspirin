@@ -17,21 +17,19 @@
 using System;
 using System.Runtime.InteropServices;
 
-namespace Kaspirin.UI.Framework.NativeMethods.Api.User32.Structs
+namespace Kaspirin.UI.Framework.NativeMethods.Api.User32.Structs;
+
+/// <summary>
+///     <seealso href="https://learn.microsoft.com/en-us/windows/win32/api/winuser/ns-winuser-windowpos">Learn more</seealso>.
+/// </summary>
+[StructLayout(LayoutKind.Sequential)]
+public struct WindowPos
 {
-    /// <summary>
-    ///     
-    /// <seealso href="https://learn.microsoft.com/en-us/windows/win32/api/winuser/ns-winuser-windowpos">Learn more</seealso>.
-    /// </summary>
-    [StructLayout(LayoutKind.Sequential)]
-    public struct WindowPos
-    {
-        public IntPtr hWnd;
-        public IntPtr hWndInsertAfter;
-        public int x;
-        public int y;
-        public int cx;
-        public int cy;
-        public WindowPositionFlags flags;
-    }
+    public IntPtr hWnd;
+    public IntPtr hWndInsertAfter;
+    public int x;
+    public int y;
+    public int cx;
+    public int cy;
+    public WindowPositionFlags flags;
 }

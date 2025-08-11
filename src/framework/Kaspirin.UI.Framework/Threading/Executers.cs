@@ -13,129 +13,115 @@
 // limitations under the License.
 
 using System;
-using System.ComponentModel;
 using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Threading;
 
-namespace Kaspirin.UI.Framework.Threading
+namespace Kaspirin.UI.Framework.Threading;
+
+/// <summary>
+///     Executes delegates in the UI thread.
+/// </summary>
+public static class Executers
 {
     /// <summary>
-    ///     Executes delegates in the UI thread.
+    ///     The logic responsible for executing delegates.
     /// </summary>
-    public static class Executers
+    public static IUiThreadExecutor Implementation { get; set; } = new WpfUiThreadExecutor();
+
+    /// <summary>
+    ///     Executes the <paramref name="action" /> delegate in the UI thread synchronously or asynchronously,
+    ///     depending on the value of <paramref name="sync" />.
+    /// </summary>
+    /// <param name="action">
+    ///     A delegate to execute.
+    /// </param>
+    /// <param name="sync">
+    ///     Execution mode. If <see langword="true" /> - execute synchronously, otherwise - asynchronously.
+    /// </param>
+    /// <param name="priority">
+    ///     Priority of execution.
+    /// </param>
+    public static void InUiSyncOrAsync(this Action action, bool sync, DispatcherPriority priority = DispatcherPriority.Normal)
     {
-        /// <summary>
-        ///     Executes the <paramref name="action" /> delegate in the UI thread synchronously or asynchronously,
-        ///     depending on the value of <paramref name="sync" />.
-        /// </summary>
-        /// <param name="action">
-        ///     A delegate to execute.
-        /// </param>
-        /// <param name="sync">
-        ///     Execution mode. If <see langword="true" /> - execute synchronously, otherwise - asynchronously.
-        /// </param>
-        /// <param name="priority">
-        ///     Priority of execution.
-        /// </param>
-        public static void InUiSyncOrAsync(this Action action, bool sync, DispatcherPriority priority = DispatcherPriority.Normal)
+        if (sync)
         {
-            if (sync)
-            {
-                InUiSync(action, priority);
-            }
-            else
-            {
-                InUiAsync(action, priority);
-            }
+            InUiSync(action, priority);
         }
-
-        /// <summary>
-        ///     Executes the <paramref name="action" /> delegate in the UI thread synchronously or asynchronously,
-        ///     depending on which thread the method is called in. If the method is called in the UI thread,
-        ///     then synchronously, otherwise asynchronously.
-        /// </summary>
-        /// <param name="action">
-        ///     A delegate to execute.
-        /// </param>
-        /// <param name="priority">
-        ///     Priority of execution.
-        /// </param>
-        public static void InUiSyncOrAsync(this Action action, DispatcherPriority priority = DispatcherPriority.Normal)
+        else
         {
-            var needExecuteSync = Application.Current?.CheckAccess() is true;
-
-            InUiSyncOrAsync(action, needExecuteSync, priority);
+            InUiAsync(action, priority);
         }
+    }
 
-        /// <summary>
-        ///     The <paramref name="action" /> delegate executes synchronously in the UI thread.
-        /// </summary>
-        /// <param name="action">
-        ///     A delegate to execute.
-        /// </param>
-        /// <param name="priority">
-        ///     Priority of execution.
-        /// </param>
-        public static void InUiSync(this Action action, DispatcherPriority priority = DispatcherPriority.Normal)
-        {
-            Guard.ArgumentIsNotNull(action);
+    /// <summary>
+    ///     Executes the <paramref name="action" /> delegate in the UI thread synchronously or asynchronously,
+    ///     depending on which thread the method is called in. If the method is called in the UI thread,
+    ///     then synchronously, otherwise asynchronously.
+    /// </summary>
+    /// <param name="action">
+    ///     A delegate to execute.
+    /// </param>
+    /// <param name="priority">
+    ///     Priority of execution.
+    /// </param>
+    public static void InUiSyncOrAsync(this Action action, DispatcherPriority priority = DispatcherPriority.Normal)
+    {
+        var needExecuteSync = Implementation.IsUiThread;
 
-            _uiThreadExecutor.ExecuteInUiThreadSync(action, priority);
-        }
+        InUiSyncOrAsync(action, needExecuteSync, priority);
+    }
 
-        /// <summary>
-        ///     Synchronously executes the <paramref name="action" /> delegate in the UI thread and returns the result.
-        /// </summary>
-        /// <param name="action">
-        ///     A delegate to execute.
-        /// </param>
-        /// <param name="priority">
-        ///     Priority of execution.
-        /// </param>
-        /// <returns>
-        ///     The result of executing <paramref name="action" />.
-        /// </returns>
-        public static TResult InUiSync<TResult>(this Func<TResult> action, DispatcherPriority priority = DispatcherPriority.Normal)
-        {
-            Guard.ArgumentIsNotNull(action);
+    /// <summary>
+    ///     The <paramref name="action" /> delegate executes synchronously in the UI thread.
+    /// </summary>
+    /// <param name="action">
+    ///     A delegate to execute.
+    /// </param>
+    /// <param name="priority">
+    ///     Priority of execution.
+    /// </param>
+    public static void InUiSync(this Action action, DispatcherPriority priority = DispatcherPriority.Normal)
+    {
+        Guard.ArgumentIsNotNull(action);
 
-            return _uiThreadExecutor.ExecuteInUiThreadSync(action, priority);
-        }
+        Implementation.ExecuteInUiThreadSync(action, priority);
+    }
 
-        /// <summary>
-        ///     Asynchronously executes the <paramref name="action" /> delegate in the UI thread.
-        /// </summary>
-        /// <param name="action">
-        ///     A delegate to execute.
-        /// </param>
-        /// <param name="priority">
-        ///     Priority of execution.
-        /// </param>
-        /// <returns>
-        ///     The task in which the delegate will be executed.
-        /// </returns>
-        public static Task InUiAsync(this Action action, DispatcherPriority priority = DispatcherPriority.Normal)
-        {
-            Guard.ArgumentIsNotNull(action);
+    /// <summary>
+    ///     Synchronously executes the <paramref name="action" /> delegate in the UI thread and returns the result.
+    /// </summary>
+    /// <param name="action">
+    ///     A delegate to execute.
+    /// </param>
+    /// <param name="priority">
+    ///     Priority of execution.
+    /// </param>
+    /// <returns>
+    ///     The result of executing <paramref name="action" />.
+    /// </returns>
+    public static TResult InUiSync<TResult>(this Func<TResult> action, DispatcherPriority priority = DispatcherPriority.Normal)
+    {
+        Guard.ArgumentIsNotNull(action);
 
-            return _uiThreadExecutor.ExecuteInUiThreadAsync(action, priority);
-        }
+        return Implementation.ExecuteInUiThreadSync(action, priority);
+    }
 
-        /// <summary>
-        ///     Sets the logic responsible for executing delegates.
-        /// </summary>
-        /// <param name="uiThreadExecutor">
-        ///     Implementation of <see cref="IUiThreadExecutor" />.
-        /// </param>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static void SetImplementation(IUiThreadExecutor uiThreadExecutor)
-        {
-            Guard.ArgumentIsNotNull(uiThreadExecutor);
+    /// <summary>
+    ///     Asynchronously executes the <paramref name="action" /> delegate in the UI thread.
+    /// </summary>
+    /// <param name="action">
+    ///     A delegate to execute.
+    /// </param>
+    /// <param name="priority">
+    ///     Priority of execution.
+    /// </param>
+    /// <returns>
+    ///     The task in which the delegate will be executed.
+    /// </returns>
+    public static Task InUiAsync(this Action action, DispatcherPriority priority = DispatcherPriority.Normal)
+    {
+        Guard.ArgumentIsNotNull(action);
 
-            _uiThreadExecutor = uiThreadExecutor;
-        }
-
-        private static IUiThreadExecutor _uiThreadExecutor = new WpfUiThreadExecutor();
+        return Implementation.ExecuteInUiThreadAsync(action, priority);
     }
 }

@@ -17,26 +17,24 @@
 using System;
 using System.Runtime.InteropServices;
 
-namespace Kaspirin.UI.Framework.NativeMethods.Api.Shell32.Structs
+namespace Kaspirin.UI.Framework.NativeMethods.Api.Shell32.Structs;
+
+/// <summary>
+///     <seealso href="https://learn.microsoft.com/en-us/windows/win32/api/shobjidl_core/ns-shobjidl_core-thumbbutton">Learn more</seealso>.
+/// </summary>
+[StructLayout(LayoutKind.Sequential, Pack = 8, CharSet = CharSet.Unicode)]
+public struct ThumbButton
 {
-    /// <summary>
-    ///     
-    /// <seealso href="https://learn.microsoft.com/en-us/windows/win32/api/shobjidl_core/ns-shobjidl_core-thumbbutton">Learn more</seealso>.
-    /// </summary>
-    [StructLayout(LayoutKind.Sequential, Pack = 8, CharSet = CharSet.Unicode)]
-    public struct ThumbButton
-    {
-        public uint Mask;
+    public uint Mask;
 
-        public uint Id;
+    public uint Id;
 
-        public uint Bitmap;
+    public uint Bitmap;
 
-        public IntPtr hIcon;
+    public IntPtr hIcon;
 
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = PathConstants.MaxPathLength)]
-        public string Tip;
+    [MarshalAs(UnmanagedType.ByValTStr, SizeConst = PathConstants.MaxPathLength)]
+    public string Tip;
 
-        public uint Flags;
-    }
+    public uint Flags;
 }

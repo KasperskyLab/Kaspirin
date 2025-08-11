@@ -15,61 +15,60 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Kaspirin.UI.Framework.Extensions.Objects
+namespace Kaspirin.UI.Framework.Extensions.Objects;
+
+/// <summary>
+///     Extension methods for objects.
+/// </summary>
+public static class ObjectExtensions
 {
     /// <summary>
-    ///     Extension methods for objects.
+    ///     Checks that the <paramref name="this" /> object is contained in the <paramref name="array" /> array.
     /// </summary>
-    public static class ObjectExtensions
-    {
-        /// <summary>
-        ///     Checks that the <paramref name="this" /> object is contained in the <paramref name="array" /> array.
-        /// </summary>
-        /// <typeparam name="T">
-        ///     The type of the object being checked.
-        /// </typeparam>
-        /// <param name="this">
-        ///     The object being checked.
-        /// </param>
-        /// <param name="array">
-        ///     An array of objects.
-        /// </param>
-        /// <param name="comparer">
-        ///     Object comparator.
-        /// </param>
-        /// <returns>
-        ///     Returns <see langword="true" /> if the object is contained in an array, otherwise <see langword="false" />.
-        /// </returns>
-        public static bool In<T>(this T @this, T[] array, IEqualityComparer<T> comparer)
-            => array.Contains(@this, comparer);
+    /// <typeparam name="T">
+    ///     The type of the object being checked.
+    /// </typeparam>
+    /// <param name="this">
+    ///     The object being checked.
+    /// </param>
+    /// <param name="array">
+    ///     An array of objects.
+    /// </param>
+    /// <param name="comparer">
+    ///     Object comparator.
+    /// </param>
+    /// <returns>
+    ///     Returns <see langword="true" /> if the object is contained in an array, otherwise <see langword="false" />.
+    /// </returns>
+    public static bool In<T>(this T @this, T[] array, IEqualityComparer<T> comparer)
+        => array.Contains(@this, comparer);
 
-        /// <inheritdoc cref="In{T}(T, T[], IEqualityComparer{T})"/>
-        public static bool In<T>(this T @this, params T[] array)
-            => array.Contains(@this);
+    /// <inheritdoc cref="In{T}(T, T[], IEqualityComparer{T})"/>
+    public static bool In<T>(this T @this, params T[] array)
+        => array.Contains(@this);
 
-        /// <summary>
-        ///     Checks that the <paramref name="this" /> object is not contained in the <paramref name="array" /> array.
-        /// </summary>
-        /// <typeparam name="T">
-        ///     The type of the object being checked.
-        /// </typeparam>
-        /// <param name="this">
-        ///     The object being checked.
-        /// </param>
-        /// <param name="parameters">
-        ///     An array of objects.
-        /// </param>
-        /// <param name="array">
-        ///     Object comparator.
-        /// </param>
-        /// <returns>
-        ///     Returns <see langword="true" /> if the object is contained in an array, otherwise <see langword="false" />.
-        /// </returns>
-        public static bool NotIn<T>(this T @this, T[] parameters, IEqualityComparer<T> array)
-            => !parameters.Contains(@this, array);
+    /// <summary>
+    ///     Checks that the <paramref name="this" /> object is not contained in the <paramref name="array" /> array.
+    /// </summary>
+    /// <typeparam name="T">
+    ///     The type of the object being checked.
+    /// </typeparam>
+    /// <param name="this">
+    ///     The object being checked.
+    /// </param>
+    /// <param name="parameters">
+    ///     An array of objects.
+    /// </param>
+    /// <param name="array">
+    ///     Object comparator.
+    /// </param>
+    /// <returns>
+    ///     Returns <see langword="true" /> if the object is not contained in the array, otherwise - <see langword="false" />.
+    /// </returns>
+    public static bool NotIn<T>(this T @this, T[] parameters, IEqualityComparer<T> array)
+        => !parameters.Contains(@this, array);
 
-        /// <inheritdoc cref="NotIn{T}(T, T[], IEqualityComparer{T})"/>
-        public static bool NotIn<T>(this T @this, params T[] parameters)
-            => !parameters.Contains(@this);
-    }
+    /// <inheritdoc cref="NotIn{T}(T, T[], IEqualityComparer{T})"/>
+    public static bool NotIn<T>(this T @this, params T[] parameters)
+        => !parameters.Contains(@this);
 }

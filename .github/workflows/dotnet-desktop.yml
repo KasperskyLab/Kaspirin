@@ -17,7 +17,8 @@ jobs:
     runs-on: windows-latest
 
     env:
-      Solution_Name: src\framework\kaspirin.sln
+      Solution_Path: src\framework\kaspirin.sln
+      Configuration: ${{ matrix.configuration }}
 
     steps:
     - name: Checkout
@@ -29,25 +30,27 @@ jobs:
     - name: Install .NET Core
       uses: actions/setup-dotnet@v4
       with:
-        dotnet-version: 8.0.x
+        dotnet-version: 6.0.x
 
     # Add  MSBuild to the PATH: https://github.com/microsoft/setup-msbuild
     - name: Setup MSBuild.exe
       uses: microsoft/setup-msbuild@v2
 
+    # Build all projects in the solution
+    - name: Build solution
+      run: dotnet build $env:Solution_Path -c $env:Configuration
+
     # Execute all unit tests in the solution
     - name: Execute unit tests
-      run: dotnet test --logger trx --results-directory "TestResults-trx"
+      run: dotnet test $env:Solution_Path  -c $env:Configuration --logger trx --results-directory "TestResults-trx"
       
     - name: Upload dotnet test results
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
-        name: dotnet-results-trx
+        name: dotnet-results-trx-${{ env.Configuration }}
         path: TestResults-trx
       if: ${{ always() }}
 
     # Restore the application to populate the obj folder with RuntimeIdentifiers
     - name: Restore the application
-      run: msbuild $env:Solution_Name /t:Restore /p:Configuration=$env:Configuration
-      env:
-        Configuration: ${{ matrix.configuration }}
+      run: msbuild $env:Solution_Path /t:Restore /p:Configuration=$env:Configuration

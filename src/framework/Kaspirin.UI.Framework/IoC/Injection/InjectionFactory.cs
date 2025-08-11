@@ -14,48 +14,47 @@
 
 using System;
 
-namespace Kaspirin.UI.Framework.IoC.Injection
+namespace Kaspirin.UI.Framework.IoC.Injection;
+
+/// <summary>
+///     Allows you to completely override the creation of an object when it is requested from an IoC container.
+/// </summary>
+public sealed class InjectionFactory : InjectionMember
 {
     /// <summary>
-    ///     Allows you to completely override the creation of an object when it is requested from an IoC container.
+    ///     Initializes a new instance of the <see cref="InjectionFactory" /> class.
     /// </summary>
-    public sealed class InjectionFactory : InjectionMember
+    /// <param name="factoryWithOverrides">
+    ///     A factory for creating an object.
+    /// </param>
+    public InjectionFactory(Func<IUnityContainer, object> factoryWithOverrides)
     {
-        /// <summary>
-        ///     Initializes a new instance of the <see cref="InjectionFactory" /> class.
-        /// </summary>
-        /// <param name="factoryWithOverrides">
-        ///     A factory for creating an object.
-        /// </param>
-        public InjectionFactory(Func<IUnityContainer, object> factoryWithOverrides)
-        {
-            _factoryWithOverrides = Guard.EnsureArgumentIsNotNull(factoryWithOverrides);
+        _factoryWithOverrides = Guard.EnsureArgumentIsNotNull(factoryWithOverrides);
 
-            Factory = ResolveFromFactoryWithOverrides;
-        }
-
-        /// <summary>
-        ///     Initializes a new instance of the <see cref="InjectionFactory" /> class.
-        /// </summary>
-        /// <param name="factory">
-        ///     A factory for creating an object with dependency overrides.
-        /// </param>
-        public InjectionFactory(Func<IUnityContainer, ResolverOverride[], object> factory)
-        {
-            Factory = Guard.EnsureArgumentIsNotNull(factory);
-        }
-
-        /// <summary>
-        ///     The factory delegate for creating the object.
-        /// </summary>
-        public Func<IUnityContainer, ResolverOverride[], object> Factory { get; }
-
-        private object ResolveFromFactoryWithOverrides(IUnityContainer container, ResolverOverride[] overrides)
-        {
-            Guard.IsNotNull(_factoryWithOverrides);
-            return _factoryWithOverrides(container);
-        }
-
-        private readonly Func<IUnityContainer, object>? _factoryWithOverrides;
+        Factory = ResolveFromFactoryWithOverrides;
     }
+
+    /// <summary>
+    ///     Initializes a new instance of the <see cref="InjectionFactory" /> class.
+    /// </summary>
+    /// <param name="factory">
+    ///     A factory for creating an object with dependency overrides.
+    /// </param>
+    public InjectionFactory(Func<IUnityContainer, ResolverOverride[], object> factory)
+    {
+        Factory = Guard.EnsureArgumentIsNotNull(factory);
+    }
+
+    /// <summary>
+    ///     The factory delegate for creating the object.
+    /// </summary>
+    public Func<IUnityContainer, ResolverOverride[], object> Factory { get; }
+
+    private object ResolveFromFactoryWithOverrides(IUnityContainer container, ResolverOverride[] overrides)
+    {
+        Guard.IsNotNull(_factoryWithOverrides);
+        return _factoryWithOverrides(container);
+    }
+
+    private readonly Func<IUnityContainer, object>? _factoryWithOverrides;
 }

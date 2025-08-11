@@ -12,39 +12,36 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using System;
 using System.Text;
 
-namespace Kaspirin.UI.Framework.UiKit.Localization.Markup.Extensions.Files
+namespace Kaspirin.UI.Framework.UiKit.Localization.Markup.Extensions.Files;
+
+public class FileExtension : BaseLocalizationMarkupExtension
 {
-    public class FileExtension : LocalizationMarkupBase
+    public FileExtension() : this(string.Empty) { }
+
+    public FileExtension(string key) : base(key) { }
+
+    public FileExtension(string key, string scope) : base(key, scope) { }
+
+    public FileExtensionMode Mode { get; set; } = FileExtensionMode.Uri;
+
+    protected override object? ProvideValue()
     {
-        public FileExtension() : this(string.Empty) { }
+        var localizer = ProvideLocalizer<IFileLocalizer>();
 
-        public FileExtension(string key) : base(key) { }
-
-        public FileExtension(string key, string scope) : base(key, scope) { }
-
-        public FileExtensionMode Mode { get; set; } = FileExtensionMode.Uri;
-
-        protected override object? ProvideValue()
+        return Mode switch
         {
-            var localizer = ProvideLocalizer<IFileLocalizer>();
+            FileExtensionMode.Uri => localizer.GetUri(Key),
+            FileExtensionMode.Content => localizer.GetContent(Key),
+            FileExtensionMode.Text => localizer.GetText(Key, Encoding.UTF8),
+            FileExtensionMode.Stream => localizer.GetStream(Key),
+            _ => throw new UnexpectedValueException(Mode)
+        };
+    }
 
-            return Mode switch
-            {
-                FileExtensionMode.Uri => localizer.GetFileUri(Key),
-                FileExtensionMode.Path => localizer.GetFilePath(Key),
-                FileExtensionMode.Content => localizer.GetFileContent(Key),
-                FileExtensionMode.Text => localizer.GetFileText(Key, Encoding.UTF8),
-                FileExtensionMode.Stream => localizer.GetFileStream(Key),
-                _ => throw new ArgumentOutOfRangeException()
-            };
-        }
-
-        protected override ILocalizer PrepareLocalizer()
-        {
-            return LocalizationManager.Current.LocalizerFactory.Resolve<IFileLocalizer>(Scope);
-        }
+    protected override ILocalizer PrepareLocalizer()
+    {
+        return LocalizationManager.GetLocalizer<IFileLocalizer>(Scope);
     }
 }

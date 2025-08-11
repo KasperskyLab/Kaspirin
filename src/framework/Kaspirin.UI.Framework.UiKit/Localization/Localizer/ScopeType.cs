@@ -12,11 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Kaspirin.UI.Framework.UiKit.Localization.Localizer
+namespace Kaspirin.UI.Framework.UiKit.Localization.Localizer;
+
+public enum ScopeType
 {
-    public enum ScopeType
-    {
-        File,
-        Directory
-    }
+    File,
+    Directory
 }

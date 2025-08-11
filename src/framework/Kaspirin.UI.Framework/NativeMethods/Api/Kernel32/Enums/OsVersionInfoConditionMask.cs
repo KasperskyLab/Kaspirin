@@ -12,22 +12,45 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
+namespace Kaspirin.UI.Framework.NativeMethods.Api.Kernel32.Enums;
 
-namespace Kaspirin.UI.Framework.NativeMethods.Api.Kernel32.Enums
+/// <summary>
+///     <seealso href="https://learn.microsoft.com/en-us/windows/win32/api/winnt/nf-winnt-versetconditionmask">Learn more</seealso>.
+/// </summary>
+public enum OsVersionInfoConditionMask : uint
 {
     /// <summary>
-    ///     
-    /// <seealso href="https://learn.microsoft.com/en-us/windows/win32/api/winnt/nf-winnt-versetconditionmask">Learn more</seealso>.
+    ///     The VER_EQUAL constant.
     /// </summary>
-    public enum OsVersionInfoConditionMask : uint
-    {
-        VER_EQUAL = 1,
-        VER_GREATER = 2,
-        VER_GREATER_EQUAL = 3,
-        VER_LESS = 4,
-        VER_LESS_EQUAL = 5,
-        VER_AND = 6,
-        VER_OR = 7
-    }
+    Equal = 1,
+
+    /// <summary>
+    ///     The VER_GREATER constant.
+    /// </summary>
+    Greater = 2,
+
+    /// <summary>
+    ///     The VER_GREATER_EQUAL constant.
+    /// </summary>
+    GreaterEqual = 3,
+
+    /// <summary>
+    ///     The VER_LESS constant.
+    /// </summary>
+    Less = 4,
+
+    /// <summary>
+    ///     The VER_LESS_EQUAL constant.
+    /// </summary>
+    LessEqual = 5,
+
+    /// <summary>
+    ///     The VER_AND constant.
+    /// </summary>
+    And = 6,
+
+    /// <summary>
+    ///     The VER_OR constant.
+    /// </summary>
+    Or = 7,
 }

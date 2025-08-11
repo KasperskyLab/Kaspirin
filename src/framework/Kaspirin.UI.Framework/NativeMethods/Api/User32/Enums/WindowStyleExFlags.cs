@@ -12,47 +12,153 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-#pragma warning disable KCAIDE0002 // Enum has incorrect suffix
-
 using System;
 
-namespace Kaspirin.UI.Framework.NativeMethods.Api.User32.Enums
+namespace Kaspirin.UI.Framework.NativeMethods.Api.User32.Enums;
+
+/// <summary>
+///     <seealso href="https://learn.microsoft.com/en-us/windows/win32/winmsg/extended-window-styles">Learn more</seealso>.
+/// </summary>
+[Flags]
+public enum WindowStyleExFlags : uint
 {
     /// <summary>
-    ///     
-    /// <seealso href="https://learn.microsoft.com/en-us/windows/win32/winmsg/extended-window-styles">Learn more</seealso>.
+    ///     The flag is not set.
     /// </summary>
-    [Flags]
-    public enum WindowStyleExFlags : uint
-    {
-        None = 0,
-        WS_EX_DLGMODALFRAME = 0x00000001,
-        WS_EX_NOPARENTNOTIFY = 0x00000004,
-        WS_EX_TOPMOST = 0x00000008,
-        WS_EX_ACCEPTFILES = 0x00000010,
-        WS_EX_TRANSPARENT = 0x00000020,
-        WS_EX_MDICHILD = 0x00000040,
-        WS_EX_TOOLWINDOW = 0x00000080,
-        WS_EX_WINDOWEDGE = 0x00000100,
-        WS_EX_CLIENTEDGE = 0x00000200,
-        WS_EX_CONTEXTHELP = 0x00000400,
-        WS_EX_RIGHT = 0x00001000,
-        WS_EX_LEFT = 0x00000000,
-        WS_EX_RTLREADING = 0x00002000,
-        WS_EX_LTRREADING = 0x00000000,
-        WS_EX_LEFTSCROLLBAR = 0x00004000,
-        WS_EX_RIGHTSCROLLBAR = 0x00000000,
-        WS_EX_CONTROLPARENT = 0x00010000,
-        WS_EX_STATICEDGE = 0x00020000,
-        WS_EX_APPWINDOW = 0x00040000,
-        WS_EX_LAYERED = 0x00080000,
-        WS_EX_NOINHERITLAYOUT = 0x00100000,
-        WS_EX_LAYOUTRTL = 0x00400000,
-        WS_EX_COMPOSITED = 0x02000000,
-        WS_EX_NOACTIVATE = 0x08000000,
-        WS_EX_NOREDIRECTIONBITMAP = 0x00200000,
-        WS_EX_OVERLAPPEDWINDOW = WS_EX_CLIENTEDGE | WS_EX_WINDOWEDGE,
-        WS_EX_PALETTEWINDOW = WS_EX_WINDOWEDGE | WS_EX_TOOLWINDOW | WS_EX_TOPMOST,
-    }
+    None = 0,
+
+    /// <summary>
+    ///     The WS_EX_DLGMODALFRAME constant.
+    /// </summary>
+    DlgModalFrame = 0x00000001,
+
+    /// <summary>
+    ///     The WS_EX_NOPARENTNOTIFY constant.
+    /// </summary>
+    NoParentNotify = 0x00000004,
+
+    /// <summary>
+    ///     The WS_EX_TOPMOST constant.
+    /// </summary>
+    Topmost = 0x00000008,
+
+    /// <summary>
+    ///     The WS_EX_ACCEPTFILES constant.
+    /// </summary>
+    AcceptFiles = 0x00000010,
+
+    /// <summary>
+    ///     The WS_EX_TRANSPARENT constant.
+    /// </summary>
+    Transparent = 0x00000020,
+
+    /// <summary>
+    ///     The WS_EX_MDICHILD constant.
+    /// </summary>
+    MdiChild = 0x00000040,
+
+    /// <summary>
+    ///     The WS_EX_TOOLWINDOW constant.
+    /// </summary>
+    ToolWindow = 0x00000080,
+
+    /// <summary>
+    ///     The WS_EX_WINDOWEDGE constant.
+    /// </summary>
+    WindowEdge = 0x00000100,
+
+    /// <summary>
+    ///     The WS_EX_CLIENTEDGE constant.
+    /// </summary>
+    ClientEdge = 0x00000200,
+
+    /// <summary>
+    ///     The WS_EX_CONTEXTHELP constant.
+    /// </summary>
+    ContextHelp = 0x00000400,
+
+    /// <summary>
+    ///     The WS_EX_RIGHT constant.
+    /// </summary>
+    Right = 0x00001000,
+
+    /// <summary>
+    ///     The WS_EX_LEFT constant.
+    /// </summary>
+    Left = 0x00000000,
+
+    /// <summary>
+    ///     The WS_EX_RTLREADING constant.
+    /// </summary>
+    RtlReading = 0x00002000,
+
+    /// <summary>
+    ///     The WS_EX_LTRREADING constant.
+    /// </summary>
+    LtrReading = 0x00000000,
+
+    /// <summary>
+    ///     The WS_EX_LEFTSCROLLBAR constant.
+    /// </summary>
+    LeftScrollbar = 0x00004000,
+
+    /// <summary>
+    ///     The WS_EX_RIGHTSCROLLBAR constant.
+    /// </summary>
+    RightScrollbar = 0x00000000,
+
+    /// <summary>
+    ///     The WS_EX_CONTROLPARENT constant.
+    /// </summary>
+    ControlParent = 0x00010000,
+
+    /// <summary>
+    ///     The WS_EX_STATICEDGE constant.
+    /// </summary>
+    StaticEdge = 0x00020000,
+
+    /// <summary>
+    ///     The WS_EX_APPWINDOW constant.
+    /// </summary>
+    AppWindow = 0x00040000,
+
+    /// <summary>
+    ///     The WS_EX_LAYERED constant.
+    /// </summary>
+    Layered = 0x00080000,
+
+    /// <summary>
+    ///     The WS_EX_NOINHERITLAYOUT constant.
+    /// </summary>
+    NoInheritLayout = 0x00100000,
+
+    /// <summary>
+    ///     The WS_EX_LAYOUTRTL constant.
+    /// </summary>
+    LayoutRtl = 0x00400000,
+
+    /// <summary>
+    ///     The WS_EX_COMPOSITED constant.
+    /// </summary>
+    Composited = 0x02000000,
+
+    /// <summary>
+    ///     The WS_EX_NOACTIVATE constant.
+    /// </summary>
+    NoActivate = 0x08000000,
+
+    /// <summary>
+    ///     The WS_EX_NOREDIRECTIONBITMAP constant.
+    /// </summary>
+    NoRedirectionBitmap = 0x00200000,
+
+    /// <summary>
+    ///     The WS_EX_OVERLAPPEDWINDOW constant.
+    /// </summary>
+    OverlappedWindow = ClientEdge | WindowEdge,
+
+    /// <summary>
+    ///     The WS_EX_PALETTEWINDOW constant.
+    /// </summary>
+    PaletteWindow = WindowEdge | ToolWindow | Topmost,
 }

@@ -14,35 +14,34 @@
 
 using System.Windows.Input;
 
-namespace Kaspirin.UI.Framework.UiKit.Input.Shortcuts
+namespace Kaspirin.UI.Framework.UiKit.Input.Shortcuts;
+
+public sealed class Shortcut
 {
-    public sealed class Shortcut
+    public Shortcut()
     {
-        public Shortcut()
-        {
-        }
-
-        public Shortcut(Key key, ModifierKeys modifiers)
-        {
-            Key = key;
-            Modifiers = modifiers;
-        }
-
-        public Key Key { get; set; }
-
-        public ModifierKeys Modifiers { get; set; }
-
-        public KeyGesture ToKeyGesture()
-            => new(Key, Modifiers);
-
-        public bool IsEquivalentTo(KeyGesture gesture)
-        {
-            Guard.ArgumentIsNotNull(gesture);
-
-            return gesture.Key == Key && gesture.Modifiers == Modifiers;
-        }
-
-        public override string ToString()
-            => $"Key: {Key}, Modifiers: {Modifiers}";
     }
+
+    public Shortcut(Key key, ModifierKeys modifiers)
+    {
+        Key = key;
+        Modifiers = modifiers;
+    }
+
+    public Key Key { get; set; }
+
+    public ModifierKeys Modifiers { get; set; }
+
+    public KeyGesture ToKeyGesture()
+        => new(Key, Modifiers);
+
+    public bool IsEquivalentTo(KeyGesture gesture)
+    {
+        Guard.ArgumentIsNotNull(gesture);
+
+        return gesture.Key == Key && gesture.Modifiers == Modifiers;
+    }
+
+    public override string ToString()
+        => $"Key: {Key}, Modifiers: {Modifiers}";
 }

@@ -16,56 +16,58 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 
-namespace Kaspirin.UI.Framework.UiKit.Controls
+namespace Kaspirin.UI.Framework.UiKit.Controls;
+
+[TemplatePart(Name = PART_Image, Type = typeof(Image))]
+public abstract class IconBase : Control
 {
-    [TemplatePart(Name = PART_Image, Type = typeof(Image))]
-    public abstract class IconBase : Control
+    public const string PART_Image = "PART_Image";
+
+    public override void OnApplyTemplate()
     {
-        public const string PART_Image = "PART_Image";
+        base.OnApplyTemplate();
 
-        public override void OnApplyTemplate()
-        {
-            base.OnApplyTemplate();
-
-            Image = Guard.EnsureIsNotNull((Image)GetTemplateChild(PART_Image));
-        }
-
-        #region IsUnset
-
-        public bool IsUnset
-        {
-            get { return (bool)GetValue(IsUnsetProperty); }
-            protected set { SetValue(IsUnsetPropertyKey, value); }
-        }
-
-        protected static readonly DependencyPropertyKey IsUnsetPropertyKey =
-            DependencyProperty.RegisterReadOnly("IsUnset", typeof(bool), typeof(IconBase), new PropertyMetadata(false));
-
-        public static readonly DependencyProperty IsUnsetProperty = IsUnsetPropertyKey.DependencyProperty;
-
-        #endregion
-
-        #region IconForeground
-
-        public Brush IconForeground
-        {
-            get => (Brush)GetValue(IconForegroundProperty);
-            set => SetValue(IconForegroundProperty, value);
-        }
-
-        public static readonly DependencyProperty IconForegroundProperty = DependencyProperty.Register(
-            nameof(IconForeground),
-            typeof(Brush),
-            typeof(IconBase),
-            new PropertyMetadata(default(Brush), OnIconForegroundChanged));
-
-        private static void OnIconForegroundChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-            => ((IconBase)d).OnIconForegroundChanged();
-
-        #endregion
-
-        protected abstract void OnIconForegroundChanged();
-
-        protected Image? Image { get; private set; }
+        Image = Guard.EnsureIsNotNull((Image)GetTemplateChild(PART_Image));
     }
+
+    #region IsUnset
+
+    public bool IsUnset
+    {
+        get => (bool)GetValue(IsUnsetProperty);
+        protected set => SetValue(IsUnsetPropertyKey, value);
+    }
+
+    protected static readonly DependencyPropertyKey IsUnsetPropertyKey = DependencyProperty.RegisterReadOnly(
+        nameof(IsUnset),
+        typeof(bool),
+        typeof(IconBase),
+        new PropertyMetadata(default(bool)));
+
+    public static readonly DependencyProperty IsUnsetProperty = IsUnsetPropertyKey.DependencyProperty;
+
+    #endregion
+
+    #region IconBrush
+
+    public Brush IconBrush
+    {
+        get => (Brush)GetValue(IconBrushProperty);
+        set => SetValue(IconBrushProperty, value);
+    }
+
+    public static readonly DependencyProperty IconBrushProperty = DependencyProperty.Register(
+        nameof(IconBrush),
+        typeof(Brush),
+        typeof(IconBase),
+        new PropertyMetadata(default(Brush), OnIconBrushChanged));
+
+    private static void OnIconBrushChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        => ((IconBase)d).OnIconBrushChanged();
+
+    #endregion
+
+    protected abstract void OnIconBrushChanged();
+
+    protected Image? Image { get; private set; }
 }

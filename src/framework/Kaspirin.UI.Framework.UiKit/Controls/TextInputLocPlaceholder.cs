@@ -15,35 +15,34 @@
 using System.Collections.Generic;
 using System.Windows.Documents;
 
-namespace Kaspirin.UI.Framework.UiKit.Controls
+namespace Kaspirin.UI.Framework.UiKit.Controls;
+
+public sealed class TextInputLocPlaceholder : TextInputPlaceholder
 {
-    public sealed class TextInputLocPlaceholder : TextInputPlaceholder
+    public TextInputLocPlaceholder(LocExtension locExtension)
     {
-        public TextInputLocPlaceholder(LocExtension locExtension)
-        {
-            _locExtension = locExtension;
-        }
-
-        public override IEnumerable<Inline> GetPlaceholderText(string? value, bool isRTL)
-        {
-            var placeholderRun = new Run();
-
-            var isEmpty = (value ?? string.Empty).Length == 0;
-            if (isEmpty)
-            {
-                var placeholderText = _locExtension.ProvideValue(placeholderRun, Run.TextProperty);
-
-                placeholderRun.SetValue(Run.TextProperty, placeholderText);
-            }
-
-            return new[] { placeholderRun };
-        }
-
-        public override string? FilterInputText(string? value)
-        {
-            return value;
-        }
-
-        private readonly LocExtension _locExtension;
+        _locExtension = locExtension;
     }
+
+    public override IEnumerable<Inline> GetPlaceholderText(string? value, bool isRTL)
+    {
+        var placeholderRun = new Run();
+
+        var isEmpty = (value ?? string.Empty).Length == 0;
+        if (isEmpty)
+        {
+            var placeholderText = _locExtension.ProvideValue(placeholderRun, Run.TextProperty);
+
+            placeholderRun.SetValue(Run.TextProperty, placeholderText);
+        }
+
+        return new[] { placeholderRun };
+    }
+
+    public override string? FilterInputText(string? value)
+    {
+        return value;
+    }
+
+    private readonly LocExtension _locExtension;
 }

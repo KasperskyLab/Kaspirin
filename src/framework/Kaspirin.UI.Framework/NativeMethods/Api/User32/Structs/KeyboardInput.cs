@@ -17,23 +17,21 @@
 using System;
 using System.Runtime.InteropServices;
 
-namespace Kaspirin.UI.Framework.NativeMethods.Api.User32.Structs
+namespace Kaspirin.UI.Framework.NativeMethods.Api.User32.Structs;
+
+/// <summary>
+///     <seealso href="https://learn.microsoft.com/en-us/windows/win32/api/winuser/ns-winuser-keybdinput">Learn more</seealso>.
+/// </summary>
+[StructLayout(LayoutKind.Sequential)]
+public struct KeyboardInput
 {
-    /// <summary>
-    ///     
-    /// <seealso href="https://learn.microsoft.com/en-us/windows/win32/api/winuser/ns-winuser-keybdinput">Learn more</seealso>.
-    /// </summary>
-    [StructLayout(LayoutKind.Sequential)]
-    public struct KeyboardInput
-    {
-        public VirtualKey VirtualKey;
+    public VirtualKey VirtualKey;
 
-        public ushort ScanCode;
+    public ushort ScanCode;
 
-        public KeyboardInputFlags Flags;
+    public KeyboardInputFlags Flags;
 
-        public uint Time;
+    public uint Time;
 
-        public UIntPtr ExtraInfo;
-    }
+    public UIntPtr ExtraInfo;
 }

@@ -12,10 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Kaspirin.UI.Framework.UiKit.Localization.Localizer
+namespace Kaspirin.UI.Framework.UiKit.Localization.Localizer;
+
+public interface ILocalizerOption<TValue>
 {
-    public interface ILocalizerOption<TValue>
-    {
-        TValue Apply(TValue value);
-    }
+    TValue Apply(TValue value);
 }

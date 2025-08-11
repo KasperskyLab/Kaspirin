@@ -12,12 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Kaspirin.UI.Framework.UiKit.Controls
+namespace Kaspirin.UI.Framework.UiKit.Controls;
+
+public enum SelectableTextState
 {
-    public enum SelectableTextState
-    {
-        Rest,
-        Ready,
-        Done,
-    }
+    Rest,
+    Ready,
+    Done,
 }

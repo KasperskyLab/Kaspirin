@@ -259,10 +259,10 @@
 					<xsl:with-param name="marginNode" select="BadgeMargin" />
 				</xsl:call-template>
 
-				<!--MenuItem_CheckBoxMarkIcon_Foreground-->
+				<!--MenuItem_CheckBoxMarkIcon_Brush-->
 				<xsl:call-template name="generateBrushSetter">
-					<xsl:with-param name="propertyId">MenuItem_CheckBoxMarkIcon_Foreground</xsl:with-param>
-					<xsl:with-param name="brushName">CheckBoxMarkIconForegroundNormal</xsl:with-param>
+					<xsl:with-param name="propertyId">MenuItem_CheckBoxMarkIcon_Brush</xsl:with-param>
+					<xsl:with-param name="brushName">CheckBoxMarkIconBrushNormal</xsl:with-param>
 					<xsl:with-param name="scopeName" select="$id" />
 				</xsl:call-template>
 
@@ -320,10 +320,10 @@
 					<xsl:with-param name="resourceName">GroupHeaderStyle</xsl:with-param>
 				</xsl:call-template>
 
-				<!--MenuItem_Icon_Foreground-->
+				<!--MenuItem_Icon_Brush-->
 				<xsl:call-template name="generateBrushSetter">
-					<xsl:with-param name="propertyId">MenuItem_Icon_Foreground</xsl:with-param>
-					<xsl:with-param name="brushName">IconForegroundNormal</xsl:with-param>
+					<xsl:with-param name="propertyId">MenuItem_Icon_Brush</xsl:with-param>
+					<xsl:with-param name="brushName">IconBrushNormal</xsl:with-param>
 					<xsl:with-param name="scopeName" select="$id" />
 				</xsl:call-template>
 
@@ -356,10 +356,10 @@
 					<xsl:with-param name="propertyValue" select="@SubmenuIconName" />
 				</xsl:call-template>
 
-				<!--MenuItem_SubmenuIcon_Foreground-->
+				<!--MenuItem_SubmenuIcon_Brush-->
 				<xsl:call-template name="generateBrushSetter">
-					<xsl:with-param name="propertyId">MenuItem_SubmenuIcon_Foreground</xsl:with-param>
-					<xsl:with-param name="brushName">SubmenuIconForegroundNormal</xsl:with-param>
+					<xsl:with-param name="propertyId">MenuItem_SubmenuIcon_Brush</xsl:with-param>
+					<xsl:with-param name="brushName">SubmenuIconBrushNormal</xsl:with-param>
 					<xsl:with-param name="scopeName" select="$id" />
 				</xsl:call-template>
 
@@ -410,24 +410,24 @@
 							<xsl:with-param name="scopeName" select="$id" />
 						</xsl:call-template>
 
-						<!--MenuItem_CheckBoxMarkIcon_Foreground-->
+						<!--MenuItem_CheckBoxMarkIcon_Brush-->
 						<xsl:call-template name="generateBrushSetter">
-							<xsl:with-param name="propertyId">MenuItem_CheckBoxMarkIcon_Foreground</xsl:with-param>
-							<xsl:with-param name="brushName">CheckBoxMarkIconForegroundDisabled</xsl:with-param>
+							<xsl:with-param name="propertyId">MenuItem_CheckBoxMarkIcon_Brush</xsl:with-param>
+							<xsl:with-param name="brushName">CheckBoxMarkIconBrushDisabled</xsl:with-param>
 							<xsl:with-param name="scopeName" select="$id" />
 						</xsl:call-template>
 
-						<!--MenuItem_Icon_Foreground-->
+						<!--MenuItem_Icon_Brush-->
 						<xsl:call-template name="generateBrushSetter">
-							<xsl:with-param name="propertyId">MenuItem_Icon_Foreground</xsl:with-param>
-							<xsl:with-param name="brushName">IconForegroundDisabled</xsl:with-param>
+							<xsl:with-param name="propertyId">MenuItem_Icon_Brush</xsl:with-param>
+							<xsl:with-param name="brushName">IconBrushDisabled</xsl:with-param>
 							<xsl:with-param name="scopeName" select="$id" />
 						</xsl:call-template>
 
-						<!--MenuItem_SubmenuIcon_Foreground-->
+						<!--MenuItem_SubmenuIcon_Brush-->
 						<xsl:call-template name="generateBrushSetter">
-							<xsl:with-param name="propertyId">MenuItem_SubmenuIcon_Foreground</xsl:with-param>
-							<xsl:with-param name="brushName">SubmenuIconForegroundDisabled</xsl:with-param>
+							<xsl:with-param name="propertyId">MenuItem_SubmenuIcon_Brush</xsl:with-param>
+							<xsl:with-param name="brushName">SubmenuIconBrushDisabled</xsl:with-param>
 							<xsl:with-param name="scopeName" select="$id" />
 						</xsl:call-template>
 
@@ -447,24 +447,24 @@
 							<xsl:with-param name="scopeName" select="$id" />
 						</xsl:call-template>
 
-						<!--MenuItem_CheckBoxMarkIcon_Foreground-->
+						<!--MenuItem_CheckBoxMarkIcon_Brush-->
 						<xsl:call-template name="generateBrushSetter">
-							<xsl:with-param name="propertyId">MenuItem_CheckBoxMarkIcon_Foreground</xsl:with-param>
-							<xsl:with-param name="brushName">CheckBoxMarkIconForegroundHover</xsl:with-param>
+							<xsl:with-param name="propertyId">MenuItem_CheckBoxMarkIcon_Brush</xsl:with-param>
+							<xsl:with-param name="brushName">CheckBoxMarkIconBrushHover</xsl:with-param>
 							<xsl:with-param name="scopeName" select="$id" />
 						</xsl:call-template>
 
-						<!--MenuItem_Icon_Foreground-->
+						<!--MenuItem_Icon_Brush-->
 						<xsl:call-template name="generateBrushSetter">
-							<xsl:with-param name="propertyId">MenuItem_Icon_Foreground</xsl:with-param>
-							<xsl:with-param name="brushName">IconForegroundHover</xsl:with-param>
+							<xsl:with-param name="propertyId">MenuItem_Icon_Brush</xsl:with-param>
+							<xsl:with-param name="brushName">IconBrushHover</xsl:with-param>
 							<xsl:with-param name="scopeName" select="$id" />
 						</xsl:call-template>
 
-						<!--MenuItem_SubmenuIcon_Foreground-->
+						<!--MenuItem_SubmenuIcon_Brush-->
 						<xsl:call-template name="generateBrushSetter">
-							<xsl:with-param name="propertyId">MenuItem_SubmenuIcon_Foreground</xsl:with-param>
-							<xsl:with-param name="brushName">SubmenuIconForegroundHover</xsl:with-param>
+							<xsl:with-param name="propertyId">MenuItem_SubmenuIcon_Brush</xsl:with-param>
+							<xsl:with-param name="brushName">SubmenuIconBrushHover</xsl:with-param>
 							<xsl:with-param name="scopeName" select="$id" />
 						</xsl:call-template>
 
@@ -484,24 +484,24 @@
 							<xsl:with-param name="scopeName" select="$id" />
 						</xsl:call-template>
 
-						<!--MenuItem_CheckBoxMarkIcon_Foreground-->
+						<!--MenuItem_CheckBoxMarkIcon_Brush-->
 						<xsl:call-template name="generateBrushSetter">
-							<xsl:with-param name="propertyId">MenuItem_CheckBoxMarkIcon_Foreground</xsl:with-param>
-							<xsl:with-param name="brushName">CheckBoxMarkIconForegroundPressed</xsl:with-param>
+							<xsl:with-param name="propertyId">MenuItem_CheckBoxMarkIcon_Brush</xsl:with-param>
+							<xsl:with-param name="brushName">CheckBoxMarkIconBrushPressed</xsl:with-param>
 							<xsl:with-param name="scopeName" select="$id" />
 						</xsl:call-template>
 
-						<!--MenuItem_Icon_Foreground-->
+						<!--MenuItem_Icon_Brush-->
 						<xsl:call-template name="generateBrushSetter">
-							<xsl:with-param name="propertyId">MenuItem_Icon_Foreground</xsl:with-param>
-							<xsl:with-param name="brushName">IconForegroundPressed</xsl:with-param>
+							<xsl:with-param name="propertyId">MenuItem_Icon_Brush</xsl:with-param>
+							<xsl:with-param name="brushName">IconBrushPressed</xsl:with-param>
 							<xsl:with-param name="scopeName" select="$id" />
 						</xsl:call-template>
 
-						<!--MenuItem_SubmenuIcon_Foreground-->
+						<!--MenuItem_SubmenuIcon_Brush-->
 						<xsl:call-template name="generateBrushSetter">
-							<xsl:with-param name="propertyId">MenuItem_SubmenuIcon_Foreground</xsl:with-param>
-							<xsl:with-param name="brushName">SubmenuIconForegroundPressed</xsl:with-param>
+							<xsl:with-param name="propertyId">MenuItem_SubmenuIcon_Brush</xsl:with-param>
+							<xsl:with-param name="brushName">SubmenuIconBrushPressed</xsl:with-param>
 							<xsl:with-param name="scopeName" select="$id" />
 						</xsl:call-template>
 

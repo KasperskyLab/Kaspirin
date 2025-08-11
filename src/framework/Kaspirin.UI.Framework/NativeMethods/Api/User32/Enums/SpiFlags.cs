@@ -12,23 +12,33 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-#pragma warning disable KCAIDE0002 // Enum has incorrect suffix
-
 using System;
 
-namespace Kaspirin.UI.Framework.NativeMethods.Api.User32.Enums
+namespace Kaspirin.UI.Framework.NativeMethods.Api.User32.Enums;
+
+/// <summary>
+///     <seealso href="https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-systemparametersinfow">Learn more</seealso>.
+/// </summary>
+[Flags]
+public enum SpiFlags : uint
 {
     /// <summary>
-    ///     
-    /// <seealso href="https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-systemparametersinfow">Learn more</seealso>.
+    ///     The flag is not set.
     /// </summary>
-    [Flags]
-    public enum SpiFlags : uint
-    {
-        None = 0,
-        SPIF_UPDATEINIFILE = 0x01,
-        SPIF_SENDCHANGE = 0x02,
-        SPIF_SENDWININICHANGE = 0x02
-    }
+    None = 0,
+
+    /// <summary>
+    ///     The SPIF_UPDATEINIFILE constant.
+    /// </summary>
+    UpdateIniFile = 0x01,
+
+    /// <summary>
+    ///     The SPIF_SENDCHANGE constant.
+    /// </summary>
+    SendChange = 0x02,
+
+    /// <summary>
+    ///     The SPIF_SENDWININICHANGE constant.
+    /// </summary>
+    SendWinIniChange = 0x02,
 }

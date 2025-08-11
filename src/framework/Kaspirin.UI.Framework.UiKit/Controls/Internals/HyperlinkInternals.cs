@@ -16,84 +16,81 @@ using System.Windows;
 using System.Windows.Documents;
 using System.Windows.Input;
 
-namespace Kaspirin.UI.Framework.UiKit.Controls.Internals
+namespace Kaspirin.UI.Framework.UiKit.Controls.Internals;
+
+internal static class HyperlinkInternals
 {
-    internal static class HyperlinkInternals
+    #region IsTouchBehaviorEnabled
+
+    public static bool GetIsTouchBehaviorEnabled(DependencyObject obj)
+        => (bool)obj.GetValue(IsTouchBehaviorEnabledProperty);
+
+    public static void SetIsTouchBehaviorEnabled(DependencyObject obj, bool value)
+        => obj.SetValue(IsTouchBehaviorEnabledProperty, value);
+
+    public static readonly DependencyProperty IsTouchBehaviorEnabledProperty = DependencyProperty.RegisterAttached(
+        "IsTouchBehaviorEnabled",
+        typeof(bool),
+        typeof(HyperlinkInternals),
+        UIKitPropertyMetadataFactory.CreatePropsMetadata(typeof(Hyperlink), nameof(IsTouchBehaviorEnabledProperty), OnValueChanged));
+
+    #endregion
+
+    private static void OnValueChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
     {
-        #region IsTouchBehaviorEnabled
+        var hyperlink = (Hyperlink)d;
 
-        public static bool GetIsTouchBehaviorEnabled(DependencyObject obj)
+        if (e.NewValue is true)
         {
-            return (bool)obj.GetValue(IsTouchBehaviorEnabledProperty);
+            hyperlink.PreviewTouchDown -= OnPreviewTouchDown;
+            hyperlink.PreviewTouchDown += OnPreviewTouchDown;
+
+            hyperlink.PreviewMouseDown -= OnPreviewMouseDown;
+            hyperlink.PreviewMouseDown += OnPreviewMouseDown;
+        }
+        else if (e.NewValue is false)
+        {
+            hyperlink.PreviewTouchDown -= OnPreviewTouchDown;
+            hyperlink.PreviewMouseDown -= OnPreviewMouseDown;
+        }
+    }
+
+    private static void OnPreviewMouseDown(object sender, MouseButtonEventArgs e)
+    {
+        if (e.StylusDevice == null)
+        {
+            return;
         }
 
-        public static void SetIsTouchBehaviorEnabled(DependencyObject obj, bool value)
+        var hyperlink = (Hyperlink)sender;
+
+        ExecuteCommand(hyperlink, e);
+    }
+
+    private static void OnPreviewTouchDown(object? sender, TouchEventArgs e)
+    {
+        if (e.TouchDevice == null)
         {
-            obj.SetValue(IsTouchBehaviorEnabledProperty, value);
+            return;
         }
 
-        public static readonly DependencyProperty IsTouchBehaviorEnabledProperty =
-            DependencyProperty.RegisterAttached("IsTouchBehaviorEnabled", typeof(bool), typeof(HyperlinkInternals),
-                UIKitPropertyMetadataFactory.CreatePropsMetadata(typeof(Hyperlink), nameof(IsTouchBehaviorEnabledProperty), OnValueChanged));
+        var hyperlink = Guard.EnsureIsInstanceOfType<Hyperlink>(sender);
 
-        #endregion
+        ExecuteCommand(hyperlink, e);
+    }
 
-        private static void OnValueChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+    private static void ExecuteCommand(Hyperlink hyperlink, RoutedEventArgs eventArgs)
+    {
+        var command = hyperlink.Command;
+        var commandParameter = hyperlink.CommandParameter;
+
+        if (command != null)
         {
-            var hyperlink = (Hyperlink)d;
+            eventArgs.Handled = true;
 
-            if (e.NewValue is true)
+            if (command.CanExecute(commandParameter))
             {
-                hyperlink.PreviewTouchDown -= OnPreviewTouchDown;
-                hyperlink.PreviewTouchDown += OnPreviewTouchDown;
-
-                hyperlink.PreviewMouseDown -= OnPreviewMouseDown;
-                hyperlink.PreviewMouseDown += OnPreviewMouseDown;
-            }
-            else if (e.NewValue is false)
-            {
-                hyperlink.PreviewTouchDown -= OnPreviewTouchDown;
-                hyperlink.PreviewMouseDown -= OnPreviewMouseDown;
-            }
-        }
-
-        private static void OnPreviewMouseDown(object sender, MouseButtonEventArgs e)
-        {
-            if (e.StylusDevice == null)
-            {
-                return;
-            }
-
-            var hyperlink = (Hyperlink)sender;
-
-            ExecuteCommand(hyperlink, e);
-        }
-
-        private static void OnPreviewTouchDown(object? sender, TouchEventArgs e)
-        {
-            if (e.TouchDevice == null)
-            {
-                return;
-            }
-
-            var hyperlink = Guard.EnsureIsInstanceOfType<Hyperlink>(sender);
-
-            ExecuteCommand(hyperlink, e);
-        }
-
-        private static void ExecuteCommand(Hyperlink hyperlink, RoutedEventArgs eventArgs)
-        {
-            var command = hyperlink.Command;
-            var commandParameter = hyperlink.CommandParameter;
-
-            if (command != null)
-            {
-                eventArgs.Handled = true;
-
-                if (command.CanExecute(commandParameter))
-                {
-                    command.Execute(commandParameter);
-                }
+                command.Execute(commandParameter);
             }
         }
     }

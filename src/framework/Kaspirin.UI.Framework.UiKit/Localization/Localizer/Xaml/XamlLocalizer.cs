@@ -14,34 +14,27 @@
 
 using System;
 
-namespace Kaspirin.UI.Framework.UiKit.Localization.Localizer.Xaml
+namespace Kaspirin.UI.Framework.UiKit.Localization.Localizer.Xaml;
+
+public class XamlLocalizer : BaseLocalizer<object>, IXamlLocalizer
 {
-    public sealed class XamlLocalizer : LocalizerBase, IXamlLocalizer
+    public XamlLocalizer(LocalizerParameters parameters) : base(parameters) { }
+
+    public virtual object? GetResource(string key)
     {
-        public XamlLocalizer(LocalizerParameters parameters) : base(parameters) { }
+        Guard.ArgumentIsNotNull(key);
 
-        #region IXamlLocalizer
-
-        public object? GetResource(string key)
+        try
         {
-            Guard.ArgumentIsNotNull(key);
-
-            try
-            {
-                return GetValue<object>(key);
-            }
-            catch (Exception e)
-            {
-                e.ProcessAsLocalizerException($"failed to provide resource for key='{key}'.");
-                return null;
-            }
+            return GetValue(key);
         }
-
-        #endregion
-
-        protected override IScope CreateScopeObject(Uri scopeUri)
+        catch (Exception e)
         {
-            return new XamlScope(scopeUri, ResourceProvider);
+            e.ProcessAsLocalizerException($"failed to provide resource for key '{key}' in scope '{ScopeInfo.Scope}'.");
+            return null;
         }
     }
+
+    protected override IScope<object> CreateFileScopeObject(ResourceItem resource)
+        => new XamlScope(resource, ResourceProvider);
 }

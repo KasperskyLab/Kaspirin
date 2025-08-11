@@ -13,28 +13,29 @@
 // limitations under the License.
 
 @FileComment
+#pragma warning disable CA2255 // The 'ModuleInitializer' attribute is only intended to be used in application code or advanced source generator scenarios.
+
 using System.Runtime.CompilerServices;
 using System.Threading;
 
-namespace Kaspirin.UI.Framework.UiKit.@ProductNamespacePart.Illustrations
-{
+namespace Kaspirin.UI.Framework.UiKit.@ProductNamespacePart.Illustrations;
+
 @IllustrationEnumDeclarations
 
-    internal static class UIKitIllustrationMetadataRegistrar
-    {
+internal static class UIKitIllustrationMetadataRegistrar
+{
 #if NETFRAMEWORK
-        public static void RegisterMetadata()
+    public static void RegisterMetadata()
 #else
-        [ModuleInitializer]
-        internal static void RegisterMetadata()
+    [ModuleInitializer]
+    internal static void RegisterMetadata()
 #endif
+    {
+        if (Interlocked.CompareExchange(ref _isRegistered, 1, 0) == 0)
         {
-            if (Interlocked.CompareExchange(ref _isRegistered, 1, 0) == 0)
-            {
 @IllustrationsMetadataRegistration
-            }
         }
-
-        private static int _isRegistered = 0;
     }
+
+    private static int _isRegistered = 0;
 }

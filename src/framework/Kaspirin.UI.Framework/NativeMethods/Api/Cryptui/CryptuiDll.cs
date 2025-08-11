@@ -16,26 +16,26 @@
 
 using System.Runtime.InteropServices;
 
-namespace Kaspirin.UI.Framework.NativeMethods.Api.Cryptui
+namespace Kaspirin.UI.Framework.NativeMethods.Api.Cryptui;
+
+/// <summary>
+///     Provides API methods for functions from cryptui.dll .
+/// </summary>
+public static class CryptuiDll
 {
+    #region cryptuiapi.h
+
     /// <summary>
-    ///     Provides API methods for functions from cryptui.dll .
+    ///     The CryptUIDlgViewCertificate API method.
+    ///     <br /><seealso href="https://learn.microsoft.com/en-us/windows/win32/api/cryptuiapi/nf-cryptuiapi-cryptuidlgviewcertificatew">Learn more</seealso>.
     /// </summary>
-    public static class CryptuiDll
-    {
-        #region cryptuiapi.h
+    [DllImport(DllName, CharSet = CharSet.Unicode, SetLastError = true)]
+    public static extern bool CryptUIDlgViewCertificate(
+        ref CryptUiViewCertificateStruct cryptUiViewCertificateStruct,
+        ref bool areAnyCertificatePropertiesChanged
+    );
 
-        /// <summary>
-        ///     The CryptUIDlgViewCertificate API method. <br /><seealso href="https://learn.microsoft.com/en-us/windows/win32/api/cryptuiapi/nf-cryptuiapi-cryptuidlgviewcertificatew">Learn more</seealso>.
-        /// </summary>
-        [DllImport(DllName, CharSet = CharSet.Unicode, SetLastError = true)]
-        public static extern bool CryptUIDlgViewCertificate(
-            ref CryptUiViewCertificateStruct cryptUiViewCertificateStruct,
-            ref bool areAnyCertificatePropertiesChanged
-        );
+    #endregion
 
-        #endregion
-
-        private const string DllName = "cryptui.dll";
-    }
+    private const string DllName = "cryptui.dll";
 }

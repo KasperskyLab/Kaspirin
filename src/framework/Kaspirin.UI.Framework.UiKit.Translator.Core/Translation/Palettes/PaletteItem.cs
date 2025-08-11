@@ -12,11 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Kaspirin.UI.Framework.UiKit.Translator.Core.Translation.Palettes
+namespace Kaspirin.UI.Framework.UiKit.Translator.Core.Translation.Palettes;
+
+internal sealed class PaletteItem
 {
-    internal sealed class PaletteItem
-    {
-        public string Id { get; set; }
-        public string Name { get; set; }
-    }
+    public string Id { get; set; }
+    public string Name { get; set; }
 }

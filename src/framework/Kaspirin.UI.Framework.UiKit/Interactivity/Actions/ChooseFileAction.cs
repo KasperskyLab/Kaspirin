@@ -16,129 +16,143 @@ using System;
 using System.Windows;
 using System.Windows.Forms;
 
-namespace Kaspirin.UI.Framework.UiKit.Interactivity.Actions
+namespace Kaspirin.UI.Framework.UiKit.Interactivity.Actions;
+
+public sealed class ChooseFileAction : TriggerAction<FrameworkElement>
 {
-    public class ChooseFileAction : TriggerAction<FrameworkElement>
+    #region InitialDirectory
+
+    public string InitialDirectory
     {
-        #region InitialDirectory
-
-        public string InitialDirectory
-        {
-            get { return (string)GetValue(InitialDirectoryProperty); }
-            set { SetValue(InitialDirectoryProperty, value); }
-        }
-
-        public static readonly DependencyProperty InitialDirectoryProperty =
-            DependencyProperty.Register("InitialDirectory", typeof(string), typeof(ChooseFileAction));
-
-        #endregion
-
-        #region Multiselect
-
-        public bool Multiselect
-        {
-            get { return (bool)GetValue(MultiselectProperty); }
-            set { SetValue(MultiselectProperty, value); }
-        }
-
-        public static readonly DependencyProperty MultiselectProperty =
-            DependencyProperty.Register("Multiselect", typeof(bool), typeof(ChooseFileAction));
-
-        #endregion
-
-        #region CheckFileExists
-
-        public bool CheckFileExists
-        {
-            get { return (bool)GetValue(CheckFileExistsProperty); }
-            set { SetValue(CheckFileExistsProperty, value); }
-        }
-
-        public static readonly DependencyProperty CheckFileExistsProperty =
-            DependencyProperty.Register("CheckFileExists", typeof(bool), typeof(ChooseFileAction));
-
-        #endregion
-
-        #region Filter
-
-        public string Filter
-        {
-            get { return (string)GetValue(FilterProperty); }
-            set { SetValue(FilterProperty, value); }
-        }
-
-        public static readonly DependencyProperty FilterProperty =
-            DependencyProperty.Register("Filter", typeof(string), typeof(ChooseFileAction));
-
-        #endregion
-
-        #region Title
-
-        public string Title
-        {
-            get { return (string)GetValue(TitleProperty); }
-            set { SetValue(TitleProperty, value); }
-        }
-
-        public static readonly DependencyProperty TitleProperty =
-            DependencyProperty.Register("Title", typeof(string), typeof(ChooseFileAction));
-
-        #endregion
-
-        protected override void Invoke(object parameter)
-        {
-            var args = parameter as InteractionRequestedEventArgs;
-            if (args == null)
-            {
-                return;
-            }
-
-            var pathObject = (FileSystemPathObject)args.InteractionObject;
-
-            ServiceLocator.Instance.GetService<INativeDialogLauncher>().ShowDialog(
-                    createDialog: () =>
-                    {
-                        var dialog = new OpenFileDialog
-                        {
-                            Multiselect = Multiselect,
-                            CheckFileExists = CheckFileExists,
-                            InitialDirectory = InitialDirectory ?? string.Empty,
-                            Title = Title ?? string.Empty
-                        };
-
-                        try
-                        {
-                            dialog.Filter = Filter ?? string.Empty;
-                        }
-                        catch (ArgumentException)
-                        {
-                            _trace.TraceError($"{nameof(ChooseFileAction)} try to set invalid Filter={Filter}");
-                            dialog.Filter = string.Empty;
-                        }
-
-                        return dialog;
-                    },
-                    showDialog: dialog =>
-                    {
-                        if (dialog.ShowDialog() == DialogResult.OK)
-                        {
-                            if (dialog.Multiselect)
-                            {
-                                pathObject.Paths = dialog.FileNames;
-                            }
-                            else
-                            {
-                                pathObject.Path = dialog.FileName;
-                            }
-
-                            pathObject.ObjectType = FileSystemPathObjectType.File;
-                            pathObject.IsConfirmed = true;
-                        }
-                    });
-
-            pathObject.Handle();
-        }
-
-        private static readonly ComponentTracer _trace = ComponentTracer.Get(UIKitComponentTracers.Interactivity);
+        get => (string)GetValue(InitialDirectoryProperty);
+        set => SetValue(InitialDirectoryProperty, value);
     }
+
+    public static readonly DependencyProperty InitialDirectoryProperty = DependencyProperty.Register(
+        nameof(InitialDirectory),
+        typeof(string),
+        typeof(ChooseFileAction),
+        new PropertyMetadata(default(string)));
+
+    #endregion
+
+    #region Multiselect
+
+    public bool Multiselect
+    {
+        get => (bool)GetValue(MultiselectProperty);
+        set => SetValue(MultiselectProperty, value);
+    }
+
+    public static readonly DependencyProperty MultiselectProperty = DependencyProperty.Register(
+        nameof(Multiselect),
+        typeof(bool),
+        typeof(ChooseFileAction),
+        new PropertyMetadata(default(bool)));
+
+    #endregion
+
+    #region CheckFileExists
+
+    public bool CheckFileExists
+    {
+        get => (bool)GetValue(CheckFileExistsProperty);
+        set => SetValue(CheckFileExistsProperty, value);
+    }
+
+    public static readonly DependencyProperty CheckFileExistsProperty = DependencyProperty.Register(
+        nameof(CheckFileExists),
+        typeof(bool),
+        typeof(ChooseFileAction),
+        new PropertyMetadata(default(bool)));
+
+    #endregion
+
+    #region Filter
+
+    public string Filter
+    {
+        get => (string)GetValue(FilterProperty);
+        set => SetValue(FilterProperty, value);
+    }
+
+    public static readonly DependencyProperty FilterProperty = DependencyProperty.Register(
+        nameof(Filter),
+        typeof(string),
+        typeof(ChooseFileAction),
+        new PropertyMetadata(default(string)));
+
+    #endregion
+
+    #region Title
+
+    public string Title
+    {
+        get => (string)GetValue(TitleProperty);
+        set => SetValue(TitleProperty, value);
+    }
+
+    public static readonly DependencyProperty TitleProperty = DependencyProperty.Register(
+        nameof(Title),
+        typeof(string),
+        typeof(ChooseFileAction),
+        new PropertyMetadata(default(string)));
+
+    #endregion
+
+    protected override void Invoke(object parameter)
+    {
+        var args = parameter as InteractionRequestedEventArgs;
+        if (args == null)
+        {
+            return;
+        }
+
+        var pathObject = (FileSystemPathObject)args.InteractionObject;
+
+        ServiceLocator.Instance.GetService<INativeDialogLauncher>().ShowDialog(
+                createDialog: () =>
+                {
+                    var dialog = new OpenFileDialog
+                    {
+                        Multiselect = Multiselect,
+                        CheckFileExists = CheckFileExists,
+                        InitialDirectory = InitialDirectory ?? string.Empty,
+                        Title = Title ?? string.Empty
+                    };
+
+                    try
+                    {
+                        dialog.Filter = Filter ?? string.Empty;
+                    }
+                    catch (ArgumentException)
+                    {
+                        _trace.TraceError($"{nameof(ChooseFileAction)} try to set invalid Filter={Filter}");
+                        dialog.Filter = string.Empty;
+                    }
+
+                    return dialog;
+                },
+                showDialog: dialog =>
+                {
+                    if (dialog.ShowDialog() == DialogResult.OK)
+                    {
+                        if (dialog.Multiselect)
+                        {
+                            pathObject.Paths = dialog.FileNames;
+                        }
+                        else
+                        {
+                            pathObject.Path = dialog.FileName;
+                        }
+
+                        pathObject.ObjectType = FileSystemPathObjectType.File;
+                        pathObject.IsConfirmed = true;
+                    }
+                });
+
+        pathObject.Handle();
+    }
+
+    private static readonly ComponentTracer _trace = ComponentTracer.Get(UIKitComponentTracers.Interactivity);
 }

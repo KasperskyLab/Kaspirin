@@ -12,12 +12,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Kaspirin.UI.Framework.UiKit.Statistics
-{
-    public interface IStatisticsSender
-    {
-        void SendClickStatistic(object source);
+using System.Windows;
+using Kaspirin.UI.Framework.UiKit.Controls;
+using Dialog = System.Windows.Forms.CommonDialog;
 
-        void SendShownStatistic(object source);
-    }
+namespace Kaspirin.UI.Framework.UiKit.Statistics;
+
+public interface IStatisticsSender
+{
+    void SendMenuItemClicked(MenuItem source);
+
+    void SendNotificationViewShown(NotificationView source);
+
+    void SendDialogShown(Dialog source);
 }

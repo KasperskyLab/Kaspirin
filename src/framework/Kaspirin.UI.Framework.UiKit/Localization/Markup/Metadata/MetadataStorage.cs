@@ -17,62 +17,66 @@ using System.Collections.Concurrent;
 using System.Linq;
 using System.Timers;
 
-namespace Kaspirin.UI.Framework.UiKit.Localization.Markup.Metadata
+namespace Kaspirin.UI.Framework.UiKit.Localization.Markup.Metadata;
+
+public sealed class MetadataStorage
 {
-    public sealed class MetadataStorage
+    public MetadataStorage(MetadataStorageSettings settings)
     {
-        public MetadataStorage(MetadataStorageSettings settings)
-        {
-            Guard.ArgumentIsNotNull(settings);
+        Guard.ArgumentIsNotNull(settings);
 
-            CleanupDefered = settings.CleanupDefered;
+        CleanupDefered = settings.CleanupDefered;
 
-            _metadataCleanupTimer.Elapsed += (_, _) => CleanupMetadataInstantly();
-            _metadataCleanupTimer.AutoReset = false;
-        }
-
-        public bool CleanupDefered { get; set; }
-
-        public MetadataItem[] Items => _metadataStorage.Values.ToArray();
-
-        public void Store(MetadataItem metadataItem, object metadataRefHolder)
-        {
-            Cleanup();
-
-            _metadataStorage.TryAdd(new WeakReference(metadataRefHolder), metadataItem);
-        }
-
-        private void Cleanup()
-        {
-            if (CleanupDefered && _metadataStorage.Count < CleanupStorageCount)
-            {
-                CleanupMetadataDeferred();
-            }
-            else
-            {
-                CleanupMetadataInstantly();
-            }
-        }
-
-        private void CleanupMetadataInstantly()
-        {
-            var deadReferences = _metadataStorage.Keys.Where(k => k.Target == null).ToArray();
-            foreach (var reference in deadReferences)
-            {
-                _metadataStorage.TryRemove(reference, out _);
-            }
-        }
-
-        private void CleanupMetadataDeferred()
-        {
-            _metadataCleanupTimer.Stop();
-            _metadataCleanupTimer.Start();
-        }
-
-        private readonly ConcurrentDictionary<WeakReference, MetadataItem> _metadataStorage = new();
-        private readonly Timer _metadataCleanupTimer = new(CleanupTimerDelay);
-
-        private const int CleanupTimerDelay = 30 * 1000;
-        private const int CleanupStorageCount = 500000;
+        _metadataCleanupTimer.Elapsed += (_, _) => CleanupMetadataInstantly();
+        _metadataCleanupTimer.AutoReset = false;
     }
+
+    public bool CleanupDefered { get; set; }
+
+    public MetadataItem[] Items => _metadataStorage.Values.ToArray();
+
+    public void Store(MetadataItem metadataItem, object metadataRefHolder)
+    {
+        Cleanup();
+
+        _metadataStorage.TryAdd(new WeakReference(metadataRefHolder), metadataItem);
+    }
+
+    public void Clear()
+    {
+        _metadataStorage.Clear();
+    }
+
+    private void Cleanup()
+    {
+        if (CleanupDefered && _metadataStorage.Count < CleanupStorageCount)
+        {
+            CleanupMetadataDeferred();
+        }
+        else
+        {
+            CleanupMetadataInstantly();
+        }
+    }
+
+    private void CleanupMetadataInstantly()
+    {
+        var deadReferences = _metadataStorage.Keys.Where(k => k.Target == null).ToArray();
+        foreach (var reference in deadReferences)
+        {
+            _metadataStorage.TryRemove(reference, out _);
+        }
+    }
+
+    private void CleanupMetadataDeferred()
+    {
+        _metadataCleanupTimer.Stop();
+        _metadataCleanupTimer.Start();
+    }
+
+    private readonly ConcurrentDictionary<WeakReference, MetadataItem> _metadataStorage = new();
+    private readonly Timer _metadataCleanupTimer = new(CleanupTimerDelay);
+
+    private const int CleanupTimerDelay = 30 * 1000;
+    private const int CleanupStorageCount = 500000;
 }

@@ -14,17 +14,16 @@
 
 using System;
 
-namespace Kaspirin.UI.Framework.UiKit.Interactivity
+namespace Kaspirin.UI.Framework.UiKit.Interactivity;
+
+public sealed class InteractionRequestedEventArgs : EventArgs
 {
-    public sealed class InteractionRequestedEventArgs : EventArgs
+    public InteractionRequestedEventArgs(InteractionObject interactionObject)
     {
-        public InteractionRequestedEventArgs(InteractionObject interactionObject)
-        {
-            Guard.ArgumentIsNotNull(interactionObject);
+        Guard.ArgumentIsNotNull(interactionObject);
 
-            InteractionObject = interactionObject;
-        }
-
-        public InteractionObject InteractionObject { get; }
+        InteractionObject = interactionObject;
     }
+
+    public InteractionObject InteractionObject { get; }
 }

@@ -17,21 +17,20 @@ using System.Globalization;
 using System.Windows;
 using System.Windows.Data;
 
-namespace Kaspirin.UI.Framework.UiKit.Controls.Internals
-{
-    internal sealed class RtlSimulationConverter : IValueConverter
-    {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            var flowDirection = (FlowDirection)value;
-            return flowDirection switch
-            {
-                FlowDirection.RightToLeft => TextAlignment.Right,
-                _ => (object)TextAlignment.Left,
-            };
-        }
+namespace Kaspirin.UI.Framework.UiKit.Controls.Internals;
 
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-            => throw new NotImplementedException();
+internal sealed class RtlSimulationConverter : IValueConverter
+{
+    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        var flowDirection = (FlowDirection)value;
+        return flowDirection switch
+        {
+            FlowDirection.RightToLeft => TextAlignment.Right,
+            _ => (object)TextAlignment.Left,
+        };
     }
+
+    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        => throw new NotImplementedException();
 }

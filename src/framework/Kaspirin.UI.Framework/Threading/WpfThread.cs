@@ -18,62 +18,77 @@ using System;
 using System.Globalization;
 using System.Threading;
 
-namespace Kaspirin.UI.Framework.Threading
+namespace Kaspirin.UI.Framework.Threading;
+
+/// <summary>
+///     Starts the main thread of the WPF application (UI thread).
+/// </summary>
+public sealed class WpfThread
 {
     /// <summary>
-    ///     Starts the main thread of the WPF application (UI thread).
+    ///     Initializes a new instance of the <see cref="WpfThread" /> class.
     /// </summary>
-    public sealed class WpfThread
+    /// <param name="startAction">
+    ///     A delegate to start the UI thread.
+    /// </param>
+    /// <param name="threadCulture">
+    ///     Passed to <see cref="Thread.CurrentCulture" /> for the UI stream being created.
+    /// </param>
+    /// <param name="threadUICulture">
+    ///     Passed to <see cref="Thread.CurrentUICulture" /> for the UI stream being created.
+    /// </param>
+    /// <param name="threadName">
+    ///     Passed to <see cref="Thread.Name" /> for the UI stream being created.
+    /// </param>
+    public WpfThread(
+        Action startAction,
+        CultureInfo? threadCulture = null,
+        CultureInfo? threadUICulture = null,
+        string threadName = "WPF")
     {
-        /// <summary>
-        ///     Initializes a new instance of the <see cref="WpfThread" /> class.
-        /// </summary>
-        /// <param name="startAction">
-        ///     A delegate to start the UI thread.
-        /// </param>
-        /// <param name="threadCulture">
-        ///     Passed to <see cref="Thread.CurrentCulture" /> for the UI stream being created.
-        /// </param>
-        /// <param name="threadUICulture">
-        ///     Passed to <see cref="Thread.CurrentUICulture" /> for the UI stream being created.
-        /// </param>
-        /// <param name="threadName">
-        ///     Passed to <see cref="Thread.Name" /> for the UI stream being created.
-        /// </param>
-        public WpfThread(
-            Action startAction,
-            CultureInfo threadCulture,
-            CultureInfo threadUICulture,
-            string threadName = "WPF")
+        Guard.ArgumentIsNotNull(startAction);
+
+        _wpfThread = new Thread(() => startAction())
         {
-            Guard.ArgumentIsNotNull(startAction);
-            Guard.ArgumentIsNotNull(threadCulture);
-            Guard.ArgumentIsNotNull(threadUICulture);
+            Name = threadName,
+            CurrentCulture = threadCulture ?? Thread.CurrentThread.CurrentCulture,
+            CurrentUICulture = threadUICulture ?? Thread.CurrentThread.CurrentUICulture
+        };
 
-            _wpfThread = new Thread(() => startAction())
-            {
-                Name = threadName,
-                CurrentCulture = threadCulture,
-                CurrentUICulture = threadUICulture
-            };
+        _wpfThread.SetApartmentState(ApartmentState.STA);
 
-            _wpfThread.SetApartmentState(ApartmentState.STA);
-
-            Guard.SetUiThreadId(_wpfThread.ManagedThreadId);
-        }
-
-        /// <summary>
-        ///     Starts the UI thread.
-        /// </summary>
-        public void Start()
-            => _wpfThread.Start();
-
-        /// <summary>
-        ///     Blocks the calling thread until the UI thread is completed.
-        /// </summary>
-        public void Join()
-            => _wpfThread.Join();
-
-        private readonly Thread _wpfThread;
+        Guard.SetUiThreadId(_wpfThread.ManagedThreadId);
     }
+
+    /// <summary>
+    ///     The value is <see cref="Thread.CurrentCulture" /> for the UI stream.
+    /// </summary>
+    public CultureInfo CurrentCulture
+    {
+        get => _wpfThread.CurrentCulture;
+        set => _wpfThread.CurrentCulture = value;
+    }
+
+    /// <summary>
+    ///     The value is <see cref="Thread.CurrentUICulture" /> for the UI stream.
+    /// </summary>
+    public CultureInfo CurrentUICulture
+    {
+        get => _wpfThread.CurrentUICulture;
+        set => _wpfThread.CurrentUICulture = value;
+    }
+
+    /// <summary>
+    ///     Starts the UI thread.
+    /// </summary>
+    public void Start()
+        => _wpfThread.Start();
+
+    /// <summary>
+    ///     Blocks the calling thread until the UI thread is completed.
+    /// </summary>
+    public void Join()
+        => _wpfThread.Join();
+
+    private readonly Thread _wpfThread;
 }

@@ -14,48 +14,47 @@
 
 using System;
 
-namespace Kaspirin.UI.Framework.UiKit.Interactivity
+namespace Kaspirin.UI.Framework.UiKit.Interactivity;
+
+public class SaveDataRequest<T> : InteractionRequestBase<T> where T : SaveDataObject
 {
-    public class SaveDataRequest<T> : InteractionRequestBase<T> where T : SaveDataObject
+    public void Raise(T saveDataObject, Action? onSave = null, Action? onDiscard = null, Action? onCancel = null)
     {
-        public void Raise(T saveDataObject, Action? onSave = null, Action? onDiscard = null, Action? onCancel = null)
-        {
-            Guard.ArgumentIsNotNull(saveDataObject);
+        Guard.ArgumentIsNotNull(saveDataObject);
 
-            Raise(saveDataObject, c => onSave?.Invoke(), c => onDiscard?.Invoke(), c => onCancel?.Invoke());
+        Raise(saveDataObject, c => onSave?.Invoke(), c => onDiscard?.Invoke(), c => onCancel?.Invoke());
+    }
+
+    public void Raise(T saveDataObject, Action<T>? onSave = null, Action<T>? onDiscard = null, Action<T>? onCancel = null)
+    {
+        Guard.ArgumentIsNotNull(saveDataObject);
+
+        void OnDecided(SaveDataDecision result)
+        {
+            var action = result == SaveDataDecision.Save
+                ? onSave
+                : result == SaveDataDecision.Discard
+                    ? onDiscard
+                    : onCancel;
+
+            action?.Invoke(saveDataObject);
         }
 
-        public void Raise(T saveDataObject, Action<T>? onSave = null, Action<T>? onDiscard = null, Action<T>? onCancel = null)
-        {
-            Guard.ArgumentIsNotNull(saveDataObject);
+        Raise(saveDataObject, OnDecided);
+    }
 
-            void OnDecided(SaveDataDecision result)
-            {
-                var action = result == SaveDataDecision.Save
-                    ? onSave
-                    : result == SaveDataDecision.Discard
-                        ? onDiscard
-                        : onCancel;
+    public void Raise(T saveDataObject, Action<SaveDataDecision> onDecided)
+    {
+        Guard.ArgumentIsNotNull(saveDataObject);
+        Guard.ArgumentIsNotNull(onDecided);
 
-                action?.Invoke(saveDataObject);
-            }
+        InvokeInteraction(saveDataObject, result => onDecided(result.Decision));
+    }
 
-            Raise(saveDataObject, OnDecided);
-        }
+    protected override void OnClose()
+    {
+        Guard.IsNotNull(InteractionObject);
 
-        public void Raise(T saveDataObject, Action<SaveDataDecision> onDecided)
-        {
-            Guard.ArgumentIsNotNull(saveDataObject);
-            Guard.ArgumentIsNotNull(onDecided);
-
-            InvokeInteraction(saveDataObject, result => onDecided(result.Decision));
-        }
-
-        protected override void OnClose()
-        {
-            Guard.IsNotNull(InteractionObject);
-
-            InteractionObject.Decision = SaveDataDecision.Stay;
-        }
+        InteractionObject.Decision = SaveDataDecision.Stay;
     }
 }

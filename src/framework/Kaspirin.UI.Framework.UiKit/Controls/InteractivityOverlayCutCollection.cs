@@ -15,9 +15,8 @@
 using System;
 using System.Collections.Generic;
 
-namespace Kaspirin.UI.Framework.UiKit.Controls
+namespace Kaspirin.UI.Framework.UiKit.Controls;
+
+public sealed class InteractivityOverlayCutCollection : Dictionary<Enum, InteractivityOverlayCut>
 {
-    public sealed class InteractivityOverlayCutCollection : Dictionary<Enum, InteractivityOverlayCut>
-    {
-    }
 }

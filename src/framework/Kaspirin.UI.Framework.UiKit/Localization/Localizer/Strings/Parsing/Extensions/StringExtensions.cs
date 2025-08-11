@@ -16,54 +16,63 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Kaspirin.UI.Framework.UiKit.Localization.Localizer.Strings.Parsing.Extensions
+namespace Kaspirin.UI.Framework.UiKit.Localization.Localizer.Strings.Parsing.Extensions;
+
+internal static class StringExtensions
 {
-    internal static class StringExtensions
+    public const char BorderChar = '\'';
+
+    public static string ReplaceAll(this string target, KeyValuePair<string, string>[] replacementMap)
     {
-        public const char BorderChar = '\'';
-        
-        public static string ReplaceAll(this string target, KeyValuePair<string, string>[] replacementMap)
+        foreach (var x in replacementMap)
         {
-            foreach (var x in replacementMap)
+            if (target.IndexOf(x.Key, StringComparison.Ordinal) >= 0)
             {
-                if (target.IndexOf(x.Key, StringComparison.Ordinal) >= 0)
+                var builder = new StringBuilder(target);
+                foreach (var item in replacementMap)
                 {
-                    var builder = new StringBuilder(target);
-                    foreach (var item in replacementMap)
-                        builder.Replace(item.Key, item.Value);
-                    return builder.ToString();
+                    builder.Replace(item.Key, item.Value);
                 }
-            }
 
-            return target;
+                return builder.ToString();
+            }
         }
 
-        public static string Unescape(this string text)
-        {
-            if (text.IndexOf('\\') < 0)
-                return text;
-            
-            var builder = new StringBuilder(text.Length);
-            
-            for (int i = 0; i < text.Length; i++)
-            {
-                var ch = text[i]; 
-                if (ch == '\\' && i + 1 < text.Length)
-                    builder.Append(text[++i] switch { 'r' => '\r', 'n' => '\n', 't' => '\t', var ch2 => ch2 });
-                else
-                    builder.Append(ch);
-            }
-
-            return builder.ToString();
-        }
-
-        public static string LiteralUnescape(this string value) => value.Unescape().ReplaceAll(CharReplacementMap);
-
-        private static readonly KeyValuePair<string, string>[] CharReplacementMap = 
-        {
-            new("&nbsp;", "\x00a0"),
-            new("&lrm;",  "\x200e"),
-            new("&rlm;",  "\x200f"),
-        };
+        return target;
     }
+
+    public static string UnEscape(this string text)
+    {
+        if (text.IndexOf('\\') < 0)
+        {
+            return text;
+        }
+
+        var builder = new StringBuilder(text.Length);
+
+        for (var i = 0; i < text.Length; i++)
+        {
+            var ch = text[i];
+            if (ch == '\\' && i + 1 < text.Length)
+            {
+                builder.Append(text[++i] switch { 'r' => '\r', 'n' => '\n', 't' => '\t', var ch2 => ch2 });
+            }
+            else
+            {
+                builder.Append(ch);
+            }
+        }
+
+        return builder.ToString();
+    }
+
+    public static string LiteralUnEscape(this string value)
+        => value.UnEscape().ReplaceAll(_charReplacementMap);
+
+    private static readonly KeyValuePair<string, string>[] _charReplacementMap =
+    {
+        new("&nbsp;", "\x00a0"),
+        new("&lrm;",  "\x200e"),
+        new("&rlm;",  "\x200f"),
+    };
 }

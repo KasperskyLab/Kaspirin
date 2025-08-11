@@ -12,18 +12,25 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
+namespace Kaspirin.UI.Framework.NativeMethods.Api.User32.Enums;
 
-namespace Kaspirin.UI.Framework.NativeMethods.Api.User32.Enums
+/// <summary>
+///     <seealso href="https://learn.microsoft.com/en-us/windows/win32/api/winuser/ns-winuser-input">Learn more</seealso>.
+/// </summary>
+public enum InputType : uint
 {
     /// <summary>
-    ///     
-    /// <seealso href="https://learn.microsoft.com/en-us/windows/win32/api/winuser/ns-winuser-input">Learn more</seealso>.
+    ///     The INPUT_MOUSE constant.
     /// </summary>
-    public enum InputType : uint
-    {
-        INPUT_MOUSE = 0,
-        INPUT_KEYBOARD = 1,
-        INPUT_HARDWARE = 2,
-    }
+    Mouse = 0,
+
+    /// <summary>
+    ///     The INPUT_KEYBOARD constant.
+    /// </summary>
+    Keyboard = 1,
+
+    /// <summary>
+    ///     The INPUT_HARDWARE constant.
+    /// </summary>
+    Hardware = 2,
 }

@@ -17,97 +17,96 @@ using System.Diagnostics.CodeAnalysis;
 using System.Windows;
 using System.Windows.Input;
 
-namespace Kaspirin.UI.Framework.UiKit.Input.Focus
+namespace Kaspirin.UI.Framework.UiKit.Input.Focus;
+
+public static class InputFocusManager
 {
-    public static class InputFocusManager
+    public static void ClearInputFocus(UIElement target)
     {
-        public static void ClearInputFocus(UIElement target)
+        Guard.ArgumentIsNotNull(target);
+
+        var window = target.GetWindow();
+        if (window == null)
         {
-            Guard.ArgumentIsNotNull(target);
-
-            var window = target.GetWindow();
-            if (window == null)
-            {
-                return;
-            }
-
-            var hasFocus = target.IsFocused || target.FindVisualChildren<UIElement>().Contains(e => e.IsFocused);
-            if (hasFocus)
-            {
-                FocusManager.SetFocusedElement(window, window);
-            }
+            return;
         }
 
-        public static bool SetInputFocus(UIElement target)
+        var hasFocus = target.IsFocused || target.FindVisualChildren<UIElement>().Contains(e => e.IsFocused);
+        if (hasFocus)
         {
-            Guard.ArgumentIsNotNull(target);
+            FocusManager.SetFocusedElement(window, window);
+        }
+    }
 
-            if (!CanSetInputFocus(target, out var parentWindow))
+    public static bool SetInputFocus(UIElement target)
+    {
+        Guard.ArgumentIsNotNull(target);
+
+        if (!CanSetInputFocus(target, out var parentWindow))
+        {
+            return false;
+        }
+
+        FocusManager.SetFocusedElement(parentWindow, target);
+        return true;
+    }
+
+    private static bool CanSetInputFocus(UIElement target, [NotNullWhen(true)] out Window? parentWindow)
+    {
+        Guard.ArgumentIsNotNull(target);
+
+        parentWindow = null;
+
+        if (!target.Focusable || !target.IsVisible)
+        {
+            return false;
+        }
+
+        var notificationLayer = NotificationLayer.FindLayer(target, isModal: true);
+        if (notificationLayer?.IsModalState == true)
+        {
+            var isInsideNotification = target.FindVisualParent<NotificationView>() != null;
+            if (isInsideNotification == false)
             {
                 return false;
             }
-
-            FocusManager.SetFocusedElement(parentWindow, target);
-            return true;
         }
 
-        private static bool CanSetInputFocus(UIElement target, [NotNullWhen(true)] out Window? parentWindow)
+        parentWindow = target.GetWindow();
+        if (parentWindow?.IsVisible != true)
         {
-            Guard.ArgumentIsNotNull(target);
-
-            parentWindow = null;
-
-            if (!target.Focusable || !target.IsVisible)
-            {
-                return false;
-            }
-
-            var notificationLayer = NotificationLayer.FindLayer(target, isModal: true);
-            if (notificationLayer?.IsModalState == true)
-            {
-                var isInsideNotification = target.FindVisualParent<NotificationView>() != null;
-                if (isInsideNotification == false)
-                {
-                    return false;
-                }
-            }
-
-            parentWindow = target.GetWindow();
-            if (parentWindow?.IsVisible != true)
-            {
-                return false;
-            }
-
-            if (!parentWindow.IsActive)
-            {
-                // If current foreground window belongs to our app, it's totally legit
-                // to set focus to any focusable and visible element inside any visible
-                // window of our app (active or inactive one, no difference).
-
-                // If current foreground window belongs to some another app, there is
-                // not much sense to set focus to an element inside our inactive window.
-
-                // So if it's really important to set focus, then it's necessary to ensure
-                // that foreground window belongs to our app before calling SetInputFocus.
-                return IsCurrentApplicationForeground();
-            }
-
-            return true;
+            return false;
         }
 
-        private static bool IsCurrentApplicationForeground()
+        if (!parentWindow.IsActive)
         {
-            var foregroundWindowHandle = User32Dll.GetForegroundWindow();
-            if (foregroundWindowHandle == IntPtr.Zero)
-            {
-                // No window is currently activated.
-                return false;
-            }
+            // If current foreground window belongs to our app, it's totally legit
+            // to set focus to any focusable and visible element inside any visible
+            // window of our app (active or inactive one, no difference).
 
-            var currentProcessId = Kernel32Dll.GetCurrentProcessId();
-            var foregroundProcessId = foregroundWindowHandle.GetProcessId().ToInt32();
+            // If current foreground window belongs to some another app, there is
+            // not much sense to set focus to an element inside our inactive window.
 
-            return foregroundProcessId == currentProcessId;
+            // So if it's really important to set focus, then it's necessary to ensure
+            // that foreground window belongs to our app before calling SetInputFocus.
+            return IsCurrentApplicationForeground();
         }
+
+        return true;
+    }
+
+    private static bool IsCurrentApplicationForeground()
+    {
+        var foregroundWindowHandle = User32Dll.GetForegroundWindow();
+        if (foregroundWindowHandle == IntPtr.Zero)
+        {
+            // No window is currently activated.
+            return false;
+        }
+
+        var currentProcessId = Kernel32Dll.GetCurrentProcessId();
+        var foregroundProcessId = foregroundWindowHandle.GetProcessId().ToInt32();
+
+        return foregroundProcessId == currentProcessId;
     }
 }

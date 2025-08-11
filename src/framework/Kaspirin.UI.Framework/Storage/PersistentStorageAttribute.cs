@@ -15,38 +15,37 @@
 using System;
 using System.ComponentModel;
 
-namespace Kaspirin.UI.Framework.Storage
+namespace Kaspirin.UI.Framework.Storage;
+
+/// <summary>
+///     An attribute for configuring the way property data is stored in <see cref="PersistentStorageBase" />.
+/// </summary>
+[AttributeUsage(AttributeTargets.Property)]
+public sealed class PersistentStorageAttribute : Attribute
 {
     /// <summary>
-    ///     An attribute for configuring the way property data is stored in <see cref="PersistentStorageBase" />.
+    ///     Initializes a new instance of the <see cref="PersistentStorageAttribute" /> class.
     /// </summary>
-    [AttributeUsage(AttributeTargets.Property)]
-    public sealed class PersistentStorageAttribute : Attribute
+    /// <param name="skipSerialization">
+    ///     Specifies whether the property value will be serialized when saved.
+    /// </param>
+    /// <param name="defaultValue">
+    ///     Specifies the default value for the property.
+    /// </param>
+    public PersistentStorageAttribute(bool skipSerialization = false, object? defaultValue = null)
     {
-        /// <summary>
-        ///     Initializes a new instance of the <see cref="PersistentStorageAttribute" /> class.
-        /// </summary>
-        /// <param name="skipSerialization">
-        ///     Specifies whether the property value will be serialized when saved.
-        /// </param>
-        /// <param name="defaultValue">
-        ///     Specifies the default value for the property.
-        /// </param>
-        public PersistentStorageAttribute(bool skipSerialization = false, object? defaultValue = null)
-        {
-            SkipSerialization = skipSerialization;
-            DefaultValue = defaultValue;
-        }
-
-        /// <summary>
-        ///     Specifies whether the property value will be serialized when saved.
-        /// </summary>
-        [DefaultValue(60)]
-        public bool SkipSerialization { get; set; }
-
-        /// <summary>
-        ///     Specifies the default value for the property.
-        /// </summary>
-        public object? DefaultValue { get; set; }
+        SkipSerialization = skipSerialization;
+        DefaultValue = defaultValue;
     }
+
+    /// <summary>
+    ///     Specifies whether the property value will be serialized when saved.
+    /// </summary>
+    [DefaultValue(60)]
+    public bool SkipSerialization { get; set; }
+
+    /// <summary>
+    ///     Specifies the default value for the property.
+    /// </summary>
+    public object? DefaultValue { get; set; }
 }

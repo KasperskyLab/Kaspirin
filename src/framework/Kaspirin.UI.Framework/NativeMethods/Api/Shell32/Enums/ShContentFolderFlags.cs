@@ -12,33 +12,84 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-#pragma warning disable KCAIDE0002 // Enum has incorrect suffix
 
 using System;
 
-namespace Kaspirin.UI.Framework.NativeMethods.Api.Shell32.Enums
+namespace Kaspirin.UI.Framework.NativeMethods.Api.Shell32.Enums;
+
+/// <summary>
+///     <seealso href="https://learn.microsoft.com/en-us/windows/win32/api/shobjidl_core/ne-shobjidl_core-_shcontf">Learn more</seealso>.
+/// </summary>
+[Flags]
+public enum ShContentFolderFlags : uint
 {
     /// <summary>
-    ///     
-    /// <seealso href="https://learn.microsoft.com/en-us/windows/win32/api/shobjidl_core/ne-shobjidl_core-_shcontf">Learn more</seealso>.
+    ///     The flag is not set.
     /// </summary>
-    [Flags]
-    public enum ShContentFolderFlags : uint
-    {
-        None = 0,
-        SHCONTF_CHECKING_FOR_CHILDREN = 0x10,
-        SHCONTF_FOLDERS = 0x20,
-        SHCONTF_NONFOLDERS = 0x40,
-        SHCONTF_INCLUDEHIDDEN = 0x80,
-        SHCONTF_INIT_ON_FIRST_NEXT = 0x100,
-        SHCONTF_NETPRINTERSRCH = 0x200,
-        SHCONTF_SHAREABLE = 0x400,
-        SHCONTF_STORAGE = 0x800,
-        SHCONTF_NAVIGATION_ENUM = 0x1000,
-        SHCONTF_FASTITEMS = 0x2000,
-        SHCONTF_FLATLIST = 0x4000,
-        SHCONTF_ENABLE_ASYNC = 0x8000,
-        SHCONTF_INCLUDESUPERHIDDEN = 0x10000,
-    }
+    None = 0,
+
+    /// <summary>
+    ///     The SHCONTF_CHECKING_FOR_CHILDREN constant.
+    /// </summary>
+    CheckingForChildren = 0x10,
+
+    /// <summary>
+    ///     The SHCONTF_FOLDERS constant.
+    /// </summary>
+    Folders = 0x20,
+
+    /// <summary>
+    ///     The SHCONTF_NONFOLDERS constant.
+    /// </summary>
+    NonFolders = 0x40,
+
+    /// <summary>
+    ///     The SHCONTF_INCLUDEHIDDEN constant.
+    /// </summary>
+    IncludeHidden = 0x80,
+
+    /// <summary>
+    ///     The SHCONTF_INIT_ON_FIRST_NEXT constant.
+    /// </summary>
+    InitOnFirstNext = 0x100,
+
+    /// <summary>
+    ///     The SHCONTF_NETPRINTERSRCH constant.
+    /// </summary>
+    NetPrinterSearch = 0x200,
+
+    /// <summary>
+    ///     The SHCONTF_SHAREABLE constant.
+    /// </summary>
+    Shareable = 0x400,
+
+    /// <summary>
+    ///     The SHCONTF_STORAGE constant.
+    /// </summary>
+    Storage = 0x800,
+
+    /// <summary>
+    ///     The SHCONTF_NAVIGATION_ENUM constant.
+    /// </summary>
+    NavigationEnum = 0x1000,
+
+    /// <summary>
+    ///     The SHCONTF_FASTITEMS constant.
+    /// </summary>
+    FastItems = 0x2000,
+
+    /// <summary>
+    ///     The SHCONTF_FLATLIST constant.
+    /// </summary>
+    FlatList = 0x4000,
+
+    /// <summary>
+    ///     The SHCONTF_ENABLE_ASYNC constant.
+    /// </summary>
+    EnableAsync = 0x8000,
+
+    /// <summary>
+    ///     The SHCONTF_INCLUDESUPERHIDDEN constant.
+    /// </summary>
+    IncludeSuperHidden = 0x10000,
 }

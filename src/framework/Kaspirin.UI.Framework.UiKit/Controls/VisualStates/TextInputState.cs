@@ -12,17 +12,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Kaspirin.UI.Framework.UiKit.Controls.VisualStates
+namespace Kaspirin.UI.Framework.UiKit.Controls.VisualStates;
+
+public enum TextInputState
 {
-    public enum TextInputState
-    {
-        Normal,
-        Hover,
-        Focus,
-        InvalidNormal,
-        InvalidHover,
-        InvalidFocus,
-        ReadOnly,
-        Disabled,
-    }
+    Normal,
+    Hover,
+    Focus,
+    InvalidNormal,
+    InvalidHover,
+    InvalidFocus,
+    ReadOnly,
+    Disabled,
 }

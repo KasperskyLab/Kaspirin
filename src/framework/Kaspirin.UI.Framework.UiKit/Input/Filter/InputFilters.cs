@@ -16,65 +16,64 @@ using System;
 using System.IO;
 using System.Linq;
 
-namespace Kaspirin.UI.Framework.UiKit.Input.Filter
+namespace Kaspirin.UI.Framework.UiKit.Input.Filter;
+
+public static class InputFilters
 {
-    public static class InputFilters
+    public static IInputFilter Digits { get; } = new DelegateInputFilter(
+        input => FilterString(input, c => char.IsDigit(c)));
+
+    public static IInputFilter DigitsAndSpaces { get; } = new DelegateInputFilter(
+        input => FilterString(input, c => char.IsDigit(c) || c == ' '));
+
+    public static IInputFilter Letters { get; } = new DelegateInputFilter(
+        input => FilterString(input, c => char.IsLetter(c)));
+
+    public static IInputFilter LettersAndSpaces { get; } = new DelegateInputFilter(
+        input => FilterString(input, c => char.IsLetter(c) || c == ' '));
+
+    public static IInputFilter LettersAndDigits { get; } = new DelegateInputFilter(
+        input => FilterString(input, c => char.IsLetterOrDigit(c)));
+
+    public static IInputFilter LettersAndDigitsAndSpaces { get; } = new DelegateInputFilter(
+        input => FilterString(input, c => char.IsLetterOrDigit(c) || c == ' '));
+
+    public static IInputFilter FileNameChars { get; } = new DelegateInputFilter(input =>
     {
-        public static IInputFilter Digits { get; } = new DelegateInputFilter(
-            input => FilterString(input, c => char.IsDigit(c)));
+        var invalidChars = Path.GetInvalidFileNameChars();
 
-        public static IInputFilter DigitsAndSpaces { get; } = new DelegateInputFilter(
-            input => FilterString(input, c => char.IsDigit(c) || c == ' '));
+        return FilterString(input, c => !invalidChars.Contains(c));
+    });
 
-        public static IInputFilter Letters { get; } = new DelegateInputFilter(
-            input => FilterString(input, c => char.IsLetter(c)));
+    public static IInputFilter DirectoryNameChars { get; } = new DelegateInputFilter(input =>
+    {
+        var pathSeparators = new[] { Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar };
 
-        public static IInputFilter LettersAndSpaces { get; } = new DelegateInputFilter(
-            input => FilterString(input, c => char.IsLetter(c) || c == ' '));
+        var invalidPathChars = Path.GetInvalidPathChars()
+            .Concat(pathSeparators)
+            .ToArray();
 
-        public static IInputFilter LettersAndDigits { get; } = new DelegateInputFilter(
-            input => FilterString(input, c => char.IsLetterOrDigit(c)));
+        return FilterString(input, c => !invalidPathChars.Contains(c));
+    });
 
-        public static IInputFilter LettersAndDigitsAndSpaces { get; } = new DelegateInputFilter(
-            input => FilterString(input, c => char.IsLetterOrDigit(c) || c == ' '));
-
-        public static IInputFilter FileNameChars { get; } = new DelegateInputFilter(input =>
+    public static string? FilterString(string str, Func<char, bool> predicate)
+    {
+        if (str.Length == 0)
         {
-            var invalidChars = Path.GetInvalidFileNameChars();
+            return string.Empty;
+        }
 
-            return FilterString(input, c => !invalidChars.Contains(c));
-        });
-
-        public static IInputFilter DirectoryNameChars { get; } = new DelegateInputFilter(input =>
+        var charArray = default(char[]);
+        try
         {
-            var pathSeparators = new[] { Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar };
-
-            var invalidPathChars = Path.GetInvalidPathChars()
-                .Concat(pathSeparators)
-                .ToArray();
-
-            return FilterString(input, c => !invalidPathChars.Contains(c));
-        });
-
-        public static string? FilterString(string str, Func<char, bool> predicate)
+            charArray = str.Where(predicate).ToArray();
+            return new string(charArray);
+        }
+        finally
         {
-            if (str.Length == 0)
+            if (charArray is not null)
             {
-                return string.Empty;
-            }
-
-            var charArray = default(char[]);
-            try
-            {
-                charArray = str.Where(predicate).ToArray();
-                return new string(charArray);
-            }
-            finally
-            {
-                if (charArray is not null)
-                {
-                    Array.Clear(charArray, 0, charArray.Length);
-                }
+                Array.Clear(charArray, 0, charArray.Length);
             }
         }
     }

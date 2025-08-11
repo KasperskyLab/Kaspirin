@@ -15,21 +15,23 @@
 using System.Windows;
 using System.Windows.Controls;
 
-namespace Kaspirin.UI.Framework.UiKit.Controls
+namespace Kaspirin.UI.Framework.UiKit.Controls;
+
+public class Badge : Control
 {
-    public class Badge : Control
+    #region Type
+
+    public BadgeType Type
     {
-        #region Type
-
-        public BadgeType Type
-        {
-            get { return (BadgeType)GetValue(TypeProperty); }
-            set { SetValue(TypeProperty, value); }
-        }
-
-        public static readonly DependencyProperty TypeProperty =
-            DependencyProperty.Register("Type", typeof(BadgeType), typeof(Badge));
-
-        #endregion
+        get => (BadgeType)GetValue(TypeProperty);
+        set => SetValue(TypeProperty, value);
     }
+
+    public static readonly DependencyProperty TypeProperty = DependencyProperty.Register(
+        nameof(Type),
+        typeof(BadgeType),
+        typeof(Badge),
+        new PropertyMetadata(default(BadgeType)));
+
+    #endregion
 }

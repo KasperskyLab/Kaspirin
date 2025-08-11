@@ -12,11 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Kaspirin.UI.Framework.UiKit.Translator.Core
+namespace Kaspirin.UI.Framework.UiKit.Translator.Core;
+
+internal enum LineEndingMode
 {
-    internal enum LineEndingMode
-    {
-        Lf,
-        CrLf
-    }
+    Lf,
+    CrLf
 }

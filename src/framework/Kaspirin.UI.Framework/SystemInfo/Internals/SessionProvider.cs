@@ -17,49 +17,48 @@
 using System;
 using Microsoft.Win32;
 
-namespace Kaspirin.UI.Framework.SystemInfo.Internals
+namespace Kaspirin.UI.Framework.SystemInfo.Internals;
+
+internal sealed class SessionProvider : ISessionProvider
 {
-    internal sealed class SessionProvider : ISessionProvider
+    public SessionProvider(ISystemEvents systemEvents)
     {
-        public SessionProvider(ISystemEvents systemEvents)
+        Guard.ArgumentIsNotNull(systemEvents);
+
+        systemEvents.SessionSwitch += (s, e) =>
         {
-            Guard.ArgumentIsNotNull(systemEvents);
+            IsSessionActive = IsActiveSession(e.Reason);
 
-            systemEvents.SessionSwitch += (s, e) =>
+            _trace.TraceInformation($"SessionSwitch {e.Reason}");
+
+            if (IsSessionActive)
             {
-                IsSessionActive = IsActiveSession(e.Reason);
-
-                _trace.TraceInformation($"SessionSwitch {e.Reason}");
-
-                if (IsSessionActive)
-                {
-                    OnActivateSession.Invoke();
-                }
-                else
-                {
-                    OnDeactivateSession.Invoke();
-                }
-            };
-        }
-
-        public event Action OnActivateSession = () => { };
-
-        public event Action OnDeactivateSession = () => { };
-
-        public bool IsSessionActive { get; private set; } = true;
-
-        private static bool IsActiveSession(SessionSwitchReason reason)
-        {
-            return reason switch
+                OnActivateSession.Invoke();
+            }
+            else
             {
-                SessionSwitchReason.ConsoleConnect or
-                SessionSwitchReason.RemoteConnect or
-                SessionSwitchReason.SessionLogon or
-                SessionSwitchReason.SessionUnlock => true,
-                _ => false,
-            };
-        }
-
-        private static readonly ComponentTracer _trace = ComponentTracer.Get(ComponentTracers.SystemInfo);
+                OnDeactivateSession.Invoke();
+            }
+        };
     }
+
+    public event Action OnActivateSession = () => { };
+
+    public event Action OnDeactivateSession = () => { };
+
+    public bool IsSessionActive { get; private set; } = true;
+
+    private static bool IsActiveSession(SessionSwitchReason reason)
+    {
+        return reason switch
+        {
+            SessionSwitchReason.ConsoleConnect or
+            SessionSwitchReason.RemoteConnect or
+            SessionSwitchReason.SessionLogon or
+            SessionSwitchReason.SessionUnlock => true,
+            _ => false,
+        };
+    }
+
+    private static readonly ComponentTracer _trace = ComponentTracer.Get(ComponentTracers.SystemInfo);
 }

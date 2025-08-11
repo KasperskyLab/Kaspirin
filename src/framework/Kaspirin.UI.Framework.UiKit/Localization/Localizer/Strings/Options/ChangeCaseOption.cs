@@ -13,52 +13,51 @@
 // limitations under the License.
 
 
-namespace Kaspirin.UI.Framework.UiKit.Localization.Localizer.Strings.Options
+namespace Kaspirin.UI.Framework.UiKit.Localization.Localizer.Strings.Options;
+
+public sealed class ChangeCaseOption : IStringLocalizerOption
 {
-    public sealed class ChangeCaseOption : IStringLocalizerOption
+    public ChangeCaseOption(ChangeCaseOptionMode mode)
     {
-        public ChangeCaseOption(ChangeCaseOptionMode mode)
+        Mode = mode;
+    }
+
+    public ChangeCaseOptionMode Mode { get; }
+
+    public string Apply(string value)
+    {
+        return ChangeCase(value);
+    }
+
+    private string ChangeCase(string resourceString)
+    {
+        if (string.IsNullOrEmpty(resourceString))
         {
-            Mode = mode;
-        }
-
-        public ChangeCaseOptionMode Mode { get; }
-
-        public string Apply(string value)
-        {
-            return ChangeCase(value);
-        }
-
-        private string ChangeCase(string resourceString)
-        {
-            if (string.IsNullOrEmpty(resourceString))
-            {
-                return resourceString;
-            }
-
-            if (Mode == ChangeCaseOptionMode.LowercaseFirstLetterOnly ||
-                Mode == ChangeCaseOptionMode.LowercaseAll)
-            {
-                if (Mode == ChangeCaseOptionMode.LowercaseAll || resourceString.Length == 1)
-                {
-                    return resourceString.ToLower(LocalizationManager.Current.DisplayCulture.CultureInfo);
-                }
-
-                return char.ToLower(resourceString[0], LocalizationManager.Current.DisplayCulture.CultureInfo) + resourceString.Substring(1);
-            }
-
-            if (Mode == ChangeCaseOptionMode.UppercaseFirstLetterOnly ||
-                Mode == ChangeCaseOptionMode.UppercaseAll)
-            {
-                if (Mode == ChangeCaseOptionMode.UppercaseAll || resourceString.Length == 1)
-                {
-                    return resourceString.ToUpper(LocalizationManager.Current.DisplayCulture.CultureInfo);
-                }
-
-                return char.ToUpper(resourceString[0], LocalizationManager.Current.DisplayCulture.CultureInfo) + resourceString.Substring(1);
-            }
-
             return resourceString;
         }
+
+        if (Mode == ChangeCaseOptionMode.LowercaseFirstLetterOnly ||
+            Mode == ChangeCaseOptionMode.LowercaseAll)
+        {
+            if (Mode == ChangeCaseOptionMode.LowercaseAll || resourceString.Length == 1)
+            {
+                return resourceString.ToLower(LocalizationManager.DisplayCulture.CultureInfo);
+            }
+
+            return char.ToLower(resourceString[0], LocalizationManager.DisplayCulture.CultureInfo) + resourceString.Substring(1);
+        }
+
+        if (Mode == ChangeCaseOptionMode.UppercaseFirstLetterOnly ||
+            Mode == ChangeCaseOptionMode.UppercaseAll)
+        {
+            if (Mode == ChangeCaseOptionMode.UppercaseAll || resourceString.Length == 1)
+            {
+                return resourceString.ToUpper(LocalizationManager.DisplayCulture.CultureInfo);
+            }
+
+            return char.ToUpper(resourceString[0], LocalizationManager.DisplayCulture.CultureInfo) + resourceString.Substring(1);
+        }
+
+        return resourceString;
     }
 }

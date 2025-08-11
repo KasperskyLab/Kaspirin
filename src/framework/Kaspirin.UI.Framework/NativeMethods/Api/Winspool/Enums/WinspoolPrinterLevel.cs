@@ -14,17 +14,15 @@
 
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
 
-namespace Kaspirin.UI.Framework.NativeMethods.Api.Winspool.Enums
+namespace Kaspirin.UI.Framework.NativeMethods.Api.Winspool.Enums;
+
+/// <summary>
+///     <seealso href="https://learn.microsoft.com/en-us/windows/win32/printdocs/enumprinters">Learn more</seealso>.
+/// </summary>
+public enum WinspoolPrinterLevel : uint
 {
-    /// <summary>
-    ///     
-    /// <seealso href="https://learn.microsoft.com/en-us/windows/win32/printdocs/enumprinters">Learn more</seealso>.
-    /// </summary>
-    public enum WinspoolPrinterLevel : uint
-    {
-        Level1 = 1,
-        Level2 = 2,
-        Level4 = 4,
-        Level5 = 5
-    }
+    Level1 = 1,
+    Level2 = 2,
+    Level4 = 4,
+    Level5 = 5
 }

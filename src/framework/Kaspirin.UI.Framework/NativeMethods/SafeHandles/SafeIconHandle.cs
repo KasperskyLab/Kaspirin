@@ -19,34 +19,33 @@ using System.Runtime.ConstrainedExecution;
 using System.Runtime.InteropServices;
 using System.Security;
 
-namespace Kaspirin.UI.Framework.NativeMethods.SafeHandles
+namespace Kaspirin.UI.Framework.NativeMethods.SafeHandles;
+
+/// <summary>
+///     The icon descriptor.
+/// </summary>
+[SecurityCritical]
+public sealed class SafeIconHandle : SafeHandle
 {
     /// <summary>
-    ///     The icon descriptor.
+    ///     Initializes a new instance of the <see cref="SafeIconHandle" /> class.
     /// </summary>
+    /// <param name="icon">
+    ///     The icon pointer.
+    /// </param>
     [SecurityCritical]
-    public sealed class SafeIconHandle : SafeHandle
+    public SafeIconHandle(IntPtr icon)
+        : base(IntPtr.Zero, true)
     {
-        /// <summary>
-        ///     Initializes a new instance of the <see cref="SafeIconHandle" /> class.
-        /// </summary>
-        /// <param name="icon">
-        ///     The icon pointer.
-        /// </param>
-        [SecurityCritical]
-        public SafeIconHandle(IntPtr icon)
-            : base(IntPtr.Zero, true)
-        {
-            SetHandle(icon);
-        }
-
-        /// <inheritdoc />
-        public override bool IsInvalid => handle == IntPtr.Zero;
-
-        /// <inheritdoc />
-        [SecurityCritical]
-        [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
-        protected override bool ReleaseHandle()
-            => IsInvalid || User32Dll.DestroyIcon(handle);
+        SetHandle(icon);
     }
+
+    /// <inheritdoc />
+    public override bool IsInvalid => handle == IntPtr.Zero;
+
+    /// <inheritdoc />
+    [SecurityCritical]
+    [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
+    protected override bool ReleaseHandle()
+        => IsInvalid || User32Dll.DestroyIcon(handle);
 }

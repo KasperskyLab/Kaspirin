@@ -12,14 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Kaspirin.UI.Framework.UiKit.Input.Security
+namespace Kaspirin.UI.Framework.UiKit.Input.Security;
+
+public interface ISecureInputManager
 {
-    public interface ISecureInputManager
-    {
-        bool IsSecureInputAvailable { get; }
+    bool IsSecureInputAvailable { get; }
 
-        void RegisterClient(ISecureInputClient secureInputClient);
+    void RegisterClient(ISecureInputClient secureInputClient);
 
-        void UnregisterClient(ISecureInputClient secureInputClient);
-    }
+    void UnregisterClient(ISecureInputClient secureInputClient);
 }

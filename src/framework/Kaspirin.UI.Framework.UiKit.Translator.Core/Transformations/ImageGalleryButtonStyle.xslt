@@ -95,10 +95,10 @@
 					<xsl:with-param name="propertyValue" select = "@Height" />
 				</xsl:call-template>
 
-				<!--ImageGalleryButton_Icon_Foreground-->
+				<!--ImageGalleryButton_Icon_Brush-->
 				<xsl:call-template name="generateBrushSetter">
-					<xsl:with-param name="propertyId">ImageGalleryButton_Icon_Foreground</xsl:with-param>
-					<xsl:with-param name="brushName">IconForegroundNormal</xsl:with-param>
+					<xsl:with-param name="propertyId">ImageGalleryButton_Icon_Brush</xsl:with-param>
+					<xsl:with-param name="brushName">IconBrushNormal</xsl:with-param>
 					<xsl:with-param name="scopeName" select="$id" />
 				</xsl:call-template>
 
@@ -139,10 +139,10 @@
 							<xsl:with-param name="scopeName" select="$id" />
 						</xsl:call-template>
 
-						<!--ImageGalleryButton_Icon_Foreground-->
+						<!--ImageGalleryButton_Icon_Brush-->
 						<xsl:call-template name="generateBrushSetter">
-							<xsl:with-param name="propertyId">ImageGalleryButton_Icon_Foreground</xsl:with-param>
-							<xsl:with-param name="brushName">IconForegroundDisabled</xsl:with-param>
+							<xsl:with-param name="propertyId">ImageGalleryButton_Icon_Brush</xsl:with-param>
+							<xsl:with-param name="brushName">IconBrushDisabled</xsl:with-param>
 							<xsl:with-param name="scopeName" select="$id" />
 						</xsl:call-template>
 
@@ -176,10 +176,10 @@
 							<xsl:with-param name="scopeName" select="$id" />
 						</xsl:call-template>
 
-						<!--ImageGalleryButton_Icon_Foreground-->
+						<!--ImageGalleryButton_Icon_Brush-->
 						<xsl:call-template name="generateBrushSetter">
-							<xsl:with-param name="propertyId">ImageGalleryButton_Icon_Foreground</xsl:with-param>
-							<xsl:with-param name="brushName">IconForegroundHover</xsl:with-param>
+							<xsl:with-param name="propertyId">ImageGalleryButton_Icon_Brush</xsl:with-param>
+							<xsl:with-param name="brushName">IconBrushHover</xsl:with-param>
 							<xsl:with-param name="scopeName" select="$id" />
 						</xsl:call-template>
 
@@ -213,10 +213,10 @@
 							<xsl:with-param name="scopeName" select="$id" />
 						</xsl:call-template>
 
-						<!--ImageGalleryButton_Icon_Foreground-->
+						<!--ImageGalleryButton_Icon_Brush-->
 						<xsl:call-template name="generateBrushSetter">
-							<xsl:with-param name="propertyId">ImageGalleryButton_Icon_Foreground</xsl:with-param>
-							<xsl:with-param name="brushName">IconForegroundPressed</xsl:with-param>
+							<xsl:with-param name="propertyId">ImageGalleryButton_Icon_Brush</xsl:with-param>
+							<xsl:with-param name="brushName">IconBrushPressed</xsl:with-param>
 							<xsl:with-param name="scopeName" select="$id" />
 						</xsl:call-template>
 

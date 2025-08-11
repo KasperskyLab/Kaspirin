@@ -12,17 +12,20 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
+namespace Kaspirin.UI.Framework.NativeMethods.Api.User32.Enums;
 
-namespace Kaspirin.UI.Framework.NativeMethods.Api.User32.Enums
+/// <summary>
+///     <seealso href="https://learn.microsoft.com/en-us/windows/win32/dwm/windowcompositionattrib">Learn more</seealso>.
+/// </summary>
+public enum WindowCompositionAttribute
 {
     /// <summary>
-    ///     
-    /// <seealso href="https://learn.microsoft.com/en-us/windows/win32/dwm/windowcompositionattrib">Learn more</seealso>.
+    ///     The WCA_ACCENT_POLICY constant.
     /// </summary>
-    public enum WindowCompositionAttribute
-    {
-        WCA_ACCENT_POLICY = 19, // not documented
-        WCA_EXCLUDED_FROM_DDA = 24,
-    }
+    AccentPolicy = 19,
+
+    /// <summary>
+    ///     The WCA_EXCLUDED_FROM_DDA constant.
+    /// </summary>
+    ExcludedFromDda = 24,
 }

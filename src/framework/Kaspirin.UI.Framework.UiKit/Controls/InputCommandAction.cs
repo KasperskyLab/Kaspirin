@@ -12,62 +12,65 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
 
-namespace Kaspirin.UI.Framework.UiKit.Controls
+namespace Kaspirin.UI.Framework.UiKit.Controls;
+
+public class InputCommandAction : InputActionBase
 {
-    public class InputCommandAction : InputActionBase
+    public InputCommandAction()
     {
-        public InputCommandAction()
-        {
-            ActionMode = InputActionMode.OnClick;
-        }
-
-        #region Command
-
-        public ICommand? Command
-        {
-            get => (ICommand?)GetValue(CommandProperty);
-            set => SetValue(CommandProperty, value);
-        }
-
-        public static readonly DependencyProperty CommandProperty = DependencyProperty.Register(
-            nameof(Command),
-            typeof(ICommand),
-            typeof(InputCommandAction));
-
-        #endregion
-
-        #region Icon
-
-        public UIKitIcon_16 Icon
-        {
-            get => (UIKitIcon_16)GetValue(IconProperty);
-            set => SetValue(IconProperty, value);
-        }
-
-        public static readonly DependencyProperty IconProperty = DependencyProperty.Register(
-            nameof(Icon),
-            typeof(UIKitIcon_16),
-            typeof(InputCommandAction));
-
-        #endregion
-
-        #region IconForeground
-
-        public Brush IconForeground
-        {
-            get => (Brush)GetValue(IconForegroundProperty);
-            set => SetValue(IconForegroundProperty, value);
-        }
-
-        public static readonly DependencyProperty IconForegroundProperty = DependencyProperty.Register(
-            nameof(IconForeground),
-            typeof(Brush),
-            typeof(InputCommandAction));
-
-        #endregion
+        ActionMode = InputActionMode.OnClick;
     }
+
+    #region Command
+
+    public ICommand? Command
+    {
+        get => (ICommand?)GetValue(CommandProperty);
+        set => SetValue(CommandProperty, value);
+    }
+
+    public static readonly DependencyProperty CommandProperty = DependencyProperty.Register(
+        nameof(Command),
+        typeof(ICommand),
+        typeof(InputCommandAction),
+        new PropertyMetadata(default(ICommand)));
+
+    #endregion
+
+    #region Icon
+
+    public UIKitIcon_16 Icon
+    {
+        get => (UIKitIcon_16)GetValue(IconProperty);
+        set => SetValue(IconProperty, value);
+    }
+
+    public static readonly DependencyProperty IconProperty = DependencyProperty.Register(
+        nameof(Icon),
+        typeof(UIKitIcon_16),
+        typeof(InputCommandAction),
+        new PropertyMetadata(default(UIKitIcon_16)));
+
+    #endregion
+
+    #region IconBrush
+
+    public Brush IconBrush
+    {
+        get => (Brush)GetValue(IconBrushProperty);
+        set => SetValue(IconBrushProperty, value);
+    }
+
+    public static readonly DependencyProperty IconBrushProperty = DependencyProperty.Register(
+        nameof(IconBrush),
+        typeof(Brush),
+        typeof(InputCommandAction),
+        new PropertyMetadata(default(Brush)));
+
+    #endregion
 }

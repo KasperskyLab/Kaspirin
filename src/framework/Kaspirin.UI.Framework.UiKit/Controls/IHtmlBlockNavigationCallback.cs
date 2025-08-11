@@ -14,10 +14,9 @@
 
 using System;
 
-namespace Kaspirin.UI.Framework.UiKit.Controls
+namespace Kaspirin.UI.Framework.UiKit.Controls;
+
+public interface IHtmlBlockNavigationCallback
 {
-    public interface IHtmlBlockNavigationCallback
-    {
-        void Navigate(Uri? uri, string? target);
-    }
+    void Navigate(Uri? uri, string? target);
 }

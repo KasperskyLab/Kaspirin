@@ -12,17 +12,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Kaspirin.UI.Framework.UiKit.Localization.Markup.Extensions.Strings
+namespace Kaspirin.UI.Framework.UiKit.Localization.Markup.Extensions.Strings;
+
+public sealed class LocOption
 {
-    public class LocOption
+    public LocOption(IStringLocalizerOption option)
     {
-        public LocOption(IStringLocalizerOption option)
-        {
-            Guard.ArgumentIsNotNull(option);
+        Guard.ArgumentIsNotNull(option);
 
-            LocalizerOption = option;
-        }
-
-        public IStringLocalizerOption LocalizerOption { get; }
+        LocalizerOption = option;
     }
+
+    public IStringLocalizerOption LocalizerOption { get; }
 }

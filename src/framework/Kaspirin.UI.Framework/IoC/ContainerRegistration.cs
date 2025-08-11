@@ -14,39 +14,38 @@
 
 using System;
 
-namespace Kaspirin.UI.Framework.IoC
+namespace Kaspirin.UI.Framework.IoC;
+
+/// <summary>
+///     A class that provides information about type registration in an IoC container.
+/// </summary>
+public sealed class ContainerRegistration
 {
     /// <summary>
-    ///     A class that provides information about type registration in an IoC container.
+    ///     Initializes a new instance of the <see cref="ContainerRegistration" /> class.
     /// </summary>
-    public sealed class ContainerRegistration
+    /// <param name="registeredType">
+    ///     The type being registered.
+    /// </param>
+    /// <param name="name">
+    ///     The name of the registration.
+    /// </param>
+    public ContainerRegistration(Type registeredType, string name)
     {
-        /// <summary>
-        ///     Initializes a new instance of the <see cref="ContainerRegistration" /> class.
-        /// </summary>
-        /// <param name="registeredType">
-        ///     The type being registered.
-        /// </param>
-        /// <param name="name">
-        ///     The name of the registration.
-        /// </param>
-        public ContainerRegistration(Type registeredType, string name)
-        {
-            RegisteredType = Guard.EnsureArgumentIsNotNull(registeredType);
-            Name = Guard.EnsureArgumentIsNotNull(name);
-        }
-
-        /// <summary>
-        ///     The registered type.
-        /// </summary>
-        public Type RegisteredType { get; }
-
-        /// <summary>
-        ///     The name of the registration.
-        /// </summary>
-        public string Name { get; }
-
-        /// <inheritdoc cref="object.ToString"/>
-        public override string ToString() => $"RegisteredType={RegisteredType.Name} ({RegisteredType.Namespace}) Name={Name}";
+        RegisteredType = Guard.EnsureArgumentIsNotNull(registeredType);
+        Name = Guard.EnsureArgumentIsNotNull(name);
     }
+
+    /// <summary>
+    ///     The registered type.
+    /// </summary>
+    public Type RegisteredType { get; }
+
+    /// <summary>
+    ///     The name of the registration.
+    /// </summary>
+    public string Name { get; }
+
+    /// <inheritdoc cref="object.ToString"/>
+    public override string ToString() => $"RegisteredType={RegisteredType.Name} ({RegisteredType.Namespace}) Name={Name}";
 }

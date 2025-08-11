@@ -12,17 +12,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Kaspirin.UI.Framework.UiKit.Converters.TimeConverters
+namespace Kaspirin.UI.Framework.UiKit.Converters.TimeConverters;
+
+public enum DateTimeAgeEstimate
 {
-    public enum DateTimeAgeEstimate
-    {
-        Future,
-        SecondsAgo,
-        MinutesAgo,
-        HoursAgo,
-        Yesterday,
-        DaysAgo,
-        MonthsAgo,
-        YearsAgo
-    }
+    Future,
+    SecondsAgo,
+    MinutesAgo,
+    HoursAgo,
+    Yesterday,
+    DaysAgo,
+    MonthsAgo,
+    YearsAgo
 }

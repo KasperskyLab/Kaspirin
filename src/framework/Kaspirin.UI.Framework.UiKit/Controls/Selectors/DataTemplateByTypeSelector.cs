@@ -14,13 +14,12 @@
 
 using System.Windows;
 
-namespace Kaspirin.UI.Framework.UiKit.Controls.Selectors
+namespace Kaspirin.UI.Framework.UiKit.Controls.Selectors;
+
+public sealed class DataTemplateByTypeSelector : DataTemplateSelectorBase
 {
-    public sealed class DataTemplateByTypeSelector : DataTemplateSelectorBase
+    protected override object? GetDataTemplateKey(object item)
     {
-        protected override object? GetDataTemplateKey(object item)
-        {
-            return new DataTemplateKey(item.GetType());
-        }
+        return new DataTemplateKey(item.GetType());
     }
 }

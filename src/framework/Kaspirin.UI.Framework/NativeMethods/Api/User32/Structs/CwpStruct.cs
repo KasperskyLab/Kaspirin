@@ -17,21 +17,19 @@
 using System;
 using System.Runtime.InteropServices;
 
-namespace Kaspirin.UI.Framework.NativeMethods.Api.User32.Structs
+namespace Kaspirin.UI.Framework.NativeMethods.Api.User32.Structs;
+
+/// <summary>
+///     <seealso href="https://learn.microsoft.com/en-us/windows/win32/api/winuser/ns-winuser-cwpstruct">Learn more</seealso>.
+/// </summary>
+[StructLayout(LayoutKind.Sequential)]
+public struct CwpStruct
 {
-    /// <summary>
-    ///     
-    /// <seealso href="https://learn.microsoft.com/en-us/windows/win32/api/winuser/ns-winuser-cwpstruct">Learn more</seealso>.
-    /// </summary>
-    [StructLayout(LayoutKind.Sequential)]
-    public struct CwpStruct
-    {
-        public IntPtr LParam;
+    public IntPtr LParam;
 
-        public IntPtr WParam;
+    public IntPtr WParam;
 
-        public uint Message;
+    public uint Message;
 
-        public IntPtr Hwnd;
-    }
+    public IntPtr Hwnd;
 }

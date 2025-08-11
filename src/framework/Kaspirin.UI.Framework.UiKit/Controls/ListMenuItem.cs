@@ -15,60 +15,71 @@
 using System.Windows;
 using System.Windows.Media;
 
-namespace Kaspirin.UI.Framework.UiKit.Controls
+namespace Kaspirin.UI.Framework.UiKit.Controls;
+
+public sealed class ListMenuItem : SelectorItem
 {
-    public class ListMenuItem : SelectorItem
+    #region Header
+
+    public string Header
     {
-        #region Header
-
-        public string Header
-        {
-            get { return (string)GetValue(HeaderProperty); }
-            set { SetValue(HeaderProperty, value); }
-        }
-
-        public static readonly DependencyProperty HeaderProperty =
-            DependencyProperty.Register("Header", typeof(string), typeof(ListMenuItem));
-
-        #endregion
-
-        #region Icon
-
-        public UIKitIcon_16 Icon
-        {
-            get { return (UIKitIcon_16)GetValue(IconProperty); }
-            set { SetValue(IconProperty, value); }
-        }
-
-        public static readonly DependencyProperty IconProperty =
-            DependencyProperty.Register("Icon", typeof(UIKitIcon_16), typeof(ListMenuItem));
-
-        #endregion
-
-        #region Image
-
-        public ImageSource Image
-        {
-            get { return (ImageSource)GetValue(ImageProperty); }
-            set { SetValue(ImageProperty, value); }
-        }
-
-        public static readonly DependencyProperty ImageProperty =
-            DependencyProperty.Register("Image", typeof(ImageSource), typeof(ListMenuItem));
-
-        #endregion
-
-        #region IsSelectable
-
-        public bool IsSelectable
-        {
-            get { return (bool)GetValue(IsSelectableProperty); }
-            set { SetValue(IsSelectableProperty, value); }
-        }
-
-        public static readonly DependencyProperty IsSelectableProperty =
-            DependencyProperty.Register("IsSelectable", typeof(bool), typeof(ListMenuItem), new PropertyMetadata(true));
-
-        #endregion
+        get => (string)GetValue(HeaderProperty);
+        set => SetValue(HeaderProperty, value);
     }
+
+    public static readonly DependencyProperty HeaderProperty = DependencyProperty.Register(
+        nameof(Header),
+        typeof(string),
+        typeof(ListMenuItem),
+        new PropertyMetadata(default(string)));
+
+    #endregion
+
+    #region Icon
+
+    public UIKitIcon_16 Icon
+    {
+        get => (UIKitIcon_16)GetValue(IconProperty);
+        set => SetValue(IconProperty, value);
+    }
+
+    public static readonly DependencyProperty IconProperty = DependencyProperty.Register(
+        nameof(Icon),
+        typeof(UIKitIcon_16),
+        typeof(ListMenuItem),
+        new PropertyMetadata(default(UIKitIcon_16)));
+
+    #endregion
+
+    #region Image
+
+    public ImageSource Image
+    {
+        get => (ImageSource)GetValue(ImageProperty);
+        set => SetValue(ImageProperty, value);
+    }
+
+    public static readonly DependencyProperty ImageProperty = DependencyProperty.Register(
+        nameof(Image),
+        typeof(ImageSource),
+        typeof(ListMenuItem),
+        new PropertyMetadata(default(ImageSource)));
+
+    #endregion
+
+    #region IsSelectable
+
+    public bool IsSelectable
+    {
+        get => (bool)GetValue(IsSelectableProperty);
+        set => SetValue(IsSelectableProperty, value);
+    }
+
+    public static readonly DependencyProperty IsSelectableProperty = DependencyProperty.Register(
+        nameof(IsSelectable),
+        typeof(bool),
+        typeof(ListMenuItem),
+        new PropertyMetadata(true));
+
+    #endregion
 }

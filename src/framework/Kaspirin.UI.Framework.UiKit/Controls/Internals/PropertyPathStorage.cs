@@ -15,27 +15,26 @@
 using System.Collections.Generic;
 using System.Windows;
 
-namespace Kaspirin.UI.Framework.UiKit.Controls.Internals
+namespace Kaspirin.UI.Framework.UiKit.Controls.Internals;
+
+internal static class PropertyPathStorage
 {
-    internal static class PropertyPathStorage
+    public static PropertyPath AsPath(this DependencyPropertyKey propertyKey)
     {
-        public static PropertyPath AsPath(this DependencyPropertyKey propertyKey)
-        {
-            return propertyKey.DependencyProperty.AsPath();
-        }
-
-        public static PropertyPath AsPath(this DependencyProperty property)
-        {
-            if (!_propertyPathStorage.TryGetValue(property, out var path))
-            {
-                path = new PropertyPath("(0)", property);
-
-                _propertyPathStorage.Add(property, path);
-            }
-
-            return path;
-        }
-
-        private static readonly Dictionary<DependencyProperty, PropertyPath> _propertyPathStorage = new();
+        return propertyKey.DependencyProperty.AsPath();
     }
+
+    public static PropertyPath AsPath(this DependencyProperty property)
+    {
+        if (!_propertyPathStorage.TryGetValue(property, out var path))
+        {
+            path = new PropertyPath("(0)", property);
+
+            _propertyPathStorage.Add(property, path);
+        }
+
+        return path;
+    }
+
+    private static readonly Dictionary<DependencyProperty, PropertyPath> _propertyPathStorage = new();
 }

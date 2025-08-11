@@ -14,9 +14,8 @@
 
 using System.Collections.Generic;
 
-namespace Kaspirin.UI.Framework.UiKit.Input.Shortcuts
+namespace Kaspirin.UI.Framework.UiKit.Input.Shortcuts;
+
+public sealed class ShortcutCollection : List<Shortcut>
 {
-    public sealed class ShortcutCollection : List<Shortcut>
-    {
-    }
 }

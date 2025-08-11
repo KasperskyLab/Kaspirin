@@ -15,98 +15,87 @@
 using System.Windows;
 using System.Windows.Controls.Primitives;
 
-namespace Kaspirin.UI.Framework.UiKit.Controls.Internals
+namespace Kaspirin.UI.Framework.UiKit.Controls.Internals;
+
+internal static class ButtonBaseInternals
 {
-    internal static class ButtonBaseInternals
-    {
-        #region LeftIcon16
+    #region LeftIcon16
 
-        public static UIKitIcon_16 GetLeftIcon16(DependencyObject obj)
-        {
-            return (UIKitIcon_16)obj.GetValue(LeftIcon16Property);
-        }
+    public static UIKitIcon_16 GetLeftIcon16(DependencyObject obj)
+        => (UIKitIcon_16)obj.GetValue(LeftIcon16Property);
 
-        public static void SetLeftIcon16(DependencyObject obj, UIKitIcon_16 value)
-        {
-            obj.SetValue(LeftIcon16Property, value);
-        }
+    public static void SetLeftIcon16(DependencyObject obj, UIKitIcon_16 value)
+        => obj.SetValue(LeftIcon16Property, value);
 
-        public static readonly DependencyProperty LeftIcon16Property =
-            DependencyProperty.RegisterAttached("LeftIcon16", typeof(UIKitIcon_16), typeof(ButtonBaseInternals),
-                UIKitPropertyMetadataFactory.CreatePropsMetadata(typeof(ButtonBase), nameof(LeftIcon16Property)));
+    public static readonly DependencyProperty LeftIcon16Property = DependencyProperty.RegisterAttached(
+        "LeftIcon16",
+        typeof(UIKitIcon_16),
+        typeof(ButtonBaseInternals),
+        UIKitPropertyMetadataFactory.CreatePropsMetadata(typeof(ButtonBase), nameof(LeftIcon16Property)));
 
-        #endregion
+    #endregion
 
-        #region LeftIcon24
+    #region LeftIcon24
 
-        public static UIKitIcon_24 GetLeftIcon24(DependencyObject obj)
-        {
-            return (UIKitIcon_24)obj.GetValue(LeftIcon24Property);
-        }
+    public static UIKitIcon_24 GetLeftIcon24(DependencyObject obj)
+        => (UIKitIcon_24)obj.GetValue(LeftIcon24Property);
 
-        public static void SetLeftIcon24(DependencyObject obj, UIKitIcon_24 value)
-        {
-            obj.SetValue(LeftIcon24Property, value);
-        }
+    public static void SetLeftIcon24(DependencyObject obj, UIKitIcon_24 value)
+        => obj.SetValue(LeftIcon24Property, value);
 
-        public static readonly DependencyProperty LeftIcon24Property =
-            DependencyProperty.RegisterAttached("LeftIcon24", typeof(UIKitIcon_24), typeof(ButtonBaseInternals),
-                UIKitPropertyMetadataFactory.CreatePropsMetadata(typeof(ButtonBase), nameof(LeftIcon24Property)));
+    public static readonly DependencyProperty LeftIcon24Property = DependencyProperty.RegisterAttached(
+        "LeftIcon24",
+        typeof(UIKitIcon_24),
+        typeof(ButtonBaseInternals),
+        UIKitPropertyMetadataFactory.CreatePropsMetadata(typeof(ButtonBase), nameof(LeftIcon24Property)));
 
-        #endregion
+    #endregion
 
-        #region RightIcon16
+    #region RightIcon16
 
-        public static UIKitIcon_16 GetRightIcon16(DependencyObject obj)
-        {
-            return (UIKitIcon_16)obj.GetValue(RightIcon16Property);
-        }
+    public static UIKitIcon_16 GetRightIcon16(DependencyObject obj)
+        => (UIKitIcon_16)obj.GetValue(RightIcon16Property);
 
-        public static void SetRightIcon16(DependencyObject obj, UIKitIcon_16 value)
-        {
-            obj.SetValue(RightIcon16Property, value);
-        }
+    public static void SetRightIcon16(DependencyObject obj, UIKitIcon_16 value)
+        => obj.SetValue(RightIcon16Property, value);
 
-        public static readonly DependencyProperty RightIcon16Property =
-            DependencyProperty.RegisterAttached("RightIcon16", typeof(UIKitIcon_16), typeof(ButtonBaseInternals),
-                UIKitPropertyMetadataFactory.CreatePropsMetadata(typeof(ButtonBase), nameof(RightIcon16Property)));
+    public static readonly DependencyProperty RightIcon16Property = DependencyProperty.RegisterAttached(
+        "RightIcon16",
+        typeof(UIKitIcon_16),
+        typeof(ButtonBaseInternals),
+        UIKitPropertyMetadataFactory.CreatePropsMetadata(typeof(ButtonBase), nameof(RightIcon16Property)));
 
-        #endregion
+    #endregion
 
-        #region RightIcon24
+    #region RightIcon24
 
-        public static UIKitIcon_24 GetRightIcon24(DependencyObject obj)
-        {
-            return (UIKitIcon_24)obj.GetValue(RightIcon24Property);
-        }
+    public static UIKitIcon_24 GetRightIcon24(DependencyObject obj)
+        => (UIKitIcon_24)obj.GetValue(RightIcon24Property);
 
-        public static void SetRightIcon24(DependencyObject obj, UIKitIcon_24 value)
-        {
-            obj.SetValue(RightIcon24Property, value);
-        }
+    public static void SetRightIcon24(DependencyObject obj, UIKitIcon_24 value)
+        => obj.SetValue(RightIcon24Property, value);
 
-        public static readonly DependencyProperty RightIcon24Property =
-            DependencyProperty.RegisterAttached("RightIcon24", typeof(UIKitIcon_24), typeof(ButtonBaseInternals),
-                UIKitPropertyMetadataFactory.CreatePropsMetadata(typeof(ButtonBase), nameof(RightIcon24Property)));
+    public static readonly DependencyProperty RightIcon24Property = DependencyProperty.RegisterAttached(
+        "RightIcon24",
+        typeof(UIKitIcon_24),
+        typeof(ButtonBaseInternals),
+        UIKitPropertyMetadataFactory.CreatePropsMetadata(typeof(ButtonBase), nameof(RightIcon24Property)));
 
-        #endregion
+    #endregion
 
-        #region IsBusy
+    #region IsBusy
 
-        public static bool GetIsBusy(DependencyObject obj)
-        {
-            return (bool)obj.GetValue(IsBusyProperty);
-        }
+    public static bool GetIsBusy(DependencyObject obj)
+        => (bool)obj.GetValue(IsBusyProperty);
 
-        public static void SetIsBusy(DependencyObject obj, bool value)
-        {
-            obj.SetValue(IsBusyProperty, value);
-        }
+    public static void SetIsBusy(DependencyObject obj, bool value)
+        => obj.SetValue(IsBusyProperty, value);
 
-        public static readonly DependencyProperty IsBusyProperty =
-            DependencyProperty.RegisterAttached("IsBusy", typeof(bool), typeof(ButtonBaseInternals),
-                UIKitPropertyMetadataFactory.CreatePropsMetadata(typeof(ButtonBase), nameof(IsBusyProperty)));
+    public static readonly DependencyProperty IsBusyProperty = DependencyProperty.RegisterAttached(
+        "IsBusy",
+        typeof(bool),
+        typeof(ButtonBaseInternals),
+        UIKitPropertyMetadataFactory.CreatePropsMetadata(typeof(ButtonBase), nameof(IsBusyProperty)));
 
-        #endregion
-    }
+    #endregion
 }

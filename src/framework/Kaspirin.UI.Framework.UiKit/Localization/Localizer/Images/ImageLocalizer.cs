@@ -13,6 +13,7 @@
 // limitations under the License.
 
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Windows;
@@ -21,189 +22,223 @@ using System.Windows.Media.Imaging;
 using SharpVectors.Converters;
 using SharpVectors.Renderers.Wpf;
 
-namespace Kaspirin.UI.Framework.UiKit.Localization.Localizer.Images
+namespace Kaspirin.UI.Framework.UiKit.Localization.Localizer.Images;
+
+public class ImageLocalizer : BaseLocalizer<ResourceItem>, IImageLocalizer
 {
-    public sealed class ImageLocalizer : LocalizerBase, IImageLocalizer
+    public ImageLocalizer(LocalizerParameters parameters) : base(parameters) { }
+
+    public override void ResetCache()
     {
-        public ImageLocalizer(LocalizerParameters parameters) : base(parameters) { }
+        base.ResetCache();
 
-        #region IImageLocalizer
+        _imageCache.Clear();
+    }
 
-        public BitmapImage? GetBitmapImage(string key)
+    public virtual BitmapImage? GetBitmapImage(string key)
+    {
+        Guard.ArgumentIsNotNull(key);
+
+        try
         {
-            Guard.ArgumentIsNotNull(key);
+            var cacheKey = CreateImageKey(key, ScopeInfo);
 
-            try
+            var bitmapImage = TryGetImageFromCache<BitmapImage>(cacheKey);
+            if (bitmapImage == null)
             {
-                var cacheKey = CreateImageKey(key, ScopeInfo);
+                var imageResource = GetValue(key);
+                var imageStream = ResourceProvider.ReadResourceStream(imageResource);
 
-                var bitmapImage = TryGetImageFromCache<BitmapImage>(cacheKey);
-                if (bitmapImage == null)
-                {
-                    var imageUri = GetValue<Uri>(key);
+                bitmapImage = CreateBitmapImage(imageStream);
 
-                    bitmapImage = CreateBitmapImage(imageUri);
-
-                    CacheImage(cacheKey, bitmapImage);
-                }
-
-                return bitmapImage;
-            }
-            catch (Exception e)
-            {
-                e.ProcessAsLocalizerException($"failed to provide BitmapImage for key='{key}'.");
-                return null;
-            }
-        }
-
-        public BitmapFrame? GetBitmapFrame(string key)
-        {
-            return GetBitmapFrame(key, Size.Empty);
-        }
-
-        public BitmapFrame? GetBitmapFrame(string key, Size frameSize)
-        {
-            Guard.ArgumentIsNotNull(key);
-
-            try
-            {
-                var cacheKey = CreateImageKey(key, ScopeInfo, frameSize.ToString());
-
-                var bitmapFrame = TryGetImageFromCache<BitmapFrame>(cacheKey);
-                if (bitmapFrame == null)
-                {
-                    var imageUri = GetValue<Uri>(key);
-
-                    bitmapFrame = CreateBitmapFrame(imageUri, frameSize);
-
-                    CacheImage(cacheKey, bitmapFrame);
-                }
-
-                return bitmapFrame;
-            }
-            catch (Exception e)
-            {
-                e.ProcessAsLocalizerException($"failed to provide BitmapFrame for key='{key}'.");
-                return null;
-            }
-        }
-
-        public DrawingImage? GetSvgImage(string key)
-        {
-            Guard.ArgumentIsNotNull(key);
-
-            try
-            {
-                var cacheKey = CreateImageKey(key, ScopeInfo);
-
-                var drawingImage = TryGetImageFromCache<DrawingImage>(cacheKey);
-                if (drawingImage == null)
-                {
-                    var imageUri = GetValue<Uri>(key);
-                    var imageBytes = ResourceProvider.ReadResource(imageUri);
-
-                    drawingImage = CreateDrawingImage(imageBytes);
-
-                    CacheImage(cacheKey, drawingImage);
-                }
-
-                return drawingImage;
-            }
-            catch (Exception e)
-            {
-                e.ProcessAsLocalizerException($"failed to provide SvgImage for key='{key}'.");
-                return null;
-            }
-        }
-
-        #endregion
-
-        protected override IScope CreateScopeObject(Uri scopeUri)
-        {
-            return new ImageScope(scopeUri, ResourceProvider);
-        }
-
-        private TImageSource? TryGetImageFromCache<TImageSource>(string key)
-            where TImageSource : ImageSource
-        {
-            if (_imageCache.TryGet(key, out var imageReference))
-            {
-                if (imageReference!.TryGetTarget(out var img))
-                {
-                    if (img is DrawingImage drawingImage)
-                    {
-                        img = drawingImage.CloneCurrentValue();
-                    }
-
-                    return (TImageSource)img;
-                }
-            }
-
-            return null;
-        }
-
-        private void CacheImage(string key, ImageSource imageSource)
-        {
-            _imageCache.Put(key, new(imageSource));
-        }
-
-        private static string CreateImageKey(string key, ScopeMetainfo scopeInfo, string parameter = "")
-        {
-            return $"{key}+{scopeInfo.Scope}+{parameter}";
-        }
-
-        private static BitmapImage CreateBitmapImage(Uri imageUri)
-        {
-            var bitmapImage = new BitmapImage(imageUri);
-            if (bitmapImage.CanFreeze)
-            {
-                bitmapImage.Freeze();
+                CacheImage(cacheKey, bitmapImage);
             }
 
             return bitmapImage;
         }
-
-        private static BitmapFrame CreateBitmapFrame(Uri imageUri, Size frameSize)
+        catch (Exception e)
         {
-            var bitmapFrame = BitmapFrame.Create(imageUri);
+            e.ProcessAsLocalizerException($"failed to provide BitmapImage for key '{key}' in scope '{ScopeInfo.Scope}'.");
+            return null;
+        }
+    }
 
-            if (frameSize != Size.Empty)
+    public virtual BitmapFrame? GetBitmapFrame(string key)
+    {
+        return GetBitmapFrame(key, Size.Empty);
+    }
+
+    public virtual BitmapFrame? GetBitmapFrame(string key, Size frameSize)
+    {
+        Guard.ArgumentIsNotNull(key);
+
+        try
+        {
+            var cacheKey = CreateImageKey(key, ScopeInfo, frameSize.ToString());
+
+            var bitmapFrame = TryGetImageFromCache<BitmapFrame>(cacheKey);
+            if (bitmapFrame == null)
             {
-                var sizedBitmapFrame = bitmapFrame.Decoder.Frames
-                    .OrderByDescending(f => f.Width)
-                    .ThenByDescending(f => f.Height)
-                    .LastOrDefault(f =>
-                        f.Width.LargerOrNearlyEqual(frameSize.Width) && f.Height.LargerOrNearlyEqual(frameSize.Height));
+                var imageResource = GetValue(key);
+                var imageStream = ResourceProvider.ReadResourceStream(imageResource);
 
-                if (sizedBitmapFrame != null)
-                {
-                    bitmapFrame = sizedBitmapFrame;
-                }
-            }
+                bitmapFrame = CreateBitmapFrame(imageStream, frameSize);
 
-            if (bitmapFrame.CanFreeze)
-            {
-                bitmapFrame.Freeze();
+                CacheImage(cacheKey, bitmapFrame);
             }
 
             return bitmapFrame;
         }
-
-        private static DrawingImage CreateDrawingImage(byte[] imageBytes)
+        catch (Exception e)
         {
-            using var imageStream = new MemoryStream(imageBytes);
+            e.ProcessAsLocalizerException($"failed to provide BitmapFrame for key '{key}' in scope '{ScopeInfo.Scope}'.");
+            return null;
+        }
+    }
 
-            var settings = new WpfDrawingSettings
+    public virtual DrawingImage? GetSvgImage(string key)
+    {
+        Guard.ArgumentIsNotNull(key);
+
+        try
+        {
+            var cacheKey = CreateImageKey(key, ScopeInfo);
+
+            var drawingImage = TryGetImageFromCache<DrawingImage>(cacheKey);
+            if (drawingImage == null)
             {
-                EnsureViewboxSize = true
-            };
+                var imageResource = GetValue(key);
+                var imageStream = ResourceProvider.ReadResourceStream(imageResource);
 
-            using var reader = new FileSvgReader(settings);
-            var drawingGroup = reader.Read(imageStream);
+                drawingImage = CreateDrawingImage(imageStream);
 
-            return new DrawingImage(drawingGroup);
+                CacheImage(cacheKey, drawingImage);
+            }
+
+            return drawingImage.CloneCurrentValue();
+        }
+        catch (Exception e)
+        {
+            e.ProcessAsLocalizerException($"failed to provide DrawingImage from svg for key '{key}' in scope '{ScopeInfo.Scope}'.");
+            return null;
+        }
+    }
+
+    public virtual Uri? GetUri(string key)
+    {
+        Guard.ArgumentIsNotNull(key);
+
+        try
+        {
+            return GetValue(key).Uri.AbsoluteUri;
+        }
+        catch (Exception e)
+        {
+            e.ProcessAsLocalizerException($"failed to provide image URI for key '{key}' in scope '{ScopeInfo.Scope}'.");
+            return null;
+        }
+    }
+
+    public virtual Stream? GetStream(string key)
+    {
+        Guard.ArgumentIsNotNull(key);
+
+        try
+        {
+            var imageResource = GetValue(key);
+            var imageStream = ResourceProvider.ReadResourceStream(imageResource);
+
+            return imageStream;
+        }
+        catch (Exception e)
+        {
+            e.ProcessAsLocalizerException($"failed to provide image Stream for key '{key}' in scope '{ScopeInfo.Scope}'.");
+            return null;
+        }
+    }
+
+    protected override IScope<ResourceItem> CreateDirectoryScopeObject(IEnumerable<ResourceItem> resources)
+    {
+        return new ImageScope(resources);
+    }
+
+    private TImageSource? TryGetImageFromCache<TImageSource>(string key)
+        where TImageSource : ImageSource
+    {
+        if (_imageCache.TryGet(key, out var imageReference))
+        {
+            if (imageReference!.TryGetTarget(out var imageSource))
+            {
+                return (TImageSource)imageSource;
+            }
         }
 
-        private readonly LruCache<string, WeakReference<ImageSource>> _imageCache = new(100);
+        return null;
     }
+
+    private void CacheImage(string key, ImageSource imageSource)
+    {
+        _imageCache.Put(key, new(imageSource));
+    }
+
+    private static string CreateImageKey(string key, ScopeMetaInfo scopeInfo, string parameter = "")
+    {
+        return $"{key}+{scopeInfo.Scope}+{parameter}";
+    }
+
+    private static BitmapImage CreateBitmapImage(Stream imageStream)
+    {
+        var bitmapImage = new BitmapImage();
+        bitmapImage.BeginInit();
+        bitmapImage.StreamSource = imageStream;
+        bitmapImage.EndInit();
+
+        if (bitmapImage.CanFreeze)
+        {
+            bitmapImage.Freeze();
+        }
+
+        return bitmapImage;
+    }
+
+    private static BitmapFrame CreateBitmapFrame(Stream imageStream, Size frameSize)
+    {
+        var bitmapFrame = BitmapFrame.Create(imageStream);
+
+        if (frameSize != Size.Empty)
+        {
+            var sizedBitmapFrame = bitmapFrame.Decoder.Frames
+                .OrderByDescending(f => f.Width)
+                .ThenByDescending(f => f.Height)
+                .LastOrDefault(f => f.Width.LargerOrNearlyEqual(frameSize.Width) &&
+                                    f.Height.LargerOrNearlyEqual(frameSize.Height));
+
+            if (sizedBitmapFrame != null)
+            {
+                bitmapFrame = sizedBitmapFrame;
+            }
+        }
+
+        if (bitmapFrame.CanFreeze)
+        {
+            bitmapFrame.Freeze();
+        }
+
+        return bitmapFrame;
+    }
+
+    private static DrawingImage CreateDrawingImage(Stream imageStream)
+    {
+        var settings = new WpfDrawingSettings
+        {
+            EnsureViewboxSize = true
+        };
+
+        using var reader = new FileSvgReader(settings);
+        var drawingGroup = reader.Read(imageStream);
+
+        return new DrawingImage(drawingGroup).CloneCurrentValue();
+    }
+
+    private readonly LruCache<string, WeakReference<ImageSource>> _imageCache = new(100);
 }

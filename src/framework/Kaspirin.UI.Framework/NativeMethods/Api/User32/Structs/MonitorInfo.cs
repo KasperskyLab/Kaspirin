@@ -16,29 +16,27 @@
 
 using System.Runtime.InteropServices;
 
-namespace Kaspirin.UI.Framework.NativeMethods.Api.User32.Structs
+namespace Kaspirin.UI.Framework.NativeMethods.Api.User32.Structs;
+
+/// <summary>
+///     <seealso href="https://learn.microsoft.com/en-us/windows/win32/api/winuser/ns-winuser-monitorinfo">Learn more</seealso>.
+/// </summary>
+[StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
+public struct MonitorInfo
 {
-    /// <summary>
-    ///     
-    /// <seealso href="https://learn.microsoft.com/en-us/windows/win32/api/winuser/ns-winuser-monitorinfo">Learn more</seealso>.
-    /// </summary>
-    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
-    public struct MonitorInfo
+    public MonitorInfo()
     {
-        public MonitorInfo()
-        {
-            Size = Marshal.SizeOf(typeof(MonitorInfo));
-            Monitor = new();
-            Work = new();
-            Flags = 0;
-        }
-
-        public int Size;
-
-        public NativeRectangle Monitor;
-
-        public NativeRectangle Work;
-
-        public int Flags;
+        Size = Marshal.SizeOf(typeof(MonitorInfo));
+        Monitor = new();
+        Work = new();
+        Flags = 0;
     }
+
+    public int Size;
+
+    public NativeRectangle Monitor;
+
+    public NativeRectangle Work;
+
+    public int Flags;
 }

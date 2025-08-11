@@ -16,47 +16,44 @@ using System.Windows;
 using System.Windows.Data;
 using Kaspirin.UI.Framework.UiKit.Controls.Internals;
 
-namespace Kaspirin.UI.Framework.UiKit.Controls
+namespace Kaspirin.UI.Framework.UiKit.Controls;
+
+public sealed class ContextMenuSelect : ContextMenuButton
 {
-    public sealed class ContextMenuSelect : ContextMenuButton
+    public override void OnApplyTemplate()
     {
-        public override void OnApplyTemplate()
-        {
-            base.OnApplyTemplate();
+        base.OnApplyTemplate();
 
-            if (BindingOperations.GetBindingBase(this, ContentProperty) is null &&
-                GetValue(ContentProperty) is null)
+        if (BindingOperations.GetBindingBase(this, ContentProperty) is null &&
+            GetValue(ContentProperty) is null)
+        {
+            SetBinding(ContentProperty, new Binding()
             {
-                SetBinding(ContentProperty, new Binding()
-                {
-                    Source = this,
-                    Path = SelectedItemProperty.AsPath()
-                });
-            }
-        }
-
-        #region SelectedItem
-
-        public object? SelectedItem
-        {
-            get { return (object?)GetValue(SelectedItemProperty); }
-            set { SetValue(SelectedItemProperty, value); }
-        }
-
-        public static readonly DependencyProperty SelectedItemProperty =
-            DependencyProperty.Register("SelectedItem", typeof(object), typeof(ContextMenuSelect),
-                new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnSelectedItemChanged));
-
-        private static void OnSelectedItemChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            ((ContextMenuSelect)d).UpdateContent();
-        }
-
-        #endregion
-
-        private void UpdateContent()
-        {
-            BindingOperations.GetBindingExpressionBase(this, ContentProperty)?.UpdateTarget();
+                Source = this,
+                Path = SelectedItemProperty.AsPath()
+            });
         }
     }
+
+    #region SelectedItem
+
+    public object? SelectedItem
+    {
+        get => (object?)GetValue(SelectedItemProperty);
+        set => SetValue(SelectedItemProperty, value);
+    }
+
+    public static readonly DependencyProperty SelectedItemProperty = DependencyProperty.Register(
+        nameof(SelectedItem),
+        typeof(object),
+        typeof(ContextMenuSelect),
+        new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnSelectedItemChanged));
+
+    private static void OnSelectedItemChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        => ((ContextMenuSelect)d).OnSelectedItemChanged();
+
+    #endregion
+
+    private void OnSelectedItemChanged()
+        => BindingOperations.GetBindingExpressionBase(this, ContentProperty)?.UpdateTarget();
 }

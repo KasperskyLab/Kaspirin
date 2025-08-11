@@ -16,30 +16,29 @@ using System;
 using System.Globalization;
 using System.Linq;
 
-namespace Kaspirin.UI.Framework.UiKit.Controls.Internals
+namespace Kaspirin.UI.Framework.UiKit.Controls.Internals;
+
+internal sealed class ObjectToIconConverter : ValueConverterMarkupExtension<ObjectToIconConverter>
 {
-    internal sealed class ObjectToIconConverter : ValueConverterMarkupExtension<ObjectToIconConverter>
+    public object? FallbackValue { get; set; }
+
+    public override object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
     {
-        public object? FallbackValue { get; set; }
-
-        public override object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
+        if (targetType.BaseType != typeof(Enum) && value is not Enum)
         {
-            if (targetType.BaseType != typeof(Enum) && value is not Enum)
-            {
-                return value;
-            }
-
-            if (targetType.BaseType == typeof(ValueType) && targetType.IsGenericType && targetType.GetGenericArguments().First().BaseType == typeof(Enum))
-            {
-                return value;
-            }
-
-            if (targetType.BaseType == typeof(Enum) && value is Enum)
-            {
-                return value;
-            }
-
-            return FallbackValue;
+            return value;
         }
+
+        if (targetType.BaseType == typeof(ValueType) && targetType.IsGenericType && targetType.GetGenericArguments().First().BaseType == typeof(Enum))
+        {
+            return value;
+        }
+
+        if (targetType.BaseType == typeof(Enum) && value is Enum)
+        {
+            return value;
+        }
+
+        return FallbackValue;
     }
 }

@@ -12,20 +12,35 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
+namespace Kaspirin.UI.Framework.NativeMethods.Api.Shell32.Enums;
 
-namespace Kaspirin.UI.Framework.NativeMethods.Api.Shell32.Enums
+/// <summary>
+///     <seealso href="https://learn.microsoft.com/en-us/windows/win32/api/shellapi/nf-shellapi-shgetimagelist">Learn more</seealso>.
+/// </summary>
+public enum ShGetImageListSize : uint
 {
     /// <summary>
-    ///     
-    /// <seealso href="https://learn.microsoft.com/en-us/windows/win32/api/shellapi/nf-shellapi-shgetimagelist">Learn more</seealso>.
+    ///     The SHIL_LARGE constant.
     /// </summary>
-    public enum ShGetImageListSize : uint
-    {
-        SHIL_LARGE = 0x000000000,
-        SHIL_SMALL = 0x000000001,
-        SHIL_EXTRALARGE = 0x000000002,
-        SHIL_SYSSMALL = 0x000000003,
-        SHIL_JUMBO = 0x000000004
-    }
+    Large = 0x000000000,
+
+    /// <summary>
+    ///     The SHIL_SMALL constant.
+    /// </summary>
+    Small = 0x000000001,
+
+    /// <summary>
+    ///     The SHIL_EXTRALARGE constant.
+    /// </summary>
+    ExtraLarge = 0x000000002,
+
+    /// <summary>
+    ///     The SHIL_SYSSMALL constant.
+    /// </summary>
+    SysSmall = 0x000000003,
+
+    /// <summary>
+    ///     The SHIL_JUMBO constant.
+    /// </summary>
+    Jumbo = 0x000000004,
 }

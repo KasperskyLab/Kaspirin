@@ -15,26 +15,25 @@
 using System;
 using System.Text.RegularExpressions;
 
-namespace Kaspirin.UI.Framework.UiKit.Translator.Core
+namespace Kaspirin.UI.Framework.UiKit.Translator.Core;
+
+internal static class LineEndingHelper
 {
-    internal static class LineEndingHelper
+    public static string NormalizeLineEndings(string value, LineEndingMode mode)
+        => _lineEndingsRegex.Replace(value, GetLineEnding(mode));
+
+    private static string GetLineEnding(LineEndingMode mode)
     {
-        public static string NormalizeLineEndings(string value, LineEndingMode mode)
-            => _lineEndingsRegex.Replace(value, GetLineEnding(mode));
-
-        private static string GetLineEnding(LineEndingMode mode)
+        return mode switch
         {
-            return mode switch
-            {
-                LineEndingMode.CrLf => CrLfLineEnding,
-                LineEndingMode.Lf => LfLineEnding,
-                _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, "Unsupported line ending mode"),
-            };
-        }
-
-        private static readonly Regex _lineEndingsRegex = new(@"\r\n|\n\r|\n|\r", RegexOptions.Compiled);
-
-        private const string CrLfLineEnding = "\r\n";
-        private const string LfLineEnding = "\n";
+            LineEndingMode.CrLf => CrLfLineEnding,
+            LineEndingMode.Lf => LfLineEnding,
+            _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null)
+        };
     }
+
+    private static readonly Regex _lineEndingsRegex = new(@"\r\n|\n\r|\n|\r", RegexOptions.Compiled);
+
+    private const string CrLfLineEnding = "\r\n";
+    private const string LfLineEnding = "\n";
 }

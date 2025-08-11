@@ -12,10 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Kaspirin.UI.Framework.UiKit.MarkupExtensions.ItemIndex
+namespace Kaspirin.UI.Framework.UiKit.MarkupExtensions.ItemIndex;
+
+public sealed class ItemIndexToBooleanExtension : BaseItemIndexExtension<bool>
 {
-    public sealed class ItemIndexToBooleanExtension : BaseItemIndexExtension<bool>
-    {
-        public ItemIndexToBooleanExtension() : base(true, false) { }
-    }
+    public ItemIndexToBooleanExtension() : base(true, false) { }
 }

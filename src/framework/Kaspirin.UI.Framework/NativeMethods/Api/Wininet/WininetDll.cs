@@ -18,59 +18,62 @@ using System;
 using System.Runtime.InteropServices;
 using System.Security;
 
-namespace Kaspirin.UI.Framework.NativeMethods.Api.Wininet
+namespace Kaspirin.UI.Framework.NativeMethods.Api.Wininet;
+
+/// <summary>
+///     Provides API methods for functions from wininet.dll .
+/// </summary>
+public static class WininetDll
 {
+    #region wininet.h
+
     /// <summary>
-    ///     Provides API methods for functions from wininet.dll .
+    ///     The InternetSetCookieEx API method.
+    ///     <br /><seealso href="https://learn.microsoft.com/en-us/windows/win32/api/wininet/nf-wininet-internetsetcookieexw">Learn more</seealso>.
     /// </summary>
-    public static class WininetDll
-    {
-        #region wininet.h
+    [DllImport(DllName, CharSet = CharSet.Unicode, SetLastError = true, ExactSpelling = true, EntryPoint = "InternetSetCookieExW")]
+    [SuppressUnmanagedCodeSecurity]
+    [SecurityCritical]
+    public static extern uint InternetSetCookieEx(
+        [In] string url,
+        [In] string cookieName,
+        [In] string cookieData,
+        InternetCookieFlags flags,
+        [In] string pHeader);
 
-        /// <summary>
-        ///     The InternetSetCookieEx API method. <br /><seealso href="https://learn.microsoft.com/en-us/windows/win32/api/wininet/nf-wininet-internetsetcookieexw">Learn more</seealso>.
-        /// </summary>
-        [DllImport(DllName, CharSet = CharSet.Unicode, SetLastError = true, ExactSpelling = true, EntryPoint = "InternetSetCookieExW")]
-        [SuppressUnmanagedCodeSecurity]
-        [SecurityCritical]
-        public static extern uint InternetSetCookieEx(
-            [In] string url,
-            [In] string cookieName,
-            [In] string cookieData,
-            InternetCookieFlags flags,
-            [In] string pHeader);
+    /// <summary>
+    ///     The InternetOpen API method.
+    ///     <br /><seealso href="https://learn.microsoft.com/en-us/windows/win32/api/wininet/nf-wininet-internetopena">Learn more</seealso>.
+    /// </summary>
+    [DllImport(DllName, CharSet = CharSet.Auto, SetLastError = true)]
+    public static extern IntPtr InternetOpen(
+        string agentName,
+        InternetOpenType accessType,
+        string proxyName,
+        string proxyBypass,
+        InternetOpenFlags flags);
 
-        /// <summary>
-        ///     The InternetOpen API method. <br /><seealso href="https://learn.microsoft.com/en-us/windows/win32/api/wininet/nf-wininet-internetopena">Learn more</seealso>.
-        /// </summary>
-        [DllImport(DllName, CharSet = CharSet.Auto, SetLastError = true)]
-        public static extern IntPtr InternetOpen(
-            string agentName,
-            InternetOpenType accessType,
-            string proxyName,
-            string proxyBypass,
-            InternetOpenFlags flags);
+    /// <summary>
+    ///     The InternetCloseHandle API method.
+    ///     <br /><seealso href="https://learn.microsoft.com/en-us/windows/win32/api/wininet/nf-wininet-internetclosehandle">Learn more</seealso>.
+    /// </summary>
+    [DllImport(DllName, SetLastError = true)]
+    [return: MarshalAs(UnmanagedType.Bool)]
+    public static extern bool InternetCloseHandle(
+        IntPtr handle);
 
-        /// <summary>
-        ///     The InternetCloseHandle API method. <br /><seealso href="https://learn.microsoft.com/en-us/windows/win32/api/wininet/nf-wininet-internetclosehandle">Learn more</seealso>.
-        /// </summary>
-        [DllImport(DllName, SetLastError = true)]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        public static extern bool InternetCloseHandle(
-            IntPtr handle);
+    /// <summary>
+    ///     The InternetSetOption API method.
+    ///     <br /><seealso href="https://learn.microsoft.com/en-us/windows/win32/api/wininet/nf-wininet-internetsetoptionw">Learn more</seealso>.
+    /// </summary>
+    [DllImport(DllName, CharSet = CharSet.Ansi, SetLastError = true)]
+    public static extern bool InternetSetOption(
+        IntPtr handle,
+        InternetOptions option,
+        IntPtr buffer,
+        int bufferSize);
 
-        /// <summary>
-        ///     The InternetSetOption API method. <br /><seealso href="https://learn.microsoft.com/en-us/windows/win32/api/wininet/nf-wininet-internetsetoptionw">Learn more</seealso>.
-        /// </summary>
-        [DllImport(DllName, CharSet = CharSet.Ansi, SetLastError = true)]
-        public static extern bool InternetSetOption(
-            IntPtr handle,
-            InternetOptions option,
-            IntPtr buffer,
-            int bufferSize);
+    #endregion
 
-        #endregion
-
-        private const string DllName = "wininet.dll";
-    }
+    private const string DllName = "wininet.dll";
 }

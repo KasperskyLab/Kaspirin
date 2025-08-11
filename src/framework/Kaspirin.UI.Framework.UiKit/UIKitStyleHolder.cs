@@ -15,24 +15,28 @@
 using System;
 using System.Windows;
 
-namespace Kaspirin.UI.Framework.UiKit
+namespace Kaspirin.UI.Framework.UiKit;
+
+internal sealed class UIKitStyleHolder : FrameworkElement
 {
-    internal sealed class UIKitStyleHolder : FrameworkElement
+    #region StyleRef
+
+    public Style StyleRef
     {
-        public Style StyleRef
-        {
-            get { return (Style)GetValue(StyleRefProperty); }
-            set { SetValue(StyleRefProperty, value); }
-        }
-
-        public static readonly DependencyProperty StyleRefProperty =
-            DependencyProperty.Register("StyleRef", typeof(Style), typeof(UIKitStyleHolder), new PropertyMetadata(null, OnStyleRefChanged));
-
-        private static void OnStyleRefChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            ((UIKitStyleHolder)d).StyleRefChanged.Invoke(e.NewValue as Style, e.OldValue as Style);
-        }
-
-        public event Action<Style?, Style?> StyleRefChanged = (_, _) => { };
+        get => (Style)GetValue(StyleRefProperty);
+        set => SetValue(StyleRefProperty, value);
     }
+
+    public static readonly DependencyProperty StyleRefProperty = DependencyProperty.Register(
+        nameof(StyleRef),
+        typeof(Style),
+        typeof(UIKitStyleHolder),
+        new PropertyMetadata(default(Style), OnStyleRefChanged));
+
+    private static void OnStyleRefChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        => ((UIKitStyleHolder)d).StyleRefChanged.Invoke(e.NewValue as Style, e.OldValue as Style);
+
+    #endregion
+
+    public event Action<Style?, Style?> StyleRefChanged = (_, _) => { };
 }

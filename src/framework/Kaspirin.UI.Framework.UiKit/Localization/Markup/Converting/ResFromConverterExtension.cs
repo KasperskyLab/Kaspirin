@@ -12,15 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Kaspirin.UI.Framework.UiKit.Localization.Markup.Converting
-{
-    public sealed class ResFromConverterExtension : ResFromSourceExtension
-    {
-        public IResourceProvider? Converter { get; set; }
+namespace Kaspirin.UI.Framework.UiKit.Localization.Markup.Converting;
 
-        public override object? GetResource(object? key)
-        {
-            return Converter?.GetResource(key);
-        }
+public sealed class ResFromConverterExtension : ResFromSourceExtension
+{
+    public IResourceProvider? Converter { get; set; }
+
+    public override object? GetResource(object? key)
+    {
+        return Converter?.GetResource(key);
     }
 }

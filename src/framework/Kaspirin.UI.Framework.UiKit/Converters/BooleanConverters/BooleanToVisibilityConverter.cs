@@ -15,22 +15,21 @@
 using System.Windows;
 using System.Windows.Data;
 
-namespace Kaspirin.UI.Framework.UiKit.Converters.BooleanConverters
+namespace Kaspirin.UI.Framework.UiKit.Converters.BooleanConverters;
+
+/// <summary>
+///     Provides an implementation of <see cref="BaseBooleanConverter{T}" /> in which the conversion
+///     result is of type <see cref="Visibility" />.
+/// </summary>
+/// <remarks>
+///     By default, it converts <see langword="true" /> to <see cref="Visibility.Visible" />, and <see langword="false" />
+///     to <see cref="Visibility.Collapsed" />.
+/// </remarks>
+[ValueConversion(typeof(bool), typeof(Visibility))]
+public sealed class BooleanToVisibilityConverter : BaseBooleanConverter<Visibility>
 {
     /// <summary>
-    ///     Provides an implementation of <see cref="BaseBooleanConverter{T}" /> in which the conversion
-    ///     result is of type <see cref="Visibility" />.
+    ///     Creates an object <see cref="BooleanToVisibilityConverter" />.
     /// </summary>
-    /// <remarks>
-    ///     By default, it converts <see langword="true" /> to <see cref="Visibility.Visible" />, and <see langword="false" />
-    ///     to <see cref="Visibility.Collapsed" />.
-    /// </remarks>
-    [ValueConversion(typeof(bool), typeof(Visibility))]
-    public sealed class BooleanToVisibilityConverter : BaseBooleanConverter<Visibility>
-    {
-        /// <summary>
-        ///     Creates an object <see cref="BooleanToVisibilityConverter" />.
-        /// </summary>
-        public BooleanToVisibilityConverter() : base(Visibility.Visible, Visibility.Collapsed) { }
-    }
+    public BooleanToVisibilityConverter() : base(Visibility.Visible, Visibility.Collapsed) { }
 }

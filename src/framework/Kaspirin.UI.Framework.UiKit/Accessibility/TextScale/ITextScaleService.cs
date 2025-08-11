@@ -12,14 +12,25 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Kaspirin.UI.Framework.UiKit.Accessibility.TextScale
+namespace Kaspirin.UI.Framework.UiKit.Accessibility.TextScale;
+
+/// <summary>
+///     An interface for providing text scaling functionality.
+/// </summary>
+public interface ITextScaleService
 {
-    public interface ITextScaleService
-    {
-        bool IsEnabled { get; set; }
+    /// <summary>
+    ///     Indicates whether the text scaling service is enabled.
+    /// </summary>
+    bool IsEnabled { get; set; }
 
-        double ScaleFactor { get; }
+    /// <summary>
+    ///     Gets the current text zoom factor.
+    /// </summary>
+    double ScaleFactor { get; }
 
-        event TextScaleChangedDelegate ScaleFactorChanged;
-    }
+    /// <summary>
+    ///     Event about a change in the text zoom factor.
+    /// </summary>
+    event TextScaleChangedDelegate ScaleFactorChanged;
 }

@@ -12,36 +12,37 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#pragma warning disable CA1724 // Change either name to eliminate the conflict.
+
 using System;
 using System.Text;
 
-namespace Kaspirin.UI.Framework.UiKit.Localization.Localizer.Strings.Parsing.Expressions
+namespace Kaspirin.UI.Framework.UiKit.Localization.Localizer.Strings.Parsing.Expressions;
+
+public sealed class ValueExpression : IExpression
 {
-    public class ValueExpression : IExpression
+    public ValueExpression(IExpression[] innerExpressions) => InnerExpressions = innerExpressions;
+
+    public IExpression[] InnerExpressions { get; }
+
+    public string Resolve(Func<string, ValueExpression> keyResolver, Func<string, object?> variableResolver)
     {
-        public ValueExpression(IExpression[] innerExpressions) => InnerExpressions = innerExpressions;
+        var stringBuilder = new StringBuilder();
 
-        public IExpression[] InnerExpressions { get; }
-
-        public string Resolve(Func<string, ValueExpression> keyResolver, Func<string, object?> variableResolver)
+        foreach (var expression in InnerExpressions)
         {
-            var stringBuilder = new StringBuilder();
-
-            foreach (var expression in InnerExpressions)
+            var resolvedValue = expression switch
             {
-                var resolvedValue = expression switch
-                {
-                    LiteralExpression literalExpression => literalExpression.Resolve(),
-                    VariableExpression variableExpression => variableExpression.Resolve(variableResolver),
-                    KeyExpression keyExpression => keyExpression.Resolve(keyResolver, variableResolver),
-                    PluralExpression pluralExpression => pluralExpression.Resolve(keyResolver, variableResolver),
-                    _ => throw new Exception($"Unknown expression of type {expression.GetType()}.")
-                };
+                LiteralExpression literalExpression => literalExpression.Resolve(),
+                VariableExpression variableExpression => variableExpression.Resolve(variableResolver),
+                KeyExpression keyExpression => keyExpression.Resolve(keyResolver, variableResolver),
+                PluralExpression pluralExpression => pluralExpression.Resolve(keyResolver, variableResolver),
+                _ => throw new UnexpectedValueException(expression)
+            };
 
-                stringBuilder.Append(resolvedValue);
-            }
-
-            return stringBuilder.ToString();
+            stringBuilder.Append(resolvedValue);
         }
+
+        return stringBuilder.ToString();
     }
 }

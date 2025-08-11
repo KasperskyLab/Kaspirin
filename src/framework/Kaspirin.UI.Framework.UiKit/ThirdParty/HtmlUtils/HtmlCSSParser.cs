@@ -4,11 +4,16 @@
 // Scope of modification:
 //   - Code adaptation to project requirements.
 
+// This file has been modified by AO Kaspersky Lab in 1/15/2025.
+// Scope of modification:
+//   - Code adaptation to project requirements.
+
 // Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-#nullable disable
-
+#pragma warning disable CA1502 // Rewrite or refactor the code to decrease its complexity below '26'.
+#pragma warning disable CS8603 // Possible null reference return.
+#pragma warning disable IDE1006 // Naming rule violation.
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -189,8 +194,6 @@ namespace Kaspirin.UI.Framework.UiKit.ThirdParty.HtmlUtils
         //  What are these definitions doing here:
         //
         // .................................................................
-
-        private static string[] _blocks = { "block", "inline", "list-item", "none" };
 
         private static readonly string[] ObjectFits = { "none", "contain", "cover", "fill", "scale-down" };
 
@@ -531,7 +534,7 @@ namespace Kaspirin.UI.Framework.UiKit.ThirdParty.HtmlUtils
             // transparent - for background-color
             ParseWhiteSpace(styleValue, ref nextIndex);
 
-            string color = null;
+            string? color = null;
 
             if (nextIndex < styleValue.Length)
             {
@@ -670,7 +673,7 @@ namespace Kaspirin.UI.Framework.UiKit.ThirdParty.HtmlUtils
 
         private static void ParseCssFontFamily(string styleValue, ref int nextIndex, Hashtable localProperties)
         {
-            string fontFamilyList = null;
+            string? fontFamilyList = null;
 
             while (nextIndex < styleValue.Length)
             {

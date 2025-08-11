@@ -20,100 +20,99 @@ using System.Windows;
 using System.Windows.Data;
 using System.Windows.Markup;
 
-namespace Kaspirin.UI.Framework.UiKit.Converters.DictionaryConverters
+namespace Kaspirin.UI.Framework.UiKit.Converters.DictionaryConverters;
+
+[ContentProperty(nameof(Resources))]
+public sealed class DictionaryConverter : IValueConverter
 {
-    [ContentProperty(nameof(Resources))]
-    public sealed class DictionaryConverter : IValueConverter
+    public static string Default = "_defaultValue";
+
+    public ResourceDictionary Resources { get; set; } = new();
+
+    public DictionaryConverter? BasedOn { get; set; } = null;
+
+    public bool ShouldTraceOnNotFound { get; set; } = true;
+
+    public DictionaryConverterValueMode ProvideValueMode { get; set; } = DictionaryConverterValueMode.Default;
+
+    public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
     {
-        public static string Default = "_defaultValue";
-
-        public ResourceDictionary Resources { get; set; } = new ResourceDictionary();
-
-        public DictionaryConverter? BasedOn { get; set; } = null;
-
-        public bool ShouldTraceOnNotFound { get; set; } = true;
-
-        public DictionaryConverterValueMode ProvideValueMode { get; set; } = DictionaryConverterValueMode.Default;
-
-        public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
+        if (value == null)
         {
-            if (value == null)
-            {
-                _trace.TraceWarning($"{nameof(DictionaryConverter)}: value is invalid");
-                return DependencyProperty.UnsetValue;
-            }
-
-            var resourceKey = GetResourceKey(value);
-            var resourceObject = GetResourceObject(resourceKey);
-            if (resourceObject == null && BasedOn != null)
-            {
-                resourceObject = BasedOn.GetResourceObject(resourceKey);
-            }
-
-            if (resourceObject == null && ShouldTraceOnNotFound)
-            {
-                _trace.TraceError($"{nameof(DictionaryConverter)}: ResourceKey '{resourceKey}' (type '{resourceKey.GetType().FullName}') is not found in the dictionary: {string.Join(", ", Resources.Keys.Cast<object>())}");
-                return DependencyProperty.UnsetValue;
-            }
-
-            return resourceObject switch
-            {
-                IDictionaryConverterItem obj => obj.GetItemValue(),
-                _ => resourceObject
-            };
-        }
-
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            foreach (DictionaryEntry entry in Resources)
-            {
-                var resValue = (entry.Value as IDictionaryConverterItem)?.GetItemValue();
-
-                if (object.ReferenceEquals(resValue, value) || value.Equals(value))
-                {
-                    return entry.Key;
-                }
-            }
-
-            _trace.TraceWarning($"{nameof(DictionaryConverter)}: ConvertBack has not find key for value '{value}'.");
+            _trace.TraceWarning($"{nameof(DictionaryConverter)}: value is invalid");
             return DependencyProperty.UnsetValue;
         }
 
-        private object GetResourceKey(object value)
+        var resourceKey = GetResourceKey(value);
+        var resourceObject = GetResourceObject(resourceKey);
+        if (resourceObject == null && BasedOn != null)
         {
-            return ProvideValueMode switch
-            {
-                DictionaryConverterValueMode.Type => value.GetType(),
-                _ => value
-            };
+            resourceObject = BasedOn.GetResourceObject(resourceKey);
         }
 
-        private object? GetResourceObject(object resourceKey)
+        if (resourceObject == null && ShouldTraceOnNotFound)
         {
-            if (resourceKey == null)
-            {
-                return null;
-            }
+            _trace.TraceError($"{nameof(DictionaryConverter)}: ResourceKey '{resourceKey}' (type '{resourceKey.GetType().FullName}') is not found in the dictionary: {string.Join(", ", Resources.Keys.Cast<object>())}");
+            return DependencyProperty.UnsetValue;
+        }
 
-            if (Resources.Contains(resourceKey))
-            {
-                return Resources[resourceKey];
-            }
+        return resourceObject switch
+        {
+            IDictionaryConverterItem obj => obj.GetItemValue(),
+            _ => resourceObject
+        };
+    }
 
-            var resourceKeyString = resourceKey.ToString();
-            if (Resources.Contains(resourceKeyString))
-            {
-                return Resources[resourceKeyString];
-            }
+    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        foreach (DictionaryEntry entry in Resources)
+        {
+            var resValue = (entry.Value as IDictionaryConverterItem)?.GetItemValue();
 
-            if (Resources.Contains(Default))
+            if (object.ReferenceEquals(resValue, value) || value.Equals(value))
             {
-                return Resources[Default];
+                return entry.Key;
             }
+        }
 
+        _trace.TraceWarning($"{nameof(DictionaryConverter)}: ConvertBack has not find key for value '{value}'.");
+        return DependencyProperty.UnsetValue;
+    }
+
+    private object GetResourceKey(object value)
+    {
+        return ProvideValueMode switch
+        {
+            DictionaryConverterValueMode.Type => value.GetType(),
+            _ => value
+        };
+    }
+
+    private object? GetResourceObject(object resourceKey)
+    {
+        if (resourceKey == null)
+        {
             return null;
         }
 
-        private static readonly ComponentTracer _trace = ComponentTracer.Get(UIKitComponentTracers.Converters);
+        if (Resources.Contains(resourceKey))
+        {
+            return Resources[resourceKey];
+        }
+
+        var resourceKeyString = resourceKey.ToString();
+        if (Resources.Contains(resourceKeyString))
+        {
+            return Resources[resourceKeyString];
+        }
+
+        if (Resources.Contains(Default))
+        {
+            return Resources[Default];
+        }
+
+        return null;
     }
+
+    private static readonly ComponentTracer _trace = ComponentTracer.Get(UIKitComponentTracers.Converters);
 }

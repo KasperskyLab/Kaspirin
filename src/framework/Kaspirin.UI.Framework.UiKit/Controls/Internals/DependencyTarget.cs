@@ -13,36 +13,31 @@
 // limitations under the License.
 
 using System;
-using System.Windows;
 using System.Windows.Markup;
 
-namespace Kaspirin.UI.Framework.UiKit.Controls.Internals
+namespace Kaspirin.UI.Framework.UiKit.Controls.Internals;
+
+internal readonly struct DependencyTarget : IServiceProvider, IProvideValueTarget
 {
-    internal readonly struct DependencyTarget : IServiceProvider, IProvideValueTarget
+    public DependencyTarget(object? targetObject, object? targetProperty)
     {
-        public DependencyTarget(DependencyObject targetObject, DependencyProperty targetProperty)
-        {
-            Guard.ArgumentIsNotNull(targetObject);
-            Guard.ArgumentIsNotNull(targetProperty);
-
-            _targetObject = new(targetObject);
-            _targetProperty = new(targetProperty);
-        }
-
-        public object? GetService(Type serviceType)
-        {
-            if (serviceType == typeof(IProvideValueTarget))
-            {
-                return this;
-            }
-
-            return null;
-        }
-
-        object? IProvideValueTarget.TargetObject { get { return _targetObject.Target; } }
-        object? IProvideValueTarget.TargetProperty { get { return _targetProperty.Target; } }
-
-        private readonly WeakReference _targetObject;
-        private readonly WeakReference _targetProperty;
+        _targetObject = new(targetObject);
+        _targetProperty = new(targetProperty);
     }
+
+    public object? GetService(Type serviceType)
+    {
+        if (serviceType == typeof(IProvideValueTarget))
+        {
+            return this;
+        }
+
+        return null;
+    }
+
+    object? IProvideValueTarget.TargetObject { get { return _targetObject.Target; } }
+    object? IProvideValueTarget.TargetProperty { get { return _targetProperty.Target; } }
+
+    private readonly WeakReference _targetObject;
+    private readonly WeakReference _targetProperty;
 }

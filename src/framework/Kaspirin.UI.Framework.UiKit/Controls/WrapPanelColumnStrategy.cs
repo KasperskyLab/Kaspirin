@@ -12,48 +12,47 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Kaspirin.UI.Framework.UiKit.Controls
+namespace Kaspirin.UI.Framework.UiKit.Controls;
+
+public sealed class WrapPanelColumnStrategy
 {
-    public sealed class WrapPanelColumnStrategy
+    public static WrapPanelColumnStrategy Default { get; } = new WrapPanelColumnStrategy();
+
+    public WrapPanelColumnStrategy()
     {
-        public static WrapPanelColumnStrategy Default { get; } = new WrapPanelColumnStrategy();
-
-        public WrapPanelColumnStrategy()
-        {
-            Count = 1;
-            FromWidth = 0;
-            ToWidth = double.PositiveInfinity;
-        }
-
-        public RowAlignType AlignType { get; set; }
-
-        public uint Count
-        {
-            get => _count;
-            set => _count = value > 0 ? value : 1;
-        }
-
-        public double FromWidth
-        {
-            get => _fromWidth;
-            set => _fromWidth = value.LesserOrNearlyEqual(ToWidth) ? value : ToWidth;
-        }
-
-        public double ToWidth
-        {
-            get => _toWidth;
-            set => _toWidth = value.LargerOrNearlyEqual(FromWidth) ? value : FromWidth;
-        }
-
-        public enum RowAlignType
-        {
-            Auto,
-            SkipAll,
-            SkipLast
-        }
-
-        private uint _count;
-        private double _fromWidth;
-        private double _toWidth;
+        Count = 1;
+        FromWidth = 0;
+        ToWidth = double.PositiveInfinity;
     }
+
+    public RowAlignType AlignType { get; set; }
+
+    public uint Count
+    {
+        get => _count;
+        set => _count = value > 0 ? value : 1;
+    }
+
+    public double FromWidth
+    {
+        get => _fromWidth;
+        set => _fromWidth = value.LesserOrNearlyEqual(ToWidth) ? value : ToWidth;
+    }
+
+    public double ToWidth
+    {
+        get => _toWidth;
+        set => _toWidth = value.LargerOrNearlyEqual(FromWidth) ? value : FromWidth;
+    }
+
+    public enum RowAlignType
+    {
+        Auto,
+        SkipAll,
+        SkipLast
+    }
+
+    private uint _count;
+    private double _fromWidth;
+    private double _toWidth;
 }

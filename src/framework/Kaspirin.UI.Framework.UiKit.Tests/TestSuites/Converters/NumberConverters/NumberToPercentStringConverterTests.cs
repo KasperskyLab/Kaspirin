@@ -12,16 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using Kaspirin.UI.Framework.UiKit.Converters.NumberConverters;
-using Kaspirin.UI.Framework.UiKit.Tests.Common;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Windows;
+using Kaspirin.UI.Framework.UiKit.Converters.NumberConverters;
 
 namespace Kaspirin.UI.Framework.UiKit.Tests.TestSuites.Converters.NumberConverters;
 
 [TestClass]
-public sealed class NumberToPercentStringConverterTests : LocalizationManagerDependentTests
+public sealed class NumberToPercentStringConverterTests : BaseTests
 {
     [TestMethod]
     public void Convert_NullValue_ReturnsUnsetValue()

@@ -18,48 +18,47 @@ using System.Windows;
 using System.Windows.Markup;
 using Kaspirin.UI.Framework.UiKit.Controls.Internals;
 
-namespace Kaspirin.UI.Framework.UiKit.Extensions
+namespace Kaspirin.UI.Framework.UiKit.Extensions;
+
+public static class MarkupExtensionExtensions
 {
-    public static class MarkupExtensionExtensions
+    public static object? ProvideValue(this MarkupExtension markupExtension, DependencyObject targetObject, DependencyProperty targetProperty)
+        => markupExtension.ProvideValue(new DependencyTarget(targetObject, targetProperty));
+
+    public static TType ExpandTo<TType>(this MarkupExtension markupExtension, IServiceProvider? serviceProvider)
+        where TType : MarkupExtension
     {
-        public static object? ProvideValue(this MarkupExtension markupExtension, DependencyObject targetObject, DependencyProperty targetProperty)
-            => markupExtension.ProvideValue(new DependencyTarget(targetObject, targetProperty));
+        Guard.ArgumentIsNotNull(markupExtension);
 
-        public static TType ExpandTo<TType>(this MarkupExtension markupExtension, IServiceProvider? serviceProvider)
-            where TType : MarkupExtension
+        if (markupExtension.TryExpandTo<TType>(serviceProvider, out var result))
         {
-            Guard.ArgumentIsNotNull(markupExtension);
-
-            if (markupExtension.TryExpandTo<TType>(serviceProvider, out var result))
-            {
-                return result;
-            }
-
-            throw new InvalidOperationException($"Failed to expand {markupExtension} to requested type {typeof(TType).Name}");
+            return result;
         }
 
-        public static bool TryExpandTo<TType>(this MarkupExtension markupExtension, IServiceProvider? serviceProvider, [NotNullWhen(true)] out TType? result)
-            where TType : MarkupExtension
-        {
-            Guard.ArgumentIsNotNull(markupExtension);
+        throw new InvalidOperationException($"Failed to expand {markupExtension} to requested type {typeof(TType).Name}");
+    }
 
-            if (markupExtension is TType targetExtension)
+    public static bool TryExpandTo<TType>(this MarkupExtension markupExtension, IServiceProvider? serviceProvider, [NotNullWhen(true)] out TType? result)
+        where TType : MarkupExtension
+    {
+        Guard.ArgumentIsNotNull(markupExtension);
+
+        if (markupExtension is TType targetExtension)
+        {
+            result = targetExtension;
+            return true;
+        }
+
+        var expandedValue = markupExtension.ProvideValue(serviceProvider);
+        if (expandedValue is MarkupExtension expandedExtension)
+        {
+            if (expandedExtension.TryExpandTo<TType>(serviceProvider, out result))
             {
-                result = targetExtension;
                 return true;
             }
-
-            var expandedValue = markupExtension.ProvideValue(serviceProvider);
-            if (expandedValue is MarkupExtension expandedExtension)
-            {
-                if (expandedExtension.TryExpandTo<TType>(serviceProvider, out result))
-                {
-                    return true;
-                }
-            }
-
-            result = null;
-            return false;
         }
+
+        result = null;
+        return false;
     }
 }

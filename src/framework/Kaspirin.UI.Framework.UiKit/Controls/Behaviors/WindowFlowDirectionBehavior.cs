@@ -14,82 +14,81 @@
 
 using System.Windows;
 
-namespace Kaspirin.UI.Framework.UiKit.Controls.Behaviors
+namespace Kaspirin.UI.Framework.UiKit.Controls.Behaviors;
+
+public sealed class WindowFlowDirectionBehavior : Behavior<Window, WindowFlowDirectionBehavior>
 {
-    public sealed class WindowFlowDirectionBehavior : Behavior<Window, WindowFlowDirectionBehavior>
+    protected override void OnAttached()
     {
-        protected override void OnAttached()
-        {
-            base.OnAttached();
+        base.OnAttached();
 
-            LocalizationManager.Current.CultureChanged -= OnCultureChanged;
-            LocalizationManager.Current.CultureChanged += OnCultureChanged;
+        LocalizationManager.CultureChanged -= OnCultureChanged;
+        LocalizationManager.CultureChanged += OnCultureChanged;
 
-            ApplyFlowDirection();
-        }
-
-        protected override void OnDetaching()
-        {
-            base.OnDetaching();
-
-            LocalizationManager.Current.CultureChanged -= OnCultureChanged;
-        }
-
-        protected override void OnAssociatedObjectLoaded()
-        {
-            base.OnAssociatedObjectLoaded();
-
-            LocalizationManager.Current.CultureChanged -= OnCultureChanged;
-            LocalizationManager.Current.CultureChanged += OnCultureChanged;
-
-            ApplyFlowDirection();
-        }
-
-        protected override void OnAssociatedObjectUnloaded()
-        {
-            base.OnAssociatedObjectLoaded();
-
-            LocalizationManager.Current.CultureChanged -= OnCultureChanged;
-        }
-
-        private void OnCultureChanged()
-        {
-            ApplyFlowDirection();
-        }
-
-        private void ApplyFlowDirection()
-        {
-            Guard.IsNotNull(AssociatedObject);
-
-            var displayCulture = LocalizationManager.Current.DisplayCulture;
-
-            var flowDirectionInfo = new FlowDirectionInfo(
-                displayCulture.CultureInfo.TextInfo.IsRightToLeft,
-                displayCulture.XmlLanguage.IetfLanguageTag);
-
-            if (flowDirectionInfo == _currentFlowDirectionInfo)
-            {
-                return;
-            }
-
-            _currentFlowDirectionInfo = flowDirectionInfo;
-
-            AssociatedObject.Language = displayCulture.XmlLanguage;
-            AssociatedObject.FlowDirection = displayCulture.CultureInfo.TextInfo.IsRightToLeft
-                ? FlowDirection.RightToLeft
-                : FlowDirection.LeftToRight;
-
-            AssociatedObject.UpdateLayout();
-
-            var windowId = WindowIdFactory.GetDefaultWindowId(AssociatedObject);
-
-            _tracer.TraceInformation($"Layout updated for {windowId}. FlowDirection: {AssociatedObject.FlowDirection}, Language: {AssociatedObject.Language}.");
-        }
-
-        private readonly record struct FlowDirectionInfo(bool IsRTL, string Language);
-
-        private FlowDirectionInfo? _currentFlowDirectionInfo;
-
-        private static readonly ComponentTracer _tracer = ComponentTracer.Get(nameof(WindowFlowDirectionBehavior));
+        ApplyFlowDirection();
     }
+
+    protected override void OnDetaching()
+    {
+        base.OnDetaching();
+
+        LocalizationManager.CultureChanged -= OnCultureChanged;
+    }
+
+    protected override void OnAssociatedObjectLoaded()
+    {
+        base.OnAssociatedObjectLoaded();
+
+        LocalizationManager.CultureChanged -= OnCultureChanged;
+        LocalizationManager.CultureChanged += OnCultureChanged;
+
+        ApplyFlowDirection();
+    }
+
+    protected override void OnAssociatedObjectUnloaded()
+    {
+        base.OnAssociatedObjectLoaded();
+
+        LocalizationManager.CultureChanged -= OnCultureChanged;
+    }
+
+    private void OnCultureChanged()
+    {
+        Executers.InUiSyncOrAsync(ApplyFlowDirection);
+    }
+
+    private void ApplyFlowDirection()
+    {
+        Guard.IsNotNull(AssociatedObject);
+
+        var displayCulture = LocalizationManager.DisplayCulture;
+
+        var flowDirectionInfo = new FlowDirectionInfo(
+            displayCulture.CultureInfo.TextInfo.IsRightToLeft,
+            displayCulture.XmlLanguage.IetfLanguageTag);
+
+        if (flowDirectionInfo == _currentFlowDirectionInfo)
+        {
+            return;
+        }
+
+        _currentFlowDirectionInfo = flowDirectionInfo;
+
+        AssociatedObject.Language = displayCulture.XmlLanguage;
+        AssociatedObject.FlowDirection = displayCulture.CultureInfo.TextInfo.IsRightToLeft
+            ? FlowDirection.RightToLeft
+            : FlowDirection.LeftToRight;
+
+        AssociatedObject.UpdateLayout();
+
+        var windowId = WindowIdFactory.GetDefaultWindowId(AssociatedObject);
+
+        _tracer.TraceInformation($"Layout updated for {windowId}. FlowDirection: {AssociatedObject.FlowDirection}, Language: {AssociatedObject.Language}.");
+    }
+
+    private readonly record struct FlowDirectionInfo(bool IsRTL, string Language);
+
+    private FlowDirectionInfo? _currentFlowDirectionInfo;
+
+    private static readonly ComponentTracer _tracer = ComponentTracer.Get(nameof(WindowFlowDirectionBehavior));
 }

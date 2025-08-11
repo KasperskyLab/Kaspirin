@@ -14,12 +14,11 @@
 
 using System.Windows;
 
-namespace Kaspirin.UI.Framework.UiKit.Notifications
-{
-    public class NotificationLocationSettings
-    {
-        public static NotificationLocationSettings Default { get; } = new NotificationLocationSettings();
+namespace Kaspirin.UI.Framework.UiKit.Notifications;
 
-        public VerticalAlignment ModallessViewVerticalAlignment { get; set; } = VerticalAlignment.Bottom;
-    }
+public sealed class NotificationLocationSettings
+{
+    public static NotificationLocationSettings Default { get; } = new NotificationLocationSettings();
+
+    public VerticalAlignment ModallessViewVerticalAlignment { get; set; } = VerticalAlignment.Bottom;
 }

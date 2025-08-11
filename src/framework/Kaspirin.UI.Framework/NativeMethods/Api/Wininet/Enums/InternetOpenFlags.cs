@@ -12,23 +12,34 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-#pragma warning disable KCAIDE0002 // Enum has incorrect suffix
 
 using System;
 
-namespace Kaspirin.UI.Framework.NativeMethods.Api.Wininet.Enums
+namespace Kaspirin.UI.Framework.NativeMethods.Api.Wininet.Enums;
+
+/// <summary>
+///     <seealso href="https://learn.microsoft.com/en-us/windows/win32/api/wininet/nf-wininet-internetopenw">Learn more</seealso>.
+/// </summary>
+[Flags]
+public enum InternetOpenFlags : uint
 {
     /// <summary>
-    ///     
-    /// <seealso href="https://learn.microsoft.com/en-us/windows/win32/api/wininet/nf-wininet-internetopenw">Learn more</seealso>.
+    ///     The flag is not set.
     /// </summary>
-    [Flags]
-    public enum InternetOpenFlags : uint
-    {
-        None = 0,
-        INTERNET_FLAG_ASYNC = 0x10000000,
-        INTERNET_FLAG_FROM_CACHE = 0x01000000,
-        INTERNET_FLAG_OFFLINE = INTERNET_FLAG_FROM_CACHE
-    }
+    None = 0,
+
+    /// <summary>
+    ///     The INTERNET_FLAG_ASYNC constant.
+    /// </summary>
+    Async = 0x10000000,
+
+    /// <summary>
+    ///     The INTERNET_FLAG_FROM_CACHE constant.
+    /// </summary>
+    FromCache = 0x01000000,
+
+    /// <summary>
+    ///     The INTERNET_FLAG_OFFLINE constant.
+    /// </summary>
+    Offline = FromCache
 }

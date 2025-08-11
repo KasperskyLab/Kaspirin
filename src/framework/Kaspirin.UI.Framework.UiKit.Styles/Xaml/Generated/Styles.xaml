@@ -104,16 +104,24 @@
 
     <!--  region Bullet  -->
 
-    <Style x:Key="BulletRegular"
-           BasedOn="{StaticResource UiKitBulletRegular}"
+    <Style x:Key="BulletSmallBold"
+           BasedOn="{StaticResource UiKitBulletSmallBold}"
            TargetType="{x:Type visuals:Bullet}" />
 
-    <Style x:Key="BulletBold"
-           BasedOn="{StaticResource UiKitBulletBold}"
+    <Style x:Key="BulletSmallRegular"
+           BasedOn="{StaticResource UiKitBulletSmallRegular}"
+           TargetType="{x:Type visuals:Bullet}" />
+
+    <Style x:Key="BulletStandardBold"
+           BasedOn="{StaticResource UiKitBulletStandardBold}"
+           TargetType="{x:Type visuals:Bullet}" />
+
+    <Style x:Key="BulletStandardRegular"
+           BasedOn="{StaticResource UiKitBulletStandardRegular}"
            TargetType="{x:Type visuals:Bullet}" />
 
     <Style x:Key="BulletDefault"
-           BasedOn="{StaticResource UiKitBulletRegular}"
+           BasedOn="{StaticResource UiKitBulletStandardRegular}"
            TargetType="{x:Type visuals:Bullet}" />
 
     <Style x:Key="{x:Type visuals:Bullet}"

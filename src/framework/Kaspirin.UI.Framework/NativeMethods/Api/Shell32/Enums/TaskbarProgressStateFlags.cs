@@ -12,24 +12,38 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-#pragma warning disable KCAIDE0002 // Enum has incorrect suffix
-
 using System;
 
-namespace Kaspirin.UI.Framework.NativeMethods.Api.Shell32.Enums
+namespace Kaspirin.UI.Framework.NativeMethods.Api.Shell32.Enums;
+
+/// <summary>
+///     <seealso href="https://learn.microsoft.com/en-us/windows/win32/api/shobjidl_core/nf-shobjidl_core-itaskbarlist3-setprogressstate">Learn more</seealso>.
+/// </summary>
+[Flags]
+public enum TaskbarProgressStateFlags : uint
 {
     /// <summary>
-    ///     
-    /// <seealso href="https://learn.microsoft.com/en-us/windows/win32/api/shobjidl_core/nf-shobjidl_core-itaskbarlist3-setprogressstate">Learn more</seealso>.
+    ///     The TBPF_NOPROGRESS constant.
     /// </summary>
-    [Flags]
-    public enum TaskbarProgressStateFlags : uint
-    {
-        TBPF_NOPROGRESS = 0x00000000,
-        TBPF_INDETERMINATE = 0x00000001,
-        TBPF_NORMAL = 0x00000002,
-        TBPF_ERROR = 0x00000004,
-        TBPF_PAUSED = 0x00000008,
-    }
+    NoProgress = 0x00000000,
+
+    /// <summary>
+    ///     The TBPF_INDETERMINATE constant.
+    /// </summary>
+    Indeterminate = 0x00000001,
+
+    /// <summary>
+    ///     The TBPF_NORMAL constant.
+    /// </summary>
+    Normal = 0x00000002,
+
+    /// <summary>
+    ///     The TBPF_ERROR constant.
+    /// </summary>
+    Error = 0x00000004,
+
+    /// <summary>
+    ///     The TBPF_PAUSED constant.
+    /// </summary>
+    Paused = 0x00000008,
 }

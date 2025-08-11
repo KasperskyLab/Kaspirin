@@ -16,31 +16,30 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
-namespace Kaspirin.UI.Framework.UiKit.Translator.Core
+namespace Kaspirin.UI.Framework.UiKit.Translator.Core;
+
+internal sealed class EmbeddedConfigurationProvider
 {
-    internal sealed class EmbeddedConfigurationProvider
+    public EmbeddedConfigurationProvider()
     {
-        public EmbeddedConfigurationProvider()
+        _configuration = new Dictionary<string, string>();
+
+        var attributes = Assembly.GetExecutingAssembly()
+            .GetCustomAttributes(typeof(EmbeddedConfigurationAttribute), false)
+            .OfType<EmbeddedConfigurationAttribute>();
+
+        foreach (var attribute in attributes)
         {
-            _configuration = new Dictionary<string, string>();
-
-            var attributes = Assembly.GetExecutingAssembly()
-                .GetCustomAttributes(typeof(EmbeddedConfigurationAttribute), false)
-                .OfType<EmbeddedConfigurationAttribute>();
-
-            foreach (var attribute in attributes)
+            if (attribute.Key == null)
             {
-                if (attribute.Key == null)
-                {
-                    continue;
-                }
-
-                _configuration.Add(attribute.Key, attribute.Value);
+                continue;
             }
+
+            _configuration.Add(attribute.Key, attribute.Value);
         }
-
-        public bool TryGetValue(string key, out string value) => _configuration.TryGetValue(key, out value);
-
-        private readonly Dictionary<string, string> _configuration;
     }
+
+    public bool TryGetValue(string key, out string value) => _configuration.TryGetValue(key, out value);
+
+    private readonly Dictionary<string, string> _configuration;
 }

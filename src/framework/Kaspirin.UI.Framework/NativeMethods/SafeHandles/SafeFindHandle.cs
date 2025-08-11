@@ -14,19 +14,18 @@
 
 using Microsoft.Win32.SafeHandles;
 
-namespace Kaspirin.UI.Framework.NativeMethods.SafeHandles
-{
-    /// <summary>
-    ///     File search descriptor.
-    /// </summary>
-    public sealed class SafeFindHandle : SafeHandleZeroOrMinusOneIsInvalid
-    {
-        internal SafeFindHandle() : base(true)
-        {
-        }
+namespace Kaspirin.UI.Framework.NativeMethods.SafeHandles;
 
-        /// <inheritdoc/>>
-        protected override bool ReleaseHandle()
-            => Kernel32Dll.FindClose(handle);
+/// <summary>
+///     File search descriptor.
+/// </summary>
+public sealed class SafeFindHandle : SafeHandleZeroOrMinusOneIsInvalid
+{
+    internal SafeFindHandle() : base(true)
+    {
     }
+
+    /// <inheritdoc/>>
+    protected override bool ReleaseHandle()
+        => Kernel32Dll.FindClose(handle);
 }

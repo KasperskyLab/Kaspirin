@@ -12,26 +12,23 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using System.Globalization;
+namespace Kaspirin.UI.Framework.UiKit.Localization.Localizer;
 
-using IResourceProvider = Kaspirin.UI.Framework.UiKit.Localization.LocResources.IResourceProvider;
-
-namespace Kaspirin.UI.Framework.UiKit.Localization.Localizer
+public sealed class LocalizerParameters
 {
-    public sealed class LocalizerParameters
+    public LocalizerParameters(
+        ScopeMetaInfo scope,
+        ResourceProvider resourceProvider,
+        LocalizationCultureInfo localizationCultureInfo)
     {
-        public LocalizerParameters(
-            ScopeMetainfo scope,
-            IResourceProvider resourceProvider,
-            CultureInfo cultureInfo)
-        {
-            Scope = Guard.EnsureArgumentIsNotNull(scope);
-            ResourceProvider = Guard.EnsureArgumentIsNotNull(resourceProvider);
-            CultureInfo = Guard.EnsureArgumentIsNotNull(cultureInfo);
-        }
-
-        public ScopeMetainfo Scope { get; }
-        public IResourceProvider ResourceProvider { get; }
-        public CultureInfo CultureInfo { get; }
+        Scope = Guard.EnsureArgumentIsNotNull(scope);
+        ResourceProvider = Guard.EnsureArgumentIsNotNull(resourceProvider);
+        LocalizationCultureInfo = Guard.EnsureArgumentIsNotNull(localizationCultureInfo);
     }
+
+    public ScopeMetaInfo Scope { get; }
+
+    public ResourceProvider ResourceProvider { get; }
+
+    public LocalizationCultureInfo LocalizationCultureInfo { get; }
 }

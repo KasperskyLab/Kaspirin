@@ -17,37 +17,35 @@
 using System;
 using System.Runtime.InteropServices;
 
-namespace Kaspirin.UI.Framework.NativeMethods.Api.Shell32.Interfaces
+namespace Kaspirin.UI.Framework.NativeMethods.Api.Shell32.Interfaces;
+
+/// <summary>
+///     <seealso href="https://learn.microsoft.com/en-us/windows/win32/api/shobjidl_core/nn-shobjidl_core-ishellitem">Learn more</seealso>.
+/// </summary>
+[ComImport]
+[InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+[Guid(ShlGuids.IidIShellItem)]
+public interface IShellItem
 {
-    /// <summary>
-    ///     
-    /// <seealso href="https://learn.microsoft.com/en-us/windows/win32/api/shobjidl_core/nn-shobjidl_core-ishellitem">Learn more</seealso>.
-    /// </summary>
-    [ComImport]
-    [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
-    [Guid(ShlGuids.IidIShellItem)]
-    public interface IShellItem
-    {
-        int BindToHandler(
-            [In, MarshalAs(UnmanagedType.Interface)] IntPtr pbc, // Not supported: IBindCtx
-            [In] ref Guid bhid,
-            [In] ref Guid riid,
-            out IntPtr ppv);
+    int BindToHandler(
+        [In, MarshalAs(UnmanagedType.Interface)] IntPtr pbc, // Not supported: IBindCtx
+        [In] ref Guid bhid,
+        [In] ref Guid riid,
+        out IntPtr ppv);
 
-        int GetParent(
-            [MarshalAs(UnmanagedType.Interface)] out IShellItem ppsi);
+    int GetParent(
+        [MarshalAs(UnmanagedType.Interface)] out IShellItem ppsi);
 
-        int GetDisplayName(
-            [In] SiGetDisplayName sigdnName,
-            [MarshalAs(UnmanagedType.LPWStr)] out string ppszName);
+    int GetDisplayName(
+        [In] SiGetDisplayName sigdnName,
+        [MarshalAs(UnmanagedType.LPWStr)] out string ppszName);
 
-        int GetAttributes(
-            [In] uint sfgaoMask,
-            out uint psfgaoAttribs);
+    int GetAttributes(
+        [In] uint sfgaoMask,
+        out uint psfgaoAttribs);
 
-        int Compare(
-            [In, MarshalAs(UnmanagedType.Interface)] IShellItem psi,
-            [In] uint hint,
-            out int piOrder);
-    }
+    int Compare(
+        [In, MarshalAs(UnmanagedType.Interface)] IShellItem psi,
+        [In] uint hint,
+        out int piOrder);
 }

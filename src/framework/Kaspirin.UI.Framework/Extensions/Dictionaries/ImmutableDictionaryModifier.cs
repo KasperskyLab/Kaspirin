@@ -12,86 +12,87 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#if NETCOREAPP
 using System;
 using System.Collections.Immutable;
 using System.Linq;
 
-namespace Kaspirin.UI.Framework.Extensions.Dictionaries
+namespace Kaspirin.UI.Framework.Extensions.Dictionaries;
+
+internal static class ImmutableDictionaryModifier
 {
-    internal static class ImmutableDictionaryModifier
+    public static IImmutableDictionary<TKey, TValue?> UpdateItem<TKey, TValue>(
+        IImmutableDictionary<TKey, TValue?> dictionary,
+        TKey key,
+        Func<TValue?, TValue?> modifier)
+        where TKey : notnull
     {
-        public static IImmutableDictionary<TKey, TValue?> UpdateItem<TKey, TValue>(
-            IImmutableDictionary<TKey, TValue?> dictionary,
-            TKey key,
-            Func<TValue?, TValue?> modifier)
-            where TKey : notnull
+        Guard.ArgumentIsNotNull(dictionary);
+        Guard.ArgumentIsNotNull(modifier);
+
+        return dictionary.SetItem(key, modifier(dictionary[key]));
+    }
+
+    public static IImmutableDictionary<TKey, TValue?> UpdateItems<TKey, TValue>(
+        IImmutableDictionary<TKey, TValue?> dictionary,
+        Func<TKey, TValue?, TValue?> modifier)
+        where TKey : notnull
+    {
+        Guard.ArgumentIsNotNull(dictionary);
+        Guard.ArgumentIsNotNull(modifier);
+
+        if (dictionary is ImmutableDictionary<TKey, TValue?> immutableDictionary)
         {
-            Guard.ArgumentIsNotNull(dictionary);
-            Guard.ArgumentIsNotNull(modifier);
+            var builder = immutableDictionary.ToBuilder();
 
-            return dictionary.SetItem(key, modifier(dictionary[key]));
-        }
-
-        public static IImmutableDictionary<TKey, TValue?> UpdateItems<TKey, TValue>(
-            IImmutableDictionary<TKey, TValue?> dictionary,
-            Func<TKey, TValue?, TValue?> modifier)
-            where TKey : notnull
-        {
-            Guard.ArgumentIsNotNull(dictionary);
-            Guard.ArgumentIsNotNull(modifier);
-
-            if (dictionary is ImmutableDictionary<TKey, TValue?> immutableDictionary)
+            foreach (var key in builder.Keys.ToList())
             {
-                var builder = immutableDictionary.ToBuilder();
-
-                foreach (var key in builder.Keys.ToList())
-                {
-                    builder[key] = modifier(key, builder[key]);
-                }
-
-                return builder.ToImmutable();
+                builder[key] = modifier(key, builder[key]);
             }
+
+            return builder.ToImmutable();
+        }
 
 #if NETCOREAPP
-            if (dictionary is ImmutableSortedDictionary<TKey, TValue?> immutableSortedDictionary)
+        if (dictionary is ImmutableSortedDictionary<TKey, TValue?> immutableSortedDictionary)
+        {
+            var builder = immutableSortedDictionary.ToBuilder();
+
+            foreach (var key in builder.Keys.ToList())
             {
-                var builder = immutableSortedDictionary.ToBuilder();
-
-                foreach (var key in builder.Keys.ToList())
-                {
-                    builder[key] = modifier(key, builder[key]);
-                }
-
-                return builder.ToImmutable();
+                builder[key] = modifier(key, builder[key]);
             }
+
+            return builder.ToImmutable();
+        }
 #endif
 
-            throw new NotSupportedException($"Not supported dictionary type {dictionary.GetType()}");
-        }
+        throw new NotSupportedException($"Not supported dictionary type {dictionary.GetType()}");
+    }
 
-        public static IImmutableDictionary<TKey, TValue?> AddOrUpdate<TKey, TValue>(
-            IImmutableDictionary<TKey, TValue?> dictionary,
-            TKey key,
-            Func<TValue?> defaultValueFactory,
-            Func<TValue?, TValue?> modifier)
-            where TKey : notnull
+    public static IImmutableDictionary<TKey, TValue?> AddOrUpdate<TKey, TValue>(
+        IImmutableDictionary<TKey, TValue?> dictionary,
+        TKey key,
+        Func<TValue?> defaultValueFactory,
+        Func<TValue?, TValue?> modifier)
+        where TKey : notnull
+    {
+        Guard.ArgumentIsNotNull(dictionary);
+        Guard.ArgumentIsNotNull(defaultValueFactory);
+        Guard.ArgumentIsNotNull(modifier);
+
+        if (dictionary.TryGetValue(key, out var oldValue))
         {
-            Guard.ArgumentIsNotNull(dictionary);
-            Guard.ArgumentIsNotNull(defaultValueFactory);
-            Guard.ArgumentIsNotNull(modifier);
-
-            if (dictionary.TryGetValue(key, out var oldValue))
-            {
-                var newValue = modifier(oldValue);
-                dictionary = dictionary.Remove(key);
-                dictionary = dictionary.Add(key, newValue);
-            }
-            else
-            {
-                dictionary = dictionary.Add(key, defaultValueFactory());
-            }
-
-            return dictionary;
+            var newValue = modifier(oldValue);
+            dictionary = dictionary.Remove(key);
+            dictionary = dictionary.Add(key, newValue);
         }
+        else
+        {
+            dictionary = dictionary.Add(key, defaultValueFactory());
+        }
+
+        return dictionary;
     }
 }
+#endif

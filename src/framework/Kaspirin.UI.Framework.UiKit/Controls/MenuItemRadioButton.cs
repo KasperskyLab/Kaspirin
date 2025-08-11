@@ -14,23 +14,22 @@
 
 using System.Windows;
 
-namespace Kaspirin.UI.Framework.UiKit.Controls
-{
-    public class MenuItemRadioButton : MenuItem
-    {
-        public MenuItemRadioButton()
-        {
-            Unchecked += SuppressUnchecked;
-            IsCheckable = true;
-        }
+namespace Kaspirin.UI.Framework.UiKit.Controls;
 
-        private void SuppressUnchecked(object sender, RoutedEventArgs routedEventArgs)
+public sealed class MenuItemRadioButton : MenuItem
+{
+    public MenuItemRadioButton()
+    {
+        Unchecked += SuppressUnchecked;
+        IsCheckable = true;
+    }
+
+    private void SuppressUnchecked(object sender, RoutedEventArgs routedEventArgs)
+    {
+        var contextMenuItem = (MenuItem)sender;
+        if (contextMenuItem.IsHighlighted)
         {
-            var contextMenuItem = (MenuItem)sender;
-            if (contextMenuItem.IsHighlighted)
-            {
-                contextMenuItem.IsChecked = true;
-            }
+            contextMenuItem.IsChecked = true;
         }
     }
 }

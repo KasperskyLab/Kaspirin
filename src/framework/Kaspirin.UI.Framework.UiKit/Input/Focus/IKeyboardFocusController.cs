@@ -12,11 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Kaspirin.UI.Framework.UiKit.Input.Focus
+namespace Kaspirin.UI.Framework.UiKit.Input.Focus;
+
+public interface IKeyboardFocusController
 {
-    public interface IKeyboardFocusController
-    {
-        void SetFocus();
-        void ClearFocus();
-    }
+    void SetFocus();
+    void ClearFocus();
 }

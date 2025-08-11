@@ -12,18 +12,25 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
+namespace Kaspirin.UI.Framework.NativeMethods.Api.Shell32.Enums;
 
-namespace Kaspirin.UI.Framework.NativeMethods.Api.Shell32.Enums
+/// <summary>
+///     <seealso href="https://learn.microsoft.com/en-us/windows/win32/api/shobjidl_core/ne-shobjidl_core-libraryfolderfilter">Learn more</seealso>.
+/// </summary>
+public enum LibraryFolderFilter
 {
     /// <summary>
-    ///     
-    /// <seealso href="https://learn.microsoft.com/en-us/windows/win32/api/shobjidl_core/ne-shobjidl_core-libraryfolderfilter">Learn more</seealso>.
+    ///     The LFF_FORCEFILESYSTEM constant.
     /// </summary>
-    public enum LibraryFolderFilter
-    {
-        LFF_FORCEFILESYSTEM = 1,
-        LFF_STORAGEITEMS = 2,
-        LFF_ALLITEMS = 3,
-    }
+    ForceFileSystem = 1,
+
+    /// <summary>
+    ///     The LFF_STORAGEITEMS constant.
+    /// </summary>
+    StorageItems = 2,
+
+    /// <summary>
+    ///     The LFF_ALLITEMS constant.
+    /// </summary>
+    AllItems = 3,
 }

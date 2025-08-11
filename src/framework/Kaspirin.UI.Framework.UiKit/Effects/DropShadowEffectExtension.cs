@@ -17,28 +17,27 @@ using System.Windows.Markup;
 using System.Windows.Media;
 using System.Windows.Media.Effects;
 
-namespace Kaspirin.UI.Framework.UiKit.Effects
-{
-    public sealed class DropShadowEffectExtension : MarkupExtension
-    {
-        public double BlurRadius { get; set; } = 10;
-        public Color Color { get; set; } = Colors.Black;
-        public double Direction { get; set; } = 270;
-        public double Opacity { get; set; } = 0.3;
-        public RenderingBias RenderingBias { get; set; } = RenderingBias.Quality;
-        public double ShadowDepth { get; set; } = 2;
+namespace Kaspirin.UI.Framework.UiKit.Effects;
 
-        public override object ProvideValue(IServiceProvider serviceProvider)
+public sealed class DropShadowEffectExtension : MarkupExtension
+{
+    public double BlurRadius { get; set; } = 10;
+    public Color Color { get; set; } = Colors.Black;
+    public double Direction { get; set; } = 270;
+    public double Opacity { get; set; } = 0.3;
+    public RenderingBias RenderingBias { get; set; } = RenderingBias.Quality;
+    public double ShadowDepth { get; set; } = 2;
+
+    public override object ProvideValue(IServiceProvider serviceProvider)
+    {
+        return new DropShadowEffect
         {
-            return new DropShadowEffect
-            {
-                BlurRadius = BlurRadius,
-                Color = Color,
-                Direction = Direction,
-                Opacity = Opacity,
-                RenderingBias = RenderingBias,
-                ShadowDepth = ShadowDepth,
-            };
-        }
+            BlurRadius = BlurRadius,
+            Color = Color,
+            Direction = Direction,
+            Opacity = Opacity,
+            RenderingBias = RenderingBias,
+            ShadowDepth = ShadowDepth,
+        };
     }
 }

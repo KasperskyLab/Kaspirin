@@ -12,12 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Kaspirin.UI.Framework.UiKit.Input.Security
-{
-    public interface ISecureInputClient
-    {
-        bool HandleKeyPress(SecureInputAction inputAction);
+namespace Kaspirin.UI.Framework.UiKit.Input.Security;
 
-        bool HandleKeyRelease(SecureInputAction inputAction);
-    }
+public interface ISecureInputClient
+{
+    bool HandleKeyPress(SecureInputAction inputAction);
+
+    bool HandleKeyRelease(SecureInputAction inputAction);
 }

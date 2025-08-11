@@ -12,14 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Kaspirin.UI.Framework.UiKit.Localization.Localizer.Strings.Parsing.Evaluators.Ast
-{
-    public sealed class KeyRef : Operand
-    {
-        public KeyRef(Token identifier) => Identifier = identifier;
-        public Token Identifier { get; }
+namespace Kaspirin.UI.Framework.UiKit.Localization.Localizer.Strings.Parsing.Evaluators.Ast;
 
-        public override Position Position => Identifier.Position;
-        public override string GetText() => Identifier.GetText();
-    }
+public sealed class KeyRef : Operand
+{
+    public KeyRef(Token identifier) => Identifier = identifier;
+    public Token Identifier { get; }
+
+    public override Position Position => Identifier.Position;
+    public override string GetText() => Identifier.GetText();
 }

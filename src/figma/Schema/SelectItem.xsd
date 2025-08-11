@@ -25,12 +25,14 @@
 	<xs:group name="elements_SelectItem">
 		<xs:all>
 			<xs:element name="BackgroundHover" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BackgroundHoverSelected" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
 			<xs:element name="BackgroundNormal" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BackgroundNormalSelected" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
 			<xs:element name="BackgroundPressed" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
-			<xs:element name="IconForeground" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BackgroundPressedSelected" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="IconBrush" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
 			<xs:element name="IconMargin" type="Thickness" minOccurs="1" maxOccurs="1"/>
 			<xs:element name="Padding" type="Thickness" minOccurs="1" maxOccurs="1"/>
-			<xs:element name="SelectionBackground" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
 			<xs:element name="TextForeground" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
 		</xs:all>
 	</xs:group>

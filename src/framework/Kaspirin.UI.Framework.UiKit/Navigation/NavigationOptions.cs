@@ -12,24 +12,23 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Kaspirin.UI.Framework.UiKit.Navigation
+namespace Kaspirin.UI.Framework.UiKit.Navigation;
+
+public sealed class NavigationOptions
 {
-    public sealed class NavigationOptions
-    {
-        /// <summary>
-        ///     Specifies whether to leave this page in the region when performing reverse navigation from
-        ///     this page. By default, <see langword="false" />.
-        /// </summary>
-        public bool KeepAlive { get; set; } = false;
+    /// <summary>
+    ///     Specifies whether to leave this page in the region when performing reverse navigation from
+    ///     this page. By default, <see langword="false" />.
+    /// </summary>
+    public bool KeepAlive { get; set; } = false;
 
-        /// <summary>
-        ///     Specifies whether to skip this page when performing reverse navigation. By default, <see langword="false" />.
-        /// </summary>
-        public bool SkipOnBackNavigation { get; set; } = false;
+    /// <summary>
+    ///     Specifies whether to skip this page when performing reverse navigation. By default, <see langword="false" />.
+    /// </summary>
+    public bool SkipOnBackNavigation { get; set; } = false;
 
-        /// <summary>
-        ///     Indicates whether navigation from this page is allowed. By default, <see langword="true" />.
-        /// </summary>
-        public bool CanNavigateFrom { get; set; } = true;
-    }
+    /// <summary>
+    ///     Indicates whether navigation from this page is allowed. By default, <see langword="true" />.
+    /// </summary>
+    public bool CanNavigateFrom { get; set; } = true;
 }

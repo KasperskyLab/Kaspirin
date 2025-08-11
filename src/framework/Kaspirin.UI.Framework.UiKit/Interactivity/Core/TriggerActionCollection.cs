@@ -10,62 +10,61 @@
 using System;
 using System.Windows;
 
-namespace Kaspirin.UI.Framework.UiKit.Interactivity.Core
+namespace Kaspirin.UI.Framework.UiKit.Interactivity.Core;
+
+public sealed class TriggerActionCollection : AttachableCollection<TriggerAction>
 {
-    public class TriggerActionCollection : AttachableCollection<TriggerAction>
+    internal TriggerActionCollection()
     {
-        internal TriggerActionCollection()
+    }
+
+    internal override void ItemAdded(TriggerAction item)
+    {
+        if (item.IsHosted)
         {
+            throw new InvalidOperationException("Cannot host an instance of a TriggerAction in multiple TriggerCollections simultaneously. Remove it from one TriggerCollection before adding it to another.");
         }
 
-        internal override void ItemAdded(TriggerAction item)
+        if (AssociatedObject != null)
         {
-            if (item.IsHosted)
-            {
-                throw new InvalidOperationException("Cannot host an instance of a TriggerAction in multiple TriggerCollections simultaneously. Remove it from one TriggerCollection before adding it to another.");
-            }
-
-            if (AssociatedObject != null)
-            {
-                item.Attach(AssociatedObject);
-            }
-
-            item.IsHosted = true;
+            item.Attach(AssociatedObject);
         }
 
-        internal override void ItemRemoved(TriggerAction item)
+        item.IsHosted = true;
+    }
+
+    internal override void ItemRemoved(TriggerAction item)
+    {
+        Guard.Assert(item.IsHosted, "Item should hosted if it is being removed from a TriggerCollection.");
+
+        if (item.AssociatedObject != null)
         {
-            Guard.Assert(item.IsHosted, "Item should hosted if it is being removed from a TriggerCollection.");
-
-            if (item.AssociatedObject != null)
-            {
-                item.Detach();
-            }
-
-            item.IsHosted = false;
+            item.Detach();
         }
 
-        protected override void OnAttached()
-        {
-            foreach (var action in this)
-            {
-                Guard.Assert(action.IsHosted, "Action must be hosted if it is in the collection.");
-                action.Attach(AssociatedObject);
-            }
-        }
+        item.IsHosted = false;
+    }
 
-        protected override void OnDetaching()
+    protected override void OnAttached()
+    {
+        foreach (var action in this)
         {
-            foreach (var action in this)
-            {
-                Guard.Assert(action.IsHosted, "Action must be hosted if it is in the collection.");
-                action.Detach();
-            }
+            Guard.Assert(action.IsHosted, "Action must be hosted if it is in the collection.");
+            action.Attach(AssociatedObject);
         }
+    }
 
-        protected override Freezable CreateInstanceCore()
+    protected override void OnDetaching()
+    {
+        foreach (var action in this)
         {
-            return new TriggerActionCollection();
+            Guard.Assert(action.IsHosted, "Action must be hosted if it is in the collection.");
+            action.Detach();
         }
+    }
+
+    protected override Freezable CreateInstanceCore()
+    {
+        return new TriggerActionCollection();
     }
 }

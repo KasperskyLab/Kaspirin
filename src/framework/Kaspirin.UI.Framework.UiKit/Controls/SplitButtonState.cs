@@ -12,15 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Kaspirin.UI.Framework.UiKit.Controls
+namespace Kaspirin.UI.Framework.UiKit.Controls;
+
+public enum SplitButtonState
 {
-    public enum SplitButtonState
-    {
-        Enabled,
-        PressedMain,
-        PressedContextMenu,
-        DisabledMain,
-        DisabledContextMenu,
-        Disabled
-    }
+    Enabled,
+    PressedMain,
+    PressedContextMenu,
+    DisabledMain,
+    DisabledContextMenu,
+    Disabled
 }

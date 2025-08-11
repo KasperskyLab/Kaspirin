@@ -14,15 +14,14 @@
 
 using System;
 
-namespace Kaspirin.UI.Framework.UiKit.Navigation
-{
-    public sealed class RegionCreatedEventArgs : EventArgs
-    {
-        internal RegionCreatedEventArgs(Region region)
-        {
-            Region = Guard.EnsureArgumentIsNotNull(region);
-        }
+namespace Kaspirin.UI.Framework.UiKit.Navigation;
 
-        public Region Region { get; }
+public sealed class RegionCreatedEventArgs : EventArgs
+{
+    internal RegionCreatedEventArgs(Region region)
+    {
+        Region = Guard.EnsureArgumentIsNotNull(region);
     }
+
+    public Region Region { get; }
 }

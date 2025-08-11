@@ -14,68 +14,67 @@
 
 using System.Windows;
 
-namespace Kaspirin.UI.Framework.UiKit.Windows
+namespace Kaspirin.UI.Framework.UiKit.Windows;
+
+public static class DpiExtensions
 {
-    public static class DpiExtensions
+    public static Point TranslateToDefaultDpi(this FrameworkElement window, Point location)
     {
-        public static Point TranslateToDefaultDpi(this FrameworkElement window, Point location)
+        var source = PresentationSource.FromVisual(window);
+        return new Point(TranslateToDefaultDpiX(location.X, source), TranslateToDefaultDpiY(location.Y, source));
+    }
+
+    public static double TranslateToDefaultDpiX(this FrameworkElement window, double value)
+    {
+        return TranslateToDefaultDpiX(value, PresentationSource.FromVisual(window));
+    }
+
+    public static double TranslateToDefaultDpiY(this FrameworkElement window, double value)
+    {
+        return TranslateToDefaultDpiY(value, PresentationSource.FromVisual(window));
+    }
+
+    public static double GetCurrentDpiX(this FrameworkElement window)
+    {
+        var source = PresentationSource.FromVisual(window);
+        if (source?.CompositionTarget != null)
         {
-            var source = PresentationSource.FromVisual(window);
-            return new Point(TranslateToDefaultDpiX(location.X, source), TranslateToDefaultDpiY(location.Y, source));
+            return 1 / source.CompositionTarget.TransformFromDevice.M11 * Dpi.Default.X;
         }
 
-        public static double TranslateToDefaultDpiX(this FrameworkElement window, double value)
+        return Dpi.Default.X;
+    }
+
+    public static double GetCurrentDpiY(this FrameworkElement window)
+    {
+        var source = PresentationSource.FromVisual(window);
+        if (source?.CompositionTarget != null)
         {
-            return TranslateToDefaultDpiX(value, PresentationSource.FromVisual(window));
+            return 1 / source.CompositionTarget.TransformFromDevice.M22 * Dpi.Default.Y;
         }
 
-        public static double TranslateToDefaultDpiY(this FrameworkElement window, double value)
+        return Dpi.Default.Y;
+    }
+
+    private static double TranslateToDefaultDpiX(double value, PresentationSource source)
+    {
+        if (source?.CompositionTarget != null)
         {
-            return TranslateToDefaultDpiY(value, PresentationSource.FromVisual(window));
+            var dpiX = Dpi.Default.X * source.CompositionTarget.TransformFromDevice.M11;
+            return value * Dpi.Default.X / dpiX;
         }
 
-        public static double GetCurrentDpiX(this FrameworkElement window)
-        {
-            var source = PresentationSource.FromVisual(window);
-            if (source?.CompositionTarget != null)
-            {
-                return 1 / source.CompositionTarget.TransformFromDevice.M11 * Dpi.Default.X;
-            }
+        return value;
+    }
 
-            return Dpi.Default.X;
+    private static double TranslateToDefaultDpiY(double value, PresentationSource source)
+    {
+        if (source?.CompositionTarget != null)
+        {
+            var dpiY = Dpi.Default.Y * source.CompositionTarget.TransformFromDevice.M22;
+            return value * Dpi.Default.Y / dpiY;
         }
 
-        public static double GetCurrentDpiY(this FrameworkElement window)
-        {
-            var source = PresentationSource.FromVisual(window);
-            if (source?.CompositionTarget != null)
-            {
-                return 1 / source.CompositionTarget.TransformFromDevice.M22 * Dpi.Default.Y;
-            }
-
-            return Dpi.Default.Y;
-        }
-
-        private static double TranslateToDefaultDpiX(double value, PresentationSource source)
-        {
-            if (source?.CompositionTarget != null)
-            {
-                var dpiX = Dpi.Default.X * source.CompositionTarget.TransformFromDevice.M11;
-                return value * Dpi.Default.X / dpiX;
-            }
-
-            return value;
-        }
-
-        private static double TranslateToDefaultDpiY(double value, PresentationSource source)
-        {
-            if (source?.CompositionTarget != null)
-            {
-                var dpiY = Dpi.Default.Y * source.CompositionTarget.TransformFromDevice.M22;
-                return value * Dpi.Default.Y / dpiY;
-            }
-
-            return value;
-        }
+        return value;
     }
 }

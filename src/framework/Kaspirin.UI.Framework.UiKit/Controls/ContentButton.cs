@@ -14,9 +14,8 @@
 
 using System.Windows.Controls.Primitives;
 
-namespace Kaspirin.UI.Framework.UiKit.Controls
+namespace Kaspirin.UI.Framework.UiKit.Controls;
+
+public sealed class ContentButton : ButtonBase
 {
-    public sealed class ContentButton : ButtonBase
-    {
-    }
 }

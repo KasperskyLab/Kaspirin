@@ -14,42 +14,41 @@
 
 using System.Windows;
 
-namespace Kaspirin.UI.Framework.UiKit.Windows
+namespace Kaspirin.UI.Framework.UiKit.Windows;
+
+public sealed class WindowSettingsProvider
 {
-    public sealed class WindowSettingsProvider
+    public WindowSettingsProvider(WindowScreenMonitoringService wsmService)
     {
-        public WindowSettingsProvider(WindowScreenMonitoringService wsmService)
-        {
-            _wsmService = Guard.EnsureArgumentIsNotNull(wsmService);
-        }
-
-        public WindowSettings GetSettings()
-        {
-            var window = _wsmService.TargetWindow;
-            var windowDpi = _wsmService.WindowDpi;
-
-            Guard.IsNotNull(window);
-            Guard.IsNotNull(windowDpi);
-
-            var position = double.IsNaN(window.Left) || double.IsNaN(window.Top)
-                ? (Point?)null
-                : new Point()
-                {
-                    X = (int)(window.Left / _wsmService.GetWindowScaleX(DpiType.WindowOriginDpi)),
-                    Y = (int)(window.Top / _wsmService.GetWindowScaleY(DpiType.WindowOriginDpi)),
-                };
-
-            return new WindowSettings
-            {
-                Id = WindowIdFactory.GetDefaultWindowId(window),
-                IsMaximized = window.WindowState == WindowState.Maximized,
-                WindowDpi = windowDpi,
-                Height = (int)window.ActualHeight,
-                Width = (int)window.ActualWidth,
-                Position = position
-            };
-        }
-
-        private readonly WindowScreenMonitoringService _wsmService;
+        _wsmService = Guard.EnsureArgumentIsNotNull(wsmService);
     }
+
+    public WindowSettings GetSettings()
+    {
+        var window = _wsmService.TargetWindow;
+        var windowDpi = _wsmService.WindowDpi;
+
+        Guard.IsNotNull(window);
+        Guard.IsNotNull(windowDpi);
+
+        var position = double.IsNaN(window.Left) || double.IsNaN(window.Top)
+            ? (Point?)null
+            : new Point()
+            {
+                X = (int)(window.Left / _wsmService.GetWindowScaleX(DpiType.WindowOriginDpi)),
+                Y = (int)(window.Top / _wsmService.GetWindowScaleY(DpiType.WindowOriginDpi)),
+            };
+
+        return new WindowSettings
+        {
+            Id = WindowIdFactory.GetDefaultWindowId(window),
+            IsMaximized = window.WindowState == WindowState.Maximized,
+            WindowDpi = windowDpi,
+            Height = (int)window.ActualHeight,
+            Width = (int)window.ActualWidth,
+            Position = position
+        };
+    }
+
+    private readonly WindowScreenMonitoringService _wsmService;
 }

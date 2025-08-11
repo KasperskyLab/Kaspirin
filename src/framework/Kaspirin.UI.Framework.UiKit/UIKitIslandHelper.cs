@@ -21,85 +21,92 @@ using System.Windows.Data;
 using Kaspirin.UI.Framework.UiKit.Controls;
 using Kaspirin.UI.Framework.UiKit.Controls.Internals;
 
-namespace Kaspirin.UI.Framework.UiKit
+namespace Kaspirin.UI.Framework.UiKit;
+
+internal static class UIKitIslandHelper
 {
-    internal static class UIKitIslandHelper
+    #region Level
+
+    public static readonly DependencyPropertyKey LevelPropertyKey = DependencyProperty.RegisterReadOnly(
+        "Level",
+        typeof(IslandLevel),
+        typeof(IslandPropsHolder),
+        new PropertyMetadata(IslandLevel.First));
+
+    private static readonly DependencyProperty _levelEditableProperty = DependencyProperty.RegisterAttached(
+        "LevelEditable",
+        typeof(IslandLevel),
+        typeof(IslandPropsHolder),
+        new PropertyMetadata(IslandLevel.First, OnLevelEditableChanged));
+
+    private static void OnLevelEditableChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        => ((Control)d).SetValue(LevelPropertyKey, e.NewValue);
+
+    #endregion
+
+    #region Type
+
+    public static readonly DependencyPropertyKey TypePropertyKey = DependencyProperty.RegisterReadOnly(
+        "Type",
+        typeof(IslandType),
+        typeof(IslandPropsHolder),
+        new PropertyMetadata(IslandType.Primary));
+
+    private static readonly DependencyProperty _typeEditableProperty = DependencyProperty.RegisterAttached(
+        "TypeEditable",
+        typeof(IslandType),
+        typeof(IslandPropsHolder),
+        new PropertyMetadata(IslandType.Primary, OnTypeEditableChanged));
+
+    private static void OnTypeEditableChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        => ((Control)d).SetValue(TypePropertyKey, e.NewValue);
+
+    #endregion
+
+    public static void Initialize(Control control)
     {
-        #region Level
+        Guard.ArgumentIsNotNull(control);
 
-        public static readonly DependencyPropertyKey LevelPropertyKey =
-            DependencyProperty.RegisterReadOnly("Level", typeof(IslandLevel), typeof(IslandPropsHolder), new PropertyMetadata(IslandLevel.First));
-
-        private static readonly DependencyProperty _levelEditableProperty =
-            DependencyProperty.RegisterAttached("LevelEditable", typeof(IslandLevel), typeof(IslandPropsHolder), new PropertyMetadata(IslandLevel.First, OnLevelEditableChanged));
-
-        private static void OnLevelEditableChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        control.WhenLoaded(() =>
         {
-            ((Control)d).SetValue(LevelPropertyKey, e.NewValue);
-        }
+            InvalidateLevel(control);
+        });
 
-        #endregion
-
-        #region Type
-
-        public static readonly DependencyPropertyKey TypePropertyKey =
-            DependencyProperty.RegisterReadOnly("Type", typeof(IslandType), typeof(IslandPropsHolder), new PropertyMetadata(IslandType.Primary));
-
-        private static readonly DependencyProperty _typeEditableProperty =
-            DependencyProperty.RegisterAttached("TypeEditable", typeof(IslandType), typeof(IslandPropsHolder), new PropertyMetadata(IslandType.Primary, OnTypeEditableChanged));
-
-        private static void OnTypeEditableChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        control.WhenInitialized(() =>
         {
-            ((Control)d).SetValue(TypePropertyKey, e.NewValue);
-        }
-
-        #endregion
-
-        public static void Initialize(Control control)
-        {
-            Guard.ArgumentIsNotNull(control);
-
-            control.WhenLoaded(() =>
-            {
-                InvalidateLevel(control);
-            });
-
-            control.WhenInitialized(() =>
-            {
-                InvalidateType(control);
-            });
-        }
-
-        private static void InvalidateLevel(Control control)
-        {
-            var nestingLevel = _islandContainers.SelectMany(ct => control.TraverseVisualParents().Where(p => ct.IsAssignableFrom(p.GetType()))).Count();
-            if (nestingLevel > _maxNestingLevel)
-            {
-                throw new InvalidOperationException($"Invalid {control.GetType().Name} level. Max level {_maxNestingLevel}. Actual level {nestingLevel + 1}");
-            }
-
-            control.SetValue(_levelEditableProperty, (IslandLevel)nestingLevel);
-        }
-
-        private static void InvalidateType(Control control)
-        {
-            control.SetBinding(_typeEditableProperty, new Binding()
-            {
-                RelativeSource = new RelativeSource(RelativeSourceMode.FindAncestor, typeof(IslandLayer), 1),
-                Path = IslandLayer.TypeProperty.AsPath(),
-                FallbackValue = IslandType.Primary
-            });
-        }
-
-        private sealed class IslandPropsHolder : UIElement { }
-
-        private static readonly List<Type> _islandContainers = new()
-        {
-            typeof(Island),
-            typeof(IslandButton),
-            typeof(IslandToggleButton),
-        };
-
-        private static readonly int _maxNestingLevel = Enum.GetValues(typeof(IslandLevel)).Length;
+            InvalidateType(control);
+        });
     }
+
+    private static void InvalidateLevel(Control control)
+    {
+        var nestingLevel = _islandContainers.SelectMany(ct => control.TraverseVisualParents().Where(p => ct.IsAssignableFrom(p.GetType()))).Count();
+        if (nestingLevel > _maxNestingLevel)
+        {
+            throw new InvalidOperationException($"Invalid {control.GetType().Name} level. Max level {_maxNestingLevel}. Actual level {nestingLevel + 1}");
+        }
+
+        control.SetValue(_levelEditableProperty, (IslandLevel)nestingLevel);
+    }
+
+    private static void InvalidateType(Control control)
+    {
+        control.SetBinding(_typeEditableProperty, new Binding()
+        {
+            RelativeSource = new RelativeSource(RelativeSourceMode.FindAncestor, typeof(IslandLayer), 1),
+            Path = IslandLayer.TypeProperty.AsPath(),
+            FallbackValue = IslandType.Primary
+        });
+    }
+
+    private sealed class IslandPropsHolder : UIElement { }
+
+    private static readonly List<Type> _islandContainers = new()
+    {
+        typeof(Island),
+        typeof(IslandButton),
+        typeof(IslandToggleButton),
+    };
+
+    private static readonly int _maxNestingLevel = Enum.GetValues(typeof(IslandLevel)).Length;
 }

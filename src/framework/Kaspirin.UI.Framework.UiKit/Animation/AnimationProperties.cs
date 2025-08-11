@@ -15,14 +15,25 @@
 using System;
 using System.Windows.Media.Animation;
 
-namespace Kaspirin.UI.Framework.UiKit.Animation
+namespace Kaspirin.UI.Framework.UiKit.Animation;
+
+/// <summary>
+///     Defines animation properties.
+/// </summary>
+public sealed class AnimationProperties
 {
-    public sealed class AnimationProperties
-    {
-        public TimeSpan Duration { get; set; }
+    /// <summary>
+    ///     Gets or sets the duration of the animation.
+    /// </summary>
+    public TimeSpan Duration { get; set; }
 
-        public TimeSpan Delay { get; set; }
+    /// <summary>
+    ///     Gets or sets the animation delay.
+    /// </summary>
+    public TimeSpan Delay { get; set; }
 
-        public IEasingFunction? Easing { get; set; }
-    }
+    /// <summary>
+    ///     Obtains or sets the easing function, which defines the shape of the animation.
+    /// </summary>
+    public IEasingFunction? Easing { get; set; }
 }

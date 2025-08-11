@@ -12,12 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Kaspirin.UI.Framework.UiKit.Animation
+namespace Kaspirin.UI.Framework.UiKit.Animation;
+
+/// <summary>
+///     Determines the quality of animation rendering.
+/// </summary>
+public enum AnimationRenderQuality
 {
-    public enum AnimationRenderQuality
-    {
-        Auto,
-        High,
-        Low
-    }
+    Auto,
+    High,
+    Low
 }

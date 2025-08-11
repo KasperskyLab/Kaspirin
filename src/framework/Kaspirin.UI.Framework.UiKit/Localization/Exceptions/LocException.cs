@@ -15,28 +15,27 @@
 using System;
 using System.Runtime.Serialization;
 
-namespace Kaspirin.UI.Framework.UiKit.Localization.Exceptions
+namespace Kaspirin.UI.Framework.UiKit.Localization.Exceptions;
+
+[Serializable]
+public sealed class LocException : Exception
 {
-    [Serializable]
-    public class LocException : Exception
+    public LocException()
     {
-        public LocException()
-        {
-        }
+    }
 
-        public LocException(string? message)
-            : base(message)
-        {
-        }
+    public LocException(string? message)
+        : base(message)
+    {
+    }
 
-        public LocException(string? message, Exception? innerException)
-            : base(message, innerException)
-        {
-        }
+    public LocException(string? message, Exception? innerException)
+        : base(message, innerException)
+    {
+    }
 
-        protected LocException(SerializationInfo info, StreamingContext context)
-            : base(info, context)
-        {
-        }
+    private LocException(SerializationInfo info, StreamingContext context)
+        : base(info, context)
+    {
     }
 }

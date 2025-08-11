@@ -4,11 +4,23 @@
 // Scope of modification:
 //   - Code adaptation to project requirements.
 
+// This file has been modified by AO Kaspersky Lab in 1/15/2025.
+// Scope of modification:
+//   - Suppress warnings.
+
 // Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-#nullable disable
-
+#pragma warning disable CA1502 // Rewrite or refactor the code to decrease its complexity below '26'.
+#pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
+#pragma warning disable CS8603 // Possible null reference return.
+#pragma warning disable CS8604 // Possible null reference argument for parameter.
+#pragma warning disable CS8605 // Unboxing a possibly null value.
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
+#pragma warning disable IDE1006 // Naming rule violation.
+#pragma warning disable IDE0060 // Remove unused parameter.
+#pragma warning disable IDE0010 // Populate switch.
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -177,10 +189,11 @@ namespace Kaspirin.UI.Framework.UiKit.ThirdParty.HtmlUtils
             var sourceContext = new List<XmlElement>(10);
 
             // Clear fragment parent
+
             _inlineFragmentParentElement = null;
 
             // convert root html element
-            AddBlock(xamlFlowDocumentElement, htmlElement, new Hashtable(), stylesheet, sourceContext);
+            AddBlock(xamlFlowDocumentElement, htmlElement, new(), stylesheet, sourceContext);
 
             // In case if the selected fragment is inline, extract it into a separate Span wrapper
             if (!asFlowDocument)
@@ -814,7 +827,7 @@ namespace Kaspirin.UI.Framework.UiKit.ThirdParty.HtmlUtils
         }
 
         // Stores a parent xaml element for the case when selected fragment is inline.
-        private static XmlElement _inlineFragmentParentElement;
+        private static XmlElement? _inlineFragmentParentElement;
 
         // Called when html comment is encountered to store a parent element
         // for the case when the fragment is inline - to extract it to a separate
@@ -1213,9 +1226,7 @@ namespace Kaspirin.UI.Framework.UiKit.ThirdParty.HtmlUtils
         {
             XmlElement singleCell = null;
 
-            for (var tableChild = htmlTableElement.FirstChild;
-                tableChild != null;
-                tableChild = tableChild.NextSibling)
+            for (var tableChild = htmlTableElement.FirstChild; tableChild != null; tableChild = tableChild.NextSibling)
             {
                 var elementName = tableChild.LocalName.ToLowerInvariant();
                 if (elementName == "tbody" || elementName == "thead" || elementName == "tfoot")
@@ -1225,9 +1236,7 @@ namespace Kaspirin.UI.Framework.UiKit.ThirdParty.HtmlUtils
                         return null;
                     }
 
-                    for (var tbodyChild = tableChild.FirstChild;
-                        tbodyChild != null;
-                        tbodyChild = tbodyChild.NextSibling)
+                    for (var tbodyChild = tableChild.FirstChild; tbodyChild != null; tbodyChild = tbodyChild.NextSibling)
                     {
                         if (tbodyChild.LocalName.ToLowerInvariant() == "tr")
                         {
@@ -1439,7 +1448,7 @@ namespace Kaspirin.UI.Framework.UiKit.ThirdParty.HtmlUtils
             ArrayList activeRowSpans = null;
             if (columnStarts != null)
             {
-                activeRowSpans = new ArrayList();
+                activeRowSpans = new();
                 InitializeActiveRowSpans(activeRowSpans, columnStarts.Count);
             }
 
@@ -2758,7 +2767,7 @@ namespace Kaspirin.UI.Framework.UiKit.ThirdParty.HtmlUtils
 
             // update current formatting properties depending on element tag
 
-            localProperties = new Hashtable();
+            localProperties = new();
             switch (elementName)
             {
                 // Character formatting

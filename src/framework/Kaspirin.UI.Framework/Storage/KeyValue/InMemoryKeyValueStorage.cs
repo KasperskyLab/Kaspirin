@@ -14,38 +14,37 @@
 
 using System.Collections.Generic;
 
-namespace Kaspirin.UI.Framework.Storage.KeyValue
+namespace Kaspirin.UI.Framework.Storage.KeyValue;
+
+/// <summary>
+///     Implements the <see cref="IKeyValueStorage" /> interface and uses a dictionary inside the current object as storage.
+/// </summary>
+public sealed class InMemoryKeyValueStorage : IKeyValueStorage
 {
-    /// <summary>
-    ///     Implements the <see cref="IKeyValueStorage" /> interface and uses a dictionary inside the current object as storage.
-    /// </summary>
-    public sealed class InMemoryKeyValueStorage : IKeyValueStorage
+    /// <inheritdoc cref="IKeyValueStorage.GetValue"/>
+    public object? GetValue(string key, object? defaultValue)
     {
-        /// <inheritdoc cref="IKeyValueStorage.GetValue"/>
-        public object? GetValue(string key, object? defaultValue)
-        {
-            Guard.ArgumentIsNotNull(key);
+        Guard.ArgumentIsNotNull(key);
 
-            return _storage.TryGetValue(key, out var value) ? value : defaultValue;
-        }
-
-        /// <inheritdoc cref="IKeyValueStorage.HasValue"/>
-        public bool HasValue(string key)
-        {
-            Guard.ArgumentIsNotNull(key);
-
-            return _storage.ContainsKey(key);
-        }
-
-        /// <inheritdoc cref="IKeyValueStorage.SetValue"/>
-        public bool SetValue(string key, object value)
-        {
-            Guard.ArgumentIsNotNull(key);
-
-            _storage[key] = value;
-            return true;
-        }
-
-        private readonly Dictionary<string, object> _storage = new();
+        return _storage.TryGetValue(key, out var value) ? value : defaultValue;
     }
+
+    /// <inheritdoc cref="IKeyValueStorage.HasValue"/>
+    public bool HasValue(string key)
+    {
+        Guard.ArgumentIsNotNull(key);
+
+        return _storage.ContainsKey(key);
+    }
+
+    /// <inheritdoc cref="IKeyValueStorage.SetValue"/>
+    public bool SetValue(string key, object value)
+    {
+        Guard.ArgumentIsNotNull(key);
+
+        _storage[key] = value;
+        return true;
+    }
+
+    private readonly Dictionary<string, object> _storage = new();
 }

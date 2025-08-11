@@ -14,13 +14,12 @@
 
 using Kaspirin.UI.Framework.UiKit.Localization.Localizer.Strings.Options;
 
-namespace Kaspirin.UI.Framework.UiKit.Localization.Markup.Extensions.Strings
+namespace Kaspirin.UI.Framework.UiKit.Localization.Markup.Extensions.Strings;
+
+public static class LocOptionFactory
 {
-    public static class LocOptionFactory
+    public static LocOption CreateChangeCaseOption(ChangeCaseOptionMode mode)
     {
-        public static LocOption CreateChangeCaseOption(ChangeCaseOptionMode mode)
-        {
-            return new LocOption(new ChangeCaseOption(mode));
-        }
+        return new LocOption(new ChangeCaseOption(mode));
     }
 }

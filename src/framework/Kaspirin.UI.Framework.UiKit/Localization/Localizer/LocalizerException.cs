@@ -15,28 +15,27 @@
 using System;
 using System.Runtime.Serialization;
 
-namespace Kaspirin.UI.Framework.UiKit.Localization.Localizer
+namespace Kaspirin.UI.Framework.UiKit.Localization.Localizer;
+
+[Serializable]
+public sealed class LocalizerException : Exception
 {
-    [Serializable]
-    public class LocalizerException : Exception
+    public LocalizerException()
     {
-        public LocalizerException()
-        {
-        }
+    }
 
-        public LocalizerException(string? message)
-            : base(message)
-        {
-        }
+    public LocalizerException(string? message)
+        : base(message)
+    {
+    }
 
-        public LocalizerException(string? message, Exception? inner)
-            : base(message, inner)
-        {
-        }
+    public LocalizerException(string? message, Exception? inner)
+        : base(message, inner)
+    {
+    }
 
-        protected LocalizerException(SerializationInfo info, StreamingContext context)
-            : base(info, context)
-        {
-        }
+    private LocalizerException(SerializationInfo info, StreamingContext context)
+        : base(info, context)
+    {
     }
 }

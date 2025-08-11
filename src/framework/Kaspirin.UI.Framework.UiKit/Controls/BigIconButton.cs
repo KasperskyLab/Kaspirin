@@ -12,30 +12,29 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using Kaspirin.UI.Framework.UiKit.Controls.Internals;
 using System.Windows;
+using Kaspirin.UI.Framework.UiKit.Controls.Internals;
 
-namespace Kaspirin.UI.Framework.UiKit.Controls
+namespace Kaspirin.UI.Framework.UiKit.Controls;
+
+public sealed class BigIconButton : IconButtonBase
 {
-    public sealed class BigIconButton : IconButtonBase
+    #region Icon
+
+    public UIKitIcon_24 Icon
     {
-        #region Icon
-
-        public UIKitIcon_24 Icon
-        {
-            get { return (UIKitIcon_24)GetValue(IconProperty); }
-            set { SetValue(IconProperty, value); }
-        }
-
-        public static readonly DependencyProperty IconProperty =
-            DependencyProperty.Register("Icon", typeof(UIKitIcon_24), typeof(BigIconButton), new PropertyMetadata(OnIconChanged));
-
-        private static void OnIconChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            var icon = (UIKitIcon_24)e.NewValue;
-            d.SetValue(IconButtonInternals.Icon24Property, icon);
-        }
-
-        #endregion
+        get => (UIKitIcon_24)GetValue(IconProperty);
+        set => SetValue(IconProperty, value);
     }
+
+    public static readonly DependencyProperty IconProperty = DependencyProperty.Register(
+        nameof(Icon),
+        typeof(UIKitIcon_24),
+        typeof(BigIconButton),
+        new PropertyMetadata(default(UIKitIcon_24), OnIconChanged));
+
+    private static void OnIconChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        => d.SetValue(dp: IconButtonInternals.Icon24Property, (UIKitIcon_24)e.NewValue);
+
+    #endregion
 }

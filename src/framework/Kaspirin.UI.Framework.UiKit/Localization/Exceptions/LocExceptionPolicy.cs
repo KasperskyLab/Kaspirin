@@ -14,31 +14,30 @@
 
 using System.Collections.Generic;
 
-namespace Kaspirin.UI.Framework.UiKit.Localization.Exceptions
+namespace Kaspirin.UI.Framework.UiKit.Localization.Exceptions;
+
+public sealed class LocExceptionPolicy
 {
-    public sealed class LocExceptionPolicy
+    public static LocExceptionHandler Suppress { get; } = args => args.Handled = true;
+    public static LocExceptionHandler Throw { get; } = args => args.Handled = false;
+
+    public LocExceptionPolicy(LocExceptionPolicySettings settings)
     {
-        public static LocExceptionHandler Suppress { get; } = args => args.Handled = true;
-        public static LocExceptionHandler Throw { get; } = args => args.Handled = false;
+        Guard.ArgumentIsNotNull(settings);
 
-        public LocExceptionPolicy(LocExceptionPolicySettings settings)
+        _exceptionHandlers = new List<LocExceptionHandler>
         {
-            Guard.ArgumentIsNotNull(settings);
+            settings.MarkupExceptionHandler,
+            settings.LocalizerExceptionHandler,
+            settings.ResourceExceptionHandler
+        };
 
-            _exceptionHandlers = new List<LocExceptionHandler>
-            {
-                settings.MarkupExceptionHandler,
-                settings.LocalizerExceptionHandler,
-                settings.ResourceExceptionHandler
-            };
-
-            LocExceptionProcessor.SetHandlers(
-                markupExceptionHandler: settings.MarkupExceptionHandler,
-                localizerExceptionHandler: settings.LocalizerExceptionHandler,
-                resourceExceptionHandler: settings.ResourceExceptionHandler);
-        }
-
-        // reference holder
-        private readonly IList<LocExceptionHandler> _exceptionHandlers;
+        LocExceptionProcessor.SetHandlers(
+            markupExceptionHandler: settings.MarkupExceptionHandler,
+            localizerExceptionHandler: settings.LocalizerExceptionHandler,
+            resourceExceptionHandler: settings.ResourceExceptionHandler);
     }
+
+    // reference holder
+    private readonly IList<LocExceptionHandler> _exceptionHandlers;
 }

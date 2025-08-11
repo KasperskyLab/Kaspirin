@@ -12,14 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Kaspirin.UI.Framework.UiKit.Controls
+namespace Kaspirin.UI.Framework.UiKit.Controls;
+
+public enum StatusTagType
 {
-    public enum StatusTagType
-    {
-        Positive,
-        Warning,
-        Danger,
-        Info,
-        Neutral
-    }
+    Positive,
+    Warning,
+    Danger,
+    Info,
+    Neutral
 }

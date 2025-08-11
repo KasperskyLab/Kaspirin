@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+
 using System;
 using System.Windows;
 using System.Windows.Data;
@@ -19,61 +20,60 @@ using System.Windows.Markup;
 using Kaspirin.UI.Framework.UiKit.Controls.Internals;
 using Kaspirin.UI.Framework.UiKit.MarkupExtensions;
 
-namespace Kaspirin.UI.Framework.UiKit
+namespace Kaspirin.UI.Framework.UiKit;
+
+internal class UIKitBinding : ExtendedMarkupExtension
 {
-    internal class UIKitBinding : ExtendedMarkupExtension
+    public UIKitBinding(string id)
     {
-        public UIKitBinding(string id)
-        {
-            _id = Guard.EnsureArgumentIsNotNullOrEmpty(id);
-            Mode = RelativeSourceMode.TemplatedParent;
-        }
-
-        public Type? Type { get; set; }
-
-        public object? DefaultValue { get; set; }
-
-        public RelativeSourceMode Mode { get; set; }
-
-        public Type? AncestorType { get; set; }
-
-        public IValueConverter? Converter { get; set; }
-
-        public object? ConverterParameter { get; set; }
-
-        protected override object? ProvideValue(IServiceProvider? serviceProvider, TargetType valueType)
-            => CreateBinding().ProvideValue(serviceProvider);
-
-        protected override object? ProvideForSetter(IServiceProvider serviceProvider, SetterBase targetObject, object targetProperty)
-            => CreateBinding();
-
-        protected override object? ProvideForControlTemplate(IServiceProvider serviceProvider, object targetObject, DependencyProperty targetProperty)
-            => CreateBinding(targetProperty).ProvideValue(serviceProvider);
-
-        protected override object? ProvideForControl(IServiceProvider serviceProvider, DependencyObject targetObject, DependencyProperty targetProperty)
-            => CreateBinding(targetProperty).ProvideValue(serviceProvider);
-
-        protected virtual MarkupExtension CreateBinding(DependencyProperty? targetProperty = null)
-        {
-            var targetPropertyType = targetProperty != null
-                ? Type ?? targetProperty.PropertyType
-                : Guard.EnsureIsNotNull(Type);
-
-            var path = UIKitPropertyStorage.GetOrCreate(_id, targetPropertyType, DefaultValue).AsPath();
-
-            return new Binding()
-            {
-                Mode = BindingMode.OneWay,
-                Converter = Converter,
-                ConverterParameter = ConverterParameter,
-                Path = path,
-                RelativeSource = new RelativeSource(Mode)
-                {
-                    AncestorType = Mode == RelativeSourceMode.FindAncestor ? AncestorType : null
-                }
-            };
-        }
-
-        private readonly string _id;
+        _id = Guard.EnsureArgumentIsNotNullOrEmpty(id);
+        Mode = RelativeSourceMode.TemplatedParent;
     }
+
+    public Type? Type { get; set; }
+
+    public object? DefaultValue { get; set; }
+
+    public RelativeSourceMode Mode { get; set; }
+
+    public Type? AncestorType { get; set; }
+
+    public IValueConverter? Converter { get; set; }
+
+    public object? ConverterParameter { get; set; }
+
+    protected override object? ProvideValue(IServiceProvider? serviceProvider, TargetType valueType)
+        => CreateBinding().ProvideValue(serviceProvider);
+
+    protected override object? ProvideForSetter(IServiceProvider serviceProvider, SetterBase targetObject, object targetProperty)
+        => CreateBinding();
+
+    protected override object? ProvideForControlTemplate(IServiceProvider serviceProvider, object targetObject, DependencyProperty targetProperty)
+        => CreateBinding(targetProperty).ProvideValue(serviceProvider);
+
+    protected override object? ProvideForControl(IServiceProvider serviceProvider, DependencyObject targetObject, DependencyProperty targetProperty)
+        => CreateBinding(targetProperty).ProvideValue(serviceProvider);
+
+    protected virtual MarkupExtension CreateBinding(DependencyProperty? targetProperty = null)
+    {
+        var targetPropertyType = targetProperty != null
+            ? Type ?? targetProperty.PropertyType
+            : Guard.EnsureIsNotNull(Type);
+
+        var path = UIKitPropertyStorage.GetOrCreate(_id, targetPropertyType, DefaultValue).AsPath();
+
+        return new Binding()
+        {
+            Mode = BindingMode.OneWay,
+            Converter = Converter,
+            ConverterParameter = ConverterParameter,
+            Path = path,
+            RelativeSource = new RelativeSource(Mode)
+            {
+                AncestorType = Mode == RelativeSourceMode.FindAncestor ? AncestorType : null
+            }
+        };
+    }
+
+    private readonly string _id;
 }

@@ -12,323 +12,324 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 
-namespace Kaspirin.UI.Framework.UiKit.Controls
+namespace Kaspirin.UI.Framework.UiKit.Controls;
+
+public class Switch : ToggleButton
 {
-    public class Switch : ToggleButton
+    public Switch()
     {
-        public Switch()
+        Loaded += OnLoaded;
+
+        PreviewKeyDown += OnPreviewKeyDown;
+        PreviewMouseDown += OnPreviewMouseDown;
+        PreviewMouseMove += OnPreviewMouseMove;
+        PreviewMouseUp += OnPreviewMouseUp;
+
+        Checked += (o, e) => { SetChecked(true); };
+        Unchecked += (o, e) => { SetChecked(false); };
+    }
+
+    #region IsCheckedConfirmBehavior
+
+    public ISwitchConfirmableSetter<bool> IsCheckedConfirmBehavior
+    {
+        get => (ISwitchConfirmableSetter<bool>)GetValue(IsCheckedConfirmBehaviorProperty);
+        set => SetValue(IsCheckedConfirmBehaviorProperty, value);
+    }
+
+    public static readonly DependencyProperty IsCheckedConfirmBehaviorProperty = DependencyProperty.Register(
+        nameof(IsCheckedConfirmBehavior),
+        typeof(ISwitchConfirmableSetter<bool>),
+        typeof(Switch),
+        new PropertyMetadata(default(ISwitchConfirmableSetter<bool>)));
+
+    #endregion
+
+    #region IsPressed
+
+    public new bool IsPressed
+    {
+        get => (bool)GetValue(IsPressedProperty);
+        private set => SetValue(IsPressedProperty, value);
+    }
+
+    private static readonly DependencyPropertyKey _isPressedPropertyKey = DependencyProperty.RegisterReadOnly(
+        nameof(IsPressed),
+        typeof(bool),
+        typeof(Switch),
+        new FrameworkPropertyMetadata(default(bool)));
+
+    public static new readonly DependencyProperty IsPressedProperty = _isPressedPropertyKey.DependencyProperty;
+
+    #endregion
+
+    public override void OnApplyTemplate()
+    {
+        _slider = (Slider)GetTemplateChild("PART_Switcher");
+    }
+
+    protected override void OnLostMouseCapture(MouseEventArgs e)
+    {
+        base.OnLostMouseCapture(e);
+
+        SetIsPressed(false);
+        EndMouseDrag();
+    }
+
+    protected override void OnClick()
+    {
+        // user input is handled in Switch.OnPreviewMouseUp
+    }
+
+    protected virtual void BeforeCheck() { }
+    protected virtual void BeforeUncheck() { }
+
+    private void OnLoaded(object sender, RoutedEventArgs eventArgs)
+    {
+        if (_slider != null)
         {
-            Loaded += OnLoaded;
-
-            PreviewKeyDown += OnPreviewKeyDown;
-            PreviewMouseDown += OnPreviewMouseDown;
-            PreviewMouseMove += OnPreviewMouseMove;
-            PreviewMouseUp += OnPreviewMouseUp;
-
-            Checked += (o, e) => { SetChecked(true); };
-            Unchecked += (o, e) => { SetChecked(false); };
+            _slider.Value = IsChecked == true ? 1 : 0;
+            _slider.IsEnabledChanged += OnSliderEnabledChanged;
         }
 
-        #region IsCheckedConfirmBehavior
+        IsSliderEnabled = _slider?.IsEnabled ?? true;
+    }
 
-        public static readonly DependencyProperty IsCheckedConfirmBehaviorProperty
-            = DependencyProperty.Register("IsCheckedConfirmBehavior", typeof(ISwitchConfirmableSetter<bool>), typeof(Switch));
-
-        public ISwitchConfirmableSetter<bool> IsCheckedConfirmBehavior
+    private void OnSliderEnabledChanged(object sender, DependencyPropertyChangedEventArgs args)
+    {
+        if (args.NewValue is bool)
         {
-            get { return (ISwitchConfirmableSetter<bool>)GetValue(IsCheckedConfirmBehaviorProperty); }
-            set { SetValue(IsCheckedConfirmBehaviorProperty, value); }
+            IsSliderEnabled = (bool)args.NewValue;
+        }
+    }
+
+    private void OnPreviewKeyDown(object sender, KeyEventArgs eventArgs)
+    {
+        Keyboard.Focus(_slider);
+
+#pragma warning disable IDE0010 // Add missing cases
+        switch (eventArgs.Key)
+        {
+            case Key.Up:
+            case Key.Right:
+                SetIsPressed(false);
+                TryCheck();
+                break;
+            case Key.Down:
+            case Key.Left:
+                SetIsPressed(false);
+                TryUncheck();
+                break;
+            case Key.Space:
+            case Key.Enter:
+                SetIsPressed(false);
+                TryInvert();
+                break;
+            default:
+                break;
+        }
+#pragma warning restore IDE0010 // Add missing cases
+    }
+
+    private void OnPreviewMouseDown(object sender, MouseButtonEventArgs eventArgs)
+    {
+        if (eventArgs.ChangedButton == MouseButton.Left && eventArgs.ButtonState == MouseButtonState.Pressed)
+        {
+            SetIsPressed(true);
+            StartMouseDrag();
+        }
+    }
+
+    private void OnPreviewMouseMove(object sender, MouseEventArgs eventArgs)
+    {
+        UpdateMouseDrag();
+    }
+
+    private void OnPreviewMouseUp(object sender, MouseButtonEventArgs eventArgs)
+    {
+        SetIsPressed(false);
+        EndMouseDrag();
+    }
+
+    private void TryCheck()
+    {
+        BeforeCheck();
+
+        var checkedSetter = IsCheckedConfirmBehavior;
+        if (checkedSetter == null)
+        {
+            SetChecked(true);
+        }
+        else
+        {
+            DisableSlider();
+
+            checkedSetter.SetWithConfirmation(true,
+                () =>
+                {
+                    SetChecked(Guard.EnsureIsNotNull(IsChecked));
+
+                    EnableSlider();
+                },
+                () =>
+                {
+                    TrySetSliderValue(0);
+
+                    EnableSlider();
+                });
+        }
+    }
+
+    private void TryUncheck()
+    {
+        BeforeUncheck();
+
+        var checkedSetter = IsCheckedConfirmBehavior;
+        if (checkedSetter == null)
+        {
+            SetChecked(false);
+        }
+        else
+        {
+            DisableSlider();
+
+            checkedSetter.SetWithConfirmation(false,
+                () =>
+                {
+                    SetChecked(Guard.EnsureIsNotNull(IsChecked));
+                    EnableSlider();
+                },
+                () =>
+                {
+                    TrySetSliderValue(1);
+                    EnableSlider();
+                });
+        }
+    }
+
+    private void DisableSlider()
+    {
+        if (_slider != null)
+        {
+            _slider.IsEnabled = false;
         }
 
-        #endregion
+        IsSliderEnabled = false;
+    }
 
-        #region IsPressed
-
-        public new bool IsPressed
+    private void EnableSlider()
+    {
+        if (_slider != null)
         {
-            get { return (bool)GetValue(IsPressedProperty); }
-            private set { SetValue(IsPressedProperty, value); }
+            _slider.IsEnabled = true;
         }
 
-        private static readonly DependencyPropertyKey _isPressedPropertyKey
-            = DependencyProperty.RegisterReadOnly("IsPressed", typeof(bool), typeof(Switch),
-                new FrameworkPropertyMetadata(false));
+        IsSliderEnabled = true;
+    }
 
-        public static new readonly DependencyProperty IsPressedProperty =
-            _isPressedPropertyKey.DependencyProperty;
-
-        #endregion
-
-        public override void OnApplyTemplate()
+    private void SetIsPressed(bool pressed)
+    {
+        if (pressed)
         {
-            _slider = (Slider)GetTemplateChild("PART_Switcher");
+            SetValue(_isPressedPropertyKey, true);
+        }
+        else
+        {
+            ClearValue(_isPressedPropertyKey);
+        }
+    }
+
+    private void StartMouseDrag()
+    {
+        _isMouseDragging = true;
+        _isMouseDragged = false;
+        _mouseDownPosition = Mouse.GetPosition(this);
+    }
+
+    private void UpdateMouseDrag()
+    {
+        if (_mouseDownPosition != Mouse.GetPosition(this))
+        {
+            _isMouseDragged = true;
+        }
+    }
+
+    private void EndMouseDrag()
+    {
+        if (!_isMouseDragging || Mouse.GetPosition(this) == _mouseDownPosition && _isMouseDragged)
+        {
+            return;
         }
 
-        protected override void OnLostMouseCapture(MouseEventArgs e)
+        try
         {
-            base.OnLostMouseCapture(e);
-
-            SetIsPressed(false);
-            EndMouseDrag();
-        }
-
-        protected override void OnClick()
-        {
-            // user input is handled in Switch.OnPreviewMouseUp
-        }
-
-        protected virtual void BeforeCheck() { }
-        protected virtual void BeforeUncheck() { }
-
-        private void OnLoaded(object sender, RoutedEventArgs eventArgs)
-        {
-            if (_slider != null)
-            {
-                _slider.Value = IsChecked == true ? 1 : 0;
-                _slider.IsEnabledChanged += OnSliderEnabledChanged;
-            }
-
-            IsSliderEnabled = _slider?.IsEnabled ?? true;
-        }
-
-        private void OnSliderEnabledChanged(object sender, DependencyPropertyChangedEventArgs args)
-        {
-            if (args.NewValue is bool)
-            {
-                IsSliderEnabled = (bool)args.NewValue;
-            }
-        }
-
-        private void OnPreviewKeyDown(object sender, KeyEventArgs eventArgs)
-        {
-            Keyboard.Focus(_slider);
-
-            switch (eventArgs.Key)
-            {
-                case Key.Up:
-                case Key.Right:
-                    SetIsPressed(false);
-                    TryCheck();
-                    break;
-                case Key.Down:
-                case Key.Left:
-                    SetIsPressed(false);
-                    TryUncheck();
-                    break;
-                case Key.Space:
-                case Key.Enter:
-                    SetIsPressed(false);
-                    TryInvert();
-                    break;
-            }
-        }
-
-        private void OnPreviewMouseDown(object sender, MouseButtonEventArgs eventArgs)
-        {
-            if (eventArgs.ChangedButton == MouseButton.Left && eventArgs.ButtonState == MouseButtonState.Pressed)
-            {
-                SetIsPressed(true);
-                StartMouseDrag();
-            }
-        }
-
-        private void OnPreviewMouseMove(object sender, MouseEventArgs eventArgs)
-        {
-            UpdateMouseDrag();
-        }
-
-        private void OnPreviewMouseUp(object sender, MouseButtonEventArgs eventArgs)
-        {
-            SetIsPressed(false);
-            EndMouseDrag();
-        }
-
-        private void TryCheck()
-        {
-            BeforeCheck();
-
-            var checkedSetter = IsCheckedConfirmBehavior;
-            if (checkedSetter == null)
-            {
-                SetChecked(true);
-            }
-            else
-            {
-                DisableSlider();
-
-                checkedSetter.SetWithConfirmation(true,
-                    () =>
-                    {
-                        SetChecked(Guard.EnsureIsNotNull(IsChecked));
-
-                        EnableSlider();
-                    },
-                    () =>
-                    {
-                        TrySetSliderValue(0);
-
-                        EnableSlider();
-                    });
-            }
-        }
-
-        private void TryUncheck()
-        {
-            BeforeUncheck();
-
-            var checkedSetter = IsCheckedConfirmBehavior;
-            if (checkedSetter == null)
-            {
-                SetChecked(false);
-            }
-            else
-            {
-                DisableSlider();
-
-                checkedSetter.SetWithConfirmation(false,
-                    () =>
-                    {
-                        SetChecked(Guard.EnsureIsNotNull(IsChecked));
-                        EnableSlider();
-                    },
-                    () =>
-                    {
-                        TrySetSliderValue(1);
-                        EnableSlider();
-                    });
-            }
-        }
-
-        private void DisableSlider()
-        {
-            if (_slider != null)
-            {
-                _slider.IsEnabled = false;
-            }
-
-            IsSliderEnabled = false;
-        }
-
-        private void EnableSlider()
-        {
-            if (_slider != null)
-            {
-                _slider.IsEnabled = true;
-            }
-
-            IsSliderEnabled = true;
-        }
-
-        private void SetIsPressed(bool pressed)
-        {
-            if (pressed)
-            {
-                SetValue(_isPressedPropertyKey, true);
-            }
-            else
-            {
-                ClearValue(_isPressedPropertyKey);
-            }
-        }
-
-        private void StartMouseDrag()
-        {
-            _isMouseDragging = true;
-            _isMouseDragged = false;
-            _mouseDownPosition = Mouse.GetPosition(this);
-        }
-
-        private void UpdateMouseDrag()
-        {
-            if (_mouseDownPosition != Mouse.GetPosition(this))
-            {
-                _isMouseDragged = true;
-            }
-        }
-
-        private void EndMouseDrag()
-        {
-            if (!_isMouseDragging || Mouse.GetPosition(this) == _mouseDownPosition && _isMouseDragged)
+            if (!IsSliderEnabled)
             {
                 return;
             }
 
-            try
+            if (!_isMouseDragged)
             {
-                if (!IsSliderEnabled)
-                {
-                    return;
-                }
-
-                if (!_isMouseDragged)
-                {
-                    TryInvert();
-                }
-                else
-                {
-                    Guard.IsNotNull(_slider);
-                    if (_slider.Value < 0.5)
-                    {
-                        TryUncheck();
-                    }
-                    else // Slider.Value >= 0.5
-                    {
-                        TryCheck();
-                    }
-                }
-            }
-            finally
-            {
-                _isMouseDragging = false;
-            }
-        }
-
-        private void TryInvert()
-        {
-            if (IsChecked ?? false)
-            {
-                TryUncheck();
+                TryInvert();
             }
             else
             {
-                TryCheck();
+                Guard.IsNotNull(_slider);
+                if (_slider.Value < 0.5)
+                {
+                    TryUncheck();
+                }
+                else // Slider.Value >= 0.5
+                {
+                    TryCheck();
+                }
             }
         }
-
-        private void SetChecked(bool state)
+        finally
         {
-            if (state != IsChecked)
-            {
-                IsChecked = state;
-            }
-
-            TrySetSliderValue((bool)IsChecked ? 1 : 0);
+            _isMouseDragging = false;
         }
-
-        private void TrySetSliderValue(int value)
-        {
-            if (_slider != null)
-            {
-                _slider.Value = value;
-            }
-        }
-
-        private bool IsSliderEnabled { get; set; }
-
-        private bool _isMouseDragging;
-        private bool _isMouseDragged;
-        private Point _mouseDownPosition;
-        private Slider? _slider;
     }
 
-    public interface ISwitchConfirmableSetter<T>
+    private void TryInvert()
     {
-        void SetWithConfirmation(T value, Action onConfirmed, Action onCancelled);
+        if (IsChecked ?? false)
+        {
+            TryUncheck();
+        }
+        else
+        {
+            TryCheck();
+        }
     }
+
+    private void SetChecked(bool state)
+    {
+        if (state != IsChecked)
+        {
+            IsChecked = state;
+        }
+
+        TrySetSliderValue((bool)IsChecked ? 1 : 0);
+    }
+
+    private void TrySetSliderValue(int value)
+    {
+        if (_slider != null)
+        {
+            _slider.Value = value;
+        }
+    }
+
+    private bool IsSliderEnabled { get; set; }
+
+    private bool _isMouseDragging;
+    private bool _isMouseDragged;
+    private Point _mouseDownPosition;
+    private Slider? _slider;
 }

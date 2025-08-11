@@ -14,21 +14,20 @@
 
 using System.Windows.Data;
 
-namespace Kaspirin.UI.Framework.UiKit.Converters.BooleanConverters
+namespace Kaspirin.UI.Framework.UiKit.Converters.BooleanConverters;
+
+/// <summary>
+///     Provides an implementation of <see cref="BaseBooleanConverter{T}" /> in which the conversion
+///     result is of type <see cref="UIKitIcon_24" />.
+/// </summary>
+/// <remarks>
+///     By default, it converts <see langword="true" /> and <see langword="false" /> to <see cref="UIKitIcon_24.UIKitUnset" />.
+/// </remarks>
+[ValueConversion(typeof(bool), typeof(UIKitIcon_24))]
+public sealed class BooleanToIcon24Converter : BaseBooleanConverter<UIKitIcon_24>
 {
     /// <summary>
-    ///     Provides an implementation of <see cref="BaseBooleanConverter{T}" /> in which the conversion
-    ///     result is of type <see cref="UIKitIcon_24" />.
+    ///     Creates an object <see cref="BooleanToIcon24Converter" />.
     /// </summary>
-    /// <remarks>
-    ///     By default, it converts <see langword="true" /> and <see langword="false" /> to <see cref="UIKitIcon_24.UIKitUnset" />.
-    /// </remarks>
-    [ValueConversion(typeof(bool), typeof(UIKitIcon_24))]
-    public sealed class BooleanToIcon24Converter : BaseBooleanConverter<UIKitIcon_24>
-    {
-        /// <summary>
-        ///     Creates an object <see cref="BooleanToIcon24Converter" />.
-        /// </summary>
-        public BooleanToIcon24Converter() : base(UIKitIcon_24.UIKitUnset, UIKitIcon_24.UIKitUnset) { }
-    }
+    public BooleanToIcon24Converter() : base(UIKitIcon_24.UIKitUnset, UIKitIcon_24.UIKitUnset) { }
 }

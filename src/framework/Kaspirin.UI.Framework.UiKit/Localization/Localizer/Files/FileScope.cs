@@ -12,35 +12,19 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using System;
 using System.Collections.Generic;
-using System.Linq;
 
-using IResourceProvider = Kaspirin.UI.Framework.UiKit.Localization.LocResources.IResourceProvider;
+namespace Kaspirin.UI.Framework.UiKit.Localization.Localizer.Files;
 
-namespace Kaspirin.UI.Framework.UiKit.Localization.Localizer.Files
+public sealed class FileScope : BaseDictionaryScope
 {
-    public sealed class FileScope : IScope
+    public FileScope(IEnumerable<ResourceItem> resources)
+        : base(resources)
     {
-        public FileScope(Uri scopeUri, IResourceProvider resourceProvider)
-        {
-            ScopeUri = Guard.EnsureArgumentIsNotNull(scopeUri);
+    }
 
-            _resources = resourceProvider.SearchResources(scopeUri)
-                .ToDictionary(fileUri => fileUri.Segments.Last().ToLowerInvariant(), fileUri => fileUri);
-        }
-
-        public Uri ScopeUri { get; }
-
-        public IEnumerable<string> Keys => _resources.Keys;
-
-        public object GetValue(string key)
-        {
-            Guard.ArgumentIsNotNull(key);
-
-            return _resources[key.ToLowerInvariant()];
-        }
-
-        private readonly IDictionary<string, Uri> _resources;
+    protected override IScopeResourceSelector CreateResourceSelector(IEnumerable<ResourceItem> resources)
+    {
+        return new FileScopeResourceSelector(resources);
     }
 }

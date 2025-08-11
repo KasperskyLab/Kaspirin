@@ -15,71 +15,70 @@
 using System.Windows;
 using System.Windows.Input;
 
-namespace Kaspirin.UI.Framework.UiKit.Controls
+namespace Kaspirin.UI.Framework.UiKit.Controls;
+
+public sealed class InteractivityConfirmationDialog : InteractivityDialog
 {
-    public sealed class InteractivityConfirmationDialog : InteractivityDialog
+    #region ConfirmButtonCaption
+
+    public string ConfirmButtonCaption
     {
-        #region ConfirmButtonCaption
-
-        public string ConfirmButtonCaption
-        {
-            get => (string)GetValue(ConfirmButtonCaptionProperty);
-            set => SetValue(ConfirmButtonCaptionProperty, value);
-        }
-
-        public static readonly DependencyProperty ConfirmButtonCaptionProperty = DependencyProperty.Register(
-            nameof(ConfirmButtonCaption),
-            typeof(string),
-            typeof(InteractivityConfirmationDialog),
-            new PropertyMetadata(default(string)));
-
-        #endregion
-
-        #region ConfirmButtonCommand
-
-        public ICommand ConfirmButtonCommand
-        {
-            get => (ICommand)GetValue(ConfirmButtonCommandProperty);
-            set => SetValue(ConfirmButtonCommandProperty, value);
-        }
-
-        public static readonly DependencyProperty ConfirmButtonCommandProperty = DependencyProperty.Register(
-            nameof(ConfirmButtonCommand),
-            typeof(ICommand),
-            typeof(InteractivityConfirmationDialog),
-            new PropertyMetadata(default(ICommand)));
-
-        #endregion
-
-        #region CancelButtonCaption
-
-        public string CancelButtonCaption
-        {
-            get => (string)GetValue(CancelButtonCaptionProperty);
-            set => SetValue(CancelButtonCaptionProperty, value);
-        }
-        public static readonly DependencyProperty CancelButtonCaptionProperty = DependencyProperty.Register(
-             nameof(CancelButtonCaption),
-            typeof(string),
-            typeof(InteractivityConfirmationDialog),
-            new PropertyMetadata(default(string)));
-
-        #endregion
-
-        #region CancelButtonCommand
-
-        public ICommand CancelButtonCommand
-        {
-            get => (ICommand)GetValue(CancelButtonCommandProperty);
-            set => SetValue(CancelButtonCommandProperty, value);
-        }
-
-        public static readonly DependencyProperty CancelButtonCommandProperty = DependencyProperty.Register(
-            nameof(CancelButtonCommand),
-            typeof(ICommand),
-            typeof(InteractivityConfirmationDialog),
-            new PropertyMetadata(default(ICommand)));
-
-        #endregion
+        get => (string)GetValue(ConfirmButtonCaptionProperty);
+        set => SetValue(ConfirmButtonCaptionProperty, value);
     }
+
+    public static readonly DependencyProperty ConfirmButtonCaptionProperty = DependencyProperty.Register(
+        nameof(ConfirmButtonCaption),
+        typeof(string),
+        typeof(InteractivityConfirmationDialog),
+        new PropertyMetadata(default(string)));
+
+    #endregion
+
+    #region ConfirmButtonCommand
+
+    public ICommand ConfirmButtonCommand
+    {
+        get => (ICommand)GetValue(ConfirmButtonCommandProperty);
+        set => SetValue(ConfirmButtonCommandProperty, value);
+    }
+
+    public static readonly DependencyProperty ConfirmButtonCommandProperty = DependencyProperty.Register(
+        nameof(ConfirmButtonCommand),
+        typeof(ICommand),
+        typeof(InteractivityConfirmationDialog),
+        new PropertyMetadata(default(ICommand)));
+
+    #endregion
+
+    #region CancelButtonCaption
+
+    public string CancelButtonCaption
+    {
+        get => (string)GetValue(CancelButtonCaptionProperty);
+        set => SetValue(CancelButtonCaptionProperty, value);
+    }
+    public static readonly DependencyProperty CancelButtonCaptionProperty = DependencyProperty.Register(
+         nameof(CancelButtonCaption),
+        typeof(string),
+        typeof(InteractivityConfirmationDialog),
+        new PropertyMetadata(default(string)));
+
+    #endregion
+
+    #region CancelButtonCommand
+
+    public ICommand CancelButtonCommand
+    {
+        get => (ICommand)GetValue(CancelButtonCommandProperty);
+        set => SetValue(CancelButtonCommandProperty, value);
+    }
+
+    public static readonly DependencyProperty CancelButtonCommandProperty = DependencyProperty.Register(
+        nameof(CancelButtonCommand),
+        typeof(ICommand),
+        typeof(InteractivityConfirmationDialog),
+        new PropertyMetadata(default(ICommand)));
+
+    #endregion
 }

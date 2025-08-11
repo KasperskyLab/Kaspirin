@@ -21,221 +21,232 @@ using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using Kaspirin.UI.Framework.UiKit.Controls.Internals;
 
-namespace Kaspirin.UI.Framework.UiKit.Controls
+namespace Kaspirin.UI.Framework.UiKit.Controls;
+
+public sealed class RoundProgress : System.Windows.Controls.ProgressBar
 {
-    public sealed class RoundProgress : System.Windows.Controls.ProgressBar
+    public RoundProgress()
     {
-        public RoundProgress()
+        _anglePropertyPath = new(_angleProperty);
+
+        _storyboard = new();
+        _storyboard.SetFrameRate();
+
+        Loaded += OnLoaded;
+        ValueChanged += OnValueChanged;
+        SizeChanged += OnSizeChanged;
+    }
+
+    public override void OnApplyTemplate()
+    {
+        var animatedIndicator = GetTemplateChild("PART_AnimatedIndicator") as Path;
+        if (animatedIndicator != null)
         {
-            _anglePropertyPath = new(_angleProperty);
+            var animationBinding = new MultiBinding();
+            animationBinding.Bindings.Add(new Binding() { Source = this, Path = DiameterProperty.AsPath() });
+            animationBinding.Bindings.Add(new Binding() { Source = this, Path = StrokeThicknessProperty.AsPath() });
+            animationBinding.Bindings.Add(new Binding() { Source = this, Path = _angleProperty.AsPath() });
+            animationBinding.Converter = new ArcConverter();
 
-            _storyboard = new();
-            _storyboard.SetFrameRate();
-
-            Loaded += OnLoaded;
-            ValueChanged += OnValueChanged;
-            SizeChanged += OnSizeChanged;
+            animatedIndicator.SetBinding(Path.DataProperty, animationBinding);
+            animatedIndicator.SetValue(FlowDirectionProperty, FlowDirection.LeftToRight);
         }
 
-        public override void OnApplyTemplate()
+        var track = GetTemplateChild("PART_Track") as Path;
+        if (track != null)
         {
-            var animatedIndicator = GetTemplateChild("PART_AnimatedIndicator") as Path;
-            if (animatedIndicator != null)
-            {
-                var animationBinding = new MultiBinding();
-                animationBinding.Bindings.Add(new Binding() { Source = this, Path = DiameterProperty.AsPath() });
-                animationBinding.Bindings.Add(new Binding() { Source = this, Path = StrokeThicknessProperty.AsPath() });
-                animationBinding.Bindings.Add(new Binding() { Source = this, Path = _angleProperty.AsPath() });
-                animationBinding.Converter = new ArcConverter();
+            var trackBinding = new MultiBinding();
+            trackBinding.Bindings.Add(new Binding() { Source = this, Path = DiameterProperty.AsPath() });
+            trackBinding.Bindings.Add(new Binding() { Source = this, Path = StrokeThicknessProperty.AsPath() });
+            trackBinding.Converter = new ArcConverter();
 
-                animatedIndicator.SetBinding(Path.DataProperty, animationBinding);
-                animatedIndicator.SetValue(FlowDirectionProperty, FlowDirection.LeftToRight);
-            }
-
-            var track = GetTemplateChild("PART_Track") as Path;
-            if (track != null)
-            {
-                var trackBinding = new MultiBinding();
-                trackBinding.Bindings.Add(new Binding() { Source = this, Path = DiameterProperty.AsPath() });
-                trackBinding.Bindings.Add(new Binding() { Source = this, Path = StrokeThicknessProperty.AsPath() });
-                trackBinding.Converter = new ArcConverter();
-
-                track.SetBinding(Path.DataProperty, trackBinding);
-            }
+            track.SetBinding(Path.DataProperty, trackBinding);
         }
+    }
 
-        #region ShowValue
+    #region ShowValue
 
-        public static readonly DependencyProperty ShowValueProperty =
-            DependencyProperty.Register("ShowValue", typeof(bool), typeof(RoundProgress), new PropertyMetadata(true));
+    public bool ShowValue
+    {
+        get => (bool)GetValue(ShowValueProperty);
+        set => SetValue(ShowValueProperty, value);
+    }
 
-        public bool ShowValue
+    public static readonly DependencyProperty ShowValueProperty = DependencyProperty.Register(
+        nameof(ShowValue),
+        typeof(bool),
+        typeof(RoundProgress),
+        new PropertyMetadata(true));
+
+    #endregion
+
+    #region StrokeThickness
+
+    public double StrokeThickness
+    {
+        get => (double)GetValue(StrokeThicknessProperty);
+        set => SetValue(StrokeThicknessProperty, value);
+    }
+
+    public static readonly DependencyProperty StrokeThicknessProperty = DependencyProperty.Register(
+        nameof(StrokeThickness),
+        typeof(double),
+        typeof(RoundProgress),
+        new PropertyMetadata(default(double)));
+
+    #endregion
+
+    #region Angle
+
+    private static readonly DependencyProperty _angleProperty = DependencyProperty.Register(
+        "Angle",
+        typeof(double),
+        typeof(RoundProgress),
+        new PropertyMetadata(default(double)));
+
+    #endregion
+
+    #region Diameter
+
+    public double Diameter
+    {
+        get => (double)GetValue(DiameterProperty);
+        set => SetValue(DiameterProperty, value);
+    }
+
+    public static readonly DependencyProperty DiameterProperty = DependencyProperty.Register(
+        nameof(Diameter),
+        typeof(double),
+        typeof(RoundProgress),
+        new PropertyMetadata(default(double)));
+
+    #endregion
+
+    private void OnSizeChanged(object sender, SizeChangedEventArgs e)
+    {
+        ChangeValuePermanent();
+    }
+
+    private void OnLoaded(object sender, RoutedEventArgs e)
+    {
+        ChangeValuePermanent();
+    }
+
+    private void OnValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+    {
+        if (e.NewValue.LargerOrNearlyEqual(e.OldValue))
         {
-            get { return (bool)GetValue(ShowValueProperty); }
-            set { SetValue(ShowValueProperty, value); }
+            ChangeValueSmooth();
         }
-
-        #endregion
-
-        #region StrokeThickness
-
-        public static readonly DependencyProperty StrokeThicknessProperty =
-            DependencyProperty.Register("StrokeThickness", typeof(double), typeof(RoundProgress));
-
-        public double StrokeThickness
-        {
-            get { return (double)GetValue(StrokeThicknessProperty); }
-            set { SetValue(StrokeThicknessProperty, value); }
-        }
-
-        #endregion
-
-        #region Angle
-
-        private static readonly DependencyProperty _angleProperty =
-            DependencyProperty.Register("Angle", typeof(double), typeof(RoundProgress), new PropertyMetadata(0.0));
-
-        #endregion
-
-        #region Diameter
-
-        public static readonly DependencyProperty DiameterProperty =
-            DependencyProperty.Register("Diameter", typeof(double), typeof(RoundProgress));
-
-        public double Diameter
-        {
-            get { return (double)GetValue(DiameterProperty); }
-            set { SetValue(DiameterProperty, value); }
-        }
-
-        #endregion
-
-        private void OnSizeChanged(object sender, SizeChangedEventArgs e)
+        else
         {
             ChangeValuePermanent();
         }
+    }
 
-        private void OnLoaded(object sender, RoutedEventArgs e)
-        {
-            ChangeValuePermanent();
-        }
+    private void ChangeValuePermanent()
+    {
+        _storyboard.Stop();
+        SetValue(_angleProperty, GetAngleForValue(Minimum, Maximum, Value));
+        _storyboard.Resume();
+    }
 
-        private void OnValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+    private void ChangeValueSmooth()
+    {
+        var animation = CreateAnimation();
+
+        _storyboard.Remove();
+        _storyboard.Children.Clear();
+
+        _storyboard.Children.Add(animation);
+        _storyboard.Begin();
+    }
+
+    private DoubleAnimation CreateAnimation()
+    {
+        var animation = new DoubleAnimation
         {
-            if (e.NewValue.LargerOrNearlyEqual(e.OldValue))
+            From = (double)GetValue(_angleProperty),
+            To = GetAngleForValue(Minimum, Maximum, Value),
+            FillBehavior = FillBehavior.HoldEnd,
+            Duration = _animationDuration.CoerceDuration()
+        };
+
+        Storyboard.SetTarget(animation, this);
+        Storyboard.SetTargetProperty(animation, _anglePropertyPath);
+        animation.Freeze();
+
+        return animation;
+    }
+
+    private static double GetAngleForValue(double minValue, double maxValue, double currentValue)
+    {
+        var percent = (currentValue - minValue) * 100 / (maxValue - minValue);
+        var valueInAngle = percent / 100 * 359.999;
+        return valueInAngle;
+    }
+
+    private sealed class ArcConverter : IMultiValueConverter
+    {
+        public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
+        {
+            var angle = 360D;
+            if (values.Length > 2)
             {
-                ChangeValueSmooth();
+                angle = (double)values[2];
             }
-            else
+
+            var origin = (double)values[0] / 2;
+
+            var circleThickness = (double)values[1];
+            var circleRadius = new Size(origin - circleThickness / 2, origin - circleThickness / 2);
+
+            var circleStartPosition = GetPointForAngle(origin, circleRadius, 0);
+            var circleEndPosition = GetPointForAngle(origin, circleRadius, angle);
+
+            var arcSegment = new ArcSegment
             {
-                ChangeValuePermanent();
-            }
-        }
-
-        private void ChangeValuePermanent()
-        {
-            _storyboard.Stop();
-            SetValue(_angleProperty, GetAngleForValue(Minimum, Maximum, Value));
-            _storyboard.Resume();
-        }
-
-        private void ChangeValueSmooth()
-        {
-            var animation = CreateAnimation();
-
-            _storyboard.Remove();
-            _storyboard.Children.Clear();
-
-            _storyboard.Children.Add(animation);
-            _storyboard.Begin();
-        }
-
-        private DoubleAnimation CreateAnimation()
-        {
-            var animation = new DoubleAnimation
-            {
-                From = (double)GetValue(_angleProperty),
-                To = GetAngleForValue(Minimum, Maximum, Value),
-                FillBehavior = FillBehavior.HoldEnd,
-                Duration = _animationDuration.CoerceDuration()
+                RotationAngle = 0,
+                SweepDirection = SweepDirection.Clockwise,
+                IsLargeArc = angle > 180,
+                Size = circleRadius,
+                Point = circleEndPosition
             };
 
-            Storyboard.SetTarget(animation, this);
-            Storyboard.SetTargetProperty(animation, _anglePropertyPath);
-            animation.Freeze();
+            var pathFigure = new PathFigure
+            {
+                StartPoint = circleStartPosition,
+            };
+            pathFigure.Segments.Add(arcSegment);
 
-            return animation;
+            var pathGeometry = new PathGeometry();
+            pathGeometry.Figures.Add(pathFigure);
+
+            return pathGeometry;
+
         }
 
-        private static double GetAngleForValue(double minValue, double maxValue, double currentValue)
+        public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
         {
-            var percent = (currentValue - minValue) * 100 / (maxValue - minValue);
-            var valueInAngle = percent / 100 * 359.999;
-            return valueInAngle;
+            throw new NotImplementedException();
         }
 
-        private sealed class ArcConverter : IMultiValueConverter
+        private Point GetPointForAngle(double origin, Size radiusInSize, double angle)
         {
-            public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
-            {
-                var angle = 360D;
-                if (values.Length > 2)
-                {
-                    angle = (double)values[2];
-                }
+            var radius = radiusInSize.Height;
 
-                var origin = (double)values[0] / 2;
+            angle = angle == 360 ? 359.99 : angle;
+            var angleInRadians = angle * Math.PI / 180;
 
-                var circleThickness = (double)values[1];
-                var circleRadius = new Size(origin - circleThickness / 2, origin - circleThickness / 2);
+            var px = Math.Sin(angleInRadians) * radius + origin;
+            var py = -Math.Cos(angleInRadians) * radius + origin;
 
-                var circleStartPosition = GetPointForAngle(origin, circleRadius, 0);
-                var circleEndPosition = GetPointForAngle(origin, circleRadius, angle);
-
-                var arcSegment = new ArcSegment
-                {
-                    RotationAngle = 0,
-                    SweepDirection = SweepDirection.Clockwise,
-                    IsLargeArc = angle > 180,
-                    Size = circleRadius,
-                    Point = circleEndPosition
-                };
-
-                var pathFigure = new PathFigure
-                {
-                    StartPoint = circleStartPosition,
-                };
-                pathFigure.Segments.Add(arcSegment);
-
-                var pathGeometry = new PathGeometry();
-                pathGeometry.Figures.Add(pathFigure);
-
-                return pathGeometry;
-
-            }
-
-            public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
-            {
-                throw new NotImplementedException();
-            }
-
-            private Point GetPointForAngle(double origin, Size radiusInSize, double angle)
-            {
-                var radius = radiusInSize.Height;
-
-                angle = angle == 360 ? 359.99 : angle;
-                var angleInRadians = angle * Math.PI / 180;
-
-                var px = Math.Sin(angleInRadians) * radius + origin;
-                var py = -Math.Cos(angleInRadians) * radius + origin;
-
-                return new Point(px, py);
-            }
+            return new Point(px, py);
         }
-
-        private readonly PropertyPath _anglePropertyPath;
-        private readonly Storyboard _storyboard;
-
-        private static readonly Duration _animationDuration = new(TimeSpan.FromMilliseconds(500));
     }
+
+    private readonly PropertyPath _anglePropertyPath;
+    private readonly Storyboard _storyboard;
+
+    private static readonly Duration _animationDuration = new(TimeSpan.FromMilliseconds(500));
 }

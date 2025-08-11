@@ -12,34 +12,34 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+
 using System.Windows;
 using System.Windows.Controls;
 
-namespace Kaspirin.UI.Framework.UiKit.Controls
+namespace Kaspirin.UI.Framework.UiKit.Controls;
+
+public class Island : ContentControl
 {
-    public class Island : ContentControl
+    public Island()
     {
-        public Island()
-        {
-            UIKitIslandHelper.Initialize(this);
-        }
-
-        #region Level
-
-        public IslandLevel Level => (IslandLevel)GetValue(LevelProperty);
-
-        public static readonly DependencyProperty LevelProperty =
-            UIKitIslandHelper.LevelPropertyKey.DependencyProperty.AddOwner(typeof(Island));
-
-        #endregion
-
-        #region Type
-
-        public IslandType Type => (IslandType)GetValue(TypeProperty);
-
-        public static readonly DependencyProperty TypeProperty =
-            UIKitIslandHelper.TypePropertyKey.DependencyProperty.AddOwner(typeof(Island));
-
-        #endregion
+        UIKitIslandHelper.Initialize(this);
     }
+
+    #region Level
+
+    public IslandLevel Level => (IslandLevel)GetValue(LevelProperty);
+
+    public static readonly DependencyProperty LevelProperty =
+        UIKitIslandHelper.LevelPropertyKey.DependencyProperty.AddOwner(typeof(Island));
+
+    #endregion
+
+    #region Type
+
+    public IslandType Type => (IslandType)GetValue(TypeProperty);
+
+    public static readonly DependencyProperty TypeProperty =
+        UIKitIslandHelper.TypePropertyKey.DependencyProperty.AddOwner(typeof(Island));
+
+    #endregion
 }

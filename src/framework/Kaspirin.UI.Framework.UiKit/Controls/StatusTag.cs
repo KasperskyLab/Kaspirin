@@ -14,34 +14,39 @@
 
 using System.Windows;
 
-namespace Kaspirin.UI.Framework.UiKit.Controls
+namespace Kaspirin.UI.Framework.UiKit.Controls;
+
+public sealed class StatusTag : TagBase
 {
-    public class StatusTag : TagBase
+    #region HasIcon
+
+    public bool HasIcon
     {
-        #region HasIcon
-
-        public bool HasIcon
-        {
-            get { return (bool)GetValue(HasIconProperty); }
-            set { SetValue(HasIconProperty, value); }
-        }
-
-        public static readonly DependencyProperty HasIconProperty =
-            DependencyProperty.Register("HasIcon", typeof(bool), typeof(StatusTag), new PropertyMetadata(true));
-
-        #endregion
-
-        #region Type
-
-        public StatusTagType Type
-        {
-            get { return (StatusTagType)GetValue(TypeProperty); }
-            set { SetValue(TypeProperty, value); }
-        }
-
-        public static readonly DependencyProperty TypeProperty =
-            DependencyProperty.Register("Type", typeof(StatusTagType), typeof(StatusTag));
-
-        #endregion
+        get => (bool)GetValue(HasIconProperty);
+        set => SetValue(HasIconProperty, value);
     }
+
+    public static readonly DependencyProperty HasIconProperty = DependencyProperty.Register(
+        nameof(HasIcon),
+        typeof(bool),
+        typeof(StatusTag),
+        new PropertyMetadata(true));
+
+    #endregion
+
+    #region Type
+
+    public StatusTagType Type
+    {
+        get => (StatusTagType)GetValue(TypeProperty);
+        set => SetValue(TypeProperty, value);
+    }
+
+    public static readonly DependencyProperty TypeProperty = DependencyProperty.Register(
+        nameof(Type),
+        typeof(StatusTagType),
+        typeof(StatusTag),
+        new PropertyMetadata(default(StatusTagType)));
+
+    #endregion
 }

@@ -12,63 +12,62 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using System.Windows.Markup;
 using System;
+using System.Windows.Markup;
 
-namespace Kaspirin.UI.Framework.Storage.KeyValue
+namespace Kaspirin.UI.Framework.Storage.KeyValue;
+
+/// <summary>
+///     Markup extension for working with the interface <see cref="IKeyValueStorage" /> in XAML.
+/// </summary>
+public abstract class KeyValueStorageExtension : MarkupExtension, IKeyValueStorage
 {
     /// <summary>
-    ///     Markup extension for working with the interface <see cref="IKeyValueStorage" /> in XAML.
+    ///     Initializes a new instance of the <see cref="KeyValueStorageExtension" /> class.
     /// </summary>
-    public abstract class KeyValueStorageExtension : MarkupExtension, IKeyValueStorage
+    /// <param name="keyValueStorage">
+    ///     An instance of <see cref="IKeyValueStorage" />.
+    /// </param>
+    protected KeyValueStorageExtension(IKeyValueStorage keyValueStorage)
     {
-        /// <summary>
-        ///     Initializes a new instance of the <see cref="KeyValueStorageExtension" /> class.
-        /// </summary>
-        /// <param name="keyValueStorage">
-        ///     An instance of <see cref="IKeyValueStorage" />.
-        /// </param>
-        protected KeyValueStorageExtension(IKeyValueStorage keyValueStorage)
-        {
-            _keyValueStorage = keyValueStorage;
-        }
-
-        /// <summary>
-        ///     Returns <see langword="this" />.
-        /// </summary>
-        /// <param name="serviceProvider">
-        ///     Not used.
-        /// </param>
-        public override object ProvideValue(IServiceProvider serviceProvider)
-        {
-            return this;
-        }
-
-        /// <inheritdoc cref="IKeyValueStorage.HasValue"/>
-        public virtual bool HasValue(string key)
-        {
-            Guard.ArgumentIsNotNull(key);
-
-            return _keyValueStorage.HasValue(key);
-        }
-
-        /// <inheritdoc cref="IKeyValueStorage.GetValue"/>
-        public virtual object? GetValue(string key, object? defaultValue)
-        {
-            Guard.ArgumentIsNotNull(key);
-
-            return _keyValueStorage.GetValue(key, defaultValue);
-        }
-
-        /// <inheritdoc cref="IKeyValueStorage.SetValue"/>
-        public virtual bool SetValue(string key, object value)
-        {
-            Guard.ArgumentIsNotNull(key);
-            Guard.ArgumentIsNotNull(value);
-
-            return _keyValueStorage.SetValue(key, value);
-        }
-
-        private readonly IKeyValueStorage _keyValueStorage;
+        _keyValueStorage = keyValueStorage;
     }
+
+    /// <summary>
+    ///     Returns <see langword="this" />.
+    /// </summary>
+    /// <param name="serviceProvider">
+    ///     Not used.
+    /// </param>
+    public override object ProvideValue(IServiceProvider serviceProvider)
+    {
+        return this;
+    }
+
+    /// <inheritdoc cref="IKeyValueStorage.HasValue"/>
+    public virtual bool HasValue(string key)
+    {
+        Guard.ArgumentIsNotNull(key);
+
+        return _keyValueStorage.HasValue(key);
+    }
+
+    /// <inheritdoc cref="IKeyValueStorage.GetValue"/>
+    public virtual object? GetValue(string key, object? defaultValue)
+    {
+        Guard.ArgumentIsNotNull(key);
+
+        return _keyValueStorage.GetValue(key, defaultValue);
+    }
+
+    /// <inheritdoc cref="IKeyValueStorage.SetValue"/>
+    public virtual bool SetValue(string key, object value)
+    {
+        Guard.ArgumentIsNotNull(key);
+        Guard.ArgumentIsNotNull(value);
+
+        return _keyValueStorage.SetValue(key, value);
+    }
+
+    private readonly IKeyValueStorage _keyValueStorage;
 }

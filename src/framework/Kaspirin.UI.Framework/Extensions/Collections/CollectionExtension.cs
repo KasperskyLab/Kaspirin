@@ -17,109 +17,108 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Kaspirin.UI.Framework.Extensions.Collections
+namespace Kaspirin.UI.Framework.Extensions.Collections;
+
+/// <summary>
+///     Extension methods for the collection <see cref="ICollection" />.
+/// </summary>
+public static class CollectionExtension
 {
     /// <summary>
-    ///     Extension methods for the collection <see cref="ICollection" />.
+    ///     Checks if the collection is empty.
     /// </summary>
-    public static class CollectionExtension
+    /// <param name="collection">
+    ///     Collection.
+    /// </param>
+    /// <returns>
+    ///     Returns <see langword="true" /> if the collection is empty, otherwise <see langword="false" />.
+    /// </returns>
+    public static bool IsEmpty(this ICollection collection)
     {
-        /// <summary>
-        ///     Checks if the collection is empty.
-        /// </summary>
-        /// <param name="collection">
-        ///     Collection.
-        /// </param>
-        /// <returns>
-        ///     Returns <see langword="true" /> if the collection is empty, otherwise <see langword="false" />.
-        /// </returns>
-        public static bool IsEmpty(this ICollection collection)
-        {
-            Guard.ArgumentIsNotNull(collection);
+        Guard.ArgumentIsNotNull(collection);
 
-            return collection.Count == 0;
+        return collection.Count == 0;
+    }
+
+    /// <summary>
+    ///     Adds items to the collection.
+    /// </summary>
+    /// <typeparam name="T">
+    ///     The type of the item in the collection.
+    /// </typeparam>
+    /// <param name="collection">
+    ///     Collection.
+    /// </param>
+    /// <param name="range">
+    ///     The elements being added.
+    /// </param>
+    public static void AddRange<T>(this ICollection<T> collection, IEnumerable<T> range)
+    {
+        Guard.ArgumentIsNotNull(collection);
+        Guard.ArgumentIsNotNull(range);
+
+        foreach (var item in range)
+        {
+            collection.Add(item);
+        }
+    }
+
+    /// <summary>
+    ///     Deletes elements that meet the condition.
+    /// </summary>
+    /// <typeparam name="T">
+    ///     The type of the item in the collection.
+    /// </typeparam>
+    /// <param name="collection">
+    ///     Collection.
+    /// </param>
+    /// <param name="predicate">
+    ///     The condition for deletion.
+    /// </param>
+    /// <returns>
+    ///     The number of deleted items.
+    /// </returns>
+    public static int RemoveAll<T>(this ICollection<T> collection, Predicate<T> predicate)
+    {
+        Guard.ArgumentIsNotNull(collection);
+        Guard.ArgumentIsNotNull(predicate);
+
+        var toRemove = collection
+            .Where(item => predicate(item))
+            .ToArray();
+        foreach (var itemToRemove in toRemove)
+        {
+            collection.Remove(itemToRemove);
         }
 
-        /// <summary>
-        ///     Adds items to the collection.
-        /// </summary>
-        /// <typeparam name="T">
-        ///     The type of the item in the collection.
-        /// </typeparam>
-        /// <param name="collection">
-        ///     Collection.
-        /// </param>
-        /// <param name="range">
-        ///     The elements being added.
-        /// </param>
-        public static void AddRange<T>(this ICollection<T> collection, IEnumerable<T> range)
-        {
-            Guard.ArgumentIsNotNull(collection);
-            Guard.ArgumentIsNotNull(range);
+        return toRemove.Length;
+    }
 
-            foreach (var item in range)
-            {
-                collection.Add(item);
-            }
+    /// <summary>
+    ///     Deletes items from the collection.
+    /// </summary>
+    /// <typeparam name="T">
+    ///     The type of the item in the collection.
+    /// </typeparam>
+    /// <param name="collection">
+    ///     Collection.
+    /// </param>
+    /// <param name="items">
+    ///     Items to delete.
+    /// </param>
+    /// <returns>
+    ///     The <paramref name="collection" /> object from which the <paramref name="items" /> elements were removed.
+    /// </returns>
+    public static ICollection<T> RemoveRange<T>(this ICollection<T> collection, IEnumerable<T> items)
+    {
+        Guard.ArgumentIsNotNull(collection);
+        Guard.ArgumentIsNotNull(items);
+
+        foreach (var each in items)
+        {
+            collection.Remove(each);
         }
 
-        /// <summary>
-        ///     Deletes elements that meet the condition.
-        /// </summary>
-        /// <typeparam name="T">
-        ///     The type of the item in the collection.
-        /// </typeparam>
-        /// <param name="collection">
-        ///     Collection.
-        /// </param>
-        /// <param name="predicate">
-        ///     The condition for deletion.
-        /// </param>
-        /// <returns>
-        ///     The number of deleted items.
-        /// </returns>
-        public static int RemoveAll<T>(this ICollection<T> collection, Predicate<T> predicate)
-        {
-            Guard.ArgumentIsNotNull(collection);
-            Guard.ArgumentIsNotNull(predicate);
-
-            var toRemove = collection
-                .Where(item => predicate(item))
-                .ToArray();
-            foreach (var itemToRemove in toRemove)
-            {
-                collection.Remove(itemToRemove);
-            }
-
-            return toRemove.Length;
-        }
-
-        /// <summary>
-        ///     Deletes items from the collection.
-        /// </summary>
-        /// <typeparam name="T">
-        ///     The type of the item in the collection.
-        /// </typeparam>
-        /// <param name="collection">
-        ///     Collection.
-        /// </param>
-        /// <param name="items">
-        ///     Items to delete.
-        /// </param>
-        /// <returns>
-        ///     The <paramref name="collection" /> object from which the <paramref name="items" /> elements were removed.
-        /// </returns>
-        public static ICollection<T> RemoveRange<T>(this ICollection<T> collection, IEnumerable<T> items)
-        {
-            Guard.ArgumentIsNotNull(collection);
-            Guard.ArgumentIsNotNull(items);
-
-            foreach (var each in items)
-            {
-                collection.Remove(each);
-            }
-
-            return collection;
-        }
+        return collection;
     }
 }

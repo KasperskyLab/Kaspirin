@@ -12,15 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Kaspirin.UI.Framework.UiKit.Controls
-{
-    public abstract class TextInputMaskItem
-    {
-        protected TextInputMaskItem(char displayChar)
-        {
-            DisplayChar = displayChar;
-        }
+namespace Kaspirin.UI.Framework.UiKit.Controls;
 
-        public char DisplayChar { get; }
+public abstract class TextInputMaskItem
+{
+    protected TextInputMaskItem(char displayChar)
+    {
+        DisplayChar = displayChar;
     }
+
+    public char DisplayChar { get; }
 }

@@ -14,15 +14,14 @@
 
 using System;
 
-namespace Kaspirin.UI.Framework.UiKit.Navigation
-{
-    internal sealed class RegionBehaviorRegistry : BaseRegionBehaviorsRegistry
-    {
-        public RegionBehaviorRegistry(Func<DisposingRemovedViewsBehavior> disposingRemovedViewsBehavior)
-        {
-            Guard.ArgumentIsNotNull(disposingRemovedViewsBehavior);
+namespace Kaspirin.UI.Framework.UiKit.Navigation;
 
-            AddBehaviorFactory(disposingRemovedViewsBehavior);
-        }
+internal sealed class RegionBehaviorRegistry : BaseRegionBehaviorsRegistry
+{
+    public RegionBehaviorRegistry(Func<DisposingRemovedViewsBehavior> disposingRemovedViewsBehavior)
+    {
+        Guard.ArgumentIsNotNull(disposingRemovedViewsBehavior);
+
+        AddBehaviorFactory(disposingRemovedViewsBehavior);
     }
 }

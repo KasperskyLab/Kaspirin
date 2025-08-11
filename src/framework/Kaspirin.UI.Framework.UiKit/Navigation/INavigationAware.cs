@@ -12,14 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Kaspirin.UI.Framework.UiKit.Navigation
+namespace Kaspirin.UI.Framework.UiKit.Navigation;
+
+public interface INavigationAware
 {
-    public interface INavigationAware
-    {
-        void OnNavigatedTo(NavigationContext context);
+    void OnNavigatedTo(NavigationContext context);
 
-        void OnNavigatedFrom(NavigationContext context);
+    void OnNavigatedFrom(NavigationContext context);
 
-        void BuildOptions(NavigationOptionsBuilder builder);
-    }
+    void BuildOptions(NavigationOptionsBuilder builder);
 }

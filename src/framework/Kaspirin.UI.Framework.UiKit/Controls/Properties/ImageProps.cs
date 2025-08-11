@@ -17,31 +17,26 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using Kaspirin.UI.Framework.UiKit.Controls.Internals;
 
-namespace Kaspirin.UI.Framework.UiKit.Controls.Properties
+namespace Kaspirin.UI.Framework.UiKit.Controls.Properties;
+
+public static class ImageProps
 {
-    public static class ImageProps
-    {
-        #region SvgBrush
+    #region SvgBrush
 
-        public static readonly DependencyProperty SvgBrushProperty =
-            DependencyProperty.RegisterAttached("SvgBrush", typeof(Brush), typeof(ImageProps),
-                UIKitPropertyMetadataFactory.CreatePropsMetadata(typeof(Image), nameof(SvgBrushProperty), OnSvgBrushChanged));
+    public static Brush GetSvgBrush(DependencyObject element)
+        => (Brush)element.GetValue(SvgBrushProperty);
 
-        public static void SetSvgBrush(DependencyObject element, Brush value)
-        {
-            element.SetValue(SvgBrushProperty, value);
-        }
+    public static void SetSvgBrush(DependencyObject element, Brush value)
+        => element.SetValue(SvgBrushProperty, value);
 
-        public static Brush GetSvgBrush(DependencyObject element)
-        {
-            return (Brush)element.GetValue(SvgBrushProperty);
-        }
+    public static readonly DependencyProperty SvgBrushProperty = DependencyProperty.RegisterAttached(
+        "SvgBrush",
+        typeof(Brush),
+        typeof(ImageProps),
+        UIKitPropertyMetadataFactory.CreatePropsMetadata(typeof(Image), nameof(SvgBrushProperty), OnSvgBrushChanged));
 
-        private static void OnSvgBrushChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            d.SetValue(ImageInternals.SvgBrushProperty, e.NewValue);
-        }
+    private static void OnSvgBrushChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        => d.SetValue(ImageInternals.SvgBrushProperty, e.NewValue);
 
-        #endregion
-    }
+    #endregion
 }

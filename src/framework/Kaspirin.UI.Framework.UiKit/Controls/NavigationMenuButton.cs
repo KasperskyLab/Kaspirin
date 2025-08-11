@@ -12,94 +12,90 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using Kaspirin.UI.Framework.UiKit.Controls.Internals;
-using System;
-using System.Globalization;
 using System.Windows;
-using System.Windows.Data;
 
-namespace Kaspirin.UI.Framework.UiKit.Controls
+namespace Kaspirin.UI.Framework.UiKit.Controls;
+
+[TemplatePart(Name = "PART_Container", Type = typeof(FrameworkElement))]
+public sealed class NavigationMenuButton : NavigationMenuButtonBase
 {
-    [TemplatePart(Name = "PART_Container", Type = typeof(FrameworkElement))]
-    public class NavigationMenuButton : NavigationMenuButtonBase
+    #region Caption
+
+    public object Caption
     {
-        #region Caption
-
-        public object Caption
-        {
-            get { return GetValue(CaptionProperty); }
-            set { SetValue(CaptionProperty, value); }
-        }
-
-        public static readonly DependencyProperty CaptionProperty =
-            DependencyProperty.Register("Caption", typeof(object), typeof(NavigationMenuButton));
-
-        #endregion
-
-        #region Description
-
-        public object Description
-        {
-            get { return GetValue(DescriptionProperty); }
-            set { SetValue(DescriptionProperty, value); }
-        }
-
-        public static readonly DependencyProperty DescriptionProperty =
-            DependencyProperty.Register("Description", typeof(object), typeof(NavigationMenuButton));
-
-        #endregion
-
-        #region Level
-
-        public uint Level
-        {
-            get { return (uint)GetValue(LevelProperty); }
-            set { SetValue(LevelProperty, value); }
-        }
-
-        public static readonly DependencyProperty LevelProperty =
-            DependencyProperty.Register("Level", typeof(uint), typeof(NavigationMenuButton), new PropertyMetadata(0U));
-
-        #endregion
-
-        public override void OnApplyTemplate()
-        {
-            var container = GetTemplateChild("PART_Container") as FrameworkElement;
-            if (container != null)
-            {
-                var marginBinding = new MultiBinding();
-                marginBinding.Bindings.Add(new Binding() { Source = container, Path = NavigationMenuButtonInternals.MarginLevel1Property.AsPath() });
-                marginBinding.Bindings.Add(new Binding() { Source = container, Path = NavigationMenuButtonInternals.MarginLevel2Property.AsPath() });
-                marginBinding.Bindings.Add(new Binding() { Source = this, Path = LevelProperty.AsPath() });
-                marginBinding.Converter = new MarginConverter();
-
-                container.SetBinding(FrameworkElement.MarginProperty, marginBinding);
-            }
-        }
-
-        private sealed class MarginConverter : IMultiValueConverter
-        {
-            public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
-            {
-                var level1Margin = (Thickness)values[0];
-                var level2Margin = (Thickness)values[1];
-                var currentLevel = (uint)values[2];
-
-                var leftDelta = level2Margin.Left - level1Margin.Left;
-
-                return new Thickness
-                {
-                    Left = level1Margin.Left + leftDelta * currentLevel,
-                    Right = level1Margin.Right,
-                    Bottom = level1Margin.Bottom,
-                    Top = level1Margin.Top,
-                };
-            }
-
-            public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
-            {
-                throw new NotImplementedException();
-            }
-        }
+        get => GetValue(CaptionProperty);
+        set => SetValue(CaptionProperty, value);
     }
+
+    public static readonly DependencyProperty CaptionProperty = DependencyProperty.Register(
+        nameof(Caption),
+        typeof(object),
+        typeof(NavigationMenuButton),
+        new PropertyMetadata(default(object)));
+
+    #endregion
+
+    #region Counter
+
+    public int Counter
+    {
+        get => (int)GetValue(CounterProperty);
+        set => SetValue(CounterProperty, value);
+    }
+
+    public static readonly DependencyProperty CounterProperty = DependencyProperty.Register(
+        nameof(Counter),
+        typeof(int),
+        typeof(NavigationMenuButton),
+        new PropertyMetadata(default(int)));
+
+    #endregion
+
+    #region Description
+
+    public object Description
+    {
+        get => GetValue(DescriptionProperty);
+        set => SetValue(DescriptionProperty, value);
+    }
+
+    public static readonly DependencyProperty DescriptionProperty = DependencyProperty.Register(
+        nameof(Description),
+        typeof(object),
+        typeof(NavigationMenuButton),
+        new PropertyMetadata(default(object)));
+
+    #endregion
+
+    #region Level
+
+    public uint Level
+    {
+        get => (uint)GetValue(LevelProperty);
+        set => SetValue(LevelProperty, value);
+    }
+
+    public static readonly DependencyProperty LevelProperty = DependencyProperty.Register(
+        nameof(Level),
+        typeof(uint),
+        typeof(NavigationMenuButton),
+        new PropertyMetadata(default(uint)));
+
+    #endregion
+
+    #region ShowCounter
+
+    public bool ShowCounter
+    {
+        get => (bool)GetValue(ShowCounterProperty);
+        set => SetValue(ShowCounterProperty, value);
+    }
+
+    public static readonly DependencyProperty ShowCounterProperty = DependencyProperty.Register(
+        nameof(ShowCounter),
+        typeof(bool),
+        typeof(NavigationMenuButton),
+        new PropertyMetadata(default(bool)));
+
+    #endregion
 }

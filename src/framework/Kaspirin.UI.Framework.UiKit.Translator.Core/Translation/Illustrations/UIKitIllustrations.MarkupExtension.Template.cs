@@ -15,12 +15,11 @@
 @FileComment
 using Kaspirin.UI.Framework.UiKit.@ProductNamespacePart.Illustrations;
 
-namespace Kaspirin.UI.Framework.UiKit.@ProductNamespacePart.MarkupExtensions
+namespace Kaspirin.UI.Framework.UiKit.@ProductNamespacePart.MarkupExtensions;
+
+public sealed class UIKitIllustrationExtension : UIKitIllustrationExtensionBase
 {
-    public sealed class UIKitIllustrationExtension : UIKitIllustrationExtensionBase
-    {
 @IllustrationEnumPropertyDeclarations
 
 @IllustrationEnumFieldsDeclarations
-    }
 }

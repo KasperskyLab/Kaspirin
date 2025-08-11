@@ -14,114 +14,135 @@
 
 using System.Windows;
 
-namespace Kaspirin.UI.Framework.UiKit.Controls
+namespace Kaspirin.UI.Framework.UiKit.Controls;
+
+public sealed class InteractivityOverlayCut : InteractivityOverlayCutBase
 {
-    public sealed class InteractivityOverlayCut : InteractivityOverlayCutBase
+    #region AllowsInteraction
+
+    public bool AllowsInteraction
     {
-        #region AllowsInteraction
-
-        public bool AllowsInteraction
-        {
-            get => (bool)GetValue(AllowsInteractionProperty);
-            set => SetValue(AllowsInteractionProperty, value);
-        }
-
-        public static readonly DependencyProperty AllowsInteractionProperty = DependencyProperty.Register(
-            nameof(AllowsInteraction), typeof(bool), typeof(InteractivityOverlayCut), new PropertyMetadata(true));
-
-        #endregion
-
-        #region CloseOnMouseClick
-
-        public bool CloseOnMouseClick
-        {
-            get => (bool)GetValue(CloseOnMouseClickProperty);
-            set => SetValue(CloseOnMouseClickProperty, value);
-        }
-
-        public static readonly DependencyProperty CloseOnMouseClickProperty =
-            DependencyProperty.Register(nameof(CloseOnMouseClick), typeof(bool), typeof(InteractivityOverlayCut));
-
-        #endregion
-
-        #region CloseOnMouseWheel
-
-        public bool CloseOnMouseWheel
-        {
-            get => (bool)GetValue(CloseOnMouseWheelProperty);
-            set => SetValue(CloseOnMouseWheelProperty, value);
-        }
-
-        public static readonly DependencyProperty CloseOnMouseWheelProperty =
-            DependencyProperty.Register(nameof(CloseOnMouseWheel), typeof(bool), typeof(InteractivityOverlayCut));
-
-        #endregion
-
-        #region Decorator
-
-        public object? Decorator
-        {
-            get => GetValue(DecoratorProperty);
-            set => SetValue(DecoratorProperty, value);
-        }
-
-        public static readonly DependencyProperty DecoratorProperty =
-            DependencyProperty.Register(nameof(Decorator), typeof(object), typeof(InteractivityOverlayCut));
-
-        #endregion
-
-        #region DecoratorTemplate
-
-        public DataTemplate? DecoratorTemplate
-        {
-            get => (DataTemplate?)GetValue(DecoratorTemplateProperty);
-            set => SetValue(DecoratorTemplateProperty, value);
-        }
-
-        public static readonly DependencyProperty DecoratorTemplateProperty =
-            DependencyProperty.Register(nameof(DecoratorTemplate), typeof(DataTemplate), typeof(InteractivityOverlayCut));
-
-        #endregion
-
-        #region DecoratorPosition
-
-        public InteractivityOverlayCutDecoratorPosition DecoratorPosition
-        {
-            get => (InteractivityOverlayCutDecoratorPosition)GetValue(DecoratorPositionProperty);
-            set => SetValue(DecoratorPositionProperty, value);
-        }
-
-        public static readonly DependencyProperty DecoratorPositionProperty =
-            DependencyProperty.Register(nameof(DecoratorPosition), typeof(InteractivityOverlayCutDecoratorPosition), typeof(InteractivityOverlayCut));
-
-        #endregion
-
-        #region DecoratorHorizontalOffset
-
-        public double DecoratorHorizontalOffset
-        {
-            get => (double)GetValue(DecoratorHorizontalOffsetProperty);
-            set => SetValue(DecoratorHorizontalOffsetProperty, value);
-        }
-
-        public static readonly DependencyProperty DecoratorHorizontalOffsetProperty =
-            DependencyProperty.Register(nameof(DecoratorHorizontalOffset), typeof(double), typeof(InteractivityOverlayCut),
-                new PropertyMetadata(default(double)));
-
-        #endregion
-
-        #region DecoratorVerticalOffset
-
-        public double DecoratorVerticalOffset
-        {
-            get => (double)GetValue(DecoratorVerticalOffsetProperty);
-            set => SetValue(DecoratorVerticalOffsetProperty, value);
-        }
-
-        public static readonly DependencyProperty DecoratorVerticalOffsetProperty =
-            DependencyProperty.Register(nameof(DecoratorVerticalOffset), typeof(double), typeof(InteractivityOverlayCut),
-                new PropertyMetadata(default(double)));
-
-        #endregion
+        get => (bool)GetValue(AllowsInteractionProperty);
+        set => SetValue(AllowsInteractionProperty, value);
     }
+
+    public static readonly DependencyProperty AllowsInteractionProperty = DependencyProperty.Register(
+        nameof(AllowsInteraction),
+        typeof(bool),
+        typeof(InteractivityOverlayCut),
+        new PropertyMetadata(true));
+
+    #endregion
+
+    #region CloseOnMouseClick
+
+    public bool CloseOnMouseClick
+    {
+        get => (bool)GetValue(CloseOnMouseClickProperty);
+        set => SetValue(CloseOnMouseClickProperty, value);
+    }
+
+    public static readonly DependencyProperty CloseOnMouseClickProperty = DependencyProperty.Register(
+        nameof(CloseOnMouseClick),
+        typeof(bool),
+        typeof(InteractivityOverlayCut),
+        new PropertyMetadata(default(bool)));
+
+    #endregion
+
+    #region CloseOnMouseWheel
+
+    public bool CloseOnMouseWheel
+    {
+        get => (bool)GetValue(CloseOnMouseWheelProperty);
+        set => SetValue(CloseOnMouseWheelProperty, value);
+    }
+
+    public static readonly DependencyProperty CloseOnMouseWheelProperty = DependencyProperty.Register(
+        nameof(CloseOnMouseWheel),
+        typeof(bool),
+        typeof(InteractivityOverlayCut),
+        new PropertyMetadata(default(bool)));
+
+    #endregion
+
+    #region Decorator
+
+    public object? Decorator
+    {
+        get => GetValue(DecoratorProperty);
+        set => SetValue(DecoratorProperty, value);
+    }
+
+    public static readonly DependencyProperty DecoratorProperty = DependencyProperty.Register(
+        nameof(Decorator),
+        typeof(object),
+        typeof(InteractivityOverlayCut),
+        new PropertyMetadata(default(object)));
+
+    #endregion
+
+    #region DecoratorTemplate
+
+    public DataTemplate? DecoratorTemplate
+    {
+        get => (DataTemplate?)GetValue(DecoratorTemplateProperty);
+        set => SetValue(DecoratorTemplateProperty, value);
+    }
+
+    public static readonly DependencyProperty DecoratorTemplateProperty = DependencyProperty.Register(
+        nameof(DecoratorTemplate),
+        typeof(DataTemplate),
+        typeof(InteractivityOverlayCut),
+        new PropertyMetadata(default(DataTemplate)));
+
+    #endregion
+
+    #region DecoratorPosition
+
+    public InteractivityOverlayCutDecoratorPosition DecoratorPosition
+    {
+        get => (InteractivityOverlayCutDecoratorPosition)GetValue(DecoratorPositionProperty);
+        set => SetValue(DecoratorPositionProperty, value);
+    }
+
+    public static readonly DependencyProperty DecoratorPositionProperty = DependencyProperty.Register(
+        nameof(DecoratorPosition),
+        typeof(InteractivityOverlayCutDecoratorPosition),
+        typeof(InteractivityOverlayCut),
+        new PropertyMetadata(default(InteractivityOverlayCutDecoratorPosition)));
+
+    #endregion
+
+    #region DecoratorHorizontalOffset
+
+    public double DecoratorHorizontalOffset
+    {
+        get => (double)GetValue(DecoratorHorizontalOffsetProperty);
+        set => SetValue(DecoratorHorizontalOffsetProperty, value);
+    }
+
+    public static readonly DependencyProperty DecoratorHorizontalOffsetProperty = DependencyProperty.Register(
+        nameof(DecoratorHorizontalOffset),
+        typeof(double),
+        typeof(InteractivityOverlayCut),
+        new PropertyMetadata(default(double)));
+
+    #endregion
+
+    #region DecoratorVerticalOffset
+
+    public double DecoratorVerticalOffset
+    {
+        get => (double)GetValue(DecoratorVerticalOffsetProperty);
+        set => SetValue(DecoratorVerticalOffsetProperty, value);
+    }
+
+    public static readonly DependencyProperty DecoratorVerticalOffsetProperty = DependencyProperty.Register(
+        nameof(DecoratorVerticalOffset),
+        typeof(double),
+        typeof(InteractivityOverlayCut),
+        new PropertyMetadata(default(double)));
+
+    #endregion
 }

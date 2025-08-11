@@ -16,25 +16,23 @@
 
 using System.Runtime.InteropServices;
 
-namespace Kaspirin.UI.Framework.NativeMethods.Api.Kernel32.Structs
-{
-    /// <summary>
-    ///     
-    /// <seealso href="https://learn.microsoft.com/en-us/windows/win32/api/sysinfoapi/ns-sysinfoapi-memorystatusex">Learn more</seealso>.
-    /// </summary>
-    [StructLayout(LayoutKind.Sequential)]
-    public struct MemoryStatusEx
-    {
-        public uint Length;
-        public uint MemoryLoadPercent;
-        public ulong TotalPhysicalMemory;
-        public ulong AvailablePhysicalMemory;
-        public ulong TotalPageFile;
-        public ulong AvailablePageFile;
-        public ulong TotalVirtualMemory;
-        public ulong AvailableVirtualMemory;
-        public ulong AvailableExtendedVirtualMemory;
+namespace Kaspirin.UI.Framework.NativeMethods.Api.Kernel32.Structs;
 
-        public static readonly int Size = Marshal.SizeOf(typeof(MemoryStatusEx));
-    }
+/// <summary>
+///     <seealso href="https://learn.microsoft.com/en-us/windows/win32/api/sysinfoapi/ns-sysinfoapi-memorystatusex">Learn more</seealso>.
+/// </summary>
+[StructLayout(LayoutKind.Sequential)]
+public struct MemoryStatusEx
+{
+    public uint Length;
+    public uint MemoryLoadPercent;
+    public ulong TotalPhysicalMemory;
+    public ulong AvailablePhysicalMemory;
+    public ulong TotalPageFile;
+    public ulong AvailablePageFile;
+    public ulong TotalVirtualMemory;
+    public ulong AvailableVirtualMemory;
+    public ulong AvailableExtendedVirtualMemory;
+
+    public static readonly int Size = Marshal.SizeOf(typeof(MemoryStatusEx));
 }

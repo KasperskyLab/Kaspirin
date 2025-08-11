@@ -12,57 +12,56 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using Kaspirin.UI.Framework.UiKit.Interactivity.Internals;
 using System;
+using Kaspirin.UI.Framework.UiKit.Interactivity.Internals;
 
-namespace Kaspirin.UI.Framework.UiKit.Interactivity
+namespace Kaspirin.UI.Framework.UiKit.Interactivity;
+
+public sealed class SaveDataRequest : SaveDataRequest<SaveDataObject>
 {
-    public sealed class SaveDataRequest : SaveDataRequest<SaveDataObject>
+    public void Raise(Action<SaveDataDecision> onDecided)
     {
-        public void Raise(Action<SaveDataDecision> onDecided)
-        {
-            Guard.ArgumentIsNotNull(onDecided);
+        Guard.ArgumentIsNotNull(onDecided);
 
-            base.Raise(new SaveDataObject(), onDecided);
-        }
+        base.Raise(new SaveDataObject(), onDecided);
+    }
 
-        public new void Raise(SaveDataObject saveDataObject, Action<SaveDataDecision> onDecided)
-        {
-            Guard.ArgumentIsNotNull(saveDataObject);
-            Guard.ArgumentIsNotNull(onDecided);
+    public new void Raise(SaveDataObject saveDataObject, Action<SaveDataDecision> onDecided)
+    {
+        Guard.ArgumentIsNotNull(saveDataObject);
+        Guard.ArgumentIsNotNull(onDecided);
 
-            base.Raise(saveDataObject, onDecided);
-        }
+        base.Raise(saveDataObject, onDecided);
+    }
 
-        public new void Raise(SaveDataObject saveDataObject, Action? onSave = null, Action? onDiscard = null, Action? onCancel = null)
-        {
-            Guard.ArgumentIsNotNull(saveDataObject);
+    public new void Raise(SaveDataObject saveDataObject, Action? onSave = null, Action? onDiscard = null, Action? onCancel = null)
+    {
+        Guard.ArgumentIsNotNull(saveDataObject);
 
-            base.Raise(saveDataObject, onSave, onDiscard, onCancel);
-        }
+        base.Raise(saveDataObject, onSave, onDiscard, onCancel);
+    }
 
-        public new void Raise(SaveDataObject saveDataObject, Action<SaveDataObject>? onSave = null, Action<SaveDataObject>? onDiscard = null, Action<SaveDataObject>? onCancel = null)
-        {
-            Guard.ArgumentIsNotNull(saveDataObject);
+    public new void Raise(SaveDataObject saveDataObject, Action<SaveDataObject>? onSave = null, Action<SaveDataObject>? onDiscard = null, Action<SaveDataObject>? onCancel = null)
+    {
+        Guard.ArgumentIsNotNull(saveDataObject);
 
-            base.Raise(saveDataObject, onSave, onDiscard, onCancel);
-        }
+        base.Raise(saveDataObject, onSave, onDiscard, onCancel);
+    }
 
-        public void Raise(Action onConfirmed, Action? onCancelled = null)
-        {
-            Guard.ArgumentIsNotNull(onConfirmed);
+    public void Raise(Action onConfirmed, Action? onCancelled = null)
+    {
+        Guard.ArgumentIsNotNull(onConfirmed);
 
-            base.Raise(new SaveDataObject(), onConfirmed, onCancelled);
-        }
+        base.Raise(new SaveDataObject(), onConfirmed, onCancelled);
+    }
 
-        public void Raise(object dataContext, Action onSave, Action? onDiscard = null, Action? onCancel = null)
-        {
-            Guard.ArgumentIsNotNull(dataContext);
-            Guard.ArgumentIsNotNull(onSave);
+    public void Raise(object dataContext, Action onSave, Action? onDiscard = null, Action? onCancel = null)
+    {
+        Guard.ArgumentIsNotNull(dataContext);
+        Guard.ArgumentIsNotNull(onSave);
 
-            var saveDataObject = new DataContextSaveDataObject(dataContext);
+        var saveDataObject = new DataContextSaveDataObject(dataContext);
 
-            Raise(saveDataObject, onSave, onDiscard, onCancel);
-        }
+        Raise(saveDataObject, onSave, onDiscard, onCancel);
     }
 }

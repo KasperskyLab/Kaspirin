@@ -15,14 +15,13 @@
 using System;
 using System.Windows.Markup;
 
-namespace Kaspirin.UI.Framework.UiKit.Converters.TimeConverters.Validation
-{
-    public abstract class BaseTimeValidator<TDateType> : MarkupExtension
-        where TDateType : notnull, IEquatable<TDateType>
-    {
-        public abstract bool ValueIsValid(TDateType date);
+namespace Kaspirin.UI.Framework.UiKit.Converters.TimeConverters.Validation;
 
-        public override object ProvideValue(IServiceProvider serviceProvider)
-            => this;
-    }
+public abstract class BaseTimeValidator<TDateType> : MarkupExtension
+    where TDateType : notnull, IEquatable<TDateType>
+{
+    public abstract bool ValueIsValid(TDateType date);
+
+    public override object ProvideValue(IServiceProvider serviceProvider)
+        => this;
 }

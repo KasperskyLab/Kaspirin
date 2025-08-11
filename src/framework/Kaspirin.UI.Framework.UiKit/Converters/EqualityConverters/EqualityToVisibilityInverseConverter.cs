@@ -14,10 +14,9 @@
 
 using System.Windows;
 
-namespace Kaspirin.UI.Framework.UiKit.Converters.EqualityConverters
+namespace Kaspirin.UI.Framework.UiKit.Converters.EqualityConverters;
+
+public sealed class EqualityToVisibilityInverseConverter : BaseEqualityConverter<Visibility>
 {
-    public class EqualityToVisibilityInverseConverter : BaseEqualityConverter<Visibility>
-    {
-        public EqualityToVisibilityInverseConverter() : base(Visibility.Collapsed, Visibility.Visible) { }
-    }
+    public EqualityToVisibilityInverseConverter() : base(Visibility.Collapsed, Visibility.Visible) { }
 }

@@ -12,17 +12,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Kaspirin.UI.Framework.UiKit.Controls.VisualStates
+namespace Kaspirin.UI.Framework.UiKit.Controls.VisualStates;
+
+public enum SelectableState
 {
-    public enum SelectableState
-    {
-        Normal,
-        Pressed,
-        Hover,
-        Disabled,
-        SelectedNormal,
-        SelectedPressed,
-        SelectedHover,
-        SelectedDisabled,
-    }
+    Normal,
+    Pressed,
+    Hover,
+    Disabled,
+    SelectedNormal,
+    SelectedPressed,
+    SelectedHover,
+    SelectedDisabled,
 }

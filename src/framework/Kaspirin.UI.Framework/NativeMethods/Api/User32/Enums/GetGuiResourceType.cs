@@ -12,19 +12,30 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
+namespace Kaspirin.UI.Framework.NativeMethods.Api.User32.Enums;
 
-namespace Kaspirin.UI.Framework.NativeMethods.Api.User32.Enums
+/// <summary>
+///     <seealso href="https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-getguiresources">Learn more</seealso>.
+/// </summary>
+public enum GetGuiResourceType : uint
 {
     /// <summary>
-    ///     
-    /// <seealso href="https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-getguiresources">Learn more</seealso>.
+    ///     The GR_GDIOBJECTS constant.
     /// </summary>
-    public enum GetGuiResourceType : uint
-    {
-        GR_GDIOBJECTS = 0,
-        GR_GDIOBJECTS_PEAK = 2,
-        GR_USEROBJECTS = 1,
-        GR_USEROBJECTS_PEAK = 4,
-    }
+    GdiObjects = 0,
+
+    /// <summary>
+    ///     The GR_GDIOBJECTS_PEAK constant.
+    /// </summary>
+    GdiObjectsPeak = 2,
+
+    /// <summary>
+    ///     The GR_USEROBJECTS constant.
+    /// </summary>
+    UserObjects = 1,
+
+    /// <summary>
+    ///     The GR_USEROBJECTS_PEAK constant.
+    /// </summary>
+    UserObjectsPeak = 4,
 }

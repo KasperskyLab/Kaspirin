@@ -16,29 +16,28 @@ using System;
 using System.ComponentModel;
 using System.Reflection;
 
-namespace Kaspirin.UI.Framework.Mvvm.Internals
+namespace Kaspirin.UI.Framework.Mvvm.Internals;
+
+internal sealed class PropertyObserverEventListener
 {
-    internal sealed class PropertyObserverEventListener
+    public PropertyObserverEventListener(INotifyPropertyChanged target, PropertyInfo propertyInfo, Action action)
     {
-        public PropertyObserverEventListener(INotifyPropertyChanged target, PropertyInfo propertyInfo, Action action)
-        {
-            _target = Guard.EnsureArgumentIsNotNull(target);
-            _propertyInfo = Guard.EnsureArgumentIsNotNull(propertyInfo);
-            _action = Guard.EnsureArgumentIsNotNull(action);
+        _target = Guard.EnsureArgumentIsNotNull(target);
+        _propertyInfo = Guard.EnsureArgumentIsNotNull(propertyInfo);
+        _action = Guard.EnsureArgumentIsNotNull(action);
 
-            _target.PropertyChanged += OnPropertyChanged;
-        }
-
-        private void OnPropertyChanged(object? sender, PropertyChangedEventArgs e)
-        {
-            if (e.PropertyName == _propertyInfo.Name || e.PropertyName == null)
-            {
-                _action.Invoke();
-            }
-        }
-
-        private readonly INotifyPropertyChanged _target;
-        private readonly PropertyInfo _propertyInfo;
-        private readonly Action _action;
+        _target.PropertyChanged += OnPropertyChanged;
     }
+
+    private void OnPropertyChanged(object? sender, PropertyChangedEventArgs e)
+    {
+        if (e.PropertyName == _propertyInfo.Name || e.PropertyName == null)
+        {
+            _action.Invoke();
+        }
+    }
+
+    private readonly INotifyPropertyChanged _target;
+    private readonly PropertyInfo _propertyInfo;
+    private readonly Action _action;
 }

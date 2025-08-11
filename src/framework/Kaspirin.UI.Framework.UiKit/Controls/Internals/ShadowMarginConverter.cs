@@ -18,17 +18,16 @@ using System.Windows;
 using System.Windows.Media.Effects;
 using Kaspirin.UI.Framework.UiKit.Extensions.Internals;
 
-namespace Kaspirin.UI.Framework.UiKit.Controls.Internals
+namespace Kaspirin.UI.Framework.UiKit.Controls.Internals;
+
+internal sealed class ShadowMarginConverter : ValueConverterMarkupExtension<ShadowMarginConverter>
 {
-    internal sealed class ShadowMarginConverter : ValueConverterMarkupExtension<ShadowMarginConverter>
+    public override object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
     {
-        public override object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
+        return value switch
         {
-            return value switch
-            {
-                DropShadowEffect shadow => new Thickness(shadow.GetShadowOffset()),
-                _ => new Thickness()
-            };
-        }
+            DropShadowEffect shadow => new Thickness(shadow.GetShadowOffset()),
+            _ => new Thickness()
+        };
     }
 }

@@ -16,88 +16,97 @@ using System;
 using System.Collections.Generic;
 using System.Windows;
 
-namespace Kaspirin.UI.Framework.UiKit.Controls.Internals
+namespace Kaspirin.UI.Framework.UiKit.Controls.Internals;
+
+internal sealed class CornerRoundingHelper
 {
-    internal class CornerRoundingHelper
+    public CornerRoundingHelper(DependencyObject target, Action callback, string? propertyName = null)
     {
-        public CornerRoundingHelper(DependencyObject target, Action callback, string? propertyName = null)
+        Guard.ArgumentIsNotNull(target);
+        Guard.ArgumentIsNotNull(callback);
+
+        _target = target;
+        _cornerRadiusChangedCallback = callback;
+        _cornerRadiusProperty = GetCornerRadiusProperty(target.GetType(), propertyName);
+
+        _target.SetValue(_cornerRoundingHelperHolderProperty, this);
+        _target.WhenLoaded(() =>
         {
-            Guard.ArgumentIsNotNull(target);
-            Guard.ArgumentIsNotNull(callback);
-
-            _target = target;
-            _cornerRaduisChangedCallback = callback;
-            _cornerRaduisProperty = GetCornerRadiusProperty(target.GetType(), propertyName);
-
-            _target.SetValue(_cornerRoundingHelperHolderProperty, this);
-            _target.WhenLoaded(() =>
-            {
-                RaiseCornerRadiusChanged();
-            });
-        }
-
-        public static readonly DependencyProperty DisableRoundingTopLeftProperty =
-            DependencyProperty.RegisterAttached("DisableRoundingTopLeft", typeof(bool), typeof(CornerRoundingHelper),
-                new PropertyMetadata(false, InvalidateCornerRadius));
-
-        public static readonly DependencyProperty DisableRoundingTopRightProperty =
-            DependencyProperty.RegisterAttached("DisableRoundingTopRight", typeof(bool), typeof(CornerRoundingHelper),
-                new PropertyMetadata(false, InvalidateCornerRadius));
-
-        public static readonly DependencyProperty DisableRoundingBottomLeftProperty =
-            DependencyProperty.RegisterAttached("DisableRoundingBottomLeft", typeof(bool), typeof(CornerRoundingHelper),
-                new PropertyMetadata(false, InvalidateCornerRadius));
-
-        public static readonly DependencyProperty DisableRoundingBottomRightProperty =
-            DependencyProperty.RegisterAttached("DisableRoundingBottomRight", typeof(bool), typeof(CornerRoundingHelper),
-                new PropertyMetadata(false, InvalidateCornerRadius));
-
-        private static readonly DependencyProperty _cornerRoundingHelperHolderProperty =
-            DependencyProperty.RegisterAttached("CornerRoundingHelperHolder", typeof(CornerRoundingHelper), typeof(CornerRoundingHelper));
-
-        public CornerRadius GetCornerRadius()
-        {
-            var cornerRadiustValue = _target.GetValue<CornerRadius>(_cornerRaduisProperty);
-
-            return new CornerRadius
-            {
-                BottomLeft = _target.GetValue<bool>(DisableRoundingBottomLeftProperty) ? 0 : cornerRadiustValue.BottomLeft,
-                BottomRight = _target.GetValue<bool>(DisableRoundingBottomRightProperty) ? 0 : cornerRadiustValue.BottomRight,
-                TopLeft = _target.GetValue<bool>(DisableRoundingTopLeftProperty) ? 0 : cornerRadiustValue.TopLeft,
-                TopRight = _target.GetValue<bool>(DisableRoundingTopRightProperty) ? 0 : cornerRadiustValue.TopRight,
-            };
-        }
-
-        private DependencyProperty GetCornerRadiusProperty(Type type, string? propertyName)
-        {
-            propertyName ??= $"{type.Name}_CornerRadius";
-
-            if (_cornerRadiusPropertyStorage.TryGetValue(propertyName, out var cornerRadiusProperty) is false)
-            {
-                Guard.AssertIsUiThread();
-
-                cornerRadiusProperty = UIKitPropertyStorage.GetOrCreate(propertyName, typeof(CornerRadius));
-                cornerRadiusProperty.OverrideMetadata(type, new PropertyMetadata(InvalidateCornerRadius));
-                _cornerRadiusPropertyStorage[propertyName] = cornerRadiusProperty;
-            }
-
-            return cornerRadiusProperty;
-        }
-
-        private void RaiseCornerRadiusChanged()
-        {
-            _cornerRaduisChangedCallback.Invoke();
-        }
-
-        private static void InvalidateCornerRadius(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            d.GetValue<CornerRoundingHelper>(_cornerRoundingHelperHolderProperty).RaiseCornerRadiusChanged();
-        }
-
-        private static readonly Dictionary<string, DependencyProperty> _cornerRadiusPropertyStorage = new();
-
-        private readonly DependencyObject _target;
-        private readonly DependencyProperty _cornerRaduisProperty;
-        private readonly Action _cornerRaduisChangedCallback;
+            RaiseCornerRadiusChanged();
+        });
     }
+
+    public static readonly DependencyProperty DisableRoundingTopLeftProperty = DependencyProperty.RegisterAttached(
+        "DisableRoundingTopLeft",
+        typeof(bool),
+        typeof(CornerRoundingHelper),
+        new PropertyMetadata(default(bool), InvalidateCornerRadius));
+
+    public static readonly DependencyProperty DisableRoundingTopRightProperty = DependencyProperty.RegisterAttached(
+        "DisableRoundingTopRight",
+        typeof(bool),
+        typeof(CornerRoundingHelper),
+        new PropertyMetadata(default(bool), InvalidateCornerRadius));
+
+    public static readonly DependencyProperty DisableRoundingBottomLeftProperty = DependencyProperty.RegisterAttached(
+        "DisableRoundingBottomLeft",
+        typeof(bool),
+        typeof(CornerRoundingHelper),
+        new PropertyMetadata(default(bool), InvalidateCornerRadius));
+
+    public static readonly DependencyProperty DisableRoundingBottomRightProperty = DependencyProperty.RegisterAttached(
+        "DisableRoundingBottomRight",
+        typeof(bool),
+        typeof(CornerRoundingHelper),
+        new PropertyMetadata(default(bool), InvalidateCornerRadius));
+
+    private static readonly DependencyProperty _cornerRoundingHelperHolderProperty = DependencyProperty.RegisterAttached(
+        "CornerRoundingHelperHolder",
+        typeof(CornerRoundingHelper),
+        typeof(CornerRoundingHelper));
+
+    public CornerRadius GetCornerRadius()
+    {
+        var cornerRadiusValue = _target.GetValue<CornerRadius>(_cornerRadiusProperty);
+
+        return new CornerRadius
+        {
+            BottomLeft = _target.GetValue<bool>(DisableRoundingBottomLeftProperty) ? 0 : cornerRadiusValue.BottomLeft,
+            BottomRight = _target.GetValue<bool>(DisableRoundingBottomRightProperty) ? 0 : cornerRadiusValue.BottomRight,
+            TopLeft = _target.GetValue<bool>(DisableRoundingTopLeftProperty) ? 0 : cornerRadiusValue.TopLeft,
+            TopRight = _target.GetValue<bool>(DisableRoundingTopRightProperty) ? 0 : cornerRadiusValue.TopRight,
+        };
+    }
+
+    private DependencyProperty GetCornerRadiusProperty(Type type, string? propertyName)
+    {
+        propertyName ??= $"{type.Name}_CornerRadius";
+
+        if (_cornerRadiusPropertyStorage.TryGetValue(propertyName, out var cornerRadiusProperty) is false)
+        {
+            Guard.AssertIsUiThread();
+
+            cornerRadiusProperty = UIKitPropertyStorage.GetOrCreate(propertyName, typeof(CornerRadius));
+            cornerRadiusProperty.OverrideMetadata(type, new PropertyMetadata(InvalidateCornerRadius));
+            _cornerRadiusPropertyStorage[propertyName] = cornerRadiusProperty;
+        }
+
+        return cornerRadiusProperty;
+    }
+
+    private void RaiseCornerRadiusChanged()
+    {
+        _cornerRadiusChangedCallback.Invoke();
+    }
+
+    private static void InvalidateCornerRadius(DependencyObject d, DependencyPropertyChangedEventArgs e)
+    {
+        d.GetValue<CornerRoundingHelper>(_cornerRoundingHelperHolderProperty).RaiseCornerRadiusChanged();
+    }
+
+    private static readonly Dictionary<string, DependencyProperty> _cornerRadiusPropertyStorage = new();
+
+    private readonly DependencyObject _target;
+    private readonly DependencyProperty _cornerRadiusProperty;
+    private readonly Action _cornerRadiusChangedCallback;
 }

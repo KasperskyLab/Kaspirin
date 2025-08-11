@@ -12,17 +12,25 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
+namespace Kaspirin.UI.Framework.NativeMethods.Api.User32.Enums;
 
-namespace Kaspirin.UI.Framework.NativeMethods.Api.User32.Enums
+/// <summary>
+///     An undocumented API. Used in the <see cref="User32Dll.SetWindowCompositionAttribute" /> call.
+/// </summary>
+public enum AccentState : uint
 {
     /// <summary>
-    ///     An undocumented API. Used in the <see cref="User32Dll.SetWindowCompositionAttribute" /> call.
+    ///     The ACCENT_DISABLED constant.
     /// </summary>
-    public enum AccentState : uint
-    {
-        ACCENT_DISABLED = 0,
-        ACCENT_ENABLE_BLURBEHIND = 3,
-        ACCENT_ENABLE_ACRYLICBLURBEHIND = 4,
-    }
+    Disabled = 0,
+
+    /// <summary>
+    ///     The ACCENT_ENABLE_BLURBEHIND constant.
+    /// </summary>
+    EnableBlurBehind = 3,
+
+    /// <summary>
+    ///     The ACCENT_ENABLE_ACRYLICBLURBEHIND constant.
+    /// </summary>
+    EnableAcrylicBlurBehind = 4,
 }

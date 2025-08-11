@@ -15,49 +15,46 @@
 using System.Windows;
 using System.Windows.Controls;
 
-namespace Kaspirin.UI.Framework.UiKit.Controls.Behaviors
+namespace Kaspirin.UI.Framework.UiKit.Controls.Behaviors;
+
+public sealed class ButtonCheckBehavior : Behavior<Button, ButtonCheckBehavior>
 {
-    public sealed class ButtonCheckBehavior : Behavior<Button, ButtonCheckBehavior>
+    #region IsChecked
+
+    public static bool GetIsChecked(DependencyObject obj)
+        => (bool)obj.GetValue(IsCheckedProperty);
+
+    public static void SetIsChecked(DependencyObject obj, bool value)
+        => obj.SetValue(IsCheckedProperty, value);
+
+    public static readonly DependencyProperty IsCheckedProperty = DependencyProperty.RegisterAttached(
+        "IsChecked",
+        typeof(bool),
+        typeof(ButtonCheckBehavior),
+        UIKitPropertyMetadataFactory.CreatePropsMetadata(typeof(Button), nameof(IsCheckedProperty)));
+
+    #endregion
+
+    protected override void OnAttached()
     {
-        #region IsChecked
+        Guard.IsNotNull(AssociatedObject);
 
-        public static bool GetIsChecked(DependencyObject obj)
-        {
-            return (bool)obj.GetValue(IsCheckedProperty);
-        }
+        AssociatedObject.Click += ChangeIsChecked;
+    }
 
-        public static void SetIsChecked(DependencyObject obj, bool value)
-        {
-            obj.SetValue(IsCheckedProperty, value);
-        }
+    protected override void OnDetaching()
+    {
+        Guard.IsNotNull(AssociatedObject);
 
-        public static readonly DependencyProperty IsCheckedProperty =
-            DependencyProperty.RegisterAttached("IsChecked", typeof(bool), typeof(ButtonCheckBehavior),
-                UIKitPropertyMetadataFactory.CreatePropsMetadata(typeof(Button), nameof(IsCheckedProperty)));
+        AssociatedObject.Click -= ChangeIsChecked;
+    }
 
-        #endregion
+    private void ChangeIsChecked(object sender, RoutedEventArgs e)
+    {
+        Guard.IsNotNull(AssociatedObject);
 
-        protected override void OnAttached()
-        {
-            Guard.IsNotNull(AssociatedObject);
+        var isChecked = (bool)AssociatedObject.GetValue(IsCheckedProperty);
 
-            AssociatedObject.Click += ChangeIsChecked;
-        }
-
-        protected override void OnDetaching()
-        {
-            Guard.IsNotNull(AssociatedObject);
-
-            AssociatedObject.Click -= ChangeIsChecked;
-        }
-
-        private void ChangeIsChecked(object sender, RoutedEventArgs e)
-        {
-            Guard.IsNotNull(AssociatedObject);
-
-            var isChecked = (bool)AssociatedObject.GetValue(IsCheckedProperty);
-
-            AssociatedObject.SetValue(IsCheckedProperty, !isChecked);
-        }
+        AssociatedObject.SetValue(IsCheckedProperty, !isChecked);
     }
 }

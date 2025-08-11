@@ -17,27 +17,26 @@ using System.Globalization;
 using System.Windows.Data;
 using System.Windows.Markup;
 
-namespace Kaspirin.UI.Framework.UiKit.Converters.BaseMarkupExtensions
+namespace Kaspirin.UI.Framework.UiKit.Converters.BaseMarkupExtensions;
+
+/// <summary>
+///     Provides a basic implementation of <see cref="IMultiValueConverter" /> that can be used in
+///     XAML files as a markup extension.
+/// </summary>
+/// <typeparam name="T">
+///     The type of the class with the conversion logic.
+/// </typeparam>
+public abstract class MultiValueConverterMarkupExtension<T> : MarkupExtension, IMultiValueConverter
+    where T : MultiValueConverterMarkupExtension<T>
 {
-    /// <summary>
-    ///     Provides a basic implementation of <see cref="IMultiValueConverter" /> that can be used in
-    ///     XAML files as a markup extension.
-    /// </summary>
-    /// <typeparam name="T">
-    ///     The type of the class with the conversion logic.
-    /// </typeparam>
-    public abstract class MultiValueConverterMarkupExtension<T> : MarkupExtension, IMultiValueConverter
-        where T : MultiValueConverterMarkupExtension<T>
-    {
-        /// <inheritdoc cref = "MarkupExtension.ProvideValue(IServiceProvider)" />
-        public sealed override object ProvideValue(IServiceProvider serviceProvider)
-            => Guard.EnsureIsInstanceOfType<T>(this);
+    /// <inheritdoc cref = "MarkupExtension.ProvideValue(IServiceProvider)" />
+    public sealed override object ProvideValue(IServiceProvider serviceProvider)
+        => Guard.EnsureIsInstanceOfType<T>(this);
 
-        /// <inheritdoc cref = "IMultiValueConverter.Convert(object[], Type, object, CultureInfo)" />
-        public abstract object? Convert(object?[] values, Type targetType, object? parameter, CultureInfo culture);
+    /// <inheritdoc cref = "IMultiValueConverter.Convert(object[], Type, object, CultureInfo)" />
+    public abstract object? Convert(object?[] values, Type targetType, object? parameter, CultureInfo culture);
 
-        /// <inheritdoc cref = "IMultiValueConverter.ConvertBack(object, Type[], object, CultureInfo)" />
-        public virtual object?[] ConvertBack(object? value, Type[] targetTypes, object? parameter, CultureInfo culture)
-            => throw new NotSupportedException();
-    }
+    /// <inheritdoc cref = "IMultiValueConverter.ConvertBack(object, Type[], object, CultureInfo)" />
+    public virtual object?[] ConvertBack(object? value, Type[] targetTypes, object? parameter, CultureInfo culture)
+        => throw new NotSupportedException();
 }

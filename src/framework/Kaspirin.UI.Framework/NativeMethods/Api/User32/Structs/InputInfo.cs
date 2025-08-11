@@ -16,19 +16,17 @@
 
 using System.Runtime.InteropServices;
 
-namespace Kaspirin.UI.Framework.NativeMethods.Api.User32.Structs
+namespace Kaspirin.UI.Framework.NativeMethods.Api.User32.Structs;
+
+/// <summary>
+///     <seealso href="https://learn.microsoft.com/en-us/windows/win32/api/winuser/ns-winuser-input">Learn more</seealso>.
+/// </summary>
+[StructLayout(LayoutKind.Sequential)]
+public struct InputInfo
 {
-    /// <summary>
-    ///     
-    /// <seealso href="https://learn.microsoft.com/en-us/windows/win32/api/winuser/ns-winuser-input">Learn more</seealso>.
-    /// </summary>
-    [StructLayout(LayoutKind.Sequential)]
-    public struct InputInfo
-    {
-        public InputType Type;
+    public InputType Type;
 
-        public InputUnion Data;
+    public InputUnion Data;
 
-        public static readonly int Size = Marshal.SizeOf(typeof(InputInfo));
-    }
+    public static readonly int Size = Marshal.SizeOf(typeof(InputInfo));
 }

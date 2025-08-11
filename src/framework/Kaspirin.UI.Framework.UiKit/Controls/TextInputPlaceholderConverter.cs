@@ -15,13 +15,12 @@
 using System.ComponentModel;
 using System.Globalization;
 
-namespace Kaspirin.UI.Framework.UiKit.Controls
+namespace Kaspirin.UI.Framework.UiKit.Controls;
+
+public sealed class TextInputPlaceholderConverter : TypeConverter
 {
-    public sealed class TextInputPlaceholderConverter : TypeConverter
+    public override object? ConvertFrom(ITypeDescriptorContext? context, CultureInfo? culture, object value)
     {
-        public override object? ConvertFrom(ITypeDescriptorContext? context, CultureInfo? culture, object value)
-        {
-            return new TextInputStringPlaceholder(value?.ToString() ?? string.Empty);
-        }
+        return new TextInputStringPlaceholder(value?.ToString() ?? string.Empty);
     }
 }

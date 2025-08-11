@@ -89,9 +89,9 @@
 								<xsl:with-param name="propertyValue" select="@CloseButtonIconName"/>
 							</xsl:call-template>
 
-							<!--IconForeground-->
+							<!--IconBrush-->
 							<xsl:call-template name="generateBrushSetter">
-								<xsl:with-param name="propertyName">IconForeground</xsl:with-param>
+								<xsl:with-param name="propertyName">IconBrush</xsl:with-param>
 								<xsl:with-param name="brushName">CloseButtonForeground</xsl:with-param>
 								<xsl:with-param name="scopeName" select="$id"/>
 							</xsl:call-template>
@@ -161,10 +161,10 @@
 					<xsl:with-param name="propertyId">InteractivityNotification_CornerRadius</xsl:with-param>
 				</xsl:call-template>
 
-				<!--InteractivityNotification_Icon_Foreground-->
+				<!--InteractivityNotification_Icon_Brush-->
 				<xsl:call-template name="generateBrushSetter">
-					<xsl:with-param name="propertyId">InteractivityNotification_Icon_Foreground</xsl:with-param>
-					<xsl:with-param name="brushName">IconForeground</xsl:with-param>
+					<xsl:with-param name="propertyId">InteractivityNotification_Icon_Brush</xsl:with-param>
+					<xsl:with-param name="brushName">IconBrush</xsl:with-param>
 					<xsl:with-param name="scopeName" select="$id" />
 				</xsl:call-template>
 

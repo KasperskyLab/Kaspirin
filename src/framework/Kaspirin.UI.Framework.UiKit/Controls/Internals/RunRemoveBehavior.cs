@@ -12,42 +12,41 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using System.Windows.Documents;
 using System.Windows.Data;
+using System.Windows.Documents;
 
-namespace Kaspirin.UI.Framework.UiKit.Controls.Internals
+namespace Kaspirin.UI.Framework.UiKit.Controls.Internals;
+
+internal sealed class RunRemoveBehavior : Behavior<Run, RunRemoveBehavior>
 {
-    internal sealed class RunRemoveBehavior : Behavior<Run, RunRemoveBehavior>
+    protected override void OnAttached()
     {
-        protected override void OnAttached()
+        base.OnAttached();
+        Guard.IsNotNull(AssociatedObject);
+
+        if (!string.IsNullOrEmpty(AssociatedObject.Text))
         {
-            base.OnAttached();
-            Guard.IsNotNull(AssociatedObject);
-
-            if (!string.IsNullOrEmpty(AssociatedObject.Text))
-            {
-                return;
-            }
-
-            var hasBinding = BindingOperations.GetBindingBase(AssociatedObject, Run.TextProperty) != null;
-            if (hasBinding)
-            {
-                return;
-            }
-
-            var root = AssociatedObject.FindParentTextBlock();
-            if (root == null)
-            {
-                return;
-            }
-
-            var isComplexTextBlock = string.IsNullOrEmpty(root.Text);
-            if (!isComplexTextBlock)
-            {
-                return;
-            }
-
-            root.Inlines.Remove(AssociatedObject);
+            return;
         }
+
+        var hasBinding = BindingOperations.GetBindingBase(AssociatedObject, Run.TextProperty) != null;
+        if (hasBinding)
+        {
+            return;
+        }
+
+        var root = AssociatedObject.FindParentTextBlock();
+        if (root == null)
+        {
+            return;
+        }
+
+        var isComplexTextBlock = string.IsNullOrEmpty(root.Text);
+        if (!isComplexTextBlock)
+        {
+            return;
+        }
+
+        root.Inlines.Remove(AssociatedObject);
     }
 }

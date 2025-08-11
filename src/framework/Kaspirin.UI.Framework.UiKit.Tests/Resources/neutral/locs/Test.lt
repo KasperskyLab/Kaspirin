@@ -1,0 +1,12 @@
+ShouldLocalizeByKey = 'test value'
+ShouldLocalizeByKeyWithOneParameter = 'begin ' + $ten + ' end'
+
+TestKey = 'test value'
+TestKeyWithChangedParam = 'begin ' + $StringValue + ' end'
+TestKeyWithChangedParamWithEnum = 'begin ' + $EnumValue + ' end'
+TestKeyWithChangedParamWithInt = 'begin ' + $StringValue + '_' + $IntValue + ' end'
+
+FirstLetterMustBeLower = 'ABCDEF'
+FirstLetterMustBeUpper = 'abcdef'
+AllLetterMustBeLower = 'ABCDEF'
+AllLettersMustBeUpper = 'abcdef'

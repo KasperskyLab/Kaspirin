@@ -12,328 +12,326 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using Kaspirin.UI.Framework.UiKit.Converters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Data;
 
-namespace Kaspirin.UI.Framework.UiKit.Localization.Markup.Converting
+namespace Kaspirin.UI.Framework.UiKit.Localization.Markup.Converting;
+
+public sealed class ResourceDelivery : FrameworkElement
 {
-    public sealed class ResourceDelivery : FrameworkElement
+    public ResourceDelivery(IResourceProvider resourceProvider, Binding sourceBinding)
     {
-        public ResourceDelivery(IResourceProvider resourceProvider, Binding sourceBinding)
-        {
-            _resourceProvider = Guard.EnsureArgumentIsNotNull(resourceProvider);
-            _sourceBinding = Guard.EnsureArgumentIsNotNull(sourceBinding);
-        }
+        _resourceProvider = Guard.EnsureArgumentIsNotNull(resourceProvider);
+        _sourceBinding = Guard.EnsureArgumentIsNotNull(sourceBinding);
+    }
 
-        static ResourceDelivery()
-        {
-            UnsetValue = new object();
+    static ResourceDelivery()
+    {
+        _unsetValue = new object();
 
-            ResourceValueProperty = DependencyProperty.Register(
-                nameof(ResourceValue),
-                typeof(object),
-                typeof(ResourceDelivery),
-                new PropertyMetadata(UnsetValue));
-        }
-
-        public LocalizationMarkupBase? CurrentBaseExtension { get; private set; }
-
-        public static readonly DependencyProperty RetainedDeliversProperty = DependencyProperty.Register(
-                "RetainedDelivers",
-                typeof(List<Retention>),
-                typeof(DependencyObject),
-                new FrameworkPropertyMetadata(null));
-
-        public object? ResourceValue
-        {
-            get => GetValue(ResourceValueProperty);
-            set => SetValue(ResourceValueProperty, value);
-        }
-
-        public static readonly DependencyProperty ResourceValueProperty;
-
-        public object? SourceValue
-        {
-            get => GetValue(SourceValueProperty);
-            set => SetValue(SourceValueProperty, value);
-        }
-
-        public static readonly DependencyProperty SourceValueProperty = DependencyProperty.Register(
-            "SourceValue",
+        ResourceValueProperty = DependencyProperty.Register(
+            nameof(ResourceValue),
             typeof(object),
             typeof(ResourceDelivery),
-            new PropertyMetadata(SourceValueChanged));
+            new PropertyMetadata(_unsetValue));
+    }
 
-        public BindingBase CreateBinding(object? targetObject)
+    #region RetainedDelivers
+
+    public static readonly DependencyProperty RetainedDeliversProperty = DependencyProperty.Register(
+            "RetainedDelivers",
+            typeof(List<Retention>),
+            typeof(DependencyObject),
+            new FrameworkPropertyMetadata(default(List<Retention>)));
+
+    #endregion
+
+    #region ResourceValue
+
+    public object? ResourceValue
+    {
+        get => GetValue(ResourceValueProperty);
+        set => SetValue(ResourceValueProperty, value);
+    }
+
+    public static readonly DependencyProperty ResourceValueProperty;
+
+    #endregion
+
+    #region SourceValue
+
+    public object? SourceValue
+    {
+        get => GetValue(SourceValueProperty);
+        set => SetValue(SourceValueProperty, value);
+    }
+
+    public static readonly DependencyProperty SourceValueProperty = DependencyProperty.Register(
+        nameof(SourceValue),
+        typeof(object),
+        typeof(ResourceDelivery),
+        new PropertyMetadata(default, SourceValueChanged));
+
+    private static void SourceValueChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+    {
+        if (e.NewValue != null)
         {
-            return targetObject switch
-            {
-                LocParameter => CreateParameterBinding(),
-                _ => CreateMultiBinding(targetObject)
-            };
+            ((ResourceDelivery)d).UpdateResource(e.NewValue);
         }
+    }
 
-        public static bool HasUnsetParameters(object?[] parameters)
+    #endregion
+
+    public BaseLocalizationMarkupExtension? CurrentBaseExtension { get; private set; }
+
+    public BindingBase CreateBinding(object? targetObject)
+    {
+        return targetObject switch
         {
-            return parameters.Contains(UnsetValue);
+            LocParameter => CreateParameterBinding(),
+            _ => CreateMultiBinding(targetObject)
+        };
+    }
+
+    public static bool HasUnsetParameters(object?[] parameters)
+    {
+        return parameters.Contains(_unsetValue);
+    }
+
+    public static bool IsUnsetParameter(object? parameter)
+    {
+        return ReferenceEquals(parameter, _unsetValue);
+    }
+
+    public void UpdateParameterDataContext(object? newDataContext)
+    {
+        var oldDataContext = DataContext;
+        DataContext = newDataContext;
+
+        if (oldDataContext == null && newDataContext != null)
+        {
+            // dataContext is setted now
+            // if dataContext is setted first time, SourceValue binding will be updated asyncronously
+            // but we need to get value of SourceValue syncronously, so set binding after dataContext isn't null:
+
+            SetBinding(SourceValueProperty, _sourceBinding);
         }
+    }
 
-        public static bool IsUnsetParameter(object? parameter)
+    internal ResourceDelivery CreateCopyResourceDelivery()
+    {
+        var result = new ResourceDelivery(_resourceProvider, _sourceBinding.Clone());
+        result._sourceBinding.Converter = null;
+        return result;
+    }
+
+    private MultiBinding CreateMultiBinding(object? targetObject)
+    {
+        var resBinding = new MultiBinding();
+
+        var setter = targetObject as Setter;
+        if (setter != null)
         {
-            return ReferenceEquals(parameter, UnsetValue);
-        }
-
-        public void UpdateParameterDataContext(object? newDataContext)
-        {
-            var oldDataContext = DataContext;
-            DataContext = newDataContext;
-
-            if (oldDataContext == null && newDataContext != null)
-            {
-                // dataContext is setted now
-                // if dataContext is setted first time, SourceValue binding will be updated asyncronously
-                // but we need to get value of SourceValue syncronously, so set binding after dataContext isn't null:
-
-                SetBinding(SourceValueProperty, _sourceBinding);
-            }
-        }
-
-        internal ResourceDelivery CreateCopyResourceDelivery()
-        {
-            var result = new ResourceDelivery(_resourceProvider, _sourceBinding.Clone());
-            result._sourceBinding.Converter = null;
-            return result;
-        }
-
-        private MultiBinding CreateMultiBinding(object? targetObject)
-        {
-            var resBinding = new MultiBinding();
-
-            var setter = targetObject as Setter;
-            if (setter != null)
-            {
-                resBinding.Bindings.Add(
-                    new Binding
-                    {
-                        RelativeSource = new RelativeSource(RelativeSourceMode.Self),
-                        Converter = new DelegateConverter(control =>
-                        {
-                            OnApplyingToTargetObject(control as DependencyObject, setter);
-                            return DependencyProperty.UnsetValue;
-                        }),
-                        Mode = BindingMode.OneWay
-                    });
-            }
-            else
-            {
-                AttachTo(targetObject as DependencyObject);
-            }
-
             resBinding.Bindings.Add(
                 new Binding
                 {
-                    Path = new PropertyPath(nameof(DataContext)),
                     RelativeSource = new RelativeSource(RelativeSourceMode.Self),
-                    Converter = new DelegateConverter(newDataContext =>
+                    Converter = new DelegateConverter(control =>
                     {
-                        DataContext = newDataContext;
+                        OnApplyingToTargetObject(control as DependencyObject, setter);
                         return DependencyProperty.UnsetValue;
-                    })
+                    }),
+                    Mode = BindingMode.OneWay
                 });
+        }
+        else
+        {
+            AttachTo(targetObject as DependencyObject);
+        }
 
-            var converter = new DelegateConverter(newKey =>
+        resBinding.Bindings.Add(
+            new Binding
             {
-                if (!string.IsNullOrEmpty(_sourceBinding.StringFormat))
+                Path = new PropertyPath(nameof(DataContext)),
+                RelativeSource = new RelativeSource(RelativeSourceMode.Self),
+                Converter = new DelegateConverter(newDataContext =>
                 {
-                    newKey = string.Format(_sourceBinding.StringFormat, newKey);
-                }
-
-                UpdateResource(newKey);
-                return DependencyProperty.UnsetValue;
+                    DataContext = newDataContext;
+                    return DependencyProperty.UnsetValue;
+                })
             });
 
-            if (_sourceBinding.Converter != null)
+        var converter = new DelegateConverter(newKey =>
+        {
+            if (!string.IsNullOrEmpty(_sourceBinding.StringFormat))
             {
-                _sourceBinding.Converter = new CompositeConverter(_sourceBinding.Converter, converter);
-            }
-            else
-            {
-                _sourceBinding.Converter = converter;
+                newKey = string.Format(_sourceBinding.StringFormat, newKey);
             }
 
-            resBinding.Bindings.Add(_sourceBinding);
-            resBinding.Bindings.Add(CreateResourceBinding());
-            resBinding.Mode = BindingMode.OneWay;
-            resBinding.Converter = new DelegateMultiConverter(values => values.Last());
+            UpdateResource(newKey);
+            return DependencyProperty.UnsetValue;
+        });
 
-            return resBinding;
+        if (_sourceBinding.Converter != null)
+        {
+            _sourceBinding.Converter = new CompositeConverter(_sourceBinding.Converter, converter);
+        }
+        else
+        {
+            _sourceBinding.Converter = converter;
         }
 
-        internal Binding CreateParameterBinding()
+        resBinding.Bindings.Add(_sourceBinding);
+        resBinding.Bindings.Add(CreateResourceBinding());
+        resBinding.Mode = BindingMode.OneWay;
+        resBinding.Converter = new DelegateMultiConverter(values => values.Last());
+
+        return resBinding;
+    }
+
+    internal Binding CreateParameterBinding()
+    {
+        // Can't provide MultiBinding to localization parameter,
+        // so provide Binding, but deliver
+        // updates from sourceBinding via DP SourceValueProperty
+        // see SetSourceBinding
+
+        return CreateResourceBinding();
+    }
+
+    private Binding CreateResourceBinding()
+    {
+        return new Binding
         {
-            // Can't provide MultiBinding to localization parameter,
-            // so provide Binding, but deliver
-            // updates from sourceBinding via DP SourceValueProperty
-            // see SetSourceBinding
+            Source = this,
+            Path = new PropertyPath(nameof(ResourceValue)),
 
-            return CreateResourceBinding();
-        }
+            // We need to create hard reference from Binding to current ResourceDelivery,
+            // because of property Binding.Source create weakReference to source object internally
+            // and GC collects current ResourceDelivery
+            FallbackValue = this
+        };
+    }
 
-        private Binding CreateResourceBinding()
+    private void OnApplyingToTargetObject(DependencyObject? newTargetObject, Setter setter)
+    {
+        // prevents binding sharing over style trigger setters
+        var targetObject = (DependencyObject?)_targetObject?.Target;
+        if (targetObject != null)
         {
-            return new Binding
+            if (newTargetObject != null && targetObject != newTargetObject)
             {
-                Source = this,
-                Path = new PropertyPath(nameof(ResourceValue)),
+                DetachFrom(targetObject);
 
-                // We need to create hard reference from Binding to current ResourceDelivery,
-                // because of property Binding.Source create weakReference to source object internally
-                // and GC collects current ResourceDelivery
-                FallbackValue = this
-            };
-        }
+                var newResDelivery = CreateCopyResourceDelivery();
+                newResDelivery._targetObject = _targetObject;
 
-        private void OnApplyingToTargetObject(DependencyObject? newTargetObject, Setter setter)
-        {
-            // prevents binding sharing over style trigger setters
-            var targetObject = (DependencyObject?)_targetObject?.Target;
-            if (targetObject != null)
-            {
-                if (newTargetObject != null && targetObject != newTargetObject)
-                {
-                    DetachFrom(targetObject);
+                var newBinding = newResDelivery.CreateBinding(targetObject);
 
-                    var newResDelivery = CreateCopyResourceDelivery();
-                    newResDelivery._targetObject = _targetObject;
+                BindingOperations.SetBinding(targetObject, setter.Property, newBinding);
+                newResDelivery.AttachTo(targetObject);
 
-                    var newBinding = newResDelivery.CreateBinding(targetObject);
-
-                    BindingOperations.SetBinding(targetObject, setter.Property, newBinding);
-                    newResDelivery.AttachTo(targetObject);
-
-                    AttachTo(newTargetObject);
-                }
-            }
-            else
-            {
                 AttachTo(newTargetObject);
             }
-
-            _targetObject = newTargetObject == null ? null : new(newTargetObject);
+        }
+        else
+        {
+            AttachTo(newTargetObject);
         }
 
-        private void UpdateResource(object? key)
+        _targetObject = newTargetObject == null ? null : new(newTargetObject);
+    }
+
+    private void UpdateResource(object? key)
+    {
+        var resource = _resourceProvider.GetResource(key);
+
+        CurrentBaseExtension = resource as BaseLocalizationMarkupExtension;
+
+        if (resource is IBindingProvider bindingProvider)
         {
-            // uncomment when switched to new metadata switching (Shift + F11)
+            BindingOperations.SetBinding(this, ResourceValueProperty, bindingProvider.ProvideBinding());
+        }
+        else
+        {
+            ResourceValue = resource;
+        }
+    }
 
-            //if (CurrentBaseExtension != null // &&
-            //    // _currentKey.Equals(key))
-            //    )
-            //{
-            //    return;
-            //}
-
-            // _currentKey = key;
-            var resource = _resourceProvider.GetResource(key);
-
-            CurrentBaseExtension = resource as LocalizationMarkupBase;
-
-            if (resource is IBindingProvider bindingProvider)
+    private void AttachTo(DependencyObject? targetObject)
+    {
+        if (targetObject != null)
+        {
+            var retention = (Retention?)_retention?.Target;
+            if (retention == null)
             {
-                BindingOperations.SetBinding(this, ResourceValueProperty, bindingProvider.ProvideBinding());
+                retention = new Retention(this);
+                _retention = new WeakReference(retention);
+            }
+
+            var retainedDelivers = (List<Retention>)targetObject!.GetValue(RetainedDeliversProperty);
+            if (retainedDelivers == null)
+            {
+                retainedDelivers = new()
+                {
+                    retention!
+                };
+                targetObject?.SetValue(RetainedDeliversProperty, retainedDelivers);
             }
             else
             {
-                ResourceValue = resource;
+                retainedDelivers.Add(retention!);
             }
         }
-
-        private static void SourceValueChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            var resourceDelivery = (ResourceDelivery)d;
-
-            if (e.NewValue != null)
-            {
-                resourceDelivery.UpdateResource(e.NewValue);
-            }
-        }
-
-        private void AttachTo(DependencyObject? targetObject)
-        {
-            if (targetObject != null)
-            {
-                var retention = (Retention?)_retention?.Target;
-                if (retention == null)
-                {
-                    retention = new Retention(this);
-                    _retention = new WeakReference(retention);
-                }
-
-                var retainedDelivers = (List<Retention>)targetObject!.GetValue(RetainedDeliversProperty);
-                if (retainedDelivers == null)
-                {
-                    retainedDelivers = new List<Retention>
-                    {
-                        retention!
-                    };
-                    targetObject?.SetValue(RetainedDeliversProperty, retainedDelivers);
-                }
-                else
-                {
-                    retainedDelivers.Add(retention!);
-                }
-            }
-        }
-
-        private void DetachFrom(DependencyObject targetObject)
-        {
-            var retention = (Retention?)_retention?.Target;
-            if (retention != null)
-            {
-                var retainedDelivers = (List<Retention>)targetObject.GetValue(RetainedDeliversProperty);
-                retainedDelivers?.Remove(retention);
-            }
-        }
-
-        private void ClearData()
-        {
-            Dispatcher.BeginInvoke(new Action(() =>
-            {
-                ClearValue(DataContextProperty);
-                _retention = null;
-                _targetObject = null;
-            }));
-        }
-
-        /// <summary>
-        /// ResourceDelivery that is used in Setter live long time and isn't collected when collected target control binded to it
-        /// We need to track the moment when target control is collected to clear DataContext property,
-        /// because ViewModel is retained by follow path: Style->Setter->Binding->ResourceDelivery->DataContext->ViewModel.
-        /// </summary>
-        private sealed class Retention
-        {
-            public Retention(ResourceDelivery delivery)
-            {
-                _delivery = delivery;
-            }
-
-            ~Retention()
-            {
-                _delivery.ClearData();
-            }
-
-            private readonly ResourceDelivery _delivery;
-        }
-
-        private readonly IResourceProvider _resourceProvider;
-        private readonly Binding _sourceBinding;
-        private WeakReference? _targetObject = null; //DependencyObject
-        private WeakReference? _retention = null; //Retention
-
-        private static readonly object UnsetValue;
     }
+
+    private void DetachFrom(DependencyObject targetObject)
+    {
+        var retention = (Retention?)_retention?.Target;
+        if (retention != null)
+        {
+            var retainedDelivers = (List<Retention>)targetObject.GetValue(RetainedDeliversProperty);
+            retainedDelivers?.Remove(retention);
+        }
+    }
+
+    private void ClearData()
+    {
+        Dispatcher.BeginInvoke(new Action(() =>
+        {
+            ClearValue(DataContextProperty);
+            _retention = null;
+            _targetObject = null;
+        }));
+    }
+
+    /// <summary>
+    /// ResourceDelivery that is used in Setter live long time and isn't collected when collected target control binded to it
+    /// We need to track the moment when target control is collected to clear DataContext property,
+    /// because ViewModel is retained by follow path: Style->Setter->Binding->ResourceDelivery->DataContext->ViewModel.
+    /// </summary>
+    private sealed class Retention
+    {
+        public Retention(ResourceDelivery delivery)
+        {
+            _delivery = delivery;
+        }
+
+        ~Retention()
+        {
+            _delivery.ClearData();
+        }
+
+        private readonly ResourceDelivery _delivery;
+    }
+
+    private readonly IResourceProvider _resourceProvider;
+    private readonly Binding _sourceBinding;
+    private WeakReference? _targetObject = null; //DependencyObject
+    private WeakReference? _retention = null; //Retention
+
+    private static readonly object _unsetValue;
 }

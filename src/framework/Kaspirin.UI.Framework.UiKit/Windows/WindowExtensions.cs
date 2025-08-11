@@ -17,92 +17,91 @@ using System.ComponentModel;
 using System.Windows;
 using System.Windows.Interop;
 
-namespace Kaspirin.UI.Framework.UiKit.Windows
+namespace Kaspirin.UI.Framework.UiKit.Windows;
+
+public static class WindowExtensions
 {
-    public static class WindowExtensions
+    public static IntPtr GetHandle(this Window window, bool ensure = false)
     {
-        public static IntPtr GetHandle(this Window window, bool ensure = false)
-        {
-            Guard.ArgumentIsNotNull(window);
+        Guard.ArgumentIsNotNull(window);
 
-            if (ensure)
-            {
-                return new WindowInteropHelper(window).EnsureHandle();
-            }
-            else
-            {
-                return new WindowInteropHelper(window).Handle;
-            }
+        if (ensure)
+        {
+            return new WindowInteropHelper(window).EnsureHandle();
+        }
+        else
+        {
+            return new WindowInteropHelper(window).Handle;
+        }
+    }
+
+    public static void WhenSourceInitialized(this Window window, Action? action)
+    {
+        Guard.ArgumentIsNotNull(window);
+
+        void OnSourceInitialized(object? sender, EventArgs e)
+        {
+            Guard.EnsureIsInstanceOfType<Window>(sender).SourceInitialized -= OnSourceInitialized;
+            action?.Invoke();
         }
 
-        public static void WhenSourceInitialized(this Window window, Action? action)
+        void OnClosing(object? sender, CancelEventArgs e)
         {
-            Guard.ArgumentIsNotNull(window);
-
-            void OnSourceInitialized(object? sender, EventArgs e)
-            {
-                Guard.EnsureIsInstanceOfType<Window>(sender).SourceInitialized -= OnSourceInitialized;
-                action?.Invoke();
-            }
-
-            void OnClosing(object? sender, CancelEventArgs e)
-            {
-                Guard.EnsureIsInstanceOfType<Window>(sender).Closing -= OnClosing;
-                action = null;
-            }
-
-            var isSourceInitialized = window.GetHandle() != IntPtr.Zero;
-            if (isSourceInitialized)
-            {
-                action?.Invoke();
-            }
-            else
-            {
-                window.Closing += OnClosing;
-                window.SourceInitialized += OnSourceInitialized;
-            }
+            Guard.EnsureIsInstanceOfType<Window>(sender).Closing -= OnClosing;
+            action = null;
         }
 
-        /// <param name="position">Position in screen coordinates.</param>
-        public static void SetWindowPosition(this Window window, Point position)
+        var isSourceInitialized = window.GetHandle() != IntPtr.Zero;
+        if (isSourceInitialized)
         {
-            Guard.ArgumentIsNotNull(window);
-
-            var service = WindowScreenMonitoringService.GetInstance(window);
-
-            service.WhenInitialized(() =>
-            {
-                window.Left = position.X * service.GetScaleX(DpiType.DefaultDpi, DpiType.WindowOriginDpi);
-                window.Top = position.Y * service.GetScaleY(DpiType.DefaultDpi, DpiType.WindowOriginDpi);
-
-                AdjustWindowPosition(window);
-            });
+            action?.Invoke();
         }
-
-        public static void AdjustWindowPosition(this Window window)
+        else
         {
-            Guard.ArgumentIsNotNull(window);
-
-            var service = WindowScreenMonitoringService.GetInstance(window);
-
-            service.WhenInitialized(() =>
-            {
-                var workArea = service.GetScaledWorkArea();
-
-                if (window.Left < workArea.Left)
-                {
-                    window.Left = workArea.Left;
-                }
-                else if (window.Left + window.Width > workArea.Right)
-                {
-                    window.Left = workArea.Right - window.Width;
-                }
-
-                if (window.Top + window.Height > workArea.Bottom)
-                {
-                    window.Top = workArea.Bottom - window.Height;
-                }
-            });
+            window.Closing += OnClosing;
+            window.SourceInitialized += OnSourceInitialized;
         }
+    }
+
+    /// <param name="position">Position in screen coordinates.</param>
+    public static void SetWindowPosition(this Window window, Point position)
+    {
+        Guard.ArgumentIsNotNull(window);
+
+        var service = WindowScreenMonitoringService.GetInstance(window);
+
+        service.WhenInitialized(() =>
+        {
+            window.Left = position.X * service.GetScaleX(DpiType.DefaultDpi, DpiType.WindowOriginDpi);
+            window.Top = position.Y * service.GetScaleY(DpiType.DefaultDpi, DpiType.WindowOriginDpi);
+
+            AdjustWindowPosition(window);
+        });
+    }
+
+    public static void AdjustWindowPosition(this Window window)
+    {
+        Guard.ArgumentIsNotNull(window);
+
+        var service = WindowScreenMonitoringService.GetInstance(window);
+
+        service.WhenInitialized(() =>
+        {
+            var workArea = service.GetScaledWorkArea();
+
+            if (window.Left < workArea.Left)
+            {
+                window.Left = workArea.Left;
+            }
+            else if (window.Left + window.Width > workArea.Right)
+            {
+                window.Left = workArea.Right - window.Width;
+            }
+
+            if (window.Top + window.Height > workArea.Bottom)
+            {
+                window.Top = workArea.Bottom - window.Height;
+            }
+        });
     }
 }

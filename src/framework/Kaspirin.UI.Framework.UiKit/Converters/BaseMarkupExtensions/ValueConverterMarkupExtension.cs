@@ -17,26 +17,25 @@ using System.Globalization;
 using System.Windows.Data;
 using System.Windows.Markup;
 
-namespace Kaspirin.UI.Framework.UiKit.Converters.BaseMarkupExtensions
+namespace Kaspirin.UI.Framework.UiKit.Converters.BaseMarkupExtensions;
+
+/// <summary>
+///     Provides a basic implementation of <see cref="IValueConverter" />, which can be used in XAML files as a markup extension.
+/// </summary>
+/// <typeparam name="T">
+///     The type of the class with the conversion logic.
+/// </typeparam>
+public abstract class ValueConverterMarkupExtension<T> : MarkupExtension, IValueConverter
+    where T : ValueConverterMarkupExtension<T>
 {
-    /// <summary>
-    ///     Provides a basic implementation of <see cref="IValueConverter" />, which can be used in XAML files as a markup extension.
-    /// </summary>
-    /// <typeparam name="T">
-    ///     The type of the class with the conversion logic.
-    /// </typeparam>
-    public abstract class ValueConverterMarkupExtension<T> : MarkupExtension, IValueConverter
-        where T : ValueConverterMarkupExtension<T>
-    {
-        /// <inheritdoc cref = "MarkupExtension.ProvideValue(IServiceProvider)" />
-        public sealed override object ProvideValue(IServiceProvider serviceProvider)
-            => Guard.EnsureIsInstanceOfType<T>(this);
+    /// <inheritdoc cref = "MarkupExtension.ProvideValue(IServiceProvider)" />
+    public sealed override object ProvideValue(IServiceProvider serviceProvider)
+        => Guard.EnsureIsInstanceOfType<T>(this);
 
-        /// <inheritdoc cref = "IValueConverter.Convert(object, Type, object, CultureInfo)" />
-        public abstract object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture);
+    /// <inheritdoc cref = "IValueConverter.Convert(object, Type, object, CultureInfo)" />
+    public abstract object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture);
 
-        /// <inheritdoc cref = "IValueConverter.ConvertBack(object, Type, object, CultureInfo)" />
-        public virtual object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
-            => throw new NotSupportedException();
-    }
+    /// <inheritdoc cref = "IValueConverter.ConvertBack(object, Type, object, CultureInfo)" />
+    public virtual object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
+        => throw new NotSupportedException();
 }

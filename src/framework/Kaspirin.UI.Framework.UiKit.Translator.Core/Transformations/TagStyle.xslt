@@ -321,7 +321,7 @@
 							<xsl:with-param name="propertyId">Tag_Icon_Color</xsl:with-param>
 							<xsl:with-param name="propertyValue">
 								<xsl:call-template name="generateResExtension">
-									<xsl:with-param name="key">IconForegroundEmerald</xsl:with-param>
+									<xsl:with-param name="key">IconBrushEmerald</xsl:with-param>
 									<xsl:with-param name="scope" select="$id" />
 								</xsl:call-template>
 							</xsl:with-param>
@@ -383,7 +383,7 @@
 							<xsl:with-param name="propertyId">Tag_Icon_Color</xsl:with-param>
 							<xsl:with-param name="propertyValue">
 								<xsl:call-template name="generateResExtension">
-									<xsl:with-param name="key">IconForegroundGrass</xsl:with-param>
+									<xsl:with-param name="key">IconBrushGrass</xsl:with-param>
 									<xsl:with-param name="scope" select="$id" />
 								</xsl:call-template>
 							</xsl:with-param>
@@ -445,7 +445,7 @@
 							<xsl:with-param name="propertyId">Tag_Icon_Color</xsl:with-param>
 							<xsl:with-param name="propertyValue">
 								<xsl:call-template name="generateResExtension">
-									<xsl:with-param name="key">IconForegroundMarina</xsl:with-param>
+									<xsl:with-param name="key">IconBrushMarina</xsl:with-param>
 									<xsl:with-param name="scope" select="$id" />
 								</xsl:call-template>
 							</xsl:with-param>
@@ -507,7 +507,7 @@
 							<xsl:with-param name="propertyId">Tag_Icon_Color</xsl:with-param>
 							<xsl:with-param name="propertyValue">
 								<xsl:call-template name="generateResExtension">
-									<xsl:with-param name="key">IconForegroundMarengo</xsl:with-param>
+									<xsl:with-param name="key">IconBrushMarengo</xsl:with-param>
 									<xsl:with-param name="scope" select="$id" />
 								</xsl:call-template>
 							</xsl:with-param>
@@ -569,7 +569,7 @@
 							<xsl:with-param name="propertyId">Tag_Icon_Color</xsl:with-param>
 							<xsl:with-param name="propertyValue">
 								<xsl:call-template name="generateResExtension">
-									<xsl:with-param name="key">IconForegroundNeutral</xsl:with-param>
+									<xsl:with-param name="key">IconBrushNeutral</xsl:with-param>
 									<xsl:with-param name="scope" select="$id" />
 								</xsl:call-template>
 							</xsl:with-param>
@@ -631,7 +631,7 @@
 							<xsl:with-param name="propertyId">Tag_Icon_Color</xsl:with-param>
 							<xsl:with-param name="propertyValue">
 								<xsl:call-template name="generateResExtension">
-									<xsl:with-param name="key">IconForegroundOrange</xsl:with-param>
+									<xsl:with-param name="key">IconBrushOrange</xsl:with-param>
 									<xsl:with-param name="scope" select="$id" />
 								</xsl:call-template>
 							</xsl:with-param>
@@ -693,7 +693,7 @@
 							<xsl:with-param name="propertyId">Tag_Icon_Color</xsl:with-param>
 							<xsl:with-param name="propertyValue">
 								<xsl:call-template name="generateResExtension">
-									<xsl:with-param name="key">IconForegroundPurple</xsl:with-param>
+									<xsl:with-param name="key">IconBrushPurple</xsl:with-param>
 									<xsl:with-param name="scope" select="$id" />
 								</xsl:call-template>
 							</xsl:with-param>
@@ -755,7 +755,7 @@
 							<xsl:with-param name="propertyId">Tag_Icon_Color</xsl:with-param>
 							<xsl:with-param name="propertyValue">
 								<xsl:call-template name="generateResExtension">
-									<xsl:with-param name="key">IconForegroundRed</xsl:with-param>
+									<xsl:with-param name="key">IconBrushRed</xsl:with-param>
 									<xsl:with-param name="scope" select="$id" />
 								</xsl:call-template>
 							</xsl:with-param>
@@ -817,7 +817,7 @@
 							<xsl:with-param name="propertyId">Tag_Icon_Color</xsl:with-param>
 							<xsl:with-param name="propertyValue">
 								<xsl:call-template name="generateResExtension">
-									<xsl:with-param name="key">IconForegroundViolet</xsl:with-param>
+									<xsl:with-param name="key">IconBrushViolet</xsl:with-param>
 									<xsl:with-param name="scope" select="$id" />
 								</xsl:call-template>
 							</xsl:with-param>
@@ -879,7 +879,7 @@
 							<xsl:with-param name="propertyId">Tag_Icon_Color</xsl:with-param>
 							<xsl:with-param name="propertyValue">
 								<xsl:call-template name="generateResExtension">
-									<xsl:with-param name="key">IconForegroundYellow</xsl:with-param>
+									<xsl:with-param name="key">IconBrushYellow</xsl:with-param>
 									<xsl:with-param name="scope" select="$id" />
 								</xsl:call-template>
 							</xsl:with-param>

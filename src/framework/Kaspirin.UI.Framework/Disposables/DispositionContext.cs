@@ -15,102 +15,101 @@
 using System;
 using System.Windows;
 
-namespace Kaspirin.UI.Framework.Disposables
+namespace Kaspirin.UI.Framework.Disposables;
+
+/// <summary>
+///     Adds an event to the <see cref="DependencyObject" /> object <see cref="Disposed" />.
+/// </summary>
+public sealed class DispositionContext
 {
     /// <summary>
-    ///     Adds an event to the <see cref="DependencyObject" /> object <see cref="Disposed" />.
+    ///     Gets the <see cref="DispositionContext" /> object from <paramref name="target" />.
     /// </summary>
-    public sealed class DispositionContext
+    /// <param name="target">
+    ///     The target object.
+    /// </param>
+    /// <returns>
+    ///     The object is <see cref="DispositionContext" /> if it was previously initialized, otherwise <see langword="null" />.
+    /// </returns>
+    public static DispositionContext? Get(DependencyObject target)
+        => GetContext(target);
+
+    /// <summary>
+    ///     Initializes the <see cref="DispositionContext" /> object at <paramref name="target" />.
+    /// </summary>
+    /// <param name="target">
+    ///     The target object.
+    /// </param>
+    public static void Initialize(DependencyObject target)
+        => SetContext(target, new DispositionContext());
+
+    /// <summary>
+    ///     Throws the <see cref="Disposed" /> event at <paramref name="target" />.
+    /// </summary>
+    /// <param name="target">
+    ///     The target object.
+    /// </param>
+    public static void Dispose(DependencyObject target)
     {
-        /// <summary>
-        ///     Gets the <see cref="DispositionContext" /> object from <paramref name="target" />.
-        /// </summary>
-        /// <param name="target">
-        ///     The target object.
-        /// </param>
-        /// <returns>
-        ///     The object is <see cref="DispositionContext" /> if it was previously initialized, otherwise <see langword="null" />.
-        /// </returns>
-        public static DispositionContext? Get(DependencyObject target)
-            => GetContext(target);
-
-        /// <summary>
-        ///     Initializes the <see cref="DispositionContext" /> object at <paramref name="target" />.
-        /// </summary>
-        /// <param name="target">
-        ///     The target object.
-        /// </param>
-        public static void Initialize(DependencyObject target)
-            => SetContext(target, new DispositionContext());
-
-        /// <summary>
-        ///     Throws the <see cref="Disposed" /> event at <paramref name="target" />.
-        /// </summary>
-        /// <param name="target">
-        ///     The target object.
-        /// </param>
-        public static void Dispose(DependencyObject target)
+        var context = GetContext(target);
+        if (context == null)
         {
-            var context = GetContext(target);
-            if (context == null)
-            {
-                return;
-            }
-
-            context.Dispose();
-
-            SetContext(target, null);
+            return;
         }
 
-        /// <summary>
-        ///     An event about the destruction of an object.
-        /// </summary>
-        public event EventHandler? Disposed;
+        context.Dispose();
 
-        private void Dispose()
-        {
-            if (_isDisposed)
-            {
-                return;
-            }
-
-            Disposed?.Invoke(this, EventArgs.Empty);
-
-            _isDisposed = true;
-        }
-
-        private static void SetContext(DependencyObject target, DispositionContext? context)
-        {
-            if (target is FrameworkElement)
-            {
-                target.SetValue(_frameworkElementDispositionContextProperty, context);
-            }
-            else
-            {
-                target.SetValue(_dependencyObjectDispositionContextProperty, context);
-            }
-        }
-
-        private static DispositionContext? GetContext(DependencyObject target)
-        {
-            var result = target is FrameworkElement
-                ? target.GetValue(_frameworkElementDispositionContextProperty)
-                : target.GetValue(_dependencyObjectDispositionContextProperty);
-
-            return (DispositionContext?)result;
-        }
-
-        private bool _isDisposed;
-
-        private static readonly DependencyProperty _dependencyObjectDispositionContextProperty = DependencyProperty.Register(
-            "DependencyObjectDispositionContext",
-            typeof(DispositionContext),
-            typeof(DependencyObject));
-
-        private static readonly DependencyProperty _frameworkElementDispositionContextProperty = DependencyProperty.Register(
-            "FrameworkElementDispositionContext",
-            typeof(DispositionContext),
-            typeof(FrameworkElement),
-            new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.Inherits));
+        SetContext(target, null);
     }
+
+    /// <summary>
+    ///     An event about the destruction of an object.
+    /// </summary>
+    public event EventHandler? Disposed;
+
+    private void Dispose()
+    {
+        if (_isDisposed)
+        {
+            return;
+        }
+
+        Disposed?.Invoke(this, EventArgs.Empty);
+
+        _isDisposed = true;
+    }
+
+    private static void SetContext(DependencyObject target, DispositionContext? context)
+    {
+        if (target is FrameworkElement)
+        {
+            target.SetValue(_frameworkElementDispositionContextProperty, context);
+        }
+        else
+        {
+            target.SetValue(_dependencyObjectDispositionContextProperty, context);
+        }
+    }
+
+    private static DispositionContext? GetContext(DependencyObject target)
+    {
+        var result = target is FrameworkElement
+            ? target.GetValue(_frameworkElementDispositionContextProperty)
+            : target.GetValue(_dependencyObjectDispositionContextProperty);
+
+        return (DispositionContext?)result;
+    }
+
+    private bool _isDisposed;
+
+    private static readonly DependencyProperty _dependencyObjectDispositionContextProperty = DependencyProperty.Register(
+        "DependencyObjectDispositionContext",
+        typeof(DispositionContext),
+        typeof(DependencyObject));
+
+    private static readonly DependencyProperty _frameworkElementDispositionContextProperty = DependencyProperty.Register(
+        "FrameworkElementDispositionContext",
+        typeof(DispositionContext),
+        typeof(FrameworkElement),
+        new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.Inherits));
 }

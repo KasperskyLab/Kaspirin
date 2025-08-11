@@ -16,32 +16,30 @@
 
 using System.Runtime.InteropServices;
 
-namespace Kaspirin.UI.Framework.NativeMethods.Api.Advapi32.Structs
+namespace Kaspirin.UI.Framework.NativeMethods.Api.Advapi32.Structs;
+
+/// <summary>
+///     <seealso href="https://learn.microsoft.com/en-us/windows/win32/api/winnt/ns-winnt-generic_mapping">Learn more</seealso>.
+/// </summary>
+[StructLayout(LayoutKind.Sequential)]
+public struct GenericMapping
 {
-    /// <summary>
-    ///     
-    /// <seealso href="https://learn.microsoft.com/en-us/windows/win32/api/winnt/ns-winnt-generic_mapping">Learn more</seealso>.
-    /// </summary>
-    [StructLayout(LayoutKind.Sequential)]
-    public struct GenericMapping
+    public uint GenericRead;
+
+    public uint GenericWrite;
+
+    public uint GenericExecute;
+
+    public uint GenericAll;
+
+    public static GenericMapping Create()
     {
-        public uint GenericRead;
-
-        public uint GenericWrite;
-
-        public uint GenericExecute;
-
-        public uint GenericAll;
-
-        public static GenericMapping Create()
+        return new GenericMapping
         {
-            return new GenericMapping
-            {
-                GenericRead = (uint)AccessMaskFlags.GENERIC_READ,
-                GenericWrite = (uint)AccessMaskFlags.GENERIC_WRITE,
-                GenericExecute = (uint)AccessMaskFlags.GENERIC_EXECUTE,
-                GenericAll = (uint)AccessMaskFlags.GENERIC_ALL
-            };
-        }
+            GenericRead = (uint)AccessMaskFlags.GenericRead,
+            GenericWrite = (uint)AccessMaskFlags.GenericWrite,
+            GenericExecute = (uint)AccessMaskFlags.GenericExecute,
+            GenericAll = (uint)AccessMaskFlags.GenericAll
+        };
     }
 }

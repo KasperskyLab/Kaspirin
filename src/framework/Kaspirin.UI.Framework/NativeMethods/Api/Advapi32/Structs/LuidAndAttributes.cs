@@ -16,17 +16,15 @@
 
 using System.Runtime.InteropServices;
 
-namespace Kaspirin.UI.Framework.NativeMethods.Api.Advapi32.Structs
-{
-    /// <summary>
-    ///     
-    /// <seealso href="https://learn.microsoft.com/en-us/windows/win32/api/winnt/ns-winnt-luid_and_attributes">Learn more</seealso>.
-    /// </summary>
-    [StructLayout(LayoutKind.Sequential)]
-    public struct LuidAndAttributes
-    {
-        public Luid Luid;
+namespace Kaspirin.UI.Framework.NativeMethods.Api.Advapi32.Structs;
 
-        public uint Attributes;
-    }
+/// <summary>
+///     <seealso href="https://learn.microsoft.com/en-us/windows/win32/api/winnt/ns-winnt-luid_and_attributes">Learn more</seealso>.
+/// </summary>
+[StructLayout(LayoutKind.Sequential)]
+public struct LuidAndAttributes
+{
+    public Luid Luid;
+
+    public uint Attributes;
 }

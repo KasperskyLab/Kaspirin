@@ -14,17 +14,21 @@
 
 using System.Windows.Media.Animation;
 
-namespace Kaspirin.UI.Framework.UiKit.Animation.Markup.Easing
-{
-    public sealed class PowerEasingExtension : EasingExtensionBase
-    {
-        public double Power { get; set; }
+namespace Kaspirin.UI.Framework.UiKit.Animation.Markup.Easing;
 
-        protected override IEasingFunction CreateEasing()
-            => new PowerEase
-            {
-                Power = Power,
-                EasingMode = Mode
-            };
-    }
+/// <summary>
+///     Extending the markup for initializing the <see cref="PowerEase" /> class in XAML.
+/// </summary>
+public sealed class PowerEasingExtension : EasingExtensionBase
+{
+    /// <inheritdoc cref="PowerEase.Power"/>
+    public double Power { get; set; }
+
+    /// <inheritdoc/>
+    protected override IEasingFunction CreateEasing()
+        => new PowerEase
+        {
+            Power = Power,
+            EasingMode = Mode
+        };
 }

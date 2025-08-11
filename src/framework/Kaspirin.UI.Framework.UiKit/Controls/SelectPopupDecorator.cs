@@ -20,90 +20,89 @@ using System.Windows.Input;
 using Kaspirin.UI.Framework.UiKit.Controls.Internals;
 using WpfPopup = System.Windows.Controls.Primitives.Popup;
 
-namespace Kaspirin.UI.Framework.UiKit.Controls
+namespace Kaspirin.UI.Framework.UiKit.Controls;
+
+internal sealed class SelectPopupDecorator : PopupDecorator
 {
-    internal sealed class SelectPopupDecorator : PopupDecorator
+    static SelectPopupDecorator()
     {
-        static SelectPopupDecorator()
+        MinHeightProperty.OverrideMetadata(typeof(SelectPopupDecorator), new FrameworkPropertyMetadata(UIKitConstants.SelectPopupDecoratorMinHeight));
+    }
+
+    public SelectPopupDecorator()
+    {
+        Loaded += OnLoaded;
+    }
+
+    protected override void OnPreviewMouseWheel(MouseWheelEventArgs e)
+    {
+        var isPopupSource = e.Source == this;
+        if (isPopupSource)
         {
-            MinHeightProperty.OverrideMetadata(typeof(SelectPopupDecorator), new FrameworkPropertyMetadata(UIKitConstants.SelectPopupDecoratorMinHeight));
+            e.Handled = true;
         }
 
-        public SelectPopupDecorator()
+        base.OnPreviewMouseWheel(e);
+    }
+
+    protected override void OnPreviewMouseDown(MouseButtonEventArgs e)
+    {
+        var isPopupSource = e.Source == this;
+        if (isPopupSource)
         {
-            Loaded += OnLoaded;
+            e.Handled = true;
         }
 
-        protected override void OnPreviewMouseWheel(MouseWheelEventArgs e)
-        {
-            var isPopupSource = e.Source == this;
-            if (isPopupSource)
-            {
-                e.Handled = true;
-            }
+        base.OnPreviewMouseDown(e);
+    }
 
-            base.OnPreviewMouseWheel(e);
+    private void OnLoaded(object sender, RoutedEventArgs e)
+    {
+        var rootPopup = this.FindLogicalParent<WpfPopup>();
+
+        rootPopup?.WhenOpened(() =>
+        {
+            SetPopupMinWidth(rootPopup);
+            SetPopupMaxHeight(rootPopup);
+        });
+    }
+
+    private void SetPopupMinWidth(WpfPopup popup)
+    {
+        popup.SetBinding(WpfPopup.MinWidthProperty, new Binding()
+        {
+            Source = popup.PlacementTarget,
+            Path = Control.ActualWidthProperty.AsPath(),
+            Converter = new DelegateConverter<double>(value => ShadowOffset * 2 + value)
+        });
+    }
+
+    private void SetPopupMaxHeight(WpfPopup popup)
+    {
+        popup.SetBinding(WpfPopup.MaxHeightProperty, new Binding()
+        {
+            Source = this,
+            Path = Control.MaxHeightProperty.AsPath(),
+            Converter = new DelegateConverter<double>(value => CoercePopupMaxHeight(value))
+        });
+    }
+
+    private double CoercePopupMaxHeight(double popupMaxHeight)
+    {
+        var popupItemHeight = this.FindVisualChild<SelectItem>()?.ActualHeight ?? 0;
+        if (popupItemHeight <= 0)
+        {
+            return popupMaxHeight;
         }
 
-        protected override void OnPreviewMouseDown(MouseButtonEventArgs e)
-        {
-            var isPopupSource = e.Source == this;
-            if (isPopupSource)
-            {
-                e.Handled = true;
-            }
+        var offsetCorrection = Padding.Top + Padding.Bottom + ShadowOffset * 2;
 
-            base.OnPreviewMouseDown(e);
-        }
+        var scrollableHeight = popupMaxHeight - offsetCorrection;
 
-        private void OnLoaded(object sender, RoutedEventArgs e)
-        {
-            var rootPopup = this.FindLogicalParent<WpfPopup>();
+        var popupItemsCount = Math.Max(Math.Truncate(scrollableHeight / popupItemHeight), 1);
 
-            rootPopup?.WhenOpened(() =>
-            {
-                SetPopupMinWidth(rootPopup);
-                SetPopupMaxHeight(rootPopup);
-            });
-        }
+        var coercedMaxHeight = popupItemsCount * popupItemHeight + offsetCorrection;
 
-        private void SetPopupMinWidth(WpfPopup popup)
-        {
-            popup.SetBinding(WpfPopup.MinWidthProperty, new Binding()
-            {
-                Source = popup.PlacementTarget,
-                Path = Control.ActualWidthProperty.AsPath(),
-                Converter = new DelegateConverter<double>(value => ShadowOffset * 2 + value)
-            });
-        }
-
-        private void SetPopupMaxHeight(WpfPopup popup)
-        {
-            popup.SetBinding(WpfPopup.MaxHeightProperty, new Binding()
-            {
-                Source = this,
-                Path = Control.MaxHeightProperty.AsPath(),
-                Converter = new DelegateConverter<double>(value => CoercePopupMaxHeight(value))
-            });
-        }
-
-        private double CoercePopupMaxHeight(double popupMaxHeight)
-        {
-            var popupItemHeight = this.FindVisualChild<SelectItem>()?.ActualHeight ?? 0;
-            if (popupItemHeight <= 0)
-            {
-                return popupMaxHeight;
-            }
-
-            var offsetCorrection = Padding.Top + Padding.Bottom + ShadowOffset * 2;
-
-            var scrollableHeight = popupMaxHeight - offsetCorrection;
-
-            var popupItemsCount = Math.Max(Math.Truncate(scrollableHeight / popupItemHeight), 1);
-
-            var coercedMaxHeight = popupItemsCount * popupItemHeight + offsetCorrection;
-
-            return coercedMaxHeight;
-        }
+        return coercedMaxHeight;
     }
 }

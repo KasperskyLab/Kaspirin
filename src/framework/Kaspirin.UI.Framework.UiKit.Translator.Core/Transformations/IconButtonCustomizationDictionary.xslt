@@ -105,10 +105,10 @@
 						<xsl:with-param name="brushNode" select="Focus/Color"/>
 					</xsl:call-template>
 
-					<!--IconForeground-->
+					<!--IconBrush-->
 					<xsl:call-template name="generateBrush">
-						<xsl:with-param name="key">IconForeground</xsl:with-param>
-						<xsl:with-param name="brushNode" select="IconForeground"/>
+						<xsl:with-param name="key">IconBrush</xsl:with-param>
+						<xsl:with-param name="brushNode" select="IconBrush"/>
 					</xsl:call-template>
 
 				</ResourceDictionary>

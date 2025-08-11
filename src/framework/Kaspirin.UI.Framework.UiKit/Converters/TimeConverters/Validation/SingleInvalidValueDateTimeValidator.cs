@@ -14,13 +14,12 @@
 
 using System;
 
-namespace Kaspirin.UI.Framework.UiKit.Converters.TimeConverters.Validation
-{
-    public sealed class SingleInvalidValueDateTimeValidator : DefaultDateTimeValidator
-    {
-        public DateTime? InvalidValue { get; set; }
+namespace Kaspirin.UI.Framework.UiKit.Converters.TimeConverters.Validation;
 
-        public override bool ValueIsValid(DateTime date)
-            => !date.Equals(InvalidValue) && base.ValueIsValid(date);
-    }
+public sealed class SingleInvalidValueDateTimeValidator : DefaultDateTimeValidator
+{
+    public DateTime? InvalidValue { get; set; }
+
+    public override bool ValueIsValid(DateTime date)
+        => !date.Equals(InvalidValue) && base.ValueIsValid(date);
 }

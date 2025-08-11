@@ -14,17 +14,21 @@
 
 using System.Windows.Media.Animation;
 
-namespace Kaspirin.UI.Framework.UiKit.Animation.Markup.Easing
-{
-    public sealed class ExponentialEasingExtension : EasingExtensionBase
-    {
-        public double Exponent { get; set; }
+namespace Kaspirin.UI.Framework.UiKit.Animation.Markup.Easing;
 
-        protected override IEasingFunction CreateEasing()
-            => new ExponentialEase
-            {
-                Exponent = Exponent,
-                EasingMode = Mode
-            };
-    }
+/// <summary>
+///     Extending the markup for initializing the <see cref="ExponentialEase" /> class in XAML.
+/// </summary>
+public sealed class ExponentialEasingExtension : EasingExtensionBase
+{
+    /// <inheritdoc cref="ExponentialEase.Exponent"/>
+    public double Exponent { get; set; }
+
+    /// <inheritdoc/>
+    protected override IEasingFunction CreateEasing()
+        => new ExponentialEase
+        {
+            Exponent = Exponent,
+            EasingMode = Mode
+        };
 }

@@ -14,15 +14,14 @@
 
 using System;
 
-namespace Kaspirin.UI.Framework.UiKit.Controls.Internals
+namespace Kaspirin.UI.Framework.UiKit.Controls.Internals;
+
+[Flags]
+internal enum ScrollViewerBorderFadeState
 {
-    [Flags]
-    internal enum ScrollViewerBorderFadeState
-    {
-        None = 0,
-        Top = 1,
-        Bottom = 2,
-        Left = 4,
-        Right = 8
-    }
+    None = 0,
+    Top = 1,
+    Bottom = 2,
+    Left = 4,
+    Right = 8
 }

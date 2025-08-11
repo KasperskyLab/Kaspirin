@@ -226,7 +226,7 @@
 							<xsl:with-param name="propertyId">StatusTag_Icon_Color</xsl:with-param>
 							<xsl:with-param name="propertyValue">
 								<xsl:call-template name="generateResExtension">
-									<xsl:with-param name="key">IconForegroundDanger</xsl:with-param>
+									<xsl:with-param name="key">IconBrushDanger</xsl:with-param>
 									<xsl:with-param name="scope" select="$id" />
 								</xsl:call-template>
 							</xsl:with-param>
@@ -294,7 +294,7 @@
 							<xsl:with-param name="propertyId">StatusTag_Icon_Color</xsl:with-param>
 							<xsl:with-param name="propertyValue">
 								<xsl:call-template name="generateResExtension">
-									<xsl:with-param name="key">IconForegroundInfo</xsl:with-param>
+									<xsl:with-param name="key">IconBrushInfo</xsl:with-param>
 									<xsl:with-param name="scope" select="$id" />
 								</xsl:call-template>
 							</xsl:with-param>
@@ -362,7 +362,7 @@
 							<xsl:with-param name="propertyId">StatusTag_Icon_Color</xsl:with-param>
 							<xsl:with-param name="propertyValue">
 								<xsl:call-template name="generateResExtension">
-									<xsl:with-param name="key">IconForegroundNeutral</xsl:with-param>
+									<xsl:with-param name="key">IconBrushNeutral</xsl:with-param>
 									<xsl:with-param name="scope" select="$id" />
 								</xsl:call-template>
 							</xsl:with-param>
@@ -430,7 +430,7 @@
 							<xsl:with-param name="propertyId">StatusTag_Icon_Color</xsl:with-param>
 							<xsl:with-param name="propertyValue">
 								<xsl:call-template name="generateResExtension">
-									<xsl:with-param name="key">IconForegroundPositive</xsl:with-param>
+									<xsl:with-param name="key">IconBrushPositive</xsl:with-param>
 									<xsl:with-param name="scope" select="$id" />
 								</xsl:call-template>
 							</xsl:with-param>
@@ -498,7 +498,7 @@
 							<xsl:with-param name="propertyId">StatusTag_Icon_Color</xsl:with-param>
 							<xsl:with-param name="propertyValue">
 								<xsl:call-template name="generateResExtension">
-									<xsl:with-param name="key">IconForegroundWarning</xsl:with-param>
+									<xsl:with-param name="key">IconBrushWarning</xsl:with-param>
 									<xsl:with-param name="scope" select="$id" />
 								</xsl:call-template>
 							</xsl:with-param>

@@ -16,34 +16,33 @@ using System;
 using System.Globalization;
 using System.Windows;
 
-namespace Kaspirin.UI.Framework.UiKit.Converters.NumberConverters
+namespace Kaspirin.UI.Framework.UiKit.Converters.NumberConverters;
+
+public abstract class BaseNumberToFormattedStringConverter : ValueConverterMarkupExtension<BaseNumberToFormattedStringConverter>
 {
-    public abstract class BaseNumberToFormattedStringConverter : ValueConverterMarkupExtension<BaseNumberToFormattedStringConverter>
+    private static bool ValueIsValid(object? value)
     {
-        private static bool ValueIsValid(object? value)
+        return value switch
         {
-            return value switch
-            {
-                null => false,
-                _ => value is sbyte
-                    || value is byte
-                    || value is short
-                    || value is ushort
-                    || value is int
-                    || value is uint
-                    || value is long
-                    || value is ulong
-                    || value is float
-                    || value is double
-                    || value is decimal
-            };
-        }
-
-        public override object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
-        {
-            return ValueIsValid(value) ? Convert(value!) : DependencyProperty.UnsetValue;
-        }
-
-        public abstract object Convert(object value);
+            null => false,
+            _ => value is sbyte
+                || value is byte
+                || value is short
+                || value is ushort
+                || value is int
+                || value is uint
+                || value is long
+                || value is ulong
+                || value is float
+                || value is double
+                || value is decimal
+        };
     }
+
+    public override object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
+    {
+        return ValueIsValid(value) ? Convert(value!) : DependencyProperty.UnsetValue;
+    }
+
+    public abstract object Convert(object value);
 }

@@ -21,70 +21,72 @@ using Kaspirin.UI.Framework.UiKit.Extensions.Internals;
 
 using WpfPopup = System.Windows.Controls.Primitives.Popup;
 
-namespace Kaspirin.UI.Framework.UiKit.Controls
+namespace Kaspirin.UI.Framework.UiKit.Controls;
+
+[TemplatePart(Name = PART_BackgroundDecorator, Type = typeof(Decorator))]
+internal abstract class PopupDecorator : ContentControl
 {
-    [TemplatePart(Name = PART_BackgroundDecorator, Type = typeof(Decorator))]
-    internal abstract class PopupDecorator : ContentControl
+    public const string PART_BackgroundDecorator = "PART_BackgroundDecorator";
+
+    static PopupDecorator()
     {
-        public const string PART_BackgroundDecorator = "PART_BackgroundDecorator";
-
-        static PopupDecorator()
-        {
-            FlowDirectionProperty.OverrideMetadata(
-                typeof(PopupDecorator),
-                new FrameworkPropertyMetadata(FlowDirection.LeftToRight, OnFlowDirectionChanged));
-        }
-
-        protected PopupDecorator()
-        {
-            Loaded += OnLoaded;
-        }
-
-        #region Offset
-
-        public double Offset
-        {
-            get { return (double)GetValue(OffsetProperty); }
-            set { SetValue(OffsetProperty, value); }
-        }
-
-        public static readonly DependencyProperty OffsetProperty =
-            DependencyProperty.Register("Offset", typeof(double), typeof(PopupDecorator), new PropertyMetadata(UIKitConstants.PopupDecoratorOffset));
-
-        #endregion
-
-        public override void OnApplyTemplate()
-        {
-            _background = Guard.EnsureIsInstanceOfType<Decorator>(GetTemplateChild(PART_BackgroundDecorator));
-        }
-
-        protected double ShadowOffset => _background != null && _background.Effect is DropShadowEffect shadow ? shadow.GetShadowOffset() : 0D;
-
-        protected virtual void SetPopupLocation()
-        {
-            var rootPopup = this.FindLogicalParent<WpfPopup>();
-            if (rootPopup != null)
-            {
-                rootPopup.Placement = PlacementMode.Custom;
-                rootPopup.CustomPopupPlacementCallback = PopupPlacementCallback;
-            }
-        }
-
-        private static void OnFlowDirectionChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            ((PopupDecorator)d).SetPopupLocation();
-        }
-
-        private void OnLoaded(object sender, RoutedEventArgs e)
-        {
-            SetPopupLocation();
-        }
-
-        private CustomPopupPlacement[] PopupPlacementCallback(Size popupSize, Size targetSize, Point offset)
-        {
-            return new PopupPositionProvider(popupSize, targetSize, FlowDirection, Offset, ShadowOffset).LocateBottomRight();
-        }
-
-        private Decorator? _background;
+        FlowDirectionProperty.OverrideMetadata(
+            typeof(PopupDecorator),
+            new FrameworkPropertyMetadata(FlowDirection.LeftToRight, OnFlowDirectionChanged));
     }
+
+    protected PopupDecorator()
+    {
+        Loaded += OnLoaded;
+    }
+
+    #region Offset
+
+    public double Offset
+    {
+        get => (double)GetValue(OffsetProperty);
+        set => SetValue(OffsetProperty, value);
+    }
+
+    public static readonly DependencyProperty OffsetProperty = DependencyProperty.Register(
+        nameof(Offset),
+        typeof(double),
+        typeof(PopupDecorator),
+        new PropertyMetadata(UIKitConstants.PopupDecoratorOffset));
+
+    #endregion
+
+    public override void OnApplyTemplate()
+    {
+        _background = Guard.EnsureIsInstanceOfType<Decorator>(GetTemplateChild(PART_BackgroundDecorator));
+    }
+
+    protected double ShadowOffset => _background != null && _background.Effect is DropShadowEffect shadow ? shadow.GetShadowOffset() : 0D;
+
+    protected virtual void SetPopupLocation()
+    {
+        var rootPopup = this.FindLogicalParent<WpfPopup>();
+        if (rootPopup != null)
+        {
+            rootPopup.Placement = PlacementMode.Custom;
+            rootPopup.CustomPopupPlacementCallback = PopupPlacementCallback;
+        }
+    }
+
+    private static void OnFlowDirectionChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+    {
+        ((PopupDecorator)d).SetPopupLocation();
+    }
+
+    private void OnLoaded(object sender, RoutedEventArgs e)
+    {
+        SetPopupLocation();
+    }
+
+    private CustomPopupPlacement[] PopupPlacementCallback(Size popupSize, Size targetSize, Point offset)
+    {
+        return new PopupPositionProvider(popupSize, targetSize, FlowDirection, Offset, ShadowOffset).LocateBottomRight();
+    }
+
+    private Decorator? _background;
 }

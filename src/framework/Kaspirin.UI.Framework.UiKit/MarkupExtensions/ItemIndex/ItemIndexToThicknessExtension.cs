@@ -14,10 +14,9 @@
 
 using System.Windows;
 
-namespace Kaspirin.UI.Framework.UiKit.MarkupExtensions.ItemIndex
+namespace Kaspirin.UI.Framework.UiKit.MarkupExtensions.ItemIndex;
+
+public sealed class ItemIndexToThicknessExtension : BaseItemIndexExtension<Thickness>
 {
-    public sealed class ItemIndexToThicknessExtension : BaseItemIndexExtension<Thickness>
-    {
-        public ItemIndexToThicknessExtension() : base(default(Thickness), default(Thickness)) { }
-    }
+    public ItemIndexToThicknessExtension() : base(default(Thickness), default(Thickness)) { }
 }

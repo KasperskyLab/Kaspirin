@@ -16,55 +16,54 @@ using System;
 using System.Windows.Markup;
 using System.Windows.Media;
 
-namespace Kaspirin.UI.Framework.UiKit.Palettes
+namespace Kaspirin.UI.Framework.UiKit.Palettes;
+
+[MarkupExtensionReturnType(typeof(Brush))]
+public abstract class UIKitPaletteExtension<TPaletteEnum> : MarkupExtension where TPaletteEnum : struct, Enum
 {
-    [MarkupExtensionReturnType(typeof(Brush))]
-    public abstract class UIKitPaletteExtension<TPaletteEnum> : MarkupExtension where TPaletteEnum : struct, Enum
+    public UIKitPaletteExtensionMode Mode { get; set; }
+
+    public TPaletteEnum Id { get; set; }
+
+    public override object? ProvideValue(IServiceProvider serviceProvider)
     {
-        public UIKitPaletteExtensionMode Mode { get; set; }
-
-        public TPaletteEnum Id { get; set; }
-
-        public override object? ProvideValue(IServiceProvider serviceProvider)
+        return new PaletteExtension()
         {
-            return new PaletteExtension()
+            IsColor = Mode == UIKitPaletteExtensionMode.Color,
+            Key = Map(Id),
+            Scope = UIKitConstants.PaletteScope
+        }.ProvideValue(serviceProvider);
+    }
+
+    protected abstract string Map(TPaletteEnum id);
+
+    private sealed class PaletteExtension : BaseLocalizationMarkupExtension
+    {
+        public PaletteExtension() : base(string.Empty) { }
+
+        public bool IsColor { get; set; }
+
+        protected override object? ProvideValue()
+        {
+            var resource = ProvideLocalizer<IXamlLocalizer>().GetResource(Key);
+            if (resource is Color paletteColor)
             {
-                IsColor = Mode == UIKitPaletteExtensionMode.Color,
-                Key = Map(Id),
-                Scope = UIKitConstants.PaletteScope
-            }.ProvideValue(serviceProvider);
+                if (IsColor)
+                {
+                    return paletteColor;
+                }
+                else
+                {
+                    return new SolidColorBrush(paletteColor).GetAsFrozen();
+                }
+            }
+
+            return resource;
         }
 
-        protected abstract string Map(TPaletteEnum id);
-
-        private sealed class PaletteExtension : LocalizationMarkupBase
+        protected override ILocalizer PrepareLocalizer()
         {
-            public PaletteExtension() : base(string.Empty) { }
-
-            public bool IsColor { get; set; }
-
-            protected override object? ProvideValue()
-            {
-                var resource = ProvideLocalizer<IXamlLocalizer>().GetResource(Key);
-                if (resource is Color paletteColor)
-                {
-                    if (IsColor)
-                    {
-                        return paletteColor;
-                    }
-                    else
-                    {
-                        return new SolidColorBrush(paletteColor).GetAsFrozen();
-                    }
-                }
-
-                return resource;
-            }
-
-            protected override ILocalizer PrepareLocalizer()
-            {
-                return LocalizationManager.Current.LocalizerFactory.Resolve<IXamlLocalizer>(Scope);
-            }
+            return LocalizationManager.GetLocalizer<IXamlLocalizer>(Scope);
         }
     }
 }

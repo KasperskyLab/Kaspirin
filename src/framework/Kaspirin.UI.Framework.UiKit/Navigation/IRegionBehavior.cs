@@ -12,12 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Kaspirin.UI.Framework.UiKit.Navigation
-{
-    public interface IRegionBehavior
-    {
-        Region? Region { get; }
+namespace Kaspirin.UI.Framework.UiKit.Navigation;
 
-        void Attach(Region region);
-    }
+public interface IRegionBehavior
+{
+    Region? Region { get; }
+
+    void Attach(Region region);
 }

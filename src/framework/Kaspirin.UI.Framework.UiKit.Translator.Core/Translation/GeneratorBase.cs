@@ -16,41 +16,40 @@ using System.Linq;
 using System.Xml;
 using Microsoft.Build.Utilities;
 
-namespace Kaspirin.UI.Framework.UiKit.Translator.Core.Translation
+namespace Kaspirin.UI.Framework.UiKit.Translator.Core.Translation;
+
+internal abstract class GeneratorBase
 {
-    internal abstract class GeneratorBase
+    public GeneratorBase(
+        string[] excludedControls,
+        LineEndingMode lineEndingMode,
+        EmbeddedResourceXmlUrlResolver xsltUrlResolver,
+        XmlWriterSettings xmlWriterSettings,
+        TaskLoggingHelper log)
     {
-        public GeneratorBase(
-            string[] excludedControls,
-            LineEndingMode lineEndingMode,
-            EmbeddedResourceXmlUrlResolver xsltUrlResolver,
-            XmlWriterSettings xmlWriterSettings,
-            TaskLoggingHelper log)
-        {
-            _excludedControls = excludedControls;
-            _lineEndingMode = lineEndingMode;
-            _xsltUrlResolver = xsltUrlResolver;
-            _xmlWriterSettings = xmlWriterSettings;
-            _log = log;
-        }
-
-        public abstract bool Generate(string uiKitContent, out string[] generatedFilePaths);
-
-        protected string GetExcludedControlsFilter()
-        {
-            if (_excludedControls?.Any() != true)
-            {
-                return string.Empty;
-            }
-
-            return string.Join(Const.ExcludedControlsFilterDelimiter, _excludedControls);
-        }
-
-        protected readonly LineEndingMode _lineEndingMode;
-        protected readonly EmbeddedResourceXmlUrlResolver _xsltUrlResolver;
-        protected readonly XmlWriterSettings _xmlWriterSettings;
-        protected readonly TaskLoggingHelper _log;
-
-        private readonly string[] _excludedControls;
+        _excludedControls = excludedControls;
+        _lineEndingMode = lineEndingMode;
+        _xsltUrlResolver = xsltUrlResolver;
+        _xmlWriterSettings = xmlWriterSettings;
+        _log = log;
     }
+
+    public abstract bool Generate(string uiKitContent, out string[] generatedFilePaths);
+
+    protected string GetExcludedControlsFilter()
+    {
+        if (_excludedControls?.Any() != true)
+        {
+            return string.Empty;
+        }
+
+        return string.Join(Const.ExcludedControlsFilterDelimiter, _excludedControls);
+    }
+
+    protected readonly LineEndingMode _lineEndingMode;
+    protected readonly EmbeddedResourceXmlUrlResolver _xsltUrlResolver;
+    protected readonly XmlWriterSettings _xmlWriterSettings;
+    protected readonly TaskLoggingHelper _log;
+
+    private readonly string[] _excludedControls;
 }

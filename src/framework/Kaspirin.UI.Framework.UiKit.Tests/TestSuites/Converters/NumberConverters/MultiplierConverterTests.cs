@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using Kaspirin.UI.Framework.UiKit.Converters.NumberConverters;
 using System;
 using System.Globalization;
 using System.Windows;
+using Kaspirin.UI.Framework.UiKit.Converters.NumberConverters;
 
 namespace Kaspirin.UI.Framework.UiKit.Tests.TestSuites.Converters.NumberConverters;
 

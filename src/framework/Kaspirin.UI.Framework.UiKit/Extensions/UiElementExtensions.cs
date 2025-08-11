@@ -15,50 +15,49 @@
 using System;
 using System.Windows;
 
-namespace Kaspirin.UI.Framework.UiKit.Extensions
-{
-    public static class UiElementExtensions
-    {
-        public static void WhenVisible(this UIElement uIElement, Action action)
-        {
-            void OnVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
-            {
-                if (e.NewValue is true)
-                {
-                    ((UIElement)sender).IsVisibleChanged -= OnVisibleChanged;
-                    action();
-                }
-            }
+namespace Kaspirin.UI.Framework.UiKit.Extensions;
 
-            if (uIElement.IsVisible)
+public static class UiElementExtensions
+{
+    public static void WhenVisible(this UIElement uIElement, Action action)
+    {
+        void OnVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            if (e.NewValue is true)
             {
+                ((UIElement)sender).IsVisibleChanged -= OnVisibleChanged;
                 action();
-            }
-            else
-            {
-                uIElement.IsVisibleChanged += OnVisibleChanged;
             }
         }
 
-        public static void WhenInvisible(this UIElement uIElement, Action action)
+        if (uIElement.IsVisible)
         {
-            void OnVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
-            {
-                if (e.NewValue is false)
-                {
-                    ((UIElement)sender).IsVisibleChanged -= OnVisibleChanged;
-                    action();
-                }
-            }
+            action();
+        }
+        else
+        {
+            uIElement.IsVisibleChanged += OnVisibleChanged;
+        }
+    }
 
-            if (uIElement.IsVisible is false)
+    public static void WhenInvisible(this UIElement uIElement, Action action)
+    {
+        void OnVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            if (e.NewValue is false)
             {
+                ((UIElement)sender).IsVisibleChanged -= OnVisibleChanged;
                 action();
             }
-            else
-            {
-                uIElement.IsVisibleChanged += OnVisibleChanged;
-            }
+        }
+
+        if (uIElement.IsVisible is false)
+        {
+            action();
+        }
+        else
+        {
+            uIElement.IsVisibleChanged += OnVisibleChanged;
         }
     }
 }

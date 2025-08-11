@@ -12,14 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Kaspirin.UI.Framework.UiKit.Converters.CollectionConverters
+namespace Kaspirin.UI.Framework.UiKit.Converters.CollectionConverters;
+
+public enum CollectionConverterOperation
 {
-    public enum CollectionConverterOperation
-    {
-        Contains,
-        IsFirst,
-        IsLast,
-        IsMin,
-        IsMax
-    }
+    Contains,
+    IsFirst,
+    IsLast,
+    IsMin,
+    IsMax
 }

@@ -14,16 +14,15 @@
 
 using System.Windows;
 
-namespace Kaspirin.UI.Framework.UiKit.Windows
+namespace Kaspirin.UI.Framework.UiKit.Windows;
+
+public static class WindowDefaultStyle
 {
-    public static class WindowDefaultStyle
+    public static void Initialize()
     {
-        public static void Initialize()
+        FrameworkElement.StyleProperty.OverrideMetadata(typeof(Window), new FrameworkPropertyMetadata
         {
-            FrameworkElement.StyleProperty.OverrideMetadata(typeof(Window), new FrameworkPropertyMetadata
-            {
-                DefaultValue = Application.Current.FindResource(typeof(Window))
-            });
-        }
+            DefaultValue = Application.Current.FindResource(typeof(Window))
+        });
     }
 }

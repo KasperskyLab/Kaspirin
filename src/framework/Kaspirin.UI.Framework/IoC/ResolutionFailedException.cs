@@ -15,42 +15,41 @@
 using System;
 using System.Runtime.Serialization;
 
-namespace Kaspirin.UI.Framework.IoC
+namespace Kaspirin.UI.Framework.IoC;
+
+/// <summary>
+///     An exception that occurs when an unsuccessful attempt is made to get a dependency from an IoC container.
+/// </summary>
+[Serializable]
+public sealed class ResolutionFailedException : Exception
 {
     /// <summary>
-    ///     An exception that occurs when an unsuccessful attempt is made to get a dependency from an IoC container.
+    ///     Initializes a new instance of the <see cref="ResolutionFailedException" /> class.
     /// </summary>
-    [Serializable]
-    public sealed class ResolutionFailedException : Exception
+    /// <param name="message">
+    ///     The error message.
+    /// </param>
+    /// <param name="innerException">
+    ///     An internal exception.
+    /// </param>
+    public ResolutionFailedException(string? message, Exception? innerException)
+        : base(message, innerException)
     {
-        /// <summary>
-        ///     Initializes a new instance of the <see cref="ResolutionFailedException" /> class.
-        /// </summary>
-        /// <param name="message">
-        ///     The error message.
-        /// </param>
-        /// <param name="innerException">
-        ///     An internal exception.
-        /// </param>
-        public ResolutionFailedException(string? message, Exception? innerException)
-            : base(message, innerException)
-        {
-        }
+    }
 
-        /// <summary>
-        ///     Initializes a new instance of the <see cref="ResolutionFailedException" /> class.
-        /// </summary>
-        /// <param name="message">
-        ///     The error message.
-        /// </param>
-        public ResolutionFailedException(string? message)
-            : base(message)
-        {
-        }
+    /// <summary>
+    ///     Initializes a new instance of the <see cref="ResolutionFailedException" /> class.
+    /// </summary>
+    /// <param name="message">
+    ///     The error message.
+    /// </param>
+    public ResolutionFailedException(string? message)
+        : base(message)
+    {
+    }
 
-        private ResolutionFailedException(SerializationInfo info, StreamingContext context)
-            : base(info, context)
-        {
-        }
+    private ResolutionFailedException(SerializationInfo info, StreamingContext context)
+        : base(info, context)
+    {
     }
 }

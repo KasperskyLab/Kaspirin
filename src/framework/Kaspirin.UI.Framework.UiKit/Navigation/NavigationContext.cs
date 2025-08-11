@@ -12,18 +12,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Kaspirin.UI.Framework.UiKit.Navigation
+namespace Kaspirin.UI.Framework.UiKit.Navigation;
+
+public sealed class NavigationContext
 {
-    public sealed class NavigationContext
+    internal NavigationContext(RegionView? targetView, RegionView? activeView)
     {
-        internal NavigationContext(RegionView? targetView, RegionView? activeView)
-        {
-            TargetView = targetView;
-            ActiveView = activeView;
-        }
-
-        public RegionView? ActiveView { get; }
-
-        public RegionView? TargetView { get; }
+        TargetView = targetView;
+        ActiveView = activeView;
     }
+
+    public RegionView? ActiveView { get; }
+
+    public RegionView? TargetView { get; }
 }

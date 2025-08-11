@@ -231,64 +231,64 @@
 						<xsl:with-param name="brushNode" select="ForegroundYellow"/>
 					</xsl:call-template>
 
-					<!--IconForegroundEmerald-->
+					<!--IconBrushEmerald-->
 					<xsl:call-template name="generateBrush">
-						<xsl:with-param name="key">IconForegroundEmerald</xsl:with-param>
-						<xsl:with-param name="brushNode" select="IconForegroundEmerald"/>
+						<xsl:with-param name="key">IconBrushEmerald</xsl:with-param>
+						<xsl:with-param name="brushNode" select="IconBrushEmerald"/>
 					</xsl:call-template>
 
-					<!--IconForegroundGrass-->
+					<!--IconBrushGrass-->
 					<xsl:call-template name="generateBrush">
-						<xsl:with-param name="key">IconForegroundGrass</xsl:with-param>
-						<xsl:with-param name="brushNode" select="IconForegroundGrass"/>
+						<xsl:with-param name="key">IconBrushGrass</xsl:with-param>
+						<xsl:with-param name="brushNode" select="IconBrushGrass"/>
 					</xsl:call-template>
 
-					<!--IconForegroundMarina-->
+					<!--IconBrushMarina-->
 					<xsl:call-template name="generateBrush">
-						<xsl:with-param name="key">IconForegroundMarina</xsl:with-param>
-						<xsl:with-param name="brushNode" select="IconForegroundMarina"/>
+						<xsl:with-param name="key">IconBrushMarina</xsl:with-param>
+						<xsl:with-param name="brushNode" select="IconBrushMarina"/>
 					</xsl:call-template>
 
-					<!--IconForegroundMarengo-->
+					<!--IconBrushMarengo-->
 					<xsl:call-template name="generateBrush">
-						<xsl:with-param name="key">IconForegroundMarengo</xsl:with-param>
-						<xsl:with-param name="brushNode" select="IconForegroundMarengo"/>
+						<xsl:with-param name="key">IconBrushMarengo</xsl:with-param>
+						<xsl:with-param name="brushNode" select="IconBrushMarengo"/>
 					</xsl:call-template>
 
-					<!--IconForegroundNeutral-->
+					<!--IconBrushNeutral-->
 					<xsl:call-template name="generateBrush">
-						<xsl:with-param name="key">IconForegroundNeutral</xsl:with-param>
-						<xsl:with-param name="brushNode" select="IconForegroundNeutral"/>
+						<xsl:with-param name="key">IconBrushNeutral</xsl:with-param>
+						<xsl:with-param name="brushNode" select="IconBrushNeutral"/>
 					</xsl:call-template>
 
-					<!--IconForegroundOrange-->
+					<!--IconBrushOrange-->
 					<xsl:call-template name="generateBrush">
-						<xsl:with-param name="key">IconForegroundOrange</xsl:with-param>
-						<xsl:with-param name="brushNode" select="IconForegroundOrange"/>
+						<xsl:with-param name="key">IconBrushOrange</xsl:with-param>
+						<xsl:with-param name="brushNode" select="IconBrushOrange"/>
 					</xsl:call-template>
 
-					<!--IconForegroundPurple-->
+					<!--IconBrushPurple-->
 					<xsl:call-template name="generateBrush">
-						<xsl:with-param name="key">IconForegroundPurple</xsl:with-param>
-						<xsl:with-param name="brushNode" select="IconForegroundPurple"/>
+						<xsl:with-param name="key">IconBrushPurple</xsl:with-param>
+						<xsl:with-param name="brushNode" select="IconBrushPurple"/>
 					</xsl:call-template>
 
-					<!--IconForegroundRed-->
+					<!--IconBrushRed-->
 					<xsl:call-template name="generateBrush">
-						<xsl:with-param name="key">IconForegroundRed</xsl:with-param>
-						<xsl:with-param name="brushNode" select="IconForegroundRed"/>
+						<xsl:with-param name="key">IconBrushRed</xsl:with-param>
+						<xsl:with-param name="brushNode" select="IconBrushRed"/>
 					</xsl:call-template>
 
-					<!--IconForegroundViolet-->
+					<!--IconBrushViolet-->
 					<xsl:call-template name="generateBrush">
-						<xsl:with-param name="key">IconForegroundViolet</xsl:with-param>
-						<xsl:with-param name="brushNode" select="IconForegroundViolet"/>
+						<xsl:with-param name="key">IconBrushViolet</xsl:with-param>
+						<xsl:with-param name="brushNode" select="IconBrushViolet"/>
 					</xsl:call-template>
 
-					<!--IconForegroundYellow-->
+					<!--IconBrushYellow-->
 					<xsl:call-template name="generateBrush">
-						<xsl:with-param name="key">IconForegroundYellow</xsl:with-param>
-						<xsl:with-param name="brushNode" select="IconForegroundYellow"/>
+						<xsl:with-param name="key">IconBrushYellow</xsl:with-param>
+						<xsl:with-param name="brushNode" select="IconBrushYellow"/>
 					</xsl:call-template>
 
 				</ResourceDictionary>

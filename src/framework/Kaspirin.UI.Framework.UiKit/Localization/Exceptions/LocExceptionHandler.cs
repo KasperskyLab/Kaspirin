@@ -12,7 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Kaspirin.UI.Framework.UiKit.Localization.Exceptions
-{
-    public delegate void LocExceptionHandler(LocExceptionArgs args);
-}
+namespace Kaspirin.UI.Framework.UiKit.Localization.Exceptions;
+
+public delegate void LocExceptionHandler(LocExceptionArgs args);

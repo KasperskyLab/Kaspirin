@@ -4,10 +4,18 @@
 // Scope of modification:
 //   - Code adaptation to project requirements.
 
+// This file has been modified by AO Kaspersky Lab in 1/15/2025.
+// Scope of modification:
+//   - Suppress warnings.
+
 // Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-#nullable disable
+#pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
+#pragma warning disable CS8603 // Possible null reference return.
+#pragma warning disable CS8604 // Possible null reference argument for parameter.
+#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor.
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
 
 using System;
 using System.Collections.Generic;
@@ -181,7 +189,7 @@ namespace Kaspirin.UI.Framework.UiKit.ThirdParty.HtmlUtils
 
             if (_styleDefinitions == null)
             {
-                _styleDefinitions = new List<StyleDefinition>();
+                _styleDefinitions = new();
             }
 
             var simpleSelectors = selector.Split(',');
@@ -203,7 +211,7 @@ namespace Kaspirin.UI.Framework.UiKit.ThirdParty.HtmlUtils
             var xmlElement = sourceContext[sourceContext.Count - 1];
             Guard.Assert(elementName == xmlElement.LocalName);
 
-            string styleDefinition = null;
+            string? styleDefinition = null;
             //  Add id processing for style selectors
             if (_styleDefinitions != null)
             {
@@ -290,7 +298,7 @@ namespace Kaspirin.UI.Framework.UiKit.ThirdParty.HtmlUtils
             return true;
         }
 
-        private class StyleDefinition
+        private sealed class StyleDefinition
         {
             public readonly string Definition;
             public readonly string Selector;

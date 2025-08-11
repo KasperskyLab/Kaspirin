@@ -12,42 +12,129 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-#pragma warning disable KCAIDE0002 // Enum has incorrect suffix
 
 using System;
 
-namespace Kaspirin.UI.Framework.NativeMethods.Api.Kernel32.Enums
+namespace Kaspirin.UI.Framework.NativeMethods.Api.Kernel32.Enums;
+
+/// <summary>
+///     <seealso href="https://learn.microsoft.com/en-us/windows/win32/fileio/file-attribute-constants">Learn more</seealso>.
+/// </summary>
+[Flags]
+public enum FileAttributeFlags : uint
 {
     /// <summary>
-    ///     
-    /// <seealso href="https://learn.microsoft.com/en-us/windows/win32/fileio/file-attribute-constants">Learn more</seealso>.
+    ///     The flag is not set.
     /// </summary>
-    [Flags]
-    public enum FileAttributeFlags : uint
-    {
-        None = 0,
-        FILE_ATTRIBUTE_READONLY = 0x00000001,
-        FILE_ATTRIBUTE_HIDDEN = 0x00000002,
-        FILE_ATTRIBUTE_SYSTEM = 0x00000004,
-        FILE_ATTRIBUTE_DIRECTORY = 0x00000010,
-        FILE_ATTRIBUTE_ARCHIVE = 0x00000020,
-        FILE_ATTRIBUTE_DEVICE = 0x00000040,
-        FILE_ATTRIBUTE_NORMAL = 0x00000080,
-        FILE_ATTRIBUTE_TEMPORARY = 0x00000100,
-        FILE_ATTRIBUTE_SPARSE_FILE = 0x00000200,
-        FILE_ATTRIBUTE_REPARSE_POINT = 0x00000400,
-        FILE_ATTRIBUTE_COMPRESSED = 0x00000800,
-        FILE_ATTRIBUTE_OFFLINE = 0x00001000,
-        FILE_ATTRIBUTE_NOT_CONTENT_INDEXED = 0x00002000,
-        FILE_ATTRIBUTE_ENCRYPTED = 0x00004000,
-        FILE_ATTRIBUTE_INTEGRITY_STREAM = 0x00008000,
-        FILE_ATTRIBUTE_VIRTUAL = 0x00010000,
-        FILE_ATTRIBUTE_NO_SCRUB_DATA = 0x00020000,
-        FILE_ATTRIBUTE_EA = 0x00040000,
-        FILE_ATTRIBUTE_PINNED = 0x00080000,
-        FILE_ATTRIBUTE_UNPINNED = 0x00100000,
-        FILE_ATTRIBUTE_RECALL_ON_OPEN = 0x00040000,
-        FILE_ATTRIBUTE_RECALL_ON_DATA_ACCESS = 0x00400000,
-    }
+    None = 0,
+
+    /// <summary>
+    ///     The FILE_ATTRIBUTE_READONLY constant.
+    /// </summary>
+    ReadOnly = 0x00000001,
+
+    /// <summary>
+    ///     The FILE_ATTRIBUTE_HIDDEN constant.
+    /// </summary>
+    Hidden = 0x00000002,
+
+    /// <summary>
+    ///     The FILE_ATTRIBUTE_SYSTEM constant.
+    /// </summary>
+    System = 0x00000004,
+
+    /// <summary>
+    ///     The FILE_ATTRIBUTE_DIRECTORY constant.
+    /// </summary>
+    Directory = 0x00000010,
+
+    /// <summary>
+    ///     The FILE_ATTRIBUTE_ARCHIVE constant.
+    /// </summary>
+    Archive = 0x00000020,
+
+    /// <summary>
+    ///     The FILE_ATTRIBUTE_DEVICE constant.
+    /// </summary>
+    Device = 0x00000040,
+
+    /// <summary>
+    ///     The FILE_ATTRIBUTE_NORMAL constant.
+    /// </summary>
+    Normal = 0x00000080,
+
+    /// <summary>
+    ///     The FILE_ATTRIBUTE_TEMPORARY constant.
+    /// </summary>
+    Temporary = 0x00000100,
+
+    /// <summary>
+    ///     The FILE_ATTRIBUTE_SPARSE_FILE constant.
+    /// </summary>
+    SparseFile = 0x00000200,
+
+    /// <summary>
+    ///     The FILE_ATTRIBUTE_REPARSE_POINT constant.
+    /// </summary>
+    ReparsePoint = 0x00000400,
+
+    /// <summary>
+    ///     The FILE_ATTRIBUTE_COMPRESSED constant.
+    /// </summary>
+    Compressed = 0x00000800,
+
+    /// <summary>
+    ///     The FILE_ATTRIBUTE_OFFLINE constant.
+    /// </summary>
+    Offline = 0x00001000,
+
+    /// <summary>
+    ///     The FILE_ATTRIBUTE_NOT_CONTENT_INDEXED constant.
+    /// </summary>
+    NotContentIndexed = 0x00002000,
+
+    /// <summary>
+    ///     The FILE_ATTRIBUTE_ENCRYPTED constant.
+    /// </summary>
+    Encrypted = 0x00004000,
+
+    /// <summary>
+    ///     The FILE_ATTRIBUTE_INTEGRITY_STREAM constant.
+    /// </summary>
+    IntegrityStream = 0x00008000,
+
+    /// <summary>
+    ///     The FILE_ATTRIBUTE_VIRTUAL constant.
+    /// </summary>
+    Virtual = 0x00010000,
+
+    /// <summary>
+    ///     The FILE_ATTRIBUTE_NO_SCRUB_DATA constant.
+    /// </summary>
+    NoScrubData = 0x00020000,
+
+    /// <summary>
+    ///     The FILE_ATTRIBUTE_EA constant.
+    /// </summary>
+    Ea = 0x00040000,
+
+    /// <summary>
+    ///     The FILE_ATTRIBUTE_PINNED constant.
+    /// </summary>
+    Pinned = 0x00080000,
+
+    /// <summary>
+    ///     The FILE_ATTRIBUTE_UNPINNED constant.
+    /// </summary>
+    Unpinned = 0x00100000,
+
+    /// <summary>
+    ///     The FILE_ATTRIBUTE_RECALL_ON_OPEN constant.
+    /// </summary>
+    RecallOnOpen = 0x00040000,
+
+    /// <summary>
+    ///     The FILE_ATTRIBUTE_RECALL_ON_DATA_ACCESS constant.
+    /// </summary>
+    RecallOnDataAccess = 0x00400000,
 }

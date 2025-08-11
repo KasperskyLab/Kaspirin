@@ -12,25 +12,24 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Kaspirin.UI.Framework.UiKit.Input.Shortcuts
+namespace Kaspirin.UI.Framework.UiKit.Input.Shortcuts;
+
+public sealed class WindowShortcut
 {
-    public sealed class WindowShortcut
+    public WindowShortcut()
     {
-        public WindowShortcut()
-        {
-        }
-
-        public WindowShortcut(string name, string description, Shortcut shortcut)
-        {
-            Name = Guard.EnsureArgumentIsNotNullOrEmpty(name);
-            Description = Guard.EnsureArgumentIsNotNullOrEmpty(description);
-            Shortcut = shortcut;
-        }
-
-        public string? Name { get; set; }
-
-        public string? Description { get; set; }
-
-        public Shortcut? Shortcut { get; set; }
     }
+
+    public WindowShortcut(string name, string description, Shortcut shortcut)
+    {
+        Name = Guard.EnsureArgumentIsNotNullOrEmpty(name);
+        Description = Guard.EnsureArgumentIsNotNullOrEmpty(description);
+        Shortcut = shortcut;
+    }
+
+    public string? Name { get; set; }
+
+    public string? Description { get; set; }
+
+    public Shortcut? Shortcut { get; set; }
 }

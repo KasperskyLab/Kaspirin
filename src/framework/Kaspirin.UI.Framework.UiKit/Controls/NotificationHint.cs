@@ -15,21 +15,23 @@
 using System.Windows;
 using System.Windows.Controls;
 
-namespace Kaspirin.UI.Framework.UiKit.Controls
+namespace Kaspirin.UI.Framework.UiKit.Controls;
+
+public sealed class NotificationHint : ContentControl
 {
-    public sealed class NotificationHint : ContentControl
+    #region Type
+
+    public NotificationHintType Type
     {
-        #region Type
-
-        public NotificationHintType Type
-        {
-            get { return (NotificationHintType)GetValue(TypeProperty); }
-            set { SetValue(TypeProperty, value); }
-        }
-
-        public static readonly DependencyProperty TypeProperty =
-            DependencyProperty.Register("Type", typeof(NotificationHintType), typeof(NotificationHint));
-
-        #endregion
+        get => (NotificationHintType)GetValue(TypeProperty);
+        set => SetValue(TypeProperty, value);
     }
+
+    public static readonly DependencyProperty TypeProperty = DependencyProperty.Register(
+        nameof(Type),
+        typeof(NotificationHintType),
+        typeof(NotificationHint),
+        new PropertyMetadata(default(NotificationHintType)));
+
+    #endregion
 }

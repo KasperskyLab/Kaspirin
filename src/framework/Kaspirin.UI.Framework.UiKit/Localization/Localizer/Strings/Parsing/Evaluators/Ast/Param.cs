@@ -12,19 +12,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Kaspirin.UI.Framework.UiKit.Localization.Localizer.Strings.Parsing.Evaluators.Ast
-{
-    public sealed class Param : Operand
-    {
-        public Param(Token dollar, Token identifier)
-        {
-            Dollar = dollar;
-            Identifier = identifier;
-        }
+namespace Kaspirin.UI.Framework.UiKit.Localization.Localizer.Strings.Parsing.Evaluators.Ast;
 
-        public override Position Position => Dollar.Position + Identifier.Position;
-        public Token Dollar { get; }
-        public Token Identifier { get; }
-        public override string GetText() => Dollar.Position.GetText() + Identifier.Position.GetText();
+public sealed class Param : Operand
+{
+    public Param(Token dollar, Token identifier)
+    {
+        Dollar = dollar;
+        Identifier = identifier;
     }
+
+    public override Position Position => Dollar.Position + Identifier.Position;
+    public Token Dollar { get; }
+    public Token Identifier { get; }
+    public override string GetText() => Dollar.Position.GetText() + Identifier.Position.GetText();
 }

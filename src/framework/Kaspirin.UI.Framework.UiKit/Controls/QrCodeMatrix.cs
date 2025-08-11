@@ -12,24 +12,25 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Kaspirin.UI.Framework.UiKit.Controls
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional.
+
+namespace Kaspirin.UI.Framework.UiKit.Controls;
+
+public sealed class QrCodeMatrix
 {
-    public sealed class QrCodeMatrix
+    public static QrCodeMatrix Empty = new(new bool[1, 1]);
+
+    public QrCodeMatrix(bool[,] matrix)
     {
-        public static QrCodeMatrix Empty = new(new bool[1, 1]);
+        Guard.ArgumentIsNotNull(matrix);
 
-        public QrCodeMatrix(bool[,] matrix)
-        {
-            Guard.ArgumentIsNotNull(matrix);
+        var rows = matrix.GetLength(0);
+        var columns = matrix.GetLength(1);
 
-            var rows = matrix.GetLength(0);
-            var columns = matrix.GetLength(1);
+        Guard.Assert(rows == columns, $"Invalid matrix {rows}x{columns}. Only square matrices are supported.");
 
-            Guard.Assert(rows == columns, $"Invalid matrix {rows}x{columns}. Only square matrices are supported");
-
-            Value = matrix;
-        }
-
-        public bool[,] Value { get; }
+        Value = matrix;
     }
+
+    public bool[,] Value { get; }
 }

@@ -18,22 +18,20 @@ using System;
 using System.Runtime.InteropServices;
 using FILETIME = System.Runtime.InteropServices.ComTypes.FILETIME;
 
-namespace Kaspirin.UI.Framework.NativeMethods.Api.Wininet.Structs
+namespace Kaspirin.UI.Framework.NativeMethods.Api.Wininet.Structs;
+
+/// <summary>
+///     <seealso href="https://learn.microsoft.com/en-us/windows/win32/api/wininet/ns-wininet-internet_per_conn_optiona">Learn more</seealso>.
+/// </summary>
+[StructLayout(LayoutKind.Explicit)]
+public struct PerConnectionOptionsUnion
 {
-    /// <summary>
-    ///     
-    /// <seealso href="https://learn.microsoft.com/en-us/windows/win32/api/wininet/ns-wininet-internet_per_conn_optiona">Learn more</seealso>.
-    /// </summary>
-    [StructLayout(LayoutKind.Explicit)]
-    public struct PerConnectionOptionsUnion
-    {
-        [FieldOffset(0)]
-        public InternetConnectionAccessFlags Value;
+    [FieldOffset(0)]
+    public InternetConnectionAccessFlags Value;
 
-        [FieldOffset(0)]
-        public IntPtr ValuePtr;
+    [FieldOffset(0)]
+    public IntPtr ValuePtr;
 
-        [FieldOffset(0)]
-        public FILETIME ValueFiletime;
-    }
+    [FieldOffset(0)]
+    public FILETIME ValueFiletime;
 }

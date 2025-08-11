@@ -12,33 +12,84 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-#pragma warning disable KCAIDE0002 // Enum has incorrect suffix
 
 using System;
 
-namespace Kaspirin.UI.Framework.NativeMethods.Api.User32.Enums
+namespace Kaspirin.UI.Framework.NativeMethods.Api.User32.Enums;
+
+/// <summary>
+///     <seealso href="https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-setwindowpos">Learn more</seealso>.
+/// </summary>
+[Flags]
+public enum WindowPositionFlags : uint
 {
     /// <summary>
-    ///     
-    /// <seealso href="https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-setwindowpos">Learn more</seealso>.
+    ///     The flag is not set.
     /// </summary>
-    [Flags]
-    public enum WindowPositionFlags : uint
-    {
-        None = 0,
-        SWP_NOSIZE = 0x0001,
-        SWP_NOMOVE = 0x0002,
-        SWP_NOZORDER = 0x0004,
-        SWP_NOREDRAW = 0x0008,
-        SWP_NOACTIVATE = 0x0010,
-        SWP_DRAWFRAME = 0x0020,
-        SWP_HIDEWINDOW = 0x0080,
-        SWP_SHOWWINDOW = 0x0040,
-        SWP_NOCOPYBITS = 0x0100,
-        SWP_NOOWNERZORDER = 0x0200,
-        SWP_NOSENDCHANGING = 0x0400,
-        SWP_DEFERERASE = 0x2000,
-        SWP_ASYNCWINDOWPOS = 0x4000
-    }
+    None = 0,
+
+    /// <summary>
+    ///     The SWP_NOSIZE constant.
+    /// </summary>
+    NoSize = 0x0001,
+
+    /// <summary>
+    ///     The SWP_NOMOVE constant.
+    /// </summary>
+    NoMove = 0x0002,
+
+    /// <summary>
+    ///     The SWP_NOZORDER constant.
+    /// </summary>
+    NoZOrder = 0x0004,
+
+    /// <summary>
+    ///     The SWP_NOREDRAW constant.
+    /// </summary>
+    NoRedraw = 0x0008,
+
+    /// <summary>
+    ///     The SWP_NOACTIVATE constant.
+    /// </summary>
+    NoActivate = 0x0010,
+
+    /// <summary>
+    ///     The SWP_DRAWFRAME constant.
+    /// </summary>
+    DrawFrame = 0x0020,
+
+    /// <summary>
+    ///     The SWP_HIDEWINDOW constant.
+    /// </summary>
+    HideWindow = 0x0080,
+
+    /// <summary>
+    ///     The SWP_SHOWWINDOW constant.
+    /// </summary>
+    ShowWindow = 0x0040,
+
+    /// <summary>
+    ///     The SWP_NOCOPYBITS constant.
+    /// </summary>
+    NoCopyBits = 0x0100,
+
+    /// <summary>
+    ///     The SWP_NOOWNERZORDER constant.
+    /// </summary>
+    NoOwnerZOrder = 0x0200,
+
+    /// <summary>
+    ///     The SWP_NOSENDCHANGING constant.
+    /// </summary>
+    NoSendChanging = 0x0400,
+
+    /// <summary>
+    ///     The SWP_DEFERERASE constant.
+    /// </summary>
+    DeferErase = 0x2000,
+
+    /// <summary>
+    ///     The SWP_ASYNCWINDOWPOS constant.
+    /// </summary>
+    AsyncWindowPos = 0x4000,
 }

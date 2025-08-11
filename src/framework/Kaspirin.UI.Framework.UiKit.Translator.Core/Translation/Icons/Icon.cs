@@ -12,20 +12,19 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Kaspirin.UI.Framework.UiKit.Translator.Core.Translation.Icons
+namespace Kaspirin.UI.Framework.UiKit.Translator.Core.Translation.Icons;
+
+public sealed class Icon
 {
-    public sealed class Icon
-    {
-        public bool IsAutoRTL { get; set; }
+    public bool IsAutoRTL { get; set; }
 
-        public bool IsColorfull { get; set; }
+    public bool IsColorfull { get; set; }
 
-        public string Name { get; set; }
+    public string Name { get; set; }
 
-        public int Size { get; set; }
+    public int Size { get; set; }
 
-        public string Svg { get; set; }
+    public string Svg { get; set; }
 
-        public string SvgRTL { get; set; }
-    }
+    public string SvgRTL { get; set; }
 }

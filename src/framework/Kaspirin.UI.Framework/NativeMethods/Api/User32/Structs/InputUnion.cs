@@ -16,22 +16,20 @@
 
 using System.Runtime.InteropServices;
 
-namespace Kaspirin.UI.Framework.NativeMethods.Api.User32.Structs
+namespace Kaspirin.UI.Framework.NativeMethods.Api.User32.Structs;
+
+/// <summary>
+///     <seealso href="https://learn.microsoft.com/en-us/windows/win32/api/winuser/ns-winuser-input">Learn more</seealso>.
+/// </summary>
+[StructLayout(LayoutKind.Explicit)]
+public struct InputUnion
 {
-    /// <summary>
-    ///     
-    /// <seealso href="https://learn.microsoft.com/en-us/windows/win32/api/winuser/ns-winuser-input">Learn more</seealso>.
-    /// </summary>
-    [StructLayout(LayoutKind.Explicit)]
-    public struct InputUnion
-    {
-        [FieldOffset(0)]
-        public MouseInput Mouse;
+    [FieldOffset(0)]
+    public MouseInput Mouse;
 
-        [FieldOffset(0)]
-        public KeyboardInput Keyboard;
+    [FieldOffset(0)]
+    public KeyboardInput Keyboard;
 
-        [FieldOffset(0)]
-        public HardwareInput Hardware;
-    }
+    [FieldOffset(0)]
+    public HardwareInput Hardware;
 }

@@ -12,18 +12,25 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
+namespace Kaspirin.UI.Framework.NativeMethods.Api.Kernel32.Enums;
 
-namespace Kaspirin.UI.Framework.NativeMethods.Api.Kernel32.Enums
+/// <summary>
+///     <seealso href="https://learn.microsoft.com/en-us/windows/win32/api/winnt/ns-winnt-osversioninfoexw">Learn more</seealso>.
+/// </summary>
+public enum OsProductType : byte
 {
     /// <summary>
-    ///     
-    /// <seealso href="https://learn.microsoft.com/en-us/windows/win32/api/winnt/ns-winnt-osversioninfoexw">Learn more</seealso>.
+    ///     The VER_NT_DOMAIN_CONTROLLER constant.
     /// </summary>
-    public enum OsProductType : byte
-    {
-        VER_NT_DOMAIN_CONTROLLER = 2,
-        VER_NT_SERVER = 3,
-        VER_NT_WORKSTATION = 1
-    }
+    DomainController = 2,
+
+    /// <summary>
+    ///     The VER_NT_SERVER constant.
+    /// </summary>
+    Server = 3,
+
+    /// <summary>
+    ///     The VER_NT_WORKSTATION constant.
+    /// </summary>
+    Workstation = 1,
 }

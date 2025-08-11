@@ -17,49 +17,50 @@ using System.Reflection;
 using System.Windows;
 using System.Windows.Media.Imaging;
 
-namespace Kaspirin.UI.Framework.UiKit.Localization.Markup.Extensions.Images
+namespace Kaspirin.UI.Framework.UiKit.Localization.Markup.Extensions.Images;
+
+public class ImgExtension : BaseLocalizationMarkupExtension
 {
-    public class ImgExtension : LocalizationMarkupBase
+    public ImgExtension() : this(string.Empty) { }
+
+    public ImgExtension(string key) : base(key) { }
+
+    public ImgExtension(string key, string scope) : base(key, scope) { }
+
+    public ImgExtensionMode Mode { get; set; }
+
+    public Size BitmapFrameSize { get; set; } = Size.Empty;
+
+    protected override object? ProvideFallback()
     {
-        public ImgExtension() : this(string.Empty) { }
-
-        public ImgExtension(string key) : base(key) { }
-
-        public ImgExtension(string key, string scope) : base(key, scope) { }
-
-        public ImgExtensionMode Mode { get; set; }
-
-        public Size BitmapFrameSize { get; set; } = Size.Empty;
-
-        protected override object? ProvideFallback()
+        return Mode switch
         {
-            return Mode switch
-            {
-                ImgExtensionMode.BitmapImage => new BitmapImage(_fallbackImageUri),
-                ImgExtensionMode.BitmapFrame => BitmapFrame.Create(_fallbackImageUri),
-                _ => base.ProvideFallback()
-            };
-        }
-
-        protected override object? ProvideValue()
-        {
-            var localizer = ProvideLocalizer<IImageLocalizer>();
-
-            return Mode switch
-            {
-                ImgExtensionMode.BitmapImage => localizer.GetBitmapImage(Key),
-                ImgExtensionMode.BitmapFrame => localizer.GetBitmapFrame(Key, BitmapFrameSize),
-                ImgExtensionMode.SvgImage => localizer.GetSvgImage(Key),
-                _ => throw new ArgumentOutOfRangeException()
-            };
-        }
-
-        protected override ILocalizer PrepareLocalizer()
-        {
-            return LocalizationManager.Current.LocalizerFactory.Resolve<IImageLocalizer>(Scope);
-        }
-
-        private static readonly Uri _fallbackImageUri = new($"pack://application:,,,/{Assembly.GetExecutingAssembly().GetName().Name};" +
-                                                             "component/Resources/neutral/images/fallback/Placeholder.png");
+            ImgExtensionMode.BitmapImage => new BitmapImage(_fallbackImageUri),
+            ImgExtensionMode.BitmapFrame => BitmapFrame.Create(_fallbackImageUri),
+            _ => base.ProvideFallback()
+        };
     }
+
+    protected override object? ProvideValue()
+    {
+        var localizer = ProvideLocalizer<IImageLocalizer>();
+
+        return Mode switch
+        {
+            ImgExtensionMode.BitmapImage => localizer.GetBitmapImage(Key),
+            ImgExtensionMode.BitmapFrame => localizer.GetBitmapFrame(Key, BitmapFrameSize),
+            ImgExtensionMode.SvgImage => localizer.GetSvgImage(Key),
+            ImgExtensionMode.Uri => localizer.GetUri(Key),
+            ImgExtensionMode.Stream => localizer.GetStream(Key),
+            _ => throw new UnexpectedValueException(Mode)
+        };
+    }
+
+    protected override ILocalizer PrepareLocalizer()
+    {
+        return LocalizationManager.GetLocalizer<IImageLocalizer>(Scope);
+    }
+
+    private static readonly Uri _fallbackImageUri = new($"pack://application:,,,/{Assembly.GetExecutingAssembly().GetName().Name};" +
+                                                         "component/Resources/neutral/images/fallback/Placeholder.png");
 }

@@ -19,92 +19,94 @@ using System.Linq;
 using Kaspirin.UI.Framework.UiKit.Localization.Localizer.Strings.Parsing.Evaluators.Ast;
 using Kaspirin.UI.Framework.UiKit.Localization.Localizer.Strings.Parsing.Exceptions;
 
-namespace Kaspirin.UI.Framework.UiKit.Localization.Localizer.Strings.Parsing
+namespace Kaspirin.UI.Framework.UiKit.Localization.Localizer.Strings.Parsing;
+
+public static class Validator
 {
-    public static class Validator
+    public static void ValidateCommonResources(Dictionary<string, IEnumerable<Operand>> commonDictionary, CultureInfo cultureInfo) =>
+        ValidateResources(dictionary: commonDictionary, parentDictionary: new(), cultureInfo);
+
+    public static void ValidateScopeResources(
+        Dictionary<string, IEnumerable<Operand>> scopeDictionary,
+        Dictionary<string, IEnumerable<Operand>> commonDictionary,
+        CultureInfo cultureInfo) =>
+        ValidateResources(scopeDictionary, commonDictionary, cultureInfo);
+
+    private static void ValidateResources(
+        Dictionary<string, IEnumerable<Operand>> dictionary,
+        Dictionary<string, IEnumerable<Operand>> parentDictionary,
+        CultureInfo cultureInfo)
     {
-        public static void ValidateCommonResources(Dictionary<string, IEnumerable<Operand>> commonDictionary, CultureInfo cultureInfo) =>
-            ValidateResources(dictionary: commonDictionary, parentDictionary: new Dictionary<string, IEnumerable<Operand>>(), cultureInfo);
-
-        public static void ValidateScopeResources(
-            Dictionary<string, IEnumerable<Operand>> scopeDictionary,
-            Dictionary<string, IEnumerable<Operand>> commonDictionary,
-            CultureInfo cultureInfo) =>
-            ValidateResources(scopeDictionary, commonDictionary, cultureInfo);
-
-        private static void ValidateResources(
-            Dictionary<string, IEnumerable<Operand>> dictionary,
-            Dictionary<string, IEnumerable<Operand>> parentDictionary,
-            CultureInfo cultureInfo)
+        void validateResolveChain(string key, List<string> resolvedKeys)
         {
-            void validateResolveChain(string key, List<string> resolvedKeys)
+            if (resolvedKeys.Contains(key))
             {
-                if (resolvedKeys.Contains(key))
-                {
-                    var first = resolvedKeys.First();
-                    var loopedKeys = resolvedKeys.TakeWhile(x => x != key).ToList();
-                    loopedKeys.Add(key);
-                    throw new InvalidDataException(message:
-                        $@"Cyclic reference found: {string.Join("->", loopedKeys)}; ""->"")->{first}");
-                }
+                var first = resolvedKeys.First();
+                var loopedKeys = resolvedKeys.TakeWhile(x => x != key).ToList();
+                loopedKeys.Add(key);
+                throw new InvalidDataException(message:
+                    $@"Cyclic reference found: {string.Join("->", loopedKeys)}; ""->"")->{first}");
+            }
+        }
+
+        void validateKeyRef(string parentKey, string keyRefValue, Position position)
+        {
+            if (!(dictionary.ContainsKey(keyRefValue) || parentDictionary.ContainsKey(keyRefValue)))
+            {
+                throw new ValidationErrorException(position, $"Unable to resolve key reference '{keyRefValue}' in '{parentKey}' key.");
+            }
+        }
+
+        void validatePluralForm(string key, int operandCount, Position position)
+        {
+            if (!cultureInfo.Equals(CultureInfo.InvariantCulture) && PluralFormInfoProvider.GetFormCount(cultureInfo) != operandCount)
+            {
+                throw new ValidationErrorException(
+                    position,
+                    $"Invalid plural form count for '{cultureInfo}' culture in key '{key}': expected {PluralFormInfoProvider.GetFormCount(cultureInfo)}, got {operandCount}.");
+            }
+        }
+
+        void validateOperand(string key, Operand operand, List<string> resolvedKeys, List<string> validatedKeys)
+        {
+            switch (operand)
+            {
+                case KeyRef keyRef:
+                    var keyRefValue = keyRef.Identifier.GetText();
+                    validateKeyRef(key, keyRefValue, keyRef.Position);
+                    resolvedKeys.Add(key);
+                    validateKey(keyRefValue, resolvedKeys, validatedKeys);
+                    break;
+
+                case PluralForm pluralForm:
+                    validatePluralForm(key, pluralForm.PluralFormExpressions.Count(), pluralForm.ClosingCurlyBrace.Position);
+                    break;
+
+                default:
+                    break;
+            }
+        }
+
+        void validateKey(string key, List<string> resolvedKeys, List<string> validatedKeys)
+        {
+            validateResolveChain(key, resolvedKeys);
+
+            if (validatedKeys.Contains(key) || parentDictionary.ContainsKey(key))
+            {
+                return;
             }
 
-            void validateKeyRef(string parentKey, string keyRefValue, Position position)
+            foreach (var operand in dictionary[key])
             {
-                if (!(dictionary.ContainsKey(keyRefValue) || parentDictionary.ContainsKey(keyRefValue)))
-                {
-                    throw new ValidationErrorException(position, $"Unable to resolve key reference '{keyRefValue}' in '{parentKey}' key.");
-                }
+                validateOperand(key, operand, resolvedKeys, validatedKeys);
             }
 
-            void validatePluralForm(string key, int operandCount, Position position)
-            {
-                if (!cultureInfo.Equals(CultureInfo.InvariantCulture) && PluralForms.GetFormCount(cultureInfo) != operandCount)
-                {
-                    throw new ValidationErrorException(
-                        position,
-                        $"Invalid plural form count for '{cultureInfo}' culture in key '{key}': expected {PluralForms.GetFormCount(cultureInfo)}, got {operandCount}.");
-                }
-            }
+            validatedKeys.Add(key);
+        }
 
-            void validateOperand(string key, Operand operand, List<string> resolvedKeys, IList<string> validatedKeys)
-            {
-                switch (operand)
-                {
-                    case KeyRef keyRef:
-                        var keyRefValue = keyRef.Identifier.GetText();
-                        validateKeyRef(key, keyRefValue, keyRef.Position);
-                        resolvedKeys.Add(key);
-                        validateKey(keyRefValue, resolvedKeys, validatedKeys);
-                        break;
-
-                    case PluralForm pluralForm:
-                        validatePluralForm(key, pluralForm.PluralFormExpressions.Count(), pluralForm.ClosingCurlyBrace.Position);
-                        break;
-                }
-            }
-
-            void validateKey(string key, List<string> resolvedKeys, IList<string> validatedKeys)
-            {
-                validateResolveChain(key, resolvedKeys);
-
-                if (validatedKeys.Contains(key) || parentDictionary.ContainsKey(key))
-                {
-                    return;
-                }
-
-                foreach (var operand in dictionary[key])
-                {
-                    validateOperand(key, operand, resolvedKeys, validatedKeys);
-                }
-
-                validatedKeys.Add(key);
-            }
-
-            foreach (var key in dictionary.Keys)
-            {
-                validateKey(key, resolvedKeys: new List<string>(), validatedKeys: new List<string>());
-            }
+        foreach (var key in dictionary.Keys)
+        {
+            validateKey(key, resolvedKeys: new(), validatedKeys: new());
         }
     }
 }

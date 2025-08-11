@@ -18,101 +18,102 @@ using System.Windows.Data;
 using System.Windows.Markup;
 using Kaspirin.UI.Framework.UiKit.Controls.Internals;
 
-namespace Kaspirin.UI.Framework.UiKit.Controls
+namespace Kaspirin.UI.Framework.UiKit.Controls;
+
+[TemplatePart(Name = PART_Popup, Type = typeof(Popup))]
+[ContentProperty(nameof(PopupContent))]
+public sealed class InputPopupAction : InputCommandAction
 {
-    [TemplatePart(Name = PART_Popup, Type = typeof(Popup))]
-    [ContentProperty(nameof(PopupContent))]
-    public sealed class InputPopupAction : InputCommandAction
+    public const string PART_Popup = "PART_Popup";
+
+    #region PopupContent
+
+    public object PopupContent
     {
-        public const string PART_Popup = "PART_Popup";
-
-        #region PopupContent
-
-        public object PopupContent
-        {
-            get => GetValue(PopupContentProperty);
-            set => SetValue(PopupContentProperty, value);
-        }
-
-        public static readonly DependencyProperty PopupContentProperty = DependencyProperty.Register(
-            nameof(PopupContent),
-            typeof(object),
-            typeof(InputPopupAction));
-
-        #endregion
-
-        #region PopupContentTemplate
-
-        public DataTemplate? PopupContentTemplate
-        {
-            get => (DataTemplate?)GetValue(PopupContentProperty);
-            set => SetValue(PopupContentProperty, value);
-        }
-
-        public static readonly DependencyProperty PopupContentTemplateProperty = DependencyProperty.Register(
-            nameof(PopupContentTemplate),
-            typeof(DataTemplate),
-            typeof(InputPopupAction));
-
-        #endregion
-
-        #region PopupPosition
-
-        public PopupPosition PopupPosition
-        {
-            get => (PopupPosition)GetValue(PopupPositionProperty);
-            set => SetValue(PopupPositionProperty, value);
-        }
-
-        public static readonly DependencyProperty PopupPositionProperty = DependencyProperty.Register(
-            nameof(PopupPosition),
-            typeof(PopupPosition),
-            typeof(InputPopupAction),
-            new PropertyMetadata(PopupPosition.Bottom));
-
-        #endregion
-
-        #region IsPopupOpen
-
-        public bool IsPopupOpen
-        {
-            get => (bool)GetValue(IsPopupOpenProperty);
-            set => SetValue(IsPopupOpenProperty, value);
-        }
-
-        public static readonly DependencyProperty IsPopupOpenProperty = DependencyProperty.Register(
-            nameof(IsPopupOpen),
-            typeof(bool),
-            typeof(InputPopupAction),
-            new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
-
-        #endregion
-
-        public override void OnApplyTemplate()
-        {
-            base.OnApplyTemplate();
-
-            _popup = (Popup)GetTemplateChild(PART_Popup);
-
-            _popup.SetBinding(Popup.IsPopupOpenProperty, new Binding() { Source = this, Path = IsPopupOpenProperty.AsPath() });
-
-            _popup.Opened += OnPopupOpened;
-            _popup.Closed += OnPopupClosed;
-        }
-
-        protected override void OnClick()
-        {
-            base.OnClick();
-
-            IsPopupOpen = !IsPopupOpen;
-        }
-
-        private void OnPopupOpened(object? sender, EventArgs e)
-            => IsHitTestVisible = false;
-
-        private void OnPopupClosed(object? sender, EventArgs e)
-            => IsHitTestVisible = true;
-
-        private Popup? _popup;
+        get => GetValue(PopupContentProperty);
+        set => SetValue(PopupContentProperty, value);
     }
+
+    public static readonly DependencyProperty PopupContentProperty = DependencyProperty.Register(
+        nameof(PopupContent),
+        typeof(object),
+        typeof(InputPopupAction),
+        new PropertyMetadata(default));
+
+    #endregion
+
+    #region PopupContentTemplate
+
+    public DataTemplate? PopupContentTemplate
+    {
+        get => (DataTemplate?)GetValue(PopupContentProperty);
+        set => SetValue(PopupContentProperty, value);
+    }
+
+    public static readonly DependencyProperty PopupContentTemplateProperty = DependencyProperty.Register(
+        nameof(PopupContentTemplate),
+        typeof(DataTemplate),
+        typeof(InputPopupAction),
+        new PropertyMetadata(default(DataTemplate)));
+
+    #endregion
+
+    #region PopupPosition
+
+    public PopupPosition PopupPosition
+    {
+        get => (PopupPosition)GetValue(PopupPositionProperty);
+        set => SetValue(PopupPositionProperty, value);
+    }
+
+    public static readonly DependencyProperty PopupPositionProperty = DependencyProperty.Register(
+        nameof(PopupPosition),
+        typeof(PopupPosition),
+        typeof(InputPopupAction),
+        new PropertyMetadata(PopupPosition.Bottom));
+
+    #endregion
+
+    #region IsPopupOpen
+
+    public bool IsPopupOpen
+    {
+        get => (bool)GetValue(IsPopupOpenProperty);
+        set => SetValue(IsPopupOpenProperty, value);
+    }
+
+    public static readonly DependencyProperty IsPopupOpenProperty = DependencyProperty.Register(
+        nameof(IsPopupOpen),
+        typeof(bool),
+        typeof(InputPopupAction),
+        new FrameworkPropertyMetadata(default(bool), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
+
+    #endregion
+
+    public override void OnApplyTemplate()
+    {
+        base.OnApplyTemplate();
+
+        _popup = (Popup)GetTemplateChild(PART_Popup);
+
+        _popup.SetBinding(Popup.IsPopupOpenProperty, new Binding() { Source = this, Path = IsPopupOpenProperty.AsPath() });
+
+        _popup.Opened += OnPopupOpened;
+        _popup.Closed += OnPopupClosed;
+    }
+
+    protected override void OnClick()
+    {
+        base.OnClick();
+
+        IsPopupOpen = !IsPopupOpen;
+    }
+
+    private void OnPopupOpened(object? sender, EventArgs e)
+        => IsHitTestVisible = false;
+
+    private void OnPopupClosed(object? sender, EventArgs e)
+        => IsHitTestVisible = true;
+
+    private Popup? _popup;
 }

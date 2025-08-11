@@ -16,17 +16,15 @@
 
 using System.Runtime.InteropServices;
 
-namespace Kaspirin.UI.Framework.NativeMethods.Api.Shell32.Structs
-{
-    /// <summary>
-    ///     
-    /// <seealso href="https://learn.microsoft.com/en-us/windows/win32/api/shtypes/ns-shtypes-strret">Learn more</seealso>.
-    /// </summary>
-    [StructLayout(LayoutKind.Sequential)]
-    public struct ShStringReturn
-    {
-        public uint Type;
+namespace Kaspirin.UI.Framework.NativeMethods.Api.Shell32.Structs;
 
-        public ShStringReturnData Data;
-    }
+/// <summary>
+///     <seealso href="https://learn.microsoft.com/en-us/windows/win32/api/shtypes/ns-shtypes-strret">Learn more</seealso>.
+/// </summary>
+[StructLayout(LayoutKind.Sequential)]
+public struct ShStringReturn
+{
+    public uint Type;
+
+    public ShStringReturnData Data;
 }

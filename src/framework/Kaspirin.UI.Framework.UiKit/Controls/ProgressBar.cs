@@ -17,198 +17,225 @@ using System.Windows;
 using System.Windows.Media.Animation;
 using Kaspirin.UI.Framework.UiKit.Controls.Internals;
 
-namespace Kaspirin.UI.Framework.UiKit.Controls
+namespace Kaspirin.UI.Framework.UiKit.Controls;
+
+[TemplatePart(Name = "PART_AnimatedIndicator", Type = typeof(FrameworkElement))]
+public sealed class ProgressBar : System.Windows.Controls.ProgressBar
 {
-    [TemplatePart(Name = "PART_AnimatedIndicator", Type = typeof(FrameworkElement))]
-    public class ProgressBar : System.Windows.Controls.ProgressBar
+    public ProgressBar()
     {
-        public ProgressBar()
-        {
-            _storyboard = new();
-            _storyboard.SetFrameRate();
+        _storyboard = new();
+        _storyboard.SetFrameRate();
 
-            Loaded += OnLoaded;
-            ValueChanged += OnValueChanged;
-            SizeChanged += OnSizeChanged;
-        }
+        Loaded += OnLoaded;
+        ValueChanged += OnValueChanged;
+        SizeChanged += OnSizeChanged;
+    }
 
-        public override void OnApplyTemplate()
-        {
-            base.OnApplyTemplate(); //Apply PART_GlowRect, PART_Track, PART_Indicator here
+    #region State
 
-            _animatedIndicator = GetTemplateChild("PART_AnimatedIndicator") as FrameworkElement;
-        }
+    public string State
+    {
+        get => (string)GetValue(StateProperty);
+        set => SetValue(StateProperty, value);
+    }
 
-        #region State
+    public static readonly DependencyProperty StateProperty = DependencyProperty.Register(
+        nameof(State),
+        typeof(string),
+        typeof(ProgressBar),
+        new PropertyMetadata(default(string)));
 
-        public static readonly DependencyProperty StateProperty =
-            DependencyProperty.Register("State", typeof(string), typeof(ProgressBar));
+    #endregion
 
-        public string State
-        {
-            get { return (string)GetValue(StateProperty); }
-            set { SetValue(StateProperty, value); }
-        }
+    #region Estimation
 
-        #endregion
+    public string Estimation
+    {
+        get => (string)GetValue(EstimationProperty);
+        set => SetValue(EstimationProperty, value);
+    }
 
-        #region Estimation
+    public static readonly DependencyProperty EstimationProperty = DependencyProperty.Register(
+        nameof(Estimation),
+        typeof(string),
+        typeof(ProgressBar),
+        new PropertyMetadata(default(string)));
 
-        public static readonly DependencyProperty EstimationProperty =
-            DependencyProperty.Register("Estimation", typeof(string), typeof(ProgressBar));
+    #endregion
 
-        public string Estimation
-        {
-            get { return (string)GetValue(EstimationProperty); }
-            set { SetValue(EstimationProperty, value); }
-        }
+    #region ShowHighlight
 
-        #endregion
+    public bool ShowHighlight
+    {
+        get => (bool)GetValue(ShowHighlightProperty);
+        set => SetValue(ShowHighlightProperty, value);
+    }
 
-        #region ShowHighlight
-        public bool ShowHighlight
-        {
-            get { return (bool)GetValue(ShowHighlightProperty); }
-            set { SetValue(ShowHighlightProperty, value); }
-        }
+    public static readonly DependencyProperty ShowHighlightProperty = DependencyProperty.Register(
+        nameof(ShowHighlight),
+        typeof(bool),
+        typeof(ProgressBar),
+        new PropertyMetadata(true));
 
-        public static readonly DependencyProperty ShowHighlightProperty =
-            DependencyProperty.Register("ShowHighlight", typeof(bool), typeof(ProgressBar), new PropertyMetadata(true));
-        #endregion
+    #endregion
 
-        #region ShowValue
+    #region ShowValue
 
-        public static readonly DependencyProperty ShowValueProperty =
-            DependencyProperty.Register("ShowValue", typeof(bool), typeof(ProgressBar), new PropertyMetadata(true));
+    public bool ShowValue
+    {
+        get => (bool)GetValue(ShowValueProperty);
+        set => SetValue(ShowValueProperty, value);
+    }
 
-        public bool ShowValue
-        {
-            get { return (bool)GetValue(ShowValueProperty); }
-            set { SetValue(ShowValueProperty, value); }
-        }
+    public static readonly DependencyProperty ShowValueProperty = DependencyProperty.Register(
+        nameof(ShowValue),
+        typeof(bool),
+        typeof(ProgressBar),
+        new PropertyMetadata(true));
 
-        #endregion
+    #endregion
 
-        #region ShowState
+    #region ShowState
 
-        public static readonly DependencyProperty ShowStateProperty =
-            DependencyProperty.Register("ShowState", typeof(bool), typeof(ProgressBar), new PropertyMetadata(true));
+    public bool ShowState
+    {
+        get => (bool)GetValue(ShowStateProperty);
+        set => SetValue(ShowStateProperty, value);
+    }
 
-        public bool ShowState
-        {
-            get { return (bool)GetValue(ShowStateProperty); }
-            set { SetValue(ShowStateProperty, value); }
-        }
+    public static readonly DependencyProperty ShowStateProperty = DependencyProperty.Register(
+        nameof(ShowState),
+        typeof(bool),
+        typeof(ProgressBar),
+        new PropertyMetadata(true));
 
-        #endregion
+    #endregion
 
-        #region ShowEstimation
+    #region ShowEstimation
 
-        public static readonly DependencyProperty ShowEstimationProperty =
-            DependencyProperty.Register("ShowEstimation", typeof(bool), typeof(ProgressBar));
+    public bool ShowEstimation
+    {
+        get => (bool)GetValue(ShowEstimationProperty);
+        set => SetValue(ShowEstimationProperty, value);
+    }
 
-        public bool ShowEstimation
-        {
-            get { return (bool)GetValue(ShowEstimationProperty); }
-            set { SetValue(ShowEstimationProperty, value); }
-        }
+    public static readonly DependencyProperty ShowEstimationProperty = DependencyProperty.Register(
+        nameof(ShowEstimation),
+        typeof(bool),
+        typeof(ProgressBar),
+        new PropertyMetadata(default(bool)));
 
-        #endregion
+    #endregion
 
-        #region CanRollback
-        public bool CanRollback
-        {
-            get { return (bool)GetValue(CanRollbackProperty); }
-            set { SetValue(CanRollbackProperty, value); }
-        }
+    #region CanRollback
 
-        public static readonly DependencyProperty CanRollbackProperty =
-            DependencyProperty.Register("CanRollback", typeof(bool), typeof(ProgressBar), new PropertyMetadata(false));
-        #endregion
+    public bool CanRollback
+    {
+        get => (bool)GetValue(CanRollbackProperty);
+        set => SetValue(CanRollbackProperty, value);
+    }
 
-        #region Type
+    public static readonly DependencyProperty CanRollbackProperty = DependencyProperty.Register(
+        nameof(CanRollback),
+        typeof(bool),
+        typeof(ProgressBar),
+        new PropertyMetadata(default(bool)));
 
-        public ProgressBarType Type
-        {
-            get { return (ProgressBarType)GetValue(TypeProperty); }
-            set { SetValue(TypeProperty, value); }
-        }
+    #endregion
 
-        public static readonly DependencyProperty TypeProperty =
-            DependencyProperty.Register("Type", typeof(ProgressBarType), typeof(ProgressBar), new PropertyMetadata(ProgressBarType.Positive));
+    #region Type
 
-        #endregion
+    public ProgressBarType Type
+    {
+        get => (ProgressBarType)GetValue(TypeProperty);
+        set => SetValue(TypeProperty, value);
+    }
 
-        private void OnSizeChanged(object sender, SizeChangedEventArgs e)
-        {
-            if (_animatedIndicator != null)
-            {
-                ChangeValuePermanent();
-            }
-        }
+    public static readonly DependencyProperty TypeProperty = DependencyProperty.Register(
+        nameof(Type),
+        typeof(ProgressBarType),
+        typeof(ProgressBar),
+        new PropertyMetadata(ProgressBarType.Positive));
 
-        private void OnLoaded(object sender, RoutedEventArgs e)
+    #endregion
+
+    public override void OnApplyTemplate()
+    {
+        base.OnApplyTemplate(); //Apply PART_GlowRect, PART_Track, PART_Indicator here
+
+        _animatedIndicator = GetTemplateChild("PART_AnimatedIndicator") as FrameworkElement;
+    }
+
+    private void OnSizeChanged(object sender, SizeChangedEventArgs e)
+    {
+        if (_animatedIndicator != null)
         {
             ChangeValuePermanent();
         }
-
-        private void OnValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
-        {
-            if (e.NewValue.LargerOrNearlyEqual(e.OldValue) || CanRollback)
-            {
-                ChangeValueSmooth();
-            }
-            else
-            {
-                ChangeValuePermanent();
-            }
-        }
-
-        private void ChangeValuePermanent()
-        {
-            if (_animatedIndicator != null)
-            {
-                _storyboard.Stop();
-                _animatedIndicator.Width = ActualWidth / Maximum * Value;
-                _storyboard.Resume();
-            }
-        }
-
-        private void ChangeValueSmooth()
-        {
-            if (_animatedIndicator != null)
-            {
-                var animation = CreateAnimation(_animatedIndicator);
-
-                _storyboard.Remove();
-                _storyboard.Children.Clear();
-
-                _storyboard.Children.Add(animation);
-                _storyboard.Begin();
-            }
-        }
-
-        private DoubleAnimation CreateAnimation(FrameworkElement animatedIndicator)
-        {
-            var animation = new DoubleAnimation
-            {
-                From = animatedIndicator.ActualWidth,
-                To = ActualWidth / Maximum * Value,
-                FillBehavior = FillBehavior.HoldEnd,
-                Duration = _animationDuration.CoerceDuration()
-            };
-
-            animation.SetValue(Storyboard.TargetProperty, animatedIndicator);
-            animation.SetValue(Storyboard.TargetPropertyProperty, WidthProperty.AsPath());
-            animation.Freeze();
-
-            return animation;
-        }
-
-        private readonly Storyboard _storyboard;
-
-        private FrameworkElement? _animatedIndicator;
-
-        private static readonly Duration _animationDuration = new(TimeSpan.FromMilliseconds(500));
     }
+
+    private void OnLoaded(object sender, RoutedEventArgs e)
+    {
+        ChangeValuePermanent();
+    }
+
+    private void OnValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+    {
+        if (e.NewValue.LargerOrNearlyEqual(e.OldValue) || CanRollback)
+        {
+            ChangeValueSmooth();
+        }
+        else
+        {
+            ChangeValuePermanent();
+        }
+    }
+
+    private void ChangeValuePermanent()
+    {
+        if (_animatedIndicator != null)
+        {
+            _storyboard.Stop();
+            _animatedIndicator.Width = ActualWidth / Maximum * Value;
+            _storyboard.Resume();
+        }
+    }
+
+    private void ChangeValueSmooth()
+    {
+        if (_animatedIndicator != null)
+        {
+            var animation = CreateAnimation(_animatedIndicator);
+
+            _storyboard.Remove();
+            _storyboard.Children.Clear();
+
+            _storyboard.Children.Add(animation);
+            _storyboard.Begin();
+        }
+    }
+
+    private DoubleAnimation CreateAnimation(FrameworkElement animatedIndicator)
+    {
+        var animation = new DoubleAnimation
+        {
+            From = animatedIndicator.ActualWidth,
+            To = ActualWidth / Maximum * Value,
+            FillBehavior = FillBehavior.HoldEnd,
+            Duration = _animationDuration.CoerceDuration()
+        };
+
+        animation.SetValue(Storyboard.TargetProperty, animatedIndicator);
+        animation.SetValue(Storyboard.TargetPropertyProperty, WidthProperty.AsPath());
+        animation.Freeze();
+
+        return animation;
+    }
+
+    private readonly Storyboard _storyboard;
+
+    private FrameworkElement? _animatedIndicator;
+
+    private static readonly Duration _animationDuration = new(TimeSpan.FromMilliseconds(500));
 }

@@ -18,77 +18,76 @@ using System.Runtime.CompilerServices;
 using Kaspirin.UI.Framework.BackwardCompatibility;
 #endif
 
-namespace Kaspirin.UI.Framework.Guards.InterpolatedStringHandlers
+namespace Kaspirin.UI.Framework.Guards.InterpolatedStringHandlers;
+
+/// <summary>
+///     An interpolated string handler to check that the object is not <see langword="null" />.
+/// </summary>
+[InterpolatedStringHandler]
+public ref struct AssertIfNotNullInterpolatedStringHandler
 {
     /// <summary>
-    ///     An interpolated string handler to check that the object is not <see langword="null" />.
+    ///     Initializes a new instance of the <see cref="AssertIfNotNullInterpolatedStringHandler" /> class.
     /// </summary>
-    [InterpolatedStringHandler]
-    public ref struct AssertIfNotNullInterpolatedStringHandler
+    /// <param name="literalLength">
+    ///     The length of the literal part of the interpolated string.
+    /// </param>
+    /// <param name="formattedCount">
+    ///     The number of formatted values.
+    /// </param>
+    /// <param name="obj">
+    ///     The object to check.
+    /// </param>
+    /// <param name="isEnabled">
+    ///     Indicates whether the handler is enabled.
+    /// </param>
+    public AssertIfNotNullInterpolatedStringHandler(
+        int literalLength,
+        int formattedCount,
+        object? obj,
+        out bool isEnabled)
     {
-        /// <summary>
-        ///     Initializes a new instance of the <see cref="AssertIfNotNullInterpolatedStringHandler" /> class.
-        /// </summary>
-        /// <param name="literalLength">
-        ///     The length of the literal part of the interpolated string.
-        /// </param>
-        /// <param name="formattedCount">
-        ///     The number of formatted values.
-        /// </param>
-        /// <param name="obj">
-        ///     The object to check.
-        /// </param>
-        /// <param name="isEnabled">
-        ///     Indicates whether the handler is enabled.
-        /// </param>
-        public AssertIfNotNullInterpolatedStringHandler(
-            int literalLength,
-            int formattedCount,
-            object? obj,
-            out bool isEnabled)
-        {
-            isEnabled = obj is not null;
-            _defaultHandler = isEnabled ? new(literalLength, formattedCount) : default;
-        }
+        isEnabled = obj is not null;
+        _defaultHandler = isEnabled ? new(literalLength, formattedCount) : default;
+    }
 
-        /// <summary>
-        ///     Adds a literal string to the interpolated string handler.
-        /// </summary>
-        /// <param name="value">
-        ///     A literal string to add.
-        /// </param>
-        public void AppendLiteral(string value)
-            => _defaultHandler.AppendLiteral(value);
+    /// <summary>
+    ///     Adds a literal string to the interpolated string handler.
+    /// </summary>
+    /// <param name="value">
+    ///     A literal string to add.
+    /// </param>
+    public void AppendLiteral(string value)
+        => _defaultHandler.AppendLiteral(value);
 
-        /// <summary>
-        ///     Adds the formatted value to the interpolated string handler.
-        /// </summary>
-        /// <typeparam name="TArgument">
-        ///     The type of formatted value.
-        /// </typeparam>
-        /// <param name="value">
-        ///     Formatted value to add.
-        /// </param>
-        /// <param name="alignment">
-        ///     Alignment of the formatted value.
-        /// </param>
-        /// <param name="format">
-        ///     The format of the formatted value.
-        /// </param>
-        public void AppendFormatted<TArgument>(TArgument value, int alignment = 0, string? format = null)
-            => _defaultHandler.AppendFormatted(value, alignment, format);
+    /// <summary>
+    ///     Adds the formatted value to the interpolated string handler.
+    /// </summary>
+    /// <typeparam name="TArgument">
+    ///     The type of formatted value.
+    /// </typeparam>
+    /// <param name="value">
+    ///     Formatted value to add.
+    /// </param>
+    /// <param name="alignment">
+    ///     Alignment of the formatted value.
+    /// </param>
+    /// <param name="format">
+    ///     The format of the formatted value.
+    /// </param>
+    public void AppendFormatted<TArgument>(TArgument value, int alignment = 0, string? format = null)
+        => _defaultHandler.AppendFormatted(value, alignment, format);
 
-        /// <summary>
-        ///     Converts the interpolated string handler to a string and clears the handler.
-        /// </summary>
-        /// <returns>
-        ///     The resulting string.
-        /// </returns>
-        public string ToStringAndClear()
-            => _defaultHandler.ToStringAndClear();
+    /// <summary>
+    ///     Converts the interpolated string handler to a string and clears the handler.
+    /// </summary>
+    /// <returns>
+    ///     The resulting string.
+    /// </returns>
+    public string ToStringAndClear()
+        => _defaultHandler.ToStringAndClear();
 
 #pragma warning disable IDE0044 // With readonly modifier struct is copied every time it is accessed.
-        private DefaultInterpolatedStringHandler _defaultHandler;
+    private DefaultInterpolatedStringHandler _defaultHandler;
 #pragma warning restore IDE0044
-    }
 }

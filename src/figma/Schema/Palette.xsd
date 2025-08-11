@@ -28,6 +28,8 @@
 									<xs:element name="Brush" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
 								</xs:sequence>
 								<xs:attribute name="Id" type="xs:string" use="required"/>
+								<xs:attribute name="BrushName" type="xs:string" use="required"/>
+								<xs:attribute name="BrushScope" type="xs:string" use="optional"/>
 							</xs:complexType>
 						</xs:element>
 					</xs:sequence>

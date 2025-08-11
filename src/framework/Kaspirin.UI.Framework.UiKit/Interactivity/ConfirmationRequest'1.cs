@@ -14,45 +14,44 @@
 
 using System;
 
-namespace Kaspirin.UI.Framework.UiKit.Interactivity
+namespace Kaspirin.UI.Framework.UiKit.Interactivity;
+
+public class ConfirmationRequest<T> : InteractionRequestBase<T> where T : ConfirmationObject
 {
-    public class ConfirmationRequest<T> : InteractionRequestBase<T> where T : ConfirmationObject
+    public void Raise(T confirmationObject)
     {
-        public void Raise(T confirmationObject)
-        {
-            Guard.ArgumentIsNotNull(confirmationObject);
+        Guard.ArgumentIsNotNull(confirmationObject);
 
-            Raise(confirmationObject, _ => { });
+        Raise(confirmationObject, _ => { });
+    }
+
+    public void Raise(T confirmationObject, Action? onConfirmed = null, Action? onCancelled = null)
+    {
+        Guard.ArgumentIsNotNull(confirmationObject);
+
+        Raise(confirmationObject, c => onConfirmed?.Invoke(), c => onCancelled?.Invoke());
+    }
+
+    public void Raise(T confirmationObject, Action<T>? onConfirmed = null, Action<T>? onCancelled = null)
+    {
+        Guard.ArgumentIsNotNull(confirmationObject);
+
+        void OnHandled(T result)
+        {
+            var action = result.IsConfirmed
+                ? onConfirmed
+                : onCancelled;
+
+            action?.Invoke(confirmationObject);
         }
 
-        public void Raise(T confirmationObject, Action? onConfirmed = null, Action? onCancelled = null)
-        {
-            Guard.ArgumentIsNotNull(confirmationObject);
+        InvokeInteraction(confirmationObject, OnHandled);
+    }
 
-            Raise(confirmationObject, c => onConfirmed?.Invoke(), c => onCancelled?.Invoke());
-        }
+    protected override void OnClose()
+    {
+        Guard.IsNotNull(InteractionObject);
 
-        public void Raise(T confirmationObject, Action<T>? onConfirmed = null, Action<T>? onCancelled = null)
-        {
-            Guard.ArgumentIsNotNull(confirmationObject);
-
-            void OnHandled(T result)
-            {
-                var action = result.IsConfirmed
-                    ? onConfirmed
-                    : onCancelled;
-
-                action?.Invoke(confirmationObject);
-            }
-
-            InvokeInteraction(confirmationObject, OnHandled);
-        }
-
-        protected override void OnClose()
-        {
-            Guard.IsNotNull(InteractionObject);
-
-            InteractionObject.IsConfirmed = false;
-        }
+        InteractionObject.IsConfirmed = false;
     }
 }

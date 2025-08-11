@@ -12,16 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Kaspirin.UI.Framework.UiKit.MarkupExtensions.ItemIndex
+namespace Kaspirin.UI.Framework.UiKit.MarkupExtensions.ItemIndex;
+
+public enum ItemIndexConditionType
 {
-    public enum ItemIndexConditionType
-    {
-        Last,
-        First,
-        LessThan,
-        LessThanOrEquals,
-        MoreThan,
-        MoreThanOrEquals,
-        Equals,
-    }
+    Last,
+    First,
+    LessThan,
+    LessThanOrEquals,
+    MoreThan,
+    MoreThanOrEquals,
+    Equals,
 }

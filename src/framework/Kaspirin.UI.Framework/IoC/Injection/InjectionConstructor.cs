@@ -12,31 +12,30 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Kaspirin.UI.Framework.IoC.Injection
+namespace Kaspirin.UI.Framework.IoC.Injection;
+
+/// <summary>
+///     Sets default values for constructor arguments when creating an object. It is used when registering in the container.
+/// </summary>
+/// <remarks>
+///     It is suitable for cases when you need to use a certain value for a certain argument, rather
+///     than getting it from a container.
+/// </remarks>
+public sealed class InjectionConstructor : InjectionMember
 {
     /// <summary>
-    ///     Sets default values for constructor arguments when creating an object. It is used when registering in the container.
+    ///     Initializes a new instance of the <see cref="InjectionConstructor" /> class.
     /// </summary>
-    /// <remarks>
-    ///     It is suitable for cases when you need to use a certain value for a certain argument, rather
-    ///     than getting it from a container.
-    /// </remarks>
-    public sealed class InjectionConstructor : InjectionMember
+    /// <param name="resolvedParameters">
+    ///     An array of arguments for the implementation constructor, specified in the form <see cref="ResolvedParameter" />.
+    /// </param>
+    public InjectionConstructor(params ResolvedParameter[] resolvedParameters)
     {
-        /// <summary>
-        ///     Initializes a new instance of the <see cref="InjectionConstructor" /> class.
-        /// </summary>
-        /// <param name="resolvedParameters">
-        ///     An array of arguments for the implementation constructor, specified in the form <see cref="ResolvedParameter" />.
-        /// </param>
-        public InjectionConstructor(params ResolvedParameter[] resolvedParameters)
-        {
-            ResolvedParameters = Guard.EnsureArgumentIsNotNull(resolvedParameters);
-        }
-
-        /// <summary>
-        ///     An array of arguments for the implementation constructor.
-        /// </summary>
-        public ResolvedParameter[] ResolvedParameters { get; }
+        ResolvedParameters = Guard.EnsureArgumentIsNotNull(resolvedParameters);
     }
+
+    /// <summary>
+    ///     An array of arguments for the implementation constructor.
+    /// </summary>
+    public ResolvedParameter[] ResolvedParameters { get; }
 }

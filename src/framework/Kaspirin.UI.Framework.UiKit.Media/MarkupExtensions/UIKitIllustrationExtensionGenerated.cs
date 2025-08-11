@@ -18,12 +18,11 @@
 
 using Kaspirin.UI.Framework.UiKit.Media.Illustrations;
 
-namespace Kaspirin.UI.Framework.UiKit.Media.MarkupExtensions
-{
-    public sealed class UIKitIllustrationExtension : UIKitIllustrationExtensionBase
-    {
-        public UIKitIllustration_ExampleOne ExampleOne { get => _exampleOne; set => EnsureCanSet(ref _exampleOne, value); }
+namespace Kaspirin.UI.Framework.UiKit.Media.MarkupExtensions;
 
-        private UIKitIllustration_ExampleOne _exampleOne;
-    }
+public sealed class UIKitIllustrationExtension : UIKitIllustrationExtensionBase
+{
+    public UIKitIllustration_ExampleOne ExampleOne { get => _exampleOne; set => EnsureCanSet(ref _exampleOne, value); }
+
+    private UIKitIllustration_ExampleOne _exampleOne;
 }

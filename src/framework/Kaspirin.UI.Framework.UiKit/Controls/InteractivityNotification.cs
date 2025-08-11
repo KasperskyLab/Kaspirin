@@ -16,86 +16,103 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
-namespace Kaspirin.UI.Framework.UiKit.Controls
+namespace Kaspirin.UI.Framework.UiKit.Controls;
+
+public sealed class InteractivityNotification : ContentControl
 {
-    public sealed class InteractivityNotification : ContentControl
+    #region Type
+
+    public InteractivityNotificationType Type
     {
-        #region Type
-
-        public InteractivityNotificationType Type
-        {
-            get { return (InteractivityNotificationType)GetValue(TypeProperty); }
-            set { SetValue(TypeProperty, value); }
-        }
-
-        public static readonly DependencyProperty TypeProperty = DependencyProperty.Register(
-            "Type", typeof(InteractivityNotificationType), typeof(InteractivityNotification), new PropertyMetadata(InteractivityNotificationType.Neutral));
-
-        #endregion
-
-        #region Icon
-
-        public UIKitIcon_24 Icon
-        {
-            get { return (UIKitIcon_24)GetValue(IconProperty); }
-            set { SetValue(IconProperty, value); }
-        }
-
-        public static readonly DependencyProperty IconProperty = DependencyProperty.Register(
-            "Icon", typeof(UIKitIcon_24), typeof(InteractivityNotification));
-
-        #endregion
-
-        #region ActionCaption
-
-        public string? ActionCaption
-        {
-            get { return (string?)GetValue(ActionCaptionProperty); }
-            set { SetValue(ActionCaptionProperty, value); }
-        }
-
-        public static readonly DependencyProperty ActionCaptionProperty = DependencyProperty.Register(
-            "ActionCaption", typeof(string), typeof(InteractivityNotification));
-
-        #endregion
-
-        #region ActionCommand
-
-        public ICommand ActionCommand
-        {
-            get { return (ICommand)GetValue(ActionCommandProperty); }
-            set { SetValue(ActionCommandProperty, value); }
-        }
-
-        public static readonly DependencyProperty ActionCommandProperty = DependencyProperty.Register(
-            "ActionCommand", typeof(ICommand), typeof(InteractivityNotification));
-
-        #endregion
-
-        #region HasCloseButton
-
-        public bool HasCloseButton
-        {
-            get { return (bool)GetValue(HasCloseButtonProperty); }
-            set { SetValue(HasCloseButtonProperty, value); }
-        }
-
-        public static readonly DependencyProperty HasCloseButtonProperty = DependencyProperty.Register(
-            "HasCloseButton", typeof(bool), typeof(InteractivityNotification), new PropertyMetadata(true));
-
-        #endregion
-
-        #region CloseButtonCommand
-
-        public ICommand CloseButtonCommand
-        {
-            get { return (ICommand)GetValue(CloseButtonCommandProperty); }
-            set { SetValue(CloseButtonCommandProperty, value); }
-        }
-
-        public static readonly DependencyProperty CloseButtonCommandProperty = DependencyProperty.Register(
-            "CloseButtonCommand", typeof(ICommand), typeof(InteractivityNotification));
-
-        #endregion
+        get => (InteractivityNotificationType)GetValue(TypeProperty);
+        set => SetValue(TypeProperty, value);
     }
+
+    public static readonly DependencyProperty TypeProperty = DependencyProperty.Register(
+        nameof(Type),
+        typeof(InteractivityNotificationType),
+        typeof(InteractivityNotification),
+        new PropertyMetadata(InteractivityNotificationType.Neutral));
+
+    #endregion
+
+    #region Icon
+
+    public UIKitIcon_24 Icon
+    {
+        get => (UIKitIcon_24)GetValue(IconProperty);
+        set => SetValue(IconProperty, value);
+    }
+
+    public static readonly DependencyProperty IconProperty = DependencyProperty.Register(
+        nameof(Icon),
+        typeof(UIKitIcon_24),
+        typeof(InteractivityNotification),
+        new PropertyMetadata(default(UIKitIcon_24)));
+
+    #endregion
+
+    #region ActionCaption
+
+    public string? ActionCaption
+    {
+        get => (string?)GetValue(ActionCaptionProperty);
+        set => SetValue(ActionCaptionProperty, value);
+    }
+
+    public static readonly DependencyProperty ActionCaptionProperty = DependencyProperty.Register(
+        nameof(ActionCaption),
+        typeof(string),
+        typeof(InteractivityNotification),
+        new PropertyMetadata(default(string)));
+
+    #endregion
+
+    #region ActionCommand
+
+    public ICommand ActionCommand
+    {
+        get => (ICommand)GetValue(ActionCommandProperty);
+        set => SetValue(ActionCommandProperty, value);
+    }
+
+    public static readonly DependencyProperty ActionCommandProperty = DependencyProperty.Register(
+        nameof(ActionCommand),
+        typeof(ICommand),
+        typeof(InteractivityNotification),
+        new PropertyMetadata(default(ICommand)));
+
+    #endregion
+
+    #region HasCloseButton
+
+    public bool HasCloseButton
+    {
+        get => (bool)GetValue(HasCloseButtonProperty);
+        set => SetValue(HasCloseButtonProperty, value);
+    }
+
+    public static readonly DependencyProperty HasCloseButtonProperty = DependencyProperty.Register(
+        nameof(HasCloseButton),
+        typeof(bool),
+        typeof(InteractivityNotification),
+        new PropertyMetadata(true));
+
+    #endregion
+
+    #region CloseButtonCommand
+
+    public ICommand CloseButtonCommand
+    {
+        get => (ICommand)GetValue(CloseButtonCommandProperty);
+        set => SetValue(CloseButtonCommandProperty, value);
+    }
+
+    public static readonly DependencyProperty CloseButtonCommandProperty = DependencyProperty.Register(
+        nameof(CloseButtonCommand),
+        typeof(ICommand),
+        typeof(InteractivityNotification),
+        new PropertyMetadata(default(ICommand)));
+
+    #endregion
 }

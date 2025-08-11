@@ -14,44 +14,39 @@
 
 using System.Windows;
 
-namespace Kaspirin.UI.Framework.UiKit.Controls.Internals
+namespace Kaspirin.UI.Framework.UiKit.Controls.Internals;
+
+internal sealed class IconButtonInternals
 {
-    internal class IconButtonInternals
-    {
-        #region Icon16
+    #region Icon16
 
-        public static UIKitIcon_16 GetIcon16(DependencyObject obj)
-        {
-            return (UIKitIcon_16)obj.GetValue(Icon16Property);
-        }
+    public static UIKitIcon_16 GetIcon16(DependencyObject obj)
+        => (UIKitIcon_16)obj.GetValue(Icon16Property);
 
-        public static void SetIcon16(DependencyObject obj, UIKitIcon_16 value)
-        {
-            obj.SetValue(Icon16Property, value);
-        }
+    public static void SetIcon16(DependencyObject obj, UIKitIcon_16 value)
+        => obj.SetValue(Icon16Property, value);
 
-        public static readonly DependencyProperty Icon16Property =
-            DependencyProperty.RegisterAttached("Icon16", typeof(UIKitIcon_16), typeof(IconButtonInternals),
-                UIKitPropertyMetadataFactory.CreatePropsMetadata(typeof(IconButtonBase), nameof(Icon16Property)));
+    public static readonly DependencyProperty Icon16Property = DependencyProperty.RegisterAttached(
+        "Icon16",
+        typeof(UIKitIcon_16),
+        typeof(IconButtonInternals),
+        UIKitPropertyMetadataFactory.CreatePropsMetadata(typeof(IconButtonBase), nameof(Icon16Property)));
 
-        #endregion
+    #endregion
 
-        #region Icon24
+    #region Icon24
 
-        public static UIKitIcon_24 GetIcon24(DependencyObject obj)
-        {
-            return (UIKitIcon_24)obj.GetValue(Icon24Property);
-        }
+    public static UIKitIcon_24 GetIcon24(DependencyObject obj)
+        => (UIKitIcon_24)obj.GetValue(Icon24Property);
 
-        public static void SetIcon24(DependencyObject obj, UIKitIcon_24 value)
-        {
-            obj.SetValue(Icon24Property, value);
-        }
+    public static void SetIcon24(DependencyObject obj, UIKitIcon_24 value)
+        => obj.SetValue(Icon24Property, value);
 
-        public static readonly DependencyProperty Icon24Property =
-            DependencyProperty.RegisterAttached("Icon24", typeof(UIKitIcon_24), typeof(IconButtonInternals),
-                UIKitPropertyMetadataFactory.CreatePropsMetadata(typeof(IconButtonBase), nameof(Icon24Property)));
+    public static readonly DependencyProperty Icon24Property = DependencyProperty.RegisterAttached(
+        "Icon24",
+        typeof(UIKitIcon_24),
+        typeof(IconButtonInternals),
+        UIKitPropertyMetadataFactory.CreatePropsMetadata(typeof(IconButtonBase), nameof(Icon24Property)));
 
-        #endregion
-    }
+    #endregion
 }

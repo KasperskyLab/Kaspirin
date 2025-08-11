@@ -12,267 +12,283 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#pragma warning disable CA1416 // This call site is reachable on all platforms.
+
 using System;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using Microsoft.Win32;
 
-namespace Kaspirin.UI.Framework.UiKit.Accessibility.TextScale
+namespace Kaspirin.UI.Framework.UiKit.Accessibility.TextScale;
+
+/// <summary>
+///     A service for controlling text scaling.
+/// </summary>
+/// <remarks>
+///     The service receives information about the text scaling value from the WinRT API for Windows
+///     10 and later, and in other cases, from the Windows registry.
+/// </remarks>
+public sealed class TextScaleService : ITextScaleService, IDisposable
 {
-    public sealed class TextScaleService : ITextScaleService, IDisposable
+    public const string ScaleFactorRegPath = "HKEY_CURRENT_USER\\" + ScaleFactorSubkey;
+    public const string ScaleFactorRegValue = "TextScaleFactor";
+
+    /// <summary>
+    ///     Initializes an instance of the <see cref="TextScaleService" /> class.
+    /// </summary>
+    /// <param name="registry">
+    ///     An object for getting settings from the Windows registry.
+    /// </param>
+    /// <param name="registryTracker">
+    ///     An object for tracking changes to settings in the Windows registry.
+    /// </param>
+    /// <param name="uiSettings">
+    ///     An object for getting settings from the WinRT API.
+    /// </param>
+    public TextScaleService(IRegistry registry, IRegistryTracker registryTracker, IWinRTUISettings uiSettings)
     {
-        public const string ScaleFactorRegPath = "HKEY_CURRENT_USER\\" + ScaleFactorSubkey;
-        public const string ScaleFactorRegValue = "TextScaleFactor";
+        _winRTuiSettings = Guard.EnsureArgumentIsNotNull(uiSettings);
+        _registry = Guard.EnsureArgumentIsNotNull(registry);
+        _registryTracker = Guard.EnsureArgumentIsNotNull(registryTracker);
 
-        public TextScaleService(IRegistry registry, IRegistryTracker registryTracker, IWinRTUISettings uiSettings)
+        IsEnabled = true;
+    }
+
+    /// <inheritdoc />
+    public bool IsEnabled
+    {
+        get => _isEnabled;
+        set
         {
-            _winRTuiSettings = Guard.EnsureArgumentIsNotNull(uiSettings);
-            _registry = Guard.EnsureArgumentIsNotNull(registry);
-            _registryTracker = Guard.EnsureArgumentIsNotNull(registryTracker);
-
-            IsEnabled = true;
-        }
-
-        public bool IsEnabled
-        {
-            get => _isEnabled;
-            set
+            if (!OperatingSystemInfo.IsWin10OrHigher)
             {
-                if (!OperatingSystemInfo.IsWin10OrHigher)
+                _isEnabled = false;
+
+                if (value)
                 {
-                    _isEnabled = false;
-
-                    if (value)
-                    {
-                        _trace.TraceWarning($"Service is unavailable on current OS Version.");
-                    }
+                    _trace.TraceWarning($"Service is unavailable on current OS Version.");
                 }
-                else
-                {
-                    _isEnabled = value;
-
-                    _trace.TraceInformation($"{nameof(IsEnabled)} is set to {value}.");
-
-                    if (_isEnabled)
-                    {
-                        StartTrackScaleChanges();
-                    }
-                    else
-                    {
-                        StopTrackScaleChanges();
-                    }
-
-                    UpdateScale();
-                }
-            }
-        }
-
-        public double ScaleFactor { get; private set; } = 1;
-
-        public event TextScaleChangedDelegate? ScaleFactorChanged;
-
-        #region IDisposable
-
-        void IDisposable.Dispose()
-        {
-            StopTrackScaleChanges();
-        }
-
-        #endregion
-
-        private void UpdateScale()
-        {
-            var scale = 1D;
-
-            if (IsEnabled)
-            {
-                var systemScale = GetSystemTextScaleFactor();
-                if (systemScale > 1)
-                {
-                    // add 0.07 on each 25% of scale
-                    scale += (Math.Floor(systemScale / 0.25) - 3D) * 0.07;
-                }
-            }
-
-            if (ScaleFactor.NotNearlyEqual(scale))
-            {
-                var oldScale = ScaleFactor;
-                var newScale = scale;
-
-                ScaleFactor = scale;
-
-                _trace.TraceInformation($"ScaleFactor changed to {scale}.");
-
-                Executers.InUiAsync(() => ScaleFactorChanged?.Invoke(this, new TextScaleChangedEventArgs(oldScale, newScale)));
-            }
-        }
-
-        private void StartTrackScaleChanges()
-        {
-            if (_isTracking)
-            {
-                return;
-            }
-
-            _isTracking = true;
-
-            if (_winRTuiSettings.IsAvailable)
-            {
-                StartTrackChangesFromWinRT();
             }
             else
             {
-                StartTrackChangesFromRegistry();
-            }
-        }
+                _isEnabled = value;
 
-        private void StopTrackScaleChanges()
-        {
-            if (!_isTracking)
-            {
-                return;
-            }
+                _trace.TraceInformation($"{nameof(IsEnabled)} is set to {value}.");
 
-            StopTrackChangesFromWinRT();
-            StopTrackChangesFromRegistry();
-
-            _isTracking = false;
-        }
-
-        private void StartTrackChangesFromWinRT()
-        {
-            _trace.TraceInformation("Starting tracking of scale changes from WinRT API");
-
-            _winRTuiSettings.TextScaleFactorChanged -= OnTextScaleFactorChangedFromWinRT;
-            _winRTuiSettings.TextScaleFactorChanged += OnTextScaleFactorChangedFromWinRT;
-        }
-
-        private void StopTrackChangesFromWinRT()
-        {
-            _trace.TraceInformation("Stopping tracking of scale changes from WinRT API");
-
-            _winRTuiSettings.TextScaleFactorChanged -= OnTextScaleFactorChangedFromWinRT;
-        }
-
-        private void StartTrackChangesFromRegistry()
-        {
-            _trace.TraceInformation("Starting tracking of scale changes from registry");
-
-            _cancellationTokenSource = new CancellationTokenSource();
-
-            _trackingTask = _registryTracker.TrackChangesAsync(
-                ScaleFactorHive,
-                ScaleFactorView,
-                ScaleFactorSubkey,
-                _cancellationTokenSource.Token,
-                UpdateScale);
-        }
-
-        private void StopTrackChangesFromRegistry()
-        {
-            _trace.TraceInformation("Stopping tracking of scale changes from registry");
-
-            if (_cancellationTokenSource != null)
-            {
-                _cancellationTokenSource.Cancel();
-
-                if (_trackingTask is not null)
+                if (_isEnabled)
                 {
-                    var cancellationTokenSource = _cancellationTokenSource;
-                    _cancellationTokenSource = null;
-
-                    _trackingTask.ContinueWith(_ => cancellationTokenSource.Dispose());
-                    _trackingTask = null;
+                    StartTrackScaleChanges();
                 }
                 else
                 {
-                    _cancellationTokenSource.Dispose();
-                    _cancellationTokenSource = null;
+                    StopTrackScaleChanges();
                 }
+
+                UpdateScale();
             }
         }
-
-        private double GetSystemTextScaleFactor()
-        {
-            var scaleFactor = 1D;
-            var scaleProvided = false;
-
-            if (!scaleProvided)
-            {
-                var scaleFactorWinRTValue = GetScaleFactorFromWinRT();
-                if (scaleFactorWinRTValue != null)
-                {
-                    scaleFactor = scaleFactorWinRTValue.Value;
-                    _trace.TraceInformation($"SystemScaleFactor '{scaleFactor}' provided from WinRT.");
-
-                    scaleProvided = true;
-                }
-            }
-
-            if (!scaleProvided)
-            {
-                var scaleFactorRegValue = GetScaleFactorFromRegistry();
-                if (scaleFactorRegValue != null)
-                {
-                    scaleFactor = Convert.ToDouble(scaleFactorRegValue) / DefaultScaleFactorRegValue;
-                    _trace.TraceInformation($"SystemScaleFactor '{scaleFactor}' provided from Registry.");
-
-                    scaleProvided = true;
-                }
-            }
-
-            if (!scaleProvided)
-            {
-                scaleFactor = GetScaleFactorFromSystemFonts();
-                _trace.TraceInformation($"SystemScaleFactor '{scaleFactor}' provided from SystemFonts.");
-            }
-
-            if (scaleFactor < 1)
-            {
-                scaleFactor = 1;
-            }
-
-            return scaleFactor;
-        }
-
-        private void OnTextScaleFactorChangedFromWinRT(object? sender, EventArgs e)
-        {
-            UpdateScale();
-        }
-
-        private object? GetScaleFactorFromRegistry()
-        {
-            return _registry.GetValue(ScaleFactorRegPath, ScaleFactorRegValue, DefaultScaleFactorRegValue);
-        }
-
-        private double? GetScaleFactorFromWinRT()
-        {
-            return _winRTuiSettings.IsAvailable ? _winRTuiSettings.TextScaleFactor : null;
-        }
-
-        private double GetScaleFactorFromSystemFonts()
-        {
-            return SystemFonts.MessageFontSize / DefaultMessageFontSize;
-        }
-
-        private static readonly ComponentTracer _trace = ComponentTracer.Get(nameof(TextScaleService));
-
-        private const int DefaultMessageFontSize = 12;
-        private const int DefaultScaleFactorRegValue = 100;
-
-        private const RegistryHive ScaleFactorHive = RegistryHive.CurrentUser;
-        private const RegistryView ScaleFactorView = RegistryView.Default;
-        private const string ScaleFactorSubkey = "Software\\Microsoft\\Accessibility";
-        private const string ScaleChangedPropertyName = "NonClientMetrics";
-
-        private readonly IWinRTUISettings _winRTuiSettings;
-        private readonly IRegistry _registry;
-        private readonly IRegistryTracker _registryTracker;
-
-        private CancellationTokenSource? _cancellationTokenSource;
-        private Task? _trackingTask;
-        private bool _isEnabled;
-        private bool _isTracking;
     }
+
+    /// <inheritdoc />
+    public double ScaleFactor { get; private set; } = 1;
+
+    /// <inheritdoc />
+    public event TextScaleChangedDelegate? ScaleFactorChanged;
+
+    #region IDisposable
+
+    /// <inheritdoc />
+    void IDisposable.Dispose()
+    {
+        StopTrackScaleChanges();
+    }
+
+    #endregion
+
+    private void UpdateScale()
+    {
+        var scale = 1D;
+
+        if (IsEnabled)
+        {
+            var systemScale = GetSystemTextScaleFactor();
+            if (systemScale > 1)
+            {
+                // add 0.07 on each 25% of scale
+                scale += (Math.Floor(systemScale / 0.25) - 3D) * 0.07;
+            }
+        }
+
+        if (ScaleFactor.NotNearlyEqual(scale))
+        {
+            var oldScale = ScaleFactor;
+            var newScale = scale;
+
+            ScaleFactor = scale;
+
+            _trace.TraceInformation($"ScaleFactor changed to {scale}.");
+
+            ScaleFactorChanged?.Invoke(this, new TextScaleChangedEventArgs(oldScale, newScale));
+        }
+    }
+
+    private void StartTrackScaleChanges()
+    {
+        if (_isTracking)
+        {
+            return;
+        }
+
+        _isTracking = true;
+
+        if (_winRTuiSettings.IsAvailable)
+        {
+            StartTrackChangesFromWinRT();
+        }
+        else
+        {
+            StartTrackChangesFromRegistry();
+        }
+    }
+
+    private void StopTrackScaleChanges()
+    {
+        if (!_isTracking)
+        {
+            return;
+        }
+
+        StopTrackChangesFromWinRT();
+        StopTrackChangesFromRegistry();
+
+        _isTracking = false;
+    }
+
+    private void StartTrackChangesFromWinRT()
+    {
+        _trace.TraceInformation("Starting tracking of scale changes from WinRT API");
+
+        _winRTuiSettings.TextScaleFactorChanged -= OnTextScaleFactorChangedFromWinRT;
+        _winRTuiSettings.TextScaleFactorChanged += OnTextScaleFactorChangedFromWinRT;
+    }
+
+    private void StopTrackChangesFromWinRT()
+    {
+        _trace.TraceInformation("Stopping tracking of scale changes from WinRT API");
+
+        _winRTuiSettings.TextScaleFactorChanged -= OnTextScaleFactorChangedFromWinRT;
+    }
+
+    private void StartTrackChangesFromRegistry()
+    {
+        _trace.TraceInformation("Starting tracking of scale changes from registry");
+
+        _cancellationTokenSource = new CancellationTokenSource();
+
+        _trackingTask = _registryTracker.TrackChangesAsync(
+            ScaleFactorHive,
+            ScaleFactorView,
+            ScaleFactorSubkey,
+            _cancellationTokenSource.Token,
+            UpdateScale);
+    }
+
+    private void StopTrackChangesFromRegistry()
+    {
+        _trace.TraceInformation("Stopping tracking of scale changes from registry");
+
+        if (_cancellationTokenSource != null)
+        {
+            _cancellationTokenSource.Cancel();
+
+            if (_trackingTask is not null)
+            {
+                var cancellationTokenSource = _cancellationTokenSource;
+                _cancellationTokenSource = null;
+
+                _trackingTask.ContinueWith(_ => cancellationTokenSource.Dispose());
+                _trackingTask = null;
+            }
+            else
+            {
+                _cancellationTokenSource.Dispose();
+                _cancellationTokenSource = null;
+            }
+        }
+    }
+
+    private double GetSystemTextScaleFactor()
+    {
+        var scaleFactor = 1D;
+        var scaleProvided = false;
+
+        if (!scaleProvided)
+        {
+            var scaleFactorWinRTValue = GetScaleFactorFromWinRT();
+            if (scaleFactorWinRTValue != null)
+            {
+                scaleFactor = scaleFactorWinRTValue.Value;
+                _trace.TraceInformation($"SystemScaleFactor '{scaleFactor}' provided from WinRT.");
+
+                scaleProvided = true;
+            }
+        }
+
+        if (!scaleProvided)
+        {
+            var scaleFactorRegValue = GetScaleFactorFromRegistry();
+            if (scaleFactorRegValue != null)
+            {
+                scaleFactor = Convert.ToDouble(scaleFactorRegValue) / DefaultScaleFactorRegValue;
+                _trace.TraceInformation($"SystemScaleFactor '{scaleFactor}' provided from Registry.");
+
+                scaleProvided = true;
+            }
+        }
+
+        if (!scaleProvided)
+        {
+            scaleFactor = GetScaleFactorFromSystemFonts();
+            _trace.TraceInformation($"SystemScaleFactor '{scaleFactor}' provided from SystemFonts.");
+        }
+
+        if (scaleFactor < 1)
+        {
+            scaleFactor = 1;
+        }
+
+        return scaleFactor;
+    }
+
+    private void OnTextScaleFactorChangedFromWinRT(object? sender, EventArgs e)
+        => UpdateScale();
+
+    private object? GetScaleFactorFromRegistry()
+        => _registry.GetValue(ScaleFactorRegPath, ScaleFactorRegValue, DefaultScaleFactorRegValue);
+
+    private double? GetScaleFactorFromWinRT()
+        => _winRTuiSettings.IsAvailable ? _winRTuiSettings.TextScaleFactor : null;
+
+    private double GetScaleFactorFromSystemFonts()
+        => SystemFonts.MessageFontSize / DefaultMessageFontSize;
+
+    private static readonly ComponentTracer _trace = ComponentTracer.Get(nameof(TextScaleService));
+
+    private const int DefaultMessageFontSize = 12;
+    private const int DefaultScaleFactorRegValue = 100;
+
+    private const RegistryHive ScaleFactorHive = RegistryHive.CurrentUser;
+    private const RegistryView ScaleFactorView = RegistryView.Default;
+    private const string ScaleFactorSubkey = "Software\\Microsoft\\Accessibility";
+    private const string ScaleChangedPropertyName = "NonClientMetrics";
+
+    private readonly IWinRTUISettings _winRTuiSettings;
+    private readonly IRegistry _registry;
+    private readonly IRegistryTracker _registryTracker;
+
+    private CancellationTokenSource? _cancellationTokenSource;
+    private Task? _trackingTask;
+    private bool _isEnabled;
+    private bool _isTracking;
 }

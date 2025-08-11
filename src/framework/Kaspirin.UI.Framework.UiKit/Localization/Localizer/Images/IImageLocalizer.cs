@@ -12,20 +12,25 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System;
+using System.IO;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
-namespace Kaspirin.UI.Framework.UiKit.Localization.Localizer.Images
+namespace Kaspirin.UI.Framework.UiKit.Localization.Localizer.Images;
+
+public interface IImageLocalizer : ILocalizer
 {
-    public interface IImageLocalizer : ILocalizer
-    {
-        BitmapImage? GetBitmapImage(string key);
+    BitmapImage? GetBitmapImage(string key);
 
-        BitmapFrame? GetBitmapFrame(string key);
+    BitmapFrame? GetBitmapFrame(string key);
 
-        BitmapFrame? GetBitmapFrame(string key, Size frameSize);
+    BitmapFrame? GetBitmapFrame(string key, Size frameSize);
 
-        DrawingImage? GetSvgImage(string key);
-    }
+    DrawingImage? GetSvgImage(string key);
+
+    Uri? GetUri(string key);
+
+    Stream? GetStream(string key);
 }

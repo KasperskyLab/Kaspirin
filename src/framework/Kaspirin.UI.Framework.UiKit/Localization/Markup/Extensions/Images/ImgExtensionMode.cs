@@ -12,12 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Kaspirin.UI.Framework.UiKit.Localization.Markup.Extensions.Images
+namespace Kaspirin.UI.Framework.UiKit.Localization.Markup.Extensions.Images;
+
+public enum ImgExtensionMode
 {
-    public enum ImgExtensionMode
-    {
-        BitmapImage,
-        BitmapFrame,
-        SvgImage
-    }
+    BitmapImage,
+    BitmapFrame,
+    SvgImage,
+    Uri,
+    Stream,
 }

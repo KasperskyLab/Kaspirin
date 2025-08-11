@@ -15,33 +15,32 @@
 using Kaspirin.UI.Framework.Services.Internals;
 using Kaspirin.UI.Framework.SystemInfo.Internals;
 
-namespace Kaspirin.UI.Framework.Services
+namespace Kaspirin.UI.Framework.Services;
+
+/// <summary>
+///     Provides methods for registering framework services in an IoC container.
+/// </summary>
+public static class UnityContainerBuilder
 {
     /// <summary>
-    ///     Provides methods for registering framework services in an IoC container.
+    ///     Performs registration of the framework services in the IoC container.
     /// </summary>
-    public static class UnityContainerBuilder
+    /// <param name="container">
+    ///     The IoC container.
+    /// </param>
+    /// <remarks>
+    ///     This method should be called after registering all overrides of the framework services.
+    /// </remarks>
+    public static void BuildFrameworkServices(this IUnityContainer container)
     {
-        /// <summary>
-        ///     Performs registration of the framework services in the IoC container.
-        /// </summary>
-        /// <param name="container">
-        ///     The IoC container.
-        /// </param>
-        /// <remarks>
-        ///     This method should be called after registering all overrides of the framework services.
-        /// </remarks>
-        public static void BuildFrameworkServices(this IUnityContainer container)
-        {
-            Guard.ArgumentIsNotNull(container);
+        Guard.ArgumentIsNotNull(container);
 
-            container.RegisterDefault<IKeyValueStorage, InMemoryKeyValueStorage>(LifetimeManager.ContainerControlled);
-            container.RegisterDefault<IRegistry, WinRegistry>(LifetimeManager.ContainerControlled);
-            container.RegisterDefault<IRegistryTracker, WinRegistryTracker>(LifetimeManager.ContainerControlled);
-            container.RegisterDefault<ISessionProvider, SessionProvider>(LifetimeManager.ContainerControlled);
-            container.RegisterDefault<ISystemEvents, SystemEvents>(LifetimeManager.ExternallyControlled);
-            container.RegisterDefault<IWinRTLauncher, WinRTLauncher>(LifetimeManager.ContainerControlled);
-            container.RegisterDefault<IWinRTUISettings, WinRTUISettings>(LifetimeManager.ContainerControlled);
-        }
+        container.RegisterDefault<IKeyValueStorage, InMemoryKeyValueStorage>(LifetimeType.Singleton);
+        container.RegisterDefault<IRegistry, WinRegistry>(LifetimeType.Singleton);
+        container.RegisterDefault<IRegistryTracker, WinRegistryTracker>(LifetimeType.Singleton);
+        container.RegisterDefault<ISessionProvider, SessionProvider>(LifetimeType.Singleton);
+        container.RegisterDefault<ISystemEvents, SystemEvents>(LifetimeType.WeakSingleton);
+        container.RegisterDefault<IWinRTLauncher, WinRTLauncher>(LifetimeType.Singleton);
+        container.RegisterDefault<IWinRTUISettings, WinRTUISettings>(LifetimeType.Singleton);
     }
 }

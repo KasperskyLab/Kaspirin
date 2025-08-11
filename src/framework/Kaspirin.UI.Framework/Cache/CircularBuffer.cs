@@ -15,96 +15,95 @@
 using System.Collections.Concurrent;
 using System.Linq;
 
-namespace Kaspirin.UI.Framework.Cache
+namespace Kaspirin.UI.Framework.Cache;
+
+/// <summary>
+///     Implements a ring buffer.
+/// </summary>
+/// <typeparam name="TKey">
+///     The type of key.
+/// </typeparam>
+/// <typeparam name="TValue">
+///     The type of value.
+/// </typeparam>
+public sealed class CircularBuffer<TKey, TValue>
+    where TKey : notnull
 {
     /// <summary>
-    ///     Implements a ring buffer.
+    ///     Initializes a new instance of the <see cref="CircularBuffer{TKey, TValue}" /> class.
     /// </summary>
-    /// <typeparam name="TKey">
-    ///     The type of key.
-    /// </typeparam>
-    /// <typeparam name="TValue">
-    ///     The type of value.
-    /// </typeparam>
-    public sealed class CircularBuffer<TKey, TValue>
-        where TKey : notnull
+    /// <param name="size">
+    ///     The size of the buffer.
+    /// </param>
+    public CircularBuffer(int size)
     {
-        /// <summary>
-        ///     Initializes a new instance of the <see cref="CircularBuffer{TKey, TValue}" /> class.
-        /// </summary>
-        /// <param name="size">
-        ///     The size of the buffer.
-        /// </param>
-        public CircularBuffer(int size)
-        {
-            _size = size;
-        }
+        _size = size;
+    }
 
-        /// <summary>
-        ///     Checks for the presence of an element in the buffer and returns its value if the element is found.
-        /// </summary>
-        /// <param name="key">
-        ///     The key of the element.
-        /// </param>
-        /// <param name="value">
-        ///     The value of the element.
-        /// </param>
-        /// <returns>
-        ///     Returns <see langword="true" /> if the element is found, otherwise <see langword="false" />.
-        /// </returns>
-        public bool TryGet(TKey key, out TValue? value)
-        {
-            return _storage.TryGetValue(key, out value);
-        }
+    /// <summary>
+    ///     Checks for the presence of an element in the buffer and returns its value if the element is found.
+    /// </summary>
+    /// <param name="key">
+    ///     The key of the element.
+    /// </param>
+    /// <param name="value">
+    ///     The value of the element.
+    /// </param>
+    /// <returns>
+    ///     Returns <see langword="true" /> if the element is found, otherwise - <see langword="false" />.
+    /// </returns>
+    public bool TryGet(TKey key, out TValue? value)
+    {
+        return _storage.TryGetValue(key, out value);
+    }
 
-        /// <summary>
-        ///     Deletes an item from the buffer.
-        /// </summary>
-        /// <param name="key">
-        ///     The key of the element.
-        /// </param>
-        public void Remove(TKey key)
-        {
-            _storage.TryRemove(key, out var _);
-            _queue.TryDequeue(out var _);
-        }
+    /// <summary>
+    ///     Deletes an item from the buffer.
+    /// </summary>
+    /// <param name="key">
+    ///     The key of the element.
+    /// </param>
+    public void Remove(TKey key)
+    {
+        _storage.TryRemove(key, out var _);
+        _queue.TryDequeue(out var _);
+    }
 
-        /// <summary>
-        ///     Adds an element to the buffer.
-        /// </summary>
-        /// <param name="key">
-        ///     The key of the element.
-        /// </param>
-        /// <param name="value">
-        ///     The value of the element.
-        /// </param>
-        public void Add(TKey key, TValue? value)
-        {
-            _storage.TryAdd(key, value);
-            _queue.Enqueue(key);
+    /// <summary>
+    ///     Adds an element to the buffer.
+    /// </summary>
+    /// <param name="key">
+    ///     The key of the element.
+    /// </param>
+    /// <param name="value">
+    ///     The value of the element.
+    /// </param>
+    public void Add(TKey key, TValue? value)
+    {
+        _storage.TryAdd(key, value);
+        _queue.Enqueue(key);
 
-            while (_queue.Count > _size)
+        while (_queue.Count > _size)
+        {
+            if (_queue.TryDequeue(out var tmpKey))
             {
-                if (_queue.TryDequeue(out var tmpKey))
-                {
-                    _storage.TryRemove(tmpKey, out var tmpValue);
-                }
+                _storage.TryRemove(tmpKey, out var tmpValue);
             }
         }
-
-        /// <summary>
-        ///     Returns all the values of the elements from the buffer.
-        /// </summary>
-        /// <returns>
-        ///     An array of values.
-        /// </returns>
-        public TValue?[] GetAllValues()
-        {
-            return _storage.Values.ToArray();
-        }
-
-        private readonly ConcurrentDictionary<TKey, TValue?> _storage = new();
-        private readonly ConcurrentQueue<TKey> _queue = new();
-        private readonly int _size;
     }
+
+    /// <summary>
+    ///     Returns all the values of the elements from the buffer.
+    /// </summary>
+    /// <returns>
+    ///     An array of values.
+    /// </returns>
+    public TValue?[] GetAllValues()
+    {
+        return _storage.Values.ToArray();
+    }
+
+    private readonly ConcurrentDictionary<TKey, TValue?> _storage = new();
+    private readonly ConcurrentQueue<TKey> _queue = new();
+    private readonly int _size;
 }

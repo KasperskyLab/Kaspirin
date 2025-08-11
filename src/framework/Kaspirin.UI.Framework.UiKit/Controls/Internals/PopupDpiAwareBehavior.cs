@@ -18,58 +18,57 @@ using System.Windows.Media;
 
 using PopupWpf = System.Windows.Controls.Primitives.Popup;
 
-namespace Kaspirin.UI.Framework.UiKit.Controls.Internals
+namespace Kaspirin.UI.Framework.UiKit.Controls.Internals;
+
+internal sealed class PopupDpiAwareBehavior : Behavior<PopupWpf, PopupDpiAwareBehavior>
 {
-    internal sealed class PopupDpiAwareBehavior : Behavior<PopupWpf, PopupDpiAwareBehavior>
+    protected override void OnAttached()
     {
-        protected override void OnAttached()
+        base.OnAttached();
+        Guard.IsNotNull(AssociatedObject);
+
+        SetLayoutTransformBinding(AssociatedObject);
+    }
+
+    protected override void OnDetaching()
+    {
+        base.OnDetaching();
+        Guard.IsNotNull(AssociatedObject);
+
+        ResetLayoutTransformBinding(AssociatedObject);
+    }
+
+    private static void SetLayoutTransformBinding(PopupWpf popup)
+    {
+        FrameworkElement? transformSource = null;
+
+        var window = popup.GetWindow();
+        if (window == null)
         {
-            base.OnAttached();
-            Guard.IsNotNull(AssociatedObject);
-
-            SetLayoutTransformBinding(AssociatedObject);
-        }
-
-        protected override void OnDetaching()
-        {
-            base.OnDetaching();
-            Guard.IsNotNull(AssociatedObject);
-
-            ResetLayoutTransformBinding(AssociatedObject);
-        }
-
-        private static void SetLayoutTransformBinding(PopupWpf popup)
-        {
-            FrameworkElement? transformSource = null;
-
-            var window = popup.GetWindow();
-            if (window == null)
+            var popupTarget = popup.PlacementTarget;
+            if (popupTarget != null)
             {
-                var popupTarget = popup.PlacementTarget;
-                if (popupTarget != null)
-                {
-                    transformSource = popupTarget.GetWindow();
-                }
-            }
-            else
-            {
-                transformSource = window.FindVisualChild<FrameworkElement>();
-            }
-
-            if (transformSource != null)
-            {
-                popup.SetBinding(FrameworkElement.LayoutTransformProperty, new Binding()
-                {
-                    Source = transformSource,
-                    Path = FrameworkElement.LayoutTransformProperty.AsPath(),
-                    Converter = new DelegateConverter<GeneralTransform>(t => t?.Inverse)
-                });
+                transformSource = popupTarget.GetWindow();
             }
         }
-
-        private static void ResetLayoutTransformBinding(PopupWpf popup)
+        else
         {
-            popup.ClearValue(FrameworkElement.LayoutTransformProperty);
+            transformSource = window.FindVisualChild<FrameworkElement>();
         }
+
+        if (transformSource != null)
+        {
+            popup.SetBinding(FrameworkElement.LayoutTransformProperty, new Binding()
+            {
+                Source = transformSource,
+                Path = FrameworkElement.LayoutTransformProperty.AsPath(),
+                Converter = new DelegateConverter<GeneralTransform>(t => t?.Inverse)
+            });
+        }
+    }
+
+    private static void ResetLayoutTransformBinding(PopupWpf popup)
+    {
+        popup.ClearValue(FrameworkElement.LayoutTransformProperty);
     }
 }

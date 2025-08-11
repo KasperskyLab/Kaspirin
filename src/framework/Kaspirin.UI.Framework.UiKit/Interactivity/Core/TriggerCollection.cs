@@ -9,49 +9,48 @@
 
 using System.Windows;
 
-namespace Kaspirin.UI.Framework.UiKit.Interactivity.Core
+namespace Kaspirin.UI.Framework.UiKit.Interactivity.Core;
+
+public sealed class TriggerCollection : AttachableCollection<TriggerBase>
 {
-    public sealed class TriggerCollection : AttachableCollection<TriggerBase>
+    internal TriggerCollection()
     {
-        internal TriggerCollection()
-        {
-        }
+    }
 
-        internal override void ItemAdded(TriggerBase item)
+    internal override void ItemAdded(TriggerBase item)
+    {
+        if (AssociatedObject != null)
         {
-            if (AssociatedObject != null)
-            {
-                item.Attach(AssociatedObject);
-            }
+            item.Attach(AssociatedObject);
         }
+    }
 
-        internal override void ItemRemoved(TriggerBase item)
+    internal override void ItemRemoved(TriggerBase item)
+    {
+        if (item.AssociatedObject != null)
         {
-            if (item.AssociatedObject != null)
-            {
-                item.Detach();
-            }
+            item.Detach();
         }
+    }
 
-        protected override void OnAttached()
+    protected override void OnAttached()
+    {
+        foreach (var trigger in this)
         {
-            foreach (var trigger in this)
-            {
-                trigger.Attach(AssociatedObject);
-            }
+            trigger.Attach(AssociatedObject);
         }
+    }
 
-        protected override void OnDetaching()
+    protected override void OnDetaching()
+    {
+        foreach (var trigger in this)
         {
-            foreach (var trigger in this)
-            {
-                trigger.Detach();
-            }
+            trigger.Detach();
         }
+    }
 
-        protected override Freezable CreateInstanceCore()
-        {
-            return new TriggerCollection();
-        }
+    protected override Freezable CreateInstanceCore()
+    {
+        return new TriggerCollection();
     }
 }

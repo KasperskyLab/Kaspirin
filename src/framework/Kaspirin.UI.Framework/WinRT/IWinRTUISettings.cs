@@ -14,31 +14,30 @@
 
 using System;
 
-namespace Kaspirin.UI.Framework.WinRT
+namespace Kaspirin.UI.Framework.WinRT;
+
+/// <summary>
+///     An interface for getting OS settings via the WinRT Api.
+/// </summary>
+public interface IWinRTUISettings
 {
     /// <summary>
-    ///     An interface for getting OS settings via the WinRT Api.
+    ///     Indicates whether the WinRT API is available.
     /// </summary>
-    public interface IWinRTUISettings
-    {
-        /// <summary>
-        ///     Indicates whether the WinRT API is available.
-        /// </summary>
-        bool IsAvailable { get; }
+    bool IsAvailable { get; }
 
-        /// <summary>
-        ///     Indicates whether user interface animation is enabled.
-        /// </summary>
-        bool AnimationsEnabled { get; }
+    /// <summary>
+    ///     Indicates whether user interface animation is enabled.
+    /// </summary>
+    bool AnimationsEnabled { get; }
 
-        /// <summary>
-        ///     Specifies the current text zoom level.
-        /// </summary>
-        double TextScaleFactor { get; }
+    /// <summary>
+    ///     Specifies the current text zoom level.
+    /// </summary>
+    double TextScaleFactor { get; }
 
-        /// <summary>
-        ///     Event about changing the setting <see cref="TextScaleFactor" />.
-        /// </summary>
-        event EventHandler? TextScaleFactorChanged;
-    }
+    /// <summary>
+    ///     Event about changing the setting <see cref="TextScaleFactor" />.
+    /// </summary>
+    event EventHandler? TextScaleFactorChanged;
 }

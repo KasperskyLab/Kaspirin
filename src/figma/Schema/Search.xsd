@@ -42,8 +42,8 @@
 			<xs:element name="Padding" type="Thickness" minOccurs="1" maxOccurs="1"/>
 			<xs:element name="PlaceholderForeground" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
 			<xs:element name="PlaceholderForegroundDisabled" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
-			<xs:element name="SearchIconForeground" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
-			<xs:element name="SearchIconForegroundDisabled" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="SearchIconBrush" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="SearchIconBrushDisabled" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
 			<xs:element name="SearchIconMargin" type="Thickness" minOccurs="1" maxOccurs="1"/>
 			<xs:element name="SpinnerMargin" type="Thickness" minOccurs="1" maxOccurs="1"/>
 			<xs:element name="TextForeground" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>

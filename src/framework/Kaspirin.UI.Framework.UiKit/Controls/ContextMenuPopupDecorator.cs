@@ -17,60 +17,59 @@ using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using Kaspirin.UI.Framework.UiKit.Controls.Internals;
 
-namespace Kaspirin.UI.Framework.UiKit.Controls
+namespace Kaspirin.UI.Framework.UiKit.Controls;
+
+internal sealed class ContextMenuPopupDecorator : PopupDecorator
 {
-    internal sealed class ContextMenuPopupDecorator : PopupDecorator
+    static ContextMenuPopupDecorator()
     {
-        static ContextMenuPopupDecorator()
-        {
-            MaxWidthProperty.OverrideMetadata(typeof(ContextMenuPopupDecorator), new FrameworkPropertyMetadata(UIKitConstants.ContextMenuPopupDecoratorMaxWidth));
-            MinWidthProperty.OverrideMetadata(typeof(ContextMenuPopupDecorator), new FrameworkPropertyMetadata(UIKitConstants.ContextMenuPopupDecoratorMinWidth));
-        }
+        MaxWidthProperty.OverrideMetadata(typeof(ContextMenuPopupDecorator), new FrameworkPropertyMetadata(UIKitConstants.ContextMenuPopupDecoratorMaxWidth));
+        MinWidthProperty.OverrideMetadata(typeof(ContextMenuPopupDecorator), new FrameworkPropertyMetadata(UIKitConstants.ContextMenuPopupDecoratorMinWidth));
+    }
 
-        public ContextMenuPopupDecorator()
-        {
-            SetValue(Grid.IsSharedSizeScopeProperty, true);
-        }
+    public ContextMenuPopupDecorator()
+    {
+        SetValue(Grid.IsSharedSizeScopeProperty, true);
+    }
 
-        protected override void SetPopupLocation()
+    protected override void SetPopupLocation()
+    {
+        var rootPopup = this.FindVisualParent<ContextMenu>();
+        if (rootPopup != null)
         {
-            var rootPopup = this.FindVisualParent<ContextMenu>();
-            if (rootPopup != null)
+            var isTargetContextMenuButton = rootPopup.PlacementTarget?.FindVisualParent<ContextMenuButton>() != null;
+            if (isTargetContextMenuButton)
             {
-                var isTargetContextMenuButton = rootPopup.PlacementTarget?.FindVisualParent<ContextMenuButton>() != null;
-                if (isTargetContextMenuButton)
-                {
-                    rootPopup.Placement = PlacementMode.Custom;
-                    rootPopup.CustomPopupPlacementCallback = OnContextMenuButtonCustomPopupPlacementCalled;
-                }
-                else
-                {
-                    if (rootPopup.PlacementTarget is NavigationMenuFooterButton)
-                    {
-                        rootPopup.Placement = PlacementMode.Custom;
-                        rootPopup.CustomPopupPlacementCallback = OnNavigationMenuFooterButtonCustomPopupPlacementCalled;
-                    }
-                }
+                rootPopup.Placement = PlacementMode.Custom;
+                rootPopup.CustomPopupPlacementCallback = OnContextMenuButtonCustomPopupPlacementCalled;
             }
             else
             {
-                var submenuPopup = this.FindLogicalParent<ContextMenuPopup>();
-                if (submenuPopup != null)
+                if (rootPopup.PlacementTarget is NavigationMenuFooterButton)
                 {
-                    submenuPopup.HorizontalOffset = -ShadowOffset + Offset;
-                    submenuPopup.VerticalOffset = -ShadowOffset - Padding.Top;
+                    rootPopup.Placement = PlacementMode.Custom;
+                    rootPopup.CustomPopupPlacementCallback = OnNavigationMenuFooterButtonCustomPopupPlacementCalled;
                 }
             }
         }
-
-        private CustomPopupPlacement[] OnContextMenuButtonCustomPopupPlacementCalled(Size popupSize, Size targetSize, Point offset)
+        else
         {
-            return new PopupPositionProvider(popupSize, targetSize, FlowDirection, Offset, ShadowOffset).LocateBottomRight();
+            var submenuPopup = this.FindLogicalParent<ContextMenuPopup>();
+            if (submenuPopup != null)
+            {
+                submenuPopup.HorizontalOffset = -ShadowOffset + Offset;
+                submenuPopup.VerticalOffset = -ShadowOffset - Padding.Top;
+            }
         }
+    }
 
-        private CustomPopupPlacement[] OnNavigationMenuFooterButtonCustomPopupPlacementCalled(Size popupSize, Size targetSize, Point offset)
-        {
-            return new PopupPositionProvider(popupSize, targetSize, FlowDirection, Offset, ShadowOffset).LocateTopLeft();
-        }
+    private CustomPopupPlacement[] OnContextMenuButtonCustomPopupPlacementCalled(Size popupSize, Size targetSize, Point offset)
+    {
+        return new PopupPositionProvider(popupSize, targetSize, FlowDirection, Offset, ShadowOffset).LocateBottomRight();
+    }
+
+    private CustomPopupPlacement[] OnNavigationMenuFooterButtonCustomPopupPlacementCalled(Size popupSize, Size targetSize, Point offset)
+    {
+        return new PopupPositionProvider(popupSize, targetSize, FlowDirection, Offset, ShadowOffset).LocateTopLeft();
     }
 }

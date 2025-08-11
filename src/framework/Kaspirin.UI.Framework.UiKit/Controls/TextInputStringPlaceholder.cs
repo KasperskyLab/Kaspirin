@@ -15,31 +15,30 @@
 using System.Collections.Generic;
 using System.Windows.Documents;
 
-namespace Kaspirin.UI.Framework.UiKit.Controls
+namespace Kaspirin.UI.Framework.UiKit.Controls;
+
+public sealed class TextInputStringPlaceholder : TextInputPlaceholder
 {
-    public sealed class TextInputStringPlaceholder : TextInputPlaceholder
+    public static TextInputStringPlaceholder Empty { get; } = new(string.Empty);
+
+    public TextInputStringPlaceholder(string text)
     {
-        public static TextInputStringPlaceholder Empty { get; } = new(string.Empty);
-
-        public TextInputStringPlaceholder(string text)
-        {
-            _text = text;
-        }
-
-        public override IEnumerable<Inline> GetPlaceholderText(string? value, bool isRTL)
-        {
-            value ??= string.Empty;
-            var isEmpty = value.Length == 0;
-
-            var placeholderRun = new Run(isEmpty ? _text : string.Empty);
-            return new[] { placeholderRun };
-        }
-
-        public override string? FilterInputText(string? value)
-        {
-            return value;
-        }
-
-        private readonly string _text;
+        _text = text;
     }
+
+    public override IEnumerable<Inline> GetPlaceholderText(string? value, bool isRTL)
+    {
+        value ??= string.Empty;
+        var isEmpty = value.Length == 0;
+
+        var placeholderRun = new Run(isEmpty ? _text : string.Empty);
+        return new[] { placeholderRun };
+    }
+
+    public override string? FilterInputText(string? value)
+    {
+        return value;
+    }
+
+    private readonly string _text;
 }

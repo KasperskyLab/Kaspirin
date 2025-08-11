@@ -14,18 +14,17 @@
 
 using System.Windows;
 
-namespace Kaspirin.UI.Framework.UiKit.Windows
+namespace Kaspirin.UI.Framework.UiKit.Windows;
+
+public sealed class ScreenResolutionChangedEventArguments
 {
-    public sealed class ScreenResolutionChangedEventArguments
+    public ScreenResolutionChangedEventArguments(Size oldResolution, Size newResolution)
     {
-        public ScreenResolutionChangedEventArguments(Size oldResolution, Size newResolution)
-        {
-            OldResolution = oldResolution;
-            NewResolution = newResolution;
-        }
-
-        public Size NewResolution { get; }
-
-        public Size OldResolution { get; }
+        OldResolution = oldResolution;
+        NewResolution = newResolution;
     }
+
+    public Size NewResolution { get; }
+
+    public Size OldResolution { get; }
 }

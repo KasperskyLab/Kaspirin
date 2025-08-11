@@ -12,18 +12,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Kaspirin.UI.Framework.UiKit.Input.Security.Internals
+namespace Kaspirin.UI.Framework.UiKit.Input.Security.Internals;
+
+internal sealed class EmptySecureInputManager : ISecureInputManager
 {
-    internal sealed class EmptySecureInputManager : ISecureInputManager
+    public bool IsSecureInputAvailable => false;
+
+    public void RegisterClient(ISecureInputClient secureInputClient)
     {
-        public bool IsSecureInputAvailable => false;
+    }
 
-        public void RegisterClient(ISecureInputClient secureInputClient)
-        {
-        }
-
-        public void UnregisterClient(ISecureInputClient secureInputClient)
-        {
-        }
+    public void UnregisterClient(ISecureInputClient secureInputClient)
+    {
     }
 }

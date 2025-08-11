@@ -14,56 +14,55 @@
 
 using System.Windows;
 
-namespace Kaspirin.UI.Framework.UiKit.Controls.VisualStates
+namespace Kaspirin.UI.Framework.UiKit.Controls.VisualStates;
+
+public static class StateService
 {
-    public static class StateService
-    {
-        #region State
+    #region State
 
-        public static readonly DependencyProperty StateProperty = DependencyProperty.RegisterAttached(
-            "State", typeof(State), typeof(StateService));
+    public static State GetState(DependencyObject obj)
+        => (State)obj.GetValue(StateProperty);
 
-        public static State GetState(DependencyObject obj)
-        {
-            return (State)obj.GetValue(StateProperty);
-        }
-        public static void SetState(DependencyObject obj, State value)
-        {
-            obj.SetValue(StateProperty, value);
-        }
+    public static void SetState(DependencyObject obj, State value)
+        => obj.SetValue(StateProperty, value);
 
-        #endregion
+    public static readonly DependencyProperty StateProperty = DependencyProperty.RegisterAttached(
+        "State",
+        typeof(State),
+        typeof(StateService),
+        new PropertyMetadata(default(State)));
 
-        #region SelectableState
+    #endregion
 
-        public static readonly DependencyProperty SelectableStateProperty = DependencyProperty.RegisterAttached(
-            "SelectableState", typeof(SelectableState), typeof(StateService));
+    #region SelectableState
 
-        public static SelectableState GetSelectableState(DependencyObject obj)
-        {
-            return (SelectableState)obj.GetValue(SelectableStateProperty);
-        }
-        public static void SetSelectableState(DependencyObject obj, SelectableState value)
-        {
-            obj.SetValue(SelectableStateProperty, value);
-        }
+    public static SelectableState GetSelectableState(DependencyObject obj)
+        => (SelectableState)obj.GetValue(SelectableStateProperty);
 
-        #endregion
+    public static void SetSelectableState(DependencyObject obj, SelectableState value)
+        => obj.SetValue(SelectableStateProperty, value);
 
-        #region TextInputState
+    public static readonly DependencyProperty SelectableStateProperty = DependencyProperty.RegisterAttached(
+        "SelectableState",
+        typeof(SelectableState),
+        typeof(StateService),
+        new PropertyMetadata(default(SelectableState)));
 
-        public static readonly DependencyProperty TextInputStateProperty = DependencyProperty.RegisterAttached(
-            "TextInputState", typeof(TextInputState), typeof(StateService));
+    #endregion
 
-        public static TextInputState GetTextInputState(DependencyObject obj)
-        {
-            return (TextInputState)obj.GetValue(TextInputStateProperty);
-        }
-        public static void SetTextInputState(DependencyObject obj, TextInputState value)
-        {
-            obj.SetValue(TextInputStateProperty, value);
-        }
+    #region TextInputState
 
-        #endregion
-    }
+    public static TextInputState GetTextInputState(DependencyObject obj)
+        => (TextInputState)obj.GetValue(TextInputStateProperty);
+
+    public static void SetTextInputState(DependencyObject obj, TextInputState value)
+        => obj.SetValue(TextInputStateProperty, value);
+
+    public static readonly DependencyProperty TextInputStateProperty = DependencyProperty.RegisterAttached(
+        "TextInputState",
+        typeof(TextInputState),
+        typeof(StateService),
+        new PropertyMetadata(default(TextInputState)));
+
+    #endregion
 }

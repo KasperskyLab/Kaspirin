@@ -15,80 +15,85 @@
 using System.Windows;
 using System.Windows.Controls;
 
-namespace Kaspirin.UI.Framework.UiKit.Controls
+namespace Kaspirin.UI.Framework.UiKit.Controls;
+
+public sealed class Divider : Control
 {
-    public class Divider : Control
+    static Divider()
     {
-        static Divider()
-        {
-            HorizontalAlignmentProperty.OverrideMetadata(
-                typeof(Divider),
-                new FrameworkPropertyMetadata((d, e) => { }, CoerceHorizontalAlignment));
+        HorizontalAlignmentProperty.OverrideMetadata(
+            typeof(Divider),
+            new FrameworkPropertyMetadata((d, e) => { }, CoerceHorizontalAlignment));
 
-            VerticalAlignmentProperty.OverrideMetadata(
-                typeof(Divider),
-                new FrameworkPropertyMetadata((d, e) => { }, CoerceVerticalAlignment));
+        VerticalAlignmentProperty.OverrideMetadata(
+            typeof(Divider),
+            new FrameworkPropertyMetadata((d, e) => { }, CoerceVerticalAlignment));
+    }
+
+    #region Orientation
+
+    public Orientation Orientation
+    {
+        get => (Orientation)GetValue(OrientationProperty);
+        set => SetValue(OrientationProperty, value);
+    }
+
+    public static readonly DependencyProperty OrientationProperty = DependencyProperty.Register(
+        nameof(Orientation),
+        typeof(Orientation),
+        typeof(Divider),
+        new PropertyMetadata(Orientation.Horizontal, OnDividerChanged));
+
+    #endregion
+
+    #region Length
+
+    public double Length
+    {
+        get => (double)GetValue(LengthProperty);
+        set => SetValue(LengthProperty, value);
+    }
+
+    public static readonly DependencyProperty LengthProperty = DependencyProperty.Register(
+        nameof(Length),
+        typeof(double),
+        typeof(Divider),
+        new PropertyMetadata(double.NaN, OnDividerChanged));
+
+    #endregion
+
+    private static void OnDividerChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+    {
+        var length = (double)d.GetValue(LengthProperty);
+
+        if (double.IsNaN(length))
+        {
+            d.SetValue(HorizontalAlignmentProperty, d.GetValue(HorizontalAlignmentProperty));
+            d.SetValue(VerticalAlignmentProperty, d.GetValue(VerticalAlignmentProperty));
+        }
+    }
+
+    private static object CoerceHorizontalAlignment(DependencyObject d, object baseValue)
+    {
+        var divider = (Divider)d;
+
+        if (double.IsNaN(divider.Length) && divider.Orientation == Orientation.Horizontal)
+        {
+            return HorizontalAlignment.Stretch;
         }
 
-        private static object CoerceHorizontalAlignment(DependencyObject d, object baseValue)
+        return baseValue;
+    }
+
+    private static object CoerceVerticalAlignment(DependencyObject d, object baseValue)
+    {
+        var divider = (Divider)d;
+
+        if (double.IsNaN(divider.Length) && divider.Orientation == Orientation.Vertical)
         {
-            var divider = (Divider)d;
-
-            if (double.IsNaN(divider.Length) && divider.Orientation == Orientation.Horizontal)
-            {
-                return HorizontalAlignment.Stretch;
-            }
-
-            return baseValue;
+            return VerticalAlignment.Stretch;
         }
 
-        private static object CoerceVerticalAlignment(DependencyObject d, object baseValue)
-        {
-            var divider = (Divider)d;
-
-            if (double.IsNaN(divider.Length) && divider.Orientation == Orientation.Vertical)
-            {
-                return VerticalAlignment.Stretch;
-            }
-
-            return baseValue;
-        }
-
-        #region Orientation
-
-        public Orientation Orientation
-        {
-            get { return (Orientation)GetValue(OrientationProperty); }
-            set { SetValue(OrientationProperty, value); }
-        }
-
-        public static readonly DependencyProperty OrientationProperty =
-            DependencyProperty.Register("Orientation", typeof(Orientation), typeof(Divider), new PropertyMetadata(Orientation.Horizontal, OnDividerChanged));
-
-        #endregion
-
-        #region Length
-
-        public double Length
-        {
-            get { return (double)GetValue(LengthProperty); }
-            set { SetValue(LengthProperty, value); }
-        }
-
-        public static readonly DependencyProperty LengthProperty =
-            DependencyProperty.Register("Length", typeof(double), typeof(Divider), new PropertyMetadata(double.NaN, OnDividerChanged));
-
-        #endregion
-
-        private static void OnDividerChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            var lenght = (double)d.GetValue(LengthProperty);
-
-            if (double.IsNaN(lenght))
-            {
-                d.SetValue(HorizontalAlignmentProperty, d.GetValue(HorizontalAlignmentProperty));
-                d.SetValue(VerticalAlignmentProperty, d.GetValue(VerticalAlignmentProperty));
-            }
-        }
+        return baseValue;
     }
 }

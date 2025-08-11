@@ -14,10 +14,9 @@
 
 using System.Windows;
 
-namespace Kaspirin.UI.Framework.UiKit.Converters.CollectionConverters
+namespace Kaspirin.UI.Framework.UiKit.Converters.CollectionConverters;
+
+public sealed class CollectionToVisibilityInverseConverter : BaseCollectionConverter<Visibility>
 {
-    public sealed class CollectionToVisibilityInverseConverter : BaseCollectionConverter<Visibility>
-    {
-        public CollectionToVisibilityInverseConverter() : base(Visibility.Collapsed, Visibility.Visible) { }
-    }
+    public CollectionToVisibilityInverseConverter() : base(Visibility.Collapsed, Visibility.Visible) { }
 }

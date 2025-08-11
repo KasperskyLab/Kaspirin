@@ -12,24 +12,38 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-#pragma warning disable KCAIDE0002 // Enum has incorrect suffix
-
 using System;
 
-namespace Kaspirin.UI.Framework.NativeMethods.Api.Wininet.Enums
+namespace Kaspirin.UI.Framework.NativeMethods.Api.Wininet.Enums;
+
+/// <summary>
+///     <seealso href="https://learn.microsoft.com/en-us/windows/win32/api/wininet/nf-wininet-internetsetcookieexw">Learn more</seealso>.
+/// </summary>
+[Flags]
+public enum InternetCookieFlags : uint
 {
     /// <summary>
-    ///     
-    /// <seealso href="https://learn.microsoft.com/en-us/windows/win32/api/wininet/nf-wininet-internetsetcookieexw">Learn more</seealso>.
+    ///     The flag is not set.
     /// </summary>
-    [Flags]
-    public enum InternetCookieFlags : uint
-    {
-        None = 0,
-        INTERNET_COOKIE_THIRD_PARTY = 0x10,
-        INTERNET_COOKIE_EVALUATE_P3P = 0x40,
-        INTERNET_FLAG_RESTRICTED_ZONE = 0x200,
-        INTERNET_COOKIE_HTTPONLY = 0x00002000
-    }
+    None = 0,
+
+    /// <summary>
+    ///     The INTERNET_COOKIE_THIRD_PARTY constant.
+    /// </summary>
+    ThirdParty = 0x10,
+
+    /// <summary>
+    ///     The INTERNET_COOKIE_EVALUATE_P3P constant.
+    /// </summary>
+    EvaluateP3p = 0x40,
+
+    /// <summary>
+    ///     The INTERNET_FLAG_RESTRICTED_ZONE constant.
+    /// </summary>
+    RestrictedZone = 0x200,
+
+    /// <summary>
+    ///     The INTERNET_COOKIE_HTTPONLY constant.
+    /// </summary>
+    HttpOnly = 0x00002000
 }

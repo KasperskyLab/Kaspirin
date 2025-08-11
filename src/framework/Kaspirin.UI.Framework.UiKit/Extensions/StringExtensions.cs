@@ -15,61 +15,60 @@
 using System.Linq;
 using System.Text;
 
-namespace Kaspirin.UI.Framework.UiKit.Extensions
+namespace Kaspirin.UI.Framework.UiKit.Extensions;
+
+public static class StringExtensions
 {
-    public static class StringExtensions
+    /// <summary>
+    /// Presaves string to be Left-To-Right interpretation even for Right-To-Left locales.
+    /// </summary>
+    /// <param name="str"></param>
+    /// <returns></returns>
+    public static string CreateLeftToRightString(this string str)
     {
-        /// <summary>
-        /// Presaves string to be Left-To-Right interpretation even for Right-To-Left locales.
-        /// </summary>
-        /// <param name="str"></param>
-        /// <returns></returns>
-        public static string CreateLeftToRightString(this string str)
+        var isRTL = LocalizationManager.DisplayCulture.CultureInfo.TextInfo.IsRightToLeft;
+
+        if (!isRTL ||
+            string.IsNullOrWhiteSpace(str) ||
+            ContainsArabicText(str) ||
+            ContainsHebrewText(str) ||
+            ContainsBiDirections(str))
         {
-            var isRTL = LocalizationManager.Current.DisplayCulture.CultureInfo.TextInfo.IsRightToLeft;
-
-            if (!isRTL ||
-                string.IsNullOrWhiteSpace(str) ||
-                ContainsArabicText(str) ||
-                ContainsHebrewText(str) ||
-                ContainsBiDirections(str))
-            {
-                return str;
-            }
-
-            return str.Aggregate(new StringBuilder(),
-                (acc, sym) => acc.Append("\u200E").Append(sym),
-                acc => acc.Append("\u200E").ToString());
+            return str;
         }
 
-        private static bool ContainsBiDirections(string text)
-        {
-            return text.Any(IsBiDirectionCharacter);
-        }
+        return str.Aggregate(new StringBuilder(),
+            (acc, sym) => acc.Append("\u200E").Append(sym),
+            acc => acc.Append("\u200E").ToString());
+    }
 
-        private static bool ContainsArabicText(string text)
-        {
-            return text.Any(IsArabicCharacter);
-        }
+    private static bool ContainsBiDirections(string text)
+    {
+        return text.Any(IsBiDirectionCharacter);
+    }
 
-        private static bool ContainsHebrewText(string text)
-        {
-            return text.Any(IsHebrewCharacter);
-        }
+    private static bool ContainsArabicText(string text)
+    {
+        return text.Any(IsArabicCharacter);
+    }
 
-        private static bool IsArabicCharacter(char c)
-        {
-            return c >= 0x600 && c <= 0x6ff;
-        }
+    private static bool ContainsHebrewText(string text)
+    {
+        return text.Any(IsHebrewCharacter);
+    }
 
-        private static bool IsHebrewCharacter(char c)
-        {
-            return c >= 0x590 && c <= 0x5ff;
-        }
+    private static bool IsArabicCharacter(char c)
+    {
+        return c >= 0x600 && c <= 0x6ff;
+    }
 
-        private static bool IsBiDirectionCharacter(char c)
-        {
-            return c >= 0x200e || c == 0x200f;
-        }
+    private static bool IsHebrewCharacter(char c)
+    {
+        return c >= 0x590 && c <= 0x5ff;
+    }
+
+    private static bool IsBiDirectionCharacter(char c)
+    {
+        return c >= 0x200e || c == 0x200f;
     }
 }

@@ -16,17 +16,15 @@
 
 using System.Runtime.InteropServices;
 
-namespace Kaspirin.UI.Framework.NativeMethods.Api.Advapi32.Structs
-{
-    /// <summary>
-    ///     
-    /// <seealso href="https://learn.microsoft.com/en-us/windows/win32/api/winnt/ns-winnt-luid">Learn more</seealso>.
-    /// </summary>
-    [StructLayout(LayoutKind.Sequential)]
-    public struct Luid
-    {
-        public uint LowPart;
+namespace Kaspirin.UI.Framework.NativeMethods.Api.Advapi32.Structs;
 
-        public int HighPart;
-    }
+/// <summary>
+///     <seealso href="https://learn.microsoft.com/en-us/windows/win32/api/winnt/ns-winnt-luid">Learn more</seealso>.
+/// </summary>
+[StructLayout(LayoutKind.Sequential)]
+public struct Luid
+{
+    public uint LowPart;
+
+    public int HighPart;
 }

@@ -14,84 +14,84 @@
 
 using System.Windows;
 
-namespace Kaspirin.UI.Framework.UiKit.Controls
+namespace Kaspirin.UI.Framework.UiKit.Controls;
+
+internal sealed class NumberInputAction : InputActionBase
 {
-    internal sealed class NumberInputAction : InputActionBase
+    public NumberInputAction(NumberInput numberInput, NumberInputActionType actionType)
     {
-        public NumberInputAction(NumberInput numberInput, NumberInputActionType actionType)
-        {
-            Guard.ArgumentIsNotNull(numberInput);
+        Guard.ArgumentIsNotNull(numberInput);
 
-            _numberInput = numberInput;
-            ActionType = actionType;
-            ActionMode = InputActionMode.OnPressedWithRepeat;
+        _numberInput = numberInput;
+        ActionType = actionType;
+        ActionMode = InputActionMode.OnPressedWithRepeat;
 
-            _numberInputIsReadOnlyNotifier = new PropertyChangeNotifier<NumberInput, bool>(_numberInput, NumberInput.IsReadOnlyProperty);
-            _numberInputIsReadOnlyNotifier.ValueChanged += OnNumberInputIsReadOnlyChanged;
+        _numberInputIsReadOnlyNotifier = new PropertyChangeNotifier<NumberInput, bool>(_numberInput, NumberInput.IsReadOnlyProperty);
+        _numberInputIsReadOnlyNotifier.ValueChanged += OnNumberInputIsReadOnlyChanged;
 
-            _numberInputValueNotifier = new PropertyChangeNotifier<NumberInput, int>(_numberInput, NumberInput.ValueInternalProperty);
-            _numberInputValueNotifier.ValueChanged += OnNumberInputValueChanged;
-            _numberInputMaximumNotifier = new PropertyChangeNotifier<NumberInput, int>(_numberInput, NumberInput.MaximumProperty);
-            _numberInputMaximumNotifier.ValueChanged += OnNumberInputValueChanged;
-            _numberInputMinimumNotifier = new PropertyChangeNotifier<NumberInput, int>(_numberInput, NumberInput.MinimumProperty);
-            _numberInputMinimumNotifier.ValueChanged += OnNumberInputValueChanged;
-        }
-
-        #region ActionType
-
-        public NumberInputActionType ActionType
-        {
-            get { return (NumberInputActionType)GetValue(ActionTypeProperty); }
-            private set { SetValue(_actionTypePropertyKey, value); }
-        }
-
-        private static readonly DependencyPropertyKey _actionTypePropertyKey =
-            DependencyProperty.RegisterReadOnly("ActionType", typeof(NumberInputActionType), typeof(NumberInputAction),
-                new PropertyMetadata(default(NumberInputActionType)));
-
-        public static readonly DependencyProperty ActionTypeProperty =
-            _actionTypePropertyKey.DependencyProperty;
-
-        #endregion
-
-        protected override void OnPressed(bool isPressed)
-        {
-            if (isPressed && ActionType == NumberInputActionType.Decrease)
-            {
-                _numberInput.DecreaseValue();
-            }
-
-            if (isPressed && ActionType == NumberInputActionType.Increase)
-            {
-                _numberInput.IncreaseValue();
-            }
-        }
-
-        private void OnNumberInputIsReadOnlyChanged(NumberInput input, bool oldIsReadOnly, bool newIsReadOnly)
-        {
-            SetActionVisibility(!newIsReadOnly);
-        }
-
-        private void OnNumberInputValueChanged(NumberInput input, int oldValue, int newValue)
-        {
-            if (input.ValueInternal <= input.Minimum && ActionType == NumberInputActionType.Decrease)
-            {
-                SetActionEnabled(false);
-            }
-            else if (input.ValueInternal >= input.Maximum && ActionType == NumberInputActionType.Increase)
-            {
-                SetActionEnabled(false);
-            }
-            else
-            {
-                SetActionEnabled(true);
-            }
-        }
-
-        private readonly NumberInput _numberInput;
-        private readonly PropertyChangeNotifier<NumberInput, int> _numberInputMaximumNotifier;
-        private readonly PropertyChangeNotifier<NumberInput, int> _numberInputMinimumNotifier;
-        private readonly PropertyChangeNotifier<NumberInput, int> _numberInputValueNotifier;
-        private readonly PropertyChangeNotifier<NumberInput, bool> _numberInputIsReadOnlyNotifier;
+        _numberInputValueNotifier = new PropertyChangeNotifier<NumberInput, int>(_numberInput, NumberInput._valueInternalProperty);
+        _numberInputValueNotifier.ValueChanged += OnNumberInputValueChanged;
+        _numberInputMaximumNotifier = new PropertyChangeNotifier<NumberInput, int>(_numberInput, NumberInput.MaximumProperty);
+        _numberInputMaximumNotifier.ValueChanged += OnNumberInputValueChanged;
+        _numberInputMinimumNotifier = new PropertyChangeNotifier<NumberInput, int>(_numberInput, NumberInput.MinimumProperty);
+        _numberInputMinimumNotifier.ValueChanged += OnNumberInputValueChanged;
     }
+
+    #region ActionType
+
+    public NumberInputActionType ActionType
+    {
+        get => (NumberInputActionType)GetValue(ActionTypeProperty);
+        private set => SetValue(_actionTypePropertyKey, value);
+    }
+
+    private static readonly DependencyPropertyKey _actionTypePropertyKey = DependencyProperty.RegisterReadOnly(
+        nameof(ActionType),
+        typeof(NumberInputActionType),
+        typeof(NumberInputAction),
+        new PropertyMetadata(default(NumberInputActionType)));
+
+    public static readonly DependencyProperty ActionTypeProperty = _actionTypePropertyKey.DependencyProperty;
+
+    #endregion
+
+    protected override void OnPressed(bool isPressed)
+    {
+        if (isPressed && ActionType == NumberInputActionType.Decrease)
+        {
+            _numberInput.DecreaseValue();
+        }
+
+        if (isPressed && ActionType == NumberInputActionType.Increase)
+        {
+            _numberInput.IncreaseValue();
+        }
+    }
+
+    private void OnNumberInputIsReadOnlyChanged(NumberInput input, bool oldIsReadOnly, bool newIsReadOnly)
+    {
+        SetActionVisibility(!newIsReadOnly);
+    }
+
+    private void OnNumberInputValueChanged(NumberInput input, int oldValue, int newValue)
+    {
+        if (input.ValueInternal <= input.Minimum && ActionType == NumberInputActionType.Decrease)
+        {
+            SetActionEnabled(false);
+        }
+        else if (input.ValueInternal >= input.Maximum && ActionType == NumberInputActionType.Increase)
+        {
+            SetActionEnabled(false);
+        }
+        else
+        {
+            SetActionEnabled(true);
+        }
+    }
+
+    private readonly NumberInput _numberInput;
+    private readonly PropertyChangeNotifier<NumberInput, int> _numberInputMaximumNotifier;
+    private readonly PropertyChangeNotifier<NumberInput, int> _numberInputMinimumNotifier;
+    private readonly PropertyChangeNotifier<NumberInput, int> _numberInputValueNotifier;
+    private readonly PropertyChangeNotifier<NumberInput, bool> _numberInputIsReadOnlyNotifier;
 }

@@ -17,35 +17,33 @@
 using System.Runtime.InteropServices;
 using FILETIME = System.Runtime.InteropServices.ComTypes.FILETIME;
 
-namespace Kaspirin.UI.Framework.NativeMethods.Api.Kernel32.Structs
+namespace Kaspirin.UI.Framework.NativeMethods.Api.Kernel32.Structs;
+
+/// <summary>
+///     <seealso href="https://learn.microsoft.com/en-us/windows/win32/api/minwinbase/ns-minwinbase-win32_find_dataa">Learn more</seealso>.
+/// </summary>
+[StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
+public struct Win32FindData
 {
-    /// <summary>
-    ///     
-    /// <seealso href="https://learn.microsoft.com/en-us/windows/win32/api/minwinbase/ns-minwinbase-win32_find_dataa">Learn more</seealso>.
-    /// </summary>
-    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
-    public struct Win32FindData
-    {
-        public FileAttributeFlags FileAttributes;
+    public FileAttributeFlags FileAttributes;
 
-        public FILETIME CreationTime;
+    public FILETIME CreationTime;
 
-        public FILETIME LastAccessTime;
+    public FILETIME LastAccessTime;
 
-        public FILETIME LastWriteTime;
+    public FILETIME LastWriteTime;
 
-        public uint FileSizeHigh;
+    public uint FileSizeHigh;
 
-        public uint FileSizeLow;
+    public uint FileSizeLow;
 
-        public uint Reserved0;
+    public uint Reserved0;
 
-        public uint Reserved1;
+    public uint Reserved1;
 
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = PathConstants.MaxPathLength)]
-        public string FileName;
+    [MarshalAs(UnmanagedType.ByValTStr, SizeConst = PathConstants.MaxPathLength)]
+    public string FileName;
 
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = PathConstants.MaxAlternatePathLength)]
-        public string Alternate;
-    }
+    [MarshalAs(UnmanagedType.ByValTStr, SizeConst = PathConstants.MaxAlternatePathLength)]
+    public string Alternate;
 }

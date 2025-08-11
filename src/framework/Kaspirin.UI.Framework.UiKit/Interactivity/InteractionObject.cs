@@ -12,73 +12,111 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
 using System;
-using Kaspirin.UI.Framework.Mvvm;
 
-namespace Kaspirin.UI.Framework.UiKit.Interactivity
+namespace Kaspirin.UI.Framework.UiKit.Interactivity;
+
+public class InteractionObject : BaseViewModel
 {
-    public class InteractionObject : ViewModelBase
+    public InteractionObject()
     {
-        public InteractionObject()
-        {
-            HandleCommand = new DelegateCommand(Handle);
-        }
-
-        public event Action PreviewDecided = () => { };
-
-        public event Action Decided = () => { };
-
-        public DelegateCommand HandleCommand { get; private set; }
-
-        public bool IsDecided
-        {
-            get { return _isDecided; }
-            private set
-            {
-                _isDecided = value;
-                RaisePropertyChanged(nameof(IsDecided));
-            }
-        }
-
-        public void Handle()
-        {
-            OnHandle();
-
-            if (_isDecided)
-            {
-                return;
-            }
-
-            OnPreviewDecided();
-            PreviewDecided.Invoke();
-
-            IsDecided = true;
-
-            OnDecided();
-            Decided.Invoke();
-        }
-
-        public virtual object GetDataContext()
-        {
-            return this;
-        }
-
-        protected virtual void OnPreviewDecided()
-        {
-
-        }
-
-        protected virtual void OnDecided()
-        {
-
-        }
-
-        protected virtual void OnHandle()
-        {
-
-        }
-
-        private bool _isDecided;
+        HandleCommand = new DelegateCommand(Handle);
     }
+
+    public InteractionObject(string traceComponent)
+        : base(traceComponent)
+    {
+        HandleCommand = new DelegateCommand(Handle);
+    }
+
+    public InteractionObject(ComponentTracer tracer)
+        : base(tracer)
+    {
+        HandleCommand = new DelegateCommand(Handle);
+    }
+
+    public event Action PreviewDecided = () => { };
+
+    public event Action Decided = () => { };
+
+    public DelegateCommand HandleCommand { get; }
+
+    public bool IsDecided
+    {
+        get { return _isDecided; }
+        private set
+        {
+            _isDecided = value;
+            RaisePropertyChanged(nameof(IsDecided));
+        }
+    }
+
+    public void Handle()
+    {
+        OnHandle();
+
+        if (_isDecided)
+        {
+            return;
+        }
+
+        OnPreviewDecided();
+        PreviewDecided.Invoke();
+
+        IsDecided = true;
+
+        OnDecided();
+        Decided.Invoke();
+    }
+
+    public virtual object GetDataContext()
+    {
+        return this;
+    }
+
+    internal void InteractionStarted()
+    {
+        Tracer.TraceMethodCall();
+
+        if (GetDataContext() is IInteractionAware interactionAware)
+        {
+            interactionAware.OnInteractionStarted(new(this));
+        }
+
+        OnInteractionStarted();
+    }
+
+    internal void InteractionCompleted()
+    {
+        Tracer.TraceMethodCall();
+
+        if (GetDataContext() is IInteractionAware interactionAware)
+        {
+            interactionAware.OnInteractionCompleted();
+        }
+
+        OnInteractionCompleted();
+    }
+
+    protected virtual void OnInteractionStarted()
+    {
+    }
+
+    protected virtual void OnInteractionCompleted()
+    {
+    }
+
+    protected virtual void OnPreviewDecided()
+    {
+    }
+
+    protected virtual void OnDecided()
+    {
+    }
+
+    protected virtual void OnHandle()
+    {
+    }
+
+    private bool _isDecided;
 }

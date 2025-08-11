@@ -14,43 +14,42 @@
 
 using System;
 
-namespace Kaspirin.UI.Framework.UiKit.Windows
+namespace Kaspirin.UI.Framework.UiKit.Windows;
+
+public sealed class Dpi : IEquatable<Dpi>
 {
-    public sealed class Dpi : IEquatable<Dpi>
+    public static readonly Dpi Default = new(DefaultDpi, DefaultDpi);
+
+    public double ScaleX { get; }
+    public double ScaleY { get; }
+
+    public double X { get; }
+    public double Y { get; }
+
+    public Dpi(double x, double y)
     {
-        public static readonly Dpi Default = new(DefaultDpi, DefaultDpi);
+        X = x;
+        Y = y;
 
-        public double ScaleX { get; }
-        public double ScaleY { get; }
-
-        public double X { get; }
-        public double Y { get; }
-
-        public Dpi(double x, double y)
-        {
-            X = x;
-            Y = y;
-
-            ScaleX = X / DefaultDpi;
-            ScaleY = Y / DefaultDpi;
-        }
-
-        public bool Equals(Dpi? other)
-        {
-            if (ReferenceEquals(null, other))
-            {
-                return false;
-            }
-
-            return X.Equals(other.X) && Y.Equals(other.Y);
-        }
-
-        public override bool Equals(object? other) => Equals(other as Dpi);
-
-        public override int GetHashCode() => X.GetHashCode() ^ Y.GetHashCode();
-
-        public override string ToString() => $"({X},{Y})";
-
-        private const int DefaultDpi = 96;
+        ScaleX = X / DefaultDpi;
+        ScaleY = Y / DefaultDpi;
     }
+
+    public bool Equals(Dpi? other)
+    {
+        if (ReferenceEquals(null, other))
+        {
+            return false;
+        }
+
+        return X.Equals(other.X) && Y.Equals(other.Y);
+    }
+
+    public override bool Equals(object? other) => Equals(other as Dpi);
+
+    public override int GetHashCode() => X.GetHashCode() ^ Y.GetHashCode();
+
+    public override string ToString() => $"({X},{Y})";
+
+    private const int DefaultDpi = 96;
 }

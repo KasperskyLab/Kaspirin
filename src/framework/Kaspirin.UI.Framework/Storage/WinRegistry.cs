@@ -16,30 +16,29 @@
 
 using Microsoft.Win32;
 
-namespace Kaspirin.UI.Framework.Storage
+namespace Kaspirin.UI.Framework.Storage;
+
+/// <summary>
+///     Performs read and write operations in the Windows registry.
+/// </summary>
+public sealed class WinRegistry : IRegistry
 {
-    /// <summary>
-    ///     Performs read and write operations in the Windows registry.
-    /// </summary>
-    public sealed class WinRegistry : IRegistry
+    /// <inheritdoc cref="IRegistry.GetValue"/>
+    public object? GetValue(string keyName, string valueName, object? defaultValue)
     {
-        /// <inheritdoc cref="IRegistry.GetValue"/>
-        public object? GetValue(string keyName, string valueName, object? defaultValue)
-        {
-            return Registry.GetValue(keyName, valueName, defaultValue);
-        }
+        return Registry.GetValue(keyName, valueName, defaultValue);
+    }
 
-        /// <inheritdoc cref="IRegistry.SetValue"/>
-        public void SetValue(string keyName, string valueName, object value)
-        {
-            Registry.SetValue(keyName, valueName, value);
-        }
+    /// <inheritdoc cref="IRegistry.SetValue"/>
+    public void SetValue(string keyName, string valueName, object value)
+    {
+        Registry.SetValue(keyName, valueName, value);
+    }
 
-        /// <inheritdoc cref="IRegistry.CreateKey"/>
-        public void CreateKey(RegistryHive rootHive, string relativeKey, RegistryView registryView)
-        {
-            using var rootKey = RegistryKey.OpenBaseKey(rootHive, registryView);
-            using var subKey = rootKey.CreateSubKey(relativeKey);
-        }
+    /// <inheritdoc cref="IRegistry.CreateKey"/>
+    public void CreateKey(RegistryHive rootHive, string relativeKey, RegistryView registryView)
+    {
+        using var rootKey = RegistryKey.OpenBaseKey(rootHive, registryView);
+        using var subKey = rootKey.CreateSubKey(relativeKey);
     }
 }

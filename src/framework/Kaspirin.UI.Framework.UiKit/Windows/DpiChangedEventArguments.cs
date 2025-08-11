@@ -14,21 +14,20 @@
 
 using System.Windows;
 
-namespace Kaspirin.UI.Framework.UiKit.Windows
+namespace Kaspirin.UI.Framework.UiKit.Windows;
+
+public sealed class DpiChangedEventArguments
 {
-    public sealed class DpiChangedEventArguments
+    public DpiChangedEventArguments(Dpi oldDpi, Dpi newDpi, Rect positionAdvice)
     {
-        public DpiChangedEventArguments(Dpi oldDpi, Dpi newDpi, Rect positionAdvice)
-        {
-            OldDpi = oldDpi;
-            NewDpi = newDpi;
-            PositionAdvice = positionAdvice;
-        }
-
-        public Dpi NewDpi { get; }
-
-        public Dpi OldDpi { get; }
-
-        public Rect PositionAdvice { get; }
+        OldDpi = oldDpi;
+        NewDpi = newDpi;
+        PositionAdvice = positionAdvice;
     }
+
+    public Dpi NewDpi { get; }
+
+    public Dpi OldDpi { get; }
+
+    public Rect PositionAdvice { get; }
 }

@@ -12,10 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Kaspirin.UI.Framework.UiKit.Localization.Localizer.Xaml
+namespace Kaspirin.UI.Framework.UiKit.Localization.Localizer.Xaml;
+
+public interface IXamlLocalizer : ILocalizer
 {
-    public interface IXamlLocalizer : ILocalizer
-    {
-        object? GetResource(string key);
-    }
+    object? GetResource(string key);
 }

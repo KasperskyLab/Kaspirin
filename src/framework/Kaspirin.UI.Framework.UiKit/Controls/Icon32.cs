@@ -12,9 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Kaspirin.UI.Framework.UiKit.Controls
+namespace Kaspirin.UI.Framework.UiKit.Controls;
+
+public sealed class Icon32 : IconBase<UIKitIcon_32>
 {
-    public sealed class Icon32 : IconBase<UIKitIcon_32>
-    {
-    }
 }

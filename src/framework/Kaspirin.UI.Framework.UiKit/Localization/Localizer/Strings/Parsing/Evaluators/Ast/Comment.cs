@@ -12,19 +12,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Kaspirin.UI.Framework.UiKit.Localization.Localizer.Strings.Parsing.Evaluators.Ast
-{
-    public sealed class Comment : Item
-    {
-        public Comment(Token value, Token newLine)
-        {
-            Value = value;
-            NewLine = newLine;
-        }
+namespace Kaspirin.UI.Framework.UiKit.Localization.Localizer.Strings.Parsing.Evaluators.Ast;
 
-        public Token Value { get; }
-        public Token NewLine { get; }
-        public override string GetText() => Value.GetText() + NewLine.GetText();
-        public override string ToString() => GetText();
+public sealed class Comment : Item
+{
+    public Comment(Token value, Token newLine)
+    {
+        Value = value;
+        NewLine = newLine;
     }
+
+    public Token Value { get; }
+    public Token NewLine { get; }
+    public override string GetText() => Value.GetText() + NewLine.GetText();
+    public override string ToString() => GetText();
 }

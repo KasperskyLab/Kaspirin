@@ -12,10 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Kaspirin.UI.Framework.UiKit.Localization.Markup.Metadata
+namespace Kaspirin.UI.Framework.UiKit.Localization.Markup.Metadata;
+
+public sealed class MetadataStorageSettings
 {
-    public class MetadataStorageSettings
-    {
-        public bool CleanupDefered { get; set; } = true;
-    }
+    public bool CleanupDefered { get; set; } = true;
 }

@@ -14,35 +14,34 @@
 
 using System;
 
-namespace Kaspirin.UI.Framework.UiKit.Localization.Markup.Converting
+namespace Kaspirin.UI.Framework.UiKit.Localization.Markup.Converting;
+
+public sealed class SourceOrFallbackExtension : ResFromSourceExtension
 {
-    public sealed class SourceOrFallbackExtension : ResFromSourceExtension
+    public LocExtension? Fallback { get; set; }
+
+    public override object? GetResource(object? value)
     {
-        public LocExtension? Fallback { get; set; }
+        Guard.ArgumentIsNotNull(Fallback);
 
-        public override object? GetResource(object? value)
+        if (value == null)
         {
-            Guard.ArgumentIsNotNull(Fallback);
-
-            if (value == null)
-            {
-                return Fallback;
-            }
-
-            if (value is string stringValue)
-            {
-                return string.IsNullOrEmpty(stringValue) ? Fallback : value;
-            }
-
-            var valueType = value.GetType();
-            if (valueType.IsValueType)
-            {
-                var defaultValue = Activator.CreateInstance(valueType);
-
-                return value.Equals(defaultValue) ? Fallback : value.ToString();
-            }
-
-            return value.ToString();
+            return Fallback;
         }
+
+        if (value is string stringValue)
+        {
+            return string.IsNullOrEmpty(stringValue) ? Fallback : value;
+        }
+
+        var valueType = value.GetType();
+        if (valueType.IsValueType)
+        {
+            var defaultValue = Activator.CreateInstance(valueType);
+
+            return value.Equals(defaultValue) ? Fallback : value.ToString();
+        }
+
+        return value.ToString();
     }
 }

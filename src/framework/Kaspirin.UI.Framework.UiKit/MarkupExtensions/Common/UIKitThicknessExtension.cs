@@ -16,51 +16,50 @@ using System;
 using System.Windows;
 using System.Windows.Markup;
 
-namespace Kaspirin.UI.Framework.UiKit.MarkupExtensions.Common
+namespace Kaspirin.UI.Framework.UiKit.MarkupExtensions.Common;
+
+/// <summary>
+/// Helpful markup extension that simplifies definition of Thickness in XAML (usually used for Margin and Padding properties).<para/>
+/// All values (except <see cref="Offset"/>) are relative and have multiplier semantics.<para/>
+/// At the same time <see cref="Offset"/> is absolute and already in WPF units.
+/// </summary>
+[MarkupExtensionReturnType(typeof(Thickness))]
+public sealed class UIKitThicknessExtension : MarkupExtension
 {
-    /// <summary>
-    /// Helpful markup extension that simplifies definition of Thickness in XAML (usually used for Margin and Padding properties).<para/>
-    /// All values (except <see cref="Offset"/>) are relative and have multiplier semantics.<para/>
-    /// At the same time <see cref="Offset"/> is absolute and already in WPF units.
-    /// </summary>
-    [MarkupExtensionReturnType(typeof(Thickness))]
-    public sealed class UIKitThicknessExtension : MarkupExtension
+    public int Uniform { get; set; }
+
+    public int? Horizontal { get; set; }
+    public int? Vertical { get; set; }
+
+    public int? Left { get; set; }
+    public int? Top { get; set; }
+    public int? Right { get; set; }
+    public int? Bottom { get; set; }
+
+    public Thickness Offset { get; set; }
+
+    public override object ProvideValue(IServiceProvider serviceProvider)
     {
-        public int Uniform { get; set; }
+        var uniform = GetValueByLevel(Uniform);
 
-        public int? Horizontal { get; set; }
-        public int? Vertical { get; set; }
+        var horizontal = GetValueByLevel(Horizontal) ?? uniform;
+        var vertical = GetValueByLevel(Vertical) ?? uniform;
 
-        public int? Left { get; set; }
-        public int? Top { get; set; }
-        public int? Right { get; set; }
-        public int? Bottom { get; set; }
+        var left = (GetValueByLevel(Left) ?? horizontal) + Offset.Left;
+        var top = (GetValueByLevel(Top) ?? vertical) + Offset.Top;
+        var right = (GetValueByLevel(Right) ?? horizontal) + Offset.Right;
+        var bottom = (GetValueByLevel(Bottom) ?? vertical) + Offset.Bottom;
 
-        public Thickness Offset { get; set; }
-
-        public override object ProvideValue(IServiceProvider serviceProvider)
-        {
-            var uniform = GetValueByLevel(Uniform);
-
-            var horizontal = GetValueByLevel(Horizontal) ?? uniform;
-            var vertical = GetValueByLevel(Vertical) ?? uniform;
-
-            var left = (GetValueByLevel(Left) ?? horizontal) + Offset.Left;
-            var top = (GetValueByLevel(Top) ?? vertical) + Offset.Top;
-            var right = (GetValueByLevel(Right) ?? horizontal) + Offset.Right;
-            var bottom = (GetValueByLevel(Bottom) ?? vertical) + Offset.Bottom;
-
-            return new Thickness(left, top, right, bottom);
-        }
-
-        private static int? GetValueByLevel(int? level)
-            => level is not null
-                ? GetValueByLevel(level.Value)
-                : null;
-
-        private static int GetValueByLevel(int level)
-            => level * BaselineUnit;
-
-        private const int BaselineUnit = 4;
+        return new Thickness(left, top, right, bottom);
     }
+
+    private static int? GetValueByLevel(int? level)
+        => level is not null
+            ? GetValueByLevel(level.Value)
+            : null;
+
+    private static int GetValueByLevel(int level)
+        => level * BaselineUnit;
+
+    private const int BaselineUnit = 4;
 }

@@ -17,104 +17,112 @@ using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 
-namespace Kaspirin.UI.Framework.UiKit
+namespace Kaspirin.UI.Framework.UiKit;
+
+internal static class UIKitConstants
 {
-    internal static class UIKitConstants
+    //RefTypes:     public static PropClass PropName => new PropClass();
+    //ValueTypes:   public static Thickness PropName { get; } = new Thickness(10);
+    //strings:      public static string PropName { get; } = "Value";
+
+    //Internal
+    public static string IconsScope { get; } = "Svg";
+    public static string PaletteScope { get; } = "Palette";
+    public static string LocalizationScope { get; } = "UiKit";
+
+    //BadgeCounter
+    public static int BadgeCounterMaxCounter { get; } = 100;
+
+    //BarCode
+    public static Brush BarCodeBackground => Brushes.White;
+    public static Brush BarCodeForeground => Brushes.Black;
+    public static Thickness BarCodeBorderThickness { get; } = new Thickness(4);
+
+    //Bullet
+    public static UIKitIcon_12 BulletIcon { get; } = UIKitIcon_12.Check;
+
+    //Button
+    public static double ButtonMinWidth { get; } = 80;
+    public static double ButtonGhostMinWidth { get; } = 0;
+
+    //CarouselItem
+    public static AnimationProperties CarouselItemAnimationProperties => new()
     {
-        //RefTypes:     public static PropClass PropName => new PropClass();
-        //ValueTypes:   public static Thickness PropName { get; } = new Thickness(10);
-        //strings:      public static string PropName { get; } = "Value";
+        Duration = TimeSpan.FromMilliseconds(300),
+        Easing = new ExponentialEase() { Exponent = 4, EasingMode = EasingMode.EaseInOut }
+    };
+    public static Thickness CarouselItemMargin { get; } = new Thickness(4, 0, 4, 0);
 
-        //Internal
-        public static string IconsScope { get; } = "Svg";
-        public static string PaletteScope { get; } = "Palette";
-        public static string LocalizationScope { get; } = "UiKit";
+    //ChipsItem
+    public static Thickness ChipsItemMargin { get; } = new Thickness(0, 6, 8, 6);
+    public static int ChipsItemMaxCounter { get; } = 100;
 
-        //BadgeCounter
-        public static int BadgeCounterMaxCounter { get; } = 100;
+    //ContextMenuPopupDecorator
+    public static double ContextMenuPopupDecoratorMaxWidth { get; } = 350;
+    public static double ContextMenuPopupDecoratorMinWidth { get; } = 80;
 
-        //Bullet
-        public static UIKitIcon_12 BulletIcon { get; } = UIKitIcon_12.Check;
+    //DateTimeInput
+    public static double DateTimeInputWidth { get; } = 140;
 
-        //Button
-        public static double ButtonMinWidth { get; } = 80;
-        public static double ButtonGhostMinWidth { get; } = 0;
+    //ImageGalleryList
+    public static AnimationProperties ImageGalleryListAnimationProperties => new()
+    {
+        Duration = TimeSpan.FromMilliseconds(600),
+        Easing = new ExponentialEase() { Exponent = 3, EasingMode = EasingMode.EaseInOut }
+    };
 
-        //CarouselItem
-        public static AnimationProperties CarouselItemAnimationProperties => new()
-        {
-            Duration = TimeSpan.FromMilliseconds(300),
-            Easing = new ExponentialEase() { Exponent = 4, EasingMode = EasingMode.EaseInOut }
-        };
-        public static Thickness CarouselItemMargin { get; } = new Thickness(4, 0, 4, 0);
+    //InteractivityDialog
+    public static Thickness InteractivityDialogMargin { get; } = new Thickness(12);
 
-        //ChipsItem
-        public static Thickness ChipsItemMargin { get; } = new Thickness(0, 6, 8, 6);
-        public static int ChipsItemMaxCounter { get; } = 100;
+    //InteractivityOverlay
+    public static Thickness InteractivityOverlayClipExtent { get; } = new Thickness(4);
+    public static double InteractivityOverlayClipCornerRadius { get; } = 6;
 
-        //ContextMenuPopupDecorator
-        public static double ContextMenuPopupDecoratorMaxWidth { get; } = 350;
-        public static double ContextMenuPopupDecoratorMinWidth { get; } = 80;
+    //ListMenu
+    public static Thickness ListMenuPadding { get; } = new Thickness(4);
 
-        //DateTimeInput
-        public static double DateTimeInputWidth { get; } = 140;
+    //MenuItem
+    public static double MenuItemIconHeight { get; } = 16;
+    public static double MenuItemIconWidth { get; } = 16;
 
-        //ImageGalleryList
-        public static AnimationProperties ImageGalleryListAnimationProperties => new()
-        {
-            Duration = TimeSpan.FromMilliseconds(600),
-            Easing = new ExponentialEase() { Exponent = 3, EasingMode = EasingMode.EaseInOut }
-        };
+    //PasswordInput
+    public static int PasswordInputMaxLength { get; } = 256;
 
-        //InteractivityDialog
-        public static Thickness InteractivityDialogMargin { get; } = new Thickness(12);
+    //Popup
+    public static double PopupMaxWidth { get; } = 350;
 
-        //InteractivityOverlay
-        public static Thickness InteractivityOverlayClipExtent { get; } = new Thickness(4);
-        public static double InteractivityOverlayClipCornerRadius { get; } = 6;
+    //PopupDecorator
+    public static double PopupDecoratorOffset { get; } = 4;
 
-        //ListMenu
-        public static Thickness ListMenuPadding { get; } = new Thickness(4);
+    //QrCode
+    public static Brush QrCodeBackground => Brushes.White;
+    public static Brush QrCodeForeground => Brushes.Black;
+    public static Thickness QrCodeBorderThickness { get; } = new Thickness(4);
 
-        //MenuItem
-        public static double MenuItemIconHeight { get; } = 16;
-        public static double MenuItemIconWidth { get; } = 16;
+    //ScrollBar
+    public static double ScrollBarMinLength { get; } = 80;
 
-        //PasswordInput
-        public static int PasswordInputMaxLength { get; } = 256;
+    //ScrollViewer
+    public static double ScrollViewerBorderFadeLength { get; } = 32;
+    public static GradientStopCollection ScrollViewerBorderFadeGradient => new()
+    {
+        new GradientStop() { Color = Colors.Black, Offset = 0 },
+        new GradientStop() { Color = Colors.Transparent, Offset = 1 }
+    };
 
-        //Popup
-        public static double PopupMaxWidth { get; } = 350;
+    //Search
+    public static double SearchWidth { get; } = 150;
 
-        //PopupDecorator
-        public static double PopupDecoratorOffset { get; } = 4;
+    //SelectPopupDecorator
+    public static double SelectPopupDecoratorMinHeight { get; } = 80;
 
-        //QrCode
-        public static Brush QrCodeBackground => Brushes.White;
-        public static Brush QrCodeForeground => Brushes.Black;
+    //TabMenuItem
+    public static int TabMenuItemMaxCounter { get; } = 100;
 
-        //ScrollBar
-        public static double ScrollBarMinLength { get; } = 80;
+    //TextInlineBase
+    public static Thickness TextInlineBaseMargin { get; } = new Thickness(4, 0, 4, 0);
 
-        //ScrollViewer
-        public static double ScrollViewerBorderFadeLength { get; } = 32;
-        public static GradientStopCollection ScrollViewerBorderFadeGradient => new()
-        {
-            new GradientStop() { Color = Colors.Black, Offset = 0 },
-            new GradientStop() { Color = Colors.Transparent, Offset = 1 }
-        };
-
-        //Search
-        public static double SearchWidth { get; } = 150;
-
-        //SelectPopupDecorator
-        public static double SelectPopupDecoratorMinHeight { get; } = 80;
-
-        //TabMenuItem
-        public static int TabMenuItemMaxCounter { get; } = 100;
-
-        //ToolTip
-        public static double ToolTipMaxWidth { get; } = 350;
-        public static double ToolTipMaxHeight { get; } = 550;
-    }
+    //ToolTip
+    public static double ToolTipMaxWidth { get; } = 350;
+    public static double ToolTipMaxHeight { get; } = 550;
 }

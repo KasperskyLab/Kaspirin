@@ -131,27 +131,27 @@
 						</xsl:call-template>
 					</xsl:if>
 
-					<!--IconForegroundHover-->
-					<xsl:if test="IconForegroundHover">
+					<!--IconBrushHover-->
+					<xsl:if test="IconBrushHover">
 						<xsl:call-template name="generateBrush">
-							<xsl:with-param name="key">IconForegroundHover</xsl:with-param>
-							<xsl:with-param name="brushNode" select="IconForegroundHover"/>
+							<xsl:with-param name="key">IconBrushHover</xsl:with-param>
+							<xsl:with-param name="brushNode" select="IconBrushHover"/>
 						</xsl:call-template>
 					</xsl:if>
 
-					<!--IconForegroundNormal-->
-					<xsl:if test="IconForegroundNormal">
+					<!--IconBrushNormal-->
+					<xsl:if test="IconBrushNormal">
 						<xsl:call-template name="generateBrush">
-							<xsl:with-param name="key">IconForegroundNormal</xsl:with-param>
-							<xsl:with-param name="brushNode" select="IconForegroundNormal"/>
+							<xsl:with-param name="key">IconBrushNormal</xsl:with-param>
+							<xsl:with-param name="brushNode" select="IconBrushNormal"/>
 						</xsl:call-template>
 					</xsl:if>
 
-					<!--IconForegroundPressed-->
-					<xsl:if test="IconForegroundPressed">
+					<!--IconBrushPressed-->
+					<xsl:if test="IconBrushPressed">
 						<xsl:call-template name="generateBrush">
-							<xsl:with-param name="key">IconForegroundPressed</xsl:with-param>
-							<xsl:with-param name="brushNode" select="IconForegroundPressed"/>
+							<xsl:with-param name="key">IconBrushPressed</xsl:with-param>
+							<xsl:with-param name="brushNode" select="IconBrushPressed"/>
 						</xsl:call-template>
 					</xsl:if>
 

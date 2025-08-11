@@ -14,22 +14,21 @@
 
 using System;
 
-namespace Kaspirin.UI.Framework.UiKit.Navigation
+namespace Kaspirin.UI.Framework.UiKit.Navigation;
+
+public sealed class ActiveViewChangedEventArgs : EventArgs
 {
-    public sealed class ActiveViewChangedEventArgs : EventArgs
+    public ActiveViewChangedEventArgs(string regionName, RegionView? oldView, RegionView? newView)
     {
-        public ActiveViewChangedEventArgs(string regionName, RegionView? oldView, RegionView? newView)
-        {
-            RegionName = Guard.EnsureArgumentIsNotNullOrEmpty(regionName);
+        RegionName = Guard.EnsureArgumentIsNotNullOrEmpty(regionName);
 
-            OldView = oldView;
-            NewView = newView;
-        }
-
-        public string RegionName { get; }
-
-        public RegionView? OldView { get; }
-
-        public RegionView? NewView { get; }
+        OldView = oldView;
+        NewView = newView;
     }
+
+    public string RegionName { get; }
+
+    public RegionView? OldView { get; }
+
+    public RegionView? NewView { get; }
 }

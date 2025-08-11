@@ -12,16 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Kaspirin.UI.Framework.Storage
-{
-    /// <summary>
-    ///     Delegate for the data store change handler <see cref="PersistentStorageBase" />.
-    /// </summary>
-    /// <param name="key">
-    ///     The key of the changed property.
-    /// </param>
-    /// <param name="value">
-    ///     The new value of the property.
-    /// </param>
-    public delegate void PersistentStorageChangedHandler(string key, object? value);
-}
+namespace Kaspirin.UI.Framework.Storage;
+
+/// <summary>
+///     Delegate for the data store change handler <see cref="PersistentStorageBase" />.
+/// </summary>
+/// <param name="key">
+///     The key of the changed property.
+/// </param>
+/// <param name="value">
+///     The new value of the property.
+/// </param>
+public delegate void PersistentStorageChangedHandler(string key, object? value);

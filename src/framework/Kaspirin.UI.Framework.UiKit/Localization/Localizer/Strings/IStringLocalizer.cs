@@ -12,18 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using System;
 using System.Collections.Generic;
 
-namespace Kaspirin.UI.Framework.UiKit.Localization.Localizer.Strings
+namespace Kaspirin.UI.Framework.UiKit.Localization.Localizer.Strings;
+
+public interface IStringLocalizer : ILocalizer
 {
+    string? GetString(string key, IStringLocalizerOption? option = null);
 
-    public interface IStringLocalizer : ILocalizer
-    {
-        string? GetString(string key, IStringLocalizerOption? option = null);
+    string? GetString(string key, IStringParamResolver paramResolver, IStringLocalizerOption? option = null);
 
-        string? GetString(string key, IDictionary<string, object?> keyParams, IStringLocalizerOption? option = null);
-
-        string? GetString(string key, Func<string, object?> resolveParamCallback, IStringLocalizerOption? option = null);
-    }
+    string? GetString(string key, IDictionary<string, object?> parameters, IStringLocalizerOption? option = null);
 }

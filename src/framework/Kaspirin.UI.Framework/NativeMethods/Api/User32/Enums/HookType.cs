@@ -12,31 +12,90 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
+namespace Kaspirin.UI.Framework.NativeMethods.Api.User32.Enums;
 
-namespace Kaspirin.UI.Framework.NativeMethods.Api.User32.Enums
+/// <summary>
+///     <seealso href="https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-setwindowshookexw">Learn more</seealso>.
+/// </summary>
+public enum HookType : int
 {
     /// <summary>
-    ///     
-    /// <seealso href="https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-setwindowshookexw">Learn more</seealso>.
+    ///     The WH_MSGFILTER constant.
     /// </summary>
-    public enum HookType : int
-    {
-        WH_MSGFILTER = -1,
-        WH_JOURNALRECORD = 0,
-        WH_JOURNALPLAYBACK = 1,
-        WH_KEYBOARD = 2,
-        WH_GETMESSAGE = 3,
-        WH_CALLWNDPROC = 4,
-        WH_CBT = 5,
-        WH_SYSMSGFILTER = 6,
-        WH_MOUSE = 7,
-        WH_HARDWARE = 8,
-        WH_DEBUG = 9,
-        WH_SHELL = 10,
-        WH_FOREGROUNDIDLE = 11,
-        WH_CALLWNDPROCRET = 12,
-        WH_KEYBOARD_LL = 13,
-        WH_MOUSE_LL = 14
-    }
+    MsgFilter = -1,
+
+    /// <summary>
+    ///     The WH_JOURNALRECORD constant.
+    /// </summary>
+    JournalRecord = 0,
+
+    /// <summary>
+    ///     The WH_JOURNALPLAYBACK constant.
+    /// </summary>
+    JournalPlayback = 1,
+
+    /// <summary>
+    ///     The WH_KEYBOARD constant.
+    /// </summary>
+    Keyboard = 2,
+
+    /// <summary>
+    ///     The WH_GETMESSAGE constant.
+    /// </summary>
+    GetMessage = 3,
+
+    /// <summary>
+    ///     The WH_CALLWNDPROC constant.
+    /// </summary>
+    CallWndProc = 4,
+
+    /// <summary>
+    ///     The WH_CBT constant.
+    /// </summary>
+    Cbt = 5,
+
+    /// <summary>
+    ///     The WH_SYSMSGFILTER constant.
+    /// </summary>
+    SysMsgFilter = 6,
+
+    /// <summary>
+    ///     The WH_MOUSE constant.
+    /// </summary>
+    Mouse = 7,
+
+    /// <summary>
+    ///     The WH_HARDWARE constant.
+    /// </summary>
+    Hardware = 8,
+
+    /// <summary>
+    ///     The WH_DEBUG constant.
+    /// </summary>
+    Debug = 9,
+
+    /// <summary>
+    ///     The WH_SHELL constant.
+    /// </summary>
+    Shell = 10,
+
+    /// <summary>
+    ///     The WH_FOREGROUNDIDLE constant.
+    /// </summary>
+    ForegroundIdle = 11,
+
+    /// <summary>
+    ///     The WH_CALLWNDPROCRET constant.
+    /// </summary>
+    CallWndProcRet = 12,
+
+    /// <summary>
+    ///     The WH_KEYBOARD_LL constant.
+    /// </summary>
+    KeyboardLl = 13,
+
+    /// <summary>
+    ///     The WH_MOUSE_LL constant.
+    /// </summary>
+    MouseLl = 14,
 }

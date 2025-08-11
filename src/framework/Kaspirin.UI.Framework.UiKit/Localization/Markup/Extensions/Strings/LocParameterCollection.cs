@@ -16,45 +16,44 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Windows.Data;
 
-namespace Kaspirin.UI.Framework.UiKit.Localization.Markup.Extensions.Strings
+namespace Kaspirin.UI.Framework.UiKit.Localization.Markup.Extensions.Strings;
+
+public sealed class LocParameterCollection : Collection<LocParameter>
 {
-    public class LocParameterCollection : Collection<LocParameter>
+    public LocParameterCollection()
     {
-        public LocParameterCollection()
-        {
-        }
-
-        public LocParameterCollection(IDictionary<string, string> constantParameters)
-        {
-            Guard.ArgumentIsNotNull(constantParameters);
-
-            foreach (var constantParameter in constantParameters)
-            {
-                var parameter = new LocParameter
-                {
-                    ParamName = constantParameter.Key,
-                    ParamSource = new Binding
-                    {
-                        Source = constantParameter.Value
-                    }
-                };
-
-                Add(parameter);
-            }
-        }
-
-        protected override void InsertItem(int index, LocParameter item)
-        {
-            Guard.ArgumentIsNotNull(item);
-            base.InsertItem(index, item);
-        }
-
-        protected override void SetItem(int index, LocParameter item)
-        {
-            Guard.ArgumentIsNotNull(item);
-            base.SetItem(index, item);
-        }
-
-        public bool IgnoreUnsetParameters { get; set; }
     }
+
+    public LocParameterCollection(IDictionary<string, string> constantParameters)
+    {
+        Guard.ArgumentIsNotNull(constantParameters);
+
+        foreach (var constantParameter in constantParameters)
+        {
+            var parameter = new LocParameter
+            {
+                ParamName = constantParameter.Key,
+                ParamSource = new Binding
+                {
+                    Source = constantParameter.Value
+                }
+            };
+
+            Add(parameter);
+        }
+    }
+
+    protected override void InsertItem(int index, LocParameter item)
+    {
+        Guard.ArgumentIsNotNull(item);
+        base.InsertItem(index, item);
+    }
+
+    protected override void SetItem(int index, LocParameter item)
+    {
+        Guard.ArgumentIsNotNull(item);
+        base.SetItem(index, item);
+    }
+
+    public bool IgnoreUnsetParameters { get; set; }
 }

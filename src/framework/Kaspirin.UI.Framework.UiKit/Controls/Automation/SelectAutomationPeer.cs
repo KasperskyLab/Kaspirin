@@ -16,76 +16,75 @@ using System.Windows.Automation;
 using System.Windows.Automation.Peers;
 using System.Windows.Automation.Provider;
 
-namespace Kaspirin.UI.Framework.UiKit.Controls.Automation
+namespace Kaspirin.UI.Framework.UiKit.Controls.Automation;
+
+public sealed class SelectAutomationPeer : SelectorAutomationPeer, IExpandCollapseProvider
 {
-    public class SelectAutomationPeer : SelectorAutomationPeer, IExpandCollapseProvider
+    public SelectAutomationPeer(Select owner) : base(owner)
+    { }
+
+    protected override ItemAutomationPeer CreateItemAutomationPeer(object item)
     {
-        public SelectAutomationPeer(Select owner) : base(owner)
-        { }
-
-        protected override ItemAutomationPeer CreateItemAutomationPeer(object item)
-        {
-            return new ListBoxItemAutomationPeer(item, this);
-        }
-
-        protected override AutomationControlType GetAutomationControlTypeCore()
-        {
-            return AutomationControlType.ComboBox;
-        }
-
-        protected override string GetClassNameCore()
-        {
-            return nameof(Select);
-        }
-
-        public override object GetPattern(PatternInterface pattern)
-        {
-            object? iface;
-
-            if (pattern == PatternInterface.ExpandCollapse)
-            {
-                iface = this;
-            }
-            else
-            {
-                iface = base.GetPattern(pattern);
-            }
-
-            return iface;
-        }
-
-        #region ExpandCollapse
-
-        void IExpandCollapseProvider.Expand()
-        {
-            if (!IsEnabled())
-            {
-                throw new ElementNotEnabledException();
-            }
-
-            Guard.EnsureIsInstanceOfType<Select>(Owner).SetCurrentValue(Select.IsDropDownOpenProperty, true);
-        }
-
-        void IExpandCollapseProvider.Collapse()
-        {
-            if (!IsEnabled())
-            {
-                throw new ElementNotEnabledException();
-            }
-
-            Guard.EnsureIsInstanceOfType<Select>(Owner).SetCurrentValue(Select.IsDropDownOpenProperty, false);
-        }
-
-        ExpandCollapseState IExpandCollapseProvider.ExpandCollapseState
-        {
-            get
-            {
-                return Guard.EnsureIsInstanceOfType<Select>(Owner).IsDropDownOpen
-                    ? ExpandCollapseState.Expanded
-                    : ExpandCollapseState.Collapsed;
-            }
-        }
-
-        #endregion ExpandCollapse
+        return new ListBoxItemAutomationPeer(item, this);
     }
+
+    protected override AutomationControlType GetAutomationControlTypeCore()
+    {
+        return AutomationControlType.ComboBox;
+    }
+
+    protected override string GetClassNameCore()
+    {
+        return nameof(Select);
+    }
+
+    public override object GetPattern(PatternInterface pattern)
+    {
+        object? iface;
+
+        if (pattern == PatternInterface.ExpandCollapse)
+        {
+            iface = this;
+        }
+        else
+        {
+            iface = base.GetPattern(pattern);
+        }
+
+        return iface;
+    }
+
+    #region ExpandCollapse
+
+    void IExpandCollapseProvider.Expand()
+    {
+        if (!IsEnabled())
+        {
+            throw new ElementNotEnabledException();
+        }
+
+        Guard.EnsureIsInstanceOfType<Select>(Owner).SetCurrentValue(Select.IsDropDownOpenProperty, true);
+    }
+
+    void IExpandCollapseProvider.Collapse()
+    {
+        if (!IsEnabled())
+        {
+            throw new ElementNotEnabledException();
+        }
+
+        Guard.EnsureIsInstanceOfType<Select>(Owner).SetCurrentValue(Select.IsDropDownOpenProperty, false);
+    }
+
+    ExpandCollapseState IExpandCollapseProvider.ExpandCollapseState
+    {
+        get
+        {
+            return Guard.EnsureIsInstanceOfType<Select>(Owner).IsDropDownOpen
+                ? ExpandCollapseState.Expanded
+                : ExpandCollapseState.Collapsed;
+        }
+    }
+
+    #endregion ExpandCollapse
 }

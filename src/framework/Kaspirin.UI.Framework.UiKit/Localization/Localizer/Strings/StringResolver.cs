@@ -15,30 +15,34 @@
 using System;
 using System.Globalization;
 using Kaspirin.UI.Framework.UiKit.Localization.Localizer.Strings.Parsing;
-using Kaspirin.UI.Framework.UiKit.Localization.Localizer.Strings.Parsing.Evaluators.ValueExpression;
+using Kaspirin.UI.Framework.UiKit.Localization.Localizer.Strings.Parsing.Evaluators;
 using Kaspirin.UI.Framework.UiKit.Localization.Localizer.Strings.Parsing.Expressions;
 
-namespace Kaspirin.UI.Framework.UiKit.Localization.Localizer.Strings
+namespace Kaspirin.UI.Framework.UiKit.Localization.Localizer.Strings;
+
+public static class StringResolver
 {
-    public static class StringResolver
+    public static string Resolve(string sourceText, Func<string, object?> variableResolver, CultureInfo cultureInfo)
+        => Resolve(sourceText, sourceText, variableResolver, cultureInfo);
+
+    public static string Resolve(string sourceText, string sourceName, Func<string, object?> variableResolver, CultureInfo cultureInfo)
     {
-        public static string Resolve(string localizableString, Func<string, object?> variableResolver, CultureInfo cultureInfo)
-        {
-            Guard.ArgumentIsNotNull(localizableString);
-            Guard.ArgumentIsNotNull(variableResolver);
+        Guard.ArgumentIsNotNull(sourceText);
+        Guard.ArgumentIsNotNull(sourceName);
+        Guard.ArgumentIsNotNull(variableResolver);
+        Guard.ArgumentIsNotNull(cultureInfo);
 
-            var valueExpression = (ValueExpression)Parser.ParseExpression(
-                localizableString,
-                new ValueExpressionEvaluator(cultureInfo),
-                filePath: localizableString); // Use the content as the filename so that it appears in the exception.
+        var valueExpression = (ValueExpression)Parser.ParseExpression(
+            sourceText: sourceText,
+            sourceName: sourceName,
+            new ValueExpressionEvaluator(cultureInfo));
 
-            return valueExpression.Resolve(_ => new ValueExpression(
+        return valueExpression.Resolve(_ => new ValueExpression(
 #if NETCOREAPP
-                Array.Empty<IExpression>()
+            Array.Empty<IExpression>()
 #else
-                new IExpression[0]
+            new IExpression[0]
 #endif
-                ), variableResolver);
-        }
+            ), variableResolver);
     }
 }

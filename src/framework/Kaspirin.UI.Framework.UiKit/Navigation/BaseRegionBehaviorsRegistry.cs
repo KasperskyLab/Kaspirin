@@ -16,22 +16,21 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Kaspirin.UI.Framework.UiKit.Navigation
+namespace Kaspirin.UI.Framework.UiKit.Navigation;
+
+public abstract class BaseRegionBehaviorsRegistry : IRegionBehaviorsRegistry
 {
-    public abstract class BaseRegionBehaviorsRegistry : IRegionBehaviorsRegistry
+    protected void AddBehaviorFactory(Func<IRegionBehavior> factory)
     {
-        protected void AddBehaviorFactory(Func<IRegionBehavior> factory)
-        {
-            Guard.ArgumentIsNotNull(factory);
+        Guard.ArgumentIsNotNull(factory);
 
-            _behaviorFactories.Add(factory);
-        }
-
-        public IList<IRegionBehavior> CreateBehaviors()
-        {
-            return _behaviorFactories.Select(f => f()).ToList();
-        }
-
-        private readonly List<Func<IRegionBehavior>> _behaviorFactories = new();
+        _behaviorFactories.Add(factory);
     }
+
+    public IList<IRegionBehavior> CreateBehaviors()
+    {
+        return _behaviorFactories.Select(f => f()).ToList();
+    }
+
+    private readonly List<Func<IRegionBehavior>> _behaviorFactories = new();
 }

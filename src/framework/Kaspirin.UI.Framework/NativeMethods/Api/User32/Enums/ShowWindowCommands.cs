@@ -12,27 +12,70 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
+namespace Kaspirin.UI.Framework.NativeMethods.Api.User32.Enums;
 
-namespace Kaspirin.UI.Framework.NativeMethods.Api.User32.Enums
+/// <summary>
+///     <seealso href="https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-showwindow">Learn more</seealso>.
+/// </summary>
+public enum ShowWindowCommands : uint
 {
     /// <summary>
-    ///     
-    /// <seealso href="https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-showwindow">Learn more</seealso>.
+    ///     The SW_HIDE constant.
     /// </summary>
-    public enum ShowWindowCommands : uint
-    {
-        SW_HIDE = 0,
-        SW_NORMAL = 1,
-        SW_SHOWMINIMIZED = 2,
-        SW_SHOWMAXIMIZED = 3,
-        SW_SHOWNOACTIVATE = 4,
-        SW_SHOW = 5,
-        SW_MINIMIZE = 6,
-        SW_SHOWMINNOACTIVE = 7,
-        SW_SHOWNA = 8,
-        SW_RESTORE = 9,
-        SW_SHOWDEFAULT = 10,
-        SW_FORCEMINIMIZE = 11
-    }
+    Hide = 0,
+
+    /// <summary>
+    ///     The SW_NORMAL constant.
+    /// </summary>
+    Normal = 1,
+
+    /// <summary>
+    ///     The SW_SHOWMINIMIZED constant.
+    /// </summary>
+    ShowMinimized = 2,
+
+    /// <summary>
+    ///     The SW_SHOWMAXIMIZED constant.
+    /// </summary>
+    ShowMaximized = 3,
+
+    /// <summary>
+    ///     The SW_SHOWNOACTIVATE constant.
+    /// </summary>
+    ShowNoActivate = 4,
+
+    /// <summary>
+    ///     The SW_SHOW constant.
+    /// </summary>
+    Show = 5,
+
+    /// <summary>
+    ///     The SW_MINIMIZE constant.
+    /// </summary>
+    Minimize = 6,
+
+    /// <summary>
+    ///     The SW_SHOWMINNOACTIVE constant.
+    /// </summary>
+    ShowMinNoActive = 7,
+
+    /// <summary>
+    ///     The SW_SHOWNA constant.
+    /// </summary>
+    ShowNA = 8,
+
+    /// <summary>
+    ///     The SW_RESTORE constant.
+    /// </summary>
+    Restore = 9,
+
+    /// <summary>
+    ///     The SW_SHOWDEFAULT constant.
+    /// </summary>
+    ShowDefault = 10,
+
+    /// <summary>
+    ///     The SW_FORCEMINIMIZE constant.
+    /// </summary>
+    ForceMinimize = 11,
 }

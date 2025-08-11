@@ -52,50 +52,73 @@
 									xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
 					<!--BackgroundDanger-->
-					<xsl:if test="BackgroundDanger">
-						<xsl:call-template name="generateBrush">
-							<xsl:with-param name="key">BackgroundDanger</xsl:with-param>
-							<xsl:with-param name="brushNode" select="BackgroundDanger"/>
-						</xsl:call-template>
-					</xsl:if>
+					<xsl:call-template name="generateBrush">
+						<xsl:with-param name="key">BackgroundDanger</xsl:with-param>
+						<xsl:with-param name="brushNode" select="BackgroundDanger"/>
+					</xsl:call-template>
 
 					<!--BackgroundInfo-->
-					<xsl:if test="BackgroundInfo">
-						<xsl:call-template name="generateBrush">
-							<xsl:with-param name="key">BackgroundInfo</xsl:with-param>
-							<xsl:with-param name="brushNode" select="BackgroundInfo"/>
-						</xsl:call-template>
-					</xsl:if>
+					<xsl:call-template name="generateBrush">
+						<xsl:with-param name="key">BackgroundInfo</xsl:with-param>
+						<xsl:with-param name="brushNode" select="BackgroundInfo"/>
+					</xsl:call-template>
 
 					<!--BackgroundNeutral-->
-					<xsl:if test="BackgroundNeutral">
-						<xsl:call-template name="generateBrush">
-							<xsl:with-param name="key">BackgroundNeutral</xsl:with-param>
-							<xsl:with-param name="brushNode" select="BackgroundNeutral"/>
-						</xsl:call-template>
-					</xsl:if>
+					<xsl:call-template name="generateBrush">
+						<xsl:with-param name="key">BackgroundNeutral</xsl:with-param>
+						<xsl:with-param name="brushNode" select="BackgroundNeutral"/>
+					</xsl:call-template>
 
 					<!--BackgroundPositive-->
-					<xsl:if test="BackgroundPositive">
-						<xsl:call-template name="generateBrush">
-							<xsl:with-param name="key">BackgroundPositive</xsl:with-param>
-							<xsl:with-param name="brushNode" select="BackgroundPositive"/>
-						</xsl:call-template>
-					</xsl:if>
+					<xsl:call-template name="generateBrush">
+						<xsl:with-param name="key">BackgroundPositive</xsl:with-param>
+						<xsl:with-param name="brushNode" select="BackgroundPositive"/>
+					</xsl:call-template>
 
 					<!--BackgroundWarning-->
-					<xsl:if test="BackgroundWarning">
+					<xsl:call-template name="generateBrush">
+						<xsl:with-param name="key">BackgroundWarning</xsl:with-param>
+						<xsl:with-param name="brushNode" select="BackgroundWarning"/>
+					</xsl:call-template>
+
+					<!--ForegroundDanger-->
+					<xsl:if test="ForegroundDanger">
 						<xsl:call-template name="generateBrush">
-							<xsl:with-param name="key">BackgroundWarning</xsl:with-param>
-							<xsl:with-param name="brushNode" select="BackgroundWarning"/>
+							<xsl:with-param name="key">ForegroundDanger</xsl:with-param>
+							<xsl:with-param name="brushNode" select="ForegroundDanger"/>
 						</xsl:call-template>
 					</xsl:if>
 
-					<!--Foreground-->
-					<xsl:if test="Foreground">
+					<!--ForegroundInfo-->
+					<xsl:if test="ForegroundInfo">
 						<xsl:call-template name="generateBrush">
-							<xsl:with-param name="key">Foreground</xsl:with-param>
-							<xsl:with-param name="brushNode" select="Foreground"/>
+							<xsl:with-param name="key">ForegroundInfo</xsl:with-param>
+							<xsl:with-param name="brushNode" select="ForegroundInfo"/>
+						</xsl:call-template>
+					</xsl:if>
+
+
+					<!--ForegroundNeutral-->
+					<xsl:if test="ForegroundNeutral">
+						<xsl:call-template name="generateBrush">
+							<xsl:with-param name="key">ForegroundNeutral</xsl:with-param>
+							<xsl:with-param name="brushNode" select="ForegroundNeutral"/>
+						</xsl:call-template>
+					</xsl:if>
+
+					<!--ForegroundPositive-->
+					<xsl:if test="ForegroundPositive">
+						<xsl:call-template name="generateBrush">
+							<xsl:with-param name="key">ForegroundPositive</xsl:with-param>
+							<xsl:with-param name="brushNode" select="ForegroundPositive"/>
+						</xsl:call-template>
+					</xsl:if>
+
+					<!--ForegroundWarning-->
+					<xsl:if test="ForegroundWarning">
+						<xsl:call-template name="generateBrush">
+							<xsl:with-param name="key">ForegroundWarning</xsl:with-param>
+							<xsl:with-param name="brushNode" select="ForegroundWarning"/>
 						</xsl:call-template>
 					</xsl:if>
 

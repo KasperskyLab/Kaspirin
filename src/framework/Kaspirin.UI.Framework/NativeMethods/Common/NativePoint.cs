@@ -16,26 +16,24 @@
 
 using System.Runtime.InteropServices;
 
-namespace Kaspirin.UI.Framework.NativeMethods.Common
+namespace Kaspirin.UI.Framework.NativeMethods.Common;
+
+/// <summary>
+///     <seealso href="https://learn.microsoft.com/en-us/windows/win32/api/windef/ns-windef-point">Learn more</seealso>.
+/// </summary>
+[StructLayout(LayoutKind.Sequential)]
+public struct NativePoint
 {
-    /// <summary>
-    ///     
-    /// <seealso href="https://learn.microsoft.com/en-us/windows/win32/api/windef/ns-windef-point">Learn more</seealso>.
-    /// </summary>
-    [StructLayout(LayoutKind.Sequential)]
-    public struct NativePoint
+    public int X;
+
+    public int Y;
+
+    public NativePoint(int x, int y)
     {
-        public int X;
-
-        public int Y;
-
-        public NativePoint(int x, int y)
-        {
-            X = x;
-            Y = y;
-        }
-
-        public override readonly string ToString()
-            => $"{{{X},{Y}}}";
+        X = x;
+        Y = y;
     }
+
+    public override readonly string ToString()
+        => $"{{{X},{Y}}}";
 }

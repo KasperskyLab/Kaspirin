@@ -18,53 +18,56 @@ using System;
 using System.Runtime.InteropServices;
 using System.Security;
 
-namespace Kaspirin.UI.Framework.NativeMethods.Api.Gdi32
+namespace Kaspirin.UI.Framework.NativeMethods.Api.Gdi32;
+
+/// <summary>
+///     Provides API methods for functions from gdi32.dll .
+/// </summary>
+public static class Gdi32Dll
 {
+    #region wingdi.h
+
     /// <summary>
-    ///     Provides API methods for functions from gdi32.dll .
+    ///     The CreateDC API method.
+    ///     <br /><seealso href="https://learn.microsoft.com/en-us/windows/win32/api/wingdi/nf-wingdi-createdcw">Learn more</seealso>.
     /// </summary>
-    public static class Gdi32Dll
-    {
-        #region wingdi.h
+    [SecurityCritical]
+    [DllImport(DllName, CharSet = CharSet.Unicode)]
+    internal static extern SafeDcHandle CreateDC(
+        [MarshalAs(UnmanagedType.LPWStr)] string driver,
+        [MarshalAs(UnmanagedType.LPWStr)] string? device,
+        IntPtr output,
+        IntPtr initData);
 
-        /// <summary>
-        ///     The CreateDC API method. <br /><seealso href="https://learn.microsoft.com/en-us/windows/win32/api/wingdi/nf-wingdi-createdcw">Learn more</seealso>.
-        /// </summary>
-        [SecurityCritical]
-        [DllImport(DllName, CharSet = CharSet.Unicode)]
-        internal static extern SafeDcHandle CreateDC(
-            [MarshalAs(UnmanagedType.LPWStr)] string driver,
-            [MarshalAs(UnmanagedType.LPWStr)] string? device,
-            IntPtr output,
-            IntPtr initData);
+    /// <summary>
+    ///     The DeleteDC API method.
+    ///     <br /><seealso href="https://learn.microsoft.com/en-us/windows/win32/api/wingdi/nf-wingdi-deletedc">Learn more</seealso>.
+    /// </summary>
+    [SecurityCritical]
+    [DllImport(DllName)]
+    [return: MarshalAs(UnmanagedType.Bool)]
+    public static extern bool DeleteDC(
+        IntPtr hDc);
 
-        /// <summary>
-        ///     The DeleteDC API method. <br /><seealso href="https://learn.microsoft.com/en-us/windows/win32/api/wingdi/nf-wingdi-deletedc">Learn more</seealso>.
-        /// </summary>
-        [SecurityCritical]
-        [DllImport(DllName)]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        public static extern bool DeleteDC(
-            IntPtr hDc);
+    /// <summary>
+    ///     The GetDeviceCaps API method.
+    ///     <br /><seealso href="https://learn.microsoft.com/en-us/windows/win32/api/wingdi/nf-wingdi-getdevicecaps">Learn more</seealso>.
+    /// </summary>
+    [DllImport(DllName)]
+    public static extern int GetDeviceCaps(
+        IntPtr hDc,
+        DeviceCapsItems index);
 
-        /// <summary>
-        ///     The GetDeviceCaps API method. <br /><seealso href="https://learn.microsoft.com/en-us/windows/win32/api/wingdi/nf-wingdi-getdevicecaps">Learn more</seealso>.
-        /// </summary>
-        [DllImport(DllName)]
-        public static extern int GetDeviceCaps(
-            IntPtr hDc,
-            DeviceCapsItems index);
+    /// <summary>
+    ///     The DeleteObject API method.
+    ///     <br /><seealso href="https://learn.microsoft.com/en-us/windows/win32/api/wingdi/nf-wingdi-deleteobject">Learn more</seealso>.
+    /// </summary>
+    [DllImport(DllName)]
+    [return: MarshalAs(UnmanagedType.Bool)]
+    public static extern bool DeleteObject(
+        [In] IntPtr hObject);
 
-        /// <summary>
-        ///     The DeleteObject API method. <br /><seealso href="https://learn.microsoft.com/en-us/windows/win32/api/wingdi/nf-wingdi-deleteobject">Learn more</seealso>.
-        /// </summary>
-        [DllImport(DllName)]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        public static extern bool DeleteObject(
-            [In] IntPtr hObject);
+    #endregion
 
-        #endregion
-
-        private const string DllName = "gdi32.dll";
-    }
+    private const string DllName = "gdi32.dll";
 }

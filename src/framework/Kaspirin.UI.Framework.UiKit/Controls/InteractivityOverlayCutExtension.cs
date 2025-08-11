@@ -16,76 +16,75 @@ using System;
 using System.Windows;
 using System.Windows.Markup;
 
-namespace Kaspirin.UI.Framework.UiKit.Controls
+namespace Kaspirin.UI.Framework.UiKit.Controls;
+
+public sealed class InteractivityOverlayCutExtension : MarkupExtension
 {
-    public sealed class InteractivityOverlayCutExtension : MarkupExtension
+    public Enum? Id { get; set; }
+    public bool? AllowsInteraction { get; set; }
+    public double? ClipCornerRadius { get; set; }
+    public bool? CloseOnMouseClick { get; set; }
+    public bool? CloseOnMouseWheel { get; set; }
+    public Thickness? ClipExtent { get; set; }
+    public object? Decorator { get; set; }
+    public DataTemplate? DecoratorTemplate { get; set; }
+    public double? DecoratorHorizontalOffset { get; set; }
+    public InteractivityOverlayCutDecoratorPosition? DecoratorPosition { get; set; }
+    public double? DecoratorVerticalOffset { get; set; }
+
+    public override object ProvideValue(IServiceProvider serviceProvider)
     {
-        public Enum? Id { get; set; }
-        public bool? AllowsInteraction { get; set; }
-        public double? ClipCornerRadius { get; set; }
-        public bool? CloseOnMouseClick { get; set; }
-        public bool? CloseOnMouseWheel { get; set; }
-        public Thickness? ClipExtent { get; set; }
-        public object? Decorator { get; set; }
-        public DataTemplate? DecoratorTemplate { get; set; }
-        public double? DecoratorHorizontalOffset { get; set; }
-        public InteractivityOverlayCutDecoratorPosition? DecoratorPosition { get; set; }
-        public double? DecoratorVerticalOffset { get; set; }
+        Guard.IsNotNull(Id);
 
-        public override object ProvideValue(IServiceProvider serviceProvider)
+        var overlayCut = new InteractivityOverlayCut()
         {
-            Guard.IsNotNull(Id);
+            Decorator = Decorator,
+            DecoratorTemplate = DecoratorTemplate,
+        };
 
-            var overlayCut = new InteractivityOverlayCut()
-            {
-                Decorator = Decorator,
-                DecoratorTemplate = DecoratorTemplate,
-            };
-
-            if (AllowsInteraction != null)
-            {
-                overlayCut.AllowsInteraction = AllowsInteraction.Value;
-            }
-
-            if (ClipCornerRadius != null)
-            {
-                overlayCut.ClipCornerRadius = ClipCornerRadius.Value;
-            }
-
-            if (ClipExtent != null)
-            {
-                overlayCut.ClipExtent = ClipExtent.Value;
-            }
-
-            if (CloseOnMouseClick != null)
-            {
-                overlayCut.CloseOnMouseClick = CloseOnMouseClick.Value;
-            }
-
-            if (CloseOnMouseWheel != null)
-            {
-                overlayCut.CloseOnMouseWheel = CloseOnMouseWheel.Value;
-            }
-
-            if (DecoratorPosition != null)
-            {
-                overlayCut.DecoratorPosition = DecoratorPosition.Value;
-            }
-
-            if (DecoratorHorizontalOffset != null)
-            {
-                overlayCut.DecoratorHorizontalOffset = DecoratorHorizontalOffset.Value;
-            }
-
-            if (DecoratorVerticalOffset != null)
-            {
-                overlayCut.DecoratorVerticalOffset = DecoratorVerticalOffset.Value;
-            }
-
-            return new InteractivityOverlayCutCollection()
-            {
-                { Id, overlayCut }
-            };
+        if (AllowsInteraction != null)
+        {
+            overlayCut.AllowsInteraction = AllowsInteraction.Value;
         }
+
+        if (ClipCornerRadius != null)
+        {
+            overlayCut.ClipCornerRadius = ClipCornerRadius.Value;
+        }
+
+        if (ClipExtent != null)
+        {
+            overlayCut.ClipExtent = ClipExtent.Value;
+        }
+
+        if (CloseOnMouseClick != null)
+        {
+            overlayCut.CloseOnMouseClick = CloseOnMouseClick.Value;
+        }
+
+        if (CloseOnMouseWheel != null)
+        {
+            overlayCut.CloseOnMouseWheel = CloseOnMouseWheel.Value;
+        }
+
+        if (DecoratorPosition != null)
+        {
+            overlayCut.DecoratorPosition = DecoratorPosition.Value;
+        }
+
+        if (DecoratorHorizontalOffset != null)
+        {
+            overlayCut.DecoratorHorizontalOffset = DecoratorHorizontalOffset.Value;
+        }
+
+        if (DecoratorVerticalOffset != null)
+        {
+            overlayCut.DecoratorVerticalOffset = DecoratorVerticalOffset.Value;
+        }
+
+        return new InteractivityOverlayCutCollection()
+        {
+            { Id, overlayCut }
+        };
     }
 }

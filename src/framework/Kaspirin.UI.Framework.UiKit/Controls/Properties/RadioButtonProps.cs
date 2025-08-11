@@ -16,54 +16,45 @@ using System.Windows;
 using System.Windows.Controls;
 using Kaspirin.UI.Framework.UiKit.Controls.Internals;
 
-namespace Kaspirin.UI.Framework.UiKit.Controls.Properties
+namespace Kaspirin.UI.Framework.UiKit.Controls.Properties;
+
+public static class RadioButtonProps
 {
-    public static class RadioButtonProps
-    {
-        #region Description
+    #region Description
 
-        public static object GetDescription(DependencyObject obj)
-        {
-            return (object)obj.GetValue(DescriptionProperty);
-        }
+    public static object GetDescription(DependencyObject obj)
+        => (object)obj.GetValue(DescriptionProperty);
 
-        public static void SetDescription(DependencyObject obj, object value)
-        {
-            obj.SetValue(DescriptionProperty, value);
-        }
+    public static void SetDescription(DependencyObject obj, object value)
+        => obj.SetValue(DescriptionProperty, value);
 
-        public static readonly DependencyProperty DescriptionProperty =
-            DependencyProperty.RegisterAttached("Description", typeof(object), typeof(RadioButtonProps),
-                UIKitPropertyMetadataFactory.CreatePropsMetadata(typeof(RadioButton), nameof(DescriptionProperty), OnDescriptionChanged));
+    public static readonly DependencyProperty DescriptionProperty = DependencyProperty.RegisterAttached(
+        "Description",
+        typeof(object),
+        typeof(RadioButtonProps),
+        UIKitPropertyMetadataFactory.CreatePropsMetadata(typeof(RadioButton), nameof(DescriptionProperty), OnDescriptionChanged));
 
-        private static void OnDescriptionChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            d.SetValue(CheckableInternals.DescriptionProperty, e.NewValue);
-        }
+    private static void OnDescriptionChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        => d.SetValue(CheckableInternals.DescriptionProperty, e.NewValue);
 
-        #endregion
+    #endregion
 
-        #region IsInvalidState
+    #region IsInvalidState
 
-        public static bool GetIsInvalidState(DependencyObject obj)
-        {
-            return (bool)obj.GetValue(IsInvalidStateProperty);
-        }
+    public static bool GetIsInvalidState(DependencyObject obj)
+        => (bool)obj.GetValue(IsInvalidStateProperty);
 
-        public static void SetIsInvalidState(DependencyObject obj, bool value)
-        {
-            obj.SetValue(IsInvalidStateProperty, value);
-        }
+    public static void SetIsInvalidState(DependencyObject obj, bool value)
+        => obj.SetValue(IsInvalidStateProperty, value);
 
-        public static readonly DependencyProperty IsInvalidStateProperty =
-            DependencyProperty.RegisterAttached("IsInvalidState", typeof(bool), typeof(RadioButtonProps),
-                UIKitPropertyMetadataFactory.CreatePropsMetadata(typeof(RadioButton), nameof(IsInvalidStateProperty), OnIsInvalidStateChanged));
+    public static readonly DependencyProperty IsInvalidStateProperty = DependencyProperty.RegisterAttached(
+        "IsInvalidState",
+        typeof(bool),
+        typeof(RadioButtonProps),
+        UIKitPropertyMetadataFactory.CreatePropsMetadata(typeof(RadioButton), nameof(IsInvalidStateProperty), OnIsInvalidStateChanged));
 
-        private static void OnIsInvalidStateChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            d.SetValue(CheckableInternals.IsInvalidStateProperty, e.NewValue);
-        }
+    private static void OnIsInvalidStateChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        => d.SetValue(CheckableInternals.IsInvalidStateProperty, e.NewValue);
 
-        #endregion
-    }
+    #endregion
 }

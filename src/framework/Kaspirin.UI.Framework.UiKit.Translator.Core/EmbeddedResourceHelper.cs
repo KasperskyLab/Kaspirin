@@ -17,32 +17,31 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 
-namespace Kaspirin.UI.Framework.UiKit.Translator.Core
+namespace Kaspirin.UI.Framework.UiKit.Translator.Core;
+
+internal static class EmbeddedResourceHelper
 {
-    internal static class EmbeddedResourceHelper
+    public static Stream GetEmbeddedResource(string resourceDirectory, string resourceName)
     {
-        public static Stream GetEmbeddedResource(string resourceDirectory, string resourceName)
+        // Replace all slashes by dots.
+        var resourcePath = resourceDirectory.Replace(Path.DirectorySeparatorChar, '.');
+
+        var embeddedConfigurationProvider = new EmbeddedConfigurationProvider();
+        if (!embeddedConfigurationProvider.TryGetValue(Const.RootNamespaceEmbeddedConfigurationKey, out var rootNamespace))
         {
-            // Replace all slashes by dots.
-            var resourcePath = resourceDirectory.Replace(Path.DirectorySeparatorChar, '.');
-
-            var embeddedConfigurationProvider = new EmbeddedConfigurationProvider();
-            if (!embeddedConfigurationProvider.TryGetValue(Const.RootNamespaceEmbeddedConfigurationKey, out var rootNamespace))
-            {
-                throw new Exception("failed to provide assembly root namespace");
-            }
-
-            var assembly = Assembly.GetExecutingAssembly();
-            var expectedResourcePath = $"{rootNamespace}.{resourcePath}.{resourceName}";
-            var resolvedResourcePath = assembly.GetManifestResourceNames()
-                .FirstOrDefault(existingResourcePath =>
-                    string.Equals(existingResourcePath, expectedResourcePath, StringComparison.InvariantCultureIgnoreCase));
-
-            return resolvedResourcePath switch
-            {
-                null => null,
-                _ => assembly.GetManifestResourceStream(resolvedResourcePath)
-            };
+            throw new Exception("failed to provide assembly root namespace");
         }
+
+        var assembly = Assembly.GetExecutingAssembly();
+        var expectedResourcePath = $"{rootNamespace}.{resourcePath}.{resourceName}";
+        var resolvedResourcePath = assembly.GetManifestResourceNames()
+            .FirstOrDefault(existingResourcePath =>
+                string.Equals(existingResourcePath, expectedResourcePath, StringComparison.InvariantCultureIgnoreCase));
+
+        return resolvedResourcePath switch
+        {
+            null => null,
+            _ => assembly.GetManifestResourceStream(resolvedResourcePath)
+        };
     }
 }

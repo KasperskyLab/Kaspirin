@@ -19,385 +19,376 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Threading;
 
-namespace Kaspirin.UI.Framework.UiKit.Controls
+namespace Kaspirin.UI.Framework.UiKit.Controls;
+
+public sealed class WrapPanelAdaptable : Panel
 {
-    public sealed class WrapPanelAdaptable : Panel
+    #region ColumnsCount
+
+    public uint ColumnsCount
     {
-        #region ColumnsCount
+        get => (uint)GetValue(ColumnsCountProperty);
+        private set => SetValue(_columnsCountPropertyKey, value);
+    }
 
-        public uint ColumnsCount
+    private static readonly DependencyPropertyKey _columnsCountPropertyKey = DependencyProperty.RegisterReadOnly(
+        nameof(ColumnsCount),
+        typeof(uint),
+        typeof(WrapPanelAdaptable),
+        new PropertyMetadata(1U));
+
+    public static readonly DependencyProperty ColumnsCountProperty = _columnsCountPropertyKey.DependencyProperty;
+
+    #endregion
+
+    #region ColumnSpan
+
+    public static uint GetColumnSpan(DependencyObject obj)
+        => (uint)obj.GetValue(ColumnSpanProperty);
+
+    public static void SetColumnSpan(DependencyObject obj, uint value)
+        => obj.SetValue(ColumnSpanProperty, value);
+
+    public static readonly DependencyProperty ColumnSpanProperty = DependencyProperty.RegisterAttached(
+        "ColumnSpan",
+        typeof(uint),
+        typeof(WrapPanelAdaptable),
+        new FrameworkPropertyMetadata(1U, FrameworkPropertyMetadataOptions.AffectsParentMeasure, null, ColumnSpanCoerce));
+
+    private static object ColumnSpanCoerce(DependencyObject d, object baseValue)
+        => (uint)baseValue == 0 ? 1U : baseValue;
+
+    #endregion
+
+    #region ColumnStrategies
+
+    public WrapPanelColumnStrategyCollection ColumnStrategies
+    {
+        get => (WrapPanelColumnStrategyCollection)GetValue(ColumnStrategiesProperty);
+        set => SetValue(ColumnStrategiesProperty, value);
+    }
+
+    public static readonly DependencyProperty ColumnStrategiesProperty = DependencyProperty.Register(
+        nameof(ColumnStrategies),
+        typeof(WrapPanelColumnStrategyCollection),
+        typeof(WrapPanelAdaptable),
+        new FrameworkPropertyMetadata(new WrapPanelColumnStrategyCollection(), FrameworkPropertyMetadataOptions.AffectsMeasure));
+
+    #endregion
+
+    #region ItemSize
+
+    private static readonly DependencyProperty _itemSizeProperty = DependencyProperty.RegisterAttached(
+        "ItemSize",
+        typeof(Size),
+        typeof(WrapPanelAdaptable),
+        new PropertyMetadata(default(Size)));
+
+    #endregion
+
+    #region HasNeighbours
+
+    public static bool GetHasNeighbours(UIElement textBox)
+        => (bool)textBox.GetValue(HasNeighboursProperty);
+
+    public static void SetHasNeighbours(UIElement textBox, bool hasNeighbours)
+        => textBox.SetValue(HasNeighboursProperty, hasNeighbours);
+
+    public static readonly DependencyProperty HasNeighboursProperty = DependencyProperty.RegisterAttached(
+        "HasNeighbours",
+        typeof(bool),
+        typeof(WrapPanelAdaptable),
+        new FrameworkPropertyMetadata(default(bool), FrameworkPropertyMetadataOptions.Inherits));
+
+    #endregion
+
+    #region ActualColumnStrategy
+
+    public WrapPanelColumnStrategy ActualColumnStrategy
+    {
+        get => (WrapPanelColumnStrategy)GetValue(ActualColumnStrategyProperty);
+        private set => SetValue(_actualColumnStrategyPropertyKey, value);
+    }
+
+    private static readonly DependencyPropertyKey _actualColumnStrategyPropertyKey = DependencyProperty.RegisterReadOnly(
+        nameof(ActualColumnStrategy),
+        typeof(WrapPanelColumnStrategy),
+        typeof(WrapPanelAdaptable),
+        new PropertyMetadata(WrapPanelColumnStrategy.Default));
+
+    public static readonly DependencyProperty ActualColumnStrategyProperty = _actualColumnStrategyPropertyKey.DependencyProperty;
+
+    #endregion
+
+    protected override Size MeasureOverride(Size availableSize)
+    {
+        var panelHeight = 0.0;
+        var panelWidth = availableSize.Width;
+        var columnStrategy = UpdateActualColumnStrateg(panelWidth);
+        var columnsCount = columnStrategy.Count;
+        var columnWidth = panelWidth / columnStrategy.Count;
+
+        var children = GetVisibleChildren();
+        if (children.Any() == false)
         {
-            get { return (uint)GetValue(ColumnsCountProperty); }
-            private set { SetValue(_columnsCountPropertyKey, value); }
+            return new Size(0, 0);
         }
 
-        private static readonly DependencyPropertyKey _columnsCountPropertyKey =
-            DependencyProperty.RegisterReadOnly("ColumnsCount", typeof(uint), typeof(WrapPanelAdaptable),
-                new PropertyMetadata(1U));
+        var panelRows = new List<PanelRow>() { new PanelRow(columnsCount, columnWidth) };
+        var currentRow = panelRows.Last();
 
-        public static readonly DependencyProperty ColumnsCountProperty =
-            _columnsCountPropertyKey.DependencyProperty;
-
-        #endregion
-
-        #region ColumnSpan
-
-        public static uint GetColumnSpan(DependencyObject obj)
+        foreach (var item in children)
         {
-            return (uint)obj.GetValue(ColumnSpanProperty);
-        }
-
-        public static void SetColumnSpan(DependencyObject obj, uint value)
-        {
-            obj.SetValue(ColumnSpanProperty, value);
-        }
-
-        public static readonly DependencyProperty ColumnSpanProperty =
-            DependencyProperty.RegisterAttached("ColumnSpan", typeof(uint), typeof(WrapPanelAdaptable),
-                new FrameworkPropertyMetadata(1U, FrameworkPropertyMetadataOptions.AffectsParentMeasure, null, ColumnSpanCoerce));
-
-        private static object ColumnSpanCoerce(DependencyObject d, object baseValue)
-        {
-            return (uint)baseValue == 0 ? 1U : baseValue;
-        }
-
-        #endregion
-
-        #region ColumnStrategies
-
-        public WrapPanelColumnStrategyCollection ColumnStrategies
-        {
-            get { return (WrapPanelColumnStrategyCollection)GetValue(ColumnStrategiesProperty); }
-            set { SetValue(ColumnStrategiesProperty, value); }
-        }
-
-        public static readonly DependencyProperty ColumnStrategiesProperty =
-            DependencyProperty.Register("ColumnStrategies", typeof(WrapPanelColumnStrategyCollection), typeof(WrapPanelAdaptable),
-                new FrameworkPropertyMetadata(new WrapPanelColumnStrategyCollection(), FrameworkPropertyMetadataOptions.AffectsMeasure));
-
-        #endregion
-
-        #region ItemSize
-
-        private static readonly DependencyProperty _itemSizeProperty =
-            DependencyProperty.RegisterAttached(
-                "ItemSize",
-                typeof(Size),
-                typeof(WrapPanelAdaptable));
-
-        #endregion
-
-        #region HasNeighbours
-
-        public static readonly DependencyProperty HasNeighboursProperty =
-            DependencyProperty.RegisterAttached(
-                "HasNeighbours",
-                typeof(bool),
-                typeof(WrapPanelAdaptable),
-                new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.Inherits));
-
-        public static void SetHasNeighbours(UIElement textBox, bool hasNeighbours)
-        {
-            textBox.SetValue(HasNeighboursProperty, hasNeighbours);
-        }
-
-        public static bool GetHasNeighbours(UIElement textBox)
-        {
-            return (bool)textBox.GetValue(HasNeighboursProperty);
-        }
-
-        #endregion
-
-        #region ActualColumnStrategy
-
-        public WrapPanelColumnStrategy ActualColumnStrategy
-        {
-            get { return (WrapPanelColumnStrategy)GetValue(ActualColumnStrategyProperty); }
-            private set { SetValue(_actualColumnStrategyPropertyKey, value); }
-        }
-
-        private static readonly DependencyPropertyKey _actualColumnStrategyPropertyKey =
-            DependencyProperty.RegisterReadOnly("ActualColumnStrategy", typeof(WrapPanelColumnStrategy), typeof(WrapPanelAdaptable),
-                new PropertyMetadata(WrapPanelColumnStrategy.Default));
-
-        public static readonly DependencyProperty ActualColumnStrategyProperty =
-            _actualColumnStrategyPropertyKey.DependencyProperty;
-
-        #endregion
-
-        protected override Size MeasureOverride(Size availableSize)
-        {
-            var panelHeight = 0.0;
-            var panelWidth = availableSize.Width;
-            var columnStrategy = UpdateActualColumnStrateg(panelWidth);
-            var columnsCount = columnStrategy.Count;
-            var columnWidth = panelWidth / columnStrategy.Count;
-
-            var children = GetVisibleChildren();
-            if (children.Any() == false)
+            if (currentRow.TryAddItem(item))
             {
-                return new Size(0, 0);
+                continue;
             }
-
-            var panelRows = new List<PanelRow>() { new PanelRow(columnsCount, columnWidth) };
-            var currentRow = panelRows.Last();
-
-            foreach (var item in children)
+            else
             {
-                if (currentRow.TryAddItem(item))
-                {
-                    continue;
-                }
-                else
-                {
-                    currentRow = new PanelRow(columnsCount, columnWidth);
-                    currentRow.TryAddItem(item);
+                currentRow = new PanelRow(columnsCount, columnWidth);
+                currentRow.TryAddItem(item);
 
-                    panelRows.Add(currentRow);
-                }
+                panelRows.Add(currentRow);
             }
+        }
 
-            var lastRow = panelRows.Last();
+        var lastRow = panelRows.Last();
 
-            foreach (var row in panelRows)
+        foreach (var row in panelRows)
+        {
+            var skipRowAlign = columnStrategy.AlignType == WrapPanelColumnStrategy.RowAlignType.SkipLast && row == lastRow ||
+                               columnStrategy.AlignType == WrapPanelColumnStrategy.RowAlignType.SkipAll;
+
+            row.Seal(skipRowAlign);
+            row.Measure();
+            row.SetNeighbours();
+
+            panelHeight += row.Height;
+        }
+
+        if (ColumnsCount != columnsCount)
+        {
+            Executers.InUiAsync(() =>
             {
-                var skipRowAlign = columnStrategy.AlignType == WrapPanelColumnStrategy.RowAlignType.SkipLast && row == lastRow ||
-                                   columnStrategy.AlignType == WrapPanelColumnStrategy.RowAlignType.SkipAll;
+                ColumnsCount = columnsCount;
+                InvalidateMeasure();
+            }, DispatcherPriority.Loaded);
+        }
 
-                row.Seal(skipRowAlign);
-                row.Measure();
-                row.SetNeighbours();
+        return new Size(panelWidth, panelHeight);
+    }
 
-                panelHeight += row.Height;
+    protected override Size ArrangeOverride(Size finalSize)
+    {
+        var panelHeight = 0.0;
+        var panelWidth = finalSize.Width;
+        var columnStrategy = UpdateActualColumnStrateg(panelWidth);
+        var columnsCount = columnStrategy.Count;
+        var columnWidth = panelWidth / columnStrategy.Count;
+
+        var children = GetVisibleChildren();
+        if (children.Any() == false)
+        {
+            return new Size(0, 0);
+        }
+
+        var panelRows = new List<PanelRow>() { new PanelRow(columnsCount, columnWidth) };
+        var currentRow = panelRows.Last();
+
+        foreach (var item in children)
+        {
+            if (currentRow.TryAddItem(item))
+            {
+                continue;
             }
+            else
+            {
+                currentRow = new PanelRow(columnsCount, columnWidth);
+                currentRow.TryAddItem(item);
 
-            if (ColumnsCount != columnsCount)
+                panelRows.Add(currentRow);
+            }
+        }
+
+        foreach (var row in panelRows)
+        {
+            row.Seal(true);
+            row.Arrange(panelHeight);
+
+            panelHeight += row.Height;
+        }
+
+        return new Size(panelWidth, panelHeight);
+    }
+
+    private WrapPanelColumnStrategy UpdateActualColumnStrateg(double panelWidth)
+    {
+        var effectiveStrategy = ColumnStrategies?.LastOrDefault(s => s.FromWidth.LesserOrNearlyEqual(panelWidth) && panelWidth.LesserOrNearlyEqual(s.ToWidth)) ?? WrapPanelColumnStrategy.Default;
+        if (effectiveStrategy != ActualColumnStrategy)
+        {
+            if (ActualColumnStrategy == WrapPanelColumnStrategy.Default)
+            {
+                ActualColumnStrategy = effectiveStrategy;
+
+                return effectiveStrategy;
+            }
+            else
             {
                 Executers.InUiAsync(() =>
                 {
-                    ColumnsCount = columnsCount;
+                    ActualColumnStrategy = effectiveStrategy;
                     InvalidateMeasure();
                 }, DispatcherPriority.Loaded);
-            }
 
-            return new Size(panelWidth, panelHeight);
+                return ActualColumnStrategy;
+            }
         }
 
-        protected override Size ArrangeOverride(Size finalSize)
+        return effectiveStrategy;
+    }
+
+    private IEnumerable<FrameworkElement> GetVisibleChildren()
+        => Children
+            .OfType<FrameworkElement>()
+            .Where(f => f.Visibility != Visibility.Collapsed)
+            .Where(f => f.FindVisualChild<UIElement>()?.Visibility != Visibility.Collapsed)
+            .ToList();
+
+    private sealed class PanelItem
+    {
+        public PanelItem(FrameworkElement item)
         {
-            var panelHeight = 0.0;
-            var panelWidth = finalSize.Width;
-            var columnStrategy = UpdateActualColumnStrateg(panelWidth);
-            var columnsCount = columnStrategy.Count;
-            var columnWidth = panelWidth / columnStrategy.Count;
+            Item = item;
 
-            var children = GetVisibleChildren();
-            if (children.Any() == false)
-            {
-                return new Size(0, 0);
-            }
-
-            var panelRows = new List<PanelRow>() { new PanelRow(columnsCount, columnWidth) };
-            var currentRow = panelRows.Last();
-
-            foreach (var item in children)
-            {
-                if (currentRow.TryAddItem(item))
-                {
-                    continue;
-                }
-                else
-                {
-                    currentRow = new PanelRow(columnsCount, columnWidth);
-                    currentRow.TryAddItem(item);
-
-                    panelRows.Add(currentRow);
-                }
-            }
-
-            foreach (var row in panelRows)
-            {
-                row.Seal(true);
-                row.Arrange(panelHeight);
-
-                panelHeight += row.Height;
-            }
-
-            return new Size(panelWidth, panelHeight);
+            DesiredColumnSpan = (uint)Item.GetValue(ColumnSpanProperty);
+            ActualColumnSpan = DesiredColumnSpan;
         }
 
-        private WrapPanelColumnStrategy UpdateActualColumnStrateg(double panelWidth)
+        public FrameworkElement Item { get; }
+
+        public uint DesiredColumnSpan { get; }
+
+        public uint ActualColumnSpan { get; set; }
+
+        public Size Measure(Size size)
         {
-            var effectiveStrategy = ColumnStrategies?.LastOrDefault(s => s.FromWidth.LesserOrNearlyEqual(panelWidth) && panelWidth.LesserOrNearlyEqual(s.ToWidth)) ?? WrapPanelColumnStrategy.Default;
-            if (effectiveStrategy != ActualColumnStrategy)
+            Item.Measure(size);
+
+            if (size.Height.NearlyEqual(double.PositiveInfinity))
             {
-                if (ActualColumnStrategy == WrapPanelColumnStrategy.Default)
-                {
-                    ActualColumnStrategy = effectiveStrategy;
-
-                    return effectiveStrategy;
-                }
-                else
-                {
-                    Executers.InUiAsync(() =>
-                    {
-                        ActualColumnStrategy = effectiveStrategy;
-                        InvalidateMeasure();
-                    }, DispatcherPriority.Loaded);
-
-                    return ActualColumnStrategy;
-                }
+                size.Height = Item.DesiredSize.Height;
             }
 
-            return effectiveStrategy;
+            return size;
         }
+    }
 
-        private IEnumerable<FrameworkElement> GetVisibleChildren()
-            => Children
-                .OfType<FrameworkElement>()
-                .Where(f => f.Visibility != Visibility.Collapsed)
-                .Where(f => f.FindVisualChild<UIElement>()?.Visibility != Visibility.Collapsed)
-                .ToList();
-
-        private sealed class PanelItem
+    private sealed class PanelRow
+    {
+        public PanelRow(uint maxSpan, double columnWidth)
         {
-            public PanelItem(FrameworkElement item)
-            {
-                Item = item;
-
-                DesiredColumnSpan = (uint)Item.GetValue(ColumnSpanProperty);
-                ActualColumnSpan = DesiredColumnSpan;
-            }
-
-            public FrameworkElement Item { get; }
-
-            public uint DesiredColumnSpan { get; }
-
-            public uint ActualColumnSpan { get; set; }
-
-            public Size Measure(Size size)
-            {
-                Item.Measure(size);
-
-                if (size.Height.NearlyEqual(double.PositiveInfinity))
-                {
-                    size.Height = Item.DesiredSize.Height;
-                }
-
-                return size;
-            }
+            _maxSpan = maxSpan;
+            _columnWidth = columnWidth;
         }
 
-        private sealed class PanelRow
+        public double Height { get; private set; }
+
+        public IList<PanelItem> Items => _items;
+
+        public bool TryAddItem(FrameworkElement item)
         {
-            public PanelRow(uint maxSpan, double columnWidth)
+            if (_isSealed)
             {
-                _maxSpan = maxSpan;
-                _columnWidth = columnWidth;
+                return false;
             }
 
-            public double Height { get; private set; }
-
-            public IList<PanelItem> Items => _items;
-
-            public bool TryAddItem(FrameworkElement item)
+            var panelItem = new PanelItem(item);
+            if (panelItem.DesiredColumnSpan > _maxSpan)
             {
-                if (_isSealed)
-                {
-                    return false;
-                }
-
-                var panelItem = new PanelItem(item);
-                if (panelItem.DesiredColumnSpan > _maxSpan)
-                {
-                    panelItem.ActualColumnSpan = _maxSpan;
-                }
-
-                var currentSpan = (int)_items.Sum(i => i.ActualColumnSpan);
-                if (currentSpan + panelItem.ActualColumnSpan > _maxSpan)
-                {
-                    return false;
-                }
-
-                _items.Add(panelItem);
-
-                return true;
+                panelItem.ActualColumnSpan = _maxSpan;
             }
 
-            public void Seal(bool skipRowAlign)
+            var currentSpan = (int)_items.Sum(i => i.ActualColumnSpan);
+            if (currentSpan + panelItem.ActualColumnSpan > _maxSpan)
             {
-                var currentSpan = (int)_items.Sum(i => i.ActualColumnSpan);
-                if (currentSpan > _maxSpan)
-                {
-                    throw new Exception("Error on sealing PanelRow. Invalid items collection.");
-                }
-
-                if (!skipRowAlign && currentSpan < _maxSpan)
-                {
-                    var lastItem = _items.LastOrDefault();
-                    if (lastItem != null)
-                    {
-                        lastItem.ActualColumnSpan += (uint)(_maxSpan - currentSpan);
-                    }
-                }
-
-                _isSealed = true;
+                return false;
             }
 
-            public void SetNeighbours()
-            {
-                _items.ForEach(i => i.Item.SetValue(HasNeighboursProperty, _items.Count > 1));
-            }
+            _items.Add(panelItem);
 
-            public void Measure()
-            {
-                var maxHeight = 0.0;
-
-                foreach (var item in _items)
-                {
-                    var itemWidth = _columnWidth * item.ActualColumnSpan;
-                    var itemHeight = double.PositiveInfinity;
-                    var itemSize = new Size(itemWidth, itemHeight);
-
-                    itemSize = item.Measure(itemSize);
-
-                    maxHeight = Math.Max(maxHeight, itemSize.Height);
-                }
-
-                foreach (var item in _items)
-                {
-                    var itemWidth = _columnWidth * item.ActualColumnSpan;
-                    var itemHeight = maxHeight;
-                    var itemSize = new Size(itemWidth, itemHeight);
-
-                    item.Item.SetValue(_itemSizeProperty, itemSize);
-                }
-
-                Height = maxHeight;
-            }
-            internal void Arrange(double panelHeight)
-            {
-                var currentRowWidth = 0.0;
-                var maxHeight = 0.0;
-
-                foreach (var item in _items)
-                {
-                    var itemSize = (Size)item.Item.GetValue(_itemSizeProperty);
-                    var itemPos = new Rect(currentRowWidth, panelHeight, itemSize.Width, itemSize.Height);
-
-                    item.Item.Arrange(itemPos);
-
-                    currentRowWidth += itemSize.Width;
-                    maxHeight = Math.Max(maxHeight, itemSize.Height);
-                }
-
-                Height = maxHeight;
-            }
-
-            private bool _isSealed;
-            private readonly uint _maxSpan;
-            private readonly double _columnWidth;
-            private readonly List<PanelItem> _items = new();
+            return true;
         }
+
+        public void Seal(bool skipRowAlign)
+        {
+            var currentSpan = (int)_items.Sum(i => i.ActualColumnSpan);
+            if (currentSpan > _maxSpan)
+            {
+                throw new Exception("Error on sealing PanelRow. Invalid items collection.");
+            }
+
+            if (!skipRowAlign && currentSpan < _maxSpan)
+            {
+                var lastItem = _items.LastOrDefault();
+                if (lastItem != null)
+                {
+                    lastItem.ActualColumnSpan += (uint)(_maxSpan - currentSpan);
+                }
+            }
+
+            _isSealed = true;
+        }
+
+        public void SetNeighbours() => _items.ForEach(i => i.Item.SetValue(HasNeighboursProperty, _items.Count > 1));
+
+        public void Measure()
+        {
+            var maxHeight = 0.0;
+
+            foreach (var item in _items)
+            {
+                var itemWidth = _columnWidth * item.ActualColumnSpan;
+                var itemHeight = double.PositiveInfinity;
+                var itemSize = new Size(itemWidth, itemHeight);
+
+                itemSize = item.Measure(itemSize);
+
+                maxHeight = Math.Max(maxHeight, itemSize.Height);
+            }
+
+            foreach (var item in _items)
+            {
+                var itemWidth = _columnWidth * item.ActualColumnSpan;
+                var itemHeight = maxHeight;
+                var itemSize = new Size(itemWidth, itemHeight);
+
+                item.Item.SetValue(_itemSizeProperty, itemSize);
+            }
+
+            Height = maxHeight;
+        }
+        internal void Arrange(double panelHeight)
+        {
+            var currentRowWidth = 0.0;
+            var maxHeight = 0.0;
+
+            foreach (var item in _items)
+            {
+                var itemSize = (Size)item.Item.GetValue(_itemSizeProperty);
+                var itemPos = new Rect(currentRowWidth, panelHeight, itemSize.Width, itemSize.Height);
+
+                item.Item.Arrange(itemPos);
+
+                currentRowWidth += itemSize.Width;
+                maxHeight = Math.Max(maxHeight, itemSize.Height);
+            }
+
+            Height = maxHeight;
+        }
+
+        private bool _isSealed;
+        private readonly uint _maxSpan;
+        private readonly double _columnWidth;
+        private readonly List<PanelItem> _items = new();
     }
 }

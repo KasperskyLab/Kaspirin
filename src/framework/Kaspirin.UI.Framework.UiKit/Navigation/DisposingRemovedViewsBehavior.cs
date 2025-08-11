@@ -12,26 +12,25 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Kaspirin.UI.Framework.UiKit.Navigation
+namespace Kaspirin.UI.Framework.UiKit.Navigation;
+
+public sealed class DisposingRemovedViewsBehavior : RegionBehavior
 {
-    public sealed class DisposingRemovedViewsBehavior : RegionBehavior
+    protected override void OnAttach()
     {
-        protected override void OnAttach()
-        {
-            Guard.IsNotNull(Region);
+        Guard.IsNotNull(Region);
 
-            Region.ViewAdded += OnViewAdded;
-            Region.ViewRemoved += OnViewRemoved;
-        }
+        Region.ViewAdded += OnViewAdded;
+        Region.ViewRemoved += OnViewRemoved;
+    }
 
-        private void OnViewAdded(object? sender, ViewAddedEventArgs args)
-        {
-            DispositionContext.Initialize(args.AddedView.View);
-        }
+    private void OnViewAdded(object? sender, ViewAddedEventArgs args)
+    {
+        DispositionContext.Initialize(args.AddedView.View);
+    }
 
-        private void OnViewRemoved(object? sender, ViewRemovedEventArgs args)
-        {
-            DispositionContext.Dispose(args.RemovedView.View);
-        }
+    private void OnViewRemoved(object? sender, ViewRemovedEventArgs args)
+    {
+        DispositionContext.Dispose(args.RemovedView.View);
     }
 }

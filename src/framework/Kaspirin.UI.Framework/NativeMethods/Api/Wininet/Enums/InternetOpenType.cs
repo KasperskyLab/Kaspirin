@@ -12,19 +12,30 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
+namespace Kaspirin.UI.Framework.NativeMethods.Api.Wininet.Enums;
 
-namespace Kaspirin.UI.Framework.NativeMethods.Api.Wininet.Enums
+/// <summary>
+///     <seealso href="https://learn.microsoft.com/en-us/windows/win32/api/wininet/nf-wininet-internetopenw">Learn more</seealso>.
+/// </summary>
+public enum InternetOpenType : uint
 {
     /// <summary>
-    ///     
-    /// <seealso href="https://learn.microsoft.com/en-us/windows/win32/api/wininet/nf-wininet-internetopenw">Learn more</seealso>.
+    ///     The INTERNET_OPEN_TYPE_PRECONFIG constant.
     /// </summary>
-    public enum InternetOpenType : uint
-    {
-        INTERNET_OPEN_TYPE_PRECONFIG = 0,
-        INTERNET_OPEN_TYPE_DIRECT = 1,
-        INTERNET_OPEN_TYPE_PROXY = 3,
-        INTERNET_OPEN_TYPE_PRECONFIG_WITH_NO_AUTOPROXY = 4,
-    }
+    PreConfig = 0,
+
+    /// <summary>
+    ///     The INTERNET_OPEN_TYPE_DIRECT constant.
+    /// </summary>
+    Direct = 1,
+
+    /// <summary>
+    ///     The INTERNET_OPEN_TYPE_PROXY constant.
+    /// </summary>
+    Proxy = 3,
+
+    /// <summary>
+    ///     The INTERNET_OPEN_TYPE_PRECONFIG_WITH_NO_AUTOPROXY constant.
+    /// </summary>
+    PreConfigWithNoAutoProxy = 4,
 }

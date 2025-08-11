@@ -12,7 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Kaspirin.UI.Framework.UiKit.Accessibility.TextScale
-{
-    public delegate void TextScaleChangedDelegate(TextScaleService sender, TextScaleChangedEventArgs e);
-}
+namespace Kaspirin.UI.Framework.UiKit.Accessibility.TextScale;
+
+/// <summary>
+///     The delegate that handles the text zoom event.
+/// </summary>
+/// <param name="sender">
+///     The object that generates the event.
+/// </param>
+/// <param name="e">
+///     Event data.
+/// </param>
+public delegate void TextScaleChangedDelegate(TextScaleService sender, TextScaleChangedEventArgs e);

@@ -18,37 +18,36 @@ using System.Xml;
 using Microsoft.Build.Framework;
 using Microsoft.Build.Utilities;
 
-namespace Kaspirin.UI.Framework.UiKit.Translator.Core
+namespace Kaspirin.UI.Framework.UiKit.Translator.Core;
+
+internal sealed class EmbeddedResourceXmlUrlResolver : XmlUrlResolver
 {
-    internal sealed class EmbeddedResourceXmlUrlResolver : XmlUrlResolver
+    public EmbeddedResourceXmlUrlResolver(string resourcesDirectory, TaskLoggingHelper log)
     {
-        public EmbeddedResourceXmlUrlResolver(string resourcesDirectory, TaskLoggingHelper log)
-        {
-            _resourcesDirectory = resourcesDirectory;
-            _log = log;
-        }
-
-        public override object GetEntity(Uri absoluteUri, string role, Type ofObjectToReturn)
-        {
-            var message = $"Schema import resolve '{absoluteUri}'";
-
-            if (absoluteUri.IsFile)
-            {
-                var schemaFilename = Path.GetFileName(absoluteUri.AbsolutePath);
-                var schemaStream = EmbeddedResourceHelper.GetEmbeddedResource(_resourcesDirectory, schemaFilename);
-
-                if (schemaStream != null)
-                {
-                    _log.LogMessage(MessageImportance.Normal, $"{message} [success]");
-                    return schemaStream;
-                }
-            }
-
-            _log.LogMessage(MessageImportance.High, $"{message} [fail]");
-            return null;
-        }
-
-        private readonly string _resourcesDirectory;
-        private readonly TaskLoggingHelper _log;
+        _resourcesDirectory = resourcesDirectory;
+        _log = log;
     }
+
+    public override object GetEntity(Uri absoluteUri, string role, Type ofObjectToReturn)
+    {
+        var message = $"Schema import resolve '{absoluteUri}'";
+
+        if (absoluteUri.IsFile)
+        {
+            var schemaFilename = Path.GetFileName(absoluteUri.AbsolutePath);
+            var schemaStream = EmbeddedResourceHelper.GetEmbeddedResource(_resourcesDirectory, schemaFilename);
+
+            if (schemaStream != null)
+            {
+                _log.LogMessage(MessageImportance.Normal, $"{message} [success]");
+                return schemaStream;
+            }
+        }
+
+        _log.LogMessage(MessageImportance.High, $"{message} [fail]");
+        return null;
+    }
+
+    private readonly string _resourcesDirectory;
+    private readonly TaskLoggingHelper _log;
 }

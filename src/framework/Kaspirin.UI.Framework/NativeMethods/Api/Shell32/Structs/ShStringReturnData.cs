@@ -17,24 +17,22 @@
 using System;
 using System.Runtime.InteropServices;
 
-namespace Kaspirin.UI.Framework.NativeMethods.Api.Shell32.Structs
+namespace Kaspirin.UI.Framework.NativeMethods.Api.Shell32.Structs;
+
+/// <summary>
+///     <seealso href="https://learn.microsoft.com/en-us/windows/win32/api/shtypes/ns-shtypes-strret">Learn more</seealso>.
+/// </summary>
+[StructLayout(LayoutKind.Explicit, Size = SizeOfShStringReturnInternal)]
+public struct ShStringReturnData
 {
-    /// <summary>
-    ///     
-    /// <seealso href="https://learn.microsoft.com/en-us/windows/win32/api/shtypes/ns-shtypes-strret">Learn more</seealso>.
-    /// </summary>
-    [StructLayout(LayoutKind.Explicit, Size = SizeOfShStringReturnInternal)]
-    public struct ShStringReturnData
-    {
-        [FieldOffset(0)]
-        public IntPtr OleStr;
+    [FieldOffset(0)]
+    public IntPtr OleStr;
 
-        [FieldOffset(0)]
-        public IntPtr StringPointer;
+    [FieldOffset(0)]
+    public IntPtr StringPointer;
 
-        [FieldOffset(0)]
-        public uint Offset;
+    [FieldOffset(0)]
+    public uint Offset;
 
-        private const int SizeOfShStringReturnInternal = 520;
-    }
+    private const int SizeOfShStringReturnInternal = 520;
 }

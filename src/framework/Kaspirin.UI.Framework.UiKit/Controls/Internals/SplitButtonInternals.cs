@@ -14,32 +14,26 @@
 
 using System.Windows;
 
-namespace Kaspirin.UI.Framework.UiKit.Controls.Internals
+namespace Kaspirin.UI.Framework.UiKit.Controls.Internals;
+
+internal sealed class SplitButtonInternals
 {
-    internal class SplitButtonInternals
-    {
-        #region State
+    #region State
 
-        public static SplitButtonState GetState(DependencyObject obj)
-        {
-            return (SplitButtonState)obj.GetValue(StateProperty);
-        }
+    public static SplitButtonState GetState(DependencyObject obj)
+        => (SplitButtonState)obj.GetValue(StateProperty);
 
-        public static void SetState(DependencyObject obj, SplitButtonState value)
-        {
-            obj.SetValue(StateProperty, value);
-        }
+    public static void SetState(DependencyObject obj, SplitButtonState value)
+        => obj.SetValue(StateProperty, value);
 
-        public static readonly DependencyProperty StateProperty =
-            DependencyProperty.RegisterAttached("State", typeof(SplitButtonState), typeof(SplitButtonInternals),
-                UIKitPropertyMetadataFactory.CreatePropsMetadata(typeof(SplitButton), nameof(StateProperty), OnStateChanged));
+    public static readonly DependencyProperty StateProperty = DependencyProperty.RegisterAttached(
+        "State",
+        typeof(SplitButtonState),
+        typeof(SplitButtonInternals),
+        UIKitPropertyMetadataFactory.CreatePropsMetadata(typeof(SplitButton), nameof(StateProperty), OnStateChanged));
 
-        private static void OnStateChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            var splitButton = (SplitButton)d;
-            splitButton.SetState((SplitButtonState)e.NewValue);
-        }
+    private static void OnStateChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        => ((SplitButton)d).SetState((SplitButtonState)e.NewValue);
 
-        #endregion
-    }
+    #endregion
 }

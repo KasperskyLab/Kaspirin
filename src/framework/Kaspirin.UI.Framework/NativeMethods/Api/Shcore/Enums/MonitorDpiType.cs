@@ -12,19 +12,30 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
+namespace Kaspirin.UI.Framework.NativeMethods.Api.Shcore.Enums;
 
-namespace Kaspirin.UI.Framework.NativeMethods.Api.Shcore.Enums
+/// <summary>
+///     <seealso href="https://learn.microsoft.com/en-us/windows/win32/api/shellscalingapi/ne-shellscalingapi-monitor_dpi_type">Learn more</seealso>.
+/// </summary>
+public enum MonitorDpiType : uint
 {
     /// <summary>
-    ///     
-    /// <seealso href="https://learn.microsoft.com/en-us/windows/win32/api/shellscalingapi/ne-shellscalingapi-monitor_dpi_type">Learn more</seealso>.
+    ///     The MDT_EFFECTIVE_DPI constant.
     /// </summary>
-    public enum MonitorDpiType : uint
-    {
-        MDT_EFFECTIVE_DPI = 0,
-        MDT_ANGULAR_DPI = 1,
-        MDT_RAW_DPI = 2,
-        MDT_DEFAULT = MDT_EFFECTIVE_DPI
-    }
+    EffectiveDpi = 0,
+
+    /// <summary>
+    ///     The MDT_ANGULAR_DPI constant.
+    /// </summary>
+    AngularDpi = 1,
+
+    /// <summary>
+    ///     The MDT_RAW_DPI constant.
+    /// </summary>
+    RawDpi = 2,
+
+    /// <summary>
+    ///     The MDT_DEFAULT constant.
+    /// </summary>
+    Default = EffectiveDpi
 }

@@ -17,32 +17,31 @@ using System.Globalization;
 using System.Windows.Data;
 using System.Windows.Media;
 
-namespace Kaspirin.UI.Framework.UiKit.Controls.Internals
+namespace Kaspirin.UI.Framework.UiKit.Controls.Internals;
+
+internal sealed class InputCaretBrushConverter : IValueConverter
 {
-    internal sealed class InputCaretBrushConverter : IValueConverter
+    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        if (value is SolidColorBrush originBrush)
         {
-            if (value is SolidColorBrush originBrush)
-            {
-                //since we have no way to reduce the height of the caret,
-                //we reduce its visible part by 20% with custom LinearGradientBrush
+            //since we have no way to reduce the height of the caret,
+            //we reduce its visible part by 20% with custom LinearGradientBrush
 
-                var coercedBrush = new LinearGradientBrush();
-                coercedBrush.GradientStops.Add(new GradientStop(originBrush.Color, 0));
-                coercedBrush.GradientStops.Add(new GradientStop(originBrush.Color, 0.8));
-                coercedBrush.GradientStops.Add(new GradientStop(Colors.Transparent, 0.8));
-                coercedBrush.GradientStops.Add(new GradientStop(Colors.Transparent, 1));
+            var coercedBrush = new LinearGradientBrush();
+            coercedBrush.GradientStops.Add(new GradientStop(originBrush.Color, 0));
+            coercedBrush.GradientStops.Add(new GradientStop(originBrush.Color, 0.8));
+            coercedBrush.GradientStops.Add(new GradientStop(Colors.Transparent, 0.8));
+            coercedBrush.GradientStops.Add(new GradientStop(Colors.Transparent, 1));
 
-                return coercedBrush;
-            }
-
-            return value;
+            return coercedBrush;
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            throw new NotImplementedException();
-        }
+        return value;
+    }
+
+    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        throw new NotImplementedException();
     }
 }

@@ -12,27 +12,53 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-#pragma warning disable KCAIDE0002 // Enum has incorrect suffix
-
 using System;
 
-namespace Kaspirin.UI.Framework.NativeMethods.Api.Kernel32.Enums
+namespace Kaspirin.UI.Framework.NativeMethods.Api.Kernel32.Enums;
+
+/// <summary>
+///     <seealso href="https://learn.microsoft.com/en-us/windows/win32/api/winbase/nf-winbase-formatmessage">Learn more</seealso>.
+/// </summary>
+[Flags]
+public enum FormatMessageFlags : uint
 {
     /// <summary>
-    ///     
-    /// <seealso href="https://learn.microsoft.com/en-us/windows/win32/api/winbase/nf-winbase-formatmessage">Learn more</seealso>.
+    ///     The flag is not set.
     /// </summary>
-    [Flags]
-    public enum FormatMessageFlags : uint
-    {
-        None = 0,
-        FORMAT_MESSAGE_ALLOCATE_BUFFER = 0x00000100,
-        FORMAT_MESSAGE_IGNORE_INSERTS = 0x00000200,
-        FORMAT_MESSAGE_FROM_STRING = 0x00000400,
-        FORMAT_MESSAGE_FROM_HMODULE = 0x00000800,
-        FORMAT_MESSAGE_FROM_SYSTEM = 0x00001000,
-        FORMAT_MESSAGE_ARGUMENT_ARRAY = 0x00002000,
-        FORMAT_MESSAGE_MAX_WIDTH_MASK = 0x000000FF
-    }
+    None = 0,
+
+    /// <summary>
+    ///     The FORMAT_MESSAGE_ALLOCATE_BUFFER constant.
+    /// </summary>
+    AllocateBuffer = 0x00000100,
+
+    /// <summary>
+    ///     The FORMAT_MESSAGE_IGNORE_INSERTS constant.
+    /// </summary>
+    IgnoreInserts = 0x00000200,
+
+    /// <summary>
+    ///     The FORMAT_MESSAGE_FROM_STRING constant.
+    /// </summary>
+    FromString = 0x00000400,
+
+    /// <summary>
+    ///     The FORMAT_MESSAGE_FROM_HMODULE constant.
+    /// </summary>
+    FromHModule = 0x00000800,
+
+    /// <summary>
+    ///     The FORMAT_MESSAGE_FROM_SYSTEM constant.
+    /// </summary>
+    FromSystem = 0x00001000,
+
+    /// <summary>
+    ///     The FORMAT_MESSAGE_ARGUMENT_ARRAY constant.
+    /// </summary>
+    ArgumentArray = 0x00002000,
+
+    /// <summary>
+    ///     The FORMAT_MESSAGE_MAX_WIDTH_MASK constant.
+    /// </summary>
+    MaxWidthMask = 0x000000FF,
 }

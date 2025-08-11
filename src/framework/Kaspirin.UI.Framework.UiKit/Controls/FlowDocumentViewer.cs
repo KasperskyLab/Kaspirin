@@ -12,62 +12,60 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 
-namespace Kaspirin.UI.Framework.UiKit.Controls
+namespace Kaspirin.UI.Framework.UiKit.Controls;
+
+public sealed class FlowDocumentViewer : FlowDocumentScrollViewer
 {
-    public sealed class FlowDocumentViewer : FlowDocumentScrollViewer
+    static FlowDocumentViewer()
     {
-        static FlowDocumentViewer()
+        MaxZoomProperty.OverrideMetadata(typeof(FlowDocumentViewer),
+            new FrameworkPropertyMetadata(100.0, FrameworkPropertyMetadataOptions.None, null, CoerceZoom));
+        MinZoomProperty.OverrideMetadata(typeof(FlowDocumentViewer),
+            new FrameworkPropertyMetadata(100.0, FrameworkPropertyMetadataOptions.None, null, CoerceZoom));
+
+        EventManager.RegisterClassHandler(
+            typeof(FlowDocumentViewer), RequestBringIntoViewEvent, new RequestBringIntoViewEventHandler(OnRequestBringIntoView));
+    }
+
+    private static object CoerceZoom(DependencyObject d, object baseValue)
+    {
+        return 100.0;
+    }
+
+    private static void OnRequestBringIntoView(object sender, RequestBringIntoViewEventArgs e)
+    {
+        // If the FlowDocumentViewer is in an outer ScrollViewer, then that ScrollViewer will handle the event and set e.Handled.
+        // Otherwise, scrolling in the outer ScrollViewer will only work to the document boundaries, not to the element in focus.
+        var flowDocumentViewer = (FlowDocumentViewer)sender;
+        (VisualTreeHelper.GetParent(flowDocumentViewer) as UIElement)?.RaiseEvent(e);
+    }
+
+    public bool HandlesMouseWheelScrolling { get; set; } = true;
+
+    protected override void OnMouseWheel(MouseWheelEventArgs e)
+    {
+        if (Keyboard.Modifiers.HasFlag(ModifierKeys.Control)
+            || HandlesMouseWheelScrolling)
         {
-            MaxZoomProperty.OverrideMetadata(typeof(FlowDocumentViewer),
-                new FrameworkPropertyMetadata(100.0, FrameworkPropertyMetadataOptions.None, null, CoerceZoom));
-            MinZoomProperty.OverrideMetadata(typeof(FlowDocumentViewer),
-                new FrameworkPropertyMetadata(100.0, FrameworkPropertyMetadataOptions.None, null, CoerceZoom));
-
-            EventManager.RegisterClassHandler(
-                typeof(FlowDocumentViewer), RequestBringIntoViewEvent, new RequestBringIntoViewEventHandler(OnRequestBringIntoView));
+            base.OnMouseWheel(e);
         }
+    }
 
-        private static object CoerceZoom(DependencyObject d, object baseValue)
+    protected override void OnPreviewMouseWheel(MouseWheelEventArgs e)
+    {
+        base.OnPreviewMouseWheel(e);
+
+        e.Handled = true;
+
+        RaiseEvent(new MouseWheelEventArgs(e.MouseDevice, e.Timestamp, e.Delta)
         {
-            return 100.0;
-        }
-
-        private static void OnRequestBringIntoView(object sender, RequestBringIntoViewEventArgs e)
-        {
-            // If the FlowDocumentViewer is in an outer ScrollViewer, then that ScrollViewer will handle the event and set e.Handled.
-            // Otherwise, scrolling in the outer ScrollViewer will only work to the document boundaries, not to the element in focus.
-            var flowDocumentViewer = (FlowDocumentViewer)sender;
-            (VisualTreeHelper.GetParent(flowDocumentViewer) as UIElement)?.RaiseEvent(e);
-        }
-
-        public bool HandlesMouseWheelScrolling { get; set; } = true;
-
-        protected override void OnMouseWheel(MouseWheelEventArgs e)
-        {
-            if (Keyboard.Modifiers.HasFlag(ModifierKeys.Control)
-                || HandlesMouseWheelScrolling)
-            {
-                base.OnMouseWheel(e);
-            }
-        }
-
-        protected override void OnPreviewMouseWheel(MouseWheelEventArgs e)
-        {
-            base.OnPreviewMouseWheel(e);
-
-            e.Handled = true;
-
-            RaiseEvent(new MouseWheelEventArgs(e.MouseDevice, e.Timestamp, e.Delta)
-            {
-                RoutedEvent = MouseWheelEvent,
-                Source = this
-            });
-        }
+            RoutedEvent = MouseWheelEvent,
+            Source = this
+        });
     }
 }

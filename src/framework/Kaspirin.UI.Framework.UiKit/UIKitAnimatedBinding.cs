@@ -16,23 +16,22 @@ using System.Windows;
 using System.Windows.Data;
 using System.Windows.Markup;
 
-namespace Kaspirin.UI.Framework.UiKit
+namespace Kaspirin.UI.Framework.UiKit;
+
+internal sealed class UIKitAnimatedBinding : UIKitBinding
 {
-    internal sealed class UIKitAnimatedBinding : UIKitBinding
+    public UIKitAnimatedBinding(string id)
+        : base(id)
     {
-        public UIKitAnimatedBinding(string id)
-            : base(id)
-        {
-            Properties = ServiceLocator.Instance.GetService<IAnimationSettingsProvider>().DefaultAnimationProperties;
-        }
-
-        public AnimationProperties Properties { get; set; }
-
-        protected override MarkupExtension CreateBinding(DependencyProperty? targetProperty = null)
-            => new AnimatedBindingExtension()
-            {
-                Source = (Binding)base.CreateBinding(targetProperty),
-                Properties = Properties
-            };
+        Properties = ServiceLocator.Instance.GetService<IAnimationSettingsProvider>().DefaultAnimationProperties;
     }
+
+    public AnimationProperties Properties { get; set; }
+
+    protected override MarkupExtension CreateBinding(DependencyProperty? targetProperty = null)
+        => new AnimatedBindingExtension()
+        {
+            Source = (Binding)base.CreateBinding(targetProperty),
+            Properties = Properties
+        };
 }

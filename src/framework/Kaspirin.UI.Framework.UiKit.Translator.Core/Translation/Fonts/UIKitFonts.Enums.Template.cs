@@ -16,30 +16,29 @@
 using System;
 using Kaspirin.UI.Framework.UiKit.@PaletteNamespacePart.Palette;
 
-namespace Kaspirin.UI.Framework.UiKit.@FontNamespacePart.Fonts
+namespace Kaspirin.UI.Framework.UiKit.@FontNamespacePart.Fonts;
+
+public sealed class UIKitFontStorage
 {
-    public sealed class UIKitFontStorage
+    public static string Map(UIKitFontStyle id)
+        => $"@FontStyleIdPrefix{id}";
+
+    public static string Map(UIKitFontBrush id)
     {
-        public static string Map(UIKitFontStyle id)
-            => $"@FontStyleIdPrefix{id}";
+        var paletteIdString = $"@FontBrushPrefix{id}";
 
-        public static string Map(UIKitFontBrush id)
-        {
-            var paletteIdString = $"@FontBrushPrefix{id}";
+        var paletteId = (UIKitPaletteStorage.UIKitPalette)Enum.Parse(typeof(UIKitPaletteStorage.UIKitPalette), paletteIdString);
 
-            var paletteId = (UIKitPaletteStorage.UIKitPalette)Enum.Parse(typeof(UIKitPaletteStorage.UIKitPalette), paletteIdString);
+        return UIKitPaletteStorage.Map(paletteId);
+    }
 
-            return UIKitPaletteStorage.Map(paletteId);
-        }
-
-        public enum UIKitFontBrush
-        {
+    public enum UIKitFontBrush
+    {
 @FontBrushes
-        }
+    }
 
-        public enum UIKitFontStyle
-        {
+    public enum UIKitFontStyle
+    {
 @FontStyles
-        }
     }
 }

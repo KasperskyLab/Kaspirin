@@ -15,21 +15,23 @@
 using System.Windows;
 using System.Windows.Controls;
 
-namespace Kaspirin.UI.Framework.UiKit.Controls
+namespace Kaspirin.UI.Framework.UiKit.Controls;
+
+public sealed class ImageGalleryButton : Button
 {
-    public class ImageGalleryButton : Button
+    #region Icon
+
+    public UIKitIcon_24 Icon
     {
-        #region Icon
-
-        public UIKitIcon_24 Icon
-        {
-            get { return (UIKitIcon_24)GetValue(IconProperty); }
-            set { SetValue(IconProperty, value); }
-        }
-
-        public static readonly DependencyProperty IconProperty =
-            DependencyProperty.Register("Icon", typeof(UIKitIcon_24), typeof(ImageGalleryButton));
-
-        #endregion
+        get => (UIKitIcon_24)GetValue(IconProperty);
+        set => SetValue(IconProperty, value);
     }
+
+    public static readonly DependencyProperty IconProperty = DependencyProperty.Register(
+        nameof(Icon),
+        typeof(UIKitIcon_24),
+        typeof(ImageGalleryButton),
+        new PropertyMetadata(default(UIKitIcon_24)));
+
+    #endregion
 }

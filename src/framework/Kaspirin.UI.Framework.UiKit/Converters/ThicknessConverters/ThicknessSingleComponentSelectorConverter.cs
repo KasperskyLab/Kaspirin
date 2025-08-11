@@ -16,28 +16,27 @@ using System;
 using System.Globalization;
 using System.Windows;
 
-namespace Kaspirin.UI.Framework.UiKit.Converters.ThicknessConverters
+namespace Kaspirin.UI.Framework.UiKit.Converters.ThicknessConverters;
+
+public sealed class ThicknessSingleComponentSelectorConverter : ValueConverterMarkupExtension<ThicknessSingleComponentSelectorConverter>
 {
-    public sealed class ThicknessSingleComponentSelectorConverter : ValueConverterMarkupExtension<ThicknessSingleComponentSelectorConverter>
+    public override object Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
     {
-        public override object Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
+        Guard.ArgumentIsNotNull(value);
+        Guard.ArgumentIsNotNull(parameter);
+
+        if (value is not Thickness thickness || parameter is not ThicknessSingleComponent component)
         {
-            Guard.ArgumentIsNotNull(value);
-            Guard.ArgumentIsNotNull(parameter);
-
-            if (value is not Thickness thickness || parameter is not ThicknessSingleComponent component)
-            {
-                return DependencyProperty.UnsetValue;
-            }
-
-            return component switch
-            {
-                ThicknessSingleComponent.Left => thickness.Left,
-                ThicknessSingleComponent.Top => thickness.Top,
-                ThicknessSingleComponent.Right => thickness.Right,
-                ThicknessSingleComponent.Bottom => thickness.Bottom,
-                _ => throw new ArgumentOutOfRangeException($"Value {component} not supported."),
-            };
+            return DependencyProperty.UnsetValue;
         }
+
+        return component switch
+        {
+            ThicknessSingleComponent.Left => thickness.Left,
+            ThicknessSingleComponent.Top => thickness.Top,
+            ThicknessSingleComponent.Right => thickness.Right,
+            ThicknessSingleComponent.Bottom => thickness.Bottom,
+            _ => throw new UnexpectedValueException(component)
+        };
     }
 }

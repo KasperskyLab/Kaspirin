@@ -14,20 +14,19 @@
 
 using System.Windows;
 
-namespace Kaspirin.UI.Framework.UiKit.Navigation
+namespace Kaspirin.UI.Framework.UiKit.Navigation;
+
+internal sealed class RegionViewFactory : IRegionViewFactory
 {
-    internal sealed class RegionViewFactory : IRegionViewFactory
+    public RegionViewFactory(IUnityContainer container)
     {
-        public RegionViewFactory(IUnityContainer container)
-        {
-            _container = Guard.EnsureArgumentIsNotNull(container);
-        }
-
-        public FrameworkElement CreateView(string viewName)
-        {
-            return (FrameworkElement)_container.Resolve<object>(viewName);
-        }
-
-        private readonly IUnityContainer _container;
+        _container = Guard.EnsureArgumentIsNotNull(container);
     }
+
+    public FrameworkElement CreateView(string viewName)
+    {
+        return (FrameworkElement)_container.Resolve<object>(viewName);
+    }
+
+    private readonly IUnityContainer _container;
 }

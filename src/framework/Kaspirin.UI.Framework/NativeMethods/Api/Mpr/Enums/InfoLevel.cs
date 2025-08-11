@@ -12,17 +12,20 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
+namespace Kaspirin.UI.Framework.NativeMethods.Api.Mpr.Enums;
 
-namespace Kaspirin.UI.Framework.NativeMethods.Api.Mpr.Enums
+/// <summary>
+///     <seealso href="https://learn.microsoft.com/en-us/windows/win32/api/winnetwk/nf-winnetwk-wnetgetuniversalnamew">Learn more</seealso>.
+/// </summary>
+public enum InfoLevel
 {
     /// <summary>
-    ///     
-    /// <seealso href="https://learn.microsoft.com/en-us/windows/win32/api/winnetwk/nf-winnetwk-wnetgetuniversalnamew">Learn more</seealso>.
+    ///     The UNIVERSAL_NAME_INFO_LEVEL constant.
     /// </summary>
-    public enum InfoLevel
-    {
-        UNIVERSAL_NAME_INFO_LEVEL = 1,
-        REMOTE_NAME_INFO_LEVEL = 2
-    }
+    UniversalNameInfoLevel = 1,
+
+    /// <summary>
+    ///     The REMOTE_NAME_INFO_LEVEL constant.
+    /// </summary>
+    RemoteNameInfoLevel = 2
 }

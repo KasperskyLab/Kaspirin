@@ -14,13 +14,12 @@
 
 using System.Windows.Media.Effects;
 
-namespace Kaspirin.UI.Framework.UiKit.Extensions.Internals
+namespace Kaspirin.UI.Framework.UiKit.Extensions.Internals;
+
+internal static class DropShadowEffectExtensions
 {
-    internal static class DropShadowEffectExtensions
+    public static double GetShadowOffset(this DropShadowEffect shadow)
     {
-        public static double GetShadowOffset(this DropShadowEffect shadow)
-        {
-            return shadow.BlurRadius + shadow.ShadowDepth;
-        }
+        return shadow.BlurRadius + shadow.ShadowDepth;
     }
 }

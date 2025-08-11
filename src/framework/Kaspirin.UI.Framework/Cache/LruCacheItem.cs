@@ -12,18 +12,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Kaspirin.UI.Framework.Cache
+namespace Kaspirin.UI.Framework.Cache;
+
+internal sealed class LruCacheItem<TKey, TValue>
 {
-    internal sealed class LruCacheItem<TKey, TValue>
+    public LruCacheItem(TKey k, TValue? v)
     {
-        public LruCacheItem(TKey k, TValue? v)
-        {
-            Key = k;
-            Value = v;
-        }
-
-        public TKey Key { get; }
-
-        public TValue? Value { get; }
+        Key = k;
+        Value = v;
     }
+
+    public TKey Key { get; }
+
+    public TValue? Value { get; }
 }

@@ -12,12 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Kaspirin.UI.Framework.UiKit.Controls
+namespace Kaspirin.UI.Framework.UiKit.Controls;
+
+public enum PasswordInputRevealMode
 {
-    public enum PasswordInputRevealMode
-    {
-        Disabled,
-        ReadOnly,
-        Editable
-    }
+    Disabled,
+    ReadOnly,
+    Editable
 }

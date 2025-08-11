@@ -14,21 +14,23 @@
 
 using System.Windows;
 
-namespace Kaspirin.UI.Framework.UiKit.Controls
+namespace Kaspirin.UI.Framework.UiKit.Controls;
+
+public sealed class BadgeText : Badge
 {
-    public class BadgeText : Badge
+    #region Text
+
+    public string Text
     {
-        #region Text
-
-        public string Text
-        {
-            get { return (string)GetValue(TextProperty); }
-            set { SetValue(TextProperty, value); }
-        }
-
-        public static readonly DependencyProperty TextProperty =
-            DependencyProperty.Register("Text", typeof(string), typeof(BadgeText));
-
-        #endregion
+        get => (string)GetValue(TextProperty);
+        set => SetValue(TextProperty, value);
     }
+
+    public static readonly DependencyProperty TextProperty = DependencyProperty.Register(
+        nameof(Text),
+        typeof(string),
+        typeof(BadgeText),
+        new PropertyMetadata(default(string)));
+
+    #endregion
 }

@@ -16,71 +16,70 @@ using System;
 using System.Globalization;
 using System.Windows.Data;
 
-namespace Kaspirin.UI.Framework.UiKit.Converters
+namespace Kaspirin.UI.Framework.UiKit.Converters;
+
+/// <summary>
+///     Provides an implementation of <see cref="IMultiValueConverter" />, which uses arbitrary logic to convert values.
+/// </summary>
+public sealed class DelegateMultiConverter : IMultiValueConverter
 {
     /// <summary>
-    ///     Provides an implementation of <see cref="IMultiValueConverter" />, which uses arbitrary logic to convert values.
+    ///     Creates an object <see cref="DelegateMultiConverter" />.
     /// </summary>
-    public sealed class DelegateMultiConverter : IMultiValueConverter
+    /// <param name="convert">
+    ///     The delegate for the <see cref="Convert" /> method.
+    /// </param>
+    /// <param name="convertBack">
+    ///     The delegate for the <see cref="ConvertBack" /> method.
+    /// </param>
+    public DelegateMultiConverter(Func<object?[], object?> convert, Func<object?, object?[]>? convertBack = null)
     {
-        /// <summary>
-        ///     Creates an object <see cref="DelegateMultiConverter" />.
-        /// </summary>
-        /// <param name="convert">
-        ///     The delegate for the <see cref="Convert" /> method.
-        /// </param>
-        /// <param name="convertBack">
-        ///     The delegate for the <see cref="ConvertBack" /> method.
-        /// </param>
-        public DelegateMultiConverter(Func<object?[], object?> convert, Func<object?, object?[]>? convertBack = null)
-        {
-            _convert = Guard.EnsureArgumentIsNotNull(convert);
-            _convertBack = convertBack;
-        }
-
-        /// <summary>
-        ///     Converts <paramref name="values" /> using the delegate provided in the constructor.
-        /// </summary>
-        /// <param name="values">
-        ///     Converted values.
-        /// </param>
-        /// <param name="targetType">
-        ///     Not used.
-        /// </param>
-        /// <param name="parameter">
-        ///     Not used.
-        /// </param>
-        /// <param name="culture">
-        ///     Not used.
-        /// </param>
-        /// <returns>
-        ///     The result of the delegate call.
-        /// </returns>
-        public object? Convert(object?[] values, Type targetType, object? parameter, CultureInfo culture)
-            => _convert.Invoke(values);
-
-        /// <summary>
-        ///     Performs the reverse conversion of <paramref name="value" /> using the delegate provided in the constructor.
-        /// </summary>
-        /// <param name="value">
-        ///     The converted value.
-        /// </param>
-        /// <param name="targetTypes">
-        ///     Not used.
-        /// </param>
-        /// <param name="parameter">
-        ///     Not used.
-        /// </param>
-        /// <param name="culture">
-        ///     Not used.
-        /// </param>
-        /// <returns>
-        ///     The result of calling the delegate or <see langword="null" /> if the delegate for reverse conversion is not specified.
-        /// </returns>
-        public object?[]? ConvertBack(object? value, Type[] targetTypes, object? parameter, CultureInfo culture)
-            => _convertBack?.Invoke(value);
-
-        private readonly Func<object?[], object?> _convert;
-        private readonly Func<object?, object?[]>? _convertBack;
+        _convert = Guard.EnsureArgumentIsNotNull(convert);
+        _convertBack = convertBack;
     }
+
+    /// <summary>
+    ///     Converts <paramref name="values" /> using the delegate provided in the constructor.
+    /// </summary>
+    /// <param name="values">
+    ///     Converted values.
+    /// </param>
+    /// <param name="targetType">
+    ///     Not used.
+    /// </param>
+    /// <param name="parameter">
+    ///     Not used.
+    /// </param>
+    /// <param name="culture">
+    ///     Not used.
+    /// </param>
+    /// <returns>
+    ///     The result of the delegate call.
+    /// </returns>
+    public object? Convert(object?[] values, Type targetType, object? parameter, CultureInfo culture)
+        => _convert.Invoke(values);
+
+    /// <summary>
+    ///     Performs the reverse conversion of <paramref name="value" /> using the delegate provided in the constructor.
+    /// </summary>
+    /// <param name="value">
+    ///     The converted value.
+    /// </param>
+    /// <param name="targetTypes">
+    ///     Not used.
+    /// </param>
+    /// <param name="parameter">
+    ///     Not used.
+    /// </param>
+    /// <param name="culture">
+    ///     Not used.
+    /// </param>
+    /// <returns>
+    ///     The result of calling the delegate or <see langword="null" /> if the delegate for reverse conversion is not specified.
+    /// </returns>
+    public object?[]? ConvertBack(object? value, Type[] targetTypes, object? parameter, CultureInfo culture)
+        => _convertBack?.Invoke(value);
+
+    private readonly Func<object?[], object?> _convert;
+    private readonly Func<object?, object?[]>? _convertBack;
 }

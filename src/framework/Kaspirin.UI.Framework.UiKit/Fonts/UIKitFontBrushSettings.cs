@@ -12,15 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Kaspirin.UI.Framework.UiKit.Fonts
-{
-    public sealed class UIKitFontBrushSettings
-    {
-        internal UIKitFontBrushSettings(string brush)
-        {
-            Brush = brush;
-        }
+namespace Kaspirin.UI.Framework.UiKit.Fonts;
 
-        public string Brush { get; }
+public sealed class UIKitFontBrushSettings
+{
+    internal UIKitFontBrushSettings(string brush)
+    {
+        Brush = brush;
     }
+
+    public string Brush { get; }
 }

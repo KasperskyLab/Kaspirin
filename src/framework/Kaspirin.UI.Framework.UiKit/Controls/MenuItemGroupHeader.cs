@@ -12,16 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Kaspirin.UI.Framework.UiKit.Controls
+namespace Kaspirin.UI.Framework.UiKit.Controls;
+
+public sealed class MenuItemGroupHeader : MenuItemBase
 {
-    public class MenuItemGroupHeader : MenuItemBase
+    public MenuItemGroupHeader()
     {
-        public MenuItemGroupHeader()
-        {
-            IsHitTestVisible = false;
-            IsCheckable = false;
-            IsTabStop = false;
-            MenuItemRole = MenuItemRole.MenuItemGroupHeader;
-        }
+        IsHitTestVisible = false;
+        IsCheckable = false;
+        IsTabStop = false;
+        MenuItemRole = MenuItemRole.MenuItemGroupHeader;
     }
 }

@@ -20,98 +20,97 @@ using System.Security;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace Kaspirin.UI.Framework.Cryptography
+namespace Kaspirin.UI.Framework.Cryptography;
+
+/// <summary>
+///     Calculates the hash sum for the specified data.
+/// </summary>
+public static class HashProvider
 {
     /// <summary>
-    ///     Calculates the hash sum for the specified data.
+    ///     Calculates SHA256 for the specified file.
     /// </summary>
-    public static class HashProvider
+    /// <param name="filePath">
+    ///     The path to the file.
+    /// </param>
+    /// <returns>
+    ///     The hash amount for the specified file.
+    /// </returns>
+    public static string CalculateSha256FromFile(string filePath)
     {
-        /// <summary>
-        ///     Calculates SHA256 for the specified file.
-        /// </summary>
-        /// <param name="filePath">
-        ///     The path to the file.
-        /// </param>
-        /// <returns>
-        ///     The hash amount for the specified file.
-        /// </returns>
-        public static string CalculateSha256FromFile(string filePath)
+        using var sha256Hash = SHA256.Create();
+        using var fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read);
+
+        fileStream.Position = 0;
+        var hashValue = sha256Hash.ComputeHash(fileStream);
+
+        return BitConverter.ToString(hashValue).Replace("-", string.Empty);
+    }
+
+    /// <summary>
+    ///     Calculates SHA256 for the specified string.
+    /// </summary>
+    /// <param name="data">
+    ///     Line.
+    /// </param>
+    /// <returns>
+    ///     The hash amount for the specified file.
+    /// </returns>
+    public static string CalculateSha256FromString(string data)
+    {
+        if (string.IsNullOrEmpty(data))
         {
-            using var sha256Hash = SHA256.Create();
-            using var fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read);
-
-            fileStream.Position = 0;
-            var hashValue = sha256Hash.ComputeHash(fileStream);
-
-            return BitConverter.ToString(hashValue).Replace("-", string.Empty);
+            return string.Empty;
         }
 
-        /// <summary>
-        ///     Calculates SHA256 for the specified string.
-        /// </summary>
-        /// <param name="data">
-        ///     Line.
-        /// </param>
-        /// <returns>
-        ///     The hash amount for the specified file.
-        /// </returns>
-        public static string CalculateSha256FromString(string data)
+        using var sha256Hash = SHA256.Create();
+
+        return BitConverter
+            .ToString(sha256Hash.ComputeHash(Encoding.UTF8.GetBytes(data)))
+            .Replace("-", string.Empty);
+    }
+
+    /// <summary>
+    ///     Calculates MD5 for the specified secure string.
+    /// </summary>
+    /// <param name="secureString">
+    ///     A secure string.
+    /// </param>
+    /// <returns>
+    ///     The hash amount for the specified secure string.
+    /// </returns>
+    public static string CalculateMd5(SecureString secureString)
+    {
+        var length = secureString.Length;
+
+        var buffer = IntPtr.Zero;
+        var charArray = new char[length];
+        var byteArray = default(byte[]);
+        var hash = default(byte[]);
+
+        try
         {
-            if (string.IsNullOrEmpty(data))
+            buffer = Marshal.SecureStringToBSTR(secureString);
+            Marshal.Copy(buffer, charArray, 0, length);
+            byteArray = Encoding.Unicode.GetBytes(charArray);
+            using var md5 = MD5.Create();
+            hash = md5.ComputeHash(byteArray);
+        }
+        finally
+        {
+            if (buffer != IntPtr.Zero)
             {
-                return string.Empty;
+                Marshal.ZeroFreeBSTR(buffer);
             }
 
-            using var sha256Hash = SHA256.Create();
+            Array.Clear(charArray, 0, charArray.Length);
 
-            return BitConverter
-                .ToString(sha256Hash.ComputeHash(Encoding.UTF8.GetBytes(data)))
-                .Replace("-", string.Empty);
+            if (byteArray is not null)
+            {
+                Array.Clear(byteArray, 0, byteArray.Length);
+            }
         }
 
-        /// <summary>
-        ///     Calculates MD5 for the specified secure string.
-        /// </summary>
-        /// <param name="secureString">
-        ///     A secure string.
-        /// </param>
-        /// <returns>
-        ///     The hash amount for the specified secure string.
-        /// </returns>
-        public static string CalculateMd5(SecureString secureString)
-        {
-            var length = secureString.Length;
-
-            var buffer = IntPtr.Zero;
-            var charArray = new char[length];
-            var byteArray = default(byte[]);
-            var hash = default(byte[]);
-
-            try
-            {
-                buffer = Marshal.SecureStringToBSTR(secureString);
-                Marshal.Copy(buffer, charArray, 0, length);
-                byteArray = Encoding.Unicode.GetBytes(charArray);
-                using var md5 = MD5.Create();
-                hash = md5.ComputeHash(byteArray);
-            }
-            finally
-            {
-                if (buffer != IntPtr.Zero)
-                {
-                    Marshal.ZeroFreeBSTR(buffer);
-                }
-
-                Array.Clear(charArray, 0, charArray.Length);
-
-                if (byteArray is not null)
-                {
-                    Array.Clear(byteArray, 0, byteArray.Length);
-                }
-            }
-
-            return string.Join(string.Empty, hash.Select(x => x.ToString("X2")));
-        }
+        return string.Join(string.Empty, hash.Select(x => x.ToString("X2")));
     }
 }

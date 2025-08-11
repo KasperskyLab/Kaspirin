@@ -12,23 +12,25 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#pragma warning disable KCAIDE0006 // Class should be abstract or sealed
 
 using Microsoft.Win32.SafeHandles;
 
-namespace Kaspirin.UI.Framework.NativeMethods.SafeHandles
-{
-    /// <summary>
-    ///     The handle of the system object.
-    /// </summary>
-    public class SafeTokenHandle : SafeHandleZeroOrMinusOneIsInvalid
-    {
-        internal SafeTokenHandle(bool ownsHandle) : base(ownsHandle)
-        {
-        }
+namespace Kaspirin.UI.Framework.NativeMethods.SafeHandles;
 
-        /// <inheritdoc/>
-        protected override bool ReleaseHandle()
-            => Kernel32Dll.CloseHandle(handle);
+/// <summary>
+///     The handle of the system object.
+/// </summary>
+public class SafeTokenHandle : SafeHandleZeroOrMinusOneIsInvalid
+{
+    internal SafeTokenHandle() : this(true)
+    {
     }
+
+    internal SafeTokenHandle(bool ownsHandle) : base(ownsHandle)
+    {
+    }
+
+    /// <inheritdoc/>
+    protected override bool ReleaseHandle()
+        => Kernel32Dll.CloseHandle(handle);
 }

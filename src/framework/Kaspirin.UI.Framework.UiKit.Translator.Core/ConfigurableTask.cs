@@ -17,46 +17,45 @@ using System.IO;
 using Microsoft.Build.Framework;
 using Microsoft.Build.Utilities;
 
-namespace Kaspirin.UI.Framework.UiKit.Translator.Core
-{
-    public abstract class ConfigurableTask
+namespace Kaspirin.UI.Framework.UiKit.Translator.Core;
+
+public abstract class ConfigurableTask
 #if !NET6_0_OR_GREATER
-        : AppDomainIsolatedTask
+    : AppDomainIsolatedTask
 #else
-        : Task
+    : Task
 #endif
+{
+    [Required]
+    public string ConfigPath { get; set; }
+
+    protected virtual bool CheckArguments()
     {
-        [Required]
-        public string ConfigPath { get; set; }
-
-        protected virtual bool CheckArguments()
+        if (!File.Exists(ConfigPath))
         {
-            if (!File.Exists(ConfigPath))
-            {
-                Log.LogError($"Config file '{Path.GetFullPath(ConfigPath)}' doesn't exist.");
-                return false;
-            }
-
-            return true;
+            Log.LogError($"Config file '{Path.GetFullPath(ConfigPath)}' doesn't exist.");
+            return false;
         }
 
-        protected bool ReadConfiguration()
-        {
-            try
-            {
-                var configContent = File.ReadAllText(ConfigPath);
-                _configuration = JsonHelper.Deserialize<Configuration>(configContent);
-            }
-            catch (Exception ex)
-            {
-                Log.LogError("Config deserialization failed.");
-                Log.LogErrorFromException(ex, showStackTrace: true);
-                return false;
-            }
-
-            return true;
-        }
-
-        private protected Configuration _configuration;
+        return true;
     }
+
+    protected bool ReadConfiguration()
+    {
+        try
+        {
+            var configContent = File.ReadAllText(ConfigPath);
+            _configuration = JsonHelper.Deserialize<Configuration>(configContent);
+        }
+        catch (Exception ex)
+        {
+            Log.LogError("Config deserialization failed.");
+            Log.LogErrorFromException(ex, showStackTrace: true);
+            return false;
+        }
+
+        return true;
+    }
+
+    private protected Configuration _configuration;
 }

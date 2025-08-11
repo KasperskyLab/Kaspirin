@@ -12,17 +12,35 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Kaspirin.UI.Framework.UiKit.Accessibility.TextScale
-{
-    public sealed class TextScaleChangedEventArgs
-    {
-        public TextScaleChangedEventArgs(double oldScale, double newScale)
-        {
-            OldScale = oldScale;
-            NewScale = newScale;
-        }
+namespace Kaspirin.UI.Framework.UiKit.Accessibility.TextScale;
 
-        public double NewScale { get; private set; }
-        public double OldScale { get; private set; }
+/// <summary>
+///     Data about the text zoom event.
+/// </summary>
+public sealed class TextScaleChangedEventArgs
+{
+    /// <summary>
+    ///     Creates a new instance of <see cref="TextScaleChangedEventArgs" /> with the specified values of the old and new scale.
+    /// </summary>
+    /// <param name="oldScale">
+    ///     The old scale value.
+    /// </param>
+    /// <param name="newScale">
+    ///     New scale value.
+    /// </param>
+    public TextScaleChangedEventArgs(double oldScale, double newScale)
+    {
+        OldScale = oldScale;
+        NewScale = newScale;
     }
+
+    /// <summary>
+    ///     New scale value.
+    /// </summary>
+    public double NewScale { get; }
+
+    /// <summary>
+    ///     The old scale value.
+    /// </summary>
+    public double OldScale { get; }
 }

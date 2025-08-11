@@ -12,58 +12,59 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#pragma warning disable CA1724 // Change either name to eliminate the conflict.
+
 using System.Linq;
 using System.Windows;
 
-namespace Kaspirin.UI.Framework.UiKit.Interactivity.Core
+namespace Kaspirin.UI.Framework.UiKit.Interactivity.Core;
+
+public abstract class Behavior<TAssociatedObject, TBehavior> : Behavior<TAssociatedObject>
+    where TAssociatedObject : DependencyObject
+    where TBehavior : Behavior<TAssociatedObject>, new()
 {
-    public abstract class Behavior<TAssociatedObject, TBehavior> : Behavior<TAssociatedObject>
-        where TAssociatedObject : DependencyObject
-        where TBehavior : Behavior<TAssociatedObject>, new()
+    #region IsEnabled
+
+    public static bool GetIsEnabled(DependencyObject obj)
+        => (bool)obj.GetValue(IsEnabledProperty);
+
+    public static void SetIsEnabled(DependencyObject obj, bool value)
+        => obj.SetValue(IsEnabledProperty, value);
+
+    public static readonly DependencyProperty IsEnabledProperty = DependencyProperty.RegisterAttached(
+        "IsEnabled",
+        typeof(bool),
+        typeof(Behavior<TAssociatedObject, TBehavior>),
+        new PropertyMetadata(default(bool), OnIsEnabledChanged));
+
+    private static void OnIsEnabledChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)
     {
-        #region IsEnabled
-
-        public static readonly DependencyProperty IsEnabledProperty = DependencyProperty.RegisterAttached(
-            "IsEnabled",
-            typeof(bool),
-            typeof(Behavior<TAssociatedObject, TBehavior>),
-            new PropertyMetadata(false, OnIsEnabledChanged));
-
-        public static bool GetIsEnabled(DependencyObject obj)
-            => (bool)obj.GetValue(IsEnabledProperty);
-
-        public static void SetIsEnabled(DependencyObject obj, bool value)
-            => obj.SetValue(IsEnabledProperty, value);
-
-        private static void OnIsEnabledChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)
+        if (dependencyObject is not TAssociatedObject)
         {
-            if (dependencyObject is not TAssociatedObject)
-            {
-                return;
-            }
-
-            var behaviors = Interaction.GetBehaviors(dependencyObject);
-            if ((bool)args.NewValue)
-            {
-                var alreadyExists = behaviors.OfType<TBehavior>().GuardedSingleOrDefault() is not null;
-                if (!alreadyExists)
-                {
-                    behaviors.Add(new TBehavior());
-                }
-            }
-            else
-            {
-                var itemToRemove = behaviors.Where(x => x.GetType() == typeof(TBehavior)).GuardedSingleOrDefault();
-                if (itemToRemove is not null)
-                {
-                    behaviors.Remove(itemToRemove);
-                }
-            }
+            return;
         }
 
-        #endregion
-
-        protected static TBehavior GetBehavior(DependencyObject obj)
-            => Interaction.GetBehaviors(obj).OfType<TBehavior>().GuardedSingle();
+        var behaviors = Interaction.GetBehaviors(dependencyObject);
+        if ((bool)args.NewValue)
+        {
+            var alreadyExists = behaviors.OfType<TBehavior>().GuardedSingleOrDefault() is not null;
+            if (!alreadyExists)
+            {
+                behaviors.Add(new TBehavior());
+            }
+        }
+        else
+        {
+            var itemToRemove = behaviors.Where(x => x.GetType() == typeof(TBehavior)).GuardedSingleOrDefault();
+            if (itemToRemove is not null)
+            {
+                behaviors.Remove(itemToRemove);
+            }
+        }
     }
+
+    #endregion
+
+    protected static TBehavior GetBehavior(DependencyObject obj)
+        => Interaction.GetBehaviors(obj).OfType<TBehavior>().GuardedSingle();
 }

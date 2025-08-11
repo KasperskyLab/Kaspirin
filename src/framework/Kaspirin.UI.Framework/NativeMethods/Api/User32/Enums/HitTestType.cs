@@ -12,39 +12,130 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
+namespace Kaspirin.UI.Framework.NativeMethods.Api.User32.Enums;
 
-namespace Kaspirin.UI.Framework.NativeMethods.Api.User32.Enums
+/// <summary>
+///     <seealso href="https://learn.microsoft.com/en-us/windows/win32/inputdev/wm-nchittest">Learn more</seealso>.
+/// </summary>
+public enum HitTestType : int
 {
     /// <summary>
-    ///     
-    /// <seealso href="https://learn.microsoft.com/en-us/windows/win32/inputdev/wm-nchittest">Learn more</seealso>.
+    ///     The HTERROR constant.
     /// </summary>
-    public enum HitTestType : int
-    {
-        HTERROR = -2,
-        HTTRANSPARENT = -1,
-        HTNOWHERE = 0,
-        HTCLIENT = 1,
-        HTCAPTION = 2,
-        HTSYSMENU = 3,
-        HTGROWBOX = 4,
-        HTMENU = 5,
-        HTHSCROLL = 6,
-        HTVSCROLL = 7,
-        HTMINBUTTON = 8,
-        HTMAXBUTTON = 9,
-        HTLEFT = 10,
-        HTRIGHT = 11,
-        HTTOP = 12,
-        HTTOPLEFT = 13,
-        HTTOPRIGHT = 14,
-        HTBOTTOM = 15,
-        HTBOTTOMLEFT = 16,
-        HTBOTTOMRIGHT = 17,
-        HTBORDER = 18,
-        HTOBJECT = 19,
-        HTCLOSE = 20,
-        HTHELP = 21,
-    }
+    Error = -2,
+
+    /// <summary>
+    ///     The HTTRANSPARENT constant.
+    /// </summary>
+    Transparent = -1,
+
+    /// <summary>
+    ///     The HTNOWHERE constant.
+    /// </summary>
+    Nowhere = 0,
+
+    /// <summary>
+    ///     The HTCLIENT constant.
+    /// </summary>
+    Client = 1,
+
+    /// <summary>
+    ///     The HTCAPTION constant.
+    /// </summary>
+    Caption = 2,
+
+    /// <summary>
+    ///     The HTSYSMENU constant.
+    /// </summary>
+    SysMenu = 3,
+
+    /// <summary>
+    ///     The HTGROWBOX constant.
+    /// </summary>
+    GrowBox = 4,
+
+    /// <summary>
+    ///     The HTMENU constant.
+    /// </summary>
+    Menu = 5,
+
+    /// <summary>
+    ///     The HTHSCROLL constant.
+    /// </summary>
+    HScroll = 6,
+
+    /// <summary>
+    ///     The HTVSCROLL constant.
+    /// </summary>
+    VScroll = 7,
+
+    /// <summary>
+    ///     The HTMINBUTTON constant.
+    /// </summary>
+    MinButton = 8,
+
+    /// <summary>
+    ///     The HTMAXBUTTON constant.
+    /// </summary>
+    MaxButton = 9,
+
+    /// <summary>
+    ///     The HTLEFT constant.
+    /// </summary>
+    Left = 10,
+
+    /// <summary>
+    ///     The HTRIGHT constant.
+    /// </summary>
+    Right = 11,
+
+    /// <summary>
+    ///     The HTTOP constant.
+    /// </summary>
+    Top = 12,
+
+    /// <summary>
+    ///     The HTTOPLEFT constant.
+    /// </summary>
+    TopLeft = 13,
+
+    /// <summary>
+    ///     The HTTOPRIGHT constant.
+    /// </summary>
+    TopRight = 14,
+
+    /// <summary>
+    ///     The HTBOTTOM constant.
+    /// </summary>
+    Bottom = 15,
+
+    /// <summary>
+    ///     The HTBOTTOMLEFT constant.
+    /// </summary>
+    BottomLeft = 16,
+
+    /// <summary>
+    ///     The HTBOTTOMRIGHT constant.
+    /// </summary>
+    BottomRight = 17,
+
+    /// <summary>
+    ///     The HTBORDER constant.
+    /// </summary>
+    Border = 18,
+
+    /// <summary>
+    ///     The HTOBJECT constant.
+    /// </summary>
+    Object = 19,
+
+    /// <summary>
+    ///     The HTCLOSE constant.
+    /// </summary>
+    Close = 20,
+
+    /// <summary>
+    ///     The HTHELP constant.
+    /// </summary>
+    Help = 21,
 }

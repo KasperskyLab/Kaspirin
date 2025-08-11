@@ -57,71 +57,6 @@
 			<xsl:with-param name="key" select="$id"/>
 			<xsl:with-param name="setters">
 
-				<!--Style.Resources-->
-				<xsl:element name ="Style.Resources">
-
-					<!--TextStyle-->
-					<xsl:call-template name="generateStyle">
-						<xsl:with-param name="targetType">TextBlock</xsl:with-param>
-						<xsl:with-param name="basedOn" select="@TextStyleIdNormal"/>
-						<xsl:with-param name="key">TextStyle</xsl:with-param>
-						<xsl:with-param name="setters">
-							<!--TextElement.Foreground-->
-							<xsl:call-template name="generateBrushSetter">
-								<xsl:with-param name="propertyName">TextElement.Foreground</xsl:with-param>
-								<xsl:with-param name="brushName">ForegroundNormal</xsl:with-param>
-								<xsl:with-param name="scopeName" select="$id"/>
-							</xsl:call-template>
-						</xsl:with-param>
-					</xsl:call-template>
-
-					<!--TextStyleDisabled-->
-					<xsl:call-template name="generateStyle">
-						<xsl:with-param name="targetType">TextBlock</xsl:with-param>
-						<xsl:with-param name="basedOn" select="@TextStyleIdDisabled"/>
-						<xsl:with-param name="key">TextStyleDisabled</xsl:with-param>
-						<xsl:with-param name="setters">
-							<!--TextElement.Foreground-->
-							<xsl:call-template name="generateBrushSetter">
-								<xsl:with-param name="propertyName">TextElement.Foreground</xsl:with-param>
-								<xsl:with-param name="brushName">ForegroundDisabled</xsl:with-param>
-								<xsl:with-param name="scopeName" select="$id"/>
-							</xsl:call-template>
-						</xsl:with-param>
-					</xsl:call-template>
-
-					<!--TextStyleHover-->
-					<xsl:call-template name="generateStyle">
-						<xsl:with-param name="targetType">TextBlock</xsl:with-param>
-						<xsl:with-param name="basedOn" select="@TextStyleIdHover"/>
-						<xsl:with-param name="key">TextStyleHover</xsl:with-param>
-						<xsl:with-param name="setters">
-							<!--TextElement.Foreground-->
-							<xsl:call-template name="generateBrushSetter">
-								<xsl:with-param name="propertyName">TextElement.Foreground</xsl:with-param>
-								<xsl:with-param name="brushName">ForegroundHover</xsl:with-param>
-								<xsl:with-param name="scopeName" select="$id"/>
-							</xsl:call-template>
-						</xsl:with-param>
-					</xsl:call-template>
-
-					<!--TextStylePressed-->
-					<xsl:call-template name="generateStyle">
-						<xsl:with-param name="targetType">TextBlock</xsl:with-param>
-						<xsl:with-param name="basedOn" select="@TextStyleIdPressed"/>
-						<xsl:with-param name="key">TextStylePressed</xsl:with-param>
-						<xsl:with-param name="setters">
-							<!--TextElement.Foreground-->
-							<xsl:call-template name="generateBrushSetter">
-								<xsl:with-param name="propertyName">TextElement.Foreground</xsl:with-param>
-								<xsl:with-param name="brushName">ForegroundPressed</xsl:with-param>
-								<xsl:with-param name="scopeName" select="$id"/>
-							</xsl:call-template>
-						</xsl:with-param>
-					</xsl:call-template>
-
-				</xsl:element>
-
 				<!--Button_Container_Background-->
 				<xsl:call-template name="generateBrushSetter">
 					<xsl:with-param name="propertyId">Button_Container_Background</xsl:with-param>
@@ -154,11 +89,11 @@
 					<xsl:with-param name="scopeName" select="$id"/>
 				</xsl:call-template>
 
-				<!--Button_Icon_Foreground-->
-				<xsl:if test="IconForegroundNormal">
+				<!--Button_Icon_Brush-->
+				<xsl:if test="IconBrushNormal">
 					<xsl:call-template name="generateBrushSetter">
-						<xsl:with-param name="propertyId">Button_Icon_Foreground</xsl:with-param>
-						<xsl:with-param name="brushName">IconForegroundNormal</xsl:with-param>
+						<xsl:with-param name="propertyId">Button_Icon_Brush</xsl:with-param>
+						<xsl:with-param name="brushName">IconBrushNormal</xsl:with-param>
 						<xsl:with-param name="scopeName" select="$id" />
 					</xsl:call-template>
 				</xsl:if>
@@ -167,12 +102,6 @@
 				<xsl:call-template name="generateUiKitSetterViaAttribute">
 					<xsl:with-param name="propertyId">Button_Icon_Opacity</xsl:with-param>
 					<xsl:with-param name="propertyValue" select="@IconOpacityNormal" />
-				</xsl:call-template>
-
-				<!--Button_Icon_MarginLeft-->
-				<xsl:call-template name="generateMarginSetter">
-					<xsl:with-param name="propertyId">Button_Icon_MarginLeft</xsl:with-param>
-					<xsl:with-param name="marginNode" select="IconMargin" />
 				</xsl:call-template>
 
 				<!--Button_FocusVisualStyle-->
@@ -195,30 +124,6 @@
 				<!--Button_Padding-->
 				<xsl:call-template name="generatePaddingSetter">
 					<xsl:with-param name="propertyId">Button_Padding</xsl:with-param>
-				</xsl:call-template>
-
-				<!--Button_TextStyle-->
-				<xsl:call-template name="generateStaticResourceSetter">
-					<xsl:with-param name="propertyId">Button_TextStyle</xsl:with-param>
-					<xsl:with-param name="resourceName">TextStyle</xsl:with-param>
-				</xsl:call-template>
-
-				<!--Button_TextStyleDisabled-->
-				<xsl:call-template name="generateStaticResourceSetter">
-					<xsl:with-param name="propertyId">Button_TextStyleDisabled</xsl:with-param>
-					<xsl:with-param name="resourceName">TextStyleDisabled</xsl:with-param>
-				</xsl:call-template>
-
-				<!--Button_TextStyleHover-->
-				<xsl:call-template name="generateStaticResourceSetter">
-					<xsl:with-param name="propertyId">Button_TextStyleHover</xsl:with-param>
-					<xsl:with-param name="resourceName">TextStyleHover</xsl:with-param>
-				</xsl:call-template>
-
-				<!--Button_TextStylePressed-->
-				<xsl:call-template name="generateStaticResourceSetter">
-					<xsl:with-param name="propertyId">Button_TextStylePressed</xsl:with-param>
-					<xsl:with-param name="resourceName">TextStylePressed</xsl:with-param>
 				</xsl:call-template>
 
 				<!--SsoButton_Icon_Name-->
@@ -264,11 +169,11 @@
 							<xsl:with-param name="scope" select="$id"/>
 						</xsl:call-template>
 
-						<!--Button_Icon_Foreground-->
-						<xsl:if test="IconForegroundDisabled">
+						<!--Button_Icon_Brush-->
+						<xsl:if test="IconBrushDisabled">
 							<xsl:call-template name="generateBrushSetter">
-								<xsl:with-param name="propertyId">Button_Icon_Foreground</xsl:with-param>
-								<xsl:with-param name="brushName">IconForegroundDisabled</xsl:with-param>
+								<xsl:with-param name="propertyId">Button_Icon_Brush</xsl:with-param>
+								<xsl:with-param name="brushName">IconBrushDisabled</xsl:with-param>
 								<xsl:with-param name="scopeName" select="$id" />
 							</xsl:call-template>
 						</xsl:if>
@@ -321,11 +226,11 @@
 							<xsl:with-param name="scope" select="$id"/>
 						</xsl:call-template>
 
-						<!--Button_Icon_Foreground-->
-						<xsl:if test="IconForegroundHover">
+						<!--Button_Icon_Brush-->
+						<xsl:if test="IconBrushHover">
 							<xsl:call-template name="generateBrushSetter">
-								<xsl:with-param name="propertyId">Button_Icon_Foreground</xsl:with-param>
-								<xsl:with-param name="brushName">IconForegroundHover</xsl:with-param>
+								<xsl:with-param name="propertyId">Button_Icon_Brush</xsl:with-param>
+								<xsl:with-param name="brushName">IconBrushHover</xsl:with-param>
 								<xsl:with-param name="scopeName" select="$id" />
 							</xsl:call-template>
 						</xsl:if>
@@ -378,11 +283,11 @@
 							<xsl:with-param name="scope" select="$id"/>
 						</xsl:call-template>
 
-						<!--Button_Icon_Foreground-->
-						<xsl:if test="IconForegroundPressed">
+						<!--Button_Icon_Brush-->
+						<xsl:if test="IconBrushPressed">
 							<xsl:call-template name="generateBrushSetter">
-								<xsl:with-param name="propertyId">Button_Icon_Foreground</xsl:with-param>
-								<xsl:with-param name="brushName">IconForegroundPressed</xsl:with-param>
+								<xsl:with-param name="propertyId">Button_Icon_Brush</xsl:with-param>
+								<xsl:with-param name="brushName">IconBrushPressed</xsl:with-param>
 								<xsl:with-param name="scopeName" select="$id" />
 							</xsl:call-template>
 						</xsl:if>

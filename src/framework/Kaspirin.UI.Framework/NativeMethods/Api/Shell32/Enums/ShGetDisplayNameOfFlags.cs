@@ -12,24 +12,39 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-#pragma warning disable KCAIDE0002 // Enum has incorrect suffix
 
 using System;
 
-namespace Kaspirin.UI.Framework.NativeMethods.Api.Shell32.Enums
+namespace Kaspirin.UI.Framework.NativeMethods.Api.Shell32.Enums;
+
+/// <summary>
+///     <seealso href="https://learn.microsoft.com/en-us/windows/win32/api/shobjidl_core/ne-shobjidl_core-_shgdnf">Learn more</seealso>.
+/// </summary>
+[Flags]
+public enum ShGetDisplayNameOfFlags : uint
 {
     /// <summary>
-    ///     
-    /// <seealso href="https://learn.microsoft.com/en-us/windows/win32/api/shobjidl_core/ne-shobjidl_core-_shgdnf">Learn more</seealso>.
+    ///     The SHGDN_NORMAL constant.
     /// </summary>
-    [Flags]
-    public enum ShGetDisplayNameOfFlags : uint
-    {
-        SHGDN_NORMAL = 0x0000,
-        SHGDN_INFOLDER = 0x0001,
-        SHGDN_FOREDITING = 0x1000,
-        SHGDN_FORADDRESSBAR = 0x4000,
-        SHGDN_FORPARSING = 0x8000,
-    }
+    Normal = 0x0000,
+
+    /// <summary>
+    ///     The SHGDN_INFOLDER constant.
+    /// </summary>
+    InFolder = 0x0001,
+
+    /// <summary>
+    ///     The SHGDN_FOREDITING constant.
+    /// </summary>
+    ForEditing = 0x1000,
+
+    /// <summary>
+    ///     The SHGDN_FORADDRESSBAR constant.
+    /// </summary>
+    ForAddressBar = 0x4000,
+
+    /// <summary>
+    ///     The SHGDN_FORPARSING constant.
+    /// </summary>
+    ForParsing = 0x8000,
 }

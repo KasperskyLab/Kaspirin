@@ -15,24 +15,23 @@
 using System;
 using System.Windows;
 
-namespace Kaspirin.UI.Framework.UiKit.Windows
+namespace Kaspirin.UI.Framework.UiKit.Windows;
+
+public static class WindowIdFactory
 {
-    public static class WindowIdFactory
+    public static string GetDefaultWindowId<TWindow>() where TWindow : Window
     {
-        public static string GetDefaultWindowId<TWindow>() where TWindow : Window
-        {
-            return GetDefaultWindowId(typeof(TWindow));
-        }
+        return GetDefaultWindowId(typeof(TWindow));
+    }
 
-        public static string GetDefaultWindowId(Window window)
-        {
-            return GetDefaultWindowId(window.GetType());
-        }
+    public static string GetDefaultWindowId(Window window)
+    {
+        return GetDefaultWindowId(window.GetType());
+    }
 
-        private static string GetDefaultWindowId(Type windowType)
-        {
-            // prefix is needed for compatibility with eka::storage::Copy in avp::RegistryExporter
-            return $"windowId_{windowType.Name}_{HashProvider.CalculateSha256FromString(windowType.FullName!)}";
-        }
+    private static string GetDefaultWindowId(Type windowType)
+    {
+        // prefix is needed for compatibility with eka::storage::Copy in avp::RegistryExporter
+        return $"windowId_{windowType.Name}_{HashProvider.CalculateSha256FromString(windowType.FullName!)}";
     }
 }

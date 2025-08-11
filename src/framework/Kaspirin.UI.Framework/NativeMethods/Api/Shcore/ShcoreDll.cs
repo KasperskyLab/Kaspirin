@@ -17,27 +17,27 @@
 using System;
 using System.Runtime.InteropServices;
 
-namespace Kaspirin.UI.Framework.NativeMethods.Api.Shcore
+namespace Kaspirin.UI.Framework.NativeMethods.Api.Shcore;
+
+/// <summary>
+///     Provides API methods for functions from shcore.dll .
+/// </summary>
+public static class ShcoreDll
 {
+    #region shellscalingapi.h
+
     /// <summary>
-    ///     Provides API methods for functions from shcore.dll .
+    ///     The GetDpiForMonitor API method.
+    ///     <br /><seealso href="https://learn.microsoft.com/en-us/windows/win32/api/shellscalingapi/nf-shellscalingapi-getdpiformonitor">Learn more</seealso>.
     /// </summary>
-    public static class ShcoreDll
-    {
-        #region shellscalingapi.h
+    [DllImport(DllName, SetLastError = true)]
+    public static extern void GetDpiForMonitor(
+        IntPtr hMonitor,
+        MonitorDpiType dpiType,
+        ref uint dpiX,
+        ref uint dpiY);
 
-        /// <summary>
-        ///     The GetDpiForMonitor API method. <br /><seealso href="https://learn.microsoft.com/en-us/windows/win32/api/shellscalingapi/nf-shellscalingapi-getdpiformonitor">Learn more</seealso>.
-        /// </summary>
-        [DllImport(DllName, SetLastError = true)]
-        public static extern void GetDpiForMonitor(
-            IntPtr hMonitor,
-            MonitorDpiType dpiType,
-            ref uint dpiX,
-            ref uint dpiY);
+    #endregion
 
-        #endregion
-
-        private const string DllName = "SHCore.dll";
-    }
+    private const string DllName = "SHCore.dll";
 }

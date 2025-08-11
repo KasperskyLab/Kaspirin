@@ -17,32 +17,30 @@
 using System;
 using System.Runtime.InteropServices;
 
-namespace Kaspirin.UI.Framework.NativeMethods.Api.Shell32.Interfaces
+namespace Kaspirin.UI.Framework.NativeMethods.Api.Shell32.Interfaces;
+
+/// <summary>
+///     <seealso href="https://learn.microsoft.com/en-us/windows/win32/api/shobjidl_core/nn-shobjidl_core-ienumidlist">Learn more</seealso>.
+/// </summary>
+[ComImport]
+[InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+[Guid(ShlGuids.IidIEnumIDList)]
+public interface IEnumIDList
 {
-    /// <summary>
-    ///     
-    /// <seealso href="https://learn.microsoft.com/en-us/windows/win32/api/shobjidl_core/nn-shobjidl_core-ienumidlist">Learn more</seealso>.
-    /// </summary>
-    [ComImport]
-    [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
-    [Guid(ShlGuids.IidIEnumIDList)]
-    public interface IEnumIDList
-    {
-        [PreserveSig]
-        int Next(
-            int celt,
-            out IntPtr rgelt,
-            out int pceltFetched);
+    [PreserveSig]
+    int Next(
+        int celt,
+        out IntPtr rgelt,
+        out int pceltFetched);
 
-        [PreserveSig]
-        int Skip(
-            int celt);
+    [PreserveSig]
+    int Skip(
+        int celt);
 
-        [PreserveSig]
-        int Reset();
+    [PreserveSig]
+    int Reset();
 
-        [PreserveSig]
-        int Clone(
-            out IEnumIDList ppenum);
-    }
+    [PreserveSig]
+    int Clone(
+        out IEnumIDList ppenum);
 }

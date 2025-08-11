@@ -15,82 +15,81 @@
 using System.Windows;
 using System.Windows.Controls;
 
-namespace Kaspirin.UI.Framework.UiKit.Controls
+namespace Kaspirin.UI.Framework.UiKit.Controls;
+
+public abstract class SelectorList<TListItem> : ListBox where TListItem : SelectorItem, new()
 {
-    public abstract class SelectorList<TListItem> : ListBox where TListItem : SelectorItem, new()
+    #region ItemElement
+
+    public DataTemplate ItemElement
     {
-        #region ItemElement
+        get => (DataTemplate)GetValue(ItemElementProperty);
+        set => SetValue(ItemElementProperty, value);
+    }
 
-        public DataTemplate ItemElement
+    public static readonly DependencyProperty ItemElementProperty =
+        UIKitItemsControlHelper.ItemElementProperty.AddOwner(typeof(TListItem));
+
+    #endregion
+
+    #region ItemElementSelector
+
+    public DataTemplateSelector ItemElementSelector
+    {
+        get => (DataTemplateSelector)GetValue(ItemElementSelectorProperty);
+        set => SetValue(ItemElementSelectorProperty, value);
+    }
+
+    public static readonly DependencyProperty ItemElementSelectorProperty =
+        UIKitItemsControlHelper.ItemElementSelectorProperty.AddOwner(typeof(TListItem));
+
+    #endregion
+
+    public new void ScrollIntoView(object item)
+    {
+        if (item == null)
         {
-            get { return (DataTemplate)GetValue(ItemElementProperty); }
-            set { SetValue(ItemElementProperty, value); }
+            return;
         }
 
-        public static readonly DependencyProperty ItemElementProperty =
-            UIKitItemsControlHelper.ItemElementProperty.AddOwner(typeof(TListItem));
-
-        #endregion
-
-        #region ItemElementSelector
-
-        public DataTemplateSelector ItemElementSelector
+        var container = ItemContainerGenerator.ContainerFromItem(item) as SelectorItem;
+        if (container != null)
         {
-            get { return (DataTemplateSelector)GetValue(ItemElementSelectorProperty); }
-            set { SetValue(ItemElementSelectorProperty, value); }
-        }
-
-        public static readonly DependencyProperty ItemElementSelectorProperty =
-            UIKitItemsControlHelper.ItemElementSelectorProperty.AddOwner(typeof(TListItem));
-
-        #endregion
-
-        public new void ScrollIntoView(object item)
-        {
-            if (item == null)
+            var fadeLine = container.FindVisualParent<FadeLine>();
+            if (fadeLine != null)
             {
+                fadeLine.ScrollIntoView(container);
+
                 return;
             }
-
-            var container = ItemContainerGenerator.ContainerFromItem(item) as SelectorItem;
-            if (container != null)
-            {
-                var fadeLine = container.FindVisualParent<FadeLine>();
-                if (fadeLine != null)
-                {
-                    fadeLine.ScrollIntoView(container);
-
-                    return;
-                }
-            }
-
-            base.ScrollIntoView(item);
         }
 
-        protected override bool IsItemItsOwnContainerOverride(object item)
-        {
-            _processingItem = item;
-
-            return UIKitItemsControlHelper.IsItemContainer<TListItem>(item);
-        }
-
-        protected override DependencyObject GetContainerForItemOverride()
-        {
-            var processingItem = _processingItem;
-            _processingItem = null;
-
-            return UIKitItemsControlHelper.CreateItemContainer<TListItem>(this, processingItem);
-        }
-
-        protected override void PrepareContainerForItemOverride(DependencyObject element, object item)
-        {
-            element = UIKitItemsControlHelper.IsSimpleItemContainer(element)
-                ? element
-                : new TListItem();
-
-            base.PrepareContainerForItemOverride(element, item);
-        }
-
-        private object? _processingItem;
+        base.ScrollIntoView(item);
     }
+
+    protected override bool IsItemItsOwnContainerOverride(object item)
+    {
+        _processingItem = item;
+
+        return UIKitItemsControlHelper.IsItemContainer<TListItem>(item);
+    }
+
+    protected override DependencyObject GetContainerForItemOverride()
+    {
+        var processingItem = _processingItem;
+        _processingItem = null;
+
+        return UIKitItemsControlHelper.CreateItemContainer<TListItem>(this, processingItem);
+    }
+
+    protected override void PrepareContainerForItemOverride(DependencyObject element, object item)
+    {
+        element = UIKitItemsControlHelper.IsSimpleItemContainer(element)
+            ? element
+            : new TListItem();
+
+        base.PrepareContainerForItemOverride(element, item);
+    }
+
+    private object? _processingItem;
 }

@@ -17,29 +17,27 @@
 using System;
 using System.Runtime.InteropServices;
 
-namespace Kaspirin.UI.Framework.NativeMethods.Api.Shell32.Structs
+namespace Kaspirin.UI.Framework.NativeMethods.Api.Shell32.Structs;
+
+/// <summary>
+///     <seealso href="https://learn.microsoft.com/en-us/windows/win32/api/shellapi/ns-shellapi-shfileinfoa">Learn more</seealso>.
+/// </summary>
+[StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
+public struct ShFileInfo
 {
-    /// <summary>
-    ///     
-    /// <seealso href="https://learn.microsoft.com/en-us/windows/win32/api/shellapi/ns-shellapi-shfileinfoa">Learn more</seealso>.
-    /// </summary>
-    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
-    public struct ShFileInfo
-    {
-        public IntPtr IconHandle;
+    public IntPtr IconHandle;
 
-        public int Icon;
+    public int Icon;
 
-        public ShGetAttributesOfFlags Attributes;
+    public ShGetAttributesOfFlags Attributes;
 
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = PathConstants.MaxPathLength)]
-        public readonly string DisplayName;
+    [MarshalAs(UnmanagedType.ByValTStr, SizeConst = PathConstants.MaxPathLength)]
+    public readonly string DisplayName;
 
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = TypeNameSize)]
-        public readonly string TypeName;
+    [MarshalAs(UnmanagedType.ByValTStr, SizeConst = TypeNameSize)]
+    public readonly string TypeName;
 
-        public static readonly int ShFileInfoSize = Marshal.SizeOf(typeof(ShFileInfo));
+    public static readonly int ShFileInfoSize = Marshal.SizeOf(typeof(ShFileInfo));
 
-        private const int TypeNameSize = 80;
-    }
+    private const int TypeNameSize = 80;
 }

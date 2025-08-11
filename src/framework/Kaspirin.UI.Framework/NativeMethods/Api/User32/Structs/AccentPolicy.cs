@@ -16,17 +16,16 @@
 
 using System.Runtime.InteropServices;
 
-namespace Kaspirin.UI.Framework.NativeMethods.Api.User32.Structs
+namespace Kaspirin.UI.Framework.NativeMethods.Api.User32.Structs;
+
+/// <summary>
+///     An undocumented API. Used in the <see cref="User32Dll.SetWindowCompositionAttribute" /> call.
+/// </summary>
+[StructLayout(LayoutKind.Sequential)]
+public struct AccentPolicy
 {
-    /// <summary>
-    ///     An undocumented API. Used in the <see cref="User32Dll.SetWindowCompositionAttribute" /> call.
-    /// </summary>
-    [StructLayout(LayoutKind.Sequential)]
-    public struct AccentPolicy
-    {
-        public AccentState AccentState;
-        public uint AccentFlags;
-        public uint GradientColor;
-        public int AnimationId;
-    }
+    public AccentState AccentState;
+    public uint AccentFlags;
+    public uint GradientColor;
+    public int AnimationId;
 }

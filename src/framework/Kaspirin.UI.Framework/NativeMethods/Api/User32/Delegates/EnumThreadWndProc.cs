@@ -14,13 +14,11 @@
 
 using System;
 
-namespace Kaspirin.UI.Framework.NativeMethods.Api.User32.Delegates
-{
-    /// <summary>
-    ///     
-    /// <seealso href="https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-enumthreadwindows">Learn more</seealso>.
-    /// </summary>
-    public delegate bool EnumThreadWndProc(
-        IntPtr hWnd,
-        IntPtr lParam);
-}
+namespace Kaspirin.UI.Framework.NativeMethods.Api.User32.Delegates;
+
+/// <summary>
+///     <seealso href="https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-enumthreadwindows">Learn more</seealso>.
+/// </summary>
+public delegate bool EnumThreadWndProc(
+    IntPtr hWnd,
+    IntPtr lParam);

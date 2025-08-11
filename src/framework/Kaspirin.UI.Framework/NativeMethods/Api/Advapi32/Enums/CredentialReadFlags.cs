@@ -12,20 +12,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-#pragma warning disable KCAIDE0002 // Enum has incorrect suffix
-
 using System;
 
-namespace Kaspirin.UI.Framework.NativeMethods.Api.Advapi32.Enums
+namespace Kaspirin.UI.Framework.NativeMethods.Api.Advapi32.Enums;
+
+/// <summary>
+///     <seealso href="https://learn.microsoft.com/en-us/windows/win32/api/wincred/nf-wincred-credreadw">Learn more</seealso>.
+/// </summary>
+[Flags]
+public enum CredentialReadFlags : uint
 {
     /// <summary>
-    ///     
-    /// <seealso href="https://learn.microsoft.com/en-us/windows/win32/api/wincred/nf-wincred-credreadw">Learn more</seealso>.
+    ///     The flag is not set.
     /// </summary>
-    [Flags]
-    public enum CredentialReadFlags : uint
-    {
-        None = 0,
-    }
+    None = 0,
 }

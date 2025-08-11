@@ -12,10 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Kaspirin.UI.Framework.UiKit.Converters.EqualityConverters
+namespace Kaspirin.UI.Framework.UiKit.Converters.EqualityConverters;
+
+public sealed class EqualityToBooleanInverseConverter : BaseEqualityConverter<bool>
 {
-    public class EqualityToBooleanInverseConverter : BaseEqualityConverter<bool>
-    {
-        public EqualityToBooleanInverseConverter() : base(false, true) { }
-    }
+    public EqualityToBooleanInverseConverter() : base(false, true) { }
 }

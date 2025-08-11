@@ -15,36 +15,37 @@
 using System.Windows;
 using System.Windows.Data;
 
-namespace Kaspirin.UI.Framework.UiKit.Controls.Selectors
+namespace Kaspirin.UI.Framework.UiKit.Controls.Selectors;
+
+public sealed class DataTemplateByKeySelector : DataTemplateSelectorBase
 {
-    public sealed class DataTemplateByKeySelector : DataTemplateSelectorBase
+    public Binding Source { get; set; } = new Binding();
+
+    protected override object? GetDataTemplateKey(object item)
     {
-        public Binding Source { get; set; } = new Binding();
+        Guard.IsNotNull(Source);
 
-        protected override object? GetDataTemplateKey(object item)
+        return new ValueProvider(item, Source).GetValue();
+    }
+
+    private sealed class ValueProvider : FrameworkElement
+    {
+        public ValueProvider(object dataContext, Binding binding)
         {
-            Guard.IsNotNull(Source);
+            binding = binding.Clone();
+            binding.Source ??= dataContext;
 
-            return new ValueProvider(item, Source).GetValue();
+            SetBinding(_valueProperty, binding);
         }
 
-        private sealed class ValueProvider : FrameworkElement
+        public object? GetValue()
         {
-            public ValueProvider(object dataContext, Binding binding)
-            {
-                binding = binding.Clone();
-                binding.Source ??= dataContext;
-
-                SetBinding(_valueProperty, binding);
-            }
-
-            public object? GetValue()
-            {
-                return GetValue(_valueProperty);
-            }
-
-            private static readonly DependencyProperty _valueProperty =
-                DependencyProperty.Register("Value", typeof(object), typeof(ValueProvider));
+            return GetValue(_valueProperty);
         }
+
+        private static readonly DependencyProperty _valueProperty = DependencyProperty.Register(
+            "Value",
+            typeof(object),
+            typeof(ValueProvider));
     }
 }

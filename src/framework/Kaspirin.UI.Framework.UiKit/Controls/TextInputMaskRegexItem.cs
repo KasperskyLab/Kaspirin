@@ -14,29 +14,28 @@
 
 using System.Text.RegularExpressions;
 
-namespace Kaspirin.UI.Framework.UiKit.Controls
+namespace Kaspirin.UI.Framework.UiKit.Controls;
+
+public sealed class TextInputMaskRegexItem : TextInputMaskItem
 {
-    public sealed class TextInputMaskRegexItem : TextInputMaskItem
+    public TextInputMaskRegexItem(Regex charRegex, bool uppercase, char displayChar) : base(displayChar)
     {
-        public TextInputMaskRegexItem(Regex charRegex, bool uppercase, char displayChar) : base(displayChar)
-        {
-            _charRegex = charRegex;
-            _uppercase = uppercase;
-        }
-
-        public bool Match(char value, out char result)
-        {
-            if (_charRegex.IsMatch(value.ToString()))
-            {
-                result = _uppercase ? char.ToUpper(value) : value;
-                return true;
-            }
-
-            result = default;
-            return false;
-        }
-
-        private readonly Regex _charRegex;
-        private readonly bool _uppercase;
+        _charRegex = charRegex;
+        _uppercase = uppercase;
     }
+
+    public bool Match(char value, out char result)
+    {
+        if (_charRegex.IsMatch(value.ToString()))
+        {
+            result = _uppercase ? char.ToUpper(value) : value;
+            return true;
+        }
+
+        result = default;
+        return false;
+    }
+
+    private readonly Regex _charRegex;
+    private readonly bool _uppercase;
 }

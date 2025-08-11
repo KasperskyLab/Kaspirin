@@ -12,10 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Kaspirin.UI.Framework.UiKit.Input.Filter
+namespace Kaspirin.UI.Framework.UiKit.Input.Filter;
+
+public interface IInputFilter
 {
-    public interface IInputFilter
-    {
-        string? FilterInput(string? input);
-    }
+    string? FilterInput(string? input);
 }

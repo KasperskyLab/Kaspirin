@@ -16,76 +16,81 @@ using System;
 using System.Windows;
 using System.Windows.Controls;
 
-namespace Kaspirin.UI.Framework.UiKit
+namespace Kaspirin.UI.Framework.UiKit;
+
+internal static class UIKitItemsControlHelper
 {
-    internal static class UIKitItemsControlHelper
+    #region IsGeneratedItemContainer
+
+    public static readonly DependencyProperty IsGeneratedItemContainerProperty = DependencyProperty.RegisterAttached(
+        "IsGeneratedItemContainer",
+        typeof(bool),
+        typeof(UIKitItemsControlHelper));
+
+    #endregion
+
+    #region ItemElement
+
+    public static readonly DependencyProperty ItemElementProperty = DependencyProperty.Register(
+        "ItemElement",
+        typeof(DataTemplate),
+        typeof(UIKitItemsControlHelper));
+
+    #endregion
+
+    #region ItemElementSelector
+
+    public static readonly DependencyProperty ItemElementSelectorProperty = DependencyProperty.Register(
+        "ItemElementSelector",
+        typeof(DataTemplateSelector),
+        typeof(UIKitItemsControlHelper));
+
+    #endregion
+
+    public static bool IsItemContainer<TControl>(object item) where TControl : Control
     {
-        #region IsGeneratedItemContainer
+        return item is TControl;
+    }
 
-        public static readonly DependencyProperty IsGeneratedItemContainerProperty =
-            DependencyProperty.RegisterAttached("IsGeneratedItemContainer", typeof(bool), typeof(UIKitItemsControlHelper));
+    public static bool IsSimpleItemContainer(DependencyObject item)
+    {
+        Guard.ArgumentIsNotNull(item);
 
-        #endregion
+        return item.GetValue(IsGeneratedItemContainerProperty) is false;
+    }
 
-        #region ItemElement
+    public static TControl CreateItemContainer<TControl>(ItemsControl itemsControl, object? item) where TControl : Control, new()
+    {
+        Guard.ArgumentIsNotNull(itemsControl);
 
-        public static readonly DependencyProperty ItemElementProperty =
-            DependencyProperty.Register("ItemElement", typeof(DataTemplate), typeof(UIKitItemsControlHelper));
-
-        #endregion
-
-        #region ItemElementSelector
-
-        public static readonly DependencyProperty ItemElementSelectorProperty =
-            DependencyProperty.Register("ItemElementSelector", typeof(DataTemplateSelector), typeof(UIKitItemsControlHelper));
-
-        #endregion
-
-        public static bool IsItemContainer<TControl>(object item) where TControl : Control
+        if (itemsControl.GetValue(ItemElementProperty) is DataTemplate dataTemplate)
         {
-            return item is TControl;
-        }
-
-        public static bool IsSimpleItemContainer(DependencyObject item)
-        {
-            Guard.ArgumentIsNotNull(item);
-
-            return item.GetValue(IsGeneratedItemContainerProperty) is false;
-        }
-
-        public static TControl CreateItemContainer<TControl>(ItemsControl itemsControl, object? item) where TControl : Control, new()
-        {
-            Guard.ArgumentIsNotNull(itemsControl);
-
-            if (itemsControl.GetValue(ItemElementProperty) is DataTemplate dataTemplate)
+            if (dataTemplate.LoadContent() is TControl itemContainer)
             {
-                if (dataTemplate.LoadContent() is TControl itemContainer)
-                {
-                    itemContainer.SetValue(IsGeneratedItemContainerProperty, true);
+                itemContainer.SetValue(IsGeneratedItemContainerProperty, true);
 
-                    return itemContainer;
-                }
-                else
-                {
-                    throw new Exception($"{nameof(ItemElementProperty)} must contain DataTemplate with {typeof(TControl).Name} in root");
-                }
+                return itemContainer;
             }
-
-            if (itemsControl.GetValue(ItemElementSelectorProperty) is DataTemplateSelector dataTemplateSelector && item != null)
+            else
             {
-                if (dataTemplateSelector.SelectTemplate(item, null)?.LoadContent() is TControl itemContainer)
-                {
-                    itemContainer.SetValue(IsGeneratedItemContainerProperty, true);
-
-                    return itemContainer;
-                }
-                else
-                {
-                    throw new Exception($"{nameof(ItemElementSelectorProperty)} must provide DataTemplates with {typeof(TControl).Name} in root");
-                }
+                throw new Exception($"{nameof(ItemElementProperty)} must contain DataTemplate with {typeof(TControl).Name} in root");
             }
-
-            return new TControl();
         }
+
+        if (itemsControl.GetValue(ItemElementSelectorProperty) is DataTemplateSelector dataTemplateSelector && item != null)
+        {
+            if (dataTemplateSelector.SelectTemplate(item, null)?.LoadContent() is TControl itemContainer)
+            {
+                itemContainer.SetValue(IsGeneratedItemContainerProperty, true);
+
+                return itemContainer;
+            }
+            else
+            {
+                throw new Exception($"{nameof(ItemElementSelectorProperty)} must provide DataTemplates with {typeof(TControl).Name} in root");
+            }
+        }
+
+        return new TControl();
     }
 }

@@ -14,15 +14,14 @@
 
 using System.Globalization;
 
-namespace Kaspirin.UI.Framework.UiKit.Converters.NumberConverters
-{
-    public sealed class NumberToLongConverter : BaseNumberToFormattedStringConverter
-    {
-        private readonly CultureInfo _currentCulture = LocalizationManager.Current.FormatCulture.CultureInfo;
+namespace Kaspirin.UI.Framework.UiKit.Converters.NumberConverters;
 
-        public override object Convert(object value)
-        {
-            return string.Format(_currentCulture, "{0:N0}", value);
-        }
+public sealed class NumberToLongConverter : BaseNumberToFormattedStringConverter
+{
+    private readonly CultureInfo _currentCulture = LocalizationManager.FormatCulture.CultureInfo;
+
+    public override object Convert(object value)
+    {
+        return string.Format(_currentCulture, "{0:N0}", value);
     }
 }

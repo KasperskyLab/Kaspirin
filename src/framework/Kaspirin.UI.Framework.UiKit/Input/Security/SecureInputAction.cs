@@ -12,18 +12,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Kaspirin.UI.Framework.UiKit.Input.Security
+namespace Kaspirin.UI.Framework.UiKit.Input.Security;
+
+public sealed class SecureInputAction
 {
-    public sealed class SecureInputAction
+    public SecureInputAction(VirtualKey virtualKey, string? inputText)
     {
-        public SecureInputAction(VirtualKey virtualKey, string? inputText)
-        {
-            VirtualKey = virtualKey;
-            InputText = inputText;
-        }
-
-        public VirtualKey VirtualKey { get; private set; }
-
-        public string? InputText { get; private set; }
+        VirtualKey = virtualKey;
+        InputText = inputText;
     }
+
+    public VirtualKey VirtualKey { get; private set; }
+
+    public string? InputText { get; private set; }
 }

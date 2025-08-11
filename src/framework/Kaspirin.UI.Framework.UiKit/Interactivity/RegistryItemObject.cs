@@ -12,10 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Kaspirin.UI.Framework.UiKit.Interactivity
+namespace Kaspirin.UI.Framework.UiKit.Interactivity;
+
+public sealed class RegistryItemObject : ConfirmationObject
 {
-    public sealed class RegistryItemObject : ConfirmationObject
-    {
-        public RegistryItem? RegistryItem { get; set; }
-    }
+    public RegistryItem? RegistryItem { get; set; }
 }

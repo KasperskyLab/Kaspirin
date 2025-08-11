@@ -12,23 +12,46 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
+namespace Kaspirin.UI.Framework.NativeMethods.Api.User32.Enums;
 
-namespace Kaspirin.UI.Framework.NativeMethods.Api.User32.Enums
+/// <summary>
+///     <seealso href="https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-getwindow">Learn more</seealso>.
+/// </summary>
+public enum GetWindowCommands : uint
 {
     /// <summary>
-    ///     
-    /// <seealso href="https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-getwindow">Learn more</seealso>.
+    ///     The GW_HWNDFIRST constant.
     /// </summary>
-    public enum GetWindowCommands : uint
-    {
-        GW_HWNDFIRST = 0,
-        GW_HWNDLAST = 1,
-        GW_HWNDNEXT = 2,
-        GW_HWNDPREV = 3,
-        GW_OWNER = 4,
-        GW_CHILD = 5,
-        GW_ENABLEDPOPUP = 6
-    }
+    HWndFirst = 0,
+
+    /// <summary>
+    ///     The GW_HWNDLAST constant.
+    /// </summary>
+    HWndLast = 1,
+
+    /// <summary>
+    ///     The GW_HWNDNEXT constant.
+    /// </summary>
+    HWndNext = 2,
+
+    /// <summary>
+    ///     The GW_HWNDPREV constant.
+    /// </summary>
+    HWndPrev = 3,
+
+    /// <summary>
+    ///     The GW_OWNER constant.
+    /// </summary>
+    Owner = 4,
+
+    /// <summary>
+    ///     The GW_CHILD constant.
+    /// </summary>
+    Child = 5,
+
+    /// <summary>
+    ///     The GW_ENABLEDPOPUP constant.
+    /// </summary>
+    EnabledPopup = 6,
 }
 

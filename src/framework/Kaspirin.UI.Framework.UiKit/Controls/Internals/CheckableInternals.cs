@@ -15,44 +15,39 @@
 using System.Windows;
 using System.Windows.Controls.Primitives;
 
-namespace Kaspirin.UI.Framework.UiKit.Controls.Internals
+namespace Kaspirin.UI.Framework.UiKit.Controls.Internals;
+
+internal static class CheckableInternals
 {
-    internal static class CheckableInternals
-    {
-        #region Description
+    #region Description
 
-        public static object GetDescription(DependencyObject obj)
-        {
-            return obj.GetValue(DescriptionProperty);
-        }
+    public static object GetDescription(DependencyObject obj)
+        => obj.GetValue(DescriptionProperty);
 
-        public static void SetDescription(DependencyObject obj, object value)
-        {
-            obj.SetValue(DescriptionProperty, value);
-        }
+    public static void SetDescription(DependencyObject obj, object value)
+        => obj.SetValue(DescriptionProperty, value);
 
-        public static readonly DependencyProperty DescriptionProperty =
-            DependencyProperty.RegisterAttached("Description", typeof(object), typeof(CheckableInternals),
-                UIKitPropertyMetadataFactory.CreatePropsMetadata(typeof(ToggleButton), nameof(DescriptionProperty)));
+    public static readonly DependencyProperty DescriptionProperty = DependencyProperty.RegisterAttached(
+        "Description",
+        typeof(object),
+        typeof(CheckableInternals),
+        UIKitPropertyMetadataFactory.CreatePropsMetadata(typeof(ToggleButton), nameof(DescriptionProperty)));
 
-        #endregion
+    #endregion
 
-        #region IsInvalidState
+    #region IsInvalidState
 
-        public static bool GetIsInvalidState(DependencyObject obj)
-        {
-            return (bool)obj.GetValue(IsInvalidStateProperty);
-        }
+    public static bool GetIsInvalidState(DependencyObject obj)
+        => (bool)obj.GetValue(IsInvalidStateProperty);
 
-        public static void SetIsInvalidState(DependencyObject obj, bool value)
-        {
-            obj.SetValue(IsInvalidStateProperty, value);
-        }
+    public static void SetIsInvalidState(DependencyObject obj, bool value)
+        => obj.SetValue(IsInvalidStateProperty, value);
 
-        public static readonly DependencyProperty IsInvalidStateProperty =
-            DependencyProperty.RegisterAttached("IsInvalidState", typeof(bool), typeof(CheckableInternals),
-                UIKitPropertyMetadataFactory.CreatePropsMetadata(typeof(ToggleButton), nameof(IsInvalidStateProperty)));
+    public static readonly DependencyProperty IsInvalidStateProperty = DependencyProperty.RegisterAttached(
+        "IsInvalidState",
+        typeof(bool),
+        typeof(CheckableInternals),
+        UIKitPropertyMetadataFactory.CreatePropsMetadata(typeof(ToggleButton), nameof(IsInvalidStateProperty)));
 
-        #endregion
-    }
+    #endregion
 }

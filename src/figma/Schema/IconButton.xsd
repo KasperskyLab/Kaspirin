@@ -38,7 +38,7 @@
 			<xs:element name="BorderThicknessPressed" type="Thickness" minOccurs="1" maxOccurs="1"/>
 			<xs:element name="CornerRadius" type="CornerRadius" minOccurs="1" maxOccurs="1"/>
 			<xs:element name="Focus" type="Focus" minOccurs="1" maxOccurs="1"/>
-			<xs:element name="IconForeground" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="IconBrush" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
 			<xs:element name="Padding" type="Thickness" minOccurs="1" maxOccurs="1"/>
 		</xs:all>
 	</xs:group>

@@ -16,17 +16,15 @@
 
 using System.Runtime.InteropServices;
 
-namespace Kaspirin.UI.Framework.NativeMethods.Api.Wininet.Structs
-{
-    /// <summary>
-    ///     
-    /// <seealso href="https://learn.microsoft.com/en-us/windows/win32/api/wininet/ns-wininet-internet_per_conn_optiona">Learn more</seealso>.
-    /// </summary>
-    [StructLayout(LayoutKind.Sequential)]
-    public struct PerConnectionOption
-    {
-        public PerConnectionOptionType Option;
+namespace Kaspirin.UI.Framework.NativeMethods.Api.Wininet.Structs;
 
-        public PerConnectionOptionsUnion Value;
-    }
+/// <summary>
+///     <seealso href="https://learn.microsoft.com/en-us/windows/win32/api/wininet/ns-wininet-internet_per_conn_optiona">Learn more</seealso>.
+/// </summary>
+[StructLayout(LayoutKind.Sequential)]
+public struct PerConnectionOption
+{
+    public PerConnectionOptionType Option;
+
+    public PerConnectionOptionsUnion Value;
 }

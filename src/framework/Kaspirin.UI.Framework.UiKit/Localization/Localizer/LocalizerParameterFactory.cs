@@ -16,61 +16,58 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-using IResourceProvider = Kaspirin.UI.Framework.UiKit.Localization.LocResources.IResourceProvider;
+namespace Kaspirin.UI.Framework.UiKit.Localization.Localizer;
 
-namespace Kaspirin.UI.Framework.UiKit.Localization.Localizer
+public sealed class LocalizerParameterFactory
 {
-    public sealed class LocalizerParameterFactory
+    public LocalizerParameterFactory(
+        LocalizerSettings localizerSettings,
+        LocalizationCultureInfo localizationCulture,
+        ResourceProvider resourceProvider)
     {
-        public LocalizerParameterFactory(
-            LocalizerSettings localizerSettings,
-            LocalizationCultureInfo localizationCulture,
-            IResourceProvider resourceProvider)
-        {
-            Guard.ArgumentIsNotNull(localizerSettings);
-            Guard.ArgumentIsNotNull(localizationCulture);
-            Guard.ArgumentIsNotNull(resourceProvider);
+        Guard.ArgumentIsNotNull(localizerSettings);
+        Guard.ArgumentIsNotNull(localizationCulture);
+        Guard.ArgumentIsNotNull(resourceProvider);
 
-            _scopeUriPatterns = localizerSettings.ScopeUriPatterns
-                .Where(kv => typeof(ILocalizer)
-                .IsAssignableFrom(kv.Key))
-                .ToDictionary(kv => kv.Key, kv => kv.Value);
+        _scopeUriPatterns = localizerSettings.ScopeUriPatterns
+            .Where(kv => typeof(ILocalizer)
+            .IsAssignableFrom(kv.Key))
+            .ToDictionary(kv => kv.Key, kv => kv.Value);
 
-            _fallbackScope = localizerSettings.FallbackScope.ToLowerInvariant();
-            _resourceProvider = resourceProvider;
-            _localizationCulture = localizationCulture;
-        }
-
-        public LocalizerParameters Resolve(string scope, Type type)
-        {
-            Guard.ArgumentIsNotNull(scope);
-            Guard.ArgumentIsNotNull(type);
-
-            var scopePattern = GetLocalizerScopePattern(type);
-            var scopeMetainfo = new ScopeMetainfo(scopePattern, scope, _fallbackScope);
-
-            return new LocalizerParameters(scopeMetainfo, _resourceProvider, _localizationCulture.CultureInfo);
-        }
-
-        private string GetLocalizerScopePattern(Type localizerType)
-        {
-            if (_scopeUriPatterns.TryGetValue(localizerType, out var scopePattern))
-            {
-                return scopePattern;
-            }
-
-            var localizerInterface = localizerType.GetInterfaces().FirstOrDefault(i => _scopeUriPatterns.ContainsKey(i));
-            if (localizerInterface != null)
-            {
-                return _scopeUriPatterns[localizerInterface];
-            }
-
-            throw new LocException($"Scope pattern not found for localizer type {localizerType}");
-        }
-
-        private readonly IDictionary<Type, string> _scopeUriPatterns;
-        private readonly IResourceProvider _resourceProvider;
-        private readonly LocalizationCultureInfo _localizationCulture;
-        private readonly string _fallbackScope;
+        _fallbackScope = localizerSettings.FallbackScope.ToLowerInvariant();
+        _resourceProvider = resourceProvider;
+        _localizationCulture = localizationCulture;
     }
+
+    public LocalizerParameters Resolve(string scope, Type localizerType)
+    {
+        Guard.ArgumentIsNotNull(scope);
+        Guard.ArgumentIsNotNull(localizerType);
+
+        var scopePattern = GetLocalizerScopePattern(localizerType);
+        var scopeMetaInfo = new ScopeMetaInfo(scopePattern, scope, _fallbackScope);
+
+        return new LocalizerParameters(scopeMetaInfo, _resourceProvider, _localizationCulture);
+    }
+
+    private string GetLocalizerScopePattern(Type localizerType)
+    {
+        if (_scopeUriPatterns.TryGetValue(localizerType, out var scopePattern))
+        {
+            return scopePattern;
+        }
+
+        var localizerInterface = localizerType.GetInterfaces().FirstOrDefault(i => _scopeUriPatterns.ContainsKey(i));
+        if (localizerInterface != null)
+        {
+            return _scopeUriPatterns[localizerInterface];
+        }
+
+        throw new LocException($"Scope pattern not found for localizer type {localizerType}");
+    }
+
+    private readonly IDictionary<Type, string> _scopeUriPatterns;
+    private readonly ResourceProvider _resourceProvider;
+    private readonly LocalizationCultureInfo _localizationCulture;
+    private readonly string _fallbackScope;
 }

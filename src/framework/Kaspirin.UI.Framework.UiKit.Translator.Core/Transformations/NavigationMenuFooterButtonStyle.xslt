@@ -121,12 +121,12 @@
 					<xsl:with-param name="propertyId">NavigationMenuFooterButton_Height</xsl:with-param>
 				</xsl:call-template>
 
-				<!--NavigationMenuFooterButton_Icon_Foreground-->
+				<!--NavigationMenuFooterButton_Icon_Brush-->
 				<xsl:call-template name="generateUiKitSetterViaAttribute">
 					<xsl:with-param name="propertyId">NavigationMenuFooterButton_Icon_Brush</xsl:with-param>
 					<xsl:with-param name="propertyValue">
 						<xsl:call-template name="generateResExtension">
-							<xsl:with-param name="key">IconForegroundNormal</xsl:with-param>
+							<xsl:with-param name="key">IconBrushNormal</xsl:with-param>
 							<xsl:with-param name="scope" select="$id" />
 						</xsl:call-template>
 					</xsl:with-param>
@@ -188,13 +188,13 @@
 							</xsl:with-param>
 						</xsl:call-template>
 
-						<!--NavigationMenuFooterButton_Icon_Foreground-->
-						<xsl:if test="IconForegroundHover">
+						<!--NavigationMenuFooterButton_Icon_Brush-->
+						<xsl:if test="IconBrushHover">
 							<xsl:call-template name="generateUiKitSetterViaAttribute">
 								<xsl:with-param name="propertyId">NavigationMenuFooterButton_Icon_Brush</xsl:with-param>
 								<xsl:with-param name="propertyValue">
 									<xsl:call-template name="generateResExtension">
-										<xsl:with-param name="key">IconForegroundHover</xsl:with-param>
+										<xsl:with-param name="key">IconBrushHover</xsl:with-param>
 										<xsl:with-param name="scope" select="$id" />
 									</xsl:call-template>
 								</xsl:with-param>
@@ -246,13 +246,13 @@
 							</xsl:with-param>
 						</xsl:call-template>
 
-						<!--NavigationMenuFooterButton_Icon_Foreground-->
-						<xsl:if test="IconForegroundPressed">
+						<!--NavigationMenuFooterButton_Icon_Brush-->
+						<xsl:if test="IconBrushPressed">
 							<xsl:call-template name="generateUiKitSetterViaAttribute">
 								<xsl:with-param name="propertyId">NavigationMenuFooterButton_Icon_Brush</xsl:with-param>
 								<xsl:with-param name="propertyValue">
 									<xsl:call-template name="generateResExtension">
-										<xsl:with-param name="key">IconForegroundPressed</xsl:with-param>
+										<xsl:with-param name="key">IconBrushPressed</xsl:with-param>
 										<xsl:with-param name="scope" select="$id" />
 									</xsl:call-template>
 								</xsl:with-param>

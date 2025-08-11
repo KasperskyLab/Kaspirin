@@ -13,17 +13,13 @@
 // limitations under the License.
 
 using System;
-#pragma warning disable KCAIDE0006 // Class should be abstract or sealed
-
 using System.Runtime.InteropServices;
 
-namespace Kaspirin.UI.Framework.NativeMethods.Api.Shell32.Classes
-{
-    /// <summary>
-    ///     
-    /// <seealso href="https://learn.microsoft.com/en-us/windows/win32/api/shobjidl_core/nn-shobjidl_core-ishelllibrary">Learn more</seealso>.
-    /// </summary>
-    [ComImport]
-    [Guid(ShlGuids.IidShellLibrary)]
-    public class ShellLibrary { }
-}
+namespace Kaspirin.UI.Framework.NativeMethods.Api.Shell32.Classes;
+
+/// <summary>
+///     <seealso href="https://learn.microsoft.com/en-us/windows/win32/api/shobjidl_core/nn-shobjidl_core-ishelllibrary">Learn more</seealso>.
+/// </summary>
+[ComImport]
+[Guid(ShlGuids.IidShellLibrary)]
+public class ShellLibrary { }

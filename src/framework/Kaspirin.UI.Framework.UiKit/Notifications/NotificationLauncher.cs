@@ -15,80 +15,79 @@
 using System;
 using System.Windows;
 
-namespace Kaspirin.UI.Framework.UiKit.Notifications
+namespace Kaspirin.UI.Framework.UiKit.Notifications;
+
+public static class NotificationLauncher
 {
-    public static class NotificationLauncher
+    public static NotificationView Create(
+        FrameworkElement associatedObject,
+        object? content = null,
+        DataTemplate? contentTemplate = null,
+        bool isModal = true,
+        Action<NotificationView>? onClosed = null,
+        Action<NotificationView>? onOpened = null,
+        TimeSpan autoCloseTimeout = default,
+        int maxNotificationCount = default,
+        string? notificationLayerName = null,
+        NotificationLocationSettings? locationSettings = null)
     {
-        public static NotificationView Create(
-            FrameworkElement associatedObject,
-            object? content = null,
-            DataTemplate? contentTemplate = null,
-            bool isModal = true,
-            Action<NotificationView>? onClosed = null,
-            Action<NotificationView>? onOpened = null,
-            TimeSpan autoCloseTimeout = default,
-            int maxNotificationCount = default,
-            string? notificationLayerName = null,
-            NotificationLocationSettings? locationSettings = null)
+        Guard.AssertIsUiThread();
+        Guard.ArgumentIsNotNull(associatedObject);
+
+        if (content == null)
         {
-            Guard.AssertIsUiThread();
-            Guard.ArgumentIsNotNull(associatedObject);
-
-            if (content == null)
-            {
-                content = associatedObject.DataContext;
-            }
-            else if (content is FrameworkElement fe && fe.DataContext == null)
-            {
-                fe.DataContext = associatedObject.DataContext;
-            }
-
-            var view = new NotificationView(associatedObject, content, locationSettings, isModal, maxNotificationCount)
-            {
-                ContentTemplate = contentTemplate,
-                AutoCloseTimeout = autoCloseTimeout,
-                NotificationLayerName = notificationLayerName
-            };
-
-            view.Opened += (s, e) =>
-            {
-                ServiceLocator.Instance.GetService<IStatisticsSender>().SendShownStatistic(view);
-
-                onOpened?.Invoke(view);
-            };
-
-            view.Closed += (s, e) => onClosed?.Invoke(view);
-
-            return view;
+            content = associatedObject.DataContext;
+        }
+        else if (content is FrameworkElement fe && fe.DataContext == null)
+        {
+            fe.DataContext = associatedObject.DataContext;
         }
 
-        public static NotificationView Show(
-            FrameworkElement associatedObject,
-            object? content = null,
-            DataTemplate? contentTemplate = null,
-            bool isModal = true,
-            Action<NotificationView>? onClosed = null,
-            Action<NotificationView>? onOpened = null,
-            TimeSpan autoCloseTimeout = default,
-            int maxNotificationCount = default,
-            string? notificationLayerName = null,
-            NotificationLocationSettings? locationSettings = null)
+        var view = new NotificationView(associatedObject, content, locationSettings, isModal, maxNotificationCount)
         {
-            var view = Create(
-                associatedObject,
-                content,
-                contentTemplate,
-                isModal,
-                onClosed,
-                onOpened,
-                autoCloseTimeout,
-                maxNotificationCount,
-                notificationLayerName,
-                locationSettings);
+            ContentTemplate = contentTemplate,
+            AutoCloseTimeout = autoCloseTimeout,
+            NotificationLayerName = notificationLayerName
+        };
 
-            view.Show();
+        view.Opened += (s, e) =>
+        {
+            ServiceLocator.Instance.GetService<IStatisticsSender>().SendNotificationViewShown(view);
 
-            return view;
-        }
+            onOpened?.Invoke(view);
+        };
+
+        view.Closed += (s, e) => onClosed?.Invoke(view);
+
+        return view;
+    }
+
+    public static NotificationView Show(
+        FrameworkElement associatedObject,
+        object? content = null,
+        DataTemplate? contentTemplate = null,
+        bool isModal = true,
+        Action<NotificationView>? onClosed = null,
+        Action<NotificationView>? onOpened = null,
+        TimeSpan autoCloseTimeout = default,
+        int maxNotificationCount = default,
+        string? notificationLayerName = null,
+        NotificationLocationSettings? locationSettings = null)
+    {
+        var view = Create(
+            associatedObject,
+            content,
+            contentTemplate,
+            isModal,
+            onClosed,
+            onOpened,
+            autoCloseTimeout,
+            maxNotificationCount,
+            notificationLayerName,
+            locationSettings);
+
+        view.Show();
+
+        return view;
     }
 }

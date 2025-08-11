@@ -195,22 +195,22 @@
 						<xsl:with-param name="brushNode" select="BorderColorSelectedNormal"/>
 					</xsl:call-template>
 
-					<!--CloseIconForegroundSelectedDisabled-->
+					<!--CloseIconBrushSelectedDisabled-->
 					<xsl:call-template name="generateBrush">
-						<xsl:with-param name="key">CloseIconForegroundSelectedDisabled</xsl:with-param>
-						<xsl:with-param name="brushNode" select="CloseIconForegroundSelectedDisabled"/>
+						<xsl:with-param name="key">CloseIconBrushSelectedDisabled</xsl:with-param>
+						<xsl:with-param name="brushNode" select="CloseIconBrushSelectedDisabled"/>
 					</xsl:call-template>
 
-					<!--CloseIconForegroundSelectedHover-->
+					<!--CloseIconBrushSelectedHover-->
 					<xsl:call-template name="generateBrush">
-						<xsl:with-param name="key">CloseIconForegroundSelectedHover</xsl:with-param>
-						<xsl:with-param name="brushNode" select="CloseIconForegroundSelectedHover"/>
+						<xsl:with-param name="key">CloseIconBrushSelectedHover</xsl:with-param>
+						<xsl:with-param name="brushNode" select="CloseIconBrushSelectedHover"/>
 					</xsl:call-template>
 
-					<!--CloseIconForegroundSelectedNormal-->
+					<!--CloseIconBrushSelectedNormal-->
 					<xsl:call-template name="generateBrush">
-						<xsl:with-param name="key">CloseIconForegroundSelectedNormal</xsl:with-param>
-						<xsl:with-param name="brushNode" select="CloseIconForegroundSelectedNormal"/>
+						<xsl:with-param name="key">CloseIconBrushSelectedNormal</xsl:with-param>
+						<xsl:with-param name="brushNode" select="CloseIconBrushSelectedNormal"/>
 					</xsl:call-template>
 
 					<!--FocusVisualBrush-->
@@ -255,40 +255,40 @@
 						<xsl:with-param name="brushNode" select="ForegroundSelectedNormal"/>
 					</xsl:call-template>
 
-					<!--IconForegroundDisabled-->
+					<!--IconBrushDisabled-->
 					<xsl:call-template name="generateBrush">
-						<xsl:with-param name="key">IconForegroundDisabled</xsl:with-param>
-						<xsl:with-param name="brushNode" select="IconForegroundDisabled"/>
+						<xsl:with-param name="key">IconBrushDisabled</xsl:with-param>
+						<xsl:with-param name="brushNode" select="IconBrushDisabled"/>
 					</xsl:call-template>
 
-					<!--IconForegroundHover-->
+					<!--IconBrushHover-->
 					<xsl:call-template name="generateBrush">
-						<xsl:with-param name="key">IconForegroundHover</xsl:with-param>
-						<xsl:with-param name="brushNode" select="IconForegroundHover"/>
+						<xsl:with-param name="key">IconBrushHover</xsl:with-param>
+						<xsl:with-param name="brushNode" select="IconBrushHover"/>
 					</xsl:call-template>
 
-					<!--IconForegroundNormal-->
+					<!--IconBrushNormal-->
 					<xsl:call-template name="generateBrush">
-						<xsl:with-param name="key">IconForegroundNormal</xsl:with-param>
-						<xsl:with-param name="brushNode" select="IconForegroundNormal"/>
+						<xsl:with-param name="key">IconBrushNormal</xsl:with-param>
+						<xsl:with-param name="brushNode" select="IconBrushNormal"/>
 					</xsl:call-template>
 
-					<!--IconForegroundSelectedDisabled-->
+					<!--IconBrushSelectedDisabled-->
 					<xsl:call-template name="generateBrush">
-						<xsl:with-param name="key">IconForegroundSelectedDisabled</xsl:with-param>
-						<xsl:with-param name="brushNode" select="IconForegroundSelectedDisabled"/>
+						<xsl:with-param name="key">IconBrushSelectedDisabled</xsl:with-param>
+						<xsl:with-param name="brushNode" select="IconBrushSelectedDisabled"/>
 					</xsl:call-template>
 
-					<!--IconForegroundSelectedHover-->
+					<!--IconBrushSelectedHover-->
 					<xsl:call-template name="generateBrush">
-						<xsl:with-param name="key">IconForegroundSelectedHover</xsl:with-param>
-						<xsl:with-param name="brushNode" select="IconForegroundSelectedHover"/>
+						<xsl:with-param name="key">IconBrushSelectedHover</xsl:with-param>
+						<xsl:with-param name="brushNode" select="IconBrushSelectedHover"/>
 					</xsl:call-template>
 
-					<!--IconForegroundSelectedNormal-->
+					<!--IconBrushSelectedNormal-->
 					<xsl:call-template name="generateBrush">
-						<xsl:with-param name="key">IconForegroundSelectedNormal</xsl:with-param>
-						<xsl:with-param name="brushNode" select="IconForegroundSelectedNormal"/>
+						<xsl:with-param name="key">IconBrushSelectedNormal</xsl:with-param>
+						<xsl:with-param name="brushNode" select="IconBrushSelectedNormal"/>
 					</xsl:call-template>
 
 				</ResourceDictionary>

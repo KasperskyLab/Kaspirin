@@ -12,30 +12,29 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Kaspirin.UI.Framework.Services.Internals
+namespace Kaspirin.UI.Framework.Services.Internals;
+
+internal static class UnityContainerExtensions
 {
-    internal static class UnityContainerExtensions
+    public static void RegisterDefault<TFrom, TTo>(this IUnityContainer container, LifetimeType lifetimeType, params InjectionMember[] injectionMembers)
+        where TFrom : class
+        where TTo : class, TFrom
     {
-        public static void RegisterDefault<TFrom, TTo>(this IUnityContainer container, LifetimeManager lifetimeManager, params InjectionMember[] injectionMembers)
-            where TFrom : class
-            where TTo : class, TFrom
+        var isTFromRegistered = container.IsTypeRegistered(typeof(TFrom));
+        var isTToRegistered = container.IsTypeRegistered(typeof(TTo));
+
+        if (isTFromRegistered)
         {
-            var isTFromRegistered = container.IsTypeRegistered(typeof(TFrom));
-            var isTToRegistered = container.IsTypeRegistered(typeof(TTo));
+            return;
+        }
 
-            if (isTFromRegistered)
-            {
-                return;
-            }
-
-            if (isTToRegistered)
-            {
-                container.MapInterface<TFrom, TTo>();
-            }
-            else
-            {
-                container.RegisterType<TFrom, TTo>(lifetimeManager, injectionMembers);
-            }
+        if (isTToRegistered)
+        {
+            container.MapInterface<TFrom, TTo>();
+        }
+        else
+        {
+            container.RegisterType<TFrom, TTo>(lifetimeType, injectionMembers);
         }
     }
 }

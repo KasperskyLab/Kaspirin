@@ -16,31 +16,32 @@
 
 using System.Runtime.InteropServices;
 
-namespace Kaspirin.UI.Framework.NativeMethods.Api.IeFrame
+namespace Kaspirin.UI.Framework.NativeMethods.Api.IeFrame;
+
+/// <summary>
+///     Provides API methods for functions from ieframe.dll .
+/// </summary>
+public static class IeFrameDll
 {
+    #region iepmapi.h
+
     /// <summary>
-    ///     Provides API methods for functions from ieframe.dll .
+    ///     The IEIsProtectedModeURL API method.
+    ///     <br /><seealso href="https://learn.microsoft.com/en-us/previous-versions/windows/internet-explorer/ie-developer/platform-apis/aa767961(v=vs.85)">Learn more</seealso>.
     /// </summary>
-    public static class IeFrameDll
-    {
-        #region iepmapi.h
+    [DllImport(DllName, SetLastError = false, CharSet = CharSet.Unicode)]
+    public static extern int IEIsProtectedModeURL(
+        string url);
 
-        /// <summary>
-        ///     The IEIsProtectedModeURL API method. <br /><seealso href="https://learn.microsoft.com/en-us/previous-versions/windows/internet-explorer/ie-developer/platform-apis/aa767961(v=vs.85)">Learn more</seealso>.
-        /// </summary>
-        [DllImport(DllName, SetLastError = false, CharSet = CharSet.Unicode)]
-        public static extern int IEIsProtectedModeURL(
-            string url);
+    /// <summary>
+    ///     The IEIsProtectedModeProcess API method.
+    ///     <br /><seealso href="https://learn.microsoft.com/en-us/previous-versions/windows/internet-explorer/ie-developer/platform-apis/ms537316(v=vs.85)">Learn more</seealso>.
+    /// </summary>
+    [DllImport(DllName, SetLastError = false)]
+    public static extern int IEIsProtectedModeProcess(
+        ref bool result);
 
-        /// <summary>
-        ///     The IEIsProtectedModeProcess API method. <br /><seealso href="https://learn.microsoft.com/en-us/previous-versions/windows/internet-explorer/ie-developer/platform-apis/ms537316(v=vs.85)">Learn more</seealso>.
-        /// </summary>
-        [DllImport(DllName, SetLastError = false)]
-        public static extern int IEIsProtectedModeProcess(
-            ref bool result);
+    #endregion
 
-        #endregion
-
-        private const string DllName = "ieframe.dll";
-    }
+    private const string DllName = "ieframe.dll";
 }
