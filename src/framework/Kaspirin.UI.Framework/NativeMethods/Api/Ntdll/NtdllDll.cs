@@ -17,41 +17,42 @@
 using System;
 using System.Runtime.InteropServices;
 
-namespace Kaspirin.UI.Framework.NativeMethods.Api.Ntdll
+namespace Kaspirin.UI.Framework.NativeMethods.Api.Ntdll;
+
+/// <summary>
+///     Provides API methods for functions from ntdll.dll .
+/// </summary>
+public static class NtdllDll
 {
+    #region ntifs.h
+
     /// <summary>
-    ///     Provides API methods for functions from ntdll.dll .
+    ///     The NtQueryInformationFile API method.
+    ///     <br /><seealso href="https://learn.microsoft.com/en-us/windows-hardware/drivers/ddi/ntifs/nf-ntifs-ntqueryinformationfile">Learn more</seealso>.
     /// </summary>
-    public static class NtdllDll
-    {
-        #region ntifs.h
+    [DllImport(DllName)]
+    [return: MarshalAs(UnmanagedType.U4)]
+    public static extern NtStatus NtQueryInformationFile(
+        IntPtr fileHandle,
+        ref IoStatusBlock ioStatusBlock,
+        IntPtr fileInformation,
+        int lengthOfFileInformation,
+        FileInformationType fileInformationClass);
 
-        /// <summary>
-        ///     The NtQueryInformationFile API method. <br /><seealso href="https://learn.microsoft.com/en-us/windows-hardware/drivers/ddi/ntifs/nf-ntifs-ntqueryinformationfile">Learn more</seealso>.
-        /// </summary>
-        [DllImport(DllName)]
-        [return: MarshalAs(UnmanagedType.U4)]
-        public static extern NtStatus NtQueryInformationFile(
-            IntPtr fileHandle,
-            ref IoStatusBlock ioStatusBlock,
-            IntPtr fileInformation,
-            int lengthOfFileInformation,
-            FileInformationType fileInformationClass);
+    /// <summary>
+    ///     The NtSetInformationFile API method.
+    ///     <br /><seealso href="https://learn.microsoft.com/en-us/windows-hardware/drivers/ddi/ntifs/nf-ntifs-ntsetinformationfile">Learn more</seealso>.
+    /// </summary>
+    [DllImport(DllName)]
+    [return: MarshalAs(UnmanagedType.U4)]
+    public static extern NtStatus NtSetInformationFile(
+        IntPtr fileHandle,
+        ref IoStatusBlock ioStatusBlock,
+        IntPtr fileInformation,
+        int lengthOfFileInformation,
+        FileInformationType fileInformationClass);
 
-        /// <summary>
-        ///     The NtSetInformationFile API method. <br /><seealso href="https://learn.microsoft.com/en-us/windows-hardware/drivers/ddi/ntifs/nf-ntifs-ntsetinformationfile">Learn more</seealso>.
-        /// </summary>
-        [DllImport(DllName)]
-        [return: MarshalAs(UnmanagedType.U4)]
-        public static extern NtStatus NtSetInformationFile(
-            IntPtr fileHandle,
-            ref IoStatusBlock ioStatusBlock,
-            IntPtr fileInformation,
-            int lengthOfFileInformation,
-            FileInformationType fileInformationClass);
+    #endregion
 
-        #endregion
-
-        private const string DllName = "ntdll.dll";
-    }
+    private const string DllName = "ntdll.dll";
 }

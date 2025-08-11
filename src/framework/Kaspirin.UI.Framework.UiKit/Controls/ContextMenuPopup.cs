@@ -16,35 +16,34 @@ using System.Windows;
 using System.Windows.Controls.Primitives;
 using PopupWpf = System.Windows.Controls.Primitives.Popup;
 
-namespace Kaspirin.UI.Framework.UiKit.Controls
+namespace Kaspirin.UI.Framework.UiKit.Controls;
+
+public sealed class ContextMenuPopup : PopupWpf
 {
-    public class ContextMenuPopup : PopupWpf
+    public ContextMenuPopup()
     {
-        public ContextMenuPopup()
+        this.WhenLoaded(() =>
         {
-            this.WhenLoaded(() =>
-            {
-                CustomPopupPlacementCallback = OnCustomPopupPlacementCalled;
-                Placement = PlacementMode.Custom;
-            });
+            CustomPopupPlacementCallback = OnCustomPopupPlacementCalled;
+            Placement = PlacementMode.Custom;
+        });
+    }
+
+    private CustomPopupPlacement[] OnCustomPopupPlacementCalled(Size popupSize, Size targetSize, Point offset)
+    {
+        if (FlowDirection == FlowDirection.LeftToRight)
+        {
+            var rightPoint = new Point(x: targetSize.Width, y: 0);
+            var rightLocation = new CustomPopupPlacement(rightPoint, PopupPrimaryAxis.Horizontal);
+
+            return new[] { rightLocation };
         }
-
-        private CustomPopupPlacement[] OnCustomPopupPlacementCalled(Size popupSize, Size targetSize, Point offset)
+        else
         {
-            if (FlowDirection == FlowDirection.LeftToRight)
-            {
-                var rightPoint = new Point(x: targetSize.Width, y: 0);
-                var rightLocation = new CustomPopupPlacement(rightPoint, PopupPrimaryAxis.Horizontal);
+            var leftPoint = new Point(x: -popupSize.Width - targetSize.Width, y: 0);
+            var leftLocation = new CustomPopupPlacement(leftPoint, PopupPrimaryAxis.Horizontal);
 
-                return new[] { rightLocation };
-            }
-            else
-            {
-                var leftPoint = new Point(x: -popupSize.Width - targetSize.Width, y: 0);
-                var leftLocation = new CustomPopupPlacement(leftPoint, PopupPrimaryAxis.Horizontal);
-
-                return new[] { leftLocation };
-            }
+            return new[] { leftLocation };
         }
     }
 }

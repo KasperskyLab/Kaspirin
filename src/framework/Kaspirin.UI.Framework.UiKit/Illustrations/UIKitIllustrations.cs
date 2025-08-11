@@ -12,10 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Kaspirin.UI.Framework.UiKit.Illustrations
+namespace Kaspirin.UI.Framework.UiKit.Illustrations;
+
+public static class UIKitIllustrations
 {
-    public static class UIKitIllustrations
-    {
-        public const string Unset = "UIKitUnset";
-    }
+    public const string Unset = "UIKitUnset";
 }

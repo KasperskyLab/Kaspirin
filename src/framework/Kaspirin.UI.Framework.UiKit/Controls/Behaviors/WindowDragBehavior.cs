@@ -16,39 +16,38 @@ using System;
 using System.Windows;
 using System.Windows.Input;
 
-namespace Kaspirin.UI.Framework.UiKit.Controls.Behaviors
+namespace Kaspirin.UI.Framework.UiKit.Controls.Behaviors;
+
+public sealed class WindowDragBehavior : Behavior<UIElement, WindowDragBehavior>
 {
-    public sealed class WindowDragBehavior : Behavior<UIElement, WindowDragBehavior>
+    protected override void OnAttached()
     {
-        protected override void OnAttached()
+        Guard.IsNotNull(AssociatedObject);
+
+        AssociatedObject.MouseLeftButtonDown += DragWindow;
+    }
+
+    protected override void OnDetaching()
+    {
+        Guard.IsNotNull(AssociatedObject);
+
+        AssociatedObject.MouseLeftButtonDown -= DragWindow;
+    }
+
+    private void DragWindow(object sender, MouseButtonEventArgs e)
+    {
+        var currentWindow = AssociatedObject?.GetWindow();
+        if (currentWindow != null)
         {
-            Guard.IsNotNull(AssociatedObject);
-
-            AssociatedObject.MouseLeftButtonDown += DragWindow;
-        }
-
-        protected override void OnDetaching()
-        {
-            Guard.IsNotNull(AssociatedObject);
-
-            AssociatedObject.MouseLeftButtonDown -= DragWindow;
-        }
-
-        private void DragWindow(object sender, MouseButtonEventArgs e)
-        {
-            var currentWindow = AssociatedObject?.GetWindow();
-            if (currentWindow != null)
+            try
             {
-                try
+                var hwnd = currentWindow.GetHandle();
+                if (hwnd != IntPtr.Zero)
                 {
-                    var hwnd = currentWindow.GetHandle();
-                    if (hwnd != IntPtr.Zero)
-                    {
-                        hwnd.DragWindow();
-                    }
+                    hwnd.DragWindow();
                 }
-                catch (InvalidOperationException) { }
             }
+            catch (InvalidOperationException) { }
         }
     }
 }

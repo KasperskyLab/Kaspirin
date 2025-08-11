@@ -16,59 +16,58 @@ using System;
 using System.Linq;
 using System.Text.RegularExpressions;
 
-namespace Kaspirin.UI.Framework.UiKit.Illustrations
+namespace Kaspirin.UI.Framework.UiKit.Illustrations;
+
+internal sealed class UIKitIllustrationBuilder
 {
-    internal sealed class UIKitIllustrationBuilder
+    public UIKitIllustrationBuilder(Enum illustration)
     {
-        public UIKitIllustrationBuilder(Enum illustration)
-        {
-            Illustration = illustration;
-            IllustrationName = illustration.ToString();
-            IllustrationKey = _illustrationKeyTemplate.Replace(NameMask, IllustrationName);
-            IllustrationScope = illustration.GetType().Name.Replace(ScopePrefix, string.Empty);
-        }
-
-        public UIKitIllustrationBuilder(string key, string scope, string assemblyName)
-            : this(GetEnumValueFromAssembly(key, scope, assemblyName))
-        {
-        }
-
-        private static Enum GetEnumValueFromAssembly(string key, string scope, string assemblyName)
-        {
-            var targetAssembly = AppDomain.CurrentDomain
-                .GetAssemblies()
-                .Where(a => string.Equals(a.GetName().Name, assemblyName, StringComparison.OrdinalIgnoreCase))
-                .GuardedSingleOrDefault();
-
-            Guard.ArgumentIsNotNull(targetAssembly);
-
-            var targetEnumType = targetAssembly
-                .GetTypes()
-                .Where(t => t.IsEnum && string.Equals(t.Name, ScopePrefix + scope, StringComparison.OrdinalIgnoreCase))
-                .GuardedSingleOrDefault();
-
-            Guard.ArgumentIsNotNull(targetEnumType);
-
-            var targetEnumValue = Enum
-                .GetValues(targetEnumType)
-                .Cast<Enum>()
-                .Where(value => string.Equals(value.ToString(), _illustrationKeyRegex.Match(key).Groups[1].Value, StringComparison.OrdinalIgnoreCase))
-                .GuardedSingleOrDefault();
-
-            Guard.ArgumentIsNotNull(targetEnumValue);
-
-            return targetEnumValue;
-        }
-
-        public Enum Illustration { get; }
-        public string IllustrationName { get; }
-        public string IllustrationKey { get; }
-        public string IllustrationScope { get; }
-
-        private const string NameMask = "%NAME%";
-        private const string ScopePrefix = "UIKitIllustration_";
-
-        private static readonly string _illustrationKeyTemplate = $"UIKitIllustration_{NameMask}.svg";
-        private static readonly Regex _illustrationKeyRegex = new($"UIKitIllustration_(.*).svg", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+        Illustration = illustration;
+        IllustrationName = illustration.ToString();
+        IllustrationKey = _illustrationKeyTemplate.Replace(NameMask, IllustrationName);
+        IllustrationScope = illustration.GetType().Name.Replace(ScopePrefix, string.Empty);
     }
+
+    public UIKitIllustrationBuilder(string key, string scope, string assemblyName)
+        : this(GetEnumValueFromAssembly(key, scope, assemblyName))
+    {
+    }
+
+    private static Enum GetEnumValueFromAssembly(string key, string scope, string assemblyName)
+    {
+        var targetAssembly = AppDomain.CurrentDomain
+            .GetAssemblies()
+            .Where(a => string.Equals(a.GetName().Name, assemblyName, StringComparison.OrdinalIgnoreCase))
+            .GuardedSingleOrDefault();
+
+        Guard.ArgumentIsNotNull(targetAssembly);
+
+        var targetEnumType = targetAssembly
+            .GetTypes()
+            .Where(t => t.IsEnum && string.Equals(t.Name, ScopePrefix + scope, StringComparison.OrdinalIgnoreCase))
+            .GuardedSingleOrDefault();
+
+        Guard.ArgumentIsNotNull(targetEnumType);
+
+        var targetEnumValue = Enum
+            .GetValues(targetEnumType)
+            .Cast<Enum>()
+            .Where(value => string.Equals(value.ToString(), _illustrationKeyRegex.Match(key).Groups[1].Value, StringComparison.OrdinalIgnoreCase))
+            .GuardedSingleOrDefault();
+
+        Guard.ArgumentIsNotNull(targetEnumValue);
+
+        return targetEnumValue;
+    }
+
+    public Enum Illustration { get; }
+    public string IllustrationName { get; }
+    public string IllustrationKey { get; }
+    public string IllustrationScope { get; }
+
+    private const string NameMask = "%NAME%";
+    private const string ScopePrefix = "UIKitIllustration_";
+
+    private static readonly string _illustrationKeyTemplate = $"UIKitIllustration_{NameMask}.svg";
+    private static readonly Regex _illustrationKeyRegex = new($"UIKitIllustration_(.*).svg", RegexOptions.Compiled | RegexOptions.IgnoreCase);
 }

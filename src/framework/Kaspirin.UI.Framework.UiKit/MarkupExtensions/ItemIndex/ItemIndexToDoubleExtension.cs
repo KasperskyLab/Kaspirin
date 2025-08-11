@@ -12,10 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Kaspirin.UI.Framework.UiKit.MarkupExtensions.ItemIndex
+namespace Kaspirin.UI.Framework.UiKit.MarkupExtensions.ItemIndex;
+
+public sealed class ItemIndexToDoubleExtension : BaseItemIndexExtension<double>
 {
-    public sealed class ItemIndexToDoubleExtension : BaseItemIndexExtension<double>
-    {
-        public ItemIndexToDoubleExtension() : base(0D, 0D) { }
-    }
+    public ItemIndexToDoubleExtension() : base(0D, 0D) { }
 }

@@ -15,42 +15,41 @@
 using System;
 using System.Runtime.Serialization;
 
-namespace Kaspirin.UI.Framework.Guards
+namespace Kaspirin.UI.Framework.Guards;
+
+/// <summary>
+///     An exception that is thrown when the guard conditions are violated in the <see cref="Guard" /> class.
+/// </summary>
+[Serializable]
+public sealed class GuardException : Exception
 {
     /// <summary>
-    ///     An exception that is thrown when the guard conditions are violated in the <see cref="Guard" /> class.
+    ///     Initializes a new instance of the <see cref="GuardException" /> class.
     /// </summary>
-    [Serializable]
-    public sealed class GuardException : Exception
+    /// <param name="message">
+    ///     The error message.
+    /// </param>
+    public GuardException(string message)
+        : base(message)
     {
-        /// <summary>
-        ///     Initializes a new instance of the <see cref="GuardException" /> class.
-        /// </summary>
-        /// <param name="message">
-        ///     The error message.
-        /// </param>
-        public GuardException(string message)
-            : base(message)
-        {
-        }
+    }
 
-        /// <summary>
-        ///     Initializes a new instance of the <see cref="GuardException" /> class.
-        /// </summary>
-        /// <param name="message">
-        ///     The error message.
-        /// </param>
-        /// <param name="inner">
-        ///     Nested exception.
-        /// </param>
-        public GuardException(string message, Exception inner)
-            : base(message, inner)
-        {
-        }
+    /// <summary>
+    ///     Initializes a new instance of the <see cref="GuardException" /> class.
+    /// </summary>
+    /// <param name="message">
+    ///     The error message.
+    /// </param>
+    /// <param name="inner">
+    ///     Nested exception.
+    /// </param>
+    public GuardException(string message, Exception inner)
+        : base(message, inner)
+    {
+    }
 
-        private GuardException(SerializationInfo info, StreamingContext context)
-            : base(info, context)
-        {
-        }
+    private GuardException(SerializationInfo info, StreamingContext context)
+        : base(info, context)
+    {
     }
 }

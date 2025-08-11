@@ -14,32 +14,31 @@
 
 using Microsoft.Win32;
 
-namespace Kaspirin.UI.Framework.UiKit.Interactivity
+namespace Kaspirin.UI.Framework.UiKit.Interactivity;
+
+public sealed class RegistryItem
 {
-    public sealed class RegistryItem
+    public RegistryItem(string path)
     {
-        public RegistryItem(string path)
-        {
-            Guard.ArgumentIsNotNull(path);
+        Guard.ArgumentIsNotNull(path);
 
-            Path = path;
-        }
-
-        public RegistryItem(string key, string value, RegistryValueKind registryValueKind)
-        {
-            Guard.ArgumentIsNotNull(key);
-            Guard.ArgumentIsNotNull(value);
-
-            Path = key;
-            Value = value;
-            IsKey = registryValueKind == RegistryValueKind.None ||
-                    registryValueKind == RegistryValueKind.Unknown;
-            IsValueValid = !IsKey;
-        }
-
-        public string Path { get; private set; }
-        public string? Value { get; private set; }
-        public bool IsValueValid { get; private set; }
-        public bool IsKey { get; private set; }
+        Path = path;
     }
+
+    public RegistryItem(string key, string value, RegistryValueKind registryValueKind)
+    {
+        Guard.ArgumentIsNotNull(key);
+        Guard.ArgumentIsNotNull(value);
+
+        Path = key;
+        Value = value;
+        IsKey = registryValueKind == RegistryValueKind.None ||
+                registryValueKind == RegistryValueKind.Unknown;
+        IsValueValid = !IsKey;
+    }
+
+    public string Path { get; private set; }
+    public string? Value { get; private set; }
+    public bool IsValueValid { get; private set; }
+    public bool IsKey { get; private set; }
 }

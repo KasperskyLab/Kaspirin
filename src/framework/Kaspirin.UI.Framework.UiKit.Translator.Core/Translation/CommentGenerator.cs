@@ -16,22 +16,21 @@ using System;
 using System.Linq;
 using System.Text;
 
-namespace Kaspirin.UI.Framework.UiKit.Translator.Core.Translation
+namespace Kaspirin.UI.Framework.UiKit.Translator.Core.Translation;
+
+public static class CommentGenerator
 {
-    public static class CommentGenerator
+    public static string AddFileComment(string fileText, string comment)
     {
-        public static string AddFileComment(string fileText, string comment)
-        {
-            var commentBuilder = new StringBuilder();
-            comment
-                .Split(new[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries)
-                .Select(p => $"// {p.Trim()}")
-                .ToList()
-                .ForEach(p => commentBuilder.AppendLine(p));
+        var commentBuilder = new StringBuilder();
+        comment
+            .Split(new[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries)
+            .Select(p => $"// {p.Trim()}")
+            .ToList()
+            .ForEach(p => commentBuilder.AppendLine(p));
 
-            comment = commentBuilder.ToString();
+        comment = commentBuilder.ToString();
 
-            return fileText.Replace("@FileComment", comment);
-        }
+        return fileText.Replace("@FileComment", comment);
     }
 }

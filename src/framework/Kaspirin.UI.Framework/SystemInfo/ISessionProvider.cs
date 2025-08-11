@@ -14,26 +14,25 @@
 
 using System;
 
-namespace Kaspirin.UI.Framework.SystemInfo
+namespace Kaspirin.UI.Framework.SystemInfo;
+
+/// <summary>
+///     Interface for getting information about the current user session.
+/// </summary>
+public interface ISessionProvider
 {
     /// <summary>
-    ///     Interface for getting information about the current user session.
+    ///     User session activation event.
     /// </summary>
-    public interface ISessionProvider
-    {
-        /// <summary>
-        ///     User session activation event.
-        /// </summary>
-        event Action OnActivateSession;
+    event Action OnActivateSession;
 
-        /// <summary>
-        ///     User session deactivation event.
-        /// </summary>
-        event Action OnDeactivateSession;
+    /// <summary>
+    ///     User session deactivation event.
+    /// </summary>
+    event Action OnDeactivateSession;
 
-        /// <summary>
-        ///     Indicates whether the user session is currently active.
-        /// </summary>
-        bool IsSessionActive { get; }
-    }
+    /// <summary>
+    ///     Indicates whether the user session is currently active.
+    /// </summary>
+    bool IsSessionActive { get; }
 }

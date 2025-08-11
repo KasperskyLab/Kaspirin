@@ -12,89 +12,89 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#pragma warning disable CA1416 // This call site is reachable on all platforms.
+
 using System;
 using System.Windows;
 using System.Windows.Input;
 
-namespace Kaspirin.UI.Framework.UiKit.Controls
+namespace Kaspirin.UI.Framework.UiKit.Controls;
+
+public sealed class PasswordInputCapsLockAction : InputActionBase
 {
-    public sealed class PasswordInputCapsLockAction : InputActionBase
+    public PasswordInputCapsLockAction()
     {
-        public PasswordInputCapsLockAction()
-        {
-            _hidePopupAction = new DeferredAction(() => IsPopupOpen = false, TimeSpan.FromMilliseconds(2000));
+        _hidePopupAction = new DeferredAction(() => IsPopupOpen = false, TimeSpan.FromMilliseconds(2000));
 
-            this.WhenLoaded(() =>
+        this.WhenLoaded(() =>
+        {
+            _passwordInput = this.FindVisualParent<PasswordInput>();
+            if (_passwordInput != null)
             {
-                _passwordInput = this.FindVisualParent<PasswordInput>();
-                if (_passwordInput != null)
-                {
-                    _passwordInputIsKeyboardFocusWithinPropertyNotifier = new PropertyChangeNotifier<PasswordInput, bool>(_passwordInput, PasswordInput.IsKeyboardFocusWithinProperty);
-                    _passwordInputIsKeyboardFocusWithinPropertyNotifier.ValueChanged += PasswordBoxOnIsKeyboardFocusWithinChanged;
-                    _passwordInput.PreviewKeyDown += PasswordBoxOnPreviewKeyDown;
-                }
-
-                SetActionVisibility(false);
-            });
-        }
-
-        #region IsPopupOpen
-
-        public bool IsPopupOpen
-        {
-            get { return (bool)GetValue(IsPopupOpenProperty); }
-            private set { SetValue(_isPopupOpenPropertyKey, value); }
-        }
-
-        private static readonly DependencyPropertyKey _isPopupOpenPropertyKey =
-            DependencyProperty.RegisterReadOnly("IsPopupOpen", typeof(bool), typeof(PasswordInputCapsLockAction),
-                new PropertyMetadata(false, OnIsPopupOpenChanged));
-
-        public static readonly DependencyProperty IsPopupOpenProperty =
-            _isPopupOpenPropertyKey.DependencyProperty;
-
-        private static void OnIsPopupOpenChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            ((PasswordInputCapsLockAction)d).HidePopupWithTimer();
-        }
-
-        #endregion
-
-        private void PasswordBoxOnPreviewKeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.Key == Key.CapsLock)
-            {
-                var isActive = e.KeyboardDevice.IsKeyToggled(Key.CapsLock);
-
-                SetActionVisibility(isActive);
-                SetPopupVisibility(isActive);
+                _passwordInputIsKeyboardFocusWithinPropertyNotifier = new PropertyChangeNotifier<PasswordInput, bool>(_passwordInput, PasswordInput.IsKeyboardFocusWithinProperty);
+                _passwordInputIsKeyboardFocusWithinPropertyNotifier.ValueChanged += PasswordBoxOnIsKeyboardFocusWithinChanged;
+                _passwordInput.PreviewKeyDown += PasswordBoxOnPreviewKeyDown;
             }
-        }
 
-        private void PasswordBoxOnIsKeyboardFocusWithinChanged(PasswordInput input, bool oldIsFocused, bool newIsFocused)
+            SetActionVisibility(false);
+        });
+    }
+
+    #region IsPopupOpen
+
+    public bool IsPopupOpen
+    {
+        get => (bool)GetValue(IsPopupOpenProperty);
+        private set => SetValue(_isPopupOpenPropertyKey, value);
+    }
+
+    private static readonly DependencyPropertyKey _isPopupOpenPropertyKey = DependencyProperty.RegisterReadOnly(
+        nameof(IsPopupOpen),
+        typeof(bool),
+        typeof(PasswordInputCapsLockAction),
+        new PropertyMetadata(default(bool), OnIsPopupOpenChanged));
+
+    public static readonly DependencyProperty IsPopupOpenProperty = _isPopupOpenPropertyKey.DependencyProperty;
+
+    private static void OnIsPopupOpenChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        => ((PasswordInputCapsLockAction)d).HidePopupWithTimer();
+
+    #endregion
+
+    private void PasswordBoxOnPreviewKeyDown(object sender, KeyEventArgs e)
+    {
+        if (e.Key == Key.CapsLock)
         {
-            var isActive = newIsFocused && Console.CapsLock;
+            var isActive = e.KeyboardDevice.IsKeyToggled(Key.CapsLock);
 
             SetActionVisibility(isActive);
             SetPopupVisibility(isActive);
         }
-
-        private void SetPopupVisibility(bool isVisible)
-        {
-            IsPopupOpen = isVisible;
-        }
-
-        private void HidePopupWithTimer()
-        {
-            if (IsPopupOpen)
-            {
-                _hidePopupAction.Execute();
-            }
-        }
-
-        private readonly DeferredAction _hidePopupAction;
-
-        private PasswordInput? _passwordInput;
-        private PropertyChangeNotifier<PasswordInput, bool>? _passwordInputIsKeyboardFocusWithinPropertyNotifier;
     }
+
+    private void PasswordBoxOnIsKeyboardFocusWithinChanged(PasswordInput input, bool oldIsFocused, bool newIsFocused)
+    {
+        var isActive = newIsFocused && Console.CapsLock;
+
+        SetActionVisibility(isActive);
+        SetPopupVisibility(isActive);
+    }
+
+    private void SetPopupVisibility(bool isVisible)
+    {
+        IsPopupOpen = isVisible;
+    }
+
+    private void HidePopupWithTimer()
+    {
+        if (IsPopupOpen)
+        {
+            _hidePopupAction.Execute();
+        }
+    }
+
+    private readonly DeferredAction _hidePopupAction;
+
+    private PasswordInput? _passwordInput;
+    private PropertyChangeNotifier<PasswordInput, bool>? _passwordInputIsKeyboardFocusWithinPropertyNotifier;
 }

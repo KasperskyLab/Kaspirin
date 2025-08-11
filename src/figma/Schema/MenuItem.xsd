@@ -29,10 +29,10 @@
 			<xs:element name="BackgroundNormal" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
 			<xs:element name="BackgroundPressed" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
 			<xs:element name="BadgeMargin" type="Thickness" minOccurs="1" maxOccurs="1"/>
-			<xs:element name="CheckBoxMarkIconForegroundDisabled" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
-			<xs:element name="CheckBoxMarkIconForegroundHover" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
-			<xs:element name="CheckBoxMarkIconForegroundNormal" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
-			<xs:element name="CheckBoxMarkIconForegroundPressed" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="CheckBoxMarkIconBrushDisabled" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="CheckBoxMarkIconBrushHover" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="CheckBoxMarkIconBrushNormal" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="CheckBoxMarkIconBrushPressed" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
 			<xs:element name="CheckBoxMarkIconMargin" type="Thickness" minOccurs="1" maxOccurs="1"/>
 			<xs:element name="DescriptionForegroundDisabled" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
 			<xs:element name="DescriptionForegroundHover" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
@@ -45,10 +45,10 @@
 			<xs:element name="ForegroundPressed" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
 			<xs:element name="GroupHeaderForeground" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
 			<xs:element name="GroupHeaderMargin" type="Thickness" minOccurs="1" maxOccurs="1"/>
-			<xs:element name="IconForegroundDisabled" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
-			<xs:element name="IconForegroundHover" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
-			<xs:element name="IconForegroundNormal" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
-			<xs:element name="IconForegroundPressed" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="IconBrushDisabled" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="IconBrushHover" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="IconBrushNormal" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="IconBrushPressed" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
 			<xs:element name="IconMargin" type="Thickness" minOccurs="0" maxOccurs="1"/>
 			<xs:element name="Padding" type="Thickness" minOccurs="1" maxOccurs="1"/>
 			<xs:element name="PopupDecoratorBackground" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
@@ -57,10 +57,10 @@
 			<xs:element name="PopupDecoratorCornerRadius" type="CornerRadius" minOccurs="1" maxOccurs="1"/>
 			<xs:element name="PopupDecoratorPadding" type="Thickness" minOccurs="1" maxOccurs="1"/>
 			<xs:element name="PopupDecoratorShadow" type="Shadow" minOccurs="0" maxOccurs="1"/>
-			<xs:element name="SubmenuIconForegroundDisabled" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
-			<xs:element name="SubmenuIconForegroundHover" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
-			<xs:element name="SubmenuIconForegroundNormal" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
-			<xs:element name="SubmenuIconForegroundPressed" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="SubmenuIconBrushDisabled" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="SubmenuIconBrushHover" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="SubmenuIconBrushNormal" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="SubmenuIconBrushPressed" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
 			<xs:element name="SubmenuIconMargin" type="Thickness" minOccurs="1" maxOccurs="1"/>
 		</xs:all>
 	</xs:group>

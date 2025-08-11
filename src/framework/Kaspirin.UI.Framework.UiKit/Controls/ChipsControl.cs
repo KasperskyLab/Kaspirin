@@ -15,30 +15,31 @@
 using System.Windows;
 using System.Windows.Controls;
 
-namespace Kaspirin.UI.Framework.UiKit.Controls
+namespace Kaspirin.UI.Framework.UiKit.Controls;
+
+[StyleTypedProperty(Property = "ItemContainerStyle", StyleTargetType = typeof(ChipsItem))]
+public sealed class ChipsControl : SelectorList<ChipsItem>
 {
-    [StyleTypedProperty(Property = "ItemContainerStyle", StyleTargetType = typeof(ChipsItem))]
-    public sealed class ChipsControl : SelectorList<ChipsItem>
+    #region Mode
+
+    public ChipsControlMode Mode
     {
-        #region Mode
+        get => (ChipsControlMode)GetValue(ModeProperty);
+        set => SetValue(ModeProperty, value);
+    }
 
-        public ChipsControlMode Mode
-        {
-            get { return (ChipsControlMode)GetValue(ModeProperty); }
-            set { SetValue(ModeProperty, value); }
-        }
+    public static readonly DependencyProperty ModeProperty = DependencyProperty.Register(
+        nameof(Mode),
+        typeof(ChipsControlMode),
+        typeof(ChipsControl),
+        new PropertyMetadata(ChipsControlMode.Wrap));
 
-        public static readonly DependencyProperty ModeProperty =
-            DependencyProperty.Register("Mode", typeof(ChipsControlMode), typeof(ChipsControl),
-                new PropertyMetadata(ChipsControlMode.Wrap));
+    #endregion
 
-        #endregion
+    protected override void OnSelectionChanged(SelectionChangedEventArgs e)
+    {
+        base.OnSelectionChanged(e);
 
-        protected override void OnSelectionChanged(SelectionChangedEventArgs e)
-        {
-            base.OnSelectionChanged(e);
-
-            this.WhenLoaded(() => ScrollIntoView(SelectedItem));
-        }
+        this.WhenLoaded(() => ScrollIntoView(SelectedItem));
     }
 }

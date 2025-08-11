@@ -129,28 +129,28 @@
 						<xsl:with-param name="brushNode" select="ForegroundPressed"/>
 					</xsl:call-template>
 
-					<!--IconForegroundDisabled-->
+					<!--IconBrushDisabled-->
 					<xsl:call-template name="generateBrush">
-						<xsl:with-param name="key">IconForegroundDisabled</xsl:with-param>
-						<xsl:with-param name="brushNode" select="IconForegroundDisabled"/>
+						<xsl:with-param name="key">IconBrushDisabled</xsl:with-param>
+						<xsl:with-param name="brushNode" select="IconBrushDisabled"/>
 					</xsl:call-template>
 
-					<!--IconForegroundHover-->
+					<!--IconBrushHover-->
 					<xsl:call-template name="generateBrush">
-						<xsl:with-param name="key">IconForegroundHover</xsl:with-param>
-						<xsl:with-param name="brushNode" select="IconForegroundHover"/>
+						<xsl:with-param name="key">IconBrushHover</xsl:with-param>
+						<xsl:with-param name="brushNode" select="IconBrushHover"/>
 					</xsl:call-template>
 
-					<!--IconForegroundNormal-->
+					<!--IconBrushNormal-->
 					<xsl:call-template name="generateBrush">
-						<xsl:with-param name="key">IconForegroundNormal</xsl:with-param>
-						<xsl:with-param name="brushNode" select="IconForegroundNormal"/>
+						<xsl:with-param name="key">IconBrushNormal</xsl:with-param>
+						<xsl:with-param name="brushNode" select="IconBrushNormal"/>
 					</xsl:call-template>
 
-					<!--IconForegroundPressed-->
+					<!--IconBrushPressed-->
 					<xsl:call-template name="generateBrush">
-						<xsl:with-param name="key">IconForegroundPressed</xsl:with-param>
-						<xsl:with-param name="brushNode" select="IconForegroundPressed"/>
+						<xsl:with-param name="key">IconBrushPressed</xsl:with-param>
+						<xsl:with-param name="brushNode" select="IconBrushPressed"/>
 					</xsl:call-template>
 
 				</ResourceDictionary>

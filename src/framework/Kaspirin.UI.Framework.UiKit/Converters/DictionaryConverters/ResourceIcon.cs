@@ -14,40 +14,39 @@
 
 using System;
 
-namespace Kaspirin.UI.Framework.UiKit.Converters.DictionaryConverters
+namespace Kaspirin.UI.Framework.UiKit.Converters.DictionaryConverters;
+
+public sealed class ResourceIcon : IDictionaryConverterItem
 {
-    public sealed class ResourceIcon : IDictionaryConverterItem
+    public UIKitIcon_12 Icon12 { get => _icon12; set => EnsureCanSet(ref _icon12, value); }
+    public UIKitIcon_16 Icon16 { get => _icon16; set => EnsureCanSet(ref _icon16, value); }
+    public UIKitIcon_24 Icon24 { get => _icon24; set => EnsureCanSet(ref _icon24, value); }
+    public UIKitIcon_32 Icon32 { get => _icon32; set => EnsureCanSet(ref _icon32, value); }
+    public UIKitIcon_48 Icon48 { get => _icon48; set => EnsureCanSet(ref _icon48, value); }
+
+    public object? GetItemValue()
     {
-        public UIKitIcon_12 Icon12 { get => _icon12; set => EnsureCanSet(ref _icon12, value); }
-        public UIKitIcon_16 Icon16 { get => _icon16; set => EnsureCanSet(ref _icon16, value); }
-        public UIKitIcon_24 Icon24 { get => _icon24; set => EnsureCanSet(ref _icon24, value); }
-        public UIKitIcon_32 Icon32 { get => _icon32; set => EnsureCanSet(ref _icon32, value); }
-        public UIKitIcon_48 Icon48 { get => _icon48; set => EnsureCanSet(ref _icon48, value); }
-
-        public object? GetItemValue()
-        {
-            return _value;
-        }
-
-        private void EnsureCanSet<TValue>(ref TValue target, TValue value)
-        {
-            if (_value == null)
-            {
-                _value = value;
-                target = value;
-            }
-            else
-            {
-                throw new InvalidOperationException("Only one property can be set");
-            }
-        }
-
-        private object? _value;
-
-        private UIKitIcon_12 _icon12;
-        private UIKitIcon_16 _icon16;
-        private UIKitIcon_24 _icon24;
-        private UIKitIcon_32 _icon32;
-        private UIKitIcon_48 _icon48;
+        return _value;
     }
+
+    private void EnsureCanSet<TValue>(ref TValue target, TValue value)
+    {
+        if (_value == null)
+        {
+            _value = value;
+            target = value;
+        }
+        else
+        {
+            throw new InvalidOperationException("Only one property can be set");
+        }
+    }
+
+    private object? _value;
+
+    private UIKitIcon_12 _icon12;
+    private UIKitIcon_16 _icon16;
+    private UIKitIcon_24 _icon24;
+    private UIKitIcon_32 _icon32;
+    private UIKitIcon_48 _icon48;
 }

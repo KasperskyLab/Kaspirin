@@ -15,23 +15,22 @@
 using System.Windows;
 using Kaspirin.UI.Framework.UiKit.Controls.Internals;
 
-namespace Kaspirin.UI.Framework.UiKit.Services
+namespace Kaspirin.UI.Framework.UiKit.Services;
+
+public sealed class PropertyChangeNotifier : PropertyChangeNotifier<DependencyObject, object>
 {
-    public sealed class PropertyChangeNotifier : PropertyChangeNotifier<DependencyObject, object>
+    public PropertyChangeNotifier(DependencyObject propertySource, string path)
+        : this(propertySource, new PropertyPath(path))
     {
-        public PropertyChangeNotifier(DependencyObject propertySource, string path)
-            : this(propertySource, new PropertyPath(path))
-        {
-        }
+    }
 
-        public PropertyChangeNotifier(DependencyObject propertySource, DependencyProperty property)
-            : this(propertySource, property.AsPath())
-        {
-        }
+    public PropertyChangeNotifier(DependencyObject propertySource, DependencyProperty property)
+        : this(propertySource, property.AsPath())
+    {
+    }
 
-        public PropertyChangeNotifier(DependencyObject propertySource, PropertyPath property)
-            : base(propertySource, property)
-        {
-        }
+    public PropertyChangeNotifier(DependencyObject propertySource, PropertyPath property)
+        : base(propertySource, property)
+    {
     }
 }

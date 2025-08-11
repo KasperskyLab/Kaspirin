@@ -21,481 +21,480 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
 
-namespace Kaspirin.UI.Framework.UiKit.Controls.Internals
+namespace Kaspirin.UI.Framework.UiKit.Controls.Internals;
+
+internal static class ScrollViewerInternals
 {
-    internal static class ScrollViewerInternals
+    public static string PART_ScrollContentPresenterContainer = "PART_ScrollContentPresenterContainer";
+
+    #region CanMouseWheelScroll
+
+    public static bool GetCanMouseWheelScroll(DependencyObject obj)
+        => (bool)obj.GetValue(CanMouseWheelScrollProperty);
+
+    public static void SetCanMouseWheelScroll(DependencyObject obj, bool value)
+        => obj.SetValue(CanMouseWheelScrollProperty, value);
+
+    public static readonly DependencyProperty CanMouseWheelScrollProperty = DependencyProperty.RegisterAttached(
+        "CanMouseWheelScroll",
+        typeof(bool),
+        typeof(ScrollViewerInternals),
+        UIKitPropertyMetadataFactory.CreatePropsMetadata(typeof(ScrollViewer), nameof(CanMouseWheelScrollProperty), OnCanMouseWheelScrollChanged, true));
+
+    private static void OnCanMouseWheelScrollChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
     {
-        public static string PART_ScrollContentPresenterContainer = "PART_ScrollContentPresenterContainer";
+        var scrollViewer = (ScrollViewer)d;
 
-        #region CanMouseWheelScroll
+        scrollViewer.PreviewMouseWheel -= HandleMouseWheelScroll;
+        scrollViewer.PreviewMouseWheel += HandleMouseWheelScroll;
+    }
 
-        public static bool GetCanMouseWheelScroll(DependencyObject obj)
-            => (bool)obj.GetValue(CanMouseWheelScrollProperty);
+    #endregion
 
-        public static void SetCanMouseWheelScroll(DependencyObject obj, bool value)
-            => obj.SetValue(CanMouseWheelScrollProperty, value);
+    #region MouseWheelScrollOrientation
 
-        public static readonly DependencyProperty CanMouseWheelScrollProperty = DependencyProperty.RegisterAttached(
-            "CanMouseWheelScroll",
-            typeof(bool),
-            typeof(ScrollViewerInternals),
-            UIKitPropertyMetadataFactory.CreatePropsMetadata(typeof(ScrollViewer), nameof(CanMouseWheelScrollProperty), OnCanMouseWheelScrollChanged, true));
+    public static Orientation GetMouseWheelScrollOrientation(DependencyObject obj)
+        => (Orientation)obj.GetValue(MouseWheelScrollOrientationProperty);
 
-        private static void OnCanMouseWheelScrollChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+    public static void SetMouseWheelScrollOrientation(DependencyObject obj, Orientation value)
+        => obj.SetValue(MouseWheelScrollOrientationProperty, value);
+
+    public static readonly DependencyProperty MouseWheelScrollOrientationProperty = DependencyProperty.RegisterAttached(
+        "MouseWheelScrollOrientation",
+        typeof(Orientation),
+        typeof(ScrollViewerInternals),
+        UIKitPropertyMetadataFactory.CreatePropsMetadata(typeof(ScrollViewer), nameof(MouseWheelScrollOrientationProperty), OnMouseWheelScrollOrientationChanged, Orientation.Vertical));
+
+    private static void OnMouseWheelScrollOrientationChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+    {
+        var scrollViewer = (ScrollViewer)d;
+
+        scrollViewer.PreviewMouseWheel -= HandleMouseWheelScroll;
+        scrollViewer.PreviewMouseWheel += HandleMouseWheelScroll;
+    }
+
+    #endregion
+
+    #region ScrollViewerObserver
+
+    public static bool GetScrollViewerObserver(DependencyObject element)
+        => (bool)element.GetValue(ScrollViewerObserverProperty);
+
+    public static void SetScrollViewerObserver(DependencyObject element, bool value)
+        => element.SetValue(ScrollViewerObserverProperty, value);
+
+    public static readonly DependencyProperty ScrollViewerObserverProperty = DependencyProperty.RegisterAttached(
+        "ScrollViewerObserver",
+        typeof(bool),
+        typeof(ScrollViewerInternals),
+        UIKitPropertyMetadataFactory.CreatePropsMetadata(typeof(ScrollViewer), nameof(ScrollViewerObserverProperty), OnScrollViewerObserverChanged));
+
+    #endregion
+
+    #region IsBorderFadeEnabled
+
+    public static bool GetIsBorderFadeEnabled(DependencyObject obj)
+        => (bool)obj.GetValue(IsBorderFadeEnabledProperty);
+
+    public static void SetIsBorderFadeEnabled(DependencyObject obj, bool value)
+        => obj.SetValue(IsBorderFadeEnabledProperty, value);
+
+    public static readonly DependencyProperty IsBorderFadeEnabledProperty = DependencyProperty.RegisterAttached(
+        "IsBorderFadeEnabled",
+        typeof(bool),
+        typeof(ScrollViewerInternals),
+        UIKitPropertyMetadataFactory.CreatePropsMetadata(typeof(ScrollViewer), nameof(IsBorderFadeEnabledProperty), OnIsBorderFadeEnabledChanged));
+
+    private static void OnIsBorderFadeEnabledChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        => ApplyBorderFade((ScrollViewer)d);
+
+    #endregion
+
+    #region BorderFadeState
+
+    public static ScrollViewerBorderFadeState GetBorderFadeState(DependencyObject obj)
+        => (ScrollViewerBorderFadeState)obj.GetValue(BorderFadeStateProperty);
+
+    public static void SetBorderFadeState(DependencyObject obj, ScrollViewerBorderFadeState value)
+        => obj.SetValue(_borderFadeStatePropertyKey, value);
+
+    private static readonly DependencyPropertyKey _borderFadeStatePropertyKey = DependencyProperty.RegisterAttachedReadOnly(
+        "BorderFadeState",
+        typeof(ScrollViewerBorderFadeState),
+        typeof(ScrollViewerInternals),
+        UIKitPropertyMetadataFactory.CreatePropsMetadata(typeof(ScrollViewer), nameof(_borderFadeStatePropertyKey)));
+
+    public static readonly DependencyProperty BorderFadeStateProperty = _borderFadeStatePropertyKey.DependencyProperty;
+
+    #endregion
+
+    #region BorderFadeWidth
+
+    public static double GetBorderFadeWidth(DependencyObject obj)
+        => (double)obj.GetValue(BorderFadeWidthProperty);
+
+    public static void SetBorderFadeWidth(DependencyObject obj, double value)
+        => obj.SetValue(BorderFadeWidthProperty, value);
+
+    public static readonly DependencyProperty BorderFadeWidthProperty = DependencyProperty.RegisterAttached(
+        "BorderFadeWidth",
+        typeof(double),
+        typeof(ScrollViewerInternals),
+        UIKitPropertyMetadataFactory.CreatePropsMetadata(typeof(ScrollViewer), nameof(BorderFadeWidthProperty), defaultValue: UIKitConstants.ScrollViewerBorderFadeLength));
+
+    #endregion
+
+    #region BorderFadeHeight
+
+    public static double GetBorderFadeHeight(DependencyObject obj)
+        => (double)obj.GetValue(BorderFadeHeightProperty);
+
+    public static void SetBorderFadeHeight(DependencyObject obj, double value)
+        => obj.SetValue(BorderFadeHeightProperty, value);
+
+    public static readonly DependencyProperty BorderFadeHeightProperty = DependencyProperty.RegisterAttached(
+        "BorderFadeHeight",
+        typeof(double),
+        typeof(ScrollViewerInternals),
+        UIKitPropertyMetadataFactory.CreatePropsMetadata(typeof(ScrollViewer), nameof(BorderFadeHeightProperty), defaultValue: UIKitConstants.ScrollViewerBorderFadeLength));
+
+    #endregion
+
+    #region BorderFadeGradient
+
+    public static GradientStopCollection GetBorderFadeGradient(DependencyObject obj)
+        => (GradientStopCollection)obj.GetValue(BorderFadeGradientProperty);
+
+    public static void SetBorderFadeGradient(DependencyObject obj, GradientStopCollection value)
+        => obj.SetValue(BorderFadeGradientProperty, value);
+
+    public static readonly DependencyProperty BorderFadeGradientProperty = DependencyProperty.RegisterAttached(
+        "BorderFadeGradient",
+        typeof(GradientStopCollection),
+        typeof(ScrollViewerInternals),
+        UIKitPropertyMetadataFactory.CreatePropsMetadata(typeof(ScrollViewer), nameof(BorderFadeGradientProperty), defaultValue: UIKitConstants.ScrollViewerBorderFadeGradient));
+
+    #endregion
+
+    private static void OnScrollViewerObserverChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+    {
+        var scrollViewer = (ScrollViewer)d;
+
+        scrollViewer.WhenLoaded(() =>
         {
-            var scrollViewer = (ScrollViewer)d;
-
-            scrollViewer.PreviewMouseWheel -= HandleMouseWheelScroll;
-            scrollViewer.PreviewMouseWheel += HandleMouseWheelScroll;
-        }
-
-        #endregion
-
-        #region MouseWheelScrollOrientation
-
-        public static Orientation GetMouseWheelScrollOrientation(DependencyObject obj)
-            => (Orientation)obj.GetValue(MouseWheelScrollOrientationProperty);
-
-        public static void SetMouseWheelScrollOrientation(DependencyObject obj, Orientation value)
-            => obj.SetValue(MouseWheelScrollOrientationProperty, value);
-
-        public static readonly DependencyProperty MouseWheelScrollOrientationProperty = DependencyProperty.RegisterAttached(
-            "MouseWheelScrollOrientation",
-            typeof(Orientation),
-            typeof(ScrollViewerInternals),
-            UIKitPropertyMetadataFactory.CreatePropsMetadata(typeof(ScrollViewer), nameof(MouseWheelScrollOrientationProperty), OnMouseWheelScrollOrientationChanged, Orientation.Vertical));
-
-        private static void OnMouseWheelScrollOrientationChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            var scrollViewer = (ScrollViewer)d;
-
-            scrollViewer.PreviewMouseWheel -= HandleMouseWheelScroll;
-            scrollViewer.PreviewMouseWheel += HandleMouseWheelScroll;
-        }
-
-        #endregion
-
-        #region ScrollViewerObserver
-
-        public static bool GetScrollViewerObserver(DependencyObject element)
-            => (bool)element.GetValue(ScrollViewerObserverProperty);
-
-        public static void SetScrollViewerObserver(DependencyObject element, bool value)
-            => element.SetValue(ScrollViewerObserverProperty, value);
-
-        public static readonly DependencyProperty ScrollViewerObserverProperty = DependencyProperty.RegisterAttached(
-            "ScrollViewerObserver",
-            typeof(bool),
-            typeof(ScrollViewerInternals),
-            UIKitPropertyMetadataFactory.CreatePropsMetadata(typeof(ScrollViewer), nameof(ScrollViewerObserverProperty), OnScrollViewerObserverChanged));
-
-        #endregion
-
-        #region IsBorderFadeEnabled
-
-        public static bool GetIsBorderFadeEnabled(DependencyObject obj)
-            => (bool)obj.GetValue(IsBorderFadeEnabledProperty);
-
-        public static void SetIsBorderFadeEnabled(DependencyObject obj, bool value)
-            => obj.SetValue(IsBorderFadeEnabledProperty, value);
-
-        public static readonly DependencyProperty IsBorderFadeEnabledProperty = DependencyProperty.RegisterAttached(
-            "IsBorderFadeEnabled",
-            typeof(bool),
-            typeof(ScrollViewerInternals),
-            UIKitPropertyMetadataFactory.CreatePropsMetadata(typeof(ScrollViewer), nameof(IsBorderFadeEnabledProperty), OnIsBorderFadeEnabledChanged));
-
-        private static void OnIsBorderFadeEnabledChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-            => ApplyBorderFade((ScrollViewer)d);
-
-        #endregion
-
-        #region BorderFadeState
-
-        public static ScrollViewerBorderFadeState GetBorderFadeState(DependencyObject obj)
-            => (ScrollViewerBorderFadeState)obj.GetValue(BorderFadeStateProperty);
-
-        public static void SetBorderFadeState(DependencyObject obj, ScrollViewerBorderFadeState value)
-            => obj.SetValue(_borderFadeStatePropertyKey, value);
-
-        private static readonly DependencyPropertyKey _borderFadeStatePropertyKey = DependencyProperty.RegisterAttachedReadOnly(
-            "BorderFadeState",
-            typeof(ScrollViewerBorderFadeState),
-            typeof(ScrollViewerInternals),
-            UIKitPropertyMetadataFactory.CreatePropsMetadata(typeof(ScrollViewer), nameof(_borderFadeStatePropertyKey)));
-
-        public static readonly DependencyProperty BorderFadeStateProperty = _borderFadeStatePropertyKey.DependencyProperty;
-
-        #endregion
-
-        #region BorderFadeWidth
-
-        public static double GetBorderFadeWidth(DependencyObject obj)
-            => (double)obj.GetValue(BorderFadeWidthProperty);
-
-        public static void SetBorderFadeWidth(DependencyObject obj, double value)
-            => obj.SetValue(BorderFadeWidthProperty, value);
-
-        public static readonly DependencyProperty BorderFadeWidthProperty = DependencyProperty.RegisterAttached(
-            "BorderFadeWidth",
-            typeof(double),
-            typeof(ScrollViewerInternals),
-            UIKitPropertyMetadataFactory.CreatePropsMetadata(typeof(ScrollViewer), nameof(BorderFadeWidthProperty), defaultValue: UIKitConstants.ScrollViewerBorderFadeLength));
-
-        #endregion
-
-        #region BorderFadeHeight
-
-        public static double GetBorderFadeHeight(DependencyObject obj)
-            => (double)obj.GetValue(BorderFadeHeightProperty);
-
-        public static void SetBorderFadeHeight(DependencyObject obj, double value)
-            => obj.SetValue(BorderFadeHeightProperty, value);
-
-        public static readonly DependencyProperty BorderFadeHeightProperty = DependencyProperty.RegisterAttached(
-            "BorderFadeHeight",
-            typeof(double),
-            typeof(ScrollViewerInternals),
-            UIKitPropertyMetadataFactory.CreatePropsMetadata(typeof(ScrollViewer), nameof(BorderFadeHeightProperty), defaultValue: UIKitConstants.ScrollViewerBorderFadeLength));
-
-        #endregion
-
-        #region BorderFadeGradient
-
-        public static GradientStopCollection GetBorderFadeGradient(DependencyObject obj)
-            => (GradientStopCollection)obj.GetValue(BorderFadeGradientProperty);
-
-        public static void SetBorderFadeGradient(DependencyObject obj, GradientStopCollection value)
-            => obj.SetValue(BorderFadeGradientProperty, value);
-
-        public static readonly DependencyProperty BorderFadeGradientProperty = DependencyProperty.RegisterAttached(
-            "BorderFadeGradient",
-            typeof(GradientStopCollection),
-            typeof(ScrollViewerInternals),
-            UIKitPropertyMetadataFactory.CreatePropsMetadata(typeof(ScrollViewer), nameof(BorderFadeGradientProperty), defaultValue: UIKitConstants.ScrollViewerBorderFadeGradient));
-
-        #endregion
-
-        private static void OnScrollViewerObserverChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            var scrollViewer = (ScrollViewer)d;
-
-            scrollViewer.WhenLoaded(() =>
-            {
-                CreateBorderFadeOpacityMask(scrollViewer);
-                ApplyBorderFade(scrollViewer);
-            });
-
-            scrollViewer.ScrollChanged += OnScrollChanged;
-        }
-
-        private static void OnScrollChanged(object sender, ScrollChangedEventArgs e)
-        {
-            var scrollViewer = (ScrollViewer)sender;
-
+            CreateBorderFadeOpacityMask(scrollViewer);
             ApplyBorderFade(scrollViewer);
+        });
+
+        scrollViewer.ScrollChanged += OnScrollChanged;
+    }
+
+    private static void OnScrollChanged(object sender, ScrollChangedEventArgs e)
+    {
+        var scrollViewer = (ScrollViewer)sender;
+
+        ApplyBorderFade(scrollViewer);
+    }
+
+    private static void ApplyBorderFade(ScrollViewer scrollViewer)
+    {
+        var isBorderFadeEnabled = GetIsBorderFadeEnabled(scrollViewer);
+        if (isBorderFadeEnabled == false)
+        {
+            SetBorderFadeState(scrollViewer, ScrollViewerBorderFadeState.None);
+        }
+        else
+        {
+            var hasTopOffset = scrollViewer.VerticalOffset > 0;
+            var hasLeftOffset = scrollViewer.HorizontalOffset > 0;
+
+            var hasBottomOffset = scrollViewer.VerticalOffset + scrollViewer.ViewportHeight < scrollViewer.ExtentHeight;
+            var hasRightOffset = scrollViewer.HorizontalOffset + scrollViewer.ViewportWidth < scrollViewer.ExtentWidth;
+
+            var fadeState = ScrollViewerBorderFadeState.None;
+
+            if (hasTopOffset)
+            {
+                fadeState |= ScrollViewerBorderFadeState.Top;
+            }
+
+            if (hasBottomOffset)
+            {
+                fadeState |= ScrollViewerBorderFadeState.Bottom;
+            }
+
+            if (hasLeftOffset)
+            {
+                fadeState |= ScrollViewerBorderFadeState.Left;
+            }
+
+            if (hasRightOffset)
+            {
+                fadeState |= ScrollViewerBorderFadeState.Right;
+            }
+
+            SetBorderFadeState(scrollViewer, fadeState);
+        }
+    }
+
+    private static void CreateBorderFadeOpacityMask(ScrollViewer scrollViewer)
+    {
+        var isBorderFadeEnabled = GetIsBorderFadeEnabled(scrollViewer);
+        if (!isBorderFadeEnabled)
+        {
+            return;
         }
 
-        private static void ApplyBorderFade(ScrollViewer scrollViewer)
+        var fadeLayer = scrollViewer.FindVisualChildren<Panel>().FirstOrDefault(p => p.Name == PART_ScrollContentPresenterContainer);
+        if (fadeLayer != null)
         {
-            var isBorderFadeEnabled = GetIsBorderFadeEnabled(scrollViewer);
-            if (isBorderFadeEnabled == false)
+            var topLeftMask = CreateRectangle(
+                source: scrollViewer,
+                column: 0,
+                row: 0,
+                gradientBrush: new RadialGradientBrush()
+                {
+                    Center = new Point(1, 1),
+                    GradientOrigin = new Point(1, 1),
+                    RadiusX = 1,
+                    RadiusY = 1
+                },
+                visibilityConverter: new DelegateConverter<ScrollViewerBorderFadeState>(value =>
+                {
+                    return EnumOperations.HasFlag(value, ScrollViewerBorderFadeState.Left | ScrollViewerBorderFadeState.Top)
+                    ? Visibility.Visible
+                    : Visibility.Collapsed;
+                }));
+
+            var topRightMask = CreateRectangle(
+                source: scrollViewer,
+                column: 2,
+                row: 0,
+                gradientBrush: new RadialGradientBrush()
+                {
+                    Center = new Point(0, 1),
+                    GradientOrigin = new Point(0, 1),
+                    RadiusX = 1,
+                    RadiusY = 1
+                },
+                visibilityConverter: new DelegateConverter<ScrollViewerBorderFadeState>(value =>
+                {
+                    return EnumOperations.HasFlag(value, ScrollViewerBorderFadeState.Right | ScrollViewerBorderFadeState.Top)
+                    ? Visibility.Visible
+                    : Visibility.Collapsed;
+                }));
+
+            var bottomLeftMask = CreateRectangle(
+                source: scrollViewer,
+                column: 0,
+                row: 2,
+                gradientBrush: new RadialGradientBrush()
+                {
+                    Center = new Point(1, 0),
+                    GradientOrigin = new Point(1, 0),
+                    RadiusX = 1,
+                    RadiusY = 1
+                },
+                visibilityConverter: new DelegateConverter<ScrollViewerBorderFadeState>(value =>
+                {
+                    return EnumOperations.HasFlag(value, ScrollViewerBorderFadeState.Left | ScrollViewerBorderFadeState.Bottom)
+                    ? Visibility.Visible
+                    : Visibility.Collapsed;
+                }));
+
+            var bottomRightMask = CreateRectangle(
+                source: scrollViewer,
+                column: 2,
+                row: 2,
+                gradientBrush: new RadialGradientBrush()
+                {
+                    Center = new Point(0, 0),
+                    GradientOrigin = new Point(0, 0),
+                    RadiusX = 1,
+                    RadiusY = 1
+                },
+                visibilityConverter: new DelegateConverter<ScrollViewerBorderFadeState>(value =>
+                {
+                    return EnumOperations.HasFlag(value, ScrollViewerBorderFadeState.Right | ScrollViewerBorderFadeState.Bottom)
+                    ? Visibility.Visible
+                    : Visibility.Collapsed;
+                }));
+
+            var leftMask = CreateRectangle(
+                source: scrollViewer,
+                column: 0,
+                row: 1,
+                gradientBrush: new LinearGradientBrush()
+                {
+                    EndPoint = new Point(0, 0),
+                    StartPoint = new Point(1, 0)
+                },
+                visibilityConverter: new DelegateConverter<ScrollViewerBorderFadeState>(value =>
+                {
+                    return EnumOperations.HasFlag(value, ScrollViewerBorderFadeState.Left)
+                    ? Visibility.Visible
+                    : Visibility.Collapsed;
+                }));
+
+            var rightMask = CreateRectangle(
+                source: scrollViewer,
+                column: 2,
+                row: 1,
+                gradientBrush: new LinearGradientBrush()
+                {
+                    EndPoint = new Point(1, 0),
+                    StartPoint = new Point(0, 0)
+                },
+                visibilityConverter: new DelegateConverter<ScrollViewerBorderFadeState>(value =>
+                {
+                    return EnumOperations.HasFlag(value, ScrollViewerBorderFadeState.Right)
+                    ? Visibility.Visible
+                    : Visibility.Collapsed;
+                }));
+
+            var topMask = CreateRectangle(
+                source: scrollViewer,
+                column: 1,
+                row: 0,
+                gradientBrush: new LinearGradientBrush()
+                {
+                    EndPoint = new Point(0, 0),
+                    StartPoint = new Point(0, 1)
+                },
+                visibilityConverter: new DelegateConverter<ScrollViewerBorderFadeState>(value =>
+                {
+                    return EnumOperations.HasFlag(value, ScrollViewerBorderFadeState.Top)
+                    ? Visibility.Visible
+                    : Visibility.Collapsed;
+                }));
+
+            var bottomMask = CreateRectangle(
+                source: scrollViewer,
+                column: 1,
+                row: 2,
+                gradientBrush: new LinearGradientBrush()
+                {
+                    EndPoint = new Point(0, 1),
+                    StartPoint = new Point(0, 0)
+                },
+                visibilityConverter: new DelegateConverter<ScrollViewerBorderFadeState>(value =>
+                {
+                    return EnumOperations.HasFlag(value, ScrollViewerBorderFadeState.Bottom)
+                    ? Visibility.Visible
+                    : Visibility.Collapsed;
+                }));
+
+            var middleMask = new Rectangle();
+            middleMask.SetValue(Grid.RowProperty, 1);
+            middleMask.SetValue(Grid.ColumnProperty, 1);
+            middleMask.SetValue(Rectangle.FillProperty, Brushes.Black);
+
+            var opacityMaskGrid = new Grid();
+            opacityMaskGrid.SetBinding(Grid.HeightProperty, new Binding() { Source = scrollViewer, Path = ScrollViewer.ActualHeightProperty.AsPath() });
+            opacityMaskGrid.SetBinding(Grid.WidthProperty, new Binding() { Source = scrollViewer, Path = ScrollViewer.ActualWidthProperty.AsPath() });
+            opacityMaskGrid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(0, GridUnitType.Auto) });
+            opacityMaskGrid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(1, GridUnitType.Star) });
+            opacityMaskGrid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(0, GridUnitType.Auto) });
+            opacityMaskGrid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(0, GridUnitType.Auto) });
+            opacityMaskGrid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(1, GridUnitType.Star) });
+            opacityMaskGrid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(0, GridUnitType.Auto) });
+            opacityMaskGrid.Children.Add(topLeftMask);
+            opacityMaskGrid.Children.Add(topRightMask);
+            opacityMaskGrid.Children.Add(bottomLeftMask);
+            opacityMaskGrid.Children.Add(bottomRightMask);
+            opacityMaskGrid.Children.Add(leftMask);
+            opacityMaskGrid.Children.Add(rightMask);
+            opacityMaskGrid.Children.Add(topMask);
+            opacityMaskGrid.Children.Add(bottomMask);
+            opacityMaskGrid.Children.Add(middleMask);
+
+            fadeLayer.OpacityMask = new VisualBrush
             {
-                SetBorderFadeState(scrollViewer, ScrollViewerBorderFadeState.None);
-            }
-            else
-            {
-                var hasTopOffset = scrollViewer.VerticalOffset > 0;
-                var hasLeftOffset = scrollViewer.HorizontalOffset > 0;
+                Visual = opacityMaskGrid
+            };
+        }
+    }
 
-                var hasBottomOffset = scrollViewer.VerticalOffset + scrollViewer.ViewportHeight < scrollViewer.ExtentHeight;
-                var hasRightOffset = scrollViewer.HorizontalOffset + scrollViewer.ViewportWidth < scrollViewer.ExtentWidth;
+    private static Rectangle CreateRectangle(ScrollViewer source, int column, int row, GradientBrush gradientBrush, IValueConverter visibilityConverter)
+    {
+        var maskWidth = (double)source.GetValue(BorderFadeWidthProperty);
+        var maskHeight = (double)source.GetValue(BorderFadeHeightProperty);
+        var gradientStops = ((GradientStopCollection)source.GetValue(BorderFadeGradientProperty)).Clone();
 
-                var fadeState = ScrollViewerBorderFadeState.None;
+        gradientBrush.GradientStops = gradientStops;
 
-                if (hasTopOffset)
-                {
-                    fadeState |= ScrollViewerBorderFadeState.Top;
-                }
-
-                if (hasBottomOffset)
-                {
-                    fadeState |= ScrollViewerBorderFadeState.Bottom;
-                }
-
-                if (hasLeftOffset)
-                {
-                    fadeState |= ScrollViewerBorderFadeState.Left;
-                }
-
-                if (hasRightOffset)
-                {
-                    fadeState |= ScrollViewerBorderFadeState.Right;
-                }
-
-                SetBorderFadeState(scrollViewer, fadeState);
-            }
+        var rect = new Rectangle();
+        rect.SetValue(Grid.ColumnProperty, column);
+        rect.SetValue(Grid.RowProperty, row);
+        if (column != 1)
+        {
+            rect.SetValue(Rectangle.WidthProperty, maskWidth);
         }
 
-        private static void CreateBorderFadeOpacityMask(ScrollViewer scrollViewer)
+        if (row != 1)
         {
-            var isBorderFadeEnabled = GetIsBorderFadeEnabled(scrollViewer);
-            if (!isBorderFadeEnabled)
-            {
-                return;
-            }
-
-            var fadeLayer = scrollViewer.FindVisualChildren<Panel>().FirstOrDefault(p => p.Name == PART_ScrollContentPresenterContainer);
-            if (fadeLayer != null)
-            {
-                var topLeftMask = CreateRectangle(
-                    source: scrollViewer,
-                    column: 0,
-                    row: 0,
-                    gradientBrush: new RadialGradientBrush()
-                    {
-                        Center = new Point(1, 1),
-                        GradientOrigin = new Point(1, 1),
-                        RadiusX = 1,
-                        RadiusY = 1
-                    },
-                    visibilityConverter: new DelegateConverter<ScrollViewerBorderFadeState>(value =>
-                    {
-                        return EnumOperations.HasFlag(value, ScrollViewerBorderFadeState.Left | ScrollViewerBorderFadeState.Top)
-                        ? Visibility.Visible
-                        : Visibility.Collapsed;
-                    }));
-
-                var topRightMask = CreateRectangle(
-                    source: scrollViewer,
-                    column: 2,
-                    row: 0,
-                    gradientBrush: new RadialGradientBrush()
-                    {
-                        Center = new Point(0, 1),
-                        GradientOrigin = new Point(0, 1),
-                        RadiusX = 1,
-                        RadiusY = 1
-                    },
-                    visibilityConverter: new DelegateConverter<ScrollViewerBorderFadeState>(value =>
-                    {
-                        return EnumOperations.HasFlag(value, ScrollViewerBorderFadeState.Right | ScrollViewerBorderFadeState.Top)
-                        ? Visibility.Visible
-                        : Visibility.Collapsed;
-                    }));
-
-                var bottomLeftMask = CreateRectangle(
-                    source: scrollViewer,
-                    column: 0,
-                    row: 2,
-                    gradientBrush: new RadialGradientBrush()
-                    {
-                        Center = new Point(1, 0),
-                        GradientOrigin = new Point(1, 0),
-                        RadiusX = 1,
-                        RadiusY = 1
-                    },
-                    visibilityConverter: new DelegateConverter<ScrollViewerBorderFadeState>(value =>
-                    {
-                        return EnumOperations.HasFlag(value, ScrollViewerBorderFadeState.Left | ScrollViewerBorderFadeState.Bottom)
-                        ? Visibility.Visible
-                        : Visibility.Collapsed;
-                    }));
-
-                var bottomRightMask = CreateRectangle(
-                    source: scrollViewer,
-                    column: 2,
-                    row: 2,
-                    gradientBrush: new RadialGradientBrush()
-                    {
-                        Center = new Point(0, 0),
-                        GradientOrigin = new Point(0, 0),
-                        RadiusX = 1,
-                        RadiusY = 1
-                    },
-                    visibilityConverter: new DelegateConverter<ScrollViewerBorderFadeState>(value =>
-                    {
-                        return EnumOperations.HasFlag(value, ScrollViewerBorderFadeState.Right | ScrollViewerBorderFadeState.Bottom)
-                        ? Visibility.Visible
-                        : Visibility.Collapsed;
-                    }));
-
-                var leftMask = CreateRectangle(
-                    source: scrollViewer,
-                    column: 0,
-                    row: 1,
-                    gradientBrush: new LinearGradientBrush()
-                    {
-                        EndPoint = new Point(0, 0),
-                        StartPoint = new Point(1, 0)
-                    },
-                    visibilityConverter: new DelegateConverter<ScrollViewerBorderFadeState>(value =>
-                    {
-                        return EnumOperations.HasFlag(value, ScrollViewerBorderFadeState.Left)
-                        ? Visibility.Visible
-                        : Visibility.Collapsed;
-                    }));
-
-                var rightMask = CreateRectangle(
-                    source: scrollViewer,
-                    column: 2,
-                    row: 1,
-                    gradientBrush: new LinearGradientBrush()
-                    {
-                        EndPoint = new Point(1, 0),
-                        StartPoint = new Point(0, 0)
-                    },
-                    visibilityConverter: new DelegateConverter<ScrollViewerBorderFadeState>(value =>
-                    {
-                        return EnumOperations.HasFlag(value, ScrollViewerBorderFadeState.Right)
-                        ? Visibility.Visible
-                        : Visibility.Collapsed;
-                    }));
-
-                var topMask = CreateRectangle(
-                    source: scrollViewer,
-                    column: 1,
-                    row: 0,
-                    gradientBrush: new LinearGradientBrush()
-                    {
-                        EndPoint = new Point(0, 0),
-                        StartPoint = new Point(0, 1)
-                    },
-                    visibilityConverter: new DelegateConverter<ScrollViewerBorderFadeState>(value =>
-                    {
-                        return EnumOperations.HasFlag(value, ScrollViewerBorderFadeState.Top)
-                        ? Visibility.Visible
-                        : Visibility.Collapsed;
-                    }));
-
-                var bottomMask = CreateRectangle(
-                    source: scrollViewer,
-                    column: 1,
-                    row: 2,
-                    gradientBrush: new LinearGradientBrush()
-                    {
-                        EndPoint = new Point(0, 1),
-                        StartPoint = new Point(0, 0)
-                    },
-                    visibilityConverter: new DelegateConverter<ScrollViewerBorderFadeState>(value =>
-                    {
-                        return EnumOperations.HasFlag(value, ScrollViewerBorderFadeState.Bottom)
-                        ? Visibility.Visible
-                        : Visibility.Collapsed;
-                    }));
-
-                var middleMask = new Rectangle();
-                middleMask.SetValue(Grid.RowProperty, 1);
-                middleMask.SetValue(Grid.ColumnProperty, 1);
-                middleMask.SetValue(Rectangle.FillProperty, Brushes.Black);
-
-                var opacityMaskGrid = new Grid();
-                opacityMaskGrid.SetBinding(Grid.HeightProperty, new Binding() { Source = scrollViewer, Path = ScrollViewer.ActualHeightProperty.AsPath() });
-                opacityMaskGrid.SetBinding(Grid.WidthProperty, new Binding() { Source = scrollViewer, Path = ScrollViewer.ActualWidthProperty.AsPath() });
-                opacityMaskGrid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(0, GridUnitType.Auto) });
-                opacityMaskGrid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(1, GridUnitType.Star) });
-                opacityMaskGrid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(0, GridUnitType.Auto) });
-                opacityMaskGrid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(0, GridUnitType.Auto) });
-                opacityMaskGrid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(1, GridUnitType.Star) });
-                opacityMaskGrid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(0, GridUnitType.Auto) });
-                opacityMaskGrid.Children.Add(topLeftMask);
-                opacityMaskGrid.Children.Add(topRightMask);
-                opacityMaskGrid.Children.Add(bottomLeftMask);
-                opacityMaskGrid.Children.Add(bottomRightMask);
-                opacityMaskGrid.Children.Add(leftMask);
-                opacityMaskGrid.Children.Add(rightMask);
-                opacityMaskGrid.Children.Add(topMask);
-                opacityMaskGrid.Children.Add(bottomMask);
-                opacityMaskGrid.Children.Add(middleMask);
-
-                fadeLayer.OpacityMask = new VisualBrush
-                {
-                    Visual = opacityMaskGrid
-                };
-            }
+            rect.SetValue(Rectangle.HeightProperty, maskHeight);
         }
 
-        private static Rectangle CreateRectangle(ScrollViewer source, int column, int row, GradientBrush gradientBrush, IValueConverter visibilityConverter)
+        rect.SetValue(Rectangle.FillProperty, gradientBrush);
+        rect.SetBinding(Rectangle.VisibilityProperty, new Binding()
         {
-            var maskWidth = (double)source.GetValue(BorderFadeWidthProperty);
-            var maskHeight = (double)source.GetValue(BorderFadeHeightProperty);
-            var gradientStops = ((GradientStopCollection)source.GetValue(BorderFadeGradientProperty)).Clone();
+            Source = source,
+            Path = _borderFadeStatePropertyKey.DependencyProperty.AsPath(),
+            Converter = visibilityConverter
+        });
 
-            gradientBrush.GradientStops = gradientStops;
+        return rect;
+    }
 
-            var rect = new Rectangle();
-            rect.SetValue(Grid.ColumnProperty, column);
-            rect.SetValue(Grid.RowProperty, row);
-            if (column != 1)
-            {
-                rect.SetValue(Rectangle.WidthProperty, maskWidth);
-            }
+    private static void HandleMouseWheelScroll(object sender, MouseWheelEventArgs e)
+    {
+        var scrollViewer = Guard.EnsureIsInstanceOfType<ScrollViewer>(sender);
 
-            if (row != 1)
-            {
-                rect.SetValue(Rectangle.HeightProperty, maskHeight);
-            }
+        var canMouseWheelScroll = scrollViewer.GetValue<bool>(CanMouseWheelScrollProperty);
+        if (canMouseWheelScroll == false)
+        {
+            e.Handled = true;
 
-            rect.SetValue(Rectangle.FillProperty, gradientBrush);
-            rect.SetBinding(Rectangle.VisibilityProperty, new Binding()
-            {
-                Source = source,
-                Path = _borderFadeStatePropertyKey.DependencyProperty.AsPath(),
-                Converter = visibilityConverter
-            });
-
-            return rect;
+            RaiseParentScroll(scrollViewer, e);
         }
 
-        private static void HandleMouseWheelScroll(object sender, MouseWheelEventArgs e)
+        var mouseWheelScrollOrientation = scrollViewer.GetValue<Orientation>(MouseWheelScrollOrientationProperty);
+        if (mouseWheelScrollOrientation == Orientation.Horizontal)
         {
-            var scrollViewer = Guard.EnsureIsInstanceOfType<ScrollViewer>(sender);
+            e.Handled = true;
 
-            var canMouseWheelScroll = scrollViewer.GetValue<bool>(CanMouseWheelScrollProperty);
-            if (canMouseWheelScroll == false)
+            if (scrollViewer.CanScrollLeft() || scrollViewer.CanScrollRight())
             {
-                e.Handled = true;
+                const int minHorizontalScrollLine = 2;
 
-                RaiseParentScroll(scrollViewer, e);
-            }
+                var lineCount = Math.Max(Math.Abs(e.Delta) / Mouse.MouseWheelDeltaForOneLine, minHorizontalScrollLine);
 
-            var mouseWheelScrollOrientation = scrollViewer.GetValue<Orientation>(MouseWheelScrollOrientationProperty);
-            if (mouseWheelScrollOrientation == Orientation.Horizontal)
-            {
-                e.Handled = true;
-
-                if (scrollViewer.CanScrollLeft() || scrollViewer.CanScrollRight())
+                if (e.Delta < 0)
                 {
-                    const int minHorizontalScrollLine = 2;
-
-                    var lineCount = Math.Max(Math.Abs(e.Delta) / Mouse.MouseWheelDeltaForOneLine, minHorizontalScrollLine);
-
-                    if (e.Delta < 0)
-                    {
-                        Enumerable.Range(0, lineCount).ForEach(arg => scrollViewer.LineRight());
-                    }
-                    else
-                    {
-                        Enumerable.Range(0, lineCount).ForEach(arg => scrollViewer.LineLeft());
-                    }
+                    Enumerable.Range(0, lineCount).ForEach(arg => scrollViewer.LineRight());
                 }
                 else
                 {
-                    RaiseParentScroll(scrollViewer, e);
+                    Enumerable.Range(0, lineCount).ForEach(arg => scrollViewer.LineLeft());
                 }
             }
-        }
-
-        private static void RaiseParentScroll(ScrollViewer sender, MouseWheelEventArgs eventArgs)
-        {
-            if (sender.Parent is UIElement parent)
+            else
             {
-                parent.RaiseEvent(new MouseWheelEventArgs(eventArgs.MouseDevice, eventArgs.Timestamp, eventArgs.Delta)
-                {
-                    RoutedEvent = UIElement.MouseWheelEvent,
-                    Source = sender
-                });
+                RaiseParentScroll(scrollViewer, e);
             }
+        }
+    }
+
+    private static void RaiseParentScroll(ScrollViewer sender, MouseWheelEventArgs eventArgs)
+    {
+        if (sender.Parent is UIElement parent)
+        {
+            parent.RaiseEvent(new MouseWheelEventArgs(eventArgs.MouseDevice, eventArgs.Timestamp, eventArgs.Delta)
+            {
+                RoutedEvent = UIElement.MouseWheelEvent,
+                Source = sender
+            });
         }
     }
 }

@@ -12,13 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Kaspirin.UI.Framework.UiKit.Localization.Localizer.Strings.Parsing
+#pragma warning disable CA1005 // Avoid excessive parameters on generic types.
+
+namespace Kaspirin.UI.Framework.UiKit.Localization.Localizer.Strings.Parsing;
+
+public interface IKeyValueEvaluator<TItem, TExpression, TParam, TPluralFormExpression, TOperand>
+    : IExpressionEvaluator<TExpression, TParam, TPluralFormExpression, TOperand>
+    where TParam : TOperand
 {
-    public interface IKeyValueEvaluator<TItem, TExpression, TParam, TPluralFormExpression, TOperand>
-        : IExpressionEvaluator<TExpression, TParam, TPluralFormExpression, TOperand>
-        where TParam: TOperand
-    {
-        TItem KeyValue(Token key, Token equals, TExpression expression, Token? comment, Token? newLine);
-        bool ToItem(Token comment, Token newLine, out TItem result);
-    }
+    TItem KeyValue(Token key, Token equals, TExpression expression, Token? comment, Token? newLine);
+    bool ToItem(Token comment, Token newLine, out TItem result);
 }

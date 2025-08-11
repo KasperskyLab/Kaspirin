@@ -12,79 +12,87 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
-namespace Kaspirin.UI.Framework.UiKit.Localization.Localizer.Files
+namespace Kaspirin.UI.Framework.UiKit.Localization.Localizer.Files;
+
+public class FileLocalizer : BaseLocalizer<ResourceItem>, IFileLocalizer
 {
-    public sealed class FileLocalizer : LocalizerBase, IFileLocalizer
+    public FileLocalizer(LocalizerParameters parameters) : base(parameters) { }
+
+    public virtual byte[]? GetContent(string key)
     {
-        public FileLocalizer(LocalizerParameters parameters) : base(parameters) { }
+        Guard.ArgumentIsNotNull(key);
 
-        #region IFileLocalizer
-
-        public byte[]? GetFileContent(string key)
+        try
         {
-            Guard.ArgumentIsNotNull(key);
+            var resource = GetValue(key);
 
-            var uri = GetFileUri(key);
-            return uri == null ? null : ResourceProvider.ReadResource(uri);
+            return resource == null ? null : ResourceProvider.ReadResourceBytes(resource);
         }
-
-        public Stream? GetFileStream(string key)
+        catch (Exception e)
         {
-            Guard.ArgumentIsNotNull(key);
-
-            var content = GetFileContent(key);
-            return content == null ? null : new MemoryStream(content);
+            e.ProcessAsLocalizerException($"Failed to provide file bytes for key '{key}' in scope '{ScopeInfo.Scope}'.");
+            return null;
         }
+    }
 
-        public string? GetFileText(string key, Encoding encoding)
+    public virtual Stream? GetStream(string key)
+    {
+        Guard.ArgumentIsNotNull(key);
+
+        try
         {
-            Guard.ArgumentIsNotNull(key);
-            Guard.ArgumentIsNotNull(encoding);
+            var resource = GetValue(key);
 
-            var content = GetFileContent(key);
-            return content == null ? null : encoding.GetString(content);
+            return resource == null ? null : ResourceProvider.ReadResourceStream(resource);
         }
-
-        public Uri? GetFileUri(string key)
+        catch (Exception e)
         {
-            Guard.ArgumentIsNotNull(key);
-
-            try
-            {
-                return GetValue<Uri>(key);
-            }
-            catch (Exception e)
-            {
-                e.ProcessAsLocalizerException($"Failed to provide Uri for key='{key}'.");
-                return null;
-            }
+            e.ProcessAsLocalizerException($"Failed to provide file stream for key '{key}' in scope '{ScopeInfo.Scope}'.");
+            return null;
         }
+    }
 
-        public string? GetFilePath(string key)
+    public virtual string? GetText(string key, Encoding encoding)
+    {
+        Guard.ArgumentIsNotNull(key);
+        Guard.ArgumentIsNotNull(encoding);
+
+        try
         {
-            Guard.ArgumentIsNotNull(key);
+            var resource = GetValue(key);
 
-            try
-            {
-                var uri = GetValue<Uri>(key);
-                return uri.LocalPath;
-            }
-            catch (Exception e)
-            {
-                e.ProcessAsLocalizerException($"Failed to provide file path for key='{key}'.");
-                return null;
-            }
+            return resource == null ? null : ResourceProvider.ReadResourceString(resource, encoding);
         }
-
-        #endregion
-
-        protected override IScope CreateScopeObject(Uri scopeUri)
+        catch (Exception e)
         {
-            return new FileScope(scopeUri, ResourceProvider);
+            e.ProcessAsLocalizerException($"Failed to provide file text for key '{key}' in scope '{ScopeInfo.Scope}'.");
+            return null;
         }
+    }
+
+    public virtual Uri? GetUri(string key)
+    {
+        Guard.ArgumentIsNotNull(key);
+
+        try
+        {
+            return GetValue(key).Uri.AbsoluteUri;
+        }
+        catch (Exception e)
+        {
+            e.ProcessAsLocalizerException($"Failed to provide file URI for key '{key}' in scope '{ScopeInfo.Scope}'.");
+            return null;
+        }
+    }
+
+    protected override IScope<ResourceItem> CreateDirectoryScopeObject(IEnumerable<ResourceItem> resources)
+    {
+        return new FileScope(resources);
     }
 }

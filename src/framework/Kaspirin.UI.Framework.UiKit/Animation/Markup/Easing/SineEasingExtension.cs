@@ -14,11 +14,14 @@
 
 using System.Windows.Media.Animation;
 
-namespace Kaspirin.UI.Framework.UiKit.Animation.Markup.Easing
+namespace Kaspirin.UI.Framework.UiKit.Animation.Markup.Easing;
+
+/// <summary>
+///     Markup extension for initializing the <see cref="SineEase" /> class in XAML.
+/// </summary>
+public sealed class SineEasingExtension : EasingExtensionBase
 {
-    public sealed class SineEasingExtension : EasingExtensionBase
-    {
-        protected override IEasingFunction CreateEasing()
-            => new SineEase { EasingMode = Mode };
-    }
+    /// <inheritdoc/>
+    protected override IEasingFunction CreateEasing()
+        => new SineEase { EasingMode = Mode };
 }

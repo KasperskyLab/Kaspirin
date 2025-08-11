@@ -12,20 +12,19 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Kaspirin.UI.Framework.UiKit.Interactivity.Internals
+namespace Kaspirin.UI.Framework.UiKit.Interactivity.Internals;
+
+internal sealed class DataContextConfirmationObject : ConfirmationObject
 {
-    internal class DataContextConfirmationObject : ConfirmationObject
+    internal DataContextConfirmationObject(object dataContext)
     {
-        internal DataContextConfirmationObject(object dataContext)
-        {
-            _dataContext = dataContext;
-        }
-
-        public override object GetDataContext()
-        {
-            return _dataContext;
-        }
-
-        private readonly object _dataContext;
+        _dataContext = dataContext;
     }
+
+    public override object GetDataContext()
+    {
+        return _dataContext;
+    }
+
+    private readonly object _dataContext;
 }

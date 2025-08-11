@@ -14,95 +14,99 @@
 
 using System.Windows;
 
-namespace Kaspirin.UI.Framework.UiKit.Controls
+namespace Kaspirin.UI.Framework.UiKit.Controls;
+
+public sealed class TabMenuItem : SelectorItem
 {
-    public sealed class TabMenuItem : SelectorItem
+    #region Counter
+
+    public int Counter
     {
-        #region Counter
-
-        public int Counter
-        {
-            get { return (int)GetValue(CounterProperty); }
-            set { SetValue(CounterProperty, value); }
-        }
-
-        public static readonly DependencyProperty CounterProperty =
-            DependencyProperty.Register("Counter", typeof(int), typeof(TabMenuItem),
-                new PropertyMetadata(0, null, CoerceCounter));
-
-        private static object CoerceCounter(DependencyObject d, object baseValue)
-        {
-            var counter = (int)baseValue;
-            return counter switch
-            {
-                < 0 => 0,
-                _ => counter
-            };
-        }
-
-        #endregion
-
-        #region MaxCounter
-
-        public int MaxCounter
-        {
-            get { return (int)GetValue(MaxCounterProperty); }
-            set { SetValue(MaxCounterProperty, value); }
-        }
-
-        public static readonly DependencyProperty MaxCounterProperty =
-            DependencyProperty.Register("MaxCounter", typeof(int), typeof(TabMenuItem),
-                new PropertyMetadata(UIKitConstants.TabMenuItemMaxCounter, null, CoerceMaxCounter));
-
-        private static object CoerceMaxCounter(DependencyObject d, object baseValue)
-        {
-            var counter = (int)baseValue;
-            return counter switch
-            {
-                < 1 => 1,
-                _ => counter
-            };
-        }
-
-        #endregion
-
-        #region Icon
-
-        public UIKitIcon_16 Icon
-        {
-            get { return (UIKitIcon_16)GetValue(IconProperty); }
-            set { SetValue(IconProperty, value); }
-        }
-
-        public static readonly DependencyProperty IconProperty =
-            DependencyProperty.Register("Icon", typeof(UIKitIcon_16), typeof(TabMenuItem));
-
-        #endregion
-
-        #region HasCounter
-
-        public bool HasCounter
-        {
-            get { return (bool)GetValue(HasCounterProperty); }
-            set { SetValue(HasCounterProperty, value); }
-        }
-
-        public static readonly DependencyProperty HasCounterProperty =
-            DependencyProperty.Register("HasCounter", typeof(bool), typeof(TabMenuItem));
-
-        #endregion
-
-        #region HasIcon
-
-        public bool HasIcon
-        {
-            get { return (bool)GetValue(HasIconProperty); }
-            set { SetValue(HasIconProperty, value); }
-        }
-
-        public static readonly DependencyProperty HasIconProperty =
-            DependencyProperty.Register("HasIcon", typeof(bool), typeof(TabMenuItem));
-
-        #endregion
+        get => (int)GetValue(CounterProperty);
+        set => SetValue(CounterProperty, value);
     }
+
+    public static readonly DependencyProperty CounterProperty = DependencyProperty.Register(
+        nameof(Counter),
+        typeof(int),
+        typeof(TabMenuItem),
+        new PropertyMetadata(default(int), null, CoerceCounter));
+
+    private static object CoerceCounter(DependencyObject d, object baseValue)
+    {
+        var counter = (int)baseValue;
+        return counter < 0 ? 0 : counter;
+    }
+
+    #endregion
+
+    #region MaxCounter
+
+    public int MaxCounter
+    {
+        get => (int)GetValue(MaxCounterProperty);
+        set => SetValue(MaxCounterProperty, value);
+    }
+
+    public static readonly DependencyProperty MaxCounterProperty = DependencyProperty.Register(
+        nameof(MaxCounter),
+        typeof(int),
+        typeof(TabMenuItem),
+        new PropertyMetadata(UIKitConstants.TabMenuItemMaxCounter, null, CoerceMaxCounter));
+
+    private static object CoerceMaxCounter(DependencyObject d, object baseValue)
+    {
+        var counter = (int)baseValue;
+        return counter < 1 ? 1 : counter;
+    }
+
+    #endregion
+
+    #region Icon
+
+    public UIKitIcon_16 Icon
+    {
+        get => (UIKitIcon_16)GetValue(IconProperty);
+        set => SetValue(IconProperty, value);
+    }
+
+    public static readonly DependencyProperty IconProperty = DependencyProperty.Register(
+        nameof(Icon),
+        typeof(UIKitIcon_16),
+        typeof(TabMenuItem),
+        new PropertyMetadata(default(UIKitIcon_16)));
+
+    #endregion
+
+    #region HasCounter
+
+    public bool HasCounter
+    {
+        get => (bool)GetValue(HasCounterProperty);
+        set => SetValue(HasCounterProperty, value);
+    }
+
+    public static readonly DependencyProperty HasCounterProperty = DependencyProperty.Register(
+        nameof(HasCounter),
+        typeof(bool),
+        typeof(TabMenuItem),
+        new PropertyMetadata(default(bool)));
+
+    #endregion
+
+    #region HasIcon
+
+    public bool HasIcon
+    {
+        get => (bool)GetValue(HasIconProperty);
+        set => SetValue(HasIconProperty, value);
+    }
+
+    public static readonly DependencyProperty HasIconProperty = DependencyProperty.Register(
+        nameof(HasIcon),
+        typeof(bool),
+        typeof(TabMenuItem),
+        new PropertyMetadata(default(bool)));
+
+    #endregion
 }

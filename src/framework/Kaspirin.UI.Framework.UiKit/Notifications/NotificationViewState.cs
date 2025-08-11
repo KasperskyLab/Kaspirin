@@ -12,15 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Kaspirin.UI.Framework.UiKit.Notifications
+namespace Kaspirin.UI.Framework.UiKit.Notifications;
+
+public enum NotificationViewState
 {
-    public enum NotificationViewState
-    {
-        Initial,
-        Error,
-        Closed,
-        Closing,
-        Opened,
-        Opening,
-    }
+    Initial,
+    Error,
+    Closed,
+    Closing,
+    Opened,
+    Opening,
 }

@@ -17,45 +17,47 @@
 using System;
 using System.Runtime.InteropServices;
 
-namespace Kaspirin.UI.Framework.NativeMethods.Api.Version
+namespace Kaspirin.UI.Framework.NativeMethods.Api.Version;
+
+/// <summary>
+///     Provides API methods for functions from version.dll .
+/// </summary>
+public static class VersionDll
 {
+    #region winver.h
+
     /// <summary>
-    ///     Provides API methods for functions from version.dll .
+    ///     The GetFileVersionInfo API method.
+    ///     <br /><seealso href="https://learn.microsoft.com/en-us/windows/win32/api/winver/nf-winver-getfileversioninfow">Learn more</seealso>.
     /// </summary>
-    public static class VersionDll
-    {
-        #region winver.h
+    [DllImport(DllName, CharSet = CharSet.Auto, SetLastError = true, BestFitMapping = false)]
+    public static extern bool GetFileVersionInfo(
+        string filename,
+        int handle,
+        int size,
+        HandleRef infoBuffer);
 
-        /// <summary>
-        ///     The GetFileVersionInfo API method. <br /><seealso href="https://learn.microsoft.com/en-us/windows/win32/api/winver/nf-winver-getfileversioninfow">Learn more</seealso>.
-        /// </summary>
-        [DllImport(DllName, CharSet = CharSet.Auto, SetLastError = true, BestFitMapping = false)]
-        public static extern bool GetFileVersionInfo(
-            string filename,
-            int handle,
-            int size,
-            HandleRef infoBuffer);
+    /// <summary>
+    ///     The GetFileVersionInfoSize API method.
+    ///     <br /><seealso href="https://learn.microsoft.com/en-us/windows/win32/api/winver/nf-winver-getfileversioninfosizew">Learn more</seealso>.
+    /// </summary>
+    [DllImport(DllName, CharSet = CharSet.Auto, SetLastError = true, BestFitMapping = false)]
+    public static extern int GetFileVersionInfoSize(
+        string fileName,
+        out int handle);
 
-        /// <summary>
-        ///     The GetFileVersionInfoSize API method. <br /><seealso href="https://learn.microsoft.com/en-us/windows/win32/api/winver/nf-winver-getfileversioninfosizew">Learn more</seealso>.
-        /// </summary>
-        [DllImport(DllName, CharSet = CharSet.Auto, SetLastError = true, BestFitMapping = false)]
-        public static extern int GetFileVersionInfoSize(
-            string fileName,
-            out int handle);
+    /// <summary>
+    ///     The GetFileVersionInfoSize API method.
+    ///     <br /><seealso href="https://learn.microsoft.com/en-us/windows/win32/api/winver/nf-winver-verqueryvaluew">Learn more</seealso>.
+    /// </summary>
+    [DllImport(DllName, CharSet = CharSet.Auto, BestFitMapping = false)]
+    public static extern bool VerQueryValue(
+        HandleRef info,
+        string subBlock,
+        out IntPtr value,
+        out uint length);
 
-        /// <summary>
-        ///     The GetFileVersionInfoSize API method. <br /><seealso href="https://learn.microsoft.com/en-us/windows/win32/api/winver/nf-winver-verqueryvaluew">Learn more</seealso>.
-        /// </summary>
-        [DllImport(DllName, CharSet = CharSet.Auto, BestFitMapping = false)]
-        public static extern bool VerQueryValue(
-            HandleRef info,
-            string subBlock,
-            out IntPtr value,
-            out uint length);
+    #endregion
 
-        #endregion
-
-        private const string DllName = "version.dll";
-    }
+    private const string DllName = "version.dll";
 }

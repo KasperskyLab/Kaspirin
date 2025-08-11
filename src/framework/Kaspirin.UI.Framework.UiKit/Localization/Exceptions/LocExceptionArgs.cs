@@ -15,18 +15,17 @@
 using System;
 using System.ComponentModel;
 
-namespace Kaspirin.UI.Framework.UiKit.Localization.Exceptions
+namespace Kaspirin.UI.Framework.UiKit.Localization.Exceptions;
+
+public sealed class LocExceptionArgs : HandledEventArgs
 {
-    public sealed class LocExceptionArgs : HandledEventArgs
+    public LocExceptionArgs(Exception exception, string description)
     {
-        public LocExceptionArgs(Exception exception, string description)
-        {
-            Exception = Guard.EnsureArgumentIsNotNull(exception);
-            Description = Guard.EnsureArgumentIsNotNull(description);
-        }
-
-        public Exception Exception { get; }
-
-        public string Description { get; }
+        Exception = Guard.EnsureArgumentIsNotNull(exception);
+        Description = Guard.EnsureArgumentIsNotNull(description);
     }
+
+    public Exception Exception { get; }
+
+    public string Description { get; }
 }

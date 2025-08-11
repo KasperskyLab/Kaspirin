@@ -192,10 +192,10 @@
 				<xsl:with-param name="propertyValue" select="@SearchIconName" />
 			</xsl:call-template>
 
-			<!--Search_IconForeground-->
+			<!--Search_IconBrush-->
 			<xsl:call-template name="generateBrushSetter">
-				<xsl:with-param name="propertyId">Search_IconForeground</xsl:with-param>
-				<xsl:with-param name="brushName">SearchIconForeground</xsl:with-param>
+				<xsl:with-param name="propertyId">Search_IconBrush</xsl:with-param>
+				<xsl:with-param name="brushName">SearchIconBrush</xsl:with-param>
 				<xsl:with-param name="scopeName" select="$id" />
 			</xsl:call-template>
 
@@ -251,10 +251,10 @@
 							<xsl:with-param name="thicknessNode" select="BorderThicknessDisabled" />
 						</xsl:call-template>
 
-						<!--Search_IconForeground-->
+						<!--Search_IconBrush-->
 						<xsl:call-template name="generateBrushSetter">
-							<xsl:with-param name="propertyId">Search_IconForeground</xsl:with-param>
-							<xsl:with-param name="brushName">SearchIconForegroundDisabled</xsl:with-param>
+							<xsl:with-param name="propertyId">Search_IconBrush</xsl:with-param>
+							<xsl:with-param name="brushName">SearchIconBrushDisabled</xsl:with-param>
 							<xsl:with-param name="scopeName" select="$id" />
 						</xsl:call-template>
 

@@ -4,6 +4,10 @@
 // Scope of modification:
 //   - Code adaptation to project requirements.
 
+// This file has been modified by AO Kaspersky Lab in 1/15/2025.
+// Scope of modification:
+//   - Suppress warnings.
+
 // Copyright (c) 2019 Fayyad Sufyan
 // BidiSharp: Bidirectional algorithm C# implementation
 // 
@@ -24,6 +28,8 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
+
+#pragma warning disable IDE1006 // Naming rule violation.
 
 namespace BidiSharp
 {

@@ -12,17 +12,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Kaspirin.UI.Framework.UiKit.Windows
+namespace Kaspirin.UI.Framework.UiKit.Windows;
+
+public enum WindowResizeDirection
 {
-    public enum WindowResizeDirection
-    {
-        Left = 1,
-        Right = 2,
-        Top = 3,
-        TopLeft = 4,
-        TopRight = 5,
-        Bottom = 6,
-        BottomLeft = 7,
-        BottomRight = 8
-    }
+    Left = 1,
+    Right = 2,
+    Top = 3,
+    TopLeft = 4,
+    TopRight = 5,
+    Bottom = 6,
+    BottomLeft = 7,
+    BottomRight = 8
 }

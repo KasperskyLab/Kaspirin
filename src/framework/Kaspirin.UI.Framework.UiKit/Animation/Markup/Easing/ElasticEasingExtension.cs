@@ -14,20 +14,25 @@
 
 using System.Windows.Media.Animation;
 
-namespace Kaspirin.UI.Framework.UiKit.Animation.Markup.Easing
+namespace Kaspirin.UI.Framework.UiKit.Animation.Markup.Easing;
+
+/// <summary>
+///     Extending the markup for initializing the <see cref="ElasticEase" /> class in XAML.
+/// </summary>
+public sealed class ElasticEasingExtension : EasingExtensionBase
 {
-    public sealed class ElasticEasingExtension : EasingExtensionBase
-    {
-        public int Oscillations { get; set; }
+    /// <inheritdoc cref="ElasticEase.Oscillations"/>
+    public int Oscillations { get; set; }
 
-        public double Springiness { get; set; }
+    /// <inheritdoc cref="ElasticEase.Springiness"/>
+    public double Springiness { get; set; }
 
-        protected override IEasingFunction CreateEasing()
-            => new ElasticEase
-            {
-                Oscillations = Oscillations,
-                Springiness = Springiness,
-                EasingMode = Mode
-            };
-    }
+    /// <inheritdoc/>
+    protected override IEasingFunction CreateEasing()
+        => new ElasticEase
+        {
+            Oscillations = Oscillations,
+            Springiness = Springiness,
+            EasingMode = Mode
+        };
 }

@@ -14,36 +14,35 @@
 
 using System;
 
-namespace Kaspirin.UI.Framework.Guards
+namespace Kaspirin.UI.Framework.Guards;
+
+/// <summary>
+///     Arguments for the event <see cref="Guard.GuardFailed" />.
+/// </summary>
+public sealed class GuardFailedEventArgs : EventArgs
 {
     /// <summary>
-    ///     Arguments for the event <see cref="Guard.GuardFailed" />.
+    ///     Initializes a new instance of the <see cref="GuardFailedEventArgs" /> class.
     /// </summary>
-    public sealed class GuardFailedEventArgs : EventArgs
+    /// <param name="message">
+    ///     The error message.
+    /// </param>
+    /// <param name="originalException">
+    ///     The original exception.
+    /// </param>
+    public GuardFailedEventArgs(string message, Exception originalException)
     {
-        /// <summary>
-        ///     Initializes a new instance of the <see cref="GuardFailedEventArgs" /> class.
-        /// </summary>
-        /// <param name="message">
-        ///     The error message.
-        /// </param>
-        /// <param name="originalException">
-        ///     The original exception.
-        /// </param>
-        public GuardFailedEventArgs(string message, Exception originalException)
-        {
-            Message = message;
-            OriginalException = originalException;
-        }
-
-        /// <summary>
-        ///     The error message.
-        /// </summary>
-        public string Message { get; }
-
-        /// <summary>
-        ///     The original exception.
-        /// </summary>
-        public Exception OriginalException { get; }
+        Message = message;
+        OriginalException = originalException;
     }
+
+    /// <summary>
+    ///     The error message.
+    /// </summary>
+    public string Message { get; }
+
+    /// <summary>
+    ///     The original exception.
+    /// </summary>
+    public Exception OriginalException { get; }
 }

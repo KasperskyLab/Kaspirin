@@ -12,10 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Kaspirin.UI.Framework.UiKit.Localization.Markup.Converting
+namespace Kaspirin.UI.Framework.UiKit.Localization.Markup.Converting;
+
+public interface IResourceProvider
 {
-    public interface IResourceProvider
-    {
-        object? GetResource(object? key);
-    }
+    object? GetResource(object? key);
 }

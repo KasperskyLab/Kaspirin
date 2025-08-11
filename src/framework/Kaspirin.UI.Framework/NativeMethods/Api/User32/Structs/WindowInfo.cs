@@ -16,24 +16,22 @@
 
 using System.Runtime.InteropServices;
 
-namespace Kaspirin.UI.Framework.NativeMethods.Api.User32.Structs
+namespace Kaspirin.UI.Framework.NativeMethods.Api.User32.Structs;
+
+/// <summary>
+///     <seealso href="https://learn.microsoft.com/en-us/windows/win32/api/winuser/ns-winuser-windowinfo">Learn more</seealso>.
+/// </summary>
+[StructLayout(LayoutKind.Sequential)]
+public struct WindowInfo
 {
-    /// <summary>
-    ///     
-    /// <seealso href="https://learn.microsoft.com/en-us/windows/win32/api/winuser/ns-winuser-windowinfo">Learn more</seealso>.
-    /// </summary>
-    [StructLayout(LayoutKind.Sequential)]
-    public struct WindowInfo
-    {
-        public uint CbSize;
-        public NativeRectangle RcWindow;
-        public NativeRectangle RcClient;
-        public uint DwStyle;
-        public uint DwExStyle;
-        public uint DwWindowStatus;
-        public uint CxWindowBorders;
-        public uint CyWindowBorders;
-        public ushort AtomWindowType;
-        public ushort WCreatorVersion;
-    }
+    public uint CbSize;
+    public NativeRectangle RcWindow;
+    public NativeRectangle RcClient;
+    public uint DwStyle;
+    public uint DwExStyle;
+    public uint DwWindowStatus;
+    public uint CxWindowBorders;
+    public uint CyWindowBorders;
+    public ushort AtomWindowType;
+    public ushort WCreatorVersion;
 }

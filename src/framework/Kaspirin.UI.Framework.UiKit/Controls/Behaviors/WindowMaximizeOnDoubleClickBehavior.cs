@@ -15,33 +15,32 @@
 using System.Windows;
 using System.Windows.Input;
 
-namespace Kaspirin.UI.Framework.UiKit.Controls.Behaviors
+namespace Kaspirin.UI.Framework.UiKit.Controls.Behaviors;
+
+public sealed class WindowMaximizeOnDoubleClickBehavior : Behavior<UIElement, WindowMaximizeOnDoubleClickBehavior>
 {
-    public sealed class WindowMaximizeOnDoubleClickBehavior : Behavior<UIElement, WindowMaximizeOnDoubleClickBehavior>
+    protected override void OnAttached()
     {
-        protected override void OnAttached()
+        Guard.IsNotNull(AssociatedObject);
+
+        AssociatedObject.MouseLeftButtonDown += MaximizeWindow;
+    }
+
+    protected override void OnDetaching()
+    {
+        Guard.IsNotNull(AssociatedObject);
+
+        AssociatedObject.MouseLeftButtonDown -= MaximizeWindow;
+    }
+
+    private void MaximizeWindow(object sender, MouseButtonEventArgs e)
+    {
+        if (e.ClickCount == 2)
         {
-            Guard.IsNotNull(AssociatedObject);
-
-            AssociatedObject.MouseLeftButtonDown += MaximizeWindow;
-        }
-
-        protected override void OnDetaching()
-        {
-            Guard.IsNotNull(AssociatedObject);
-
-            AssociatedObject.MouseLeftButtonDown -= MaximizeWindow;
-        }
-
-        private void MaximizeWindow(object sender, MouseButtonEventArgs e)
-        {
-            if (e.ClickCount == 2)
+            var currentWindow = AssociatedObject?.GetWindow();
+            if (currentWindow?.ResizeMode == ResizeMode.CanResize)
             {
-                var currentWindow = AssociatedObject?.GetWindow();
-                if (currentWindow?.ResizeMode == ResizeMode.CanResize)
-                {
-                    WindowCommand.MaximizeOrRestore.Execute(currentWindow);
-                }
+                WindowCommand.MaximizeOrRestore.Execute(currentWindow);
             }
         }
     }

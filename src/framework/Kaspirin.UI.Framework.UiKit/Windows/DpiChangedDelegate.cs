@@ -12,7 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Kaspirin.UI.Framework.UiKit.Windows
-{
-    public delegate void DpiChangedDelegate(WindowScreenMonitoringService sender, DpiChangedEventArguments args);
-}
+namespace Kaspirin.UI.Framework.UiKit.Windows;
+
+public delegate void DpiChangedDelegate(WindowScreenMonitoringService sender, DpiChangedEventArguments args);

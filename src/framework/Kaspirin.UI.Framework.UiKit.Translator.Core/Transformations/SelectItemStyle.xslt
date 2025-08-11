@@ -81,10 +81,10 @@
 
 				</xsl:element>
 
-				<!--SelectItem_Icon_Foreground-->
+				<!--SelectItem_Icon_Brush-->
 				<xsl:call-template name="generateBrushSetter">
-					<xsl:with-param name="propertyId">SelectItem_Icon_Foreground</xsl:with-param>
-					<xsl:with-param name="brushName">IconForeground</xsl:with-param>
+					<xsl:with-param name="propertyId">SelectItem_Icon_Brush</xsl:with-param>
+					<xsl:with-param name="brushName">IconBrush</xsl:with-param>
 					<xsl:with-param name="scopeName" select="$id" />
 				</xsl:call-template>
 
@@ -99,13 +99,6 @@
 					<xsl:with-param name="propertyId">SelectItem_Padding</xsl:with-param>
 				</xsl:call-template>
 
-				<!--SelectItem_SelectionBackground-->
-				<xsl:call-template name="generateBrushSetter">
-					<xsl:with-param name="propertyId">SelectItem_SelectionBackground</xsl:with-param>
-					<xsl:with-param name="brushName">SelectionBackground</xsl:with-param>
-					<xsl:with-param name="scopeName" select="$id" />
-				</xsl:call-template>
-
 				<!--SelectItem_TextStyle-->
 				<xsl:call-template name="generateStaticResourceSetter">
 					<xsl:with-param name="propertyId">SelectItem_TextStyle</xsl:with-param>
@@ -116,9 +109,9 @@
 
 			<xsl:with-param name="triggers">
 
-				<!--[State = Hover]-->
+				<!--[SelectableState = Hover]-->
 				<xsl:call-template name="generateTrigger">
-					<xsl:with-param name="propertyName">visuals:StateService.State</xsl:with-param>
+					<xsl:with-param name="propertyName">visuals:StateService.SelectableState</xsl:with-param>
 					<xsl:with-param name="propertyValue">Hover</xsl:with-param>
 					<xsl:with-param name="setters">
 
@@ -132,9 +125,9 @@
 					</xsl:with-param>
 				</xsl:call-template>
 
-				<!--[State = Normal]-->
+				<!--[SelectableState = Normal]-->
 				<xsl:call-template name="generateTrigger">
-					<xsl:with-param name="propertyName">visuals:StateService.State</xsl:with-param>
+					<xsl:with-param name="propertyName">visuals:StateService.SelectableState</xsl:with-param>
 					<xsl:with-param name="propertyValue">Normal</xsl:with-param>
 					<xsl:with-param name="setters">
 
@@ -148,9 +141,9 @@
 					</xsl:with-param>
 				</xsl:call-template>
 
-				<!--[State = Pressed]-->
+				<!--[SelectableState = Pressed]-->
 				<xsl:call-template name="generateTrigger">
-					<xsl:with-param name="propertyName">visuals:StateService.State</xsl:with-param>
+					<xsl:with-param name="propertyName">visuals:StateService.SelectableState</xsl:with-param>
 					<xsl:with-param name="propertyValue">Pressed</xsl:with-param>
 					<xsl:with-param name="setters">
 
@@ -158,6 +151,54 @@
 						<xsl:call-template name="generateBrushSetter">
 							<xsl:with-param name="propertyId">SelectItem_StateBackground</xsl:with-param>
 							<xsl:with-param name="brushName">BackgroundPressed</xsl:with-param>
+							<xsl:with-param name="scopeName" select="$id" />
+						</xsl:call-template>
+
+					</xsl:with-param>
+				</xsl:call-template>
+
+				<!--[SelectableState = SelectedHover]-->
+				<xsl:call-template name="generateTrigger">
+					<xsl:with-param name="propertyName">visuals:StateService.SelectableState</xsl:with-param>
+					<xsl:with-param name="propertyValue">SelectedHover</xsl:with-param>
+					<xsl:with-param name="setters">
+
+						<!--SelectItem_StateBackground-->
+						<xsl:call-template name="generateBrushSetter">
+							<xsl:with-param name="propertyId">SelectItem_StateBackground</xsl:with-param>
+							<xsl:with-param name="brushName">BackgroundHoverSelected</xsl:with-param>
+							<xsl:with-param name="scopeName" select="$id" />
+						</xsl:call-template>
+
+					</xsl:with-param>
+				</xsl:call-template>
+
+				<!--[SelectableState = SelectedNormal]-->
+				<xsl:call-template name="generateTrigger">
+					<xsl:with-param name="propertyName">visuals:StateService.SelectableState</xsl:with-param>
+					<xsl:with-param name="propertyValue">SelectedNormal</xsl:with-param>
+					<xsl:with-param name="setters">
+
+						<!--SelectItem_StateBackground-->
+						<xsl:call-template name="generateBrushSetter">
+							<xsl:with-param name="propertyId">SelectItem_StateBackground</xsl:with-param>
+							<xsl:with-param name="brushName">BackgroundNormalSelected</xsl:with-param>
+							<xsl:with-param name="scopeName" select="$id" />
+						</xsl:call-template>
+
+					</xsl:with-param>
+				</xsl:call-template>
+
+				<!--[SelectableState = SelectedPressed]-->
+				<xsl:call-template name="generateTrigger">
+					<xsl:with-param name="propertyName">visuals:StateService.SelectableState</xsl:with-param>
+					<xsl:with-param name="propertyValue">SelectedPressed</xsl:with-param>
+					<xsl:with-param name="setters">
+
+						<!--SelectItem_StateBackground-->
+						<xsl:call-template name="generateBrushSetter">
+							<xsl:with-param name="propertyId">SelectItem_StateBackground</xsl:with-param>
+							<xsl:with-param name="brushName">BackgroundPressedSelected</xsl:with-param>
 							<xsl:with-param name="scopeName" select="$id" />
 						</xsl:call-template>
 

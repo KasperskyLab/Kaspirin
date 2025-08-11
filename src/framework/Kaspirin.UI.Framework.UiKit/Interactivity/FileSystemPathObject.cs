@@ -12,16 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Kaspirin.UI.Framework.UiKit.Interactivity
+namespace Kaspirin.UI.Framework.UiKit.Interactivity;
+
+public sealed class FileSystemPathObject : ConfirmationObject
 {
-    public sealed class FileSystemPathObject : ConfirmationObject
-    {
-        public string? Path { get; set; }
+    public string? Path { get; set; }
 
-        public string[]? Paths { get; set; }
+    public string[]? Paths { get; set; }
 
-        public bool IncludeSubfolders { get; set; }
+    public bool IncludeSubfolders { get; set; }
 
-        public FileSystemPathObjectType ObjectType { get; set; }
-    }
+    public FileSystemPathObjectType ObjectType { get; set; }
 }

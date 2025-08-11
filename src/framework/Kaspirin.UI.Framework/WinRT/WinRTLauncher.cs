@@ -20,25 +20,24 @@ using System;
 using Windows.System;
 #endif
 
-namespace Kaspirin.UI.Framework.WinRT
+namespace Kaspirin.UI.Framework.WinRT;
+
+/// <summary>
+///     Provides an implementation of <see cref="IWinRTLauncher" />.
+/// </summary>
+/// <remarks>
+///     It is supported only on Windows 10 RS5 and above.
+/// </remarks>
+public sealed class WinRTLauncher : IWinRTLauncher
 {
-    /// <summary>
-    ///     Provides an implementation of <see cref="IWinRTLauncher" />.
-    /// </summary>
-    /// <remarks>
-    ///     It is supported only on Windows 10 RS5 and above.
-    /// </remarks>
-    public sealed class WinRTLauncher : IWinRTLauncher
+    /// <inheritdoc cref="IWinRTLauncher.LaunchUriAsync" />
+    public void LaunchUriAsync(Uri uri)
     {
-        /// <inheritdoc cref="IWinRTLauncher.LaunchUriAsync" />
-        public void LaunchUriAsync(Uri uri)
-        {
 #if WINDOWS10_0_17763_0_OR_GREATER
 #pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed.
-            Launcher.LaunchUriAsync(uri);
+        Launcher.LaunchUriAsync(uri);
 #pragma warning restore CS4014
 #endif
-        }
     }
 }
 

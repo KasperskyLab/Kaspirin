@@ -12,22 +12,35 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using Kaspirin.UI.Framework.Mvvm;
 
-namespace Kaspirin.UI.Framework.UiKit.Navigation
+namespace Kaspirin.UI.Framework.UiKit.Navigation;
+
+public abstract class NavigatableViewModel : BaseViewModel, INavigationAware
 {
-    public abstract class NavigatableViewModel : ViewModelBase, INavigationAware
+    protected NavigatableViewModel()
+        : base()
     {
-        public virtual void OnNavigatedFrom(NavigationContext context)
-        {
-        }
+    }
 
-        public virtual void OnNavigatedTo(NavigationContext context)
-        {
-        }
+    protected NavigatableViewModel(string traceComponent)
+        : base(traceComponent)
+    {
+    }
 
-        public virtual void BuildOptions(NavigationOptionsBuilder builder)
-        {
-        }
+    protected NavigatableViewModel(ComponentTracer tracer)
+        : base(tracer)
+    {
+    }
+
+    public virtual void OnNavigatedFrom(NavigationContext context)
+    {
+    }
+
+    public virtual void OnNavigatedTo(NavigationContext context)
+    {
+    }
+
+    public virtual void BuildOptions(NavigationOptionsBuilder builder)
+    {
     }
 }

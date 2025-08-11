@@ -13,22 +13,19 @@
 // limitations under the License.
 
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-#pragma warning disable KCAIDE0002 // Enum has incorrect suffix
 
 using System;
 
-namespace Kaspirin.UI.Framework.NativeMethods.Api.Wininet.Enums
+namespace Kaspirin.UI.Framework.NativeMethods.Api.Wininet.Enums;
+
+/// <summary>
+///     <seealso href="https://learn.microsoft.com/en-us/windows/win32/api/wininet/ns-wininet-internet_per_conn_optiona">Learn more</seealso>.
+/// </summary>
+[Flags]
+public enum InternetConnectionAccessFlags : uint
 {
-    /// <summary>
-    ///     
-    /// <seealso href="https://learn.microsoft.com/en-us/windows/win32/api/wininet/ns-wininet-internet_per_conn_optiona">Learn more</seealso>.
-    /// </summary>
-    [Flags]
-    public enum InternetConnectionAccessFlags : uint
-    {
-        Direct = 1,
-        Proxy = 2,
-        AutoProxyUrl = 4,
-        AutoDetect = 8
-    }
+    Direct = 1,
+    Proxy = 2,
+    AutoProxyUrl = 4,
+    AutoDetect = 8
 }

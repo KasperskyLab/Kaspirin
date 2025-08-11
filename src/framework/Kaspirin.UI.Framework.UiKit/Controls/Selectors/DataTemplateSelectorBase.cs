@@ -16,40 +16,39 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Markup;
 
-namespace Kaspirin.UI.Framework.UiKit.Controls.Selectors
+namespace Kaspirin.UI.Framework.UiKit.Controls.Selectors;
+
+[ContentProperty(nameof(DataTemplates))]
+public abstract class DataTemplateSelectorBase : DataTemplateSelector
 {
-    [ContentProperty(nameof(DataTemplates))]
-    public abstract class DataTemplateSelectorBase : DataTemplateSelector
+    public ResourceDictionary DataTemplates { get; set; } = new();
+
+    public sealed override DataTemplate? SelectTemplate(object item, DependencyObject container)
     {
-        public ResourceDictionary DataTemplates { get; set; } = new();
-
-        public sealed override DataTemplate? SelectTemplate(object item, DependencyObject container)
+        if (item == null)
         {
-            if (item == null)
-            {
-                return null;
-            }
-
-            var key = GetDataTemplateKey(item);
-            if (key == null)
-            {
-                return null;
-            }
-
-            if (DataTemplates.Contains(key))
-            {
-                return DataTemplates[key] as DataTemplate;
-            }
-
-            var stringKey = key.ToString();
-            if (DataTemplates.Contains(stringKey))
-            {
-                return DataTemplates[stringKey] as DataTemplate;
-            }
-
             return null;
         }
 
-        protected abstract object? GetDataTemplateKey(object item);
+        var key = GetDataTemplateKey(item);
+        if (key == null)
+        {
+            return null;
+        }
+
+        if (DataTemplates.Contains(key))
+        {
+            return DataTemplates[key] as DataTemplate;
+        }
+
+        var stringKey = key.ToString();
+        if (DataTemplates.Contains(stringKey))
+        {
+            return DataTemplates[stringKey] as DataTemplate;
+        }
+
+        return null;
     }
+
+    protected abstract object? GetDataTemplateKey(object item);
 }

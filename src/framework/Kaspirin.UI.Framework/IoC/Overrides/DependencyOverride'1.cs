@@ -14,39 +14,38 @@
 
 using System;
 
-namespace Kaspirin.UI.Framework.IoC.Overrides
+namespace Kaspirin.UI.Framework.IoC.Overrides;
+
+/// <summary>
+///     Provides the ability to override the dependency value for the type registered in the IoC container.
+/// </summary>
+/// <typeparam name="T">
+///     The type of dependency to be redefined.
+/// </typeparam>
+/// <remarks>
+///     The choice of a dependency in the constructor of the instance being created is based on the type of argument.
+/// </remarks>
+public sealed class DependencyOverride<T> : DependencyOverride
 {
     /// <summary>
-    ///     Provides the ability to override the dependency value for the type registered in the IoC container.
+    ///     Initializes a new instance of the <see cref="DependencyOverride{T}" /> class.
     /// </summary>
-    /// <typeparam name="T">
-    ///     The type of dependency to be redefined.
-    /// </typeparam>
-    /// <remarks>
-    ///     The choice of a dependency in the constructor of the instance being created is based on the type of argument.
-    /// </remarks>
-    public sealed class DependencyOverride<T> : DependencyOverride
+    /// <param name="dependencyValue">
+    ///     The meaning of dependence.
+    /// </param>
+    public DependencyOverride(object dependencyValue)
+        : base(typeof(T), dependencyValue)
     {
-        /// <summary>
-        ///     Initializes a new instance of the <see cref="DependencyOverride{T}" /> class.
-        /// </summary>
-        /// <param name="dependencyValue">
-        ///     The meaning of dependence.
-        /// </param>
-        public DependencyOverride(object dependencyValue)
-            : base(typeof(T), dependencyValue)
-        {
-        }
+    }
 
-        /// <summary>
-        ///     Initializes a new instance of the <see cref="DependencyOverride{T}" /> class.
-        /// </summary>
-        /// <param name="dependencyFactory">
-        ///     A factory for creating a dependency value.
-        /// </param>
-        public DependencyOverride(Func<object> dependencyFactory)
-            : base(typeof(T), dependencyFactory)
-        {
-        }
+    /// <summary>
+    ///     Initializes a new instance of the <see cref="DependencyOverride{T}" /> class.
+    /// </summary>
+    /// <param name="dependencyFactory">
+    ///     A factory for creating a dependency value.
+    /// </param>
+    public DependencyOverride(Func<object> dependencyFactory)
+        : base(typeof(T), dependencyFactory)
+    {
     }
 }

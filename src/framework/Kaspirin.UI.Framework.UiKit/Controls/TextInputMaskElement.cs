@@ -12,16 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Kaspirin.UI.Framework.UiKit.Controls
+namespace Kaspirin.UI.Framework.UiKit.Controls;
+
+public sealed class TextInputMaskElement
 {
-    public sealed class TextInputMaskElement
-    {
-        public char DisplayChar { get; set; } = ' ';
+    public char DisplayChar { get; set; } = ' ';
 
-        public string CustomPattern { get; set; } = ".";
+    public string CustomPattern { get; set; } = ".";
 
-        public int RepeatCount { get; set; } = 1;
+    public int RepeatCount { get; set; } = 1;
 
-        public TextInputMaskElementType Type { get; set; }
-    }
+    public TextInputMaskElementType Type { get; set; }
 }

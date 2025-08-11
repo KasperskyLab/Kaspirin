@@ -13,59 +13,60 @@
 // limitations under the License.
 
 @FileComment
+#pragma warning disable CA2255 // The 'ModuleInitializer' attribute is only intended to be used in application code or advanced source generator scenarios.
+
 using System.Runtime.CompilerServices;
 using System.Threading;
 
-namespace Kaspirin.UI.Framework.UiKit.Icons
+namespace Kaspirin.UI.Framework.UiKit.Icons;
+
+/// <summary>UIKit icons with 12x12 size.</summary>
+public enum UIKitIcon_12
 {
-    /// <summary>UIKit icons with 12x12 size.</summary>
-    public enum UIKitIcon_12
-    {
-        UIKitUnset = 0,
+    UIKitUnset = 0,
 @Icons12
-    }
+}
 
-    /// <summary>UIKit icons with 16x16 size.</summary>
-    public enum UIKitIcon_16
-    {
-        UIKitUnset = 0,
+/// <summary>UIKit icons with 16x16 size.</summary>
+public enum UIKitIcon_16
+{
+    UIKitUnset = 0,
 @Icons16
-    }
+}
 
-    /// <summary>UIKit icons with 24x24 size.</summary>
-    public enum UIKitIcon_24
-    {
-        UIKitUnset = 0,
+/// <summary>UIKit icons with 24x24 size.</summary>
+public enum UIKitIcon_24
+{
+    UIKitUnset = 0,
 @Icons24
-    }
+}
 
-    /// <summary>UIKit icons with 32x32 size.</summary>
-    public enum UIKitIcon_32
-    {
-        UIKitUnset = 0,
+/// <summary>UIKit icons with 32x32 size.</summary>
+public enum UIKitIcon_32
+{
+    UIKitUnset = 0,
 @Icons32
-    }
+}
 
-    /// <summary>UIKit icons with 48x48 size.</summary>
-    public enum UIKitIcon_48
-    {
-        UIKitUnset = 0,
+/// <summary>UIKit icons with 48x48 size.</summary>
+public enum UIKitIcon_48
+{
+    UIKitUnset = 0,
 @Icons48
-    }
+}
 
-    internal static class UIKitIconMetadataRegistrar
-    {
+internal static class UIKitIconMetadataRegistrar
+{
 #if !NETFRAMEWORK
-        [ModuleInitializer]
+    [ModuleInitializer]
 #endif
-        internal static void RegisterMetadata()
+    internal static void RegisterMetadata()
+    {
+        if (Interlocked.CompareExchange(ref _isRegistered, 1, 0) == 0)
         {
-            if (Interlocked.CompareExchange(ref _isRegistered, 1, 0) == 0)
-            {
 @IconsMetadataRegistration
-            }
         }
-
-        private static int _isRegistered = 0;
     }
+
+    private static int _isRegistered = 0;
 }

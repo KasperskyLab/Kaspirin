@@ -12,18 +12,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Kaspirin.UI.Framework.UiKit.Icons
+namespace Kaspirin.UI.Framework.UiKit.Icons;
+
+internal sealed class UIKitIconMetadata
 {
-    internal sealed class UIKitIconMetadata
+    public UIKitIconMetadata(bool isAutoRTL, bool isColorfull)
     {
-        public UIKitIconMetadata(bool isAutoRTL, bool isColorfull)
-        {
-            IsAutoRTL = isAutoRTL;
-            IsColorfull = isColorfull;
-        }
-
-        public bool IsAutoRTL { get; }
-
-        public bool IsColorfull { get; }
+        IsAutoRTL = isAutoRTL;
+        IsColorfull = isColorfull;
     }
+
+    public bool IsAutoRTL { get; }
+
+    public bool IsColorfull { get; }
 }

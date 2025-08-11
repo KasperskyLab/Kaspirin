@@ -17,19 +17,17 @@
 using System;
 using System.Runtime.InteropServices;
 
-namespace Kaspirin.UI.Framework.NativeMethods.Api.Comctl32.Structs
+namespace Kaspirin.UI.Framework.NativeMethods.Api.Comctl32.Structs;
+
+/// <summary>
+///     <seealso href="https://learn.microsoft.com/en-us/windows/win32/api/commoncontrols/ns-commoncontrols-imageinfo">Learn more</seealso>.
+/// </summary>
+[StructLayout(LayoutKind.Sequential)]
+public struct ImageInfo
 {
-    /// <summary>
-    ///     
-    /// <seealso href="https://learn.microsoft.com/en-us/windows/win32/api/commoncontrols/ns-commoncontrols-imageinfo">Learn more</seealso>.
-    /// </summary>
-    [StructLayout(LayoutKind.Sequential)]
-    public struct ImageInfo
-    {
-        public IntPtr hbmImage;
-        public IntPtr hbmMask;
-        public int Unused1;
-        public int Unused2;
-        public NativeRectangle rcImage;
-    }
+    public IntPtr hbmImage;
+    public IntPtr hbmMask;
+    public int Unused1;
+    public int Unused2;
+    public NativeRectangle rcImage;
 }

@@ -16,94 +16,93 @@ using System;
 using System.Windows;
 using System.Windows.Controls;
 
-namespace Kaspirin.UI.Framework.UiKit.Controls.Internals
+namespace Kaspirin.UI.Framework.UiKit.Controls.Internals;
+
+internal sealed class TextBlockLinesLimiterBehavior : Behavior<TextBlock, TextBlockLinesLimiterBehavior>
 {
-    internal sealed class TextBlockLinesLimiterBehavior : Behavior<TextBlock, TextBlockLinesLimiterBehavior>
+    #region MaxLines
+
+    public static int GetMaxLines(TextBlock element)
+        => (int)element.GetValue(MaxLinesProperty);
+
+    public static void SetMaxLines(TextBlock element, int value)
+        => element.SetValue(MaxLinesProperty, value);
+
+    public static readonly DependencyProperty MaxLinesProperty = DependencyProperty.RegisterAttached(
+        "MaxLines",
+        typeof(int),
+        typeof(TextBlockLinesLimiterBehavior),
+        new PropertyMetadata(default(int), OnMaxLinesChanged));
+
+    private static void OnMaxLinesChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
     {
-        #region MaxLines
-
-        public static readonly DependencyProperty MaxLinesProperty = DependencyProperty.RegisterAttached(
-            "MaxLines",
-            typeof(int),
-            typeof(TextBlockLinesLimiterBehavior),
-            new PropertyMetadata(OnMaxLinesChanged));
-
-        public static int GetMaxLines(TextBlock element)
-            => (int)element.GetValue(MaxLinesProperty);
-
-        public static void SetMaxLines(TextBlock element, int value)
-            => element.SetValue(MaxLinesProperty, value);
-
-        private static void OnMaxLinesChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        if (d is TextBlock textBlock && GetIsEnabled(textBlock))
         {
-            if (d is TextBlock textBlock && GetIsEnabled(textBlock))
-            {
-                GetBehavior(textBlock).UpdateTextBlock();
-            }
+            GetBehavior(textBlock).UpdateTextBlock();
         }
-
-        #endregion
-
-        protected override void OnAttached()
-        {
-            base.OnAttached();
-
-            SaveOriginalValues();
-            UpdateTextBlock();
-        }
-
-        protected override void OnDetaching()
-        {
-            base.OnDetaching();
-
-            ResetToOriginalValues();
-        }
-
-        private void UpdateTextBlock()
-        {
-            Guard.IsNotNull(AssociatedObject);
-
-            AssociatedObject.WhenLoaded(() =>
-            {
-                var maxLines = GetMaxLines(AssociatedObject);
-                if (maxLines != 0)
-                {
-                    AssociatedObject.MaxHeight = GetLineHeight(AssociatedObject) * maxLines;
-                    AssociatedObject.TextTrimming = TextTrimming.CharacterEllipsis;
-                    AssociatedObject.TextWrapping = TextWrapping.Wrap;
-                }
-                else
-                {
-                    ResetToOriginalValues();
-                }
-            });
-        }
-
-        private void SaveOriginalValues()
-        {
-            Guard.IsNotNull(AssociatedObject);
-
-            _originalMaxHeight = AssociatedObject.MaxHeight;
-            _originalTextWrapping = AssociatedObject.TextWrapping;
-            _originalTextTrimming = AssociatedObject.TextTrimming;
-        }
-
-        private void ResetToOriginalValues()
-        {
-            Guard.IsNotNull(AssociatedObject);
-
-            AssociatedObject.MaxHeight = _originalMaxHeight;
-            AssociatedObject.TextTrimming = _originalTextTrimming;
-            AssociatedObject.TextWrapping = _originalTextWrapping;
-        }
-
-        private static double GetLineHeight(TextBlock textBlock)
-            => textBlock.LineStackingStrategy == LineStackingStrategy.BlockLineHeight && !double.IsNaN(textBlock.LineHeight)
-                ? textBlock.LineHeight
-                : Math.Ceiling(textBlock.FontSize * textBlock.FontFamily.LineSpacing);
-
-        private double _originalMaxHeight;
-        private TextTrimming _originalTextTrimming;
-        private TextWrapping _originalTextWrapping;
     }
+
+    #endregion
+
+    protected override void OnAttached()
+    {
+        base.OnAttached();
+
+        SaveOriginalValues();
+        UpdateTextBlock();
+    }
+
+    protected override void OnDetaching()
+    {
+        base.OnDetaching();
+
+        ResetToOriginalValues();
+    }
+
+    private void UpdateTextBlock()
+    {
+        Guard.IsNotNull(AssociatedObject);
+
+        AssociatedObject.WhenLoaded(() =>
+        {
+            var maxLines = GetMaxLines(AssociatedObject);
+            if (maxLines != 0)
+            {
+                AssociatedObject.MaxHeight = GetLineHeight(AssociatedObject) * maxLines;
+                AssociatedObject.TextTrimming = TextTrimming.CharacterEllipsis;
+                AssociatedObject.TextWrapping = TextWrapping.Wrap;
+            }
+            else
+            {
+                ResetToOriginalValues();
+            }
+        });
+    }
+
+    private void SaveOriginalValues()
+    {
+        Guard.IsNotNull(AssociatedObject);
+
+        _originalMaxHeight = AssociatedObject.MaxHeight;
+        _originalTextWrapping = AssociatedObject.TextWrapping;
+        _originalTextTrimming = AssociatedObject.TextTrimming;
+    }
+
+    private void ResetToOriginalValues()
+    {
+        Guard.IsNotNull(AssociatedObject);
+
+        AssociatedObject.MaxHeight = _originalMaxHeight;
+        AssociatedObject.TextTrimming = _originalTextTrimming;
+        AssociatedObject.TextWrapping = _originalTextWrapping;
+    }
+
+    private static double GetLineHeight(TextBlock textBlock)
+        => textBlock.LineStackingStrategy == LineStackingStrategy.BlockLineHeight && !double.IsNaN(textBlock.LineHeight)
+            ? textBlock.LineHeight
+            : Math.Ceiling(textBlock.FontSize * textBlock.FontFamily.LineSpacing);
+
+    private double _originalMaxHeight;
+    private TextTrimming _originalTextTrimming;
+    private TextWrapping _originalTextWrapping;
 }

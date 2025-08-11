@@ -624,7 +624,7 @@
 							<xsl:with-param name="propertyId" select="concat($prefix, 'Icon_Fill')" />
 							<xsl:with-param name="propertyValue">
 								<xsl:call-template name="generateResExtension">
-									<xsl:with-param name="key">IconForegroundNormal</xsl:with-param>
+									<xsl:with-param name="key">IconBrushNormal</xsl:with-param>
 									<xsl:with-param name="scope" select="$id"/>
 								</xsl:call-template>
 							</xsl:with-param>
@@ -676,7 +676,7 @@
 							<xsl:with-param name="propertyId" select="concat($prefix, 'Icon_Fill')" />
 							<xsl:with-param name="propertyValue">
 								<xsl:call-template name="generateResExtension">
-									<xsl:with-param name="key">IconForegroundHover</xsl:with-param>
+									<xsl:with-param name="key">IconBrushHover</xsl:with-param>
 									<xsl:with-param name="scope" select="$id"/>
 								</xsl:call-template>
 							</xsl:with-param>
@@ -728,7 +728,7 @@
 							<xsl:with-param name="propertyId" select="concat($prefix, 'Icon_Fill')" />
 							<xsl:with-param name="propertyValue">
 								<xsl:call-template name="generateResExtension">
-									<xsl:with-param name="key">IconForegroundDisabled</xsl:with-param>
+									<xsl:with-param name="key">IconBrushDisabled</xsl:with-param>
 									<xsl:with-param name="scope" select="$id"/>
 								</xsl:call-template>
 							</xsl:with-param>
@@ -748,7 +748,7 @@
 							<xsl:with-param name="propertyId" select="concat($prefix, 'CloseIcon_Fill')" />
 							<xsl:with-param name="propertyValue">
 								<xsl:call-template name="generateResExtension">
-									<xsl:with-param name="key">CloseIconForegroundSelectedNormal</xsl:with-param>
+									<xsl:with-param name="key">CloseIconBrushSelectedNormal</xsl:with-param>
 									<xsl:with-param name="scope" select="$id"/>
 								</xsl:call-template>
 							</xsl:with-param>
@@ -791,7 +791,7 @@
 							<xsl:with-param name="propertyId" select="concat($prefix, 'Icon_Fill')" />
 							<xsl:with-param name="propertyValue">
 								<xsl:call-template name="generateResExtension">
-									<xsl:with-param name="key">IconForegroundSelectedNormal</xsl:with-param>
+									<xsl:with-param name="key">IconBrushSelectedNormal</xsl:with-param>
 									<xsl:with-param name="scope" select="$id"/>
 								</xsl:call-template>
 							</xsl:with-param>
@@ -811,7 +811,7 @@
 							<xsl:with-param name="propertyId" select="concat($prefix, 'CloseIcon_Fill')" />
 							<xsl:with-param name="propertyValue">
 								<xsl:call-template name="generateResExtension">
-									<xsl:with-param name="key">CloseIconForegroundSelectedHover</xsl:with-param>
+									<xsl:with-param name="key">CloseIconBrushSelectedHover</xsl:with-param>
 									<xsl:with-param name="scope" select="$id"/>
 								</xsl:call-template>
 							</xsl:with-param>
@@ -854,7 +854,7 @@
 							<xsl:with-param name="propertyId" select="concat($prefix, 'Icon_Fill')" />
 							<xsl:with-param name="propertyValue">
 								<xsl:call-template name="generateResExtension">
-									<xsl:with-param name="key">IconForegroundSelectedHover</xsl:with-param>
+									<xsl:with-param name="key">IconBrushSelectedHover</xsl:with-param>
 									<xsl:with-param name="scope" select="$id"/>
 								</xsl:call-template>
 							</xsl:with-param>
@@ -874,7 +874,7 @@
 							<xsl:with-param name="propertyId" select="concat($prefix, 'CloseIcon_Fill')" />
 							<xsl:with-param name="propertyValue">
 								<xsl:call-template name="generateResExtension">
-									<xsl:with-param name="key">CloseIconForegroundSelectedDisabled</xsl:with-param>
+									<xsl:with-param name="key">CloseIconBrushSelectedDisabled</xsl:with-param>
 									<xsl:with-param name="scope" select="$id"/>
 								</xsl:call-template>
 							</xsl:with-param>
@@ -917,7 +917,7 @@
 							<xsl:with-param name="propertyId" select="concat($prefix, 'Icon_Fill')" />
 							<xsl:with-param name="propertyValue">
 								<xsl:call-template name="generateResExtension">
-									<xsl:with-param name="key">IconForegroundSelectedDisabled</xsl:with-param>
+									<xsl:with-param name="key">IconBrushSelectedDisabled</xsl:with-param>
 									<xsl:with-param name="scope" select="$id"/>
 								</xsl:call-template>
 							</xsl:with-param>

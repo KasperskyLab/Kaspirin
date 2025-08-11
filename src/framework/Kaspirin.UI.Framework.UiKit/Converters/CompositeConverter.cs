@@ -17,70 +17,69 @@ using System.Globalization;
 using System.Linq;
 using System.Windows.Data;
 
-namespace Kaspirin.UI.Framework.UiKit.Converters
+namespace Kaspirin.UI.Framework.UiKit.Converters;
+
+/// <summary>
+///     Provides an implementation of <see cref="IValueConverter" /> that performs sequential conversion
+///     of values through several <see cref="IValueConverter" />.
+/// </summary>
+public sealed class CompositeConverter : IValueConverter
 {
     /// <summary>
-    ///     Provides an implementation of <see cref="IValueConverter" /> that performs sequential conversion
-    ///     of values through several <see cref="IValueConverter" />.
+    ///     Creates an object <see cref="CompositeConverter" />.
     /// </summary>
-    public sealed class CompositeConverter : IValueConverter
+    /// <param name="converters">
+    ///     Converters involved in sequential conversion.
+    /// </param>
+    public CompositeConverter(params IValueConverter[] converters)
     {
-        /// <summary>
-        ///     Creates an object <see cref="CompositeConverter" />.
-        /// </summary>
-        /// <param name="converters">
-        ///     Converters involved in sequential conversion.
-        /// </param>
-        public CompositeConverter(params IValueConverter[] converters)
-        {
-            _converters = Guard.EnsureArgumentIsNotNull(converters);
-        }
-
-        /// <summary>
-        ///     Converts <paramref name="value" />, sequentially transferring the conversion result between converters.
-        /// </summary>
-        /// <param name="value">
-        ///     The converted value.
-        /// </param>
-        /// <param name="targetType">
-        ///     It is transmitted to the converters involved in the conversion.
-        /// </param>
-        /// <param name="parameter">
-        ///     It is transmitted to the converters involved in the conversion.
-        /// </param>
-        /// <param name="culture">
-        ///     It is transmitted to the converters involved in the conversion.
-        /// </param>
-        /// <returns>
-        ///     The result of the conversion of the last converter.
-        /// </returns>
-        public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
-            => _converters.WhereNotNull().Aggregate(value, (v, converter) => converter.Convert(v, targetType, parameter, culture));
-
-        /// <summary>
-        ///     Performs reverse conversion <paramref name="value" />, sequentially transmitting the conversion result between converters.
-        /// </summary>
-        /// <remarks>
-        ///     In reverse conversion, the converters are called in reverse order.
-        /// </remarks>
-        /// <param name="value">
-        ///     The converted value.
-        /// </param>
-        /// <param name="targetType">
-        ///     It is transmitted to the converters involved in the conversion.
-        /// </param>
-        /// <param name="parameter">
-        ///     It is transmitted to the converters involved in the conversion.
-        /// </param>
-        /// <param name="culture">
-        ///     It is transmitted to the converters involved in the conversion.
-        /// </param>
-        /// <returns>
-        ///     The result of the reverse conversion of the first converter.
-        /// </returns>
-        public object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
-            => _converters.WhereNotNull().Reverse().Aggregate(value, (v, converter) => converter.ConvertBack(v, targetType, parameter, culture));
-
-        private readonly IValueConverter[] _converters;
+        _converters = Guard.EnsureArgumentIsNotNull(converters);
     }
+
+    /// <summary>
+    ///     Converts <paramref name="value" />, sequentially transferring the conversion result between converters.
+    /// </summary>
+    /// <param name="value">
+    ///     The converted value.
+    /// </param>
+    /// <param name="targetType">
+    ///     It is transmitted to the converters involved in the conversion.
+    /// </param>
+    /// <param name="parameter">
+    ///     It is transmitted to the converters involved in the conversion.
+    /// </param>
+    /// <param name="culture">
+    ///     It is transmitted to the converters involved in the conversion.
+    /// </param>
+    /// <returns>
+    ///     The result of the conversion of the last converter.
+    /// </returns>
+    public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
+        => _converters.WhereNotNull().Aggregate(value, (v, converter) => converter.Convert(v, targetType, parameter, culture));
+
+    /// <summary>
+    ///     Performs reverse conversion <paramref name="value" />, sequentially transmitting the conversion result between converters.
+    /// </summary>
+    /// <remarks>
+    ///     In reverse conversion, the converters are called in reverse order.
+    /// </remarks>
+    /// <param name="value">
+    ///     The converted value.
+    /// </param>
+    /// <param name="targetType">
+    ///     It is transmitted to the converters involved in the conversion.
+    /// </param>
+    /// <param name="parameter">
+    ///     It is transmitted to the converters involved in the conversion.
+    /// </param>
+    /// <param name="culture">
+    ///     It is transmitted to the converters involved in the conversion.
+    /// </param>
+    /// <returns>
+    ///     The result of the reverse conversion of the first converter.
+    /// </returns>
+    public object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
+        => _converters.WhereNotNull().Reverse().Aggregate(value, (v, converter) => converter.ConvertBack(v, targetType, parameter, culture));
+
+    private readonly IValueConverter[] _converters;
 }

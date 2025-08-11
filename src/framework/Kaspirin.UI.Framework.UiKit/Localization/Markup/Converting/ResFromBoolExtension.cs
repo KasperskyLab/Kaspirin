@@ -12,45 +12,44 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Kaspirin.UI.Framework.UiKit.Localization.Markup.Converting
+namespace Kaspirin.UI.Framework.UiKit.Localization.Markup.Converting;
+
+public sealed class ResFromBoolExtension : ResFromSourceExtension
 {
-    public sealed class ResFromBoolExtension : ResFromSourceExtension
+    public object? True
     {
-        public object? True
+        get
         {
-            get
-            {
-                return _resources.Collection.Contains(ResourceCollection.True)
-                     ? _resources.Collection[ResourceCollection.True]
-                     : null;
-            }
-            set
-            {
-                _resources.Collection[ResourceCollection.True] = value;
-            }
+            return _resources.Collection.Contains(ResourceCollection.True)
+                 ? _resources.Collection[ResourceCollection.True]
+                 : null;
         }
-
-        public object? False
+        set
         {
-            get
-            {
-                return _resources.Collection.Contains(ResourceCollection.False)
-                     ? _resources.Collection[ResourceCollection.False]
-                     : null;
-            }
-            set
-            {
-                _resources.Collection[ResourceCollection.False] = value;
-            }
+            _resources.Collection[ResourceCollection.True] = value;
         }
-
-        public override object? GetResource(object? key)
-        {
-            Guard.ArgumentIsNotNull(key);
-
-            return _resources.GetResource(key);
-        }
-
-        private readonly ResFromCollectionExtension _resources = new();
     }
+
+    public object? False
+    {
+        get
+        {
+            return _resources.Collection.Contains(ResourceCollection.False)
+                 ? _resources.Collection[ResourceCollection.False]
+                 : null;
+        }
+        set
+        {
+            _resources.Collection[ResourceCollection.False] = value;
+        }
+    }
+
+    public override object? GetResource(object? key)
+    {
+        Guard.ArgumentIsNotNull(key);
+
+        return _resources.GetResource(key);
+    }
+
+    private readonly ResFromCollectionExtension _resources = new();
 }

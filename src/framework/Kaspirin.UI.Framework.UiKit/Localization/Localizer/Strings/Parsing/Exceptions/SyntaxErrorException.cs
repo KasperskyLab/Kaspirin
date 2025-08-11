@@ -14,16 +14,15 @@
 
 using System;
 
-namespace Kaspirin.UI.Framework.UiKit.Localization.Localizer.Strings.Parsing.Exceptions
-{
-    public abstract class SyntaxErrorException : Exception
-    {
-        public abstract Position Position { get; }
-        public abstract string ErrorMessage { get; }
-        public sealed override string Message => Position.Start >= Position.SourceText.Length
-            ? ErrorMessage
-            : $"{ErrorMessage} at {Position}";
+namespace Kaspirin.UI.Framework.UiKit.Localization.Localizer.Strings.Parsing.Exceptions;
 
-        public override string ToString() => Message;
-    }
+public abstract class SyntaxErrorException : Exception
+{
+    public abstract Position Position { get; }
+    public abstract string ErrorMessage { get; }
+    public sealed override string Message => Position.Start >= Position.SourceText.Length
+        ? ErrorMessage
+        : $"{ErrorMessage} at {Position}";
+
+    public override string ToString() => Message;
 }

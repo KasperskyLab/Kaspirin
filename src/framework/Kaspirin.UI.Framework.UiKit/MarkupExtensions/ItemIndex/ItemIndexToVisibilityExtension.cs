@@ -14,10 +14,9 @@
 
 using System.Windows;
 
-namespace Kaspirin.UI.Framework.UiKit.MarkupExtensions.ItemIndex
+namespace Kaspirin.UI.Framework.UiKit.MarkupExtensions.ItemIndex;
+
+public sealed class ItemIndexToVisibilityExtension : BaseItemIndexExtension<Visibility>
 {
-    public sealed class ItemIndexToVisibilityExtension : BaseItemIndexExtension<Visibility>
-    {
-        public ItemIndexToVisibilityExtension() : base(Visibility.Visible, Visibility.Collapsed) { }
-    }
+    public ItemIndexToVisibilityExtension() : base(Visibility.Visible, Visibility.Collapsed) { }
 }

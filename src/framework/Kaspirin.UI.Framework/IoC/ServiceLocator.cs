@@ -14,56 +14,55 @@
 
 using System;
 
-namespace Kaspirin.UI.Framework.IoC
+namespace Kaspirin.UI.Framework.IoC;
+
+/// <summary>
+///     Allows you to use the IoC container as a static service locator.
+/// </summary>
+/// <remarks>
+///     It is intended for use only in places where it is impossible to create dependencies from an
+///     IoC container in the usual way.
+/// </remarks>
+public sealed class ServiceLocator
 {
     /// <summary>
-    ///     Allows you to use the IoC container as a static service locator.
+    ///     The current instance is <see cref="ServiceLocator" />.
     /// </summary>
+    public static ServiceLocator Instance => Guard.EnsureIsNotNull(_instance).Value;
+
+    /// <summary>
+    ///     Sets <paramref name="container" /> as the current container for this <see cref="ServiceLocator" />.
+    /// </summary>
+    /// <param name="container">
+    ///     The container to be installed.
+    /// </param>
     /// <remarks>
-    ///     It is intended for use only in places where it is impossible to create dependencies from an
-    ///     IoC container in the usual way.
+    ///     The method cannot be called again.
     /// </remarks>
-    public sealed class ServiceLocator
+    public static void SetContainer(IUnityContainer container)
     {
-        /// <summary>
-        ///     The current instance is <see cref="ServiceLocator" />.
-        /// </summary>
-        public static ServiceLocator Instance => Guard.EnsureIsNotNull(_instance).Value;
+        Guard.ArgumentIsNotNull(container);
+        Guard.Assert(!(_instance?.IsValueCreated ?? false), "Can't change container in created service locator");
 
-        /// <summary>
-        ///     Sets <paramref name="container" /> as the current container for this <see cref="ServiceLocator" />.
-        /// </summary>
-        /// <param name="container">
-        ///     The container to be installed.
-        /// </param>
-        /// <remarks>
-        ///     The method cannot be called again.
-        /// </remarks>
-        public static void SetContainer(IUnityContainer container)
-        {
-            Guard.ArgumentIsNotNull(container);
-            Guard.Assert(!(_instance?.IsValueCreated ?? false), "Can't change container in created service locator");
-
-            _instance = new Lazy<ServiceLocator>(() => new ServiceLocator(container));
-        }
-
-        /// <summary>
-        ///     Retrieves an instance of the specified service from the IoC container.
-        /// </summary>
-        /// <typeparam name="TService">
-        ///     The type of service requested.
-        /// </typeparam>
-        /// <returns>
-        ///     An instance of the requested service.
-        /// </returns>
-        public TService GetService<TService>() => _unityContainer.Resolve<TService>();
-
-        private ServiceLocator(IUnityContainer unityContainer)
-        {
-            _unityContainer = unityContainer;
-        }
-
-        private static Lazy<ServiceLocator>? _instance;
-        private readonly IUnityContainer _unityContainer;
+        _instance = new Lazy<ServiceLocator>(() => new ServiceLocator(container));
     }
+
+    /// <summary>
+    ///     Retrieves an instance of the specified service from the IoC container.
+    /// </summary>
+    /// <typeparam name="TService">
+    ///     The type of service requested.
+    /// </typeparam>
+    /// <returns>
+    ///     An instance of the requested service.
+    /// </returns>
+    public TService GetService<TService>() => _unityContainer.Resolve<TService>();
+
+    private ServiceLocator(IUnityContainer unityContainer)
+    {
+        _unityContainer = unityContainer;
+    }
+
+    private static Lazy<ServiceLocator>? _instance;
+    private readonly IUnityContainer _unityContainer;
 }

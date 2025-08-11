@@ -12,32 +12,31 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Kaspirin.UI.Framework.UiKit.Localization.Localizer
+namespace Kaspirin.UI.Framework.UiKit.Localization.Localizer;
+
+public static class LocalizerExtensions
 {
-    public static class LocalizerExtensions
+    public static TValue? GetValue<TValue>(this ILocalizer localizer, string key)
     {
-        public static TValue? GetValue<TValue>(this ILocalizer localizer, string key)
+        Guard.IsNotNull(localizer, nameof(localizer));
+        Guard.IsNotNull(key, nameof(key));
+
+        return localizer switch
         {
-            Guard.IsNotNull(localizer, nameof(localizer));
-            Guard.IsNotNull(key, nameof(key));
+            IXamlLocalizer xamlLocalizer => GetValue(xamlLocalizer.GetResource(key)),
+            IImageLocalizer imageLocalizer => GetValue(imageLocalizer.GetBitmapImage(key)),
+            IStringLocalizer stringLocalizer => GetValue(stringLocalizer.GetString(key)),
+            IFileLocalizer fileLocalizer => GetValue(fileLocalizer.GetContent(key)),
+            _ => default,
+        };
 
-            return localizer switch
+        static TValue? GetValue(object? value)
+        {
+            return value switch
             {
-                IXamlLocalizer xamlLocalizer => GetValue(xamlLocalizer.GetResource(key)),
-                IImageLocalizer imageLocalizer => GetValue(imageLocalizer.GetBitmapImage(key)),
-                IStringLocalizer stringLocalizer => GetValue(stringLocalizer.GetString(key)),
-                IFileLocalizer fileLocalizer => GetValue(fileLocalizer.GetFileContent(key)),
-                _ => default,
+                TValue tValue => tValue,
+                _ => default
             };
-
-            static TValue? GetValue(object? value)
-            {
-                return value switch
-                {
-                    TValue tValue => tValue,
-                    _ => default
-                };
-            }
         }
     }
 }

@@ -14,15 +14,13 @@
 
 using System;
 
-namespace Kaspirin.UI.Framework.NativeMethods.Api.User32.Delegates
-{
-    /// <summary>
-    ///     
-    /// <seealso href="https://learn.microsoft.com/en-us/windows/win32/api/winuser/nc-winuser-monitorenumproc">Learn more</seealso>.
-    /// </summary>
-    public delegate bool MonitorEnumProc(
-        IntPtr hMonitor,
-        IntPtr hdcMonitor,
-        ref IntPtr lprcMonitor,
-        IntPtr dwData);
-}
+namespace Kaspirin.UI.Framework.NativeMethods.Api.User32.Delegates;
+
+/// <summary>
+///     <seealso href="https://learn.microsoft.com/en-us/windows/win32/api/winuser/nc-winuser-monitorenumproc">Learn more</seealso>.
+/// </summary>
+public delegate bool MonitorEnumProc(
+    IntPtr hMonitor,
+    IntPtr hdcMonitor,
+    ref IntPtr lprcMonitor,
+    IntPtr dwData);

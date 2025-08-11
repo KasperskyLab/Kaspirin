@@ -15,23 +15,23 @@
 using System.Windows;
 using System.Windows.Controls;
 
-namespace Kaspirin.UI.Framework.UiKit.Controls
+namespace Kaspirin.UI.Framework.UiKit.Controls;
+
+public sealed class NotificationSpinner : ContentControl
 {
-    public sealed class NotificationSpinner : ContentControl
+    #region Header
+
+    public string Header
     {
-        #region Header
-
-        public string Header
-        {
-            get => (string)GetValue(HeaderProperty);
-            set => SetValue(HeaderProperty, value);
-        }
-
-        public static readonly DependencyProperty HeaderProperty = DependencyProperty.Register(
-                nameof(Header),
-                typeof(string),
-                typeof(NotificationSpinner));
-
-        #endregion
+        get => (string)GetValue(HeaderProperty);
+        set => SetValue(HeaderProperty, value);
     }
+
+    public static readonly DependencyProperty HeaderProperty = DependencyProperty.Register(
+            nameof(Header),
+            typeof(string),
+            typeof(NotificationSpinner),
+            new PropertyMetadata(default(string)));
+
+    #endregion
 }

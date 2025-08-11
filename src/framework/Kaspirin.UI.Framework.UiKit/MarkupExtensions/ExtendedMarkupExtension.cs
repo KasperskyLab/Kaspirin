@@ -18,126 +18,125 @@ using System.Windows;
 using System.Windows.Markup;
 using TriggerBase = System.Windows.TriggerBase;
 
-namespace Kaspirin.UI.Framework.UiKit.MarkupExtensions
+namespace Kaspirin.UI.Framework.UiKit.MarkupExtensions;
+
+public abstract class ExtendedMarkupExtension : MarkupExtension
 {
-    public abstract class ExtendedMarkupExtension : MarkupExtension
+    public sealed override object? ProvideValue(IServiceProvider? serviceProvider)
     {
-        public sealed override object? ProvideValue(IServiceProvider? serviceProvider)
+        var targetType = GetTargetType(serviceProvider, out var targetObject, out var targetProperty);
+
+        var result = targetType switch
         {
-            var targetType = GetTargetType(serviceProvider, out var targetObject, out var targetProperty);
+            TargetType.Unknown => ProvideSelf(serviceProvider),
+            TargetType.Freezable => ProvideForFreezable(serviceProvider!, (Freezable)targetObject!, targetProperty!),
+            TargetType.Setter => ProvideForSetter(serviceProvider!, (SetterBase)targetObject!, targetProperty!),
+            TargetType.Trigger => ProvideForTrigger(serviceProvider!, (TriggerBase)targetObject!, targetProperty!),
+            TargetType.Control => ProvideForControl(serviceProvider!, (DependencyObject)targetObject!, (DependencyProperty)targetProperty!),
+            TargetType.ControlTemplate => ProvideForControlTemplate(serviceProvider!, targetObject!, (DependencyProperty)targetProperty!),
+            TargetType.MarkupExtension => ProvideForMarkupExtension(serviceProvider!, (MarkupExtension)targetObject!, targetProperty!),
+            _ => null
+        };
 
-            var result = targetType switch
-            {
-                TargetType.Unknown => ProvideSelf(serviceProvider),
-                TargetType.Freezable => ProvideForFreezable(serviceProvider!, (Freezable)targetObject!, targetProperty!),
-                TargetType.Setter => ProvideForSetter(serviceProvider!, (SetterBase)targetObject!, targetProperty!),
-                TargetType.Trigger => ProvideForTrigger(serviceProvider!, (TriggerBase)targetObject!, targetProperty!),
-                TargetType.Control => ProvideForControl(serviceProvider!, (DependencyObject)targetObject!, (DependencyProperty)targetProperty!),
-                TargetType.ControlTemplate => ProvideForControlTemplate(serviceProvider!, targetObject!, (DependencyProperty)targetProperty!),
-                TargetType.MarkupExtension => ProvideForMarkupExtension(serviceProvider!, (MarkupExtension)targetObject!, targetProperty!),
-                _ => null
-            };
+        return result ?? ProvideValue(serviceProvider, targetType);
+    }
 
-            return result ?? ProvideValue(serviceProvider, targetType);
+    protected virtual object? ProvideForFreezable(IServiceProvider serviceProvider, Freezable targetObject, object targetProperty)
+        => null;
+
+    protected virtual object? ProvideForControl(IServiceProvider serviceProvider, DependencyObject targetObject, DependencyProperty targetProperty)
+        => null;
+
+    protected virtual object? ProvideForControlTemplate(IServiceProvider serviceProvider, object targetObject, DependencyProperty targetProperty)
+        => null;
+
+    protected virtual object? ProvideForSetter(IServiceProvider serviceProvider, SetterBase targetObject, object targetProperty)
+        => null;
+
+    protected virtual object? ProvideForTrigger(IServiceProvider serviceProvider, TriggerBase targetObject, object targetProperty)
+        => null;
+
+    protected virtual object? ProvideForMarkupExtension(IServiceProvider serviceProvider, MarkupExtension markupExtension, object targetProperty)
+        => null;
+
+    protected virtual object? ProvideSelf(IServiceProvider? serviceProvider)
+        => this;
+
+    protected virtual object? ProvideValue(IServiceProvider? serviceProvider, TargetType valueType)
+        => DependencyProperty.UnsetValue;
+
+    private static bool TryGetTargetInfo(IServiceProvider serviceProvider, [NotNullWhen(true)] out object? targetObject, [NotNullWhen(true)] out object? targetProperty)
+    {
+        targetObject = null;
+        targetProperty = null;
+
+        var targetInfo = (IProvideValueTarget?)serviceProvider.GetService(typeof(IProvideValueTarget));
+        if (targetInfo != null)
+        {
+            targetObject = targetInfo.TargetObject;
+            targetProperty = targetInfo.TargetProperty;
+            return true;
         }
 
-        protected virtual object? ProvideForFreezable(IServiceProvider serviceProvider, Freezable targetObject, object targetProperty)
-            => null;
+        return false;
+    }
 
-        protected virtual object? ProvideForControl(IServiceProvider serviceProvider, DependencyObject targetObject, DependencyProperty targetProperty)
-            => null;
+    private static TargetType GetTargetType(IServiceProvider? serviceProvider, out object? targetObject, out object? targetProperty)
+    {
+        targetObject = null;
+        targetProperty = null;
 
-        protected virtual object? ProvideForControlTemplate(IServiceProvider serviceProvider, object targetObject, DependencyProperty targetProperty)
-            => null;
-
-        protected virtual object? ProvideForSetter(IServiceProvider serviceProvider, SetterBase targetObject, object targetProperty)
-            => null;
-
-        protected virtual object? ProvideForTrigger(IServiceProvider serviceProvider, TriggerBase targetObject, object targetProperty)
-            => null;
-
-        protected virtual object? ProvideForMarkupExtension(IServiceProvider serviceProvider, MarkupExtension markupExtension, object targetProperty)
-            => null;
-
-        protected virtual object? ProvideSelf(IServiceProvider? serviceProvider)
-            => this;
-
-        protected virtual object? ProvideValue(IServiceProvider? serviceProvider, TargetType valueType)
-            => DependencyProperty.UnsetValue;
-
-        private static bool TryGetTargetInfo(IServiceProvider serviceProvider, [NotNullWhen(true)] out object? targetObject, [NotNullWhen(true)] out object? targetProperty)
+        if (serviceProvider == null)
         {
-            targetObject = null;
-            targetProperty = null;
-
-            var targetInfo = (IProvideValueTarget?)serviceProvider.GetService(typeof(IProvideValueTarget));
-            if (targetInfo != null)
-            {
-                targetObject = targetInfo.TargetObject;
-                targetProperty = targetInfo.TargetProperty;
-                return true;
-            }
-
-            return false;
-        }
-
-        private static TargetType GetTargetType(IServiceProvider? serviceProvider, out object? targetObject, out object? targetProperty)
-        {
-            targetObject = null;
-            targetProperty = null;
-
-            if (serviceProvider == null)
-            {
-                return TargetType.Unknown;
-            }
-
-            if (TryGetTargetInfo(serviceProvider, out targetObject, out targetProperty))
-            {
-                if (targetObject is Freezable)
-                {
-                    return TargetType.Freezable;
-                }
-
-                if (targetObject is DependencyObject &&
-                    targetProperty is DependencyProperty)
-                {
-                    return TargetType.Control;
-                }
-
-                if (targetObject is not DependencyObject &&
-                    targetProperty is DependencyProperty)
-                {
-                    return TargetType.ControlTemplate;
-                }
-
-                if (targetObject is SetterBase)
-                {
-                    return TargetType.Setter;
-                }
-
-                if (targetObject is TriggerBase)
-                {
-                    return TargetType.Trigger;
-                }
-
-                if (targetObject is MarkupExtension)
-                {
-                    return TargetType.MarkupExtension;
-                }
-            }
-
             return TargetType.Unknown;
         }
 
-        protected enum TargetType
+        if (TryGetTargetInfo(serviceProvider, out targetObject, out targetProperty))
         {
-            Unknown,
-            Freezable,
-            Setter,
-            Trigger,
-            ControlTemplate,
-            Control,
-            MarkupExtension,
+            if (targetObject is Freezable)
+            {
+                return TargetType.Freezable;
+            }
+
+            if (targetObject is DependencyObject &&
+                targetProperty is DependencyProperty)
+            {
+                return TargetType.Control;
+            }
+
+            if (targetObject is not DependencyObject &&
+                targetProperty is DependencyProperty)
+            {
+                return TargetType.ControlTemplate;
+            }
+
+            if (targetObject is SetterBase)
+            {
+                return TargetType.Setter;
+            }
+
+            if (targetObject is TriggerBase)
+            {
+                return TargetType.Trigger;
+            }
+
+            if (targetObject is MarkupExtension)
+            {
+                return TargetType.MarkupExtension;
+            }
         }
+
+        return TargetType.Unknown;
+    }
+
+    protected enum TargetType
+    {
+        Unknown,
+        Freezable,
+        Setter,
+        Trigger,
+        ControlTemplate,
+        Control,
+        MarkupExtension,
     }
 }

@@ -13,28 +13,26 @@
 // limitations under the License.
 
 using System;
-using Kaspirin.UI.Framework.Mvvm;
 
-namespace Kaspirin.UI.Framework.UiKit.Localization.Markup.Metadata
+namespace Kaspirin.UI.Framework.UiKit.Localization.Markup.Metadata;
+
+public sealed class MetadataItem : BaseViewModel
 {
-    public sealed class MetadataItem : ViewModelBase
+    public MetadataItem(string key, string scope, Type localizerType)
     {
-        public MetadataItem(string key, string scope, Type localizerType)
-        {
-            Key = Guard.EnsureArgumentIsNotNull(key);
-            Scope = Guard.EnsureArgumentIsNotNull(scope);
-            LocalizerType = Guard.EnsureArgumentIsNotNull(localizerType);
-        }
+        Key = Guard.EnsureArgumentIsNotNull(key);
+        Scope = Guard.EnsureArgumentIsNotNull(scope);
+        LocalizerType = Guard.EnsureArgumentIsNotNull(localizerType);
+    }
 
-        public MetadataItem Self => this;
+    public MetadataItem Self => this;
 
-        public string Key { get; }
-        public string Scope { get; }
-        public Type LocalizerType { get; }
+    public string Key { get; }
+    public string Scope { get; }
+    public Type LocalizerType { get; }
 
-        public void Update()
-        {
-            RaisePropertyChanged(nameof(Self));
-        }
+    public void Update()
+    {
+        RaisePropertyChanged(nameof(Self));
     }
 }

@@ -15,24 +15,23 @@
 @FileComment
 using System.Collections.Generic;
 
-namespace Kaspirin.UI.Framework.UiKit.@PaletteNamespacePart.Palette
+namespace Kaspirin.UI.Framework.UiKit.@PaletteNamespacePart.Palette;
+
+public static class UIKitPaletteStorage
 {
-    public static class UIKitPaletteStorage
+    public static string Map(UIKitPalette id)
     {
-        public static string Map(UIKitPalette id)
-        {
-            return PaletteMapping[id];
-        }
+        return PaletteMapping[id];
+    }
 
-        private static IDictionary<UIKitPalette, string> PaletteMapping { get; } = new Dictionary<UIKitPalette, string>
-        {
+    private static IDictionary<UIKitPalette, string> PaletteMapping { get; } = new Dictionary<UIKitPalette, string>
+    {
 @PaletteMapping
-        };
+    };
 
-        public enum UIKitPalette
-        {
-            Transparent = 0,
+    public enum UIKitPalette
+    {
+        Transparent = 0,
 @PaletteItems
-        }
     }
 }

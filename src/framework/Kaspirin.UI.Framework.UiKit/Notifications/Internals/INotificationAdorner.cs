@@ -12,12 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Kaspirin.UI.Framework.UiKit.Notifications.Internals
-{
-    internal interface INotificationAdorner
-    {
-        void AddNotification(NotificationView view);
+namespace Kaspirin.UI.Framework.UiKit.Notifications.Internals;
 
-        void RemoveNotification(NotificationView view);
-    }
+internal interface INotificationAdorner
+{
+    void AddNotification(NotificationView view);
+
+    void RemoveNotification(NotificationView view);
 }

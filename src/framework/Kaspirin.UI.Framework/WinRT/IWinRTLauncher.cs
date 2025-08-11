@@ -14,20 +14,19 @@
 
 using System;
 
-namespace Kaspirin.UI.Framework.WinRT
+namespace Kaspirin.UI.Framework.WinRT;
+
+/// <summary>
+///     An interface for launching applications via the WinRT Api.
+/// </summary>
+public interface IWinRTLauncher
 {
     /// <summary>
-    ///     An interface for launching applications via the WinRT Api.
+    ///     Launches the application associated with the specified <paramref name="uri" /> via the WinRT Api.
     /// </summary>
-    public interface IWinRTLauncher
-    {
-        /// <summary>
-        ///     Launches the application associated with the specified <paramref name="uri" /> via the WinRT Api.
-        /// </summary>
-        /// <param name="uri">
-        ///     The link to launch.
-        /// </param>
-        void LaunchUriAsync(Uri uri);
-    }
+    /// <param name="uri">
+    ///     The link to launch.
+    /// </param>
+    void LaunchUriAsync(Uri uri);
 }
 

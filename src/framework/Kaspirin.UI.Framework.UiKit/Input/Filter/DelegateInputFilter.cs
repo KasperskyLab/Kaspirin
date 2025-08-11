@@ -14,25 +14,24 @@
 
 using System;
 
-namespace Kaspirin.UI.Framework.UiKit.Input.Filter
+namespace Kaspirin.UI.Framework.UiKit.Input.Filter;
+
+public sealed class DelegateInputFilter : IInputFilter
 {
-    public sealed class DelegateInputFilter : IInputFilter
+    public DelegateInputFilter(Func<string, string?> filterFunc)
     {
-        public DelegateInputFilter(Func<string, string?> filterFunc)
-        {
-            _filterFunc = Guard.EnsureArgumentIsNotNull(filterFunc);
-        }
-
-        public string? FilterInput(string? input)
-        {
-            if (input is null)
-            {
-                return null;
-            }
-
-            return _filterFunc(input);
-        }
-
-        private readonly Func<string, string?> _filterFunc;
+        _filterFunc = Guard.EnsureArgumentIsNotNull(filterFunc);
     }
+
+    public string? FilterInput(string? input)
+    {
+        if (input is null)
+        {
+            return null;
+        }
+
+        return _filterFunc(input);
+    }
+
+    private readonly Func<string, string?> _filterFunc;
 }

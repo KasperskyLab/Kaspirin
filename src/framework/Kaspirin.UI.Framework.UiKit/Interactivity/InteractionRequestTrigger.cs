@@ -14,52 +14,51 @@
 
 using System.Windows;
 
-namespace Kaspirin.UI.Framework.UiKit.Interactivity
+namespace Kaspirin.UI.Framework.UiKit.Interactivity;
+
+public sealed class InteractionRequestTrigger : EventTriggerBase<InteractionRequestBase>
 {
-    public sealed class InteractionRequestTrigger : EventTriggerBase<InteractionRequestBase>
+    protected override string GetEventName()
     {
-        protected override string GetEventName()
-        {
-            return nameof(InteractionRequestBase<InteractionObject>.TriggerActionRaised);
-        }
-
-        protected override void OnAttached()
-        {
-            base.OnAttached();
-
-            var parent = (FrameworkElement?)AssociatedObject;
-            if (parent != null)
-            {
-                Tracer.TraceDebug($"Trigger[{GetHashCode()}] attached to {parent.GetType().Name}");
-
-                _parent = parent;
-                _parent.Unloaded += ParentUnloaded;
-            }
-        }
-
-        private void ParentUnloaded(object sender, RoutedEventArgs e)
-        {
-            Guard.IsNotNull(_parent);
-
-            Tracer.TraceDebug($"Trigger[{GetHashCode()}] parent {_parent.GetType().Name} unloaded");
-
-            _parent.Unloaded -= ParentUnloaded;
-            _parent.Loaded += ParentReloaded;
-            Detach();
-        }
-
-        private void ParentReloaded(object sender, RoutedEventArgs e)
-        {
-            Guard.IsNotNull(_parent);
-
-            Tracer.TraceDebug($"Trigger[{GetHashCode()}] parent {_parent.GetType().Name} reloaded");
-
-            _parent.Loaded -= ParentReloaded;
-            Attach(_parent);
-        }
-
-        private FrameworkElement? _parent;
-
-        private static readonly ComponentTracer Tracer = ComponentTracer.Get(UIKitComponentTracers.Interactivity);
+        return nameof(InteractionRequestBase<InteractionObject>.TriggerActionRaised);
     }
+
+    protected override void OnAttached()
+    {
+        base.OnAttached();
+
+        var parent = (FrameworkElement?)AssociatedObject;
+        if (parent != null)
+        {
+            _tracer.TraceDebug($"Trigger[{GetHashCode()}] attached to {parent.GetType().Name}");
+
+            _parent = parent;
+            _parent.Unloaded += ParentUnloaded;
+        }
+    }
+
+    private void ParentUnloaded(object sender, RoutedEventArgs e)
+    {
+        Guard.IsNotNull(_parent);
+
+        _tracer.TraceDebug($"Trigger[{GetHashCode()}] parent {_parent.GetType().Name} unloaded");
+
+        _parent.Unloaded -= ParentUnloaded;
+        _parent.Loaded += ParentReloaded;
+        Detach();
+    }
+
+    private void ParentReloaded(object sender, RoutedEventArgs e)
+    {
+        Guard.IsNotNull(_parent);
+
+        _tracer.TraceDebug($"Trigger[{GetHashCode()}] parent {_parent.GetType().Name} reloaded");
+
+        _parent.Loaded -= ParentReloaded;
+        Attach(_parent);
+    }
+
+    private FrameworkElement? _parent;
+
+    private static readonly ComponentTracer _tracer = ComponentTracer.Get(UIKitComponentTracers.Interactivity);
 }

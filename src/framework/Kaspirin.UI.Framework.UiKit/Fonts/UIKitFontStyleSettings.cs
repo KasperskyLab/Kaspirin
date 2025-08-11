@@ -12,15 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Kaspirin.UI.Framework.UiKit.Fonts
-{
-    public sealed class UIKitFontStyleSettings
-    {
-        internal UIKitFontStyleSettings(string style)
-        {
-            Style = style;
-        }
+namespace Kaspirin.UI.Framework.UiKit.Fonts;
 
-        public string Style { get; }
+public sealed class UIKitFontStyleSettings
+{
+    internal UIKitFontStyleSettings(string style)
+    {
+        Style = style;
     }
+
+    public string Style { get; }
 }

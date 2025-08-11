@@ -14,16 +14,15 @@
 
 using System.Windows.Markup;
 
-namespace Kaspirin.UI.Framework.UiKit.Converters.DictionaryConverters
-{
-    [ContentProperty("Source")]
-    public sealed class ResourceObject : IDictionaryConverterItem
-    {
-        public object? Source { get; set; }
+namespace Kaspirin.UI.Framework.UiKit.Converters.DictionaryConverters;
 
-        public object? GetItemValue()
-        {
-            return Source;
-        }
+[ContentProperty("Source")]
+public sealed class ResourceObject : IDictionaryConverterItem
+{
+    public object? Source { get; set; }
+
+    public object? GetItemValue()
+    {
+        return Source;
     }
 }

@@ -14,13 +14,12 @@
 
 using System;
 
-namespace Kaspirin.UI.Framework.UiKit.Converters.TimeConverters.Validation
-{
-    public sealed class SingleInvalidValueTimeSpanValidator : DefaultTimeSpanValidator
-    {
-        public TimeSpan? InvalidValue { get; set; }
+namespace Kaspirin.UI.Framework.UiKit.Converters.TimeConverters.Validation;
 
-        public override bool ValueIsValid(TimeSpan time)
-            => !time.Equals(InvalidValue) && base.ValueIsValid(time);
-    }
+public sealed class SingleInvalidValueTimeSpanValidator : DefaultTimeSpanValidator
+{
+    public TimeSpan? InvalidValue { get; set; }
+
+    public override bool ValueIsValid(TimeSpan time)
+        => !time.Equals(InvalidValue) && base.ValueIsValid(time);
 }

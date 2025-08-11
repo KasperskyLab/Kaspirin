@@ -12,17 +12,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Kaspirin.UI.Framework.UiKit.Localization.Localizer.Strings.Parsing.Exceptions
-{
-    public sealed class ValidationErrorException : SyntaxErrorException
-    {
-        public ValidationErrorException(Position position, string message)
-        {
-            Position = position;
-            ErrorMessage = $"{message}\r\n{Position.GetStartLineTextWithPointer()}";
-        }
+namespace Kaspirin.UI.Framework.UiKit.Localization.Localizer.Strings.Parsing.Exceptions;
 
-        public override Position Position { get; }
-        public override string ErrorMessage { get; }
+public sealed class ValidationErrorException : SyntaxErrorException
+{
+    public ValidationErrorException(Position position, string message)
+    {
+        Position = position;
+        ErrorMessage = $"{message}\r\n{Position.GetStartLineTextWithPointer()}";
     }
+
+    public override Position Position { get; }
+    public override string ErrorMessage { get; }
 }

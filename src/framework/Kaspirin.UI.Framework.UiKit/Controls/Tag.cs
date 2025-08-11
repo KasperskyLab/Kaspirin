@@ -14,34 +14,39 @@
 
 using System.Windows;
 
-namespace Kaspirin.UI.Framework.UiKit.Controls
+namespace Kaspirin.UI.Framework.UiKit.Controls;
+
+public sealed class Tag : TagBase
 {
-    public class Tag : TagBase
+    #region Color
+
+    public TagColor Color
     {
-        #region Color
-
-        public TagColor Color
-        {
-            get { return (TagColor)GetValue(ColorProperty); }
-            set { SetValue(ColorProperty, value); }
-        }
-
-        public static readonly DependencyProperty ColorProperty =
-            DependencyProperty.Register("Color", typeof(TagColor), typeof(Tag));
-
-        #endregion
-
-        #region Icon
-
-        public UIKitIcon_16 Icon
-        {
-            get { return (UIKitIcon_16)GetValue(IconProperty); }
-            set { SetValue(IconProperty, value); }
-        }
-
-        public static readonly DependencyProperty IconProperty =
-            DependencyProperty.Register("Icon", typeof(UIKitIcon_16), typeof(Tag));
-
-        #endregion
+        get => (TagColor)GetValue(ColorProperty);
+        set => SetValue(ColorProperty, value);
     }
+
+    public static readonly DependencyProperty ColorProperty = DependencyProperty.Register(
+        nameof(Color),
+        typeof(TagColor),
+        typeof(Tag),
+        new PropertyMetadata(default(TagColor)));
+
+    #endregion
+
+    #region Icon
+
+    public UIKitIcon_16 Icon
+    {
+        get => (UIKitIcon_16)GetValue(IconProperty);
+        set => SetValue(IconProperty, value);
+    }
+
+    public static readonly DependencyProperty IconProperty = DependencyProperty.Register(
+        nameof(Icon),
+        typeof(UIKitIcon_16),
+        typeof(Tag),
+        new PropertyMetadata(default(UIKitIcon_16)));
+
+    #endregion
 }

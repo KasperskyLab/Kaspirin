@@ -17,32 +17,30 @@
 using System;
 using System.Runtime.InteropServices;
 
-namespace Kaspirin.UI.Framework.NativeMethods.Api.Shell32.Interfaces
+namespace Kaspirin.UI.Framework.NativeMethods.Api.Shell32.Interfaces;
+
+/// <summary>
+///     <seealso href="https://learn.microsoft.com/en-us/windows/win32/api/shobjidl_core/nn-shobjidl_core-ishelllibrary">Learn more</seealso>.
+/// </summary>
+[ComImport]
+[InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+[Guid(ShlGuids.IidIShellLibrary)]
+public interface IShellLibrary
 {
-    /// <summary>
-    ///     
-    /// <seealso href="https://learn.microsoft.com/en-us/windows/win32/api/shobjidl_core/nn-shobjidl_core-ishelllibrary">Learn more</seealso>.
-    /// </summary>
-    [ComImport]
-    [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
-    [Guid(ShlGuids.IidIShellLibrary)]
-    public interface IShellLibrary
-    {
-        int LoadLibraryFromItem(
-            IShellItem psiLibrary,
-            int grfMode);
+    int LoadLibraryFromItem(
+        IShellItem psiLibrary,
+        int grfMode);
 
-        int LoadLibraryFromKnownFolder(/*Arguments omitted*/);
+    int LoadLibraryFromKnownFolder(/*Arguments omitted*/);
 
-        int AddFolder(/*Arguments omitted*/);
+    int AddFolder(/*Arguments omitted*/);
 
-        int RemoveFolder(/*Arguments omitted*/);
+    int RemoveFolder(/*Arguments omitted*/);
 
-        int GetFolders(
-            LibraryFolderFilter lff,
-            [MarshalAs(UnmanagedType.LPStruct)] Guid riid,
-            out IShellItemArray ppv);
+    int GetFolders(
+        LibraryFolderFilter lff,
+        [MarshalAs(UnmanagedType.LPStruct)] Guid riid,
+        out IShellItemArray ppv);
 
-        /* Other methods omitted */
-    }
+    /* Other methods omitted */
 }

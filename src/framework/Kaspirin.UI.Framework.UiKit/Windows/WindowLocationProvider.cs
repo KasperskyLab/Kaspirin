@@ -12,56 +12,56 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+
 using System;
 using System.Windows;
 using System.Windows.Markup;
 
-namespace Kaspirin.UI.Framework.UiKit.Windows
+namespace Kaspirin.UI.Framework.UiKit.Windows;
+
+public class WindowLocationProvider : MarkupExtension
 {
-    public class WindowLocationProvider : MarkupExtension
+    public Point GetInitialWindowLocation(Window window)
     {
-        public Point GetInitialWindowLocation(Window window)
+        Guard.ArgumentIsNotNull(window);
+
+        var service = WindowScreenMonitoringService.GetInstance(window);
+
+        var windowHeight = window.Height * service.GetWindowScaleY(DpiType.DefaultDpi);
+        var windowWidth = window.Width * service.GetWindowScaleX(DpiType.DefaultDpi);
+
+        var screenHeight = SystemParameters.FullPrimaryScreenHeight * service.GetScaleY(DpiType.SystemDpi, DpiType.DefaultDpi);
+        var screenWidth = SystemParameters.FullPrimaryScreenWidth * service.GetScaleX(DpiType.SystemDpi, DpiType.DefaultDpi);
+
+        var adaptiveHeight = windowHeight > screenHeight
+            ? screenHeight
+            : windowHeight;
+        var adaptiveWidth = windowWidth > screenWidth
+            ? screenWidth
+            : windowWidth;
+
+        var workAreaWidth = SystemParameters.WorkArea.Width * service.GetScaleY(DpiType.SystemDpi, DpiType.DefaultDpi);
+        var workAreaHeight = SystemParameters.WorkArea.Height * service.GetScaleY(DpiType.SystemDpi, DpiType.DefaultDpi);
+
+        var screenPoint = GetInitialWindowLocation(workAreaWidth, workAreaHeight, adaptiveHeight, adaptiveWidth);
+
+        return new Point
         {
-            Guard.ArgumentIsNotNull(window);
+            X = screenPoint.X / service.GetWindowScaleX(DpiType.DefaultDpi),
+            Y = screenPoint.Y / service.GetWindowScaleY(DpiType.DefaultDpi),
+        };
+    }
 
-            var service = WindowScreenMonitoringService.GetInstance(window);
+    protected virtual Point GetInitialWindowLocation(double workAreaWidth, double workAreaHeight, double adaptiveHeight, double adaptiveWidth)
+    {
+        return new Point(
+            // Center screen
+            x: (workAreaWidth - adaptiveWidth) / 2,
+            y: (workAreaHeight - adaptiveHeight) / 2);
+    }
 
-            var windowHeight = window.Height * service.GetWindowScaleY(DpiType.DefaultDpi);
-            var windowWidth = window.Width * service.GetWindowScaleX(DpiType.DefaultDpi);
-
-            var screenHeight = SystemParameters.FullPrimaryScreenHeight * service.GetScaleY(DpiType.SystemDpi, DpiType.DefaultDpi);
-            var screenWidth = SystemParameters.FullPrimaryScreenWidth * service.GetScaleX(DpiType.SystemDpi, DpiType.DefaultDpi);
-
-            var adaptiveHeight = windowHeight > screenHeight
-                ? screenHeight
-                : windowHeight;
-            var adaptiveWidth = windowWidth > screenWidth
-                ? screenWidth
-                : windowWidth;
-
-            var workAreaWidth = SystemParameters.WorkArea.Width * service.GetScaleY(DpiType.SystemDpi, DpiType.DefaultDpi);
-            var workAreaHeight = SystemParameters.WorkArea.Height * service.GetScaleY(DpiType.SystemDpi, DpiType.DefaultDpi);
-
-            var screenPoint = GetInitialWindowLocation(workAreaWidth, workAreaHeight, adaptiveHeight, adaptiveWidth);
-
-            return new Point
-            {
-                X = screenPoint.X / service.GetWindowScaleX(DpiType.DefaultDpi),
-                Y = screenPoint.Y / service.GetWindowScaleY(DpiType.DefaultDpi),
-            };
-        }
-
-        protected virtual Point GetInitialWindowLocation(double workAreaWidth, double workAreaHeight, double adaptiveHeight, double adaptiveWidth)
-        {
-            return new Point(
-                // Center screen
-                x: (workAreaWidth - adaptiveWidth) / 2,
-                y: (workAreaHeight - adaptiveHeight) / 2);
-        }
-
-        public override object ProvideValue(IServiceProvider serviceProvider)
-        {
-            return this;
-        }
+    public override object ProvideValue(IServiceProvider serviceProvider)
+    {
+        return this;
     }
 }

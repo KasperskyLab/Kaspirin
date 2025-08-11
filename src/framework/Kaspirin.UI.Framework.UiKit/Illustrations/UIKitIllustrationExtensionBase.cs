@@ -16,30 +16,29 @@ using System;
 using System.Windows.Markup;
 using Kaspirin.UI.Framework.UiKit.Converters.DictionaryConverters;
 
-namespace Kaspirin.UI.Framework.UiKit.Illustrations
+namespace Kaspirin.UI.Framework.UiKit.Illustrations;
+
+[MarkupExtensionReturnType(typeof(Enum))]
+public abstract class UIKitIllustrationExtensionBase : MarkupExtension, IDictionaryConverterItem
 {
-    [MarkupExtensionReturnType(typeof(Enum))]
-    public abstract class UIKitIllustrationExtensionBase : MarkupExtension, IDictionaryConverterItem
+    public override object? ProvideValue(IServiceProvider serviceProvider)
+        => _value;
+
+    public object? GetItemValue()
+        => _value;
+
+    protected void EnsureCanSet<TValue>(ref TValue target, TValue value) where TValue : Enum
     {
-        public override object? ProvideValue(IServiceProvider serviceProvider)
-            => _value;
-
-        public object? GetItemValue()
-            => _value;
-
-        protected void EnsureCanSet<TValue>(ref TValue target, TValue value) where TValue : Enum
+        if (_value == null)
         {
-            if (_value == null)
-            {
-                _value = value;
-                target = value;
-            }
-            else
-            {
-                throw new InvalidOperationException("Only one property can be set");
-            }
+            _value = value;
+            target = value;
         }
-
-        private Enum? _value;
+        else
+        {
+            throw new InvalidOperationException("Only one property can be set");
+        }
     }
+
+    private Enum? _value;
 }

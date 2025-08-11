@@ -12,11 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Kaspirin.UI.Framework.UiKit.Converters.DictionaryConverters
+namespace Kaspirin.UI.Framework.UiKit.Converters.DictionaryConverters;
+
+public enum DictionaryConverterValueMode
 {
-    public enum DictionaryConverterValueMode
-    {
-        Default,
-        Type
-    }
+    Default,
+    Type
 }

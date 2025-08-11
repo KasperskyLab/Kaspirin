@@ -12,40 +12,37 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#pragma warning disable KCAIDE0006 // Class should be abstract or sealed
-
 using System;
 
-namespace Kaspirin.UI.Framework.IoC.Injection
+namespace Kaspirin.UI.Framework.IoC.Injection;
+
+/// <summary>
+///     It is used to provide information about the constructor parameter of the class registered in the IoC container.
+/// </summary>
+public class ResolvedParameter
 {
     /// <summary>
-    ///     It is used to provide information about the constructor parameter of the class registered in the IoC container.
+    ///     Initializes a new instance of the <see cref="ResolvedParameter" /> class.
     /// </summary>
-    public class ResolvedParameter
+    /// <param name="parameterType">
+    ///     The type of the parameter.
+    /// </param>
+    /// <param name="name">
+    ///     The name of the parameter.
+    /// </param>
+    public ResolvedParameter(Type parameterType, string? name = null)
     {
-        /// <summary>
-        ///     Initializes a new instance of the <see cref="ResolvedParameter" /> class.
-        /// </summary>
-        /// <param name="parameterType">
-        ///     The type of the parameter.
-        /// </param>
-        /// <param name="name">
-        ///     The name of the parameter.
-        /// </param>
-        public ResolvedParameter(Type parameterType, string? name = null)
-        {
-            ParameterType = Guard.EnsureArgumentIsNotNull(parameterType);
-            Name = name;
-        }
-
-        /// <summary>
-        ///     The type of the parameter.
-        /// </summary>
-        public Type ParameterType { get; }
-
-        /// <summary>
-        ///     The name of the parameter.
-        /// </summary>
-        public string? Name { get; }
+        ParameterType = Guard.EnsureArgumentIsNotNull(parameterType);
+        Name = name;
     }
+
+    /// <summary>
+    ///     The type of the parameter.
+    /// </summary>
+    public Type ParameterType { get; }
+
+    /// <summary>
+    ///     The name of the parameter.
+    /// </summary>
+    public string? Name { get; }
 }

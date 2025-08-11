@@ -16,112 +16,111 @@ using System;
 using System.Threading.Tasks;
 using System.Windows.Threading;
 
-namespace Kaspirin.UI.Framework.Threading
+namespace Kaspirin.UI.Framework.Threading;
+
+/// <summary>
+///     Extension methods for <see cref="Task" />.
+/// </summary>
+public static class TaskExtensions
 {
     /// <summary>
-    ///     Extension methods for <see cref="Task" />.
+    ///     Schedules the execution of the delegate <paramref name="continuation" /> in the UI thread as
+    ///     a continuation of the task <paramref name="task" />.
     /// </summary>
-    public static class TaskExtensions
+    /// <typeparam name="TResult">
+    ///     The type of the value returned by the task.
+    /// </typeparam>
+    /// <param name="task">
+    ///     A task.
+    /// </param>
+    /// <param name="continuation">
+    ///     A delegate to execute.
+    /// </param>
+    /// <param name="priority">
+    ///     Priority of execution.
+    /// </param>
+    /// <param name="onlyOnRanToCompletion">
+    ///     Specifies that the <paramref name="continuation" /> delegate will be executed only after the
+    ///     successful completion of the task.
+    /// </param>
+    /// <returns>
+    ///     Continuation of the task <paramref name="task" />.
+    /// </returns>
+    public static Task ContinueOnUi<TResult>(
+        this Task<TResult> task,
+        Action continuation,
+        DispatcherPriority priority = DispatcherPriority.Normal,
+        bool onlyOnRanToCompletion = true)
+        => task.ContinueOnUi(_ => continuation(), priority, onlyOnRanToCompletion);
+
+    /// <summary>
+    ///     Schedules the execution of the delegate <paramref name="continuation" /> in the UI thread as
+    ///     a continuation of the task <paramref name="task" />.
+    /// </summary>
+    /// <param name="task">
+    ///     A task.
+    /// </param>
+    /// <param name="continuation">
+    ///     A delegate to execute.
+    /// </param>
+    /// <param name="priority">
+    ///     Priority of execution.
+    /// </param>
+    /// <param name="onlyOnRanToCompletion">
+    ///     Specifies that the <paramref name="continuation" /> delegate will be executed only after the
+    ///     successful completion of the task.
+    /// </param>
+    /// <returns>
+    ///     Continuation of the task <paramref name="task" />.
+    /// </returns>
+    public static Task ContinueOnUi(
+        this Task task,
+        Action continuation,
+        DispatcherPriority priority = DispatcherPriority.Normal,
+        bool onlyOnRanToCompletion = true)
     {
-        /// <summary>
-        ///     Schedules the execution of the delegate <paramref name="continuation" /> in the UI thread as
-        ///     a continuation of the task <paramref name="task" />.
-        /// </summary>
-        /// <typeparam name="TResult">
-        ///     The type of the value returned by the task.
-        /// </typeparam>
-        /// <param name="task">
-        ///     A task.
-        /// </param>
-        /// <param name="continuation">
-        ///     A delegate to execute.
-        /// </param>
-        /// <param name="priority">
-        ///     Priority of execution.
-        /// </param>
-        /// <param name="onlyOnRanToCompletion">
-        ///     Specifies that the <paramref name="continuation" /> delegate will be executed only after the
-        ///     successful completion of the task.
-        /// </param>
-        /// <returns>
-        ///     Continuation of the task <paramref name="task" />.
-        /// </returns>
-        public static Task ContinueOnUi<TResult>(
-            this Task<TResult> task,
-            Action continuation,
-            DispatcherPriority priority = DispatcherPriority.Normal,
-            bool onlyOnRanToCompletion = true)
-            => task.ContinueOnUi(_ => continuation(), priority, onlyOnRanToCompletion);
+        Guard.ArgumentIsNotNull(task);
+        Guard.ArgumentIsNotNull(continuation);
 
-        /// <summary>
-        ///     Schedules the execution of the delegate <paramref name="continuation" /> in the UI thread as
-        ///     a continuation of the task <paramref name="task" />.
-        /// </summary>
-        /// <param name="task">
-        ///     A task.
-        /// </param>
-        /// <param name="continuation">
-        ///     A delegate to execute.
-        /// </param>
-        /// <param name="priority">
-        ///     Priority of execution.
-        /// </param>
-        /// <param name="onlyOnRanToCompletion">
-        ///     Specifies that the <paramref name="continuation" /> delegate will be executed only after the
-        ///     successful completion of the task.
-        /// </param>
-        /// <returns>
-        ///     Continuation of the task <paramref name="task" />.
-        /// </returns>
-        public static Task ContinueOnUi(
-            this Task task,
-            Action continuation,
-            DispatcherPriority priority = DispatcherPriority.Normal,
-            bool onlyOnRanToCompletion = true)
-        {
-            Guard.ArgumentIsNotNull(task);
-            Guard.ArgumentIsNotNull(continuation);
+        return task.ContinueWith(
+            parentTask => continuation.InUiAsync(priority),
+            (onlyOnRanToCompletion ? TaskContinuationOptions.OnlyOnRanToCompletion : 0) | TaskContinuationOptions.ExecuteSynchronously);
+    }
 
-            return task.ContinueWith(
-                parentTask => continuation.InUiAsync(priority),
-                (onlyOnRanToCompletion ? TaskContinuationOptions.OnlyOnRanToCompletion : 0) | TaskContinuationOptions.ExecuteSynchronously);
-        }
+    /// <summary>
+    ///     Schedules the execution of the delegate <paramref name="continuation" /> in the UI thread as
+    ///     a continuation of the task <paramref name="task" />. The result of the task is passed to <paramref name="continuation" />.
+    /// </summary>
+    /// <typeparam name="TResult">
+    ///     The type of the value returned by the task.
+    /// </typeparam>
+    /// <param name="task">
+    ///     A task.
+    /// </param>
+    /// <param name="continuation">
+    ///     A delegate to execute.
+    /// </param>
+    /// <param name="priority">
+    ///     Priority of execution.
+    /// </param>
+    /// <param name="onlyOnRanToCompletion">
+    ///     Specifies that the <paramref name="continuation" /> delegate will be executed only after the
+    ///     successful completion of the task.
+    /// </param>
+    /// <returns>
+    ///     Continuation of the task <paramref name="task" />.
+    /// </returns>
+    public static Task ContinueOnUi<TResult>(
+        this Task<TResult> task,
+        Action<TResult> continuation,
+        DispatcherPriority priority = DispatcherPriority.Normal,
+        bool onlyOnRanToCompletion = true)
+    {
+        Guard.ArgumentIsNotNull(task);
+        Guard.ArgumentIsNotNull(continuation);
 
-        /// <summary>
-        ///     Schedules the execution of the delegate <paramref name="continuation" /> in the UI thread as
-        ///     a continuation of the task <paramref name="task" />. The result of the task is passed to <paramref name="continuation" />.
-        /// </summary>
-        /// <typeparam name="TResult">
-        ///     The type of the value returned by the task.
-        /// </typeparam>
-        /// <param name="task">
-        ///     A task.
-        /// </param>
-        /// <param name="continuation">
-        ///     A delegate to execute.
-        /// </param>
-        /// <param name="priority">
-        ///     Priority of execution.
-        /// </param>
-        /// <param name="onlyOnRanToCompletion">
-        ///     Specifies that the <paramref name="continuation" /> delegate will be executed only after the
-        ///     successful completion of the task.
-        /// </param>
-        /// <returns>
-        ///     Continuation of the task <paramref name="task" />.
-        /// </returns>
-        public static Task ContinueOnUi<TResult>(
-            this Task<TResult> task,
-            Action<TResult> continuation,
-            DispatcherPriority priority = DispatcherPriority.Normal,
-            bool onlyOnRanToCompletion = true)
-        {
-            Guard.ArgumentIsNotNull(task);
-            Guard.ArgumentIsNotNull(continuation);
-
-            return task.ContinueWith(
-                parentTask => Executers.InUiAsync(() => continuation(parentTask.Result), priority),
-                (onlyOnRanToCompletion ? TaskContinuationOptions.OnlyOnRanToCompletion : 0) | TaskContinuationOptions.ExecuteSynchronously);
-        }
+        return task.ContinueWith(
+            parentTask => Executers.InUiAsync(() => continuation(parentTask.Result), priority),
+            (onlyOnRanToCompletion ? TaskContinuationOptions.OnlyOnRanToCompletion : 0) | TaskContinuationOptions.ExecuteSynchronously);
     }
 }

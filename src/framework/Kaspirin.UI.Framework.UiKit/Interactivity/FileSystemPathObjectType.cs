@@ -12,15 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Kaspirin.UI.Framework.UiKit.Interactivity
+namespace Kaspirin.UI.Framework.UiKit.Interactivity;
+
+public enum FileSystemPathObjectType
 {
-    public enum FileSystemPathObjectType
-    {
-        Unknown,
-        File,
-        Folder,
-        ThisPc,
-        Libraries,
-        Network
-    }
+    Unknown,
+    File,
+    Folder,
+    ThisPc,
+    Libraries,
+    Network,
+    Masked,
 }

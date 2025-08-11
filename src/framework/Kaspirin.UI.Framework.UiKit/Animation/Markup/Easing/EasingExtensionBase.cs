@@ -16,16 +16,28 @@ using System;
 using System.Windows.Markup;
 using System.Windows.Media.Animation;
 
-namespace Kaspirin.UI.Framework.UiKit.Animation.Markup.Easing
+namespace Kaspirin.UI.Framework.UiKit.Animation.Markup.Easing;
+
+/// <summary>
+///     The base class of markup extensions for initializing classes implementing the <see cref="IEasingFunction" /> interface.
+/// </summary>
+[MarkupExtensionReturnType(typeof(IEasingFunction))]
+public abstract class EasingExtensionBase : MarkupExtension
 {
-    [MarkupExtensionReturnType(typeof(IEasingFunction))]
-    public abstract class EasingExtensionBase : MarkupExtension
-    {
-        public EasingMode Mode { get; set; }
+    /// <summary>
+    ///     Animation execution mode.
+    /// </summary>
+    public EasingMode Mode { get; set; }
 
-        public sealed override object? ProvideValue(IServiceProvider? serviceProvider)
-            => CreateEasing();
+    /// <inheritdoc/>
+    public sealed override object? ProvideValue(IServiceProvider? serviceProvider)
+        => CreateEasing();
 
-        protected abstract IEasingFunction CreateEasing();
-    }
+    /// <summary>
+    ///     Creates an animation function that implements <see cref="IEasingFunction" />.
+    /// </summary>
+    /// <returns>
+    ///     An instance of <see cref="IEasingFunction" />.
+    /// </returns>
+    protected abstract IEasingFunction CreateEasing();
 }

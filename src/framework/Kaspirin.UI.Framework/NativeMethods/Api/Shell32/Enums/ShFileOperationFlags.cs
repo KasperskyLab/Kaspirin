@@ -12,36 +12,99 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-#pragma warning disable KCAIDE0002 // Enum has incorrect suffix
 
 using System;
 
-namespace Kaspirin.UI.Framework.NativeMethods.Api.Shell32.Enums
+namespace Kaspirin.UI.Framework.NativeMethods.Api.Shell32.Enums;
+
+/// <summary>
+///     <seealso href="https://learn.microsoft.com/en-us/windows/win32/api/shellapi/ns-shellapi-shfileopstructa">Learn more</seealso>.
+/// </summary>
+[Flags]
+public enum ShFileOperationFlags : ushort
 {
     /// <summary>
-    ///     
-    /// <seealso href="https://learn.microsoft.com/en-us/windows/win32/api/shellapi/ns-shellapi-shfileopstructa">Learn more</seealso>.
+    ///     The flag is not set.
     /// </summary>
-    [Flags]
-    public enum ShFileOperationFlags : ushort
-    {
-        None = 0,
-        FOF_MULTIDESTFILES = 1,
-        FOF_CONFIRMMOUSE = 2,
-        FOF_SILENT = 4,
-        FOF_RENAMEONCOLLISION = 8,
-        FOF_NOCONFIRMATION = 16,
-        FOF_WANTMAPPINGHANDLE = 32,
-        FOF_ALLOWUNDO = 64,
-        FOF_FILESONLY = 128,
-        FOF_SIMPLEPROGRESS = 256,
-        FOF_NOCONFIRMMKDIR = 512,
-        FOF_NOERRORUI = 1024,
-        FOF_NOCOPYSECURITYATTRIBS = 2048,
-        FOF_NORECURSION = 4096,
-        FOF_NO_CONNECTED_ELEMENTS = 8192,
-        FOF_WANTNUKEWARNING = 16384,
-        FOF_NORECURSEREPARSE = 32768,
-    }
+    None = 0,
+
+    /// <summary>
+    ///     The FOF_MULTIDESTFILES constant.
+    /// </summary>
+    MultiDestFiles = 1,
+
+    /// <summary>
+    ///     The FOF_CONFIRMMOUSE constant.
+    /// </summary>
+    ConfirmMouse = 2,
+
+    /// <summary>
+    ///     The FOF_SILENT constant.
+    /// </summary>
+    Silent = 4,
+
+    /// <summary>
+    ///     The FOF_RENAMEONCOLLISION constant.
+    /// </summary>
+    RenameOnCollision = 8,
+
+    /// <summary>
+    ///     The FOF_NOCONFIRMATION constant.
+    /// </summary>
+    NoConfirmation = 16,
+
+    /// <summary>
+    ///     The FOF_WANTMAPPINGHANDLE constant.
+    /// </summary>
+    WantMappingHandle = 32,
+
+    /// <summary>
+    ///     The FOF_ALLOWUNDO constant.
+    /// </summary>
+    AllowUndo = 64,
+
+    /// <summary>
+    ///     The FOF_FILESONLY constant.
+    /// </summary>
+    FilesOnly = 128,
+
+    /// <summary>
+    ///     The FOF_SIMPLEPROGRESS constant.
+    /// </summary>
+    SimpleProgress = 256,
+
+    /// <summary>
+    ///     The FOF_NOCONFIRMMKDIR constant.
+    /// </summary>
+    NoConfirmMkdir = 512,
+
+    /// <summary>
+    ///     The FOF_NOERRORUI constant.
+    /// </summary>
+    NoErrorUi = 1024,
+
+    /// <summary>
+    ///     The FOF_NOCOPYSECURITYATTRIBS constant.
+    /// </summary>
+    NoCopySecurityAttributes = 2048,
+
+    /// <summary>
+    ///     The FOF_NORECURSION constant.
+    /// </summary>
+    NoRecursion = 4096,
+
+    /// <summary>
+    ///     The FOF_NO_CONNECTED_ELEMENTS constant.
+    /// </summary>
+    NoConnectedElements = 8192,
+
+    /// <summary>
+    ///     The FOF_WANTNUKEWARNING constant.
+    /// </summary>
+    WantNukeWarning = 16384,
+
+    /// <summary>
+    ///     The FOF_NORECURSEREPARSE constant.
+    /// </summary>
+    NoRecurseReparse = 32768,
 }

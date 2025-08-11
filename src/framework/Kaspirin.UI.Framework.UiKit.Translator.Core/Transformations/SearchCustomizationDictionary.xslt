@@ -117,16 +117,16 @@
 						<xsl:with-param name="brushNode" select="PlaceholderForegroundDisabled"/>
 					</xsl:call-template>
 
-					<!--SearchIconForeground-->
+					<!--SearchIconBrush-->
 					<xsl:call-template name="generateBrush">
-						<xsl:with-param name="key">SearchIconForeground</xsl:with-param>
-						<xsl:with-param name="brushNode" select="SearchIconForeground"/>
+						<xsl:with-param name="key">SearchIconBrush</xsl:with-param>
+						<xsl:with-param name="brushNode" select="SearchIconBrush"/>
 					</xsl:call-template>
 
-					<!--SearchIconForegroundDisabled-->
+					<!--SearchIconBrushDisabled-->
 					<xsl:call-template name="generateBrush">
-						<xsl:with-param name="key">SearchIconForegroundDisabled</xsl:with-param>
-						<xsl:with-param name="brushNode" select="SearchIconForegroundDisabled"/>
+						<xsl:with-param name="key">SearchIconBrushDisabled</xsl:with-param>
+						<xsl:with-param name="brushNode" select="SearchIconBrushDisabled"/>
 					</xsl:call-template>
 
 					<!--TextForeground-->

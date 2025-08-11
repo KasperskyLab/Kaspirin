@@ -15,22 +15,21 @@
 using System.Windows;
 using System.Windows.Data;
 
-namespace Kaspirin.UI.Framework.UiKit.Converters.BooleanConverters
+namespace Kaspirin.UI.Framework.UiKit.Converters.BooleanConverters;
+
+/// <summary>
+///     Provides an implementation of <see cref="BaseMultiBooleanConverter{T}" /> in which the conversion
+///     result is of type <see cref="Visibility" />.
+/// </summary>
+/// <remarks>
+///     By default, it converts <see langword="true" /> to <see cref="Visibility.Collapsed" />, and <see langword="false" />
+///     to <see cref="Visibility.Visible" />.
+/// </remarks>
+[ValueConversion(typeof(bool), typeof(Visibility))]
+public sealed class MultiBooleanToVisibilityInverseConverter : BaseMultiBooleanConverter<Visibility>
 {
     /// <summary>
-    ///     Provides an implementation of <see cref="BaseMultiBooleanConverter{T}" /> in which the conversion
-    ///     result is of type <see cref="Visibility" />.
+    ///     Creates an object <see cref="MultiBooleanToVisibilityInverseConverter" />.
     /// </summary>
-    /// <remarks>
-    ///     By default, it converts <see langword="true" /> to <see cref="Visibility.Collapsed" />, and <see langword="false" />
-    ///     to <see cref="Visibility.Visible" />.
-    /// </remarks>
-    [ValueConversion(typeof(bool), typeof(Visibility))]
-    public sealed class MultiBooleanToVisibilityInverseConverter : BaseMultiBooleanConverter<Visibility>
-    {
-        /// <summary>
-        ///     Creates an object <see cref="MultiBooleanToVisibilityInverseConverter" />.
-        /// </summary>
-        public MultiBooleanToVisibilityInverseConverter() : base(Visibility.Collapsed, Visibility.Visible) { }
-    }
+    public MultiBooleanToVisibilityInverseConverter() : base(Visibility.Collapsed, Visibility.Visible) { }
 }

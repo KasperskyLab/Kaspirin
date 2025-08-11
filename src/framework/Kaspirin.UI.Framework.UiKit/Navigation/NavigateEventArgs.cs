@@ -14,23 +14,22 @@
 
 using System;
 
-namespace Kaspirin.UI.Framework.UiKit.Navigation
+namespace Kaspirin.UI.Framework.UiKit.Navigation;
+
+public sealed class NavigateEventArgs : EventArgs
 {
-    public sealed class NavigateEventArgs : EventArgs
+    internal NavigateEventArgs(Region region, string? targetViewName)
     {
-        internal NavigateEventArgs(Region region, string? targetViewName)
-        {
-            Guard.ArgumentIsNotNull(region);
+        Guard.ArgumentIsNotNull(region);
 
-            TargetViewName = targetViewName ?? "<none>";
-            ActiveViewName = region.ActiveView?.Name ?? "<none>";
-            RegionName = region.Name;
-        }
-
-        public string TargetViewName { get; }
-
-        public string ActiveViewName { get; }
-
-        public string RegionName { get; }
+        TargetViewName = targetViewName ?? "<none>";
+        ActiveViewName = region.ActiveView?.Name ?? "<none>";
+        RegionName = region.Name;
     }
+
+    public string TargetViewName { get; }
+
+    public string ActiveViewName { get; }
+
+    public string RegionName { get; }
 }

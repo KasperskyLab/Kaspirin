@@ -16,49 +16,55 @@ using System.Windows;
 using System.Windows.Controls.Primitives;
 using System.Windows.Media;
 
-namespace Kaspirin.UI.Framework.UiKit.Controls
+namespace Kaspirin.UI.Framework.UiKit.Controls;
+
+public sealed class ImageGalleryListButton : ButtonBase
 {
-    public sealed class ImageGalleryListButton : ButtonBase
+    #region ImageSource
+
+    public ImageSource ImageSource
     {
-        #region ImageSource
-
-        public ImageSource ImageSource
-        {
-            get { return (ImageSource)GetValue(ImageSourceProperty); }
-            set { SetValue(ImageSourceProperty, value); }
-        }
-
-        public static readonly DependencyProperty ImageSourceProperty =
-            DependencyProperty.Register("ImageSource", typeof(ImageSource), typeof(ImageGalleryListButton));
-
-        #endregion
-
-        #region ImageFlowDirection
-
-        public FlowDirection ImageFlowDirection
-        {
-            get { return (FlowDirection)GetValue(ImageFlowDirectionProperty); }
-            set { SetValue(ImageFlowDirectionProperty, value); }
-        }
-
-        public static readonly DependencyProperty ImageFlowDirectionProperty =
-            DependencyProperty.Register("ImageFlowDirection", typeof(FlowDirection), typeof(ImageGalleryListButton),
-                new PropertyMetadata(FlowDirection.LeftToRight));
-
-        #endregion
-
-        #region ImageStretch
-
-        public Stretch ImageStretch
-        {
-            get { return (Stretch)GetValue(ImageStretchProperty); }
-            set { SetValue(ImageStretchProperty, value); }
-        }
-
-        public static readonly DependencyProperty ImageStretchProperty =
-            DependencyProperty.Register("ImageStretch", typeof(Stretch), typeof(ImageGalleryListButton),
-                new PropertyMetadata(Stretch.Uniform));
-
-        #endregion
+        get => (ImageSource)GetValue(ImageSourceProperty);
+        set => SetValue(ImageSourceProperty, value);
     }
+
+    public static readonly DependencyProperty ImageSourceProperty = DependencyProperty.Register(
+        nameof(ImageSource),
+        typeof(ImageSource),
+        typeof(ImageGalleryListButton),
+        new PropertyMetadata(default(ImageSource)));
+
+    #endregion
+
+    #region ImageFlowDirection
+
+    public FlowDirection ImageFlowDirection
+    {
+        get => (FlowDirection)GetValue(ImageFlowDirectionProperty);
+        set => SetValue(ImageFlowDirectionProperty, value);
+    }
+
+    public static readonly DependencyProperty ImageFlowDirectionProperty = DependencyProperty.Register(
+        nameof(ImageFlowDirection),
+        typeof(FlowDirection),
+        typeof(ImageGalleryListButton),
+        new PropertyMetadata(FlowDirection.LeftToRight));
+
+    #endregion
+
+    #region ImageStretch
+
+    public Stretch ImageStretch
+    {
+        get => (Stretch)GetValue(ImageStretchProperty);
+        set => SetValue(ImageStretchProperty, value);
+    }
+
+    public static readonly DependencyProperty ImageStretchProperty = DependencyProperty.Register(
+        nameof(ImageStretch),
+        typeof(Stretch),
+        typeof(ImageGalleryListButton),
+        new PropertyMetadata(Stretch.Uniform));
+
+    #endregion
 }

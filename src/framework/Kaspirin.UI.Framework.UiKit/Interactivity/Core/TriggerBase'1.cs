@@ -10,29 +10,28 @@
 using System;
 using System.Windows;
 
-namespace Kaspirin.UI.Framework.UiKit.Interactivity.Core
+namespace Kaspirin.UI.Framework.UiKit.Interactivity.Core;
+
+public abstract class TriggerBase<T> : TriggerBase where T : DependencyObject
 {
-    public abstract class TriggerBase<T> : TriggerBase where T : DependencyObject
+    protected TriggerBase()
+        : base(typeof(T))
     {
-        protected TriggerBase()
-            : base(typeof(T))
-        {
-        }
+    }
 
-        public new T? AssociatedObject
+    public new T? AssociatedObject
+    {
+        get
         {
-            get
-            {
-                return (T?)base.AssociatedObject;
-            }
+            return (T?)base.AssociatedObject;
         }
+    }
 
-        protected sealed override Type AssociatedObjectTypeConstraint
+    protected sealed override Type AssociatedObjectTypeConstraint
+    {
+        get
         {
-            get
-            {
-                return base.AssociatedObjectTypeConstraint;
-            }
+            return base.AssociatedObjectTypeConstraint;
         }
     }
 }

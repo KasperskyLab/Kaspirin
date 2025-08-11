@@ -12,61 +12,60 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Kaspirin.UI.Framework.UiKit.Localization.Markup.Converting
+namespace Kaspirin.UI.Framework.UiKit.Localization.Markup.Converting;
+
+public class ResFromCollectionExtension : ResFromSourceExtension
 {
-    public class ResFromCollectionExtension : ResFromSourceExtension
+    public ResourceCollection Collection
     {
-        public ResourceCollection Collection
-        {
-            get => _resourceCollection ??= new ResourceCollection();
-            set => _resourceCollection = value;
-        }
-
-        public override object? GetResource(object? key)
-        {
-            var resourceItem = GetResourceItem(key);
-
-            if (resourceItem is LocExtension locMarkupItem)
-            {
-                TrySetParamsToLocExtension(locMarkupItem);
-                return locMarkupItem;
-            }
-
-            if (resourceItem is ResFromBoolExtension resFromBoolMarkupItem)
-            {
-                TrySetParamsToLocExtension(resFromBoolMarkupItem.True as LocExtension);
-                TrySetParamsToLocExtension(resFromBoolMarkupItem.False as LocExtension);
-                return resFromBoolMarkupItem;
-            }
-
-            if (resourceItem is ResFromCollectionExtension resFromCollection)
-            {
-                if (resFromCollection.Collection.ParamsCollection == null)
-                {
-                    resFromCollection.Collection.ParamsCollection = Collection.ParamsCollection;
-                }
-            }
-
-            return resourceItem;
-        }
-
-        private void TrySetParamsToLocExtension(LocExtension? locExtension)
-        {
-            if (locExtension == null || Collection.ParamsCollection == null)
-            {
-                return;
-            }
-
-            if (locExtension.Params != null)
-            {
-                return;
-            }
-
-            locExtension.Params = Collection.ParamsCollection;
-        }
-
-        private object? GetResourceItem(object? key) => Collection.GetResourceItem(key);
-
-        private ResourceCollection? _resourceCollection;
+        get => _resourceCollection ??= new();
+        set => _resourceCollection = value;
     }
+
+    public override object? GetResource(object? key)
+    {
+        var resourceItem = GetResourceItem(key);
+
+        if (resourceItem is LocExtension locMarkupItem)
+        {
+            TrySetParamsToLocExtension(locMarkupItem);
+            return locMarkupItem;
+        }
+
+        if (resourceItem is ResFromBoolExtension resFromBoolMarkupItem)
+        {
+            TrySetParamsToLocExtension(resFromBoolMarkupItem.True as LocExtension);
+            TrySetParamsToLocExtension(resFromBoolMarkupItem.False as LocExtension);
+            return resFromBoolMarkupItem;
+        }
+
+        if (resourceItem is ResFromCollectionExtension resFromCollection)
+        {
+            if (resFromCollection.Collection.ParamsCollection == null)
+            {
+                resFromCollection.Collection.ParamsCollection = Collection.ParamsCollection;
+            }
+        }
+
+        return resourceItem;
+    }
+
+    private void TrySetParamsToLocExtension(LocExtension? locExtension)
+    {
+        if (locExtension == null || Collection.ParamsCollection == null)
+        {
+            return;
+        }
+
+        if (locExtension.Params != null)
+        {
+            return;
+        }
+
+        locExtension.Params = Collection.ParamsCollection;
+    }
+
+    private object? GetResourceItem(object? key) => Collection.GetResourceItem(key);
+
+    private ResourceCollection? _resourceCollection;
 }

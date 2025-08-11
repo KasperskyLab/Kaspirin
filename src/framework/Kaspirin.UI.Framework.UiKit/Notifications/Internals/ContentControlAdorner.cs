@@ -14,27 +14,26 @@
 
 using System.Windows.Controls;
 
-namespace Kaspirin.UI.Framework.UiKit.Notifications.Internals
+namespace Kaspirin.UI.Framework.UiKit.Notifications.Internals;
+
+internal sealed class ContentControlAdorner : NotificationAdorner<ContentControl>
 {
-    internal sealed class ContentControlAdorner : NotificationAdorner<ContentControl>
+    public ContentControlAdorner(ContentControl panel, NotificationLayer notificationLayer)
+        : base(panel, notificationLayer)
     {
-        public ContentControlAdorner(ContentControl panel, NotificationLayer notificationLayer)
-            : base(panel, notificationLayer)
-        {
-        }
+    }
 
-        protected override void AddNotification(ContentControl element, NotificationView view, out bool canShowAdorner)
-        {
-            element.Content = view;
+    protected override void AddNotification(ContentControl element, NotificationView view, out bool canShowAdorner)
+    {
+        element.Content = view;
 
-            canShowAdorner = true;
-        }
+        canShowAdorner = true;
+    }
 
-        protected override void RemoveNotification(ContentControl element, NotificationView view, out bool canCloseAdorner)
-        {
-            element.Content = null;
+    protected override void RemoveNotification(ContentControl element, NotificationView view, out bool canCloseAdorner)
+    {
+        element.Content = null;
 
-            canCloseAdorner = true;
-        }
+        canCloseAdorner = true;
     }
 }

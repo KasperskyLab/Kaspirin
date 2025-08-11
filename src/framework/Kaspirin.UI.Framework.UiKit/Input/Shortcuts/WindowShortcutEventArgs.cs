@@ -15,16 +15,15 @@
 using System.Windows;
 using System.Windows.Input;
 
-namespace Kaspirin.UI.Framework.UiKit.Input.Shortcuts
-{
-    public sealed class WindowShortcutEventArgs : RoutedEventArgs
-    {
-        public WindowShortcutEventArgs(RoutedEvent routedEvent, KeyGesture keyGesture)
-            : base(routedEvent)
-        {
-            KeyGesture = keyGesture;
-        }
+namespace Kaspirin.UI.Framework.UiKit.Input.Shortcuts;
 
-        public KeyGesture KeyGesture { get; }
+public sealed class WindowShortcutEventArgs : RoutedEventArgs
+{
+    public WindowShortcutEventArgs(RoutedEvent routedEvent, KeyGesture keyGesture)
+        : base(routedEvent)
+    {
+        KeyGesture = keyGesture;
     }
+
+    public KeyGesture KeyGesture { get; }
 }

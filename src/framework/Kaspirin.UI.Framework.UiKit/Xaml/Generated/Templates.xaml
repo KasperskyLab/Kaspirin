@@ -19,6 +19,7 @@
                     xmlns:booleanConverters="clr-namespace:Kaspirin.UI.Framework.UiKit.Converters.BooleanConverters"
                     xmlns:controls="clr-namespace:Kaspirin.UI.Framework.UiKit.Controls"
                     xmlns:equalityConverters="clr-namespace:Kaspirin.UI.Framework.UiKit.Converters.EqualityConverters"
+                    xmlns:flowDirectionConverters="clr-namespace:Kaspirin.UI.Framework.UiKit.Converters.FlowDirectionConverters"
                     xmlns:focus="clr-namespace:Kaspirin.UI.Framework.UiKit.Input.Focus"
                     xmlns:fonts="clr-namespace:Kaspirin.UI.Framework.UiKit.Fonts"
                     xmlns:icons="clr-namespace:Kaspirin.UI.Framework.UiKit.Icons"
@@ -37,7 +38,8 @@
                     xmlns:xl="clr-namespace:Kaspirin.UI.Framework.UiKit.Localization.Markup.Extensions.Strings"
                     xmlns:xr="clr-namespace:Kaspirin.UI.Framework.UiKit.Localization.Markup.Extensions.Xaml">
 
-    <controls:ContextMenu x:Key="InputContextMenu">
+    <controls:ContextMenu x:Key="InputContextMenu"
+                          x:Shared="False">
         <controls:MenuItem Command="ApplicationCommands.Cut"
                            Header="{xl:Loc InputContextMenu_Cut,
                                            Scope=UiKit}"
@@ -51,11 +53,129 @@
                                            Scope=UiKit}"
                            Icon="{x:Static icons:UIKitIcon_16.Paste}" />
     </controls:ContextMenu>
-    <controls:ContextMenu x:Key="InputReadOnlyContextMenu">
+
+    <controls:ContextMenu x:Key="InputReadOnlyContextMenu"
+                          x:Shared="False">
         <controls:MenuItem Command="ApplicationCommands.Copy"
                            Header="{xl:Loc InputContextMenu_Copy,
                                            Scope=UiKit}"
                            Icon="{x:Static icons:UIKitIcon_16.Copy}" />
+    </controls:ContextMenu>
+
+    <controls:ContextMenu x:Key="VerticalContextMenu"
+                          x:Shared="False">
+        <controls:MenuItem Command="ScrollBar.ScrollHereCommand"
+                           CommandTarget="{Binding PlacementTarget,
+                                                   RelativeSource={RelativeSource AncestorType={x:Type controls:ContextMenu}}}"
+                           Header="{Loc ScrollBarContextMenu_ScrollHere,
+                                        Scope=UiKit}"
+                           Icon="{x:Static icons:UIKitIcon_16.Pointer}" />
+        <controls:MenuItemDivider />
+        <controls:MenuItem Command="ScrollBar.ScrollToTopCommand"
+                           CommandTarget="{Binding PlacementTarget,
+                                                   RelativeSource={RelativeSource AncestorType={x:Type controls:ContextMenu}}}"
+                           Header="{Loc ScrollBarContextMenu_ScrollToTop,
+                                        Scope=UiKit}"
+                           Icon="{x:Static icons:UIKitIcon_16.ArrowToLineUp}" />
+        <controls:MenuItem Command="ScrollBar.ScrollToBottomCommand"
+                           CommandTarget="{Binding PlacementTarget,
+                                                   RelativeSource={RelativeSource AncestorType={x:Type controls:ContextMenu}}}"
+                           Header="{Loc ScrollBarContextMenu_ScrollToBottom,
+                                        Scope=UiKit}"
+                           Icon="{x:Static icons:UIKitIcon_16.ArrowToLineDown}" />
+        <controls:MenuItemDivider />
+        <controls:MenuItem Command="ScrollBar.PageUpCommand"
+                           CommandTarget="{Binding PlacementTarget,
+                                                   RelativeSource={RelativeSource AncestorType={x:Type controls:ContextMenu}}}"
+                           Header="{Loc ScrollBarContextMenu_PageUp,
+                                        Scope=UiKit}"
+                           Icon="{x:Static icons:UIKitIcon_16.PageUp}" />
+        <controls:MenuItem Command="ScrollBar.PageDownCommand"
+                           CommandTarget="{Binding PlacementTarget,
+                                                   RelativeSource={RelativeSource AncestorType={x:Type controls:ContextMenu}}}"
+                           Header="{Loc ScrollBarContextMenu_PageDown,
+                                        Scope=UiKit}"
+                           Icon="{x:Static icons:UIKitIcon_16.PageDown}" />
+        <controls:MenuItemDivider />
+        <controls:MenuItem Command="ScrollBar.LineUpCommand"
+                           CommandTarget="{Binding PlacementTarget,
+                                                   RelativeSource={RelativeSource AncestorType={x:Type controls:ContextMenu}}}"
+                           Header="{Loc ScrollBarContextMenu_LineUp,
+                                        Scope=UiKit}"
+                           Icon="{x:Static icons:UIKitIcon_16.ArrowUp3}" />
+        <controls:MenuItem Command="ScrollBar.LineDownCommand"
+                           CommandTarget="{Binding PlacementTarget,
+                                                   RelativeSource={RelativeSource AncestorType={x:Type controls:ContextMenu}}}"
+                           Header="{Loc ScrollBarContextMenu_LineDown,
+                                        Scope=UiKit}"
+                           Icon="{x:Static icons:UIKitIcon_16.ArrowDown3}" />
+    </controls:ContextMenu>
+
+    <controls:ContextMenu x:Key="HorizontalContextMenu"
+                          x:Shared="False">
+        <controls:MenuItem Command="ScrollBar.ScrollHereCommand"
+                           CommandTarget="{Binding PlacementTarget,
+                                                   RelativeSource={RelativeSource AncestorType={x:Type controls:ContextMenu}}}"
+                           Header="{Loc ScrollBarContextMenu_ScrollHere,
+                                        Scope=UiKit}"
+                           Icon="{x:Static icons:UIKitIcon_16.Pointer}" />
+        <controls:MenuItemDivider />
+        <controls:MenuItem Command="{Binding FlowDirection,
+                                             RelativeSource={RelativeSource Self},
+                                             Converter={flowDirectionConverters:FlowDirectionToObjectConverter LeftToRight={x:Static ScrollBar.ScrollToLeftEndCommand},
+                                                                                                               RightToLeft={x:Static ScrollBar.ScrollToRightEndCommand}}}"
+                           CommandTarget="{Binding PlacementTarget,
+                                                   RelativeSource={RelativeSource AncestorType={x:Type controls:ContextMenu}}}"
+                           Header="{Loc ScrollBarContextMenu_ScrollToLeft,
+                                        Scope=UiKit}"
+                           Icon="{x:Static icons:UIKitIcon_16.ArrowToLineLeft}" />
+        <controls:MenuItem Command="{Binding FlowDirection,
+                                             RelativeSource={RelativeSource Self},
+                                             Converter={flowDirectionConverters:FlowDirectionToObjectConverter LeftToRight={x:Static ScrollBar.ScrollToRightEndCommand},
+                                                                                                               RightToLeft={x:Static ScrollBar.ScrollToLeftEndCommand}}}"
+                           CommandTarget="{Binding PlacementTarget,
+                                                   RelativeSource={RelativeSource AncestorType={x:Type controls:ContextMenu}}}"
+                           Header="{Loc ScrollBarContextMenu_ScrollToRight,
+                                        Scope=UiKit}"
+                           Icon="{x:Static icons:UIKitIcon_16.ArrowToLineRight}" />
+        <controls:MenuItemDivider />
+        <controls:MenuItem Command="{Binding FlowDirection,
+                                             RelativeSource={RelativeSource Self},
+                                             Converter={flowDirectionConverters:FlowDirectionToObjectConverter LeftToRight={x:Static ScrollBar.PageLeftCommand},
+                                                                                                               RightToLeft={x:Static ScrollBar.PageRightCommand}}}"
+                           CommandTarget="{Binding PlacementTarget,
+                                                   RelativeSource={RelativeSource AncestorType={x:Type controls:ContextMenu}}}"
+                           Header="{Loc ScrollBarContextMenu_PageLeft,
+                                        Scope=UiKit}"
+                           Icon="{x:Static icons:UIKitIcon_16.PageLeft}" />
+        <controls:MenuItem Command="{Binding FlowDirection,
+                                             RelativeSource={RelativeSource Self},
+                                             Converter={flowDirectionConverters:FlowDirectionToObjectConverter LeftToRight={x:Static ScrollBar.PageRightCommand},
+                                                                                                               RightToLeft={x:Static ScrollBar.PageLeftCommand}}}"
+                           CommandTarget="{Binding PlacementTarget,
+                                                   RelativeSource={RelativeSource AncestorType={x:Type controls:ContextMenu}}}"
+                           Header="{Loc ScrollBarContextMenu_PageRight,
+                                        Scope=UiKit}"
+                           Icon="{x:Static icons:UIKitIcon_16.PageRight}" />
+        <controls:MenuItemDivider />
+        <controls:MenuItem Command="{Binding FlowDirection,
+                                             RelativeSource={RelativeSource Self},
+                                             Converter={flowDirectionConverters:FlowDirectionToObjectConverter LeftToRight={x:Static ScrollBar.LineLeftCommand},
+                                                                                                               RightToLeft={x:Static ScrollBar.LineRightCommand}}}"
+                           CommandTarget="{Binding PlacementTarget,
+                                                   RelativeSource={RelativeSource AncestorType={x:Type controls:ContextMenu}}}"
+                           Header="{Loc ScrollBarContextMenu_LineLeft,
+                                        Scope=UiKit}"
+                           Icon="{x:Static icons:UIKitIcon_16.ArrowLeft3}" />
+        <controls:MenuItem Command="{Binding FlowDirection,
+                                             RelativeSource={RelativeSource Self},
+                                             Converter={flowDirectionConverters:FlowDirectionToObjectConverter LeftToRight={x:Static ScrollBar.LineRightCommand},
+                                                                                                               RightToLeft={x:Static ScrollBar.LineLeftCommand}}}"
+                           CommandTarget="{Binding PlacementTarget,
+                                                   RelativeSource={RelativeSource AncestorType={x:Type controls:ContextMenu}}}"
+                           Header="{Loc ScrollBarContextMenu_LineRight,
+                                        Scope=UiKit}"
+                           Icon="{x:Static icons:UIKitIcon_16.ArrowRight3}" />
     </controls:ContextMenu>
 
     <Style x:Key="TextWrappingTextBlock"
@@ -204,13 +324,13 @@
                         <controls:Icon12 x:Name="PART_Bullet"
                                          Grid.Column="0"
                                          Icon="{markupCommon:UIKitTemplateBinding Icon}"
-                                         IconForeground="{markupBinding:ConditionalBinding True={uikit:UIKitBinding Bullet_Color,
-                                                                                                                    Type={x:Type Brush},
-                                                                                                                    Mode=TemplatedParent},
-                                                                                           False={markupCommon:UIKitTemplateBinding IconBrush},
-                                                                                           Condition={markupCommon:UIKitTemplateBinding IconBrush,
-                                                                                                                                        Converter={equalityConverters:EqualityToBooleanConverter},
-                                                                                                                                        ConverterParameter={x:Null}}}"
+                                         IconBrush="{markupBinding:ConditionalBinding True={uikit:UIKitBinding Bullet_Color,
+                                                                                                               Type={x:Type Brush},
+                                                                                                               Mode=TemplatedParent},
+                                                                                      False={markupCommon:UIKitTemplateBinding IconBrush},
+                                                                                      Condition={markupCommon:UIKitTemplateBinding IconBrush,
+                                                                                                                                   Converter={equalityConverters:EqualityToBooleanConverter},
+                                                                                                                                   ConverterParameter={x:Null}}}"
                                          Margin="{uikit:UIKitBinding Bullet_Margin}" />
 
                         <uikit:UIKitContentPresenter Grid.Column="1"
@@ -282,6 +402,7 @@
                             <controls:Spinner x:Name="PART_Spinner"
                                               Grid.Column="0"
                                               Margin="{uikit:UIKitBinding Button_Icon_MarginLeft}"
+                                              SpinnerBrush="{uikit:UIKitBinding Button_Spinner_Brush}"
                                               Style="{uikit:UIKitBinding Button_Spinner_Style}"
                                               VerticalAlignment="Center"
                                               Visibility="Collapsed" />
@@ -292,9 +413,9 @@
                                   Opacity="{uikit:UIKitBinding Button_Icon_Opacity}"
                                   VerticalAlignment="Center">
                                 <controls:Icon16 Icon="{markupCommon:UIKitTemplateBinding internals:ButtonBaseInternals.LeftIcon16}"
-                                                 IconForeground="{uikit:UIKitBinding Button_Icon_Foreground}" />
+                                                 IconBrush="{uikit:UIKitBinding Button_Icon_Brush}" />
                                 <controls:Icon24 Icon="{markupCommon:UIKitTemplateBinding internals:ButtonBaseInternals.LeftIcon24}"
-                                                 IconForeground="{uikit:UIKitBinding Button_Icon_Foreground}" />
+                                                 IconBrush="{uikit:UIKitBinding Button_Icon_Brush}" />
                             </Grid>
 
                             <uikit:UIKitContentPresenter x:Name="PART_Presenter"
@@ -314,9 +435,9 @@
                                   Opacity="{uikit:UIKitBinding Button_Icon_Opacity}"
                                   VerticalAlignment="Center">
                                 <controls:Icon16 Icon="{markupCommon:UIKitTemplateBinding internals:ButtonBaseInternals.RightIcon16}"
-                                                 IconForeground="{uikit:UIKitBinding Button_Icon_Foreground}" />
+                                                 IconBrush="{uikit:UIKitBinding Button_Icon_Brush}" />
                                 <controls:Icon24 Icon="{markupCommon:UIKitTemplateBinding internals:ButtonBaseInternals.RightIcon24}"
-                                                 IconForeground="{uikit:UIKitBinding Button_Icon_Foreground}" />
+                                                 IconBrush="{uikit:UIKitBinding Button_Icon_Brush}" />
                             </Grid>
                         </Grid>
 
@@ -659,7 +780,7 @@
                                     VerticalAlignment="Center">
                             <controls:Icon16 x:Name="PART_Icon"
                                              Icon="{markupCommon:UIKitTemplateBinding Icon}"
-                                             IconForeground="{uikit:UIKitBinding ChipsItem_Icon_Fill}"
+                                             IconBrush="{uikit:UIKitBinding ChipsItem_Icon_Fill}"
                                              Margin="{uikit:UIKitBinding ChipsItem_Icon_Margin}"
                                              VerticalAlignment="Center" />
 
@@ -680,7 +801,7 @@
 
                             <controls:Icon16 x:Name="PART_Close"
                                              Icon="Clear"
-                                             IconForeground="{uikit:UIKitBinding ChipsItem_CloseIcon_Fill}"
+                                             IconBrush="{uikit:UIKitBinding ChipsItem_CloseIcon_Fill}"
                                              Margin="{uikit:UIKitBinding ChipsItem_CloseIcon_Margin}"
                                              VerticalAlignment="Center"
                                              Visibility="Collapsed" />
@@ -850,7 +971,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type controls:ContextMenuButton}">
-                    <ToggleButton x:Name="PART_ToggleButton"
+                    <ToggleButton x:Name="PART_MenuTargetButton"
                                   internals:ButtonBaseInternals.LeftIcon16="{markupCommon:UIKitTemplateBinding Icon}"
                                   Content="{markupCommon:UIKitTemplateBinding Content}"
                                   ContentTemplate="{markupCommon:UIKitTemplateBinding ContentTemplate}"
@@ -858,11 +979,11 @@
                                   Style="{uikit:UIKitBinding ContextMenuButton_ToggleButton_Style}"
                                   TabIndex="{markupCommon:UIKitTemplateBinding TabIndex}" />
                     <ControlTemplate.Triggers>
-                        <Trigger Property="IsChecked" SourceName="PART_ToggleButton" Value="True">
-                            <Setter Property="internals:ButtonBaseInternals.RightIcon16" TargetName="PART_ToggleButton" Value="{markupCommon:UIKitTemplateBinding IconMenuOpened}" />
+                        <Trigger Property="IsChecked" SourceName="PART_MenuTargetButton" Value="True">
+                            <Setter Property="internals:ButtonBaseInternals.RightIcon16" TargetName="PART_MenuTargetButton" Value="{markupCommon:UIKitTemplateBinding IconMenuOpened}" />
                         </Trigger>
-                        <Trigger Property="IsChecked" SourceName="PART_ToggleButton" Value="False">
-                            <Setter Property="internals:ButtonBaseInternals.RightIcon16" TargetName="PART_ToggleButton" Value="{markupCommon:UIKitTemplateBinding IconMenuClosed}" />
+                        <Trigger Property="IsChecked" SourceName="PART_MenuTargetButton" Value="False">
+                            <Setter Property="internals:ButtonBaseInternals.RightIcon16" TargetName="PART_MenuTargetButton" Value="{markupCommon:UIKitTemplateBinding IconMenuClosed}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -960,7 +1081,7 @@
                             Height="{uikit:UIKitBinding DateTimePopupFooterButton_Height}">
                         <controls:Icon24 HorizontalAlignment="Center"
                                          Icon="{markupCommon:UIKitTemplateBinding Icon}"
-                                         IconForeground="{uikit:UIKitBinding DateTimePopupFooterButton_IconBrush}"
+                                         IconBrush="{uikit:UIKitBinding DateTimePopupFooterButton_IconBrush}"
                                          VerticalAlignment="Center" />
                     </Border>
                     <ControlTemplate.Triggers>
@@ -1293,7 +1414,7 @@
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="UseLayoutRounding" Value="True" />
         <Setter Property="VerticalAlignment" Value="Top" />
-        <Setter Property="IconForeground" Value="{uikit:UIKitBinding Icon_Foreground, Mode=Self, Type={x:Type Brush}}" />
+        <Setter Property="IconBrush" Value="{uikit:UIKitBinding Icon_Brush, Mode=Self, Type={x:Type Brush}}" />
 
         <Setter Property="Template">
             <Setter.Value>
@@ -1325,7 +1446,7 @@
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="UseLayoutRounding" Value="True" />
         <Setter Property="FocusVisualStyle" Value="{uikit:UIKitBinding IconButton_FocusVisualStyle, Mode=Self, Type={x:Type Style}}" />
-        <Setter Property="IconForeground" Value="{uikit:UIKitBinding IconButton_Icon_Foreground, Mode=Self, Type={x:Type Brush}}" />
+        <Setter Property="IconBrush" Value="{uikit:UIKitBinding IconButton_Icon_Brush, Mode=Self, Type={x:Type Brush}}" />
 
         <Setter Property="Template">
             <Setter.Value>
@@ -1339,10 +1460,10 @@
                                            VerticalAlignment="Center">
                         <Grid Opacity="{uikit:UIKitBinding IconButton_Icon_Opacity}">
                             <controls:Icon16 Icon="{markupCommon:UIKitTemplateBinding internals:IconButtonInternals.Icon16}"
-                                             IconForeground="{markupCommon:UIKitTemplateBinding IconForeground}" />
+                                             IconBrush="{markupCommon:UIKitTemplateBinding IconBrush}" />
 
                             <controls:Icon24 Icon="{markupCommon:UIKitTemplateBinding internals:IconButtonInternals.Icon24}"
-                                             IconForeground="{markupCommon:UIKitTemplateBinding IconForeground}" />
+                                             IconBrush="{markupCommon:UIKitTemplateBinding IconBrush}" />
                         </Grid>
                     </controls:RoundedPanel>
                     <ControlTemplate.Triggers>
@@ -1475,7 +1596,7 @@
                             Width="{uikit:UIKitBinding ImageGalleryButton_Width}">
                         <controls:Icon24 HorizontalAlignment="Center"
                                          Icon="{markupCommon:UIKitTemplateBinding Icon}"
-                                         IconForeground="{uikit:UIKitBinding ImageGalleryButton_Icon_Foreground}"
+                                         IconBrush="{uikit:UIKitBinding ImageGalleryButton_Icon_Brush}"
                                          VerticalAlignment="Center" />
                     </Border>
                     <ControlTemplate.Triggers>
@@ -1719,12 +1840,13 @@
                                                      Width="{uikit:UIKitBinding InteractivityDialog_Status_Background_Width}" />
                                             <controls:Icon24 HorizontalAlignment="Center"
                                                              Icon="{uikit:UIKitBinding InteractivityDialog_Status_IconName}"
-                                                             IconForeground="{uikit:UIKitBinding InteractivityDialog_Status_Foreground}"
+                                                             IconBrush="{uikit:UIKitBinding InteractivityDialog_Status_Foreground}"
                                                              VerticalAlignment="Center"
                                                              Visibility="{markupCommon:UIKitTemplateBinding Type,
                                                                                                             Converter={equalityConverters:EqualityToVisibilityInverseConverter},
                                                                                                             ConverterParameter={x:Static controls:InteractivityDialogType.Loading}}" />
                                             <controls:Spinner HorizontalAlignment="Center"
+                                                              SpinnerBrush="{uikit:UIKitBinding InteractivityDialog_Status_Foreground}"
                                                               Style="{uikit:UIKitBinding InteractivityDialog_Spinner_Style}"
                                                               VerticalAlignment="Center"
                                                               Visibility="{markupCommon:UIKitTemplateBinding Type,
@@ -1910,6 +2032,7 @@
                                     notifications:NotificationViewBehavior.IsConfirmButton="{markupCommon:UIKitTemplateBinding IsPrimaryCloseButton}"
                                     properties:ButtonProps.Icon="{markupCommon:UIKitTemplateBinding PrimaryButtonIcon}"
                                     properties:ButtonProps.IconLocation="{markupCommon:UIKitTemplateBinding PrimaryButtonIconLocation}"
+                                    properties:ButtonProps.IsBusy="{markupCommon:UIKitTemplateBinding IsPrimaryBusyButton}"
                                     Command="{markupCommon:UIKitTemplateBinding PrimaryButtonCommand}"
                                     Content="{markupCommon:UIKitTemplateBinding PrimaryButtonCaption}"
                                     IsCancel="{markupCommon:UIKitTemplateBinding IsPrimaryCancelButton}"
@@ -1921,6 +2044,7 @@
                                     notifications:NotificationViewBehavior.IsCloseButton="{markupCommon:UIKitTemplateBinding IsSecondaryCloseButton}"
                                     properties:ButtonProps.Icon="{markupCommon:UIKitTemplateBinding SecondaryButtonIcon}"
                                     properties:ButtonProps.IconLocation="{markupCommon:UIKitTemplateBinding SecondaryButtonIconLocation}"
+                                    properties:ButtonProps.IsBusy="{markupCommon:UIKitTemplateBinding IsSecondaryBusyButton}"
                                     Command="{markupCommon:UIKitTemplateBinding SecondaryButtonCommand}"
                                     Content="{markupCommon:UIKitTemplateBinding SecondaryButtonCaption}"
                                     IsCancel="{markupCommon:UIKitTemplateBinding IsSecondaryCancelButton}"
@@ -1986,7 +2110,7 @@
 
                                 <controls:Icon24 x:Name="PART_StatusIcon"
                                                  Icon="{uikit:UIKitBinding InteractivityNotification_Status_IconName}"
-                                                 IconForeground="{uikit:UIKitBinding InteractivityNotification_Status_Foreground}"
+                                                 IconBrush="{uikit:UIKitBinding InteractivityNotification_Status_Foreground}"
                                                  Margin="{uikit:UIKitBinding InteractivityNotification_Icon_Margin}"
                                                  SnapsToDevicePixels="False"
                                                  UseLayoutRounding="False"
@@ -1996,7 +2120,7 @@
 
                                 <controls:Icon24 x:Name="PART_Icon"
                                                  Icon="{markupCommon:UIKitTemplateBinding Icon}"
-                                                 IconForeground="{uikit:UIKitBinding InteractivityNotification_Icon_Foreground}"
+                                                 IconBrush="{uikit:UIKitBinding InteractivityNotification_Icon_Brush}"
                                                  Margin="{uikit:UIKitBinding InteractivityNotification_Icon_Margin}"
                                                  SnapsToDevicePixels="False"
                                                  UseLayoutRounding="False"
@@ -2328,7 +2452,7 @@
 
                                     <controls:Icon16 x:Name="Icon"
                                                      Icon="{markupCommon:UIKitTemplateBinding Icon}"
-                                                     IconForeground="{uikit:UIKitBinding ListMenuItem_Icon_Foreground}" />
+                                                     IconBrush="{uikit:UIKitBinding ListMenuItem_Icon_Brush}" />
                                 </Grid>
 
                                 <uikit:UIKitContentPresenter Grid.Column="1"
@@ -2471,13 +2595,13 @@
                                          Grid.Column="0"
                                          Icon="{markupCommon:UIKitTemplateBinding Icon,
                                                                                   Converter={internals:ObjectToIconConverter FallbackValue={x:Static icons:UIKitIcon_16.UIKitUnset}}}"
-                                         IconForeground="{markupBinding:ConditionalBinding True={uikit:UIKitBinding MenuItem_Icon_Foreground,
-                                                                                                                    Type={x:Type Brush},
-                                                                                                                    Mode=TemplatedParent},
-                                                                                           False={markupCommon:UIKitTemplateBinding IconBrush},
-                                                                                           Condition={markupCommon:UIKitTemplateBinding IconBrush,
-                                                                                                                                        Converter={equalityConverters:EqualityToBooleanConverter},
-                                                                                                                                        ConverterParameter={x:Null}}}"
+                                         IconBrush="{markupBinding:ConditionalBinding True={uikit:UIKitBinding MenuItem_Icon_Brush,
+                                                                                                               Type={x:Type Brush},
+                                                                                                               Mode=TemplatedParent},
+                                                                                      False={markupCommon:UIKitTemplateBinding IconBrush},
+                                                                                      Condition={markupCommon:UIKitTemplateBinding IconBrush,
+                                                                                                                                   Converter={equalityConverters:EqualityToBooleanConverter},
+                                                                                                                                   ConverterParameter={x:Null}}}"
                                          Margin="{uikit:UIKitBinding MenuItem_Icon_Margin}" />
 
                         <StackPanel Grid.Column="1"
@@ -2515,7 +2639,7 @@
                         <controls:Icon16 x:Name="SubmenuIcon"
                                          Grid.Column="3"
                                          Icon="{uikit:UIKitBinding MenuItem_SubmenuIcon_Name}"
-                                         IconForeground="{uikit:UIKitBinding MenuItem_SubmenuIcon_Foreground}"
+                                         IconBrush="{uikit:UIKitBinding MenuItem_SubmenuIcon_Brush}"
                                          Margin="{uikit:UIKitBinding MenuItem_SubmenuIcon_Margin}"
                                          SnapsToDevicePixels="False"
                                          UseLayoutRounding="False"
@@ -2588,13 +2712,13 @@
                                          Grid.Column="0"
                                          Icon="{markupCommon:UIKitTemplateBinding Icon,
                                                                                   Converter={internals:ObjectToIconConverter FallbackValue={x:Static icons:UIKitIcon_16.UIKitUnset}}}"
-                                         IconForeground="{markupBinding:ConditionalBinding True={uikit:UIKitBinding MenuItem_Icon_Foreground,
-                                                                                                                    Type={x:Type Brush},
-                                                                                                                    Mode=TemplatedParent},
-                                                                                           False={markupCommon:UIKitTemplateBinding IconBrush},
-                                                                                           Condition={markupCommon:UIKitTemplateBinding IconBrush,
-                                                                                                                                        Converter={equalityConverters:EqualityToBooleanConverter},
-                                                                                                                                        ConverterParameter={x:Null}}}"
+                                         IconBrush="{markupBinding:ConditionalBinding True={uikit:UIKitBinding MenuItem_Icon_Brush,
+                                                                                                               Type={x:Type Brush},
+                                                                                                               Mode=TemplatedParent},
+                                                                                      False={markupCommon:UIKitTemplateBinding IconBrush},
+                                                                                      Condition={markupCommon:UIKitTemplateBinding IconBrush,
+                                                                                                                                   Converter={equalityConverters:EqualityToBooleanConverter},
+                                                                                                                                   ConverterParameter={x:Null}}}"
                                          Margin="{uikit:UIKitBinding MenuItem_Icon_Margin}" />
 
                         <StackPanel Grid.Column="1"
@@ -2631,7 +2755,7 @@
                         <controls:Icon16 x:Name="MarkCheckBoxIcon"
                                          Grid.Column="3"
                                          Icon="{uikit:UIKitBinding MenuItem_CheckBoxMarkIcon_Name}"
-                                         IconForeground="{uikit:UIKitBinding MenuItem_CheckBoxMarkIcon_Foreground}"
+                                         IconBrush="{uikit:UIKitBinding MenuItem_CheckBoxMarkIcon_Brush}"
                                          Margin="{uikit:UIKitBinding MenuItem_CheckBoxMarkIcon_Margin}"
                                          SnapsToDevicePixels="False"
                                          UseLayoutRounding="False"
@@ -2698,6 +2822,161 @@
 
     <!--  endregion  -->
 
+    <!--  region NavigationMenuButton  -->
+
+    <Style x:Key="NavigationMenuButtonUniversal"
+           TargetType="{x:Type controls:NavigationMenuButton}">
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="OverridesDefaultStyle" Value="True" />
+        <Setter Property="FocusVisualStyle" Value="{uikit:UIKitBinding NavigationMenuButton_FocusVisualStyle, Mode=Self, Type={x:Type Style}}" />
+
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type controls:NavigationMenuButton}">
+                    <Border Background="{uikit:UIKitBinding NavigationMenuButton_Background}"
+                            Height="{uikit:UIKitBinding NavigationMenuButton_Height}"
+                            MaxHeight="{uikit:UIKitBinding NavigationMenuButton_Height}"
+                            MinHeight="{uikit:UIKitBinding NavigationMenuButton_Height}"
+                            Padding="{uikit:UIKitBinding NavigationMenuButton_Padding}">
+                        <Border x:Name="PART_Container"
+                                Background="{uikit:UIKitBinding NavigationMenuButton_Container_Background}"
+                                BorderBrush="{uikit:UIKitBinding NavigationMenuButton_Container_BorderBrush}"
+                                BorderThickness="{uikit:UIKitBinding NavigationMenuButton_Container_BorderThickness}"
+                                CornerRadius="{uikit:UIKitBinding NavigationMenuButton_Container_CornerRadius}"
+                                Margin="{uikit:UIKitBinding NavigationMenuButton_Container_Margin}"
+                                Padding="{uikit:UIKitBinding NavigationMenuButton_Container_Padding}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+
+                                <controls:Icon24 Grid.Column="0"
+                                                 Icon="{markupCommon:UIKitTemplateBinding Icon}"
+                                                 IconBrush="{uikit:UIKitBinding NavigationMenuButton_Icon_Brush}"
+                                                 Margin="{uikit:UIKitBinding NavigationMenuButton_Icon_Margin}"
+                                                 VerticalAlignment="Center" />
+
+                                <StackPanel Grid.Column="1"
+                                            VerticalAlignment="Center">
+                                    <uikit:UIKitContentPresenter Grid.Column="1"
+                                                                 Content="{markupCommon:UIKitTemplateBinding Caption}">
+                                        <uikit:UIKitContentPresenter.ContentImpicitStyles>
+                                            <uikit:UIKitStyleHolder StyleRef="{uikit:UIKitImplicitStyle NavigationMenuButton_CaptionTextStyle,
+                                                                                                        BasedOnStyle={StaticResource TextTrimmingTextBlock},
+                                                                                                        StateAwareAncestorType={x:Type controls:NavigationMenuButton}}" />
+                                        </uikit:UIKitContentPresenter.ContentImpicitStyles>
+                                    </uikit:UIKitContentPresenter>
+                                    <uikit:UIKitContentPresenter x:Name="PART_Description"
+                                                                 Content="{markupCommon:UIKitTemplateBinding Description}">
+                                        <uikit:UIKitContentPresenter.ContentImpicitStyles>
+                                            <uikit:UIKitStyleHolder StyleRef="{uikit:UIKitImplicitStyle NavigationMenuButton_DescriptionTextStyle,
+                                                                                                        BasedOnStyle={StaticResource TextTrimmingTextBlock},
+                                                                                                        StateAwareAncestorType={x:Type controls:NavigationMenuButton}}" />
+                                        </uikit:UIKitContentPresenter.ContentImpicitStyles>
+                                    </uikit:UIKitContentPresenter>
+                                </StackPanel>
+
+                                <StackPanel Grid.Column="2"
+                                            Orientation="Horizontal">
+                                    <TextBlock x:Name="PART_Counter"
+                                               Margin="{uikit:UIKitBinding NavigationMenuButton_Counter_Margin}"
+                                               Style="{uikit:UIKitBinding NavigationMenuButton_CounterTextStyle}"
+                                               Text="{markupCommon:UIKitTemplateBinding Counter}"
+                                               VerticalAlignment="Center" />
+                                    <controls:Badge x:Name="PART_Marker"
+                                                    Margin="{uikit:UIKitBinding NavigationMenuButton_Badge_Margin}"
+                                                    Style="{uikit:UIKitBinding NavigationMenuButton_Badge_Style}"
+                                                    Type="{markupCommon:UIKitTemplateBinding BadgeType}"
+                                                    VerticalAlignment="Center" />
+                                </StackPanel>
+                            </Grid>
+                        </Border>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="Description" Value="{x:Null}">
+                            <Setter Property="Visibility" TargetName="PART_Description" Value="Collapsed" />
+                        </Trigger>
+                        <Trigger Property="ShowBadge" Value="False">
+                            <Setter Property="Visibility" TargetName="PART_Marker" Value="Collapsed" />
+                        </Trigger>
+                        <Trigger Property="ShowCounter" Value="False">
+                            <Setter Property="Visibility" TargetName="PART_Counter" Value="Collapsed" />
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="False">
+                            <Setter Property="vs:StateService.State" Value="Normal" />
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="vs:StateService.State" Value="Hover" />
+                        </Trigger>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter Property="vs:StateService.State" Value="Pressed" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--  endregion  -->
+
+    <!--  region NavigationMenuFooterButton  -->
+
+    <Style x:Key="NavigationMenuFooterButtonUniversal"
+           TargetType="{x:Type controls:NavigationMenuFooterButton}">
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="HorizontalAlignment" Value="Center" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="OverridesDefaultStyle" Value="True" />
+        <Setter Property="FocusVisualStyle" Value="{uikit:UIKitBinding NavigationMenuFooterButton_FocusVisualStyle, Mode=Self, Type={x:Type Style}}" />
+
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type controls:NavigationMenuFooterButton}">
+                    <Border Height="{uikit:UIKitBinding NavigationMenuFooterButton_Height}"
+                            Width="{uikit:UIKitBinding NavigationMenuFooterButton_Width}">
+                        <Border Background="{uikit:UIKitBinding NavigationMenuFooterButton_Container_BackgroundBrush}"
+                                BorderBrush="{uikit:UIKitBinding NavigationMenuFooterButton_Container_BorderBrush}"
+                                BorderThickness="{uikit:UIKitBinding NavigationMenuFooterButton_Container_BorderThickness}"
+                                CornerRadius="{uikit:UIKitBinding NavigationMenuFooterButton_Container_CornerRadius}">
+                            <Grid>
+                                <controls:Icon24 HorizontalAlignment="Center"
+                                                 Icon="{markupCommon:UIKitTemplateBinding Icon}"
+                                                 IconBrush="{uikit:UIKitBinding NavigationMenuFooterButton_Icon_Brush}"
+                                                 VerticalAlignment="Center" />
+                                <controls:Badge x:Name="PART_Marker"
+                                                HorizontalAlignment="Right"
+                                                Margin="{uikit:UIKitBinding NavigationMenuFooterButton_Badge_Margin}"
+                                                Style="{uikit:UIKitBinding NavigationMenuFooterButton_Badge_Style}"
+                                                Type="{markupCommon:UIKitTemplateBinding BadgeType}"
+                                                VerticalAlignment="Top" />
+                            </Grid>
+                        </Border>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="ShowBadge" Value="False">
+                            <Setter Property="Visibility" TargetName="PART_Marker" Value="Collapsed" />
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="False">
+                            <Setter Property="vs:StateService.State" Value="Normal" />
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="vs:StateService.State" Value="Hover" />
+                        </Trigger>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter Property="vs:StateService.State" Value="Pressed" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--  endregion  -->
+
     <!--  region NotificationHint  -->
 
     <Style x:Key="NotificationHintUniversal"
@@ -2718,7 +2997,7 @@
                         </Grid.ColumnDefinitions>
 
                         <controls:Icon16 Icon="{uikit:UIKitBinding NotificationHint_Icon_Name}"
-                                         IconForeground="{uikit:UIKitBinding NotificationHint_Icon_Color}"
+                                         IconBrush="{uikit:UIKitBinding NotificationHint_Icon_Color}"
                                          Margin="{uikit:UIKitBinding NotificationHint_Icon_Margin}" />
 
                         <uikit:UIKitContentPresenter Grid.Column="1">
@@ -2766,7 +3045,7 @@
                             <controls:Icon24 x:Name="PART_Icon"
                                              Grid.Column="0"
                                              Icon="{uikit:UIKitBinding NotificationPanel_Icon_Name}"
-                                             IconForeground="{uikit:UIKitBinding NotificationPanel_Icon_Color}"
+                                             IconBrush="{uikit:UIKitBinding NotificationPanel_Icon_Color}"
                                              Margin="{uikit:UIKitBinding NotificationPanel_Icon_Margin}"
                                              VerticalAlignment="Top"
                                              Visibility="{Binding IsVisible,
@@ -2862,16 +3141,27 @@
                         <Trigger Property="Icon" Value="{x:Null}">
                             <Setter Property="Visibility" TargetName="PART_Image" Value="Collapsed" />
                         </Trigger>
+                        <Trigger Property="RightBar" Value="{x:Null}">
+                            <Setter Property="Visibility" TargetName="PART_RightBarPresenter" Value="Collapsed" />
+                        </Trigger>
                         <Trigger Property="SubHeader" Value="{x:Null}">
                             <Setter Property="Visibility" TargetName="PART_SubHeaderPresenter" Value="Collapsed" />
                         </Trigger>
-                        <Trigger Property="RightBar" Value="{x:Null}">
-                            <Setter Property="Visibility" TargetName="PART_RightBarPresenter" Value="Collapsed" />
+                        <Trigger Property="SubHeader" Value="{x:Static system:String.Empty}">
+                            <Setter Property="Visibility" TargetName="PART_SubHeaderPresenter" Value="Collapsed" />
                         </Trigger>
                         <Trigger Property="Content" Value="{x:Null}">
                             <Setter Property="Visibility" TargetName="PART_ContentPresenter" Value="Collapsed" />
                         </Trigger>
+                        <Trigger Property="Content" Value="{x:Static system:String.Empty}">
+                            <Setter Property="Visibility" TargetName="PART_ContentPresenter" Value="Collapsed" />
+                        </Trigger>
                         <Trigger Property="Header" Value="{x:Null}">
+                            <Setter Property="Visibility" TargetName="PART_HeaderPresenter" Value="Collapsed" />
+                            <Setter Property="Visibility" TargetName="PART_SubHeaderPresenter" Value="Collapsed" />
+                            <Setter Property="Margin" TargetName="PART_ContentPresenter" Value="0" />
+                        </Trigger>
+                        <Trigger Property="Header" Value="{x:Static system:String.Empty}">
                             <Setter Property="Visibility" TargetName="PART_HeaderPresenter" Value="Collapsed" />
                             <Setter Property="Visibility" TargetName="PART_SubHeaderPresenter" Value="Collapsed" />
                             <Setter Property="Margin" TargetName="PART_ContentPresenter" Value="0" />
@@ -2893,15 +3183,24 @@
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="UseLayoutRounding" Value="True" />
         <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="Header" Value="{xl:Loc NotificationSpinner_Header, Scope=UiKit}" />
 
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type controls:NotificationSpinner}">
-                    <StackPanel x:Name="PART_NotificationSpinner"
-                                HorizontalAlignment="Center"
-                                Orientation="{uikit:UIKitBinding NotificationSpinner_Orientation}"
-                                VerticalAlignment="Center">
+                    <Grid x:Name="PART_Root">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+
                         <controls:Spinner x:Name="PART_Spinner"
+                                          Grid.Row="0"
+                                          Grid.Column="0"
                                           Margin="{uikit:UIKitBinding NotificationSpinner_Spinner_Margin}"
                                           Style="{uikit:UIKitBinding NotificationSpinner_Spinner_Style}"
                                           VerticalAlignment="Top" />
@@ -2928,7 +3227,7 @@
                                 </uikit:UIKitContentPresenter.ContentImpicitStyles>
                             </uikit:UIKitContentPresenter>
                         </StackPanel>
-                    </StackPanel>
+                    </Grid>
 
                     <ControlTemplate.Triggers>
                         <Trigger Property="Header" Value="{x:Null}">
@@ -2938,14 +3237,24 @@
                         <Trigger Property="Content" Value="{x:Null}">
                             <Setter Property="VerticalAlignment" TargetName="PART_Container" Value="Center" />
                         </Trigger>
-                        <Trigger Property="Orientation" SourceName="PART_NotificationSpinner" Value="Horizontal">
+                        <uikit:UIKitTrigger Id="NotificationSpinner_Orientation" Mode="Self" Type="{x:Type Orientation}" Value="Horizontal">
+                            <Setter Property="Grid.Row" TargetName="PART_Container" Value="0" />
+                            <Setter Property="Grid.RowSpan" TargetName="PART_Container" Value="2" />
+                            <Setter Property="Grid.RowSpan" TargetName="PART_Spinner" Value="2" />
+                            <Setter Property="Grid.Column" TargetName="PART_Container" Value="1" />
+                            <Setter Property="HorizontalAlignment" TargetName="PART_Spinner" Value="Left" />
                             <Setter Property="HorizontalAlignment" TargetName="PART_HeaderPresenter" Value="Left" />
                             <Setter Property="HorizontalAlignment" TargetName="PART_ContentPresenter" Value="Left" />
-                        </Trigger>
-                        <Trigger Property="Orientation" SourceName="PART_NotificationSpinner" Value="Vertical">
+                        </uikit:UIKitTrigger>
+                        <uikit:UIKitTrigger Id="NotificationSpinner_Orientation" Mode="Self" Type="{x:Type Orientation}" Value="Vertical">
+                            <Setter Property="Grid.Row" TargetName="PART_Container" Value="1" />
+                            <Setter Property="Grid.Column" TargetName="PART_Container" Value="0" />
+                            <Setter Property="Grid.ColumnSpan" TargetName="PART_Container" Value="2" />
+                            <Setter Property="Grid.ColumnSpan" TargetName="PART_Spinner" Value="2" />
+                            <Setter Property="HorizontalAlignment" TargetName="PART_Spinner" Value="Center" />
                             <Setter Property="HorizontalAlignment" TargetName="PART_HeaderPresenter" Value="Center" />
                             <Setter Property="HorizontalAlignment" TargetName="PART_ContentPresenter" Value="Center" />
-                        </Trigger>
+                        </uikit:UIKitTrigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
@@ -3644,9 +3953,9 @@
                     </Track>
                 </Grid>
                 <ControlTemplate.Triggers>
-                    <DataTrigger Binding="{uikit:UIKitBinding ScrollBar_Background, Type={x:Type Brush}}" Value="{x:Null}">
+                    <uikit:UIKitTrigger Id="ScrollBar_Background" Type="{x:Type Brush}" Value="{x:Null}">
                         <Setter Property="Visibility" TargetName="PART_TrackBackground" Value="Hidden" />
-                    </DataTrigger>
+                    </uikit:UIKitTrigger>
                 </ControlTemplate.Triggers>
             </ControlTemplate>
 
@@ -3675,9 +3984,9 @@
                     </Track>
                 </Grid>
                 <ControlTemplate.Triggers>
-                    <DataTrigger Binding="{uikit:UIKitBinding ScrollBar_Background, Type={x:Type Brush}}" Value="{x:Null}">
+                    <uikit:UIKitTrigger Id="ScrollBar_Background" Type="{x:Type Brush}" Value="{x:Null}">
                         <Setter Property="Visibility" TargetName="PART_TrackBackground" Value="Hidden" />
-                    </DataTrigger>
+                    </uikit:UIKitTrigger>
                 </ControlTemplate.Triggers>
             </ControlTemplate>
         </Style.Resources>
@@ -3696,12 +4005,14 @@
             </Trigger>
 
             <Trigger Property="Orientation" Value="Horizontal">
+                <Setter Property="ContextMenu" Value="{StaticResource HorizontalContextMenu}" />
                 <Setter Property="Height" Value="{uikit:UIKitBinding ScrollBar_Size, Mode=Self, Type={x:Type system:Double}}" />
                 <Setter Property="MinHeight" Value="{uikit:UIKitBinding ScrollBar_Size, Mode=Self, Type={x:Type system:Double}}" />
                 <Setter Property="Template" Value="{StaticResource ScrollBarHorizontalTemplate}" />
                 <Setter Property="Width" Value="Auto" />
             </Trigger>
             <Trigger Property="Orientation" Value="Vertical">
+                <Setter Property="ContextMenu" Value="{StaticResource VerticalContextMenu}" />
                 <Setter Property="Height" Value="Auto" />
                 <Setter Property="MinWidth" Value="{uikit:UIKitBinding ScrollBar_Size, Mode=Self, Type={x:Type system:Double}}" />
                 <Setter Property="Template" Value="{StaticResource ScrollBarVerticalTemplate}" />
@@ -3794,7 +4105,7 @@
 
                             <controls:Icon16 x:Name="PART_Icon"
                                              Icon="{uikit:UIKitBinding Search_Icon}"
-                                             IconForeground="{uikit:UIKitBinding Search_IconForeground}"
+                                             IconBrush="{uikit:UIKitBinding Search_IconBrush}"
                                              Margin="{uikit:UIKitBinding Search_IconMargin}" />
 
                             <controls:TextInput x:Name="PART_TextInput"
@@ -4007,8 +4318,6 @@
                 <ControlTemplate TargetType="{x:Type controls:SelectItem}">
                     <Grid>
                         <Border Background="{uikit:UIKitBinding SelectItem_StateBackground}" />
-                        <Border x:Name="PART_SelectionBackground"
-                                Background="{uikit:UIKitBinding SelectItem_SelectionBackground}" />
                         <Grid Margin="{uikit:UIKitBinding SelectItem_Padding}">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition SharedSizeGroup="Icon" Width="Auto" />
@@ -4017,7 +4326,7 @@
                             </Grid.ColumnDefinitions>
 
                             <controls:Icon16 Icon="{markupCommon:UIKitTemplateBinding Icon}"
-                                             IconForeground="{uikit:UIKitBinding SelectItem_Icon_Foreground}"
+                                             IconBrush="{uikit:UIKitBinding SelectItem_Icon_Brush}"
                                              Margin="{uikit:UIKitBinding SelectItem_Icon_Margin}"
                                              VerticalAlignment="Center"
                                              Visibility="{markupBinding:CompactMultiBinding Binding1={Binding IsUnset,
@@ -4054,18 +4363,36 @@
                         <Trigger Property="HasRightBar" Value="False">
                             <Setter Property="Grid.ColumnSpan" TargetName="PART_ItemHeader" Value="2" />
                         </Trigger>
-                        <Trigger Property="IsSelected" Value="False">
-                            <Setter Property="Visibility" TargetName="PART_SelectionBackground" Value="Collapsed" />
-                        </Trigger>
                         <Trigger Property="IsHighlighted" Value="False">
-                            <Setter Property="vs:StateService.State" Value="Normal" />
+                            <Setter Property="vs:StateService.SelectableState" Value="Normal" />
                         </Trigger>
                         <Trigger Property="IsHighlighted" Value="True">
-                            <Setter Property="vs:StateService.State" Value="Hover" />
+                            <Setter Property="vs:StateService.SelectableState" Value="Hover" />
                         </Trigger>
                         <Trigger Property="IsPressed" Value="True">
-                            <Setter Property="vs:StateService.State" Value="Pressed" />
+                            <Setter Property="vs:StateService.SelectableState" Value="Pressed" />
                         </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsSelected" Value="True" />
+                                <Condition Property="IsHighlighted" Value="False" />
+                            </MultiTrigger.Conditions>
+                            <Setter Property="vs:StateService.SelectableState" Value="SelectedNormal" />
+                        </MultiTrigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsSelected" Value="True" />
+                                <Condition Property="IsHighlighted" Value="True" />
+                            </MultiTrigger.Conditions>
+                            <Setter Property="vs:StateService.SelectableState" Value="SelectedHover" />
+                        </MultiTrigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsSelected" Value="True" />
+                                <Condition Property="IsPressed" Value="True" />
+                            </MultiTrigger.Conditions>
+                            <Setter Property="vs:StateService.SelectableState" Value="SelectedPressed" />
+                        </MultiTrigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
@@ -4109,7 +4436,7 @@
                                 </Grid.ColumnDefinitions>
 
                                 <controls:Icon16 x:Name="PART_ItemIcon"
-                                                 IconForeground="{uikit:UIKitBinding SelectPresenter_ItemIcon_Foreground}"
+                                                 IconBrush="{uikit:UIKitBinding SelectPresenter_ItemIcon_Brush}"
                                                  Margin="{uikit:UIKitBinding SelectPresenter_ItemIcon_Margin}"
                                                  VerticalAlignment="Center"
                                                  Visibility="{markupBinding:CompactMultiBinding Binding1={Binding IsUnset,
@@ -4181,7 +4508,7 @@
 
                             <controls:Icon16 Grid.Column="1"
                                              Icon="{uikit:UIKitBinding SelectPresenter_ArrowIcon_Name}"
-                                             IconForeground="{uikit:UIKitBinding SelectPresenter_ArrowIcon_Foreground}"
+                                             IconBrush="{uikit:UIKitBinding SelectPresenter_ArrowIcon_Brush}"
                                              Margin="{uikit:UIKitBinding SelectPresenter_ArrowIcon_Margin}"
                                              VerticalAlignment="Center" />
                         </Grid>
@@ -4316,12 +4643,13 @@
         <Setter Property="FlowDirection" Value="LeftToRight" />
         <Setter Property="Height" Value="{uikit:UIKitBinding Spinner_Height, Mode=Self, Type={x:Type system:Double}}" />
         <Setter Property="Width" Value="{uikit:UIKitBinding Spinner_Width, Mode=Self, Type={x:Type system:Double}}" />
+        <Setter Property="SpinnerBrush" Value="{uikit:UIKitBinding Spinner_Foreground, Mode=Self, Type={x:Type Brush}}" />
 
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type controls:Spinner}">
                     <Image x:Name="PART_LoaderIcon"
-                           properties:ImageProps.SvgBrush="{uikit:UIKitBinding Spinner_Foreground}"
+                           properties:ImageProps.SvgBrush="{markupCommon:UIKitTemplateBinding SpinnerBrush}"
                            Height="{markupCommon:UIKitTemplateBinding Height}"
                            RenderTransformOrigin="0.5,0.5"
                            Source="{uikit:UIKitBinding Spinner_Image}"
@@ -4360,6 +4688,7 @@
                                 Grid.Column="0"
                                 properties:ButtonProps.Icon="{markupCommon:UIKitTemplateBinding Icon}"
                                 properties:ButtonProps.IconLocation="{markupCommon:UIKitTemplateBinding IconLocation}"
+                                properties:ButtonProps.IsBusy="{markupCommon:UIKitTemplateBinding IsMainButtonBusy}"
                                 Command="{markupCommon:UIKitTemplateBinding Command}"
                                 CommandParameter="{markupCommon:UIKitTemplateBinding CommandParameter}"
                                 Content="{markupCommon:UIKitTemplateBinding Content}"
@@ -4370,28 +4699,29 @@
                         <controls:Divider Grid.Column="1"
                                           Orientation="Vertical"
                                           Style="{uikit:UIKitBinding SplitButton_Divider_Style}" />
-                        <ToggleButton x:Name="PART_ToggleButton"
+                        <ToggleButton x:Name="PART_MenuTargetButton"
                                       Grid.Column="2"
+                                      properties:ToggleButtonProps.IsBusy="{markupCommon:UIKitTemplateBinding IsContextMenuButtonBusy}"
                                       IsEnabled="{markupCommon:UIKitTemplateBinding IsContextMenuButtonEnabled}"
                                       Style="{uikit:UIKitBinding SplitButton_ToggleButton_Style}" />
                     </Grid>
                     <ControlTemplate.Triggers>
-                        <Trigger Property="IsChecked" SourceName="PART_ToggleButton" Value="True">
-                            <Setter Property="properties:ToggleButtonProps.Icon" TargetName="PART_ToggleButton" Value="{markupCommon:UIKitTemplateBinding IconMenuOpened}" />
+                        <Trigger Property="IsChecked" SourceName="PART_MenuTargetButton" Value="True">
+                            <Setter Property="properties:ToggleButtonProps.Icon" TargetName="PART_MenuTargetButton" Value="{markupCommon:UIKitTemplateBinding IconMenuOpened}" />
                         </Trigger>
-                        <Trigger Property="IsChecked" SourceName="PART_ToggleButton" Value="False">
-                            <Setter Property="properties:ToggleButtonProps.Icon" TargetName="PART_ToggleButton" Value="{markupCommon:UIKitTemplateBinding IconMenuClosed}" />
+                        <Trigger Property="IsChecked" SourceName="PART_MenuTargetButton" Value="False">
+                            <Setter Property="properties:ToggleButtonProps.Icon" TargetName="PART_MenuTargetButton" Value="{markupCommon:UIKitTemplateBinding IconMenuClosed}" />
                         </Trigger>
                         <Trigger Property="IsPressed" SourceName="PART_MainButton" Value="True">
                             <Setter Property="internals:SplitButtonInternals.State" Value="PressedMain" />
                         </Trigger>
-                        <Trigger Property="IsPressed" SourceName="PART_ToggleButton" Value="True">
+                        <Trigger Property="IsPressed" SourceName="PART_MenuTargetButton" Value="True">
                             <Setter Property="internals:SplitButtonInternals.State" Value="PressedContextMenu" />
                         </Trigger>
                         <Trigger Property="IsEnabled" SourceName="PART_MainButton" Value="False">
                             <Setter Property="internals:SplitButtonInternals.State" Value="DisabledMain" />
                         </Trigger>
-                        <Trigger Property="IsEnabled" SourceName="PART_ToggleButton" Value="False">
+                        <Trigger Property="IsEnabled" SourceName="PART_MenuTargetButton" Value="False">
                             <Setter Property="internals:SplitButtonInternals.State" Value="DisabledContextMenu" />
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="False">
@@ -4400,7 +4730,7 @@
                         <MultiTrigger>
                             <MultiTrigger.Conditions>
                                 <Condition Property="IsEnabled" SourceName="PART_MainButton" Value="False" />
-                                <Condition Property="IsEnabled" SourceName="PART_ToggleButton" Value="False" />
+                                <Condition Property="IsEnabled" SourceName="PART_MenuTargetButton" Value="False" />
                             </MultiTrigger.Conditions>
                             <Setter Property="internals:SplitButtonInternals.State" Value="Disabled" />
                         </MultiTrigger>
@@ -4505,7 +4835,7 @@
                             <controls:Icon16 x:Name="PART_Icon"
                                              Grid.Column="0"
                                              Icon="{uikit:UIKitBinding StatusTag_Icon_Name}"
-                                             IconForeground="{uikit:UIKitBinding StatusTag_Icon_Color}"
+                                             IconBrush="{uikit:UIKitBinding StatusTag_Icon_Color}"
                                              Margin="{uikit:UIKitBinding StatusTag_Icon_Margin}"
                                              SnapsToDevicePixels="False"
                                              UseLayoutRounding="False"
@@ -4712,7 +5042,7 @@
                             <controls:Icon16 x:Name="PART_Icon"
                                              Grid.Column="0"
                                              Icon="{markupCommon:UIKitTemplateBinding Icon}"
-                                             IconForeground="{uikit:UIKitBinding TabMenuItem_Icon_Fill}"
+                                             IconBrush="{uikit:UIKitBinding TabMenuItem_Icon_Fill}"
                                              Margin="{uikit:UIKitBinding TabMenuItem_Icon_Margin}"
                                              VerticalAlignment="Center" />
 
@@ -4823,7 +5153,7 @@
                             <controls:Icon16 x:Name="PART_Icon"
                                              Grid.Column="0"
                                              Icon="{markupCommon:UIKitTemplateBinding Icon}"
-                                             IconForeground="{uikit:UIKitBinding Tag_Icon_Color}"
+                                             IconBrush="{uikit:UIKitBinding Tag_Icon_Color}"
                                              Margin="{uikit:UIKitBinding Tag_Icon_Margin}"
                                              SnapsToDevicePixels="False"
                                              UseLayoutRounding="False"
@@ -5104,7 +5434,8 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type controls:TextViewer}">
                     <controls:Island Style="{uikit:UIKitBinding TextViewer_IslandStyle}">
-                        <ScrollViewer properties:ScrollViewerProps.IsBorderFadeEnabled="True">
+                        <ScrollViewer x:Name="PART_ScrollViewer"
+                                      properties:ScrollViewerProps.IsBorderFadeEnabled="True">
                             <TextBox ContextMenu="{StaticResource InputReadOnlyContextMenu}"
                                      FocusVisualStyle="{x:Null}"
                                      IsReadOnly="True"

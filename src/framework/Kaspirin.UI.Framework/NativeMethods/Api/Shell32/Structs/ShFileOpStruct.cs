@@ -17,23 +17,21 @@
 using System;
 using System.Runtime.InteropServices;
 
-namespace Kaspirin.UI.Framework.NativeMethods.Api.Shell32.Structs
+namespace Kaspirin.UI.Framework.NativeMethods.Api.Shell32.Structs;
+
+/// <summary>
+///     <seealso href="https://learn.microsoft.com/en-us/windows/win32/api/shellapi/ns-shellapi-shfileopstructa">Learn more</seealso>.
+/// </summary>
+[StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
+public struct ShFileOpStruct
 {
-    /// <summary>
-    ///     
-    /// <seealso href="https://learn.microsoft.com/en-us/windows/win32/api/shellapi/ns-shellapi-shfileopstructa">Learn more</seealso>.
-    /// </summary>
-    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
-    public struct ShFileOpStruct
-    {
-        public IntPtr hwnd;
-        public ShFileOperationType wFunc;
-        public IntPtr pFrom;
-        public IntPtr pTo;
-        public ShFileOperationFlags fFlags;
-        public int fAnyOperationsAborted;
-        public IntPtr hNameMappings;
-        [MarshalAs(UnmanagedType.LPWStr)]
-        public string lpszProgressTitle;
-    }
+    public IntPtr hwnd;
+    public ShFileOperationType wFunc;
+    public IntPtr pFrom;
+    public IntPtr pTo;
+    public ShFileOperationFlags fFlags;
+    public int fAnyOperationsAborted;
+    public IntPtr hNameMappings;
+    [MarshalAs(UnmanagedType.LPWStr)]
+    public string lpszProgressTitle;
 }

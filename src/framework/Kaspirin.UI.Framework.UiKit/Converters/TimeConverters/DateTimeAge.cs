@@ -14,103 +14,82 @@
 
 using System;
 
-namespace Kaspirin.UI.Framework.UiKit.Converters.TimeConverters
+namespace Kaspirin.UI.Framework.UiKit.Converters.TimeConverters;
+
+public sealed class DateTimeAge
 {
-    public sealed class DateTimeAge
+    public DateTimeAge(DateTime time, DateTime nowTime)
     {
-        public DateTimeAge(DateTime time, DateTime nowTime)
-        {
-            EstimatedTime = time;
-            _nowTime = nowTime;
+        EstimatedTime = time;
+        _nowTime = nowTime;
 
-            _timeSpan = nowTime >= time ?
-                nowTime - time :
-                time - nowTime;
+        _timeSpan = nowTime >= time
+            ? nowTime - time
+            : time - nowTime;
 
-            Estimate = GetAgeEstimate(time, _nowTime);
-        }
-
-        public DateTime EstimatedTime { get; private set; }
-
-        public DateTimeAgeEstimate Estimate { get; private set; }
-
-        public int TotalSeconds
-        {
-            get { return (int)Math.Floor(_timeSpan.TotalSeconds); }
-        }
-
-        public int TotalMinutes
-        {
-            get { return (int)Math.Floor(_timeSpan.TotalMinutes); }
-        }
-
-        public int TotalHours
-        {
-            get { return (int)Math.Floor(_timeSpan.TotalHours); }
-        }
-
-        public int TotalDays
-        {
-            get { return (int)Math.Floor(_timeSpan.TotalDays); }
-        }
-
-        public int TotalMonths
-        {
-            get { return (int)Math.Floor(_timeSpan.TotalSeconds / SecondsInMonth); }
-        }
-
-        public int TotalYears
-        {
-            get { return (int)Math.Floor(_timeSpan.TotalSeconds / SecondsInYear); }
-        }
-
-        public DateTimeAge AddMonths(int months)
-        {
-            return new DateTimeAge(EstimatedTime.Add(TimeSpan.FromSeconds(months * SecondsInMonth)), _nowTime);
-        }
-
-        private DateTimeAgeEstimate GetAgeEstimate(DateTime localTime, DateTime localNowTime)
-        {
-            if (localTime > localNowTime)
-            {
-                return DateTimeAgeEstimate.Future;
-            }
-
-            if (TotalMinutes < 1)
-            {
-                return DateTimeAgeEstimate.SecondsAgo;
-            }
-
-            if (TotalHours < 1)
-            {
-                return DateTimeAgeEstimate.MinutesAgo;
-            }
-
-            if (TotalDays < 1)
-            {
-                return DateTimeAgeEstimate.HoursAgo;
-            }
-
-            if (localTime.Date.AddDays(1) == localNowTime.Date)
-            {
-                return DateTimeAgeEstimate.Yesterday;
-            }
-
-            if (TotalSeconds < SecondsInMonth)
-            {
-                return DateTimeAgeEstimate.DaysAgo;
-            }
-
-            return TotalSeconds < SecondsInYear ?
-                DateTimeAgeEstimate.MonthsAgo :
-                DateTimeAgeEstimate.YearsAgo;
-        }
-
-        private const int SecondsInDay = 60 * 60 * 24;
-        private const double SecondsInYear = SecondsInDay * 365.25;
-        private const double SecondsInMonth = SecondsInYear / 12.0;
-
-        private readonly TimeSpan _timeSpan;
-        private readonly DateTime _nowTime;
+        Estimate = GetAgeEstimate(time, _nowTime);
     }
+
+    public DateTime EstimatedTime { get; private set; }
+
+    public DateTimeAgeEstimate Estimate { get; private set; }
+
+    public int TotalSeconds => (int)Math.Floor(_timeSpan.TotalSeconds);
+
+    public int TotalMinutes => (int)Math.Floor(_timeSpan.TotalMinutes);
+
+    public int TotalHours => (int)Math.Floor(_timeSpan.TotalHours);
+
+    public int TotalDays => (int)Math.Floor(_timeSpan.TotalDays);
+
+    public int TotalMonths => (int)Math.Floor(_timeSpan.TotalSeconds / SecondsInMonth);
+
+    public int TotalYears => (int)Math.Floor(_timeSpan.TotalSeconds / SecondsInYear);
+
+    public DateTimeAge AddMonths(int months)
+        => new(EstimatedTime.Add(TimeSpan.FromSeconds(months * SecondsInMonth)), _nowTime);
+
+    private DateTimeAgeEstimate GetAgeEstimate(DateTime localTime, DateTime localNowTime)
+    {
+        if (localTime > localNowTime)
+        {
+            return DateTimeAgeEstimate.Future;
+        }
+
+        if (TotalMinutes < 1)
+        {
+            return DateTimeAgeEstimate.SecondsAgo;
+        }
+
+        if (TotalHours < 1)
+        {
+            return DateTimeAgeEstimate.MinutesAgo;
+        }
+
+        if (TotalDays < 1)
+        {
+            return DateTimeAgeEstimate.HoursAgo;
+        }
+
+        if (localTime.Date.AddDays(1) == localNowTime.Date)
+        {
+            return DateTimeAgeEstimate.Yesterday;
+        }
+
+        if (TotalSeconds < SecondsInMonth)
+        {
+            return DateTimeAgeEstimate.DaysAgo;
+        }
+
+        return TotalSeconds < SecondsInYear
+            ? DateTimeAgeEstimate.MonthsAgo
+            : DateTimeAgeEstimate.YearsAgo;
+    }
+
+    private const int SecondsInDay = 60 * 60 * 24;
+    private const double SecondsInYear = SecondsInDay * 365.25;
+    private const double SecondsInMonth = SecondsInYear / 12.0;
+
+    private readonly TimeSpan _timeSpan;
+    private readonly DateTime _nowTime;
 }

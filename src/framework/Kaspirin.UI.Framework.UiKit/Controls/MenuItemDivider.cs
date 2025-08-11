@@ -14,17 +14,16 @@
 
 using System.Windows;
 
-namespace Kaspirin.UI.Framework.UiKit.Controls
+namespace Kaspirin.UI.Framework.UiKit.Controls;
+
+public sealed class MenuItemDivider : MenuItemBase
 {
-    public class MenuItemDivider : MenuItemBase
+    public MenuItemDivider()
     {
-        public MenuItemDivider()
-        {
-            IsHitTestVisible = false;
-            IsCheckable = false;
-            IsTabStop = false;
-            MenuItemRole = MenuItemRole.MenuItemDivider;
-            Margin = new Thickness(0, -1, 0, -1);
-        }
+        IsHitTestVisible = false;
+        IsCheckable = false;
+        IsTabStop = false;
+        MenuItemRole = MenuItemRole.MenuItemDivider;
+        Margin = new Thickness(0, -1, 0, -1);
     }
 }

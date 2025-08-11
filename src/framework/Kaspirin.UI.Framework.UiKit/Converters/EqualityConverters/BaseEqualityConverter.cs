@@ -16,63 +16,64 @@ using System;
 using System.Globalization;
 using System.Windows.Data;
 
-namespace Kaspirin.UI.Framework.UiKit.Converters.EqualityConverters
+using ConvertTo = System.Convert;
+
+namespace Kaspirin.UI.Framework.UiKit.Converters.EqualityConverters;
+
+public abstract class BaseEqualityConverter<T> : ValueConverterMarkupExtension<BaseEqualityConverter<T>>
 {
-    public abstract class BaseEqualityConverter<T> : ValueConverterMarkupExtension<BaseEqualityConverter<T>>
+    protected BaseEqualityConverter(T? trueValue, T? falseValue)
     {
-        protected BaseEqualityConverter(T? trueValue, T? falseValue)
+        ParameterType = EqualityParameterType.Default;
+
+        True = trueValue;
+        False = falseValue;
+    }
+
+    public T? True { get; set; }
+
+    public T? False { get; set; }
+
+    public EqualityParameterType ParameterType { get; set; }
+
+    public override object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
+        => IsEqual(value, parameter) ? True : False;
+
+    public override object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
+        => IsEqual(value, True) ? parameter : Binding.DoNothing;
+
+    private bool IsEqual(object? value, object? parameter)
+    {
+        switch (ParameterType)
         {
-            ParameterType = EqualityParameterType.Default;
+            case EqualityParameterType.Default:
+                return Equals(value, parameter);
 
-            True = trueValue;
-            False = falseValue;
-        }
+            case EqualityParameterType.Int32:
+                return Equals(value, ConvertTo.ToInt32(parameter));
 
-        public T? True { get; set; }
+            case EqualityParameterType.UInt32:
+                return Equals(value, ConvertTo.ToUInt32(parameter));
 
-        public T? False { get; set; }
+            case EqualityParameterType.UInt64:
+                return Equals(value, ConvertTo.ToUInt64(parameter));
 
-        public EqualityParameterType ParameterType { get; set; }
+            case EqualityParameterType.Double:
+                return ConvertTo.ToDouble(value).NearlyEqual(ConvertTo.ToDouble(parameter));
 
-        public override object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
-            => IsEqual(value, parameter) ? True : False;
+            case EqualityParameterType.String:
+                return string.IsNullOrWhiteSpace(value as string) && parameter == null || Equals(value, parameter);
 
-        public override object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
-            => IsEqual(value, True) ? parameter : Binding.DoNothing;
+            case EqualityParameterType.Type:
+                if (parameter is not Type targetType)
+                {
+                    return false;
+                }
 
-        private bool IsEqual(object? value, object? parameter)
-        {
-            switch (ParameterType)
-            {
-                case EqualityParameterType.Default:
-                    return Equals(value, parameter);
+                return value?.GetType().Equals(targetType) ?? false;
 
-                case EqualityParameterType.Int32:
-                    return Equals(value, System.Convert.ToInt32(parameter));
-
-                case EqualityParameterType.UInt32:
-                    return Equals(value, System.Convert.ToUInt32(parameter));
-
-                case EqualityParameterType.UInt64:
-                    return Equals(value, System.Convert.ToUInt64(parameter));
-
-                case EqualityParameterType.Double:
-                    return System.Convert.ToDouble(value).NearlyEqual(System.Convert.ToDouble(parameter));
-
-                case EqualityParameterType.String:
-                    return string.IsNullOrWhiteSpace(value as string) && parameter == null || Equals(value, parameter);
-
-                case EqualityParameterType.Type:
-                    if (parameter is not Type targetType)
-                    {
-                        return false;
-                    }
-
-                    return value?.GetType().Equals(targetType) ?? false;
-
-                default:
-                    throw new NotSupportedException($"Value {ParameterType} not supported.");
-            }
+            default:
+                throw new UnexpectedValueException(ParameterType);
         }
     }
 }

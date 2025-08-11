@@ -16,61 +16,75 @@ using System.Windows;
 using System.Windows.Controls.Primitives;
 using Kaspirin.UI.Framework.UiKit.Controls.Internals;
 
-namespace Kaspirin.UI.Framework.UiKit.Controls.Properties
+namespace Kaspirin.UI.Framework.UiKit.Controls.Properties;
+
+public static class ToggleButtonProps
 {
-    public static class ToggleButtonProps
+    #region IconLocation
+
+    public static ButtonIconLocation GetIconLocation(DependencyObject obj)
+        => (ButtonIconLocation)obj.GetValue(IconLocationProperty);
+
+    public static void SetIconLocation(DependencyObject obj, ButtonIconLocation value)
+        => obj.SetValue(IconLocationProperty, value);
+
+    public static readonly DependencyProperty IconLocationProperty = DependencyProperty.RegisterAttached(
+        "IconLocation",
+        typeof(ButtonIconLocation),
+        typeof(ToggleButtonProps),
+        UIKitPropertyMetadataFactory.CreatePropsMetadata(typeof(ToggleButton), nameof(IconLocationProperty), OnIconOrLocationChanged));
+
+    #endregion
+
+    #region Icon
+
+    public static UIKitIcon_16 GetIcon(DependencyObject obj)
+        => (UIKitIcon_16)obj.GetValue(IconProperty);
+
+    public static void SetIcon(DependencyObject obj, UIKitIcon_16 value)
+        => obj.SetValue(IconProperty, value);
+
+    public static readonly DependencyProperty IconProperty = DependencyProperty.RegisterAttached(
+        "Icon",
+        typeof(UIKitIcon_16),
+        typeof(ToggleButtonProps),
+        UIKitPropertyMetadataFactory.CreatePropsMetadata(typeof(ToggleButton), nameof(IconProperty), OnIconOrLocationChanged));
+
+    #endregion
+
+    #region IsBusy
+
+    public static bool GetIsBusy(DependencyObject obj)
+        => (bool)obj.GetValue(IsBusyProperty);
+
+    public static void SetIsBusy(DependencyObject obj, bool value)
+        => obj.SetValue(IsBusyProperty, value);
+
+    public static readonly DependencyProperty IsBusyProperty = DependencyProperty.RegisterAttached(
+        "IsBusy",
+        typeof(bool),
+        typeof(ToggleButtonProps),
+        UIKitPropertyMetadataFactory.CreatePropsMetadata(typeof(ToggleButton), nameof(IsBusyProperty), OnIsBusyChanged));
+
+    private static void OnIsBusyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        => d.SetValue(ButtonBaseInternals.IsBusyProperty, e.NewValue);
+
+    #endregion
+
+    private static void OnIconOrLocationChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
     {
-        #region IconLocation
+        var icon = (UIKitIcon_16)d.GetValue(IconProperty);
+        var location = (ButtonIconLocation)d.GetValue(IconLocationProperty);
 
-        public static ButtonIconLocation GetIconLocation(DependencyObject obj)
+        if (location == ButtonIconLocation.Left)
         {
-            return (ButtonIconLocation)obj.GetValue(IconLocationProperty);
+            d.SetValue(ButtonBaseInternals.LeftIcon16Property, icon);
+            d.SetValue(ButtonBaseInternals.RightIcon16Property, UIKitIcon_16.UIKitUnset);
         }
-
-        public static void SetIconLocation(DependencyObject obj, ButtonIconLocation value)
+        else
         {
-            obj.SetValue(IconLocationProperty, value);
-        }
-
-        public static readonly DependencyProperty IconLocationProperty =
-            DependencyProperty.RegisterAttached("IconLocation", typeof(ButtonIconLocation), typeof(ToggleButtonProps),
-                UIKitPropertyMetadataFactory.CreatePropsMetadata(typeof(ToggleButton), nameof(IconLocationProperty), OnIconOrLocationChanged));
-
-        #endregion
-
-        #region Icon
-
-        public static UIKitIcon_16 GetIcon(DependencyObject obj)
-        {
-            return (UIKitIcon_16)obj.GetValue(IconProperty);
-        }
-
-        public static void SetIcon(DependencyObject obj, UIKitIcon_16 value)
-        {
-            obj.SetValue(IconProperty, value);
-        }
-
-        public static readonly DependencyProperty IconProperty =
-            DependencyProperty.RegisterAttached("Icon", typeof(UIKitIcon_16), typeof(ToggleButtonProps),
-                UIKitPropertyMetadataFactory.CreatePropsMetadata(typeof(ToggleButton), nameof(IconProperty), OnIconOrLocationChanged));
-
-        #endregion
-
-        private static void OnIconOrLocationChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            var icon = (UIKitIcon_16)d.GetValue(IconProperty);
-            var location = (ButtonIconLocation)d.GetValue(IconLocationProperty);
-
-            if (location == ButtonIconLocation.Left)
-            {
-                d.SetValue(ButtonBaseInternals.LeftIcon16Property, icon);
-                d.SetValue(ButtonBaseInternals.RightIcon16Property, UIKitIcon_16.UIKitUnset);
-            }
-            else
-            {
-                d.SetValue(ButtonBaseInternals.LeftIcon16Property, UIKitIcon_16.UIKitUnset);
-                d.SetValue(ButtonBaseInternals.RightIcon16Property, icon);
-            }
+            d.SetValue(ButtonBaseInternals.LeftIcon16Property, UIKitIcon_16.UIKitUnset);
+            d.SetValue(ButtonBaseInternals.RightIcon16Property, icon);
         }
     }
 }

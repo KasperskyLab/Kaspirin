@@ -16,35 +16,34 @@ using System;
 using System.Windows;
 using System.Windows.Interop;
 
-namespace Kaspirin.UI.Framework.UiKit.Windows
+namespace Kaspirin.UI.Framework.UiKit.Windows;
+
+public sealed class WindowHook : WindowHookBase, IDisposable
 {
-    public sealed class WindowHook : WindowHookBase, IDisposable
+    public WindowHook(
+        Window window,
+        HwndSourceHook hook,
+        string hookId,
+        string traceComponent)
+        : base(window, hookId, traceComponent)
     {
-        public WindowHook(
-            Window window,
-            HwndSourceHook hook,
-            string hookId,
-            string traceComponent)
-            : base(window, hookId, traceComponent)
-        {
-            _hook = Guard.EnsureArgumentIsNotNull(hook);
-        }
-
-        public override void Detach()
-        {
-            Detach(_hook);
-        }
-
-        public override void Attach()
-        {
-            Attach(_hook);
-        }
-
-        public void Dispose()
-        {
-            Detach();
-        }
-
-        private readonly HwndSourceHook _hook;
+        _hook = Guard.EnsureArgumentIsNotNull(hook);
     }
+
+    public override void Detach()
+    {
+        Detach(_hook);
+    }
+
+    public override void Attach()
+    {
+        Attach(_hook);
+    }
+
+    public void Dispose()
+    {
+        Detach();
+    }
+
+    private readonly HwndSourceHook _hook;
 }

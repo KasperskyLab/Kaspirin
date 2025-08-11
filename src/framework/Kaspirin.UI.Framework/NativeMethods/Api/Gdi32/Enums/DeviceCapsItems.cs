@@ -12,17 +12,20 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
+namespace Kaspirin.UI.Framework.NativeMethods.Api.Gdi32.Enums;
 
-namespace Kaspirin.UI.Framework.NativeMethods.Api.Gdi32.Enums
+/// <summary>
+///     <seealso href="https://learn.microsoft.com/en-us/windows/win32/api/wingdi/nf-wingdi-getdevicecaps">Learn more</seealso>.
+/// </summary>
+public enum DeviceCapsItems
 {
     /// <summary>
-    ///     
-    /// <seealso href="https://learn.microsoft.com/en-us/windows/win32/api/wingdi/nf-wingdi-getdevicecaps">Learn more</seealso>.
+    ///     The LOGPIXELSX constant.
     /// </summary>
-    public enum DeviceCapsItems
-    {
-        LOGPIXELSX = 88,
-        LOGPIXELSY = 90
-    }
+    LogPixelsX = 88,
+
+    /// <summary>
+    ///     The LOGPIXELSY constant.
+    /// </summary>
+    LogPixelsY = 90
 }

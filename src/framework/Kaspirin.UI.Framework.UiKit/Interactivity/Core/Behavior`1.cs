@@ -7,17 +7,18 @@
 // Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
+#pragma warning disable CA1724 // Change either name to eliminate the conflict.
+
 using System.Windows;
 
-namespace Kaspirin.UI.Framework.UiKit.Interactivity.Core
-{
-    public abstract class Behavior<T> : Behavior where T : DependencyObject
-    {
-        protected Behavior()
-            : base(typeof(T))
-        {
-        }
+namespace Kaspirin.UI.Framework.UiKit.Interactivity.Core;
 
-        public new T? AssociatedObject => Guard.EnsureIsInstanceOfType<T?>(base.AssociatedObject);
+public abstract class Behavior<T> : Behavior where T : DependencyObject
+{
+    protected Behavior()
+        : base(typeof(T))
+    {
     }
+
+    public new T? AssociatedObject => Guard.EnsureIsInstanceOfType<T?>(base.AssociatedObject);
 }

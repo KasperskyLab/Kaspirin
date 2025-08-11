@@ -4,19 +4,37 @@ DateTimeInputAction_SelectTimeToolTip = 'Select time'
 DateTimePopupPresenter_CancelToolTip = 'Cancel'
 DateTimePopupPresenter_ConfirmToolTip = 'Confirm'
 
+EnumerableToStringJoinConverter_Separator = ', '
+
 ImageGallery_Counter = $CurrentIndex + ' of ' + $TotalIndex
 
 InputContextMenu_Copy = 'Copy'
 InputContextMenu_Cut = 'Cut'
 InputContextMenu_Paste = 'Paste'
 
+NotificationSpinner_Header = 'Please wait...'
+
 NumberInputAction_DecreaseToolTip = 'Decrease'
 NumberInputAction_IncreaseToolTip = 'Increase'
 
-PasswordInputCapsLockAction_CapsLockOnToolTip = 'Caps Lock enabled'
+PasswordInputCapsLockAction_CapsLockOnToolTip = 'Caps Lock is on.'
 PasswordInputCopyAction_CopyToolTip = 'Copy'
 PasswordInputRevealAction_HideToolTip = 'Hide'
 PasswordInputRevealAction_ShowToolTip = 'Show'
+
+ScrollBarContextMenu_ScrollHere = 'Scroll here'
+ScrollBarContextMenu_ScrollToTop = 'Top'
+ScrollBarContextMenu_ScrollToBottom = 'Bottom'
+ScrollBarContextMenu_ScrollToLeft = 'Left edge'
+ScrollBarContextMenu_ScrollToRight = 'Right edge'
+ScrollBarContextMenu_PageUp = 'Page up'
+ScrollBarContextMenu_PageDown = 'Page down'
+ScrollBarContextMenu_PageLeft = 'Page left'
+ScrollBarContextMenu_PageRight = 'Page right'
+ScrollBarContextMenu_LineUp = 'Line up'
+ScrollBarContextMenu_LineDown = 'Line down'
+ScrollBarContextMenu_LineLeft = 'Line left'
+ScrollBarContextMenu_LineRight = 'Line right'
 
 Search_ClearToolTip = 'Clear'
 Search_PlaceholderText = 'Search'
@@ -24,10 +42,10 @@ Search_Pattern_PlaceholderTextAndShortcut = $PlaceholderText + ' (' + $Shortcut 
 Search_Pattern_PlaceholderTextOnly = $PlaceholderText
 Search_Pattern_ShortcutOnly = $Shortcut
 
-Select_Placeholder = 'Select item'
+Select_Placeholder = 'Select an item'
 
-SelectableText_AfterCopy = 'Copied!'
-SelectableText_BeforeCopy = 'Click to copy'
+SelectableText_AfterCopy = 'Copied.'
+SelectableText_BeforeCopy = 'Click to copy.'
 
 TextInputCopyAction_CopyToolTip = 'Copy'
 

@@ -12,14 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Kaspirin.UI.Framework.UiKit
+namespace Kaspirin.UI.Framework.UiKit;
+
+internal static class UIKitComponentTracers
 {
-    internal static class UIKitComponentTracers
-    {
-        public static string Converters = "Converters";
-        public static string Notification = "Notification";
-        public static string Interactivity = "Interactivity";
-        public static string Navigation = "Navigation";
-        public static string Localization = "Localization";
-    }
+    public static string Converters = "Converters";
+    public static string Notification = "Notification";
+    public static string Interactivity = "Interactivity";
+    public static string Navigation = "Navigation";
+    public static string Localization = "Localization";
 }

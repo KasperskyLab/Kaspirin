@@ -15,59 +15,58 @@
 using System;
 using Microsoft.Win32;
 
-namespace Kaspirin.UI.Framework.SystemInfo
+namespace Kaspirin.UI.Framework.SystemInfo;
+
+/// <summary>
+///     Interface for working with static events and methods from <see cref="SystemEvents" />.
+/// </summary>
+public interface ISystemEvents
 {
-    /// <summary>
-    ///     Interface for working with static events and methods from <see cref="SystemEvents" />.
-    /// </summary>
-    public interface ISystemEvents
-    {
-        /// <inheritdoc cref="SystemEvents.PaletteChanged"/>
-        event EventHandler PaletteChanged;
+    /// <inheritdoc cref="SystemEvents.PaletteChanged"/>
+    event EventHandler PaletteChanged;
 
-        /// <inheritdoc cref="SystemEvents.TimerElapsed"/>
-        event TimerElapsedEventHandler TimerElapsed;
+    /// <inheritdoc cref="SystemEvents.TimerElapsed"/>
+    event TimerElapsedEventHandler TimerElapsed;
 
-        /// <inheritdoc cref="SystemEvents.TimeChanged"/>
-        event EventHandler TimeChanged;
+    /// <inheritdoc cref="SystemEvents.TimeChanged"/>
+    event EventHandler TimeChanged;
 
-        /// <inheritdoc cref="SystemEvents.SessionSwitch"/>
-        event SessionSwitchEventHandler SessionSwitch;
+    /// <inheritdoc cref="SystemEvents.SessionSwitch"/>
+    event SessionSwitchEventHandler SessionSwitch;
 
-        /// <inheritdoc cref="SystemEvents.SessionEnding"/>
-        event SessionEndingEventHandler SessionEnding;
+    /// <inheritdoc cref="SystemEvents.SessionEnding"/>
+    event SessionEndingEventHandler SessionEnding;
 
-        /// <inheritdoc cref="SystemEvents.SessionEnded"/>
-        event SessionEndedEventHandler SessionEnded;
+    /// <inheritdoc cref="SystemEvents.SessionEnded"/>
+    event SessionEndedEventHandler SessionEnded;
 
-        /// <inheritdoc cref="SystemEvents.PowerModeChanged"/>
-        event PowerModeChangedEventHandler PowerModeChanged;
+    /// <inheritdoc cref="SystemEvents.PowerModeChanged"/>
+    event PowerModeChangedEventHandler PowerModeChanged;
 
-        /// <inheritdoc cref="SystemEvents.UserPreferenceChanged"/>
-        event UserPreferenceChangedEventHandler UserPreferenceChanged;
+    /// <inheritdoc cref="SystemEvents.UserPreferenceChanged"/>
+    event UserPreferenceChangedEventHandler UserPreferenceChanged;
 
-        /// <inheritdoc cref="SystemEvents.UserPreferenceChanging"/>
-        event UserPreferenceChangingEventHandler UserPreferenceChanging;
+    /// <inheritdoc cref="SystemEvents.UserPreferenceChanging"/>
+    event UserPreferenceChangingEventHandler UserPreferenceChanging;
 
-        /// <inheritdoc cref="SystemEvents.InstalledFontsChanged"/>
-        event EventHandler InstalledFontsChanged;
+    /// <inheritdoc cref="SystemEvents.InstalledFontsChanged"/>
+    event EventHandler InstalledFontsChanged;
 
-        /// <inheritdoc cref="SystemEvents.EventsThreadShutdown"/>
-        event EventHandler EventsThreadShutdown;
+    /// <inheritdoc cref="SystemEvents.EventsThreadShutdown"/>
+    event EventHandler EventsThreadShutdown;
 
-        /// <inheritdoc cref="SystemEvents.DisplaySettingsChanged"/>
-        event EventHandler DisplaySettingsChanged;
+    /// <inheritdoc cref="SystemEvents.DisplaySettingsChanged"/>
+    event EventHandler DisplaySettingsChanged;
 
-        /// <inheritdoc cref="SystemEvents.DisplaySettingsChanging"/>
-        event EventHandler DisplaySettingsChanging;
+    /// <inheritdoc cref="SystemEvents.DisplaySettingsChanging"/>
+    event EventHandler DisplaySettingsChanging;
 
-        /// <inheritdoc cref="SystemEvents.CreateTimer"/>
-        IntPtr CreateTimer(int interval);
+    /// <inheritdoc cref="SystemEvents.CreateTimer"/>
+    IntPtr CreateTimer(int interval);
 
-        /// <inheritdoc cref="SystemEvents.InvokeOnEventsThread"/>
-        void InvokeOnEventsThread(Delegate method);
+    /// <inheritdoc cref="SystemEvents.InvokeOnEventsThread"/>
+    void InvokeOnEventsThread(Delegate method);
 
-        /// <inheritdoc cref="SystemEvents.KillTimer"/>
-        void KillTimer(IntPtr timerId);
-    }
+    /// <inheritdoc cref="SystemEvents.KillTimer"/>
+    void KillTimer(IntPtr timerId);
 }

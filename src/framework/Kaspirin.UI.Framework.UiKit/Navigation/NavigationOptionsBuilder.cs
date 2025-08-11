@@ -12,25 +12,24 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Kaspirin.UI.Framework.UiKit.Navigation
+namespace Kaspirin.UI.Framework.UiKit.Navigation;
+
+public sealed class NavigationOptionsBuilder
 {
-    public sealed class NavigationOptionsBuilder
+    public NavigationOptions Build() => _instance;
+
+    public void CopyFrom(NavigationOptions source)
     {
-        public NavigationOptions Build() => _instance;
-
-        public void CopyFrom(NavigationOptions source)
-        {
-            _instance.CanNavigateFrom = source.CanNavigateFrom;
-            _instance.KeepAlive = source.KeepAlive;
-            _instance.SkipOnBackNavigation = source.SkipOnBackNavigation;
-        }
-
-        public void SetCanNavigateFrom(bool value) => _instance.CanNavigateFrom = value;
-
-        public void SetKeepAlive(bool value) => _instance.KeepAlive = value;
-
-        public void SetSkipOnBackNavigation(bool value) => _instance.SkipOnBackNavigation = value;
-
-        private readonly NavigationOptions _instance = new();
+        _instance.CanNavigateFrom = source.CanNavigateFrom;
+        _instance.KeepAlive = source.KeepAlive;
+        _instance.SkipOnBackNavigation = source.SkipOnBackNavigation;
     }
+
+    public void SetCanNavigateFrom(bool value) => _instance.CanNavigateFrom = value;
+
+    public void SetKeepAlive(bool value) => _instance.KeepAlive = value;
+
+    public void SetSkipOnBackNavigation(bool value) => _instance.SkipOnBackNavigation = value;
+
+    private readonly NavigationOptions _instance = new();
 }

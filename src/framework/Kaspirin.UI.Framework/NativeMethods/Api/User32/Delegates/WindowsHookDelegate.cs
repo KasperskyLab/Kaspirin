@@ -15,15 +15,13 @@
 using System;
 using System.Runtime.InteropServices;
 
-namespace Kaspirin.UI.Framework.NativeMethods.Api.User32.Delegates
-{
-    /// <summary>
-    ///     
-    /// <seealso href="https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-setwindowshookexw">Learn more</seealso>.
-    /// </summary>
-    [UnmanagedFunctionPointer(CallingConvention.StdCall)]
-    public delegate IntPtr WindowsHookDelegate(
-        int code,
-        IntPtr wParam,
-        IntPtr lParam);
-}
+namespace Kaspirin.UI.Framework.NativeMethods.Api.User32.Delegates;
+
+/// <summary>
+///     <seealso href="https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-setwindowshookexw">Learn more</seealso>.
+/// </summary>
+[UnmanagedFunctionPointer(CallingConvention.StdCall)]
+public delegate IntPtr WindowsHookDelegate(
+    int code,
+    IntPtr wParam,
+    IntPtr lParam);

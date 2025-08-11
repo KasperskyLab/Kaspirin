@@ -14,21 +14,20 @@
 
 using System.Windows.Data;
 
-namespace Kaspirin.UI.Framework.UiKit.Converters.BooleanConverters
+namespace Kaspirin.UI.Framework.UiKit.Converters.BooleanConverters;
+
+/// <summary>
+///     Provides an implementation of <see cref="BaseBooleanConverter{T}" /> in which the conversion
+///     result is of type <see cref="UIKitIcon_16" />.
+/// </summary>
+/// <remarks>
+///     By default, it converts <see langword="true" /> and <see langword="false" /> to <see cref="UIKitIcon_16.UIKitUnset" />.
+/// </remarks>
+[ValueConversion(typeof(bool), typeof(UIKitIcon_16))]
+public sealed class BooleanToIcon16Converter : BaseBooleanConverter<UIKitIcon_16>
 {
     /// <summary>
-    ///     Provides an implementation of <see cref="BaseBooleanConverter{T}" /> in which the conversion
-    ///     result is of type <see cref="UIKitIcon_16" />.
+    ///     Creates an object <see cref="BooleanToIcon16Converter" />.
     /// </summary>
-    /// <remarks>
-    ///     By default, it converts <see langword="true" /> and <see langword="false" /> to <see cref="UIKitIcon_16.UIKitUnset" />.
-    /// </remarks>
-    [ValueConversion(typeof(bool), typeof(UIKitIcon_16))]
-    public sealed class BooleanToIcon16Converter : BaseBooleanConverter<UIKitIcon_16>
-    {
-        /// <summary>
-        ///     Creates an object <see cref="BooleanToIcon16Converter" />.
-        /// </summary>
-        public BooleanToIcon16Converter() : base(UIKitIcon_16.UIKitUnset, UIKitIcon_16.UIKitUnset) { }
-    }
+    public BooleanToIcon16Converter() : base(UIKitIcon_16.UIKitUnset, UIKitIcon_16.UIKitUnset) { }
 }

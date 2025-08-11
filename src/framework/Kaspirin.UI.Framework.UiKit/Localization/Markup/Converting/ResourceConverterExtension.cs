@@ -15,21 +15,20 @@
 using System;
 using System.Windows.Markup;
 
-namespace Kaspirin.UI.Framework.UiKit.Localization.Markup.Converting
+namespace Kaspirin.UI.Framework.UiKit.Localization.Markup.Converting;
+
+public abstract class ResourceConverterExtension : MarkupExtension, IResourceProvider
 {
-    public abstract class ResourceConverterExtension : MarkupExtension, IResourceProvider
+    public override object ProvideValue(IServiceProvider serviceProvider)
     {
-        public override object ProvideValue(IServiceProvider serviceProvider)
-        {
-            return this;
-        }
-
-        public object? GetResource(object? key)
-        {
-            return Convert(key);
-        }
-
-        protected abstract object? Convert(object? key);
-
+        return this;
     }
+
+    public object? GetResource(object? key)
+    {
+        return Convert(key);
+    }
+
+    protected abstract object? Convert(object? key);
+
 }

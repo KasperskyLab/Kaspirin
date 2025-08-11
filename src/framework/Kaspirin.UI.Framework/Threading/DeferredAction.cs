@@ -15,120 +15,119 @@
 using System;
 using System.Windows.Threading;
 
-namespace Kaspirin.UI.Framework.Threading
+namespace Kaspirin.UI.Framework.Threading;
+
+/// <summary>
+///     Performs an action in the UI thread once after the specified time interval.
+/// </summary>
+public sealed class DeferredAction
 {
     /// <summary>
-    ///     Performs an action in the UI thread once after the specified time interval.
+    ///     Executes the delegate <paramref name="action" /> after a time interval <paramref name="delay" />.
     /// </summary>
-    public sealed class DeferredAction
+    /// <param name="action">
+    ///     The delegate being executed.
+    /// </param>
+    /// <param name="delay">
+    ///     The time interval after which to execute <paramref name="action" />.
+    /// </param>
+    /// <remarks>
+    ///     
+    /// <paramref name="action" /> is executed in the UI thread.
+    /// </remarks>
+    /// <summary>
+    ///     An instance of <see cref="DeferredAction" /> executing the delegate.
+    /// </summary>
+    public static DeferredAction Execute(Action action, TimeSpan delay)
     {
-        /// <summary>
-        ///     Executes the delegate <paramref name="action" /> after a time interval <paramref name="delay" />.
-        /// </summary>
-        /// <param name="action">
-        ///     The delegate being executed.
-        /// </param>
-        /// <param name="delay">
-        ///     The time interval after which to execute <paramref name="action" />.
-        /// </param>
-        /// <remarks>
-        ///     
-        /// <paramref name="action" /> is executed in the UI thread.
-        /// </remarks>
-        /// <summary>
-        ///     An instance of <see cref="DeferredAction" /> executing the delegate.
-        /// </summary>
-        public static DeferredAction Execute(Action action, TimeSpan delay)
-        {
-            var deferredAction = new DeferredAction(action, delay);
-            deferredAction.Execute();
+        var deferredAction = new DeferredAction(action, delay);
+        deferredAction.Execute();
 
-            return deferredAction;
-        }
-
-        /// <summary>
-        ///     Initializes a new instance of the <see cref="DeferredAction" /> class.
-        /// </summary>
-        /// <param name="action">
-        ///     The delegate being executed.
-        /// </param>
-        /// <remarks>
-        ///     
-        /// <paramref name="action" /> is executed in the UI thread.
-        /// </remarks>
-        public DeferredAction(Action action) : this(action, TimeSpan.Zero)
-        {
-        }
-
-        /// <summary>
-        ///     Initializes a new instance of the <see cref="DeferredAction" /> class.
-        /// </summary>
-        /// <param name="action">
-        ///     The delegate being executed.
-        /// </param>
-        /// <param name="delay">
-        ///     The time interval after which to execute <paramref name="action" />.
-        /// </param>
-        /// <remarks>
-        ///     
-        /// <paramref name="action" /> is executed in the UI thread.
-        /// </remarks>
-        public DeferredAction(Action action, TimeSpan delay)
-        {
-            Guard.ArgumentIsNotNull(action);
-
-            _action = action;
-            _timer = WeakDispatcherTimer.Create(OnTimer, delay);
-        }
-
-        /// <summary>
-        ///     Indicates whether the delayed execution timer is running.
-        /// </summary>
-        public bool IsEnabled => _timer.IsEnabled;
-
-        /// <summary>
-        ///     Starts the delayed execution timer.
-        /// </summary>
-        /// <remarks>
-        ///     When the method is called again, the timer will be restarted.
-        /// </remarks>
-        public void Execute()
-        {
-            _timer.Stop();
-            _timer.Start();
-        }
-
-        /// <summary>
-        ///     Starts the delayed execution timer.
-        /// </summary>
-        /// <param name="delay">
-        ///     The time interval after which the actions must be performed.
-        /// </param>
-        /// <remarks>
-        ///     When the method is called again, the timer will be restarted.
-        /// </remarks>
-        public void Execute(TimeSpan delay)
-        {
-            _timer.Stop();
-            _timer.Interval = delay;
-            _timer.Start();
-        }
-
-        /// <summary>
-        ///     Stops the delayed execution timer.
-        /// </summary>
-        public void Cancel()
-        {
-            _timer.Stop();
-        }
-
-        private void OnTimer(object? sender, EventArgs e)
-        {
-            _action();
-            _timer.Stop();
-        }
-
-        private readonly Action _action;
-        private readonly DispatcherTimer _timer;
+        return deferredAction;
     }
+
+    /// <summary>
+    ///     Initializes a new instance of the <see cref="DeferredAction" /> class.
+    /// </summary>
+    /// <param name="action">
+    ///     The delegate being executed.
+    /// </param>
+    /// <remarks>
+    ///     
+    /// <paramref name="action" /> is executed in the UI thread.
+    /// </remarks>
+    public DeferredAction(Action action) : this(action, TimeSpan.Zero)
+    {
+    }
+
+    /// <summary>
+    ///     Initializes a new instance of the <see cref="DeferredAction" /> class.
+    /// </summary>
+    /// <param name="action">
+    ///     The delegate being executed.
+    /// </param>
+    /// <param name="delay">
+    ///     The time interval after which to execute <paramref name="action" />.
+    /// </param>
+    /// <remarks>
+    ///     
+    /// <paramref name="action" /> is executed in the UI thread.
+    /// </remarks>
+    public DeferredAction(Action action, TimeSpan delay)
+    {
+        Guard.ArgumentIsNotNull(action);
+
+        _action = action;
+        _timer = WeakDispatcherTimer.Create(OnTimer, delay);
+    }
+
+    /// <summary>
+    ///     Indicates whether the delayed execution timer is running.
+    /// </summary>
+    public bool IsEnabled => _timer.IsEnabled;
+
+    /// <summary>
+    ///     Starts the delayed execution timer.
+    /// </summary>
+    /// <remarks>
+    ///     When the method is called again, the timer will be restarted.
+    /// </remarks>
+    public void Execute()
+    {
+        _timer.Stop();
+        _timer.Start();
+    }
+
+    /// <summary>
+    ///     Starts the delayed execution timer.
+    /// </summary>
+    /// <param name="delay">
+    ///     The time interval after which the actions must be performed.
+    /// </param>
+    /// <remarks>
+    ///     When the method is called again, the timer will be restarted.
+    /// </remarks>
+    public void Execute(TimeSpan delay)
+    {
+        _timer.Stop();
+        _timer.Interval = delay;
+        _timer.Start();
+    }
+
+    /// <summary>
+    ///     Stops the delayed execution timer.
+    /// </summary>
+    public void Cancel()
+    {
+        _timer.Stop();
+    }
+
+    private void OnTimer(object? sender, EventArgs e)
+    {
+        _action();
+        _timer.Stop();
+    }
+
+    private readonly Action _action;
+    private readonly DispatcherTimer _timer;
 }

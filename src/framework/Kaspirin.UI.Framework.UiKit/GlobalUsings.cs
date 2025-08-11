@@ -12,13 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#pragma warning disable IDE0005 // Using directive is unnecessary.
+
 global using Kaspirin.UI.Framework.UiKit;
 global using Kaspirin.UI.Framework.UiKit.Accessibility;
 global using Kaspirin.UI.Framework.UiKit.Accessibility.TextScale;
 global using Kaspirin.UI.Framework.UiKit.Animation;
 global using Kaspirin.UI.Framework.UiKit.Animation.Markup;
 global using Kaspirin.UI.Framework.UiKit.Converters;
-global using Kaspirin.UI.Framework.UiKit.Converters.BaseConverters;
 global using Kaspirin.UI.Framework.UiKit.Converters.BaseMarkupExtensions;
 global using Kaspirin.UI.Framework.UiKit.Extensions;
 global using Kaspirin.UI.Framework.UiKit.Fonts;
@@ -41,10 +42,13 @@ global using Kaspirin.UI.Framework.UiKit.Localization.Localizer.Strings;
 global using Kaspirin.UI.Framework.UiKit.Localization.Localizer.Xaml;
 global using Kaspirin.UI.Framework.UiKit.Localization.Markup;
 global using Kaspirin.UI.Framework.UiKit.Localization.Markup.Converting;
+global using Kaspirin.UI.Framework.UiKit.Localization.Markup.Extensions.Files;
 global using Kaspirin.UI.Framework.UiKit.Localization.Markup.Extensions.Images;
 global using Kaspirin.UI.Framework.UiKit.Localization.Markup.Extensions.Strings;
 global using Kaspirin.UI.Framework.UiKit.Localization.Markup.Extensions.Xaml;
 global using Kaspirin.UI.Framework.UiKit.Localization.Markup.Metadata;
+global using Kaspirin.UI.Framework.UiKit.Localization.Resources;
+global using Kaspirin.UI.Framework.UiKit.Localization.Resources.ResourceBrowsers;
 global using Kaspirin.UI.Framework.UiKit.Notifications;
 global using Kaspirin.UI.Framework.UiKit.Services;
 global using Kaspirin.UI.Framework.UiKit.Statistics;

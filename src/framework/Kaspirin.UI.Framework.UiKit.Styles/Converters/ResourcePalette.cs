@@ -15,15 +15,14 @@
 using Kaspirin.UI.Framework.UiKit.Styles.Palette;
 using Kaspirin.UI.Framework.UiKit.Converters.DictionaryConverters;
 
-namespace Kaspirin.UI.Framework.UiKit.Styles.Converters
-{
-    public sealed class ResourcePalette : IDictionaryConverterItem
-    {
-        public UIKitPaletteStorage.UIKitPalette Id { get; set; }
+namespace Kaspirin.UI.Framework.UiKit.Styles.Converters;
 
-        public object GetItemValue()
-        {
-            return Id;
-        }
+public sealed class ResourcePalette : IDictionaryConverterItem
+{
+    public UIKitPaletteStorage.UIKitPalette Id { get; set; }
+
+    public object GetItemValue()
+    {
+        return Id;
     }
 }

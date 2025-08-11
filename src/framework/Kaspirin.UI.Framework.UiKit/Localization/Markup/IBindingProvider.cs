@@ -14,10 +14,9 @@
 
 using System.Windows.Data;
 
-namespace Kaspirin.UI.Framework.UiKit.Localization.Markup
+namespace Kaspirin.UI.Framework.UiKit.Localization.Markup;
+
+public interface IBindingProvider
 {
-    public interface IBindingProvider
-    {
-        BindingBase ProvideBinding();
-    }
+    BindingBase ProvideBinding();
 }

@@ -14,10 +14,9 @@
 
 using System.Collections.Generic;
 
-namespace Kaspirin.UI.Framework.UiKit.Navigation
+namespace Kaspirin.UI.Framework.UiKit.Navigation;
+
+public interface IRegionBehaviorsRegistry
 {
-    public interface IRegionBehaviorsRegistry
-    {
-        IList<IRegionBehavior> CreateBehaviors();
-    }
+    IList<IRegionBehavior> CreateBehaviors();
 }

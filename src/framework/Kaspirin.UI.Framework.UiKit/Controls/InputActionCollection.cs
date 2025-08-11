@@ -14,10 +14,9 @@
 
 using System.Collections.ObjectModel;
 
-namespace Kaspirin.UI.Framework.UiKit.Controls
-{
-    public sealed class InputActionCollection : ObservableCollection<InputActionBase>
-    {
+namespace Kaspirin.UI.Framework.UiKit.Controls;
 
-    }
+public sealed class InputActionCollection : ObservableCollection<InputActionBase>
+{
+
 }

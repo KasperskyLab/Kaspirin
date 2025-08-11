@@ -17,27 +17,26 @@ using System.Globalization;
 using System.Windows;
 using System.Windows.Data;
 
-namespace Kaspirin.UI.Framework.UiKit.Controls.Internals
+namespace Kaspirin.UI.Framework.UiKit.Controls.Internals;
+
+internal sealed class InputContentHostMarginConverter : IMultiValueConverter
 {
-    internal sealed class InputContentHostMarginConverter : IMultiValueConverter
+    public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
     {
-        public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
-        {
-            var margin = (Thickness)values[0];
-            var textAlignment = (TextAlignment)values[1];
+        var margin = (Thickness)values[0];
+        var textAlignment = (TextAlignment)values[1];
 
-            return new Thickness
-            {
-                Bottom = margin.Bottom,
-                Top = margin.Top,
-                Left = textAlignment == TextAlignment.Left ? margin.Left - (SystemParameters.CaretWidth + 1) : 0,
-                Right = textAlignment == TextAlignment.Right ? margin.Right - (SystemParameters.CaretWidth + 1) : 0,
-            };
-        }
-
-        public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
+        return new Thickness
         {
-            throw new NotImplementedException();
-        }
+            Bottom = margin.Bottom,
+            Top = margin.Top,
+            Left = textAlignment == TextAlignment.Left ? margin.Left - (SystemParameters.CaretWidth + 1) : 0,
+            Right = textAlignment == TextAlignment.Right ? margin.Right - (SystemParameters.CaretWidth + 1) : 0,
+        };
+    }
+
+    public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
+    {
+        throw new NotImplementedException();
     }
 }

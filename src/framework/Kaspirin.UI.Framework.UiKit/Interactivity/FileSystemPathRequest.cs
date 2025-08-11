@@ -14,68 +14,67 @@
 
 using System;
 
-namespace Kaspirin.UI.Framework.UiKit.Interactivity
+namespace Kaspirin.UI.Framework.UiKit.Interactivity;
+
+public sealed class FileSystemPathRequest : InteractionRequestBase<FileSystemPathObject>
 {
-    public sealed class FileSystemPathRequest : InteractionRequestBase<FileSystemPathObject>
+    public void Raise(Action<string> onSelected)
     {
-        public void Raise(Action<string> onSelected)
+        Guard.ArgumentIsNotNull(onSelected);
+
+        RaiseCore(onSelectedPath: onSelected);
+    }
+
+    public void Raise(Action<string[]> onSelected)
+    {
+        Guard.ArgumentIsNotNull(onSelected);
+
+        RaiseCore(onSelectedPaths: onSelected);
+    }
+
+    public void Raise(Action<FileSystemPathObject> onSelected)
+    {
+        Guard.ArgumentIsNotNull(onSelected);
+
+        RaiseCore(onSelected: onSelected);
+    }
+
+    public void Raise(FileSystemPathObject fileSystemPathObject, Action<FileSystemPathObject> onSelected)
+    {
+        Guard.ArgumentIsNotNull(fileSystemPathObject);
+        Guard.ArgumentIsNotNull(onSelected);
+
+        RaiseCore(fileSystemPathObject: fileSystemPathObject, onSelected: onSelected);
+    }
+
+    private void RaiseCore(
+        FileSystemPathObject? fileSystemPathObject = null,
+        Action<string>? onSelectedPath = null,
+        Action<string[]>? onSelectedPaths = null,
+        Action<FileSystemPathObject>? onSelected = null)
+    {
+        var interactionObject = fileSystemPathObject ?? new FileSystemPathObject();
+
+        void OnHandled(FileSystemPathObject pathObject)
         {
-            Guard.ArgumentIsNotNull(onSelected);
-
-            RaiseCore(onSelectedPath: onSelected);
-        }
-
-        public void Raise(Action<string[]> onSelected)
-        {
-            Guard.ArgumentIsNotNull(onSelected);
-
-            RaiseCore(onSelectedPaths: onSelected);
-        }
-
-        public void Raise(Action<FileSystemPathObject> onSelected)
-        {
-            Guard.ArgumentIsNotNull(onSelected);
-
-            RaiseCore(onSelected: onSelected);
-        }
-
-        public void Raise(FileSystemPathObject fileSystemPathObject, Action<FileSystemPathObject> onSelected)
-        {
-            Guard.ArgumentIsNotNull(fileSystemPathObject);
-            Guard.ArgumentIsNotNull(onSelected);
-
-            RaiseCore(fileSystemPathObject: fileSystemPathObject, onSelected: onSelected);
-        }
-
-        private void RaiseCore(
-            FileSystemPathObject? fileSystemPathObject = null,
-            Action<string>? onSelectedPath = null,
-            Action<string[]>? onSelectedPaths = null,
-            Action<FileSystemPathObject>? onSelected = null)
-        {
-            var interactionObject = fileSystemPathObject ?? new FileSystemPathObject();
-
-            void OnHandled(FileSystemPathObject pathObject)
+            if (pathObject.IsConfirmed)
             {
-                if (pathObject.IsConfirmed)
-                {
-                    onSelectedPath?.Invoke(Guard.EnsureIsNotNull(pathObject.Path));
-                    onSelectedPaths?.Invoke(Guard.EnsureIsNotNull(pathObject.Paths));
-                    onSelected?.Invoke(pathObject);
-                }
-            }
-
-            using (new DisableWow64FsRedirection(true))
-            {
-                InvokeInteraction(interactionObject, OnHandled);
+                onSelectedPath?.Invoke(Guard.EnsureIsNotNull(pathObject.Path));
+                onSelectedPaths?.Invoke(Guard.EnsureIsNotNull(pathObject.Paths));
+                onSelected?.Invoke(pathObject);
             }
         }
 
-        protected override void OnClose()
+        using (new DisableWow64FsRedirection(true))
         {
-            Guard.IsNotNull(InteractionObject);
-
-            InteractionObject.IsConfirmed = false;
+            InvokeInteraction(interactionObject, OnHandled);
         }
+    }
+
+    protected override void OnClose()
+    {
+        Guard.IsNotNull(InteractionObject);
+
+        InteractionObject.IsConfirmed = false;
     }
 }

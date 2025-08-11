@@ -12,10 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Kaspirin.UI.Framework.UiKit.Icons
+namespace Kaspirin.UI.Framework.UiKit.Icons;
+
+public static class UIKitIcons
 {
-    public static class UIKitIcons
-    {
-        public const string Unset = "UIKitUnset";
-    }
+    public const string Unset = "UIKitUnset";
 }

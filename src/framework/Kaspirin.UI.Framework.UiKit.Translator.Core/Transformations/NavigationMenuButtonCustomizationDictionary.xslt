@@ -52,140 +52,118 @@
 									xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
 					<!--Background-->
-					<xsl:if test="Background">
-						<xsl:call-template name="generateBrush">
-							<xsl:with-param name="key">Background</xsl:with-param>
-							<xsl:with-param name="brushNode" select="Background"/>
-						</xsl:call-template>
-					</xsl:if>
+					<xsl:call-template name="generateBrush">
+						<xsl:with-param name="key">Background</xsl:with-param>
+						<xsl:with-param name="brushNode" select="Background"/>
+					</xsl:call-template>
 
 					<!--BorderColorHover-->
-					<xsl:if test="BorderColorHover">
-						<xsl:call-template name="generateBrush">
-							<xsl:with-param name="key">BorderHover</xsl:with-param>
-							<xsl:with-param name="brushNode" select="BorderColorHover"/>
-						</xsl:call-template>
-					</xsl:if>
+					<xsl:call-template name="generateBrush">
+						<xsl:with-param name="key">BorderHover</xsl:with-param>
+						<xsl:with-param name="brushNode" select="BorderColorHover"/>
+					</xsl:call-template>
 
 					<!--BorderColorNormal-->
-					<xsl:if test="BorderColorNormal">
-						<xsl:call-template name="generateBrush">
-							<xsl:with-param name="key">BorderNormal</xsl:with-param>
-							<xsl:with-param name="brushNode" select="BorderColorNormal"/>
-						</xsl:call-template>
-					</xsl:if>
+					<xsl:call-template name="generateBrush">
+						<xsl:with-param name="key">BorderNormal</xsl:with-param>
+						<xsl:with-param name="brushNode" select="BorderColorNormal"/>
+					</xsl:call-template>
 
 					<!--BorderColorPressed-->
-					<xsl:if test="BorderColorPressed">
-						<xsl:call-template name="generateBrush">
-							<xsl:with-param name="key">BorderPressed</xsl:with-param>
-							<xsl:with-param name="brushNode" select="BorderColorPressed"/>
-						</xsl:call-template>
-					</xsl:if>
+					<xsl:call-template name="generateBrush">
+						<xsl:with-param name="key">BorderPressed</xsl:with-param>
+						<xsl:with-param name="brushNode" select="BorderColorPressed"/>
+					</xsl:call-template>
 
 					<!--ContainerBackgroundHover-->
-					<xsl:if test="ContainerBackgroundHover">
-						<xsl:call-template name="generateBrush">
-							<xsl:with-param name="key">ContainerBackgroundHover</xsl:with-param>
-							<xsl:with-param name="brushNode" select="ContainerBackgroundHover"/>
-						</xsl:call-template>
-					</xsl:if>
+					<xsl:call-template name="generateBrush">
+						<xsl:with-param name="key">ContainerBackgroundHover</xsl:with-param>
+						<xsl:with-param name="brushNode" select="ContainerBackgroundHover"/>
+					</xsl:call-template>
 
 					<!--ContainerBackgroundNormal-->
-					<xsl:if test="ContainerBackgroundNormal">
-						<xsl:call-template name="generateBrush">
-							<xsl:with-param name="key">ContainerBackgroundNormal</xsl:with-param>
-							<xsl:with-param name="brushNode" select="ContainerBackgroundNormal"/>
-						</xsl:call-template>
-					</xsl:if>
+					<xsl:call-template name="generateBrush">
+						<xsl:with-param name="key">ContainerBackgroundNormal</xsl:with-param>
+						<xsl:with-param name="brushNode" select="ContainerBackgroundNormal"/>
+					</xsl:call-template>
 
 					<!--ContainerBackgroundPressed-->
-					<xsl:if test="ContainerBackgroundPressed">
-						<xsl:call-template name="generateBrush">
-							<xsl:with-param name="key">ContainerBackgroundPressed</xsl:with-param>
-							<xsl:with-param name="brushNode" select="ContainerBackgroundPressed"/>
-						</xsl:call-template>
-					</xsl:if>
+					<xsl:call-template name="generateBrush">
+						<xsl:with-param name="key">ContainerBackgroundPressed</xsl:with-param>
+						<xsl:with-param name="brushNode" select="ContainerBackgroundPressed"/>
+					</xsl:call-template>
 
-					<!--FocusVisualBrush-->
-					<xsl:if test="Focus/Color">
-						<xsl:call-template name="generateBrush">
-							<xsl:with-param name="key">FocusVisualBrush</xsl:with-param>
-							<xsl:with-param name="brushNode" select="Focus/Color"/>
-						</xsl:call-template>
-					</xsl:if>
+					<!--CounterBrush-->
+					<xsl:call-template name="generateBrush">
+						<xsl:with-param name="key">CounterBrush</xsl:with-param>
+						<xsl:with-param name="brushNode" select="CounterBrush"/>
+					</xsl:call-template>
+
+					<!--FocusVisualBrushLevel1-->
+					<xsl:call-template name="generateBrush">
+						<xsl:with-param name="key">FocusVisualBrushLevel1</xsl:with-param>
+						<xsl:with-param name="brushNode" select="FocusLevel1/Color"/>
+					</xsl:call-template>
+
+					<!--FocusVisualBrushLevel2-->
+					<xsl:call-template name="generateBrush">
+						<xsl:with-param name="key">FocusVisualBrushLevel2</xsl:with-param>
+						<xsl:with-param name="brushNode" select="FocusLevel2/Color"/>
+					</xsl:call-template>
 
 					<!--ForegroundHover-->
-					<xsl:if test="ForegroundHover">
-						<xsl:call-template name="generateBrush">
-							<xsl:with-param name="key">ForegroundHover</xsl:with-param>
-							<xsl:with-param name="brushNode" select="ForegroundHover"/>
-						</xsl:call-template>
-					</xsl:if>
+					<xsl:call-template name="generateBrush">
+						<xsl:with-param name="key">ForegroundHover</xsl:with-param>
+						<xsl:with-param name="brushNode" select="ForegroundHover"/>
+					</xsl:call-template>
 
 					<!--ForegroundNormal-->
-					<xsl:if test="ForegroundNormal">
-						<xsl:call-template name="generateBrush">
-							<xsl:with-param name="key">ForegroundNormal</xsl:with-param>
-							<xsl:with-param name="brushNode" select="ForegroundNormal"/>
-						</xsl:call-template>
-					</xsl:if>
+					<xsl:call-template name="generateBrush">
+						<xsl:with-param name="key">ForegroundNormal</xsl:with-param>
+						<xsl:with-param name="brushNode" select="ForegroundNormal"/>
+					</xsl:call-template>
 
 					<!--ForegroundPressed-->
-					<xsl:if test="ForegroundPressed">
-						<xsl:call-template name="generateBrush">
-							<xsl:with-param name="key">ForegroundPressed</xsl:with-param>
-							<xsl:with-param name="brushNode" select="ForegroundPressed"/>
-						</xsl:call-template>
-					</xsl:if>
+					<xsl:call-template name="generateBrush">
+						<xsl:with-param name="key">ForegroundPressed</xsl:with-param>
+						<xsl:with-param name="brushNode" select="ForegroundPressed"/>
+					</xsl:call-template>
 
 					<!--ForegroundSecondLineHover-->
-					<xsl:if test="ForegroundSecondLineHover">
-						<xsl:call-template name="generateBrush">
-							<xsl:with-param name="key">ForegroundSecondLineHover</xsl:with-param>
-							<xsl:with-param name="brushNode" select="ForegroundSecondLineHover"/>
-						</xsl:call-template>
-					</xsl:if>
+					<xsl:call-template name="generateBrush">
+						<xsl:with-param name="key">ForegroundSecondLineHover</xsl:with-param>
+						<xsl:with-param name="brushNode" select="ForegroundSecondLineHover"/>
+					</xsl:call-template>
 
 					<!--ForegroundSecondLineNormal-->
-					<xsl:if test="ForegroundSecondLineNormal">
-						<xsl:call-template name="generateBrush">
-							<xsl:with-param name="key">ForegroundSecondLineNormal</xsl:with-param>
-							<xsl:with-param name="brushNode" select="ForegroundSecondLineNormal"/>
-						</xsl:call-template>
-					</xsl:if>
+					<xsl:call-template name="generateBrush">
+						<xsl:with-param name="key">ForegroundSecondLineNormal</xsl:with-param>
+						<xsl:with-param name="brushNode" select="ForegroundSecondLineNormal"/>
+					</xsl:call-template>
 
 					<!--ForegroundSecondLinePressed-->
-					<xsl:if test="ForegroundSecondLinePressed">
-						<xsl:call-template name="generateBrush">
-							<xsl:with-param name="key">ForegroundSecondLinePressed</xsl:with-param>
-							<xsl:with-param name="brushNode" select="ForegroundSecondLinePressed"/>
-						</xsl:call-template>
-					</xsl:if>
+					<xsl:call-template name="generateBrush">
+						<xsl:with-param name="key">ForegroundSecondLinePressed</xsl:with-param>
+						<xsl:with-param name="brushNode" select="ForegroundSecondLinePressed"/>
+					</xsl:call-template>
 
-					<!--IconForegroundHover-->
-					<xsl:if test="IconForegroundHover">
-						<xsl:call-template name="generateBrush">
-							<xsl:with-param name="key">IconForegroundHover</xsl:with-param>
-							<xsl:with-param name="brushNode" select="IconForegroundHover"/>
-						</xsl:call-template>
-					</xsl:if>
+					<!--IconBrushHover-->
+					<xsl:call-template name="generateBrush">
+						<xsl:with-param name="key">IconBrushHover</xsl:with-param>
+						<xsl:with-param name="brushNode" select="IconBrushHover"/>
+					</xsl:call-template>
 
-					<!--IconForegroundNormal-->
-					<xsl:if test="IconForegroundNormal">
-						<xsl:call-template name="generateBrush">
-							<xsl:with-param name="key">IconForegroundNormal</xsl:with-param>
-							<xsl:with-param name="brushNode" select="IconForegroundNormal"/>
-						</xsl:call-template>
-					</xsl:if>
+					<!--IconBrushNormal-->
+					<xsl:call-template name="generateBrush">
+						<xsl:with-param name="key">IconBrushNormal</xsl:with-param>
+						<xsl:with-param name="brushNode" select="IconBrushNormal"/>
+					</xsl:call-template>
 
-					<!--IconForegroundPressed-->
-					<xsl:if test="IconForegroundPressed">
-						<xsl:call-template name="generateBrush">
-							<xsl:with-param name="key">IconForegroundPressed</xsl:with-param>
-							<xsl:with-param name="brushNode" select="IconForegroundPressed"/>
-						</xsl:call-template>
-					</xsl:if>
+					<!--IconBrushPressed-->
+					<xsl:call-template name="generateBrush">
+						<xsl:with-param name="key">IconBrushPressed</xsl:with-param>
+						<xsl:with-param name="brushNode" select="IconBrushPressed"/>
+					</xsl:call-template>
 
 				</ResourceDictionary>
 

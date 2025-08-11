@@ -16,24 +16,30 @@ using System;
 using System.Windows.Markup;
 using System.Windows.Media.Animation;
 
-namespace Kaspirin.UI.Framework.UiKit.Animation.Markup
+namespace Kaspirin.UI.Framework.UiKit.Animation.Markup;
+
+/// <summary>
+///     Extending markup for initializing the <see cref="AnimationProperties" /> class in XAML.
+/// </summary>
+public sealed class AnimationPropertiesExtension : MarkupExtension
 {
-    public sealed class AnimationPropertiesExtension : MarkupExtension
+    /// <inheritdoc cref="AnimationProperties.Duration"/>
+    public TimeSpan Duration { get; set; }
+
+    /// <inheritdoc cref="AnimationProperties.Delay"/>
+    public TimeSpan Delay { get; set; }
+
+    /// <inheritdoc cref="AnimationProperties.Easing"/>
+    public IEasingFunction? Easing { get; set; }
+
+    /// <inheritdoc/>
+    public override object ProvideValue(IServiceProvider serviceProvider)
     {
-        public TimeSpan Duration { get; set; }
-
-        public TimeSpan Delay { get; set; }
-
-        public IEasingFunction? Easing { get; set; }
-
-        public override object ProvideValue(IServiceProvider serviceProvider)
+        return new AnimationProperties()
         {
-            return new AnimationProperties()
-            {
-                Duration = Duration,
-                Delay = Delay,
-                Easing = Easing
-            };
-        }
+            Duration = Duration,
+            Delay = Delay,
+            Easing = Easing
+        };
     }
 }

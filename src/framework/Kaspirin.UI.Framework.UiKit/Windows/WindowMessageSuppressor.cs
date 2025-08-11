@@ -15,45 +15,44 @@
 using System;
 using System.Windows;
 
-namespace Kaspirin.UI.Framework.UiKit.Windows
+namespace Kaspirin.UI.Framework.UiKit.Windows;
+
+public static class WindowMessageSuppressor
 {
-    public static class WindowMessageSuppressor
+    public static void ExecuteWithMessageSuppression(
+        Window window,
+        Action action,
+        params WindowMessage[] messages)
     {
-        public static void ExecuteWithMessageSuppression(
-            Window window,
-            Action action,
-            params WindowMessage[] messages)
+        Guard.ArgumentIsNotNull(window);
+        Guard.ArgumentIsNotNull(action);
+        Guard.ArgumentCollectionIsNotNullOrEmpty(messages);
+
+        static IntPtr wndProc(IntPtr hwnd, IntPtr wParam, IntPtr lParam, ref bool handled)
         {
-            Guard.ArgumentIsNotNull(window);
-            Guard.ArgumentIsNotNull(action);
-            Guard.ArgumentCollectionIsNotNullOrEmpty(messages);
+            handled = true;
 
-            static IntPtr wndProc(IntPtr hwnd, IntPtr wParam, IntPtr lParam, ref bool handled)
-            {
-                handled = true;
+            return IntPtr.Zero;
+        }
 
-                return IntPtr.Zero;
-            }
+        var hookId = $"{string.Join("_", messages)}_SuppressionHook_{Guid.NewGuid()}";
 
-            var hookId = $"{string.Join("_", messages)}_SuppressionHook_{Guid.NewGuid()}";
+        var hookBuilder = new WindowHookBuilder(hookId);
+        foreach (var message in messages)
+        {
+            hookBuilder.AddHandler(message, wndProc);
+        }
 
-            var hookBuilder = new WindowHookBuilder(hookId);
-            foreach (var message in messages)
-            {
-                hookBuilder.AddHandler(message, wndProc);
-            }
+        var hook = hookBuilder.Build();
 
-            var hook = hookBuilder.Build();
-
-            try
-            {
-                WindowHookStorage.AddHook(window, hook, hookId);
-                action();
-            }
-            finally
-            {
-                WindowHookStorage.RemoveHook(window, hookId);
-            }
+        try
+        {
+            WindowHookStorage.AddHook(window, hook, hookId);
+            action();
+        }
+        finally
+        {
+            WindowHookStorage.RemoveHook(window, hookId);
         }
     }
 }

@@ -16,18 +16,15 @@ using System;
 using System.IO;
 using System.Text;
 
-namespace Kaspirin.UI.Framework.UiKit.Localization.Localizer.Files
+namespace Kaspirin.UI.Framework.UiKit.Localization.Localizer.Files;
+
+public interface IFileLocalizer : ILocalizer
 {
-    public interface IFileLocalizer : ILocalizer
-    {
-        byte[]? GetFileContent(string key);
+    byte[]? GetContent(string key);
 
-        Stream? GetFileStream(string key);
+    string? GetText(string key, Encoding encoding);
 
-        string? GetFileText(string key, Encoding encoding);
+    Uri? GetUri(string key);
 
-        Uri? GetFileUri(string key);
-
-        string? GetFilePath(string key);
-    }
+    Stream? GetStream(string key);
 }

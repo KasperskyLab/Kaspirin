@@ -17,25 +17,23 @@
 using System;
 using System.Runtime.InteropServices;
 
-namespace Kaspirin.UI.Framework.NativeMethods.Api.User32.Structs
+namespace Kaspirin.UI.Framework.NativeMethods.Api.User32.Structs;
+
+/// <summary>
+///     <seealso href="https://learn.microsoft.com/en-us/windows/win32/api/winuser/ns-winuser-mouseinput">Learn more</seealso>.
+/// </summary>
+[StructLayout(LayoutKind.Sequential)]
+public struct MouseInput
 {
-    /// <summary>
-    ///     
-    /// <seealso href="https://learn.microsoft.com/en-us/windows/win32/api/winuser/ns-winuser-mouseinput">Learn more</seealso>.
-    /// </summary>
-    [StructLayout(LayoutKind.Sequential)]
-    public struct MouseInput
-    {
-        public int X;
+    public int X;
 
-        public int Y;
+    public int Y;
 
-        public uint Data;
+    public uint Data;
 
-        public MouseInputFlags Flags;
+    public MouseInputFlags Flags;
 
-        public uint Time;
+    public uint Time;
 
-        public UIntPtr ExtraInfo;
-    }
+    public UIntPtr ExtraInfo;
 }

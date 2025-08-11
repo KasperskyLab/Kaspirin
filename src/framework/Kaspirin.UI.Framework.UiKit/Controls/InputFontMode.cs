@@ -12,11 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Kaspirin.UI.Framework.UiKit.Controls
+namespace Kaspirin.UI.Framework.UiKit.Controls;
+
+public enum InputFontMode
 {
-    public enum InputFontMode
-    {
-        Regular,
-        Monospace
-    }
+    Regular,
+    Monospace
 }

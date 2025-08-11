@@ -12,110 +12,485 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
+namespace Kaspirin.UI.Framework.NativeMethods.Api.User32.Enums;
 
-namespace Kaspirin.UI.Framework.NativeMethods.Api.User32.Enums
+/// <summary>
+///     <seealso href="https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-getsystemmetrics">Learn more</seealso>.
+/// </summary>
+public enum SystemMetric : uint
 {
     /// <summary>
-    ///     
-    /// <seealso href="https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-getsystemmetrics">Learn more</seealso>.
+    ///     The SM_CXSCREEN constant.
     /// </summary>
-    public enum SystemMetric : uint
-    {
-        SM_CXSCREEN = 0,
-        SM_CYSCREEN = 1,
-        SM_CXVSCROLL = 2,
-        SM_CYHSCROLL = 3,
-        SM_CYCAPTION = 4,
-        SM_CXBORDER = 5,
-        SM_CYBORDER = 6,
-        SM_CXDLGFRAME = 7,
-        SM_CYDLGFRAME = 8,
-        SM_CYVTHUMB = 9,
-        SM_CXHTHUMB = 10,
-        SM_CXICON = 11,
-        SM_CYICON = 12,
-        SM_CXCURSOR = 13,
-        SM_CYCURSOR = 14,
-        SM_CYMENU = 15,
-        SM_CXFULLSCREEN = 16,
-        SM_CYFULLSCREEN = 17,
-        SM_CYKANJIWINDOW = 18,
-        SM_MOUSEPRESENT = 19,
-        SM_CYVSCROLL = 20,
-        SM_CXHSCROLL = 21,
-        SM_DEBUG = 22,
-        SM_SWAPBUTTON = 23,
-        SM_RESERVED1 = 24,
-        SM_RESERVED2 = 25,
-        SM_RESERVED3 = 26,
-        SM_RESERVED4 = 27,
-        SM_CXMIN = 28,
-        SM_CYMIN = 29,
-        SM_CXSIZE = 30,
-        SM_CYSIZE = 31,
-        SM_CXFRAME = 32,
-        SM_CYFRAME = 33,
-        SM_CXMINTRACK = 34,
-        SM_CYMINTRACK = 35,
-        SM_CXDOUBLECLK = 36,
-        SM_CYDOUBLECLK = 37,
-        SM_CXICONSPACING = 38,
-        SM_CYICONSPACING = 39,
-        SM_MENUDROPALIGNMENT = 40,
-        SM_PENWINDOWS = 41,
-        SM_DBCSENABLED = 42,
-        SM_CMOUSEBUTTONS = 43,
-        SM_SECURE = 44,
-        SM_CXEDGE = 45,
-        SM_CYEDGE = 46,
-        SM_CXMINSPACING = 47,
-        SM_CYMINSPACING = 48,
-        SM_CXSMICON = 49,
-        SM_CYSMICON = 50,
-        SM_CYSMCAPTION = 51,
-        SM_CXSMSIZE = 52,
-        SM_CYSMSIZE = 53,
-        SM_CXMENUSIZE = 54,
-        SM_CYMENUSIZE = 55,
-        SM_ARRANGE = 56,
-        SM_CXMINIMIZED = 57,
-        SM_CYMINIMIZED = 58,
-        SM_CXMAXTRACK = 59,
-        SM_CYMAXTRACK = 60,
-        SM_CXMAXIMIZED = 61,
-        SM_CYMAXIMIZED = 62,
-        SM_NETWORK = 63,
-        SM_CLEANBOOT = 67,
-        SM_CXDRAG = 68,
-        SM_CYDRAG = 69,
-        SM_SHOWSOUNDS = 70,
-        SM_CXMENUCHECK = 71,
-        SM_CYMENUCHECK = 72,
-        SM_SLOWMACHINE = 73,
-        SM_MIDEASTENABLED = 74,
-        SM_MOUSEWHEELPRESENT = 75,
-        SM_XVIRTUALSCREEN = 76,
-        SM_YVIRTUALSCREEN = 77,
-        SM_CXVIRTUALSCREEN = 78,
-        SM_CYVIRTUALSCREEN = 79,
-        SM_CMONITORS = 80,
-        SM_SAMEDISPLAYFORMAT = 81,
-        SM_IMMENABLED = 82,
-        SM_CXFOCUSBORDER = 83,
-        SM_CYFOCUSBORDER = 84,
-        SM_TABLETPC = 86,
-        SM_MEDIACENTER = 87,
-        SM_STARTER = 88,
-        SM_SERVERR2 = 89,
-        SM_MOUSEHORIZONTALWHEELPRESENT = 91,
-        SM_CXPADDEDBORDER = 92,
-        SM_DIGITIZER = 94,
-        SM_MAXIMUMTOUCHES = 95,
-        SM_REMOTESESSION = 0x1000,
-        SM_SHUTTINGDOWN = 0x2000,
-        SM_REMOTECONTROL = 0x2001,
-        SM_CONVERTIBLESLATEMODE = 0x2003,
-        SM_SYSTEMDOCKED = 0x2004,
-    }
+    CxScreen = 0,
+
+    /// <summary>
+    ///     The SM_CYSCREEN constant.
+    /// </summary>
+    CyScreen = 1,
+
+    /// <summary>
+    ///     The SM_CXVSCROLL constant.
+    /// </summary>
+    CxVScroll = 2,
+
+    /// <summary>
+    ///     The SM_CYHSCROLL constant.
+    /// </summary>
+    CyHScroll = 3,
+
+    /// <summary>
+    ///     The SM_CYCAPTION constant.
+    /// </summary>
+    CyCaption = 4,
+
+    /// <summary>
+    ///     The SM_CXBORDER constant.
+    /// </summary>
+    CxBorder = 5,
+
+    /// <summary>
+    ///     The SM_CYBORDER constant.
+    /// </summary>
+    CyBorder = 6,
+
+    /// <summary>
+    ///     The SM_CXDLGFRAME constant.
+    /// </summary>
+    CxDlgFrame = 7,
+
+    /// <summary>
+    ///     The SM_CYDLGFRAME constant.
+    /// </summary>
+    CyDlgFrame = 8,
+
+    /// <summary>
+    ///     The SM_CYVTHUMB constant.
+    /// </summary>
+    CyVThumb = 9,
+
+    /// <summary>
+    ///     The SM_CXHTHUMB constant.
+    /// </summary>
+    CxHThumb = 10,
+
+    /// <summary>
+    ///     The SM_CXICON constant.
+    /// </summary>
+    CxIcon = 11,
+
+    /// <summary>
+    ///     The SM_CYICON constant.
+    /// </summary>
+    CyIcon = 12,
+
+    /// <summary>
+    ///     The SM_CXCURSOR constant.
+    /// </summary>
+    CxCursor = 13,
+
+    /// <summary>
+    ///     The SM_CYCURSOR constant.
+    /// </summary>
+    CyCursor = 14,
+
+    /// <summary>
+    ///     The SM_CYMENU constant.
+    /// </summary>
+    CyMenu = 15,
+
+    /// <summary>
+    ///     The SM_CXFULLSCREEN constant.
+    /// </summary>
+    CxFullScreen = 16,
+
+    /// <summary>
+    ///     The SM_CYFULLSCREEN constant.
+    /// </summary>
+    CyFullScreen = 17,
+
+    /// <summary>
+    ///     The SM_CYKANJIWINDOW constant.
+    /// </summary>
+    CyKanjiWindow = 18,
+
+    /// <summary>
+    ///     The SM_MOUSEPRESENT constant.
+    /// </summary>
+    MousePresent = 19,
+
+    /// <summary>
+    ///     The SM_CYVSCROLL constant.
+    /// </summary>
+    CyVScroll = 20,
+
+    /// <summary>
+    ///     The SM_CXHSCROLL constant.
+    /// </summary>
+    CxHScroll = 21,
+
+    /// <summary>
+    ///     The SM_DEBUG constant.
+    /// </summary>
+    Debug = 22,
+
+    /// <summary>
+    ///     The SM_SWAPBUTTON constant.
+    /// </summary>
+    SwapButton = 23,
+
+    /// <summary>
+    ///     The SM_RESERVED1 constant.
+    /// </summary>
+    Reserved1 = 24,
+
+    /// <summary>
+    ///     The SM_RESERVED2 constant.
+    /// </summary>
+    Reserved2 = 25,
+
+    /// <summary>
+    ///     The SM_RESERVED3 constant.
+    /// </summary>
+    Reserved3 = 26,
+
+    /// <summary>
+    ///     The SM_RESERVED4 constant.
+    /// </summary>
+    Reserved4 = 27,
+
+    /// <summary>
+    ///     The SM_CXMIN constant.
+    /// </summary>
+    CxMin = 28,
+
+    /// <summary>
+    ///     The SM_CYMIN constant.
+    /// </summary>
+    CyMin = 29,
+
+    /// <summary>
+    ///     The SM_CXSIZE constant.
+    /// </summary>
+    CxSize = 30,
+
+    /// <summary>
+    ///     The SM_CYSIZE constant.
+    /// </summary>
+    CySize = 31,
+
+    /// <summary>
+    ///     The SM_CXFRAME constant.
+    /// </summary>
+    CxFrame = 32,
+
+    /// <summary>
+    ///     The SM_CYFRAME constant.
+    /// </summary>
+    CyFrame = 33,
+
+    /// <summary>
+    ///     The SM_CXMINTRACK constant.
+    /// </summary>
+    CxMinTrack = 34,
+
+    /// <summary>
+    ///     The SM_CYMINTRACK constant.
+    /// </summary>
+    CyMinTrack = 35,
+
+    /// <summary>
+    ///     The SM_CXDOUBLECLK constant.
+    /// </summary>
+    CxDoubleClk = 36,
+
+    /// <summary>
+    ///     The SM_CYDOUBLECLK constant.
+    /// </summary>
+    CyDoubleClk = 37,
+
+    /// <summary>
+    ///     The SM_CXICONSPACING constant.
+    /// </summary>
+    CxIconSpacing = 38,
+
+    /// <summary>
+    ///     The SM_CYICONSPACING constant.
+    /// </summary>
+    CyIconSpacing = 39,
+
+    /// <summary>
+    ///     The SM_MENUDROPALIGNMENT constant.
+    /// </summary>
+    MenuDropAlignment = 40,
+
+    /// <summary>
+    ///     The SM_PENWINDOWS constant.
+    /// </summary>
+    PenWindows = 41,
+
+    /// <summary>
+    ///     The SM_DBCSENABLED constant.
+    /// </summary>
+    DbcsEnabled = 42,
+
+    /// <summary>
+    ///     The SM_CMOUSEBUTTONS constant.
+    /// </summary>
+    CMouseButtons = 43,
+
+    /// <summary>
+    ///     The SM_SECURE constant.
+    /// </summary>
+    Secure = 44,
+
+    /// <summary>
+    ///     The SM_CXEDGE constant.
+    /// </summary>
+    CxEdge = 45,
+
+    /// <summary>
+    ///     The SM_CYEDGE constant.
+    /// </summary>
+    CyEdge = 46,
+
+    /// <summary>
+    ///     The SM_CXMINSPACING constant.
+    /// </summary>
+    CxMinSpacing = 47,
+
+    /// <summary>
+    ///     The SM_CYMINSPACING constant.
+    /// </summary>
+    CyMinSpacing = 48,
+
+    /// <summary>
+    ///     The SM_CXSMICON constant.
+    /// </summary>
+    CxSmIcon = 49,
+
+    /// <summary>
+    ///     The SM_CYSMICON constant.
+    /// </summary>
+    CySmIcon = 50,
+
+    /// <summary>
+    ///     The SM_CYSMCAPTION constant.
+    /// </summary>
+    CySmCaption = 51,
+
+    /// <summary>
+    ///     The SM_CXSMSIZE constant.
+    /// </summary>
+    CxSmSize = 52,
+
+    /// <summary>
+    ///     The SM_CYSMSIZE constant.
+    /// </summary>
+    CySmSize = 53,
+
+    /// <summary>
+    ///     The SM_CXMENUSIZE constant.
+    /// </summary>
+    CxMenuSize = 54,
+
+    /// <summary>
+    ///     The SM_CYMENUSIZE constant.
+    /// </summary>
+    CyMenuSize = 55,
+
+    /// <summary>
+    ///     The SM_ARRANGE constant.
+    /// </summary>
+    Arrange = 56,
+
+    /// <summary>
+    ///     The SM_CXMINIMIZED constant.
+    /// </summary>
+    CxMinimized = 57,
+
+    /// <summary>
+    ///     The SM_CYMINIMIZED constant.
+    /// </summary>
+    CyMinimized = 58,
+
+    /// <summary>
+    ///     The SM_CXMAXTRACK constant.
+    /// </summary>
+    CxMaxTrack = 59,
+
+    /// <summary>
+    ///     The SM_CYMAXTRACK constant.
+    /// </summary>
+    CyMaxTrack = 60,
+
+    /// <summary>
+    ///     The SM_CXMAXIMIZED constant.
+    /// </summary>
+    CxMaximized = 61,
+
+    /// <summary>
+    ///     The SM_CYMAXIMIZED constant.
+    /// </summary>
+    CyMaximized = 62,
+
+    /// <summary>
+    ///     The SM_NETWORK constant.
+    /// </summary>
+    Network = 63,
+
+    /// <summary>
+    ///     The SM_CLEANBOOT constant.
+    /// </summary>
+    CleanBoot = 67,
+
+    /// <summary>
+    ///     The SM_CXDRAG constant.
+    /// </summary>
+    CxDrag = 68,
+
+    /// <summary>
+    ///     The SM_CYDRAG constant.
+    /// </summary>
+    CyDrag = 69,
+
+    /// <summary>
+    ///     The SM_SHOWSOUNDS constant.
+    /// </summary>
+    ShowSounds = 70,
+
+    /// <summary>
+    ///     The SM_CXMENUCHECK constant.
+    /// </summary>
+    CxMenuCheck = 71,
+
+    /// <summary>
+    ///     The SM_CYMENUCHECK constant.
+    /// </summary>
+    CyMenuCheck = 72,
+
+    /// <summary>
+    ///     The SM_SLOWMACHINE constant.
+    /// </summary>
+    SlowMachine = 73,
+
+    /// <summary>
+    ///     The SM_MIDEASTENABLED constant.
+    /// </summary>
+    MideastEnabled = 74,
+
+    /// <summary>
+    ///     The SM_MOUSEWHEELPRESENT constant.
+    /// </summary>
+    MouseWheelPresent = 75,
+
+    /// <summary>
+    ///     The SM_XVIRTUALSCREEN constant.
+    /// </summary>
+    XVirtualScreen = 76,
+
+    /// <summary>
+    ///     The SM_YVIRTUALSCREEN constant.
+    /// </summary>
+    YVirtualScreen = 77,
+
+    /// <summary>
+    ///     The SM_CXVIRTUALSCREEN constant.
+    /// </summary>
+    CxVirtualScreen = 78,
+
+    /// <summary>
+    ///     The SM_CYVIRTUALSCREEN constant.
+    /// </summary>
+    CyVirtualScreen = 79,
+
+    /// <summary>
+    ///     The SM_CMONITORS constant.
+    /// </summary>
+    CMonitors = 80,
+
+    /// <summary>
+    ///     The SM_SAMEDISPLAYFORMAT constant.
+    /// </summary>
+    SameDisplayFormat = 81,
+
+    /// <summary>
+    ///     The SM_IMMENABLED constant.
+    /// </summary>
+    ImmEnabled = 82,
+
+    /// <summary>
+    ///     The SM_CXFOCUSBORDER constant.
+    /// </summary>
+    CxFocusBorder = 83,
+
+    /// <summary>
+    ///     The SM_CYFOCUSBORDER constant.
+    /// </summary>
+    CyFocusBorder = 84,
+
+    /// <summary>
+    ///     The SM_TABLETPC constant.
+    /// </summary>
+    TabletPc = 86,
+
+    /// <summary>
+    ///     The SM_MEDIACENTER constant.
+    /// </summary>
+    MediaCenter = 87,
+
+    /// <summary>
+    ///     The SM_STARTER constant.
+    /// </summary>
+    Starter = 88,
+
+    /// <summary>
+    ///     The SM_SERVERR2 constant.
+    /// </summary>
+    ServerR2 = 89,
+
+    /// <summary>
+    ///     The SM_MOUSEHORIZONTALWHEELPRESENT constant.
+    /// </summary>
+    MouseHorizontalWheelPresent = 91,
+
+    /// <summary>
+    ///     The SM_CXPADDEDBORDER constant.
+    /// </summary>
+    CxPaddedBorder = 92,
+
+    /// <summary>
+    ///     The SM_DIGITIZER constant.
+    /// </summary>
+    Digitizer = 94,
+
+    /// <summary>
+    ///     The SM_MAXIMUMTOUCHES constant.
+    /// </summary>
+    MaximumTouches = 95,
+
+    /// <summary>
+    ///     The SM_REMOTESESSION constant.
+    /// </summary>
+    RemoteSession = 0x1000,
+
+    /// <summary>
+    ///     The SM_SHUTTINGDOWN constant.
+    /// </summary>
+    ShuttingDown = 0x2000,
+
+    /// <summary>
+    ///     The SM_REMOTECONTROL constant.
+    /// </summary>
+    RemoteControl = 0x2001,
+
+    /// <summary>
+    ///     The SM_CONVERTIBLESLATEMODE constant.
+    /// </summary>
+    ConvertiblesLateMode = 0x2003,
+
+    /// <summary>
+    ///     The SM_SYSTEMDOCKED constant.
+    /// </summary>
+    SystemDocked = 0x2004,
 }

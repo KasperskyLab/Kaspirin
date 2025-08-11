@@ -46,7 +46,7 @@
 		<xsl:call-template name="assertId">
 			<xsl:with-param name="id" select="$id"/>
 		</xsl:call-template>
-		
+
 		<xsl:variable name="prefix" select="concat(@Type, '_')" />
 
 		<xsl:call-template name="getIdComment">
@@ -63,19 +63,6 @@
 				<xsl:call-template name="generateCornerRadiusSetter">
 					<xsl:with-param name="propertyId" select="concat($prefix, 'CornerRadius')" />
 				</xsl:call-template>
-
-				<!--[BadgePrefix]_Foreground-->
-				<xsl:if test="Foreground">
-					<xsl:call-template name="generateUiKitSetterViaAttribute">
-						<xsl:with-param name="propertyId" select="concat($prefix, 'Foreground')" />
-						<xsl:with-param name="propertyValue">
-							<xsl:call-template name="generateResExtension">
-								<xsl:with-param name="key">Foreground</xsl:with-param>
-								<xsl:with-param name="scope" select="$id"/>
-							</xsl:call-template>
-						</xsl:with-param>
-					</xsl:call-template>
-				</xsl:if>
 
 				<!--[BadgePrefix]_Height-->
 				<xsl:call-template name="generateHeightSetter">
@@ -110,17 +97,20 @@
 					<xsl:with-param name="setters">
 
 						<!--[BadgePrefix]_Background-->
-						<xsl:call-template name="generateUiKitSetterViaAttribute">
+						<xsl:call-template name="generateBrushSetter">
 							<xsl:with-param name="propertyId" select="concat($prefix, 'Background')" />
-							<xsl:with-param name="propertyValue">
-								<xsl:call-template name="generateResExtension">
-									<xsl:with-param name="key">BackgroundDanger</xsl:with-param>
-									<xsl:with-param name="scope">
-										<xsl:value-of select="@Id"/>
-									</xsl:with-param>
-								</xsl:call-template>
-							</xsl:with-param>
+							<xsl:with-param name="brushName">BackgroundDanger</xsl:with-param>
+							<xsl:with-param name="scopeName" select="$id"/>
 						</xsl:call-template>
+
+						<!--[BadgePrefix]_Foreground-->
+						<xsl:if test="ForegroundDanger">
+							<xsl:call-template name="generateBrushSetter">
+								<xsl:with-param name="propertyId" select="concat($prefix, 'Foreground')" />
+								<xsl:with-param name="brushName">ForegroundDanger</xsl:with-param>
+								<xsl:with-param name="scopeName" select="$id"/>
+							</xsl:call-template>
+						</xsl:if>
 
 					</xsl:with-param>
 				</xsl:call-template>
@@ -132,17 +122,20 @@
 					<xsl:with-param name="setters">
 
 						<!--[BadgePrefix]_Background-->
-						<xsl:call-template name="generateUiKitSetterViaAttribute">
+						<xsl:call-template name="generateBrushSetter">
 							<xsl:with-param name="propertyId" select="concat($prefix, 'Background')" />
-							<xsl:with-param name="propertyValue">
-								<xsl:call-template name="generateResExtension">
-									<xsl:with-param name="key">BackgroundInfo</xsl:with-param>
-									<xsl:with-param name="scope">
-										<xsl:value-of select="@Id"/>
-									</xsl:with-param>
-								</xsl:call-template>
-							</xsl:with-param>
+							<xsl:with-param name="brushName">BackgroundInfo</xsl:with-param>
+							<xsl:with-param name="scopeName" select="$id"/>
 						</xsl:call-template>
+
+						<!--[BadgePrefix]_Foreground-->
+						<xsl:if test="ForegroundInfo">
+							<xsl:call-template name="generateBrushSetter">
+								<xsl:with-param name="propertyId" select="concat($prefix, 'Foreground')" />
+								<xsl:with-param name="brushName">ForegroundInfo</xsl:with-param>
+								<xsl:with-param name="scopeName" select="$id"/>
+							</xsl:call-template>
+						</xsl:if>
 
 					</xsl:with-param>
 				</xsl:call-template>
@@ -154,17 +147,20 @@
 					<xsl:with-param name="setters">
 
 						<!--[BadgePrefix]_Background-->
-						<xsl:call-template name="generateUiKitSetterViaAttribute">
+						<xsl:call-template name="generateBrushSetter">
 							<xsl:with-param name="propertyId" select="concat($prefix, 'Background')" />
-							<xsl:with-param name="propertyValue">
-								<xsl:call-template name="generateResExtension">
-									<xsl:with-param name="key">BackgroundNeutral</xsl:with-param>
-									<xsl:with-param name="scope">
-										<xsl:value-of select="@Id"/>
-									</xsl:with-param>
-								</xsl:call-template>
-							</xsl:with-param>
+							<xsl:with-param name="brushName">BackgroundNeutral</xsl:with-param>
+							<xsl:with-param name="scopeName" select="$id"/>
 						</xsl:call-template>
+
+						<!--[BadgePrefix]_Foreground-->
+						<xsl:if test="ForegroundNeutral">
+							<xsl:call-template name="generateBrushSetter">
+								<xsl:with-param name="propertyId" select="concat($prefix, 'Foreground')" />
+								<xsl:with-param name="brushName">ForegroundNeutral</xsl:with-param>
+								<xsl:with-param name="scopeName" select="$id"/>
+							</xsl:call-template>
+						</xsl:if>
 
 					</xsl:with-param>
 				</xsl:call-template>
@@ -176,17 +172,20 @@
 					<xsl:with-param name="setters">
 
 						<!--[BadgePrefix]_Background-->
-						<xsl:call-template name="generateUiKitSetterViaAttribute">
+						<xsl:call-template name="generateBrushSetter">
 							<xsl:with-param name="propertyId" select="concat($prefix, 'Background')" />
-							<xsl:with-param name="propertyValue">
-								<xsl:call-template name="generateResExtension">
-									<xsl:with-param name="key">BackgroundPositive</xsl:with-param>
-									<xsl:with-param name="scope">
-										<xsl:value-of select="@Id"/>
-									</xsl:with-param>
-								</xsl:call-template>
-							</xsl:with-param>
+							<xsl:with-param name="brushName">BackgroundPositive</xsl:with-param>
+							<xsl:with-param name="scopeName" select="$id"/>
 						</xsl:call-template>
+
+						<!--[BadgePrefix]_Foreground-->
+						<xsl:if test="ForegroundPositive">
+							<xsl:call-template name="generateBrushSetter">
+								<xsl:with-param name="propertyId" select="concat($prefix, 'Foreground')" />
+								<xsl:with-param name="brushName">ForegroundPositive</xsl:with-param>
+								<xsl:with-param name="scopeName" select="$id"/>
+							</xsl:call-template>
+						</xsl:if>
 
 					</xsl:with-param>
 				</xsl:call-template>
@@ -198,17 +197,20 @@
 					<xsl:with-param name="setters">
 
 						<!--[BadgePrefix]_Background-->
-						<xsl:call-template name="generateUiKitSetterViaAttribute">
+						<xsl:call-template name="generateBrushSetter">
 							<xsl:with-param name="propertyId" select="concat($prefix, 'Background')" />
-							<xsl:with-param name="propertyValue">
-								<xsl:call-template name="generateResExtension">
-									<xsl:with-param name="key">BackgroundWarning</xsl:with-param>
-									<xsl:with-param name="scope">
-										<xsl:value-of select="@Id"/>
-									</xsl:with-param>
-								</xsl:call-template>
-							</xsl:with-param>
+							<xsl:with-param name="brushName">BackgroundWarning</xsl:with-param>
+							<xsl:with-param name="scopeName" select="$id"/>
 						</xsl:call-template>
+
+						<!--[BadgePrefix]_Foreground-->
+						<xsl:if test="ForegroundWarning">
+							<xsl:call-template name="generateBrushSetter">
+								<xsl:with-param name="propertyId" select="concat($prefix, 'Foreground')" />
+								<xsl:with-param name="brushName">ForegroundWarning</xsl:with-param>
+								<xsl:with-param name="scopeName" select="$id"/>
+							</xsl:call-template>
+						</xsl:if>
 
 					</xsl:with-param>
 				</xsl:call-template>

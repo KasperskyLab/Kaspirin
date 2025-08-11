@@ -18,99 +18,98 @@ using System;
 using Microsoft.Win32;
 using WpfSystemEvents = Microsoft.Win32.SystemEvents;
 
-namespace Kaspirin.UI.Framework.SystemInfo.Internals
+namespace Kaspirin.UI.Framework.SystemInfo.Internals;
+
+internal sealed class SystemEvents : ISystemEvents
 {
-    internal sealed class SystemEvents : ISystemEvents
+    #region ISystemEvents
+
+    public event EventHandler PaletteChanged
     {
-        #region ISystemEvents
+        add { InUi(() => WpfSystemEvents.PaletteChanged += value); }
+        remove { WpfSystemEvents.PaletteChanged -= value; }
+    }
 
-        public event EventHandler PaletteChanged
-        {
-            add { InUi(() => WpfSystemEvents.PaletteChanged += value); }
-            remove { WpfSystemEvents.PaletteChanged -= value; }
-        }
+    public event TimerElapsedEventHandler TimerElapsed
+    {
+        add { InUi(() => WpfSystemEvents.TimerElapsed += value); }
+        remove { WpfSystemEvents.TimerElapsed -= value; }
+    }
 
-        public event TimerElapsedEventHandler TimerElapsed
-        {
-            add { InUi(() => WpfSystemEvents.TimerElapsed += value); }
-            remove { WpfSystemEvents.TimerElapsed -= value; }
-        }
+    public event EventHandler TimeChanged
+    {
+        add { InUi(() => WpfSystemEvents.TimeChanged += value); }
+        remove { WpfSystemEvents.TimeChanged -= value; }
+    }
 
-        public event EventHandler TimeChanged
-        {
-            add { InUi(() => WpfSystemEvents.TimeChanged += value); }
-            remove { WpfSystemEvents.TimeChanged -= value; }
-        }
+    public event SessionSwitchEventHandler SessionSwitch
+    {
+        add { InUi(() => WpfSystemEvents.SessionSwitch += value); }
+        remove { WpfSystemEvents.SessionSwitch -= value; }
+    }
 
-        public event SessionSwitchEventHandler SessionSwitch
-        {
-            add { InUi(() => WpfSystemEvents.SessionSwitch += value); }
-            remove { WpfSystemEvents.SessionSwitch -= value; }
-        }
+    public event SessionEndingEventHandler SessionEnding
+    {
+        add { InUi(() => WpfSystemEvents.SessionEnding += value); }
+        remove { WpfSystemEvents.SessionEnding -= value; }
+    }
 
-        public event SessionEndingEventHandler SessionEnding
-        {
-            add { InUi(() => WpfSystemEvents.SessionEnding += value); }
-            remove { WpfSystemEvents.SessionEnding -= value; }
-        }
+    public event SessionEndedEventHandler SessionEnded
+    {
+        add { InUi(() => WpfSystemEvents.SessionEnded += value); }
+        remove { WpfSystemEvents.SessionEnded -= value; }
+    }
 
-        public event SessionEndedEventHandler SessionEnded
-        {
-            add { InUi(() => WpfSystemEvents.SessionEnded += value); }
-            remove { WpfSystemEvents.SessionEnded -= value; }
-        }
+    public event PowerModeChangedEventHandler PowerModeChanged
+    {
+        add { InUi(() => WpfSystemEvents.PowerModeChanged += value); }
+        remove { WpfSystemEvents.PowerModeChanged -= value; }
+    }
 
-        public event PowerModeChangedEventHandler PowerModeChanged
-        {
-            add { InUi(() => WpfSystemEvents.PowerModeChanged += value); }
-            remove { WpfSystemEvents.PowerModeChanged -= value; }
-        }
+    public event UserPreferenceChangedEventHandler UserPreferenceChanged
+    {
+        add { InUi(() => WpfSystemEvents.UserPreferenceChanged += value); }
+        remove { WpfSystemEvents.UserPreferenceChanged -= value; }
+    }
 
-        public event UserPreferenceChangedEventHandler UserPreferenceChanged
-        {
-            add { InUi(() => WpfSystemEvents.UserPreferenceChanged += value); }
-            remove { WpfSystemEvents.UserPreferenceChanged -= value; }
-        }
+    public event UserPreferenceChangingEventHandler UserPreferenceChanging
+    {
+        add { InUi(() => WpfSystemEvents.UserPreferenceChanging += value); }
+        remove { WpfSystemEvents.UserPreferenceChanging -= value; }
+    }
 
-        public event UserPreferenceChangingEventHandler UserPreferenceChanging
-        {
-            add { InUi(() => WpfSystemEvents.UserPreferenceChanging += value); }
-            remove { WpfSystemEvents.UserPreferenceChanging -= value; }
-        }
+    public event EventHandler InstalledFontsChanged
+    {
+        add { InUi(() => WpfSystemEvents.InstalledFontsChanged += value); }
+        remove { WpfSystemEvents.InstalledFontsChanged -= value; }
+    }
 
-        public event EventHandler InstalledFontsChanged
-        {
-            add { InUi(() => WpfSystemEvents.InstalledFontsChanged += value); }
-            remove { WpfSystemEvents.InstalledFontsChanged -= value; }
-        }
+    public event EventHandler EventsThreadShutdown
+    {
+        add { InUi(() => WpfSystemEvents.EventsThreadShutdown += value); }
+        remove { WpfSystemEvents.EventsThreadShutdown -= value; }
+    }
 
-        public event EventHandler EventsThreadShutdown
-        {
-            add { InUi(() => WpfSystemEvents.EventsThreadShutdown += value); }
-            remove { WpfSystemEvents.EventsThreadShutdown -= value; }
-        }
+    public event EventHandler DisplaySettingsChanged
+    {
+        add { InUi(() => WpfSystemEvents.DisplaySettingsChanged += value); }
+        remove { WpfSystemEvents.DisplaySettingsChanged -= value; }
+    }
 
-        public event EventHandler DisplaySettingsChanged
-        {
-            add { InUi(() => WpfSystemEvents.DisplaySettingsChanged += value); }
-            remove { WpfSystemEvents.DisplaySettingsChanged -= value; }
-        }
+    public event EventHandler DisplaySettingsChanging
+    {
+        add { InUi(() => WpfSystemEvents.DisplaySettingsChanging += value); }
+        remove { WpfSystemEvents.DisplaySettingsChanging -= value; }
+    }
 
-        public event EventHandler DisplaySettingsChanging
-        {
-            add { InUi(() => WpfSystemEvents.DisplaySettingsChanging += value); }
-            remove { WpfSystemEvents.DisplaySettingsChanging -= value; }
-        }
+    public IntPtr CreateTimer(int interval) => WpfSystemEvents.CreateTimer(interval);
+    public void InvokeOnEventsThread(Delegate method) => WpfSystemEvents.InvokeOnEventsThread(method);
+    public void KillTimer(IntPtr timerId) => WpfSystemEvents.KillTimer(timerId);
 
-        public IntPtr CreateTimer(int interval) => WpfSystemEvents.CreateTimer(interval);
-        public void InvokeOnEventsThread(Delegate method) => WpfSystemEvents.InvokeOnEventsThread(method);
-        public void KillTimer(IntPtr timerId) => WpfSystemEvents.KillTimer(timerId);
+    #endregion
 
-        #endregion
-
-        private static void InUi(Action action)
-        {
-            Executers.InUiAsync(action);
-        }
+    private static void InUi(Action action)
+    {
+        Executers.InUiAsync(action);
     }
 }

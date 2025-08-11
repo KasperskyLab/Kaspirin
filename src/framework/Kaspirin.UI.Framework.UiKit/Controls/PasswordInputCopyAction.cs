@@ -17,99 +17,101 @@ using System.Security;
 using System.Windows;
 using System.Windows.Threading;
 
-namespace Kaspirin.UI.Framework.UiKit.Controls
+namespace Kaspirin.UI.Framework.UiKit.Controls;
+
+public sealed class PasswordInputCopyAction : InputActionBase
 {
-    public sealed class PasswordInputCopyAction : InputActionBase
+    public PasswordInputCopyAction()
     {
-        public PasswordInputCopyAction()
-        {
-            ActionMode = InputActionMode.OnClick;
+        ActionMode = InputActionMode.OnClick;
 
-            this.WhenLoaded(() =>
+        this.WhenLoaded(() =>
+        {
+            _passwordInput = this.FindVisualParent<PasswordInput>();
+            if (_passwordInput is not null)
             {
-                _passwordInput = this.FindVisualParent<PasswordInput>();
-                if (_passwordInput is not null)
-                {
-                    _passwordInputTextNotifier = new PropertyChangeNotifier<PasswordInput, SecureString>(_passwordInput, PasswordInput.PasswordProperty);
-                    _passwordInputTextNotifier.ValueChanged += PasswordChanged;
+                _passwordInputTextNotifier = new PropertyChangeNotifier<PasswordInput, SecureString>(_passwordInput, PasswordInput.PasswordProperty);
+                _passwordInputTextNotifier.ValueChanged += PasswordChanged;
 
-                    InvalidateVisibility();
-                }
-            });
-        }
-
-        public static event EventHandler? Copied;
-
-        #region CleanupMode
-
-        public SecureClipboardCleanupMode CleanupMode
-        {
-            get => (SecureClipboardCleanupMode)GetValue(CleanupModeProperty);
-            set => SetValue(CleanupModeProperty, value);
-        }
-
-        public static readonly DependencyProperty CleanupModeProperty = DependencyProperty.Register(
-            nameof(CleanupMode),
-            typeof(SecureClipboardCleanupMode),
-            typeof(PasswordInputCopyAction),
-            new PropertyMetadata(SecureClipboardCleanupMode.Timer));
-
-        #endregion
-
-        #region ExplicitValue
-
-        public SecureString? ExplicitValue
-        {
-            get => (SecureString?)GetValue(ExplicitValueProperty);
-            set => SetValue(ExplicitValueProperty, value);
-        }
-
-        public static readonly DependencyProperty ExplicitValueProperty = DependencyProperty.Register(
-            nameof(ExplicitValue),
-            typeof(SecureString),
-            typeof(PasswordInputCopyAction));
-
-        #endregion
-
-        protected override void OnClick()
-        {
-            if (_passwordInput is null)
-            {
-                return;
+                InvalidateVisibility();
             }
-
-            var valueToCopy = ExplicitValue?.ToSimpleString() ?? _passwordInput.Password.ToSimpleString();
-            if (valueToCopy is null)
-            {
-                return;
-            }
-
-            try
-            {
-                SecureClipboard.Copy(valueToCopy, CleanupMode);
-                OnCopied(_passwordInput);
-            }
-            finally
-            {
-                // Cleanup string asynchronously to let it be transferred into the clipboard without issues.
-                Executers.InUiAsync(() => valueToCopy.CleanupMemory(), DispatcherPriority.ContextIdle);
-            }
-        }
-
-        private void PasswordChanged(PasswordInput input, SecureString? oldValue, SecureString? newValue)
-            => InvalidateVisibility();
-
-        private void InvalidateVisibility()
-        {
-            var isVisible = _passwordInput?.Password?.Length > 0;
-
-            SetActionVisibility(isVisible);
-        }
-
-        private static void OnCopied(object sender)
-            => Copied?.Invoke(sender, EventArgs.Empty);
-
-        private PasswordInput? _passwordInput;
-        private PropertyChangeNotifier<PasswordInput, SecureString>? _passwordInputTextNotifier;
+        });
     }
+
+    public static event EventHandler? Copied;
+
+    #region CleanupMode
+
+    public SecureClipboardCleanupMode CleanupMode
+    {
+        get => (SecureClipboardCleanupMode)GetValue(CleanupModeProperty);
+        set => SetValue(CleanupModeProperty, value);
+    }
+
+    public static readonly DependencyProperty CleanupModeProperty = DependencyProperty.Register(
+        nameof(CleanupMode),
+        typeof(SecureClipboardCleanupMode),
+        typeof(PasswordInputCopyAction),
+        new PropertyMetadata(SecureClipboardCleanupMode.Timer));
+
+    #endregion
+
+    #region ExplicitValue
+
+    public SecureString? ExplicitValue
+    {
+        get => (SecureString?)GetValue(ExplicitValueProperty);
+        set => SetValue(ExplicitValueProperty, value);
+    }
+
+    public static readonly DependencyProperty ExplicitValueProperty = DependencyProperty.Register(
+        nameof(ExplicitValue),
+        typeof(SecureString),
+        typeof(PasswordInputCopyAction),
+        new PropertyMetadata(default(SecureString)));
+
+    #endregion
+
+    protected override void OnClick()
+    {
+        if (_passwordInput is null)
+        {
+            return;
+        }
+
+        var valueToCopy = ExplicitValue?.ToSimpleString() ?? _passwordInput.Password.ToSimpleString();
+        if (valueToCopy is null)
+        {
+            return;
+        }
+
+        try
+        {
+            _secureClipboard.Value.Copy(valueToCopy, CleanupMode);
+            OnCopied(_passwordInput);
+        }
+        finally
+        {
+            // Cleanup string asynchronously to let it be transferred into the clipboard without issues.
+            Executers.InUiAsync(() => valueToCopy.CleanupMemory(), DispatcherPriority.ContextIdle);
+        }
+    }
+
+    private void PasswordChanged(PasswordInput input, SecureString? oldValue, SecureString? newValue)
+        => InvalidateVisibility();
+
+    private void InvalidateVisibility()
+    {
+        var isVisible = _passwordInput?.Password?.Length > 0;
+
+        SetActionVisibility(isVisible);
+    }
+
+    private static void OnCopied(object sender)
+        => Copied?.Invoke(sender, EventArgs.Empty);
+
+    private PasswordInput? _passwordInput;
+    private PropertyChangeNotifier<PasswordInput, SecureString>? _passwordInputTextNotifier;
+
+    private readonly Lazy<ISecureClipboard> _secureClipboard = new(ServiceLocator.Instance.GetService<ISecureClipboard>);
 }

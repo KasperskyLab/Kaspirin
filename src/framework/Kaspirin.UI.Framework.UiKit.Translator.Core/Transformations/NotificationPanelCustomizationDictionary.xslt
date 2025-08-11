@@ -105,28 +105,28 @@
 						<xsl:with-param name="brushNode" select="HeaderForeground"/>
 					</xsl:call-template>
 
-					<!--IconForegroundDanger-->
+					<!--IconBrushDanger-->
 					<xsl:call-template name="generateBrush">
-						<xsl:with-param name="key">IconForegroundDanger</xsl:with-param>
-						<xsl:with-param name="brushNode" select="IconForegroundDanger"/>
+						<xsl:with-param name="key">IconBrushDanger</xsl:with-param>
+						<xsl:with-param name="brushNode" select="IconBrushDanger"/>
 					</xsl:call-template>
 					
-					<!--IconForegroundInfo-->
+					<!--IconBrushInfo-->
 					<xsl:call-template name="generateBrush">
-						<xsl:with-param name="key">IconForegroundInfo</xsl:with-param>
-						<xsl:with-param name="brushNode" select="IconForegroundInfo"/>
+						<xsl:with-param name="key">IconBrushInfo</xsl:with-param>
+						<xsl:with-param name="brushNode" select="IconBrushInfo"/>
 					</xsl:call-template>
 
-					<!--IconForegroundPositive-->
+					<!--IconBrushPositive-->
 					<xsl:call-template name="generateBrush">
-						<xsl:with-param name="key">IconForegroundPositive</xsl:with-param>
-						<xsl:with-param name="brushNode" select="IconForegroundPositive"/>
+						<xsl:with-param name="key">IconBrushPositive</xsl:with-param>
+						<xsl:with-param name="brushNode" select="IconBrushPositive"/>
 					</xsl:call-template>
 
-					<!--IconForegroundWarning-->
+					<!--IconBrushWarning-->
 					<xsl:call-template name="generateBrush">
-						<xsl:with-param name="key">IconForegroundWarning</xsl:with-param>
-						<xsl:with-param name="brushNode" select="IconForegroundWarning"/>
+						<xsl:with-param name="key">IconBrushWarning</xsl:with-param>
+						<xsl:with-param name="brushNode" select="IconBrushWarning"/>
 					</xsl:call-template>
 
 					<!--SubHeaderForeground-->

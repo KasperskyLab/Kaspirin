@@ -14,20 +14,25 @@
 
 using System.Windows.Media.Animation;
 
-namespace Kaspirin.UI.Framework.UiKit.Animation.Markup.Easing
+namespace Kaspirin.UI.Framework.UiKit.Animation.Markup.Easing;
+
+/// <summary>
+///     Extending the markup for initializing the <see cref="BounceEase" /> class in XAML.
+/// </summary>
+public sealed class BounceEasingExtension : EasingExtensionBase
 {
-    public sealed class BounceEasingExtension : EasingExtensionBase
-    {
-        public int Bounces { get; set; }
+    /// <inheritdoc cref="BounceEase.Bounces"/>
+    public int Bounces { get; set; }
 
-        public double Bounciness { get; set; }
+    /// <inheritdoc cref="BounceEase.Bounciness"/>
+    public double Bounciness { get; set; }
 
-        protected override IEasingFunction CreateEasing()
-            => new BounceEase
-            {
-                Bounces = Bounces,
-                Bounciness = Bounciness,
-                EasingMode = Mode
-            };
-    }
+    /// <inheritdoc/>
+    protected override IEasingFunction CreateEasing()
+        => new BounceEase
+        {
+            Bounces = Bounces,
+            Bounciness = Bounciness,
+            EasingMode = Mode
+        };
 }

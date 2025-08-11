@@ -12,37 +12,96 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-#pragma warning disable KCAIDE0002 // Enum has incorrect suffix
 
 using System;
 
-namespace Kaspirin.UI.Framework.NativeMethods.Api.Kernel32.Enums
+namespace Kaspirin.UI.Framework.NativeMethods.Api.Kernel32.Enums;
+
+/// <summary>
+///     <seealso href="https://learn.microsoft.com/en-us/windows/win32/secauthz/access-mask">Learn more</seealso>.
+/// </summary>
+[Flags]
+public enum AccessMaskFlags : uint
 {
     /// <summary>
-    ///     
-    /// <seealso href="https://learn.microsoft.com/en-us/windows/win32/secauthz/access-mask">Learn more</seealso>.
+    ///     The flag is not set.
     /// </summary>
-    [Flags]
-    public enum AccessMaskFlags : uint
-    {
-        None = 0,
-        GENERIC_READ = 0x80000000,
-        GENERIC_WRITE = 0x40000000,
-        GENERIC_EXECUTE = 0x20000000,
-        GENERIC_ALL = 0x10000000,
-        DELETE = 0x00010000,
-        READ_CONTROL = 0x00020000,
-        WRITE_DAC = 0x00040000,
-        WRITE_OWNER = 0x00080000,
-        SYNCHRONIZE = 0x00100000,
+    None = 0,
 
-        //CreateFile flags
-        FILE_LIST_DIRECTORY = 0x00000001,
-        FILE_WRITE_DATA = 0x00000002,
-        FILE_ADD_FILE = 0x00000002,
-        FILE_ADD_SUBDIRECTORY = 0x00000004,
-        FILE_TRAVERSE = 0x00000020,
-        FILE_WRITE_ATTRIBUTES = 0x00000100,
-    }
+    /// <summary>
+    ///     The GENERIC_READ constant.
+    /// </summary>
+    GenericRead = 0x80000000,
+
+    /// <summary>
+    ///     The GENERIC_WRITE constant.
+    /// </summary>
+    GenericWrite = 0x40000000,
+
+    /// <summary>
+    ///     The GENERIC_EXECUTE constant.
+    /// </summary>
+    GenericExecute = 0x20000000,
+
+    /// <summary>
+    ///     The GENERIC_ALL constant.
+    /// </summary>
+    GenericAll = 0x10000000,
+
+    /// <summary>
+    ///     The DELETE constant.
+    /// </summary>
+    Delete = 0x00010000,
+
+    /// <summary>
+    ///     The READ_CONTROL constant.
+    /// </summary>
+    ReadControl = 0x00020000,
+
+    /// <summary>
+    ///     The WRITE_DAC constant.
+    /// </summary>
+    WriteDac = 0x00040000,
+
+    /// <summary>
+    ///     The WRITE_OWNER constant.
+    /// </summary>
+    WriteOwner = 0x00080000,
+
+    /// <summary>
+    ///     The SYNCHRONIZE constant.
+    /// </summary>
+    Synchronize = 0x00100000,
+
+    //CreateFile flags
+
+    /// <summary>
+    ///     The FILE_LIST_DIRECTORY constant.
+    /// </summary>
+    FileListDirectory = 0x00000001,
+
+    /// <summary>
+    ///     The FILE_WRITE_DATA constant.
+    /// </summary>
+    FileWriteData = 0x00000002,
+
+    /// <summary>
+    ///     The FILE_ADD_FILE constant.
+    /// </summary>
+    FileAddFile = 0x00000002,
+
+    /// <summary>
+    ///     The FILE_ADD_SUBDIRECTORY constant.
+    /// </summary>
+    FileAddSubdirectory = 0x00000004,
+
+    /// <summary>
+    ///     The FILE_TRAVERSE constant.
+    /// </summary>
+    FileTraverse = 0x00000020,
+
+    /// <summary>
+    ///     The FILE_WRITE_ATTRIBUTES constant.
+    /// </summary>
+    FileWriteAttributes = 0x00000100,
 }

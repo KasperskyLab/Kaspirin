@@ -16,41 +16,43 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
-namespace Kaspirin.UI.Framework.UiKit.Controls
+namespace Kaspirin.UI.Framework.UiKit.Controls;
+
+public abstract class SelectorItem : ListBoxItem
 {
-    public abstract class SelectorItem : ListBoxItem
+    #region SelectOnCapturedMouseEnter
+
+    public bool SelectOnCapturedMouseEnter
     {
-        #region SelectOnCapturedMouseEnter
+        get => (bool)GetValue(SelectOnCapturedMouseEnterProperty);
+        set => SetValue(SelectOnCapturedMouseEnterProperty, value);
+    }
 
-        public bool SelectOnCapturedMouseEnter
+    public static readonly DependencyProperty SelectOnCapturedMouseEnterProperty = DependencyProperty.Register(
+        nameof(SelectOnCapturedMouseEnter),
+        typeof(bool),
+        typeof(SelectorItem),
+        new PropertyMetadata(default(bool)));
+
+    #endregion
+
+    protected override void OnMouseEnter(MouseEventArgs e)
+    {
+        if (!SelectOnCapturedMouseEnter)
         {
-            get { return (bool)GetValue(SelectOnCapturedMouseEnterProperty); }
-            set { SetValue(SelectOnCapturedMouseEnterProperty, value); }
+            return;
         }
 
-        public static readonly DependencyProperty SelectOnCapturedMouseEnterProperty =
-            DependencyProperty.Register("SelectOnCapturedMouseEnter", typeof(bool), typeof(SelectorItem), new PropertyMetadata(false));
+        base.OnMouseEnter(e);
+    }
 
-        #endregion
+    protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
+    {
+        base.OnMouseLeftButtonDown(e);
 
-        protected override void OnMouseEnter(MouseEventArgs e)
+        if (!SelectOnCapturedMouseEnter)
         {
-            if (!SelectOnCapturedMouseEnter)
-            {
-                return;
-            }
-
-            base.OnMouseEnter(e);
-        }
-
-        protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
-        {
-            base.OnMouseLeftButtonDown(e);
-
-            if (!SelectOnCapturedMouseEnter)
-            {
-                ItemsControl.ItemsControlFromItemContainer(this)?.ReleaseMouseCapture();
-            }
+            ItemsControl.ItemsControlFromItemContainer(this)?.ReleaseMouseCapture();
         }
     }
 }

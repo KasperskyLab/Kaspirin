@@ -15,12 +15,11 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Kaspirin.UI.Framework.UiKit.Localization.Localizer.Strings.Parsing.Evaluators.Ast
+namespace Kaspirin.UI.Framework.UiKit.Localization.Localizer.Strings.Parsing.Evaluators.Ast;
+
+public sealed class PluralFormExpression
 {
-    public class PluralFormExpression
-    {
-        public PluralFormExpression(IEnumerable<Operand> operand) => Operand = operand;
-        public IEnumerable<Operand> Operand { get; }
-        public string GetText() => string.Join(" + ", Operand.Select(x => x.GetText()));
-    }
+    public PluralFormExpression(IEnumerable<Operand> operand) => Operand = operand;
+    public IEnumerable<Operand> Operand { get; }
+    public string GetText() => string.Join(" + ", Operand.Select(x => x.GetText()));
 }

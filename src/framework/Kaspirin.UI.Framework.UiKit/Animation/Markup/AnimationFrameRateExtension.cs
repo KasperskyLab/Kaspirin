@@ -15,13 +15,19 @@
 using System;
 using System.Windows.Markup;
 
-namespace Kaspirin.UI.Framework.UiKit.Animation.Markup
-{
-    public sealed class AnimationFrameRateExtension : MarkupExtension
-    {
-        public AnimationRenderQuality RenderQuality { get; set; } = AnimationRenderQuality.Auto;
+namespace Kaspirin.UI.Framework.UiKit.Animation.Markup;
 
-        public override object? ProvideValue(IServiceProvider serviceProvider)
-            => ServiceLocator.Instance.GetService<IAnimationSettingsProvider>().GetDesiredFrameRate(RenderQuality);
-    }
+/// <summary>
+///     Extending markup to get animation frame rates in XAML.
+/// </summary>
+public sealed class AnimationFrameRateExtension : MarkupExtension
+{
+    /// <summary>
+    ///     Animation quality.
+    /// </summary>
+    public AnimationRenderQuality RenderQuality { get; set; } = AnimationRenderQuality.Auto;
+
+    /// <inheritdoc/>
+    public override object? ProvideValue(IServiceProvider serviceProvider)
+        => ServiceLocator.Instance.GetService<IAnimationSettingsProvider>().GetDesiredFrameRate(RenderQuality);
 }

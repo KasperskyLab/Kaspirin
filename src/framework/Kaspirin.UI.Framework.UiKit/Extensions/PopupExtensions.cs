@@ -15,48 +15,47 @@
 using System;
 using System.Windows.Controls.Primitives;
 
-namespace Kaspirin.UI.Framework.UiKit.Extensions
+namespace Kaspirin.UI.Framework.UiKit.Extensions;
+
+public static class PopupExtensions
 {
-    public static class PopupExtensions
+    public static void WhenOpened(this Popup popup, Action action)
     {
-        public static void WhenOpened(this Popup popup, Action action)
+        void OnIsOpenChanged(object? sender, EventArgs e)
         {
-            void OnIsOpenChanged(object? sender, EventArgs e)
-            {
-                var popup = Guard.EnsureArgumentIsInstanceOfType<Popup>(sender);
+            var popup = Guard.EnsureArgumentIsInstanceOfType<Popup>(sender);
 
-                popup.Opened -= OnIsOpenChanged;
-                action();
-            }
-
-            if (popup.IsOpen)
-            {
-                action();
-            }
-            else
-            {
-                popup.Opened += OnIsOpenChanged;
-            }
+            popup.Opened -= OnIsOpenChanged;
+            action();
         }
 
-        public static void WhenClosed(this Popup popup, Action action)
+        if (popup.IsOpen)
         {
-            void OnIsClosedChanged(object? sender, EventArgs e)
-            {
-                var popup = Guard.EnsureArgumentIsInstanceOfType<Popup>(sender);
+            action();
+        }
+        else
+        {
+            popup.Opened += OnIsOpenChanged;
+        }
+    }
 
-                popup.Closed -= OnIsClosedChanged;
-                action();
-            }
+    public static void WhenClosed(this Popup popup, Action action)
+    {
+        void OnIsClosedChanged(object? sender, EventArgs e)
+        {
+            var popup = Guard.EnsureArgumentIsInstanceOfType<Popup>(sender);
 
-            if (!popup.IsOpen)
-            {
-                action();
-            }
-            else
-            {
-                popup.Closed += OnIsClosedChanged;
-            }
+            popup.Closed -= OnIsClosedChanged;
+            action();
+        }
+
+        if (!popup.IsOpen)
+        {
+            action();
+        }
+        else
+        {
+            popup.Closed += OnIsClosedChanged;
         }
     }
 }

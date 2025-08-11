@@ -12,19 +12,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Kaspirin.UI.Framework.UiKit.Navigation
+namespace Kaspirin.UI.Framework.UiKit.Navigation;
+
+public abstract class RegionBehavior : IRegionBehavior
 {
-    public abstract class RegionBehavior : IRegionBehavior
+    public Region? Region { get; private set; }
+
+    public void Attach(Region region)
     {
-        public Region? Region { get; private set; }
+        Region = Guard.EnsureArgumentIsNotNull(region);
 
-        public void Attach(Region region)
-        {
-            Region = Guard.EnsureArgumentIsNotNull(region);
-
-            OnAttach();
-        }
-
-        protected abstract void OnAttach();
+        OnAttach();
     }
+
+    protected abstract void OnAttach();
 }

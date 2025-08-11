@@ -14,41 +14,40 @@
 
 using System.Windows;
 
-namespace Kaspirin.UI.Framework.UiKit.Localization.Markup.Extensions.Xaml
+namespace Kaspirin.UI.Framework.UiKit.Localization.Markup.Extensions.Xaml;
+
+public class ResExtension : BaseLocalizationMarkupExtension
 {
-    public class ResExtension : LocalizationMarkupBase
+    public ResExtension() : this(string.Empty) { }
+
+    public ResExtension(string key) : base(key) { }
+
+    public ResExtension(string key, string scope) : base(key, scope) { }
+
+    public bool? Freeze { get; set; } = true;
+
+    protected override object? ProvideValue()
     {
-        public ResExtension() : this(string.Empty) { }
+        var resource = ProvideLocalizer<IXamlLocalizer>().GetResource(Key);
 
-        public ResExtension(string key) : base(key) { }
-
-        public ResExtension(string key, string scope) : base(key, scope) { }
-
-        public bool? Freeze { get; set; } = true;
-
-        protected override object? ProvideValue()
+        if (resource is Freezable freezableObject)
         {
-            var resource = ProvideLocalizer<IXamlLocalizer>().GetResource(Key);
-
-            if (resource is Freezable freezableObject)
+            if (Freeze is false)
             {
-                if (Freeze is false)
-                {
-                    return freezableObject.Clone();
-                }
-
-                if (Freeze is true && freezableObject.CanFreeze && freezableObject.IsFrozen is false)
-                {
-                    freezableObject.Freeze();
-                }
+                return freezableObject.Clone();
             }
 
-            return resource;
+            if (Freeze is true && freezableObject.CanFreeze && freezableObject.IsFrozen is false)
+            {
+                freezableObject.Freeze();
+            }
         }
 
-        protected override ILocalizer PrepareLocalizer()
-        {
-            return LocalizationManager.Current.LocalizerFactory.Resolve<IXamlLocalizer>(Scope);
-        }
+        return resource;
+    }
+
+    protected override ILocalizer PrepareLocalizer()
+    {
+        return LocalizationManager.GetLocalizer<IXamlLocalizer>(Scope);
     }
 }

@@ -12,21 +12,20 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Kaspirin.UI.Framework.UiKit.Converters.BooleanConverters
+namespace Kaspirin.UI.Framework.UiKit.Converters.BooleanConverters;
+
+/// <summary>
+///     Logical operations for operation <see cref="BaseMultiBooleanConverter{T}" />.
+/// </summary>
+public enum MultiBooleanOperation
 {
     /// <summary>
-    ///     Logical operations for operation <see cref="BaseMultiBooleanConverter{T}" />.
+    ///     Logical And.
     /// </summary>
-    public enum MultiBooleanOperation
-    {
-        /// <summary>
-        ///     Logical And.
-        /// </summary>
-        And,
+    And,
 
-        /// <summary>
-        ///     Logical OR.
-        /// </summary>
-        Or,
-    }
+    /// <summary>
+    ///     Logical OR.
+    /// </summary>
+    Or,
 }

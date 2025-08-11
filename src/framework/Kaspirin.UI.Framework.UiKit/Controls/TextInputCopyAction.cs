@@ -15,91 +15,93 @@
 using System;
 using System.Windows;
 
-namespace Kaspirin.UI.Framework.UiKit.Controls
+namespace Kaspirin.UI.Framework.UiKit.Controls;
+
+public sealed class TextInputCopyAction : InputActionBase
 {
-    public sealed class TextInputCopyAction : InputActionBase
+    public TextInputCopyAction()
     {
-        public TextInputCopyAction()
-        {
-            ActionMode = InputActionMode.OnClick;
+        ActionMode = InputActionMode.OnClick;
 
-            this.WhenLoaded(() =>
+        this.WhenLoaded(() =>
+        {
+            _textInput = this.FindVisualParent<TextInput>();
+            if (_textInput is not null)
             {
-                _textInput = this.FindVisualParent<TextInput>();
-                if (_textInput is not null)
-                {
-                    _textInputTextNotifier = new PropertyChangeNotifier<TextInput, string>(_textInput, TextInputBase.TextProperty);
-                    _textInputTextNotifier.ValueChanged += TextChanged;
+                _textInputTextNotifier = new PropertyChangeNotifier<TextInput, string>(_textInput, TextInputBase.TextProperty);
+                _textInputTextNotifier.ValueChanged += TextChanged;
 
-                    InvalidateVisibility();
-                }
-            });
-        }
-
-        public static event EventHandler? Copied;
-
-        #region CleanupMode
-
-        public SecureClipboardCleanupMode CleanupMode
-        {
-            get => (SecureClipboardCleanupMode)GetValue(CleanupModeProperty);
-            set => SetValue(CleanupModeProperty, value);
-        }
-
-        public static readonly DependencyProperty CleanupModeProperty = DependencyProperty.Register(
-            nameof(CleanupMode),
-            typeof(SecureClipboardCleanupMode),
-            typeof(TextInputCopyAction),
-            new PropertyMetadata(SecureClipboardCleanupMode.None));
-
-        #endregion
-
-        #region ExplicitValue
-
-        public string? ExplicitValue
-        {
-            get => (string?)GetValue(ExplicitValueProperty);
-            set => SetValue(ExplicitValueProperty, value);
-        }
-
-        public static readonly DependencyProperty ExplicitValueProperty = DependencyProperty.Register(
-            nameof(ExplicitValue),
-            typeof(string),
-            typeof(TextInputCopyAction));
-
-        #endregion
-
-        protected override void OnClick()
-        {
-            if (_textInput is null)
-            {
-                return;
+                InvalidateVisibility();
             }
-
-            var valueToCopy = ExplicitValue ?? _textInput.Text;
-            if (valueToCopy is null)
-            {
-                return;
-            }
-
-            SecureClipboard.Copy(valueToCopy, CleanupMode);
-            OnCopied(_textInput);
-        }
-
-        private void TextChanged(TextInput input, string? oldValue, string? newValue)
-            => InvalidateVisibility();
-
-        private void InvalidateVisibility()
-        {
-            var isVisible = _textInput?.Text?.Length > 0;
-
-            SetActionVisibility(isVisible);
-        }
-
-        private static void OnCopied(object sender)
-            => Copied?.Invoke(sender, EventArgs.Empty);
-
-        private TextInput? _textInput;
-        private PropertyChangeNotifier<TextInput, string>? _textInputTextNotifier;
+        });
     }
+
+    public static event EventHandler? Copied;
+
+    #region CleanupMode
+
+    public SecureClipboardCleanupMode CleanupMode
+    {
+        get => (SecureClipboardCleanupMode)GetValue(CleanupModeProperty);
+        set => SetValue(CleanupModeProperty, value);
+    }
+
+    public static readonly DependencyProperty CleanupModeProperty = DependencyProperty.Register(
+        nameof(CleanupMode),
+        typeof(SecureClipboardCleanupMode),
+        typeof(TextInputCopyAction),
+        new PropertyMetadata(SecureClipboardCleanupMode.None));
+
+    #endregion
+
+    #region ExplicitValue
+
+    public string? ExplicitValue
+    {
+        get => (string?)GetValue(ExplicitValueProperty);
+        set => SetValue(ExplicitValueProperty, value);
+    }
+
+    public static readonly DependencyProperty ExplicitValueProperty = DependencyProperty.Register(
+        nameof(ExplicitValue),
+        typeof(string),
+        typeof(TextInputCopyAction),
+        new PropertyMetadata(default(string)));
+
+    #endregion
+
+    protected override void OnClick()
+    {
+        if (_textInput is null)
+        {
+            return;
+        }
+
+        var valueToCopy = ExplicitValue ?? _textInput.Text;
+        if (valueToCopy is null)
+        {
+            return;
+        }
+
+        _secureClipboard.Value.Copy(valueToCopy, CleanupMode);
+        OnCopied(_textInput);
+    }
+
+    private void TextChanged(TextInput input, string? oldValue, string? newValue)
+        => InvalidateVisibility();
+
+    private void InvalidateVisibility()
+    {
+        var isVisible = _textInput?.Text?.Length > 0;
+
+        SetActionVisibility(isVisible);
+    }
+
+    private static void OnCopied(object sender)
+        => Copied?.Invoke(sender, EventArgs.Empty);
+
+    private TextInput? _textInput;
+    private PropertyChangeNotifier<TextInput, string>? _textInputTextNotifier;
+
+    private readonly Lazy<ISecureClipboard> _secureClipboard = new(ServiceLocator.Instance.GetService<ISecureClipboard>);
 }

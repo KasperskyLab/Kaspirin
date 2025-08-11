@@ -17,78 +17,76 @@
 using System;
 using System.Runtime.InteropServices;
 
-namespace Kaspirin.UI.Framework.NativeMethods.Api.Shell32.Interfaces
+namespace Kaspirin.UI.Framework.NativeMethods.Api.Shell32.Interfaces;
+
+/// <summary>
+///     <seealso href="https://learn.microsoft.com/en-us/windows/win32/api/shobjidl_core/nn-shobjidl_core-ishellfolder">Learn more</seealso>.
+/// </summary>
+[ComImport]
+[InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+[Guid(ShlGuids.IidIShellFolder)]
+public interface IShellFolder
 {
-    /// <summary>
-    ///     
-    /// <seealso href="https://learn.microsoft.com/en-us/windows/win32/api/shobjidl_core/nn-shobjidl_core-ishellfolder">Learn more</seealso>.
-    /// </summary>
-    [ComImport]
-    [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
-    [Guid(ShlGuids.IidIShellFolder)]
-    public interface IShellFolder
-    {
-        void ParseDisplayName(
-            IntPtr hwnd,
-            IntPtr pbc,
-            string pszDisplayName,
-            uint pchEaten,
-            out IntPtr ppidl,
-            ref ShGetAttributesOfFlags pdwAttributes);
+    void ParseDisplayName(
+        IntPtr hwnd,
+        IntPtr pbc,
+        string pszDisplayName,
+        uint pchEaten,
+        out IntPtr ppidl,
+        ref ShGetAttributesOfFlags pdwAttributes);
 
-        [PreserveSig]
-        int EnumObjects(
-            IntPtr hwnd,
-            ShContentFolderFlags grfFlags,
-            out IEnumIDList ppenumIdList);
+    [PreserveSig]
+    int EnumObjects(
+        IntPtr hwnd,
+        ShContentFolderFlags grfFlags,
+        out IEnumIDList ppenumIdList);
 
-        [PreserveSig]
-        int BindToObject(
-            IntPtr pidl,
-            IntPtr pbc,
-            [In] ref Guid riid,
-            out IShellFolder ppv);
+    [PreserveSig]
+    int BindToObject(
+        IntPtr pidl,
+        IntPtr pbc,
+        [In] ref Guid riid,
+        out IShellFolder ppv);
 
-        void BindToStorage(
-            IntPtr pidl,
-            IntPtr pbc,
-            [In] ref Guid riid,
-            out IntPtr ppv);
+    void BindToStorage(
+        IntPtr pidl,
+        IntPtr pbc,
+        [In] ref Guid riid,
+        out IntPtr ppv);
 
-        [PreserveSig]
-        int CompareIDs(
-            int lParam,
-            IntPtr pidl1,
-            IntPtr pidl2);
+    [PreserveSig]
+    int CompareIDs(
+        int lParam,
+        IntPtr pidl1,
+        IntPtr pidl2);
 
-        void CreateViewObject(
-            IntPtr hwndOwner,
-            [In] ref Guid riid,
-            out IntPtr ppv);
+    void CreateViewObject(
+        IntPtr hwndOwner,
+        [In] ref Guid riid,
+        out IntPtr ppv);
 
-        void GetAttributesOf(
-            uint cidl,
-            [MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 0)]
-            IntPtr[] apidl,
-            ref ShGetAttributesOfFlags rgfInOut);
+    void GetAttributesOf(
+        uint cidl,
+        [MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 0)]
+        IntPtr[] apidl,
+        ref ShGetAttributesOfFlags rgfInOut);
 
-        void GetUIObjectOf(IntPtr hwndOwner, uint cidl,
-            [MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 1)]
-            IntPtr[] apidl,
-            [In] ref Guid riid,
-            uint rgfReserved,
-            out IntPtr ppv);
+    void GetUIObjectOf(IntPtr hwndOwner, uint cidl,
+        [MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 1)]
+        IntPtr[] apidl,
+        [In] ref Guid riid,
+        uint rgfReserved,
+        out IntPtr ppv);
 
-        void GetDisplayNameOf(
-            IntPtr pidl,
-            ShGetDisplayNameOfFlags uFlags,
-            out ShStringReturn pName);
+    void GetDisplayNameOf(
+        IntPtr pidl,
+        ShGetDisplayNameOfFlags uFlags,
+        out ShStringReturn pName);
 
-        void SetNameOf(
-            IntPtr hwnd,
-            IntPtr pidl,
-            string pszName,
-            ShGetDisplayNameOfFlags uFlags,
-            out IntPtr ppidlOut);
-    }
+    void SetNameOf(
+        IntPtr hwnd,
+        IntPtr pidl,
+        string pszName,
+        ShGetDisplayNameOfFlags uFlags,
+        out IntPtr ppidlOut);
 }

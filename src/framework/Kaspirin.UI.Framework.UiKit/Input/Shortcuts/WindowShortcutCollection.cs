@@ -14,9 +14,8 @@
 
 using System.Collections.Generic;
 
-namespace Kaspirin.UI.Framework.UiKit.Input.Shortcuts
+namespace Kaspirin.UI.Framework.UiKit.Input.Shortcuts;
+
+public sealed class WindowShortcutCollection : List<WindowShortcut>
 {
-    public sealed class WindowShortcutCollection : List<WindowShortcut>
-    {
-    }
 }

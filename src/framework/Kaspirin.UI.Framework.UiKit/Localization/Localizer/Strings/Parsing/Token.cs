@@ -12,27 +12,26 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Kaspirin.UI.Framework.UiKit.Localization.Localizer.Strings.Parsing
+namespace Kaspirin.UI.Framework.UiKit.Localization.Localizer.Strings.Parsing;
+
+public readonly struct Token
 {
-    public readonly struct Token
+    public Token(TokenType type, int startPosition, int endPosition, string sourceName, string sourceText)
     {
-        public Token(TokenType type, int startPosition, int endPosition, string fileName, string sourceText)
-        {
-            Type = type;
-            Position = new Position(startPosition, endPosition, fileName, sourceText);
-            FileName = fileName;
-            SourceText = sourceText;
-        }
-
-        public TokenType Type { get; }
-        public Position Position { get; }
-        public string FileName { get; }
-        public string SourceText { get; }
-
-        public static Token Generate(TokenType type, string text) => new(type, 0, text.Length, "<generated>", text);
-        public string GetText() => Position.GetText();
-        public string GetText(string sourceText) => Position.GetText(sourceText);
-        public string ToString(string sourceText) => Type + ": \"" + GetText(sourceText) + '"';
-        public override string ToString() => $"{Type}: {Position}";
+        Type = type;
+        Position = new Position(startPosition, endPosition, sourceName, sourceText);
+        SourceName = sourceName;
+        SourceText = sourceText;
     }
+
+    public TokenType Type { get; }
+    public Position Position { get; }
+    public string SourceName { get; }
+    public string SourceText { get; }
+
+    public static Token Generate(TokenType type, string text) => new(type, 0, text.Length, "<generated>", text);
+    public string GetText() => Position.GetText();
+    public string GetText(string sourceText) => Position.GetText(sourceText);
+    public string ToString(string sourceText) => Type + ": \"" + GetText(sourceText) + '"';
+    public override string ToString() => $"{Type}: {Position}";
 }

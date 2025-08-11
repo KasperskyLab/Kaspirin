@@ -18,65 +18,64 @@ using System.Linq;
 using System.Xml.Linq;
 using Kaspirin.UI.Framework.UiKit.Translator.Core.Translation.Fonts;
 
-namespace Kaspirin.UI.Framework.UiKit.Translator.Core
+namespace Kaspirin.UI.Framework.UiKit.Translator.Core;
+
+internal class XmlFontSource
 {
-    internal class XmlFontSource
+    public XmlFontSource(Action<string> logWarning)
     {
-        public XmlFontSource(Action<string> logWarning)
-        {
-            _warn = logWarning ?? (_ => { });
-        }
-
-        public IEnumerable<Font> GetFonts(string uiKitContent)
-        {
-            var xmlDocument = XDocument.Parse(uiKitContent);
-
-            var controlsElement = xmlDocument
-                .Elements(Const.RootElementName)
-                .Elements(Const.ControlsElementName)
-                .SingleOrDefault();
-
-            if (controlsElement == null)
-            {
-                throw new InvalidOperationException($"Unable to find '{Const.ControlsElementName}' element inside XSLT-transformation result: {uiKitContent}");
-            }
-
-            var textStylesElement = controlsElement.Elements(Const.TextStylesElementName).ToArray();
-            if (!textStylesElement.Any())
-            {
-                throw new InvalidOperationException($"Unable to find '{Const.TextStylesElementName}' elements inside XSLT-transformation result: {uiKitContent}");
-            }
-
-            var textStyleElements = textStylesElement.Elements(Const.TextStyleElementName).ToArray();
-            if (!textStyleElements.Any())
-            {
-                throw new InvalidOperationException($"Unable to find '{Const.TextStyleElementName}' elements inside XSLT-transformation result: {uiKitContent}");
-            }
-
-            return textStyleElements.Select(NodeToDto);
-        }
-
-        private Font NodeToDto(XElement textStyleElement)
-        {
-            var textStyleId = textStyleElement.Attribute(Const.TextStyleIdAttributeName)?.Value;
-            if (string.IsNullOrWhiteSpace(textStyleId))
-            {
-                throw new InvalidOperationException($"Unable to get text style id: {Environment.NewLine}{textStyleElement}.");
-            }
-
-            if (!textStyleId.StartsWith(Const.TextStyleIdPrefix))
-            {
-                _warn($"Unexpected text style id: '{textStyleId}'.");
-                return null;
-            }
-
-            return new Font()
-            {
-                Id = textStyleId,
-                Name = textStyleId.Replace(Const.TextStyleIdPrefix, ""),
-            };
-        }
-
-        private readonly Action<string> _warn;
+        _warn = logWarning ?? (_ => { });
     }
+
+    public IEnumerable<Font> GetFonts(string uiKitContent)
+    {
+        var xmlDocument = XDocument.Parse(uiKitContent);
+
+        var controlsElement = xmlDocument
+            .Elements(Const.RootElementName)
+            .Elements(Const.ControlsElementName)
+            .SingleOrDefault();
+
+        if (controlsElement == null)
+        {
+            throw new InvalidOperationException($"Unable to find '{Const.ControlsElementName}' element inside XSLT-transformation result: {uiKitContent}");
+        }
+
+        var textStylesElement = controlsElement.Elements(Const.TextStylesElementName).ToArray();
+        if (!textStylesElement.Any())
+        {
+            throw new InvalidOperationException($"Unable to find '{Const.TextStylesElementName}' elements inside XSLT-transformation result: {uiKitContent}");
+        }
+
+        var textStyleElements = textStylesElement.Elements(Const.TextStyleElementName).ToArray();
+        if (!textStyleElements.Any())
+        {
+            throw new InvalidOperationException($"Unable to find '{Const.TextStyleElementName}' elements inside XSLT-transformation result: {uiKitContent}");
+        }
+
+        return textStyleElements.Select(NodeToDto);
+    }
+
+    private Font NodeToDto(XElement textStyleElement)
+    {
+        var textStyleId = textStyleElement.Attribute(Const.TextStyleIdAttributeName)?.Value;
+        if (string.IsNullOrWhiteSpace(textStyleId))
+        {
+            throw new InvalidOperationException($"Unable to get text style id: {Environment.NewLine}{textStyleElement}.");
+        }
+
+        if (!textStyleId.StartsWith(Const.TextStyleIdPrefix))
+        {
+            _warn($"Unexpected text style id: '{textStyleId}'.");
+            return null;
+        }
+
+        return new Font()
+        {
+            Id = textStyleId,
+            Name = textStyleId.Replace(Const.TextStyleIdPrefix, ""),
+        };
+    }
+
+    private readonly Action<string> _warn;
 }

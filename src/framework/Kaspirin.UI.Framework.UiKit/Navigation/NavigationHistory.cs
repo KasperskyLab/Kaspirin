@@ -15,38 +15,37 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Kaspirin.UI.Framework.UiKit.Navigation
+namespace Kaspirin.UI.Framework.UiKit.Navigation;
+
+internal sealed class NavigationHistory : List<string>
 {
-    internal sealed class NavigationHistory : List<string>
+    public void Push(string item)
     {
-        public void Push(string item)
-        {
-            Guard.ArgumentIsNotNull(item);
+        Guard.ArgumentIsNotNull(item);
 
-            Insert(0, item);
+        Insert(0, item);
+    }
+
+    public string? Pop()
+    {
+        var item = this.FirstOrDefault();
+        if (item == null)
+        {
+            return null;
         }
 
-        public string? Pop()
-        {
-            var item = this.FirstOrDefault();
-            if (item == null)
-            {
-                return null;
-            }
+        Remove(item);
+        return item;
+    }
 
-            Remove(item);
-            return item;
-        }
+    public IList<string> PopRange(int count)
+    {
+        Guard.Argument(count > 0);
 
-        public IList<string> PopRange(int count)
-        {
-            Guard.Argument(count > 0);
+        var items = GetRange(0, count);
 
-            var items = GetRange(0, count);
+        RemoveRange(0, count);
 
-            RemoveRange(0, count);
-
-            return items;
-        }
+        return items;
     }
 }

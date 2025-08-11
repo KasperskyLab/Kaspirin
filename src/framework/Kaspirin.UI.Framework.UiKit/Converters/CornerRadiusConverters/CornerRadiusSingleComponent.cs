@@ -12,14 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Kaspirin.UI.Framework.UiKit.Converters.CornerRadiusConverters
+namespace Kaspirin.UI.Framework.UiKit.Converters.CornerRadiusConverters;
+
+public enum CornerRadiusSingleComponent
 {
-    public enum CornerRadiusSingleComponent
-    {
-        TopLeft,
-        TopRight,
-        BottomRight,
-        BottomLeft,
-        All
-    }
+    TopLeft,
+    TopRight,
+    BottomRight,
+    BottomLeft,
+    All
 }

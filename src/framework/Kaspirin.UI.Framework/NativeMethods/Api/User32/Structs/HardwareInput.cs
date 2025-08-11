@@ -16,19 +16,17 @@
 
 using System.Runtime.InteropServices;
 
-namespace Kaspirin.UI.Framework.NativeMethods.Api.User32.Structs
+namespace Kaspirin.UI.Framework.NativeMethods.Api.User32.Structs;
+
+/// <summary>
+///     <seealso href="https://learn.microsoft.com/en-us/windows/win32/api/winuser/ns-winuser-hardwareinput">Learn more</seealso>.
+/// </summary>
+[StructLayout(LayoutKind.Sequential)]
+public struct HardwareInput
 {
-    /// <summary>
-    ///     
-    /// <seealso href="https://learn.microsoft.com/en-us/windows/win32/api/winuser/ns-winuser-hardwareinput">Learn more</seealso>.
-    /// </summary>
-    [StructLayout(LayoutKind.Sequential)]
-    public struct HardwareInput
-    {
-        public int MessageCode;
+    public int MessageCode;
 
-        public short ParameterLowOrderWord;
+    public short ParameterLowOrderWord;
 
-        public short ParameterHighOrderWord;
-    }
+    public short ParameterHighOrderWord;
 }

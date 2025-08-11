@@ -12,10 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Kaspirin.UI.Framework.UiKit.Converters.CollectionConverters
+namespace Kaspirin.UI.Framework.UiKit.Converters.CollectionConverters;
+
+public sealed class CollectionToBooleanInverseConverter : BaseCollectionConverter<bool>
 {
-    public sealed class CollectionToBooleanInverseConverter : BaseCollectionConverter<bool>
-    {
-        public CollectionToBooleanInverseConverter() : base(false, true) { }
-    }
+    public CollectionToBooleanInverseConverter() : base(false, true) { }
 }

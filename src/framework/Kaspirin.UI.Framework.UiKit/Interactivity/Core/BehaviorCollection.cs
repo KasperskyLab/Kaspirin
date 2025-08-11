@@ -9,49 +9,48 @@
 
 using System.Windows;
 
-namespace Kaspirin.UI.Framework.UiKit.Interactivity.Core
+namespace Kaspirin.UI.Framework.UiKit.Interactivity.Core;
+
+public sealed class BehaviorCollection : AttachableCollection<Behavior>
 {
-    public sealed class BehaviorCollection : AttachableCollection<Behavior>
+    internal BehaviorCollection()
     {
-        internal BehaviorCollection()
-        {
-        }
+    }
 
-        internal override void ItemAdded(Behavior item)
+    internal override void ItemAdded(Behavior item)
+    {
+        if (AssociatedObject != null)
         {
-            if (AssociatedObject != null)
-            {
-                item.Attach(AssociatedObject);
-            }
+            item.Attach(AssociatedObject);
         }
+    }
 
-        internal override void ItemRemoved(Behavior item)
+    internal override void ItemRemoved(Behavior item)
+    {
+        if (item.AssociatedObject != null)
         {
-            if (item.AssociatedObject != null)
-            {
-                item.Detach();
-            }
+            item.Detach();
         }
+    }
 
-        protected override void OnAttached()
+    protected override void OnAttached()
+    {
+        foreach (var behavior in this)
         {
-            foreach (var behavior in this)
-            {
-                behavior.Attach(AssociatedObject);
-            }
+            behavior.Attach(AssociatedObject);
         }
+    }
 
-        protected override void OnDetaching()
+    protected override void OnDetaching()
+    {
+        foreach (var behavior in this)
         {
-            foreach (var behavior in this)
-            {
-                behavior.Detach();
-            }
+            behavior.Detach();
         }
+    }
 
-        protected override Freezable CreateInstanceCore()
-        {
-            return new BehaviorCollection();
-        }
+    protected override Freezable CreateInstanceCore()
+    {
+        return new BehaviorCollection();
     }
 }

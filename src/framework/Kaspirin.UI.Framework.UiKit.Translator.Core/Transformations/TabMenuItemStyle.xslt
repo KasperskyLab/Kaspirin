@@ -487,7 +487,7 @@
 						<!--TabMenuItem_Icon_Fill-->
 						<xsl:call-template name="generateBrushSetter">
 							<xsl:with-param name="propertyId" select="concat($prefix, 'Icon_Fill')" />
-							<xsl:with-param name="brushName">IconForegroundNormal</xsl:with-param>
+							<xsl:with-param name="brushName">IconBrushNormal</xsl:with-param>
 							<xsl:with-param name="scopeName" select="$id"/>
 						</xsl:call-template>
 
@@ -523,7 +523,7 @@
 						<!--TabMenuItem_Icon_Fill-->
 						<xsl:call-template name="generateBrushSetter">
 							<xsl:with-param name="propertyId" select="concat($prefix, 'Icon_Fill')" />
-							<xsl:with-param name="brushName">IconForegroundHover</xsl:with-param>
+							<xsl:with-param name="brushName">IconBrushHover</xsl:with-param>
 							<xsl:with-param name="scopeName" select="$id"/>
 						</xsl:call-template>
 
@@ -559,7 +559,7 @@
 						<!--TabMenuItem_Icon_Fill-->
 						<xsl:call-template name="generateBrushSetter">
 							<xsl:with-param name="propertyId" select="concat($prefix, 'Icon_Fill')" />
-							<xsl:with-param name="brushName">IconForegroundDisabled</xsl:with-param>
+							<xsl:with-param name="brushName">IconBrushDisabled</xsl:with-param>
 							<xsl:with-param name="scopeName" select="$id"/>
 						</xsl:call-template>
 
@@ -595,7 +595,7 @@
 						<!--TabMenuItem_Icon_Fill-->
 						<xsl:call-template name="generateBrushSetter">
 							<xsl:with-param name="propertyId" select="concat($prefix, 'Icon_Fill')" />
-							<xsl:with-param name="brushName">IconForegroundSelectedNormal</xsl:with-param>
+							<xsl:with-param name="brushName">IconBrushSelectedNormal</xsl:with-param>
 							<xsl:with-param name="scopeName" select="$id"/>
 						</xsl:call-template>
 
@@ -631,7 +631,7 @@
 						<!--TabMenuItem_Icon_Fill-->
 						<xsl:call-template name="generateBrushSetter">
 							<xsl:with-param name="propertyId" select="concat($prefix, 'Icon_Fill')" />
-							<xsl:with-param name="brushName">IconForegroundSelectedDisabled</xsl:with-param>
+							<xsl:with-param name="brushName">IconBrushSelectedDisabled</xsl:with-param>
 							<xsl:with-param name="scopeName" select="$id"/>
 						</xsl:call-template>
 

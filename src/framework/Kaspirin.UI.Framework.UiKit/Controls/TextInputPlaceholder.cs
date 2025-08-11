@@ -16,15 +16,14 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows.Documents;
 
-namespace Kaspirin.UI.Framework.UiKit.Controls
+namespace Kaspirin.UI.Framework.UiKit.Controls;
+
+[TypeConverter(typeof(TextInputPlaceholderConverter))]
+public abstract class TextInputPlaceholder
 {
-    [TypeConverter(typeof(TextInputPlaceholderConverter))]
-    public abstract class TextInputPlaceholder
-    {
-        protected TextInputPlaceholder() { }
+    protected TextInputPlaceholder() { }
 
-        public abstract IEnumerable<Inline> GetPlaceholderText(string? value, bool isRTL);
+    public abstract IEnumerable<Inline> GetPlaceholderText(string? value, bool isRTL);
 
-        public abstract string? FilterInputText(string? value);
-    }
+    public abstract string? FilterInputText(string? value);
 }

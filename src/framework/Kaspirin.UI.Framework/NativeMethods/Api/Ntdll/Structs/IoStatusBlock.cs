@@ -16,17 +16,15 @@
 
 using System.Runtime.InteropServices;
 
-namespace Kaspirin.UI.Framework.NativeMethods.Api.Ntdll.Structs
+namespace Kaspirin.UI.Framework.NativeMethods.Api.Ntdll.Structs;
+
+/// <summary>
+///     <seealso href="https://learn.microsoft.com/en-us/windows-hardware/drivers/ddi/wdm/ns-wdm-_io_status_block">Learn more</seealso>.
+/// </summary>
+[StructLayout(LayoutKind.Sequential)]
+public struct IoStatusBlock
 {
-    /// <summary>
-    ///     
-    /// <seealso href="https://learn.microsoft.com/en-us/windows-hardware/drivers/ddi/wdm/ns-wdm-_io_status_block">Learn more</seealso>.
-    /// </summary>
-    [StructLayout(LayoutKind.Sequential)]
-    public struct IoStatusBlock
-    {
-        [MarshalAs(UnmanagedType.U4)]
-        public NtStatus Status;
-        public ulong Information;
-    }
+    [MarshalAs(UnmanagedType.U4)]
+    public NtStatus Status;
+    public ulong Information;
 }

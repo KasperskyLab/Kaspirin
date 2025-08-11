@@ -12,83 +12,81 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using Kaspirin.UI.Framework.Mvvm;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Input;
 
-namespace Kaspirin.UI.Framework.UiKit.Windows
+namespace Kaspirin.UI.Framework.UiKit.Windows;
+
+public static class WindowCommand
 {
-    public static class WindowCommand
+    public static readonly ICommand Close = new DelegateCommand<object?>(CloseWindow);
+    public static readonly ICommand Minimize = new DelegateCommand<object?>(MinimizeWindow);
+    public static readonly ICommand MaximizeOrRestore = new DelegateCommand<object?>(MaximizeWindow);
+
+    private static void CloseWindow(object? obj)
     {
-        public static readonly ICommand Close = new DelegateCommand<object?>(CloseWindow);
-        public static readonly ICommand Minimize = new DelegateCommand<object?>(MinimizeWindow);
-        public static readonly ICommand MaximizeOrRestore = new DelegateCommand<object?>(MaximizeWindow);
-
-        private static void CloseWindow(object? obj)
+        if (obj == null)
         {
-            if (obj == null)
-            {
-                return;
-            }
-
-            var window = Guard.EnsureArgumentIsInstanceOfType<DependencyObject>(obj).GetWindow();
-            if (window == null || _closingWindows.Contains(window))
-            {
-                return;
-            }
-
-            _closingWindows.Add(window);
-
-            try
-            {
-                window.Close();
-            }
-            finally
-            {
-                _closingWindows.Remove(window);
-            }
+            return;
         }
 
-        private static void MinimizeWindow(object? obj)
+        var window = Guard.EnsureArgumentIsInstanceOfType<DependencyObject>(obj).GetWindow();
+        if (window == null || _closingWindows.Contains(window))
         {
-            if (obj == null)
-            {
-                return;
-            }
-
-            var window = Guard.EnsureArgumentIsInstanceOfType<DependencyObject>(obj).GetWindow();
-            if (window == null)
-            {
-                return;
-            }
-
-            window.WindowState = WindowState.Minimized;
+            return;
         }
 
-        private static void MaximizeWindow(object? obj)
+        _closingWindows.Add(window);
+
+        try
         {
-            if (obj == null)
-            {
-                return;
-            }
-
-            var window = Guard.EnsureArgumentIsInstanceOfType<DependencyObject>(obj).GetWindow();
-            if (window == null)
-            {
-                return;
-            }
-
-            if (window.WindowState == WindowState.Maximized)
-            {
-                window.WindowState = WindowState.Normal;
-            }
-            else
-            {
-                window.WindowState = WindowState.Maximized;
-            }
+            window.Close();
         }
-
-        private static readonly HashSet<Window> _closingWindows = new();
+        finally
+        {
+            _closingWindows.Remove(window);
+        }
     }
+
+    private static void MinimizeWindow(object? obj)
+    {
+        if (obj == null)
+        {
+            return;
+        }
+
+        var window = Guard.EnsureArgumentIsInstanceOfType<DependencyObject>(obj).GetWindow();
+        if (window == null)
+        {
+            return;
+        }
+
+        window.WindowState = WindowState.Minimized;
+    }
+
+    private static void MaximizeWindow(object? obj)
+    {
+        if (obj == null)
+        {
+            return;
+        }
+
+        var window = Guard.EnsureArgumentIsInstanceOfType<DependencyObject>(obj).GetWindow();
+        if (window == null)
+        {
+            return;
+        }
+
+        if (window.WindowState == WindowState.Maximized)
+        {
+            window.WindowState = WindowState.Normal;
+        }
+        else
+        {
+            window.WindowState = WindowState.Maximized;
+        }
+    }
+
+    private static readonly HashSet<Window> _closingWindows = new();
 }

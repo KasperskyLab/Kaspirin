@@ -15,26 +15,25 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Kaspirin.UI.Framework.UiKit.Localization.Localizer.Strings.Parsing.Evaluators.Ast
+namespace Kaspirin.UI.Framework.UiKit.Localization.Localizer.Strings.Parsing.Evaluators.Ast;
+
+public sealed class PluralForm : Operand
 {
-    public sealed class PluralForm : Operand
+    public PluralForm(Token openingCurlyBrace, Param param, Token colon, IEnumerable<PluralFormExpression> pluralFormExpressions, Token closingCurlyBrace)
     {
-        public PluralForm(Token openingCurlyBrace, Param param, Token colon, IEnumerable<PluralFormExpression> pluralFormExpressions, Token closingCurlyBrace)
-        {
-            OpeningCurlyBrace = openingCurlyBrace;
-            Param = param;
-            Colon = colon;
-            PluralFormExpressions = pluralFormExpressions;
-            ClosingCurlyBrace = closingCurlyBrace;
-        }
-
-        public override Position Position => OpeningCurlyBrace.Position + ClosingCurlyBrace.Position;
-        public override string GetText() => $"{{{Param.GetText()}: {string.Join(", ", PluralFormExpressions.Select(x => x.GetText()))}}}";
-
-        public Token OpeningCurlyBrace { get; }
-        public Param Param { get; }
-        public Token Colon { get; }
-        public IEnumerable<PluralFormExpression> PluralFormExpressions { get; }
-        public Token ClosingCurlyBrace { get; }
+        OpeningCurlyBrace = openingCurlyBrace;
+        Param = param;
+        Colon = colon;
+        PluralFormExpressions = pluralFormExpressions;
+        ClosingCurlyBrace = closingCurlyBrace;
     }
+
+    public override Position Position => OpeningCurlyBrace.Position + ClosingCurlyBrace.Position;
+    public override string GetText() => $"{{{Param.GetText()}: {string.Join(", ", PluralFormExpressions.Select(x => x.GetText()))}}}";
+
+    public Token OpeningCurlyBrace { get; }
+    public Param Param { get; }
+    public Token Colon { get; }
+    public IEnumerable<PluralFormExpression> PluralFormExpressions { get; }
+    public Token ClosingCurlyBrace { get; }
 }

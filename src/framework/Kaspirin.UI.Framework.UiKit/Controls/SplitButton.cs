@@ -15,95 +15,142 @@
 using System.Windows;
 using System.Windows.Input;
 
-namespace Kaspirin.UI.Framework.UiKit.Controls
+namespace Kaspirin.UI.Framework.UiKit.Controls;
+
+public sealed class SplitButton : ContextMenuButton
 {
-    public class SplitButton : ContextMenuButton
+    #region State
+
+    public SplitButtonState State
     {
-        #region State
+        get => (SplitButtonState)GetValue(StateProperty);
+        private set => SetValue(_statePropertyKey, value);
+    }
 
-        public SplitButtonState State
-        {
-            get { return (SplitButtonState)GetValue(StateProperty); }
-            private set { SetValue(_statePropertyKey, value); }
-        }
+    private static readonly DependencyPropertyKey _statePropertyKey = DependencyProperty.RegisterReadOnly(
+        nameof(State),
+        typeof(SplitButtonState),
+        typeof(SplitButton),
+        new PropertyMetadata(SplitButtonState.Enabled));
 
-        private static readonly DependencyPropertyKey _statePropertyKey =
-            DependencyProperty.RegisterReadOnly("State", typeof(SplitButtonState), typeof(SplitButton),
-                new PropertyMetadata(SplitButtonState.Enabled));
+    public static readonly DependencyProperty StateProperty = _statePropertyKey.DependencyProperty;
 
-        public static readonly DependencyProperty StateProperty =
-            _statePropertyKey.DependencyProperty;
+    #endregion
 
-        #endregion
+    #region IconLocation
 
-        #region IconLocation
+    public ButtonIconLocation IconLocation
+    {
+        get => (ButtonIconLocation)GetValue(IconLocationProperty);
+        set => SetValue(IconLocationProperty, value);
+    }
 
-        public ButtonIconLocation IconLocation
-        {
-            get { return (ButtonIconLocation)GetValue(IconLocationProperty); }
-            set { SetValue(IconLocationProperty, value); }
-        }
+    public static readonly DependencyProperty IconLocationProperty = DependencyProperty.Register(
+        nameof(IconLocation),
+        typeof(ButtonIconLocation),
+        typeof(SplitButton),
+        new PropertyMetadata(default(ButtonIconLocation)));
 
-        public static readonly DependencyProperty IconLocationProperty = DependencyProperty.Register(
-            "IconLocation", typeof(ButtonIconLocation), typeof(SplitButton));
+    #endregion
 
-        #endregion
+    #region IsContextMenuButtonBusy
 
-        #region IsContextMenuButtonEnabled
+    public bool IsContextMenuButtonBusy
+    {
+        get => (bool)GetValue(IsContextMenuButtonBusyProperty);
+        set => SetValue(IsContextMenuButtonBusyProperty, value);
+    }
 
-        public bool IsContextMenuButtonEnabled
-        {
-            get { return (bool)GetValue(IsContextMenuButtonEnabledProperty); }
-            set { SetValue(IsContextMenuButtonEnabledProperty, value); }
-        }
+    public static readonly DependencyProperty IsContextMenuButtonBusyProperty = DependencyProperty.Register(
+        nameof(IsContextMenuButtonBusy),
+        typeof(bool),
+        typeof(SplitButton),
+        new PropertyMetadata(default(bool)));
 
-        public static readonly DependencyProperty IsContextMenuButtonEnabledProperty = DependencyProperty.Register(
-            "IsContextMenuButtonEnabled", typeof(bool), typeof(SplitButton), new PropertyMetadata(true));
+    #endregion
 
-        #endregion
+    #region IsContextMenuButtonEnabled
 
-        #region IsMainButtonEnabled
+    public bool IsContextMenuButtonEnabled
+    {
+        get => (bool)GetValue(IsContextMenuButtonEnabledProperty);
+        set => SetValue(IsContextMenuButtonEnabledProperty, value);
+    }
 
-        public bool IsMainButtonEnabled
-        {
-            get { return (bool)GetValue(IsMainButtonEnabledProperty); }
-            set { SetValue(IsMainButtonEnabledProperty, value); }
-        }
+    public static readonly DependencyProperty IsContextMenuButtonEnabledProperty = DependencyProperty.Register(
+        nameof(IsContextMenuButtonEnabled),
+        typeof(bool),
+        typeof(SplitButton),
+        new PropertyMetadata(true));
 
-        public static readonly DependencyProperty IsMainButtonEnabledProperty = DependencyProperty.Register(
-            "IsMainButtonEnabled", typeof(bool), typeof(SplitButton), new PropertyMetadata(true));
+    #endregion
 
-        #endregion
+    #region IsMainButtonBusy
 
-        #region Command
+    public bool IsMainButtonBusy
+    {
+        get => (bool)GetValue(IsMainButtonBusyProperty);
+        set => SetValue(IsMainButtonBusyProperty, value);
+    }
 
-        public ICommand Command
-        {
-            get { return (ICommand)GetValue(CommandProperty); }
-            set { SetValue(CommandProperty, value); }
-        }
+    public static readonly DependencyProperty IsMainButtonBusyProperty = DependencyProperty.Register(
+        nameof(IsMainButtonBusy),
+        typeof(bool),
+        typeof(SplitButton),
+        new PropertyMetadata(default(bool)));
 
-        public static readonly DependencyProperty CommandProperty =
-            DependencyProperty.Register("Command", typeof(ICommand), typeof(SplitButton));
+    #endregion
 
-        #endregion
+    #region IsMainButtonEnabled
 
-        #region CommandParameter
+    public bool IsMainButtonEnabled
+    {
+        get => (bool)GetValue(IsMainButtonEnabledProperty);
+        set => SetValue(IsMainButtonEnabledProperty, value);
+    }
 
-        public object CommandParameter
-        {
-            get { return GetValue(CommandParameterProperty); }
-            set { SetValue(CommandParameterProperty, value); }
-        }
+    public static readonly DependencyProperty IsMainButtonEnabledProperty = DependencyProperty.Register(
+        nameof(IsMainButtonEnabled),
+        typeof(bool),
+        typeof(SplitButton),
+        new PropertyMetadata(true));
 
-        public static readonly DependencyProperty CommandParameterProperty =
-            DependencyProperty.Register("CommandParameter", typeof(object), typeof(SplitButton));
+    #endregion
 
-        #endregion
+    #region Command
 
-        internal void SetState(SplitButtonState state)
-        {
-            State = state;
-        }
+    public ICommand Command
+    {
+        get => (ICommand)GetValue(CommandProperty);
+        set => SetValue(CommandProperty, value);
+    }
+
+    public static readonly DependencyProperty CommandProperty = DependencyProperty.Register(
+        nameof(Command),
+        typeof(ICommand),
+        typeof(SplitButton),
+        new PropertyMetadata(default(ICommand)));
+
+    #endregion
+
+    #region CommandParameter
+
+    public object CommandParameter
+    {
+        get => GetValue(CommandParameterProperty);
+        set => SetValue(CommandParameterProperty, value);
+    }
+
+    public static readonly DependencyProperty CommandParameterProperty = DependencyProperty.Register(
+        nameof(CommandParameter),
+        typeof(object),
+        typeof(SplitButton),
+        new PropertyMetadata(default(object)));
+
+    #endregion
+
+    internal void SetState(SplitButtonState state)
+    {
+        State = state;
     }
 }

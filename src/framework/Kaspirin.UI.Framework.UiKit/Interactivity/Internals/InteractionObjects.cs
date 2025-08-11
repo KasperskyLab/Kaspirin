@@ -15,19 +15,18 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Kaspirin.UI.Framework.UiKit.Interactivity.Internals
+namespace Kaspirin.UI.Framework.UiKit.Interactivity.Internals;
+
+internal sealed class InteractionObjects : IInteractionObjects
 {
-    internal sealed class InteractionObjects : IInteractionObjects
-    {
-        public void Add(InteractionObject interactionObject)
-            => _activeObjects.Add(interactionObject);
+    public void Add(InteractionObject interactionObject)
+        => _activeObjects.Add(interactionObject);
 
-        public void Remove(InteractionObject interactionObject)
-            => _activeObjects.Remove(interactionObject);
+    public void Remove(InteractionObject interactionObject)
+        => _activeObjects.Remove(interactionObject);
 
-        public void HandleAll()
-            => _activeObjects.ToList().ForEach(obj => obj.Handle());
+    public void HandleAll()
+        => _activeObjects.ToList().ForEach(obj => obj.Handle());
 
-        private readonly List<InteractionObject> _activeObjects = new();
-    }
+    private readonly List<InteractionObject> _activeObjects = new();
 }

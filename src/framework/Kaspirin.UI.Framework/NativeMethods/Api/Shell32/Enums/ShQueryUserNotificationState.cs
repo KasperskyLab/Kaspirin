@@ -12,22 +12,45 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
+namespace Kaspirin.UI.Framework.NativeMethods.Api.Shell32.Enums;
 
-namespace Kaspirin.UI.Framework.NativeMethods.Api.Shell32.Enums
+/// <summary>
+///     <seealso href="https://learn.microsoft.com/en-us/windows/win32/api/shellapi/ne-shellapi-query_user_notification_state">Learn more</seealso>.
+/// </summary>
+public enum ShQueryUserNotificationState
 {
     /// <summary>
-    ///     
-    /// <seealso href="https://learn.microsoft.com/en-us/windows/win32/api/shellapi/ne-shellapi-query_user_notification_state">Learn more</seealso>.
+    ///     The QUNS_NOT_PRESENT constant.
     /// </summary>
-    public enum ShQueryUserNotificationState
-    {
-        QUNS_NOT_PRESENT = 1,
-        QUNS_BUSY = 2,
-        QUNS_RUNNING_D3D_FULL_SCREEN = 3,
-        QUNS_PRESENTATION_MODE = 4,
-        QUNS_ACCEPTS_NOTIFICATIONS = 5,
-        QUNS_QUIET_TIME = 6,
-        QUNS_APP = 7
-    }
+    NotPresent = 1,
+
+    /// <summary>
+    ///     The QUNS_BUSY constant.
+    /// </summary>
+    Busy = 2,
+
+    /// <summary>
+    ///     The QUNS_RUNNING_D3D_FULL_SCREEN constant.
+    /// </summary>
+    RunningD3DFullScreen = 3,
+
+    /// <summary>
+    ///     The QUNS_PRESENTATION_MODE constant.
+    /// </summary>
+    PresentationMode = 4,
+
+    /// <summary>
+    ///     The QUNS_ACCEPTS_NOTIFICATIONS constant.
+    /// </summary>
+    AcceptsNotifications = 5,
+
+    /// <summary>
+    ///     The QUNS_QUIET_TIME constant.
+    /// </summary>
+    QuietTime = 6,
+
+    /// <summary>
+    ///     The QUNS_APP constant.
+    /// </summary>
+    App = 7,
 }

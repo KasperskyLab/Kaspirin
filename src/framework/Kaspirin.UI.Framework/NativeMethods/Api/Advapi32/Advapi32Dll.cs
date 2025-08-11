@@ -18,119 +18,127 @@ using System;
 using System.Runtime.InteropServices;
 using System.Security.Principal;
 
-namespace Kaspirin.UI.Framework.NativeMethods.Api.Advapi32
+namespace Kaspirin.UI.Framework.NativeMethods.Api.Advapi32;
+
+/// <summary>
+///     Provides API methods for functions from advapi32.dll .
+/// </summary>
+public static class Advapi32Dll
 {
+    #region wincred.h
+
     /// <summary>
-    ///     Provides API methods for functions from advapi32.dll .
+    ///     The CredRead API method.
+    ///     <br /><seealso href="https://learn.microsoft.com/en-us/windows/win32/api/wincred/nf-wincred-credreadw">Learn more</seealso>.
     /// </summary>
-    public static class Advapi32Dll
-    {
-        #region wincred.h
+    [DllImport(DllName, EntryPoint = "CredReadW", CharSet = CharSet.Unicode, SetLastError = true)]
+    public static extern bool CredRead(
+        string target,
+        CredentialType type,
+        CredentialReadFlags flags,
+        out IntPtr credentials);
 
-        /// <summary>
-        ///     The CredRead API method. <br /><seealso href="https://learn.microsoft.com/en-us/windows/win32/api/wincred/nf-wincred-credreadw">Learn more</seealso>.
-        /// </summary>
-        [DllImport(DllName, EntryPoint = "CredReadW", CharSet = CharSet.Unicode, SetLastError = true)]
-        public static extern bool CredRead(
-            string target,
-            CredentialType type,
-            CredentialReadFlags flags,
-            out IntPtr credentials);
+    /// <summary>
+    ///     The CredFree API method.
+    ///     <br /><seealso href="https://learn.microsoft.com/en-us/windows/win32/api/wincred/nf-wincred-credfree">Learn more</seealso>.
+    /// </summary>
+    [DllImport(DllName, EntryPoint = "CredFree", SetLastError = false)]
+    public static extern bool CredFree(
+        [In] IntPtr credentials);
 
-        /// <summary>
-        ///     The CredFree API method. <br /><seealso href="https://learn.microsoft.com/en-us/windows/win32/api/wincred/nf-wincred-credfree">Learn more</seealso>.
-        /// </summary>
-        [DllImport(DllName, EntryPoint = "CredFree", SetLastError = false)]
-        public static extern bool CredFree(
-            [In] IntPtr credentials);
+    /// <summary>
+    ///     The CredWrite API method.
+    ///     <br /><seealso href="https://learn.microsoft.com/en-us/windows/win32/api/wincred/nf-wincred-credwritew">Learn more</seealso>.
+    /// </summary>
+    [DllImport(DllName, EntryPoint = "CredWriteW", CharSet = CharSet.Unicode, SetLastError = true)]
+    public static extern bool CredWrite(
+        [In] ref Credential credentials,
+        [In] CredentialWriteFlags flags);
 
-        /// <summary>
-        ///     The CredWrite API method. <br /><seealso href="https://learn.microsoft.com/en-us/windows/win32/api/wincred/nf-wincred-credwritew">Learn more</seealso>.
-        /// </summary>
-        [DllImport(DllName, EntryPoint = "CredWriteW", CharSet = CharSet.Unicode, SetLastError = true)]
-        public static extern bool CredWrite(
-            [In] ref Credential credentials,
-            [In] CredentialWriteFlags flags);
+    #endregion
 
-        #endregion
+    #region winreg.h
 
-        #region winreg.h
+    /// <summary>
+    ///     The RegNotifyChangeKeyValue API method.
+    ///     <br /><seealso href="https://learn.microsoft.com/en-us/windows/win32/api/winreg/nf-winreg-regnotifychangekeyvalue">Learn more</seealso>.
+    /// </summary>
+    [DllImport(DllName, SetLastError = false)]
+    public static extern int RegNotifyChangeKeyValue(
+        IntPtr regKey,
+        bool watchSubtree,
+        RegNotifyChangeKeyValueFlags filter,
+        IntPtr notification,
+        bool isAsynchronous);
 
-        /// <summary>
-        ///     The RegNotifyChangeKeyValue API method. <br /><seealso href="https://learn.microsoft.com/en-us/windows/win32/api/winreg/nf-winreg-regnotifychangekeyvalue">Learn more</seealso>.
-        /// </summary>
-        [DllImport(DllName, SetLastError = false)]
-        public static extern int RegNotifyChangeKeyValue(
-            IntPtr regKey,
-            bool watchSubtree,
-            RegNotifyChangeKeyValueFlags filter,
-            IntPtr notification,
-            bool isAsynchronous);
+    #endregion
 
-        #endregion
+    #region securitybaseapi.h
 
-        #region securitybaseapi.h
+    /// <summary>
+    ///     The DuplicateToken API method.
+    ///     <br /><seealso href="https://learn.microsoft.com/en-us/windows/win32/api/securitybaseapi/nf-securitybaseapi-duplicatetoken">Learn more</seealso>.
+    /// </summary>
+    [DllImport(DllName, SetLastError = true)]
+    [return: MarshalAs(UnmanagedType.Bool)]
+    public static extern bool DuplicateToken(
+        IntPtr existingTokenHandle,
+        [MarshalAs(UnmanagedType.U4)] TokenImpersonationLevel level,
+        out int duplicateTokenHandle);
 
-        /// <summary>
-        ///     The DuplicateToken API method. <br /><seealso href="https://learn.microsoft.com/en-us/windows/win32/api/securitybaseapi/nf-securitybaseapi-duplicatetoken">Learn more</seealso>.
-        /// </summary>
-        [DllImport(DllName, SetLastError = true)]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        public static extern bool DuplicateToken(
-            IntPtr existingTokenHandle,
-            [MarshalAs(UnmanagedType.U4)] TokenImpersonationLevel level,
-            out int duplicateTokenHandle);
+    /// <summary>
+    ///     The AccessCheck API method.
+    ///     <br /><seealso href="https://learn.microsoft.com/en-us/windows/win32/api/securitybaseapi/nf-securitybaseapi-accesscheck">Learn more</seealso>.
+    /// </summary>
+    [DllImport(DllName, SetLastError = true)]
+    [return: MarshalAs(UnmanagedType.Bool)]
+    public static extern bool AccessCheck(
+        [MarshalAs(UnmanagedType.LPArray)] byte[] securityDescriptor,
+        IntPtr clientToken,
+        [MarshalAs(UnmanagedType.U4)] TokenAccessLevels accessMask,
+        [In] ref GenericMapping genericMapping,
+        ref PrivilegeSet privilegeSet,
+        ref int privilegeSetLength,
+        out AccessMaskFlags grantedAccess,
+        [MarshalAs(UnmanagedType.Bool)] out bool accessStatus);
 
-        /// <summary>
-        ///     The AccessCheck API method. <br /><seealso href="https://learn.microsoft.com/en-us/windows/win32/api/securitybaseapi/nf-securitybaseapi-accesscheck">Learn more</seealso>.
-        /// </summary>
-        [DllImport(DllName, SetLastError = true)]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        public static extern bool AccessCheck(
-            [MarshalAs(UnmanagedType.LPArray)] byte[] securityDescriptor,
-            IntPtr clientToken,
-            [MarshalAs(UnmanagedType.U4)] TokenAccessLevels accessMask,
-            [In] ref GenericMapping genericMapping,
-            ref PrivilegeSet privilegeSet,
-            ref int privilegeSetLength,
-            out AccessMaskFlags grantedAccess,
-            [MarshalAs(UnmanagedType.Bool)] out bool accessStatus);
+    /// <summary>
+    ///     The MapGenericMask API method.
+    ///     <br /><seealso href="https://learn.microsoft.com/en-us/windows/win32/api/securitybaseapi/nf-securitybaseapi-mapgenericmask">Learn more</seealso>.
+    /// </summary>
+    [DllImport(DllName, SetLastError = false)]
+    public static extern void MapGenericMask(
+        [In, MarshalAs(UnmanagedType.U4)] ref AccessMaskFlags accessMask,
+        [In] ref GenericMapping map);
 
-        /// <summary>
-        ///     The MapGenericMask API method. <br /><seealso href="https://learn.microsoft.com/en-us/windows/win32/api/securitybaseapi/nf-securitybaseapi-mapgenericmask">Learn more</seealso>.
-        /// </summary>
-        [DllImport(DllName, SetLastError = false)]
-        public static extern void MapGenericMask(
-            [In, MarshalAs(UnmanagedType.U4)] ref AccessMaskFlags accessMask,
-            [In] ref GenericMapping map);
+    /// <summary>
+    ///     The GetFileSecurity API method.
+    ///     <br /><seealso href="https://learn.microsoft.com/en-us/windows/win32/api/securitybaseapi/nf-securitybaseapi-getfilesecurityw">Learn more</seealso>.
+    /// </summary>
+    [DllImport(DllName, SetLastError = true, CharSet = CharSet.Unicode)]
+    public static extern uint GetFileSecurity(
+        string fileName,
+        uint requestedInformation,
+        byte[]? securityDescriptor,
+        uint securityDescriptorLength,
+        out uint securityDescriptorLengthNeeded);
 
-        /// <summary>
-        ///     The GetFileSecurity API method. <br /><seealso href="https://learn.microsoft.com/en-us/windows/win32/api/securitybaseapi/nf-securitybaseapi-getfilesecurityw">Learn more</seealso>.
-        /// </summary>
-        [DllImport(DllName, SetLastError = true, CharSet = CharSet.Unicode)]
-        public static extern uint GetFileSecurity(
-            string fileName,
-            uint requestedInformation,
-            byte[]? securityDescriptor,
-            uint securityDescriptorLength,
-            out uint securityDescriptorLengthNeeded);
+    #endregion
 
-        #endregion
+    #region processthreadsapi.h
 
-        #region processthreadsapi.h
+    /// <summary>
+    ///     The OpenProcessToken API method.
+    ///     <br /><seealso href="https://learn.microsoft.com/en-us/windows/win32/api/processthreadsapi/nf-processthreadsapi-openprocesstoken">Learn more</seealso>.
+    /// </summary>
+    [DllImport(DllName, SetLastError = true, CharSet = CharSet.Unicode)]
+    [return: MarshalAs(UnmanagedType.Bool)]
+    public static extern bool OpenProcessToken(
+        IntPtr processHandle,
+        TokenAccessFlags desiredAccess,
+        out IntPtr tokenHandle);
 
-        /// <summary>
-        ///     The OpenProcessToken API method. <br /><seealso href="https://learn.microsoft.com/en-us/windows/win32/api/processthreadsapi/nf-processthreadsapi-openprocesstoken">Learn more</seealso>.
-        /// </summary>
-        [DllImport(DllName, SetLastError = true, CharSet = CharSet.Unicode)]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        public static extern bool OpenProcessToken(
-            IntPtr processHandle,
-            TokenAccessFlags desiredAccess,
-            out IntPtr tokenHandle);
+    #endregion
 
-        #endregion
-
-        private const string DllName = "advapi32.dll";
-    }
+    private const string DllName = "advapi32.dll";
 }

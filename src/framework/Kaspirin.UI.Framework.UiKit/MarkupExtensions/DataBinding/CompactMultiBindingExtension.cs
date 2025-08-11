@@ -14,67 +14,66 @@
 
 using System.Windows.Data;
 
-namespace Kaspirin.UI.Framework.UiKit.MarkupExtensions.DataBinding
+namespace Kaspirin.UI.Framework.UiKit.MarkupExtensions.DataBinding;
+
+public sealed class CompactMultiBindingExtension : MultiBinding
 {
-    public class CompactMultiBindingExtension : MultiBinding
+    public BindingBase Binding1
     {
-        public BindingBase Binding1
+        set
         {
-            set
+            if (Bindings.Count > 0)
             {
-                if (Bindings.Count > 0)
-                {
-                    Bindings[0] = value;
-                }
-                else
-                {
-                    Bindings.Add(value);
-                }
+                Bindings[0] = value;
+            }
+            else
+            {
+                Bindings.Add(value);
             }
         }
+    }
 
-        public BindingBase Binding2
+    public BindingBase Binding2
+    {
+        set
         {
-            set
+            if (Bindings.Count > 1)
             {
-                if (Bindings.Count > 1)
-                {
-                    Bindings[1] = value;
-                }
-                else
-                {
-                    Bindings.Add(value);
-                }
+                Bindings[1] = value;
+            }
+            else
+            {
+                Bindings.Add(value);
             }
         }
+    }
 
-        public BindingBase Binding3
+    public BindingBase Binding3
+    {
+        set
         {
-            set
+            if (Bindings.Count > 2)
             {
-                if (Bindings.Count > 2)
-                {
-                    Bindings[2] = value;
-                }
-                else
-                {
-                    Bindings.Add(value);
-                }
+                Bindings[2] = value;
+            }
+            else
+            {
+                Bindings.Add(value);
             }
         }
+    }
 
-        public BindingBase Binding4
+    public BindingBase Binding4
+    {
+        set
         {
-            set
+            if (Bindings.Count > 3)
             {
-                if (Bindings.Count > 3)
-                {
-                    Bindings[3] = value;
-                }
-                else
-                {
-                    Bindings.Add(value);
-                }
+                Bindings[3] = value;
+            }
+            else
+            {
+                Bindings.Add(value);
             }
         }
     }

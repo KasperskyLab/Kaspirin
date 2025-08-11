@@ -12,24 +12,38 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-#pragma warning disable KCAIDE0002 // Enum has incorrect suffix
-
 using System;
 
-namespace Kaspirin.UI.Framework.NativeMethods.Api.User32.Enums
+namespace Kaspirin.UI.Framework.NativeMethods.Api.User32.Enums;
+
+/// <summary>
+///     <seealso href="https://learn.microsoft.com/en-us/windows/win32/api/winuser/ns-winuser-keybdinput">Learn more</seealso>.
+/// </summary>
+[Flags]
+public enum KeyboardInputFlags : uint
 {
     /// <summary>
-    ///     
-    /// <seealso href="https://learn.microsoft.com/en-us/windows/win32/api/winuser/ns-winuser-keybdinput">Learn more</seealso>.
+    ///     The flag is not set.
     /// </summary>
-    [Flags]
-    public enum KeyboardInputFlags : uint
-    {
-        None = 0,
-        KEYEVENTF_EXTENDEDKEY = 0x0001,
-        KEYEVENTF_KEYUP = 0x0002,
-        KEYEVENTF_SCANCODE = 0x0008,
-        KEYEVENTF_UNICODE = 0x0004
-    }
+    None = 0,
+
+    /// <summary>
+    ///     The KEYEVENTF_EXTENDEDKEY constant.
+    /// </summary>
+    ExtendedKey = 0x0001,
+
+    /// <summary>
+    ///     The KEYEVENTF_KEYUP constant.
+    /// </summary>
+    KeyUp = 0x0002,
+
+    /// <summary>
+    ///     The KEYEVENTF_SCANCODE constant.
+    /// </summary>
+    ScanCode = 0x0008,
+
+    /// <summary>
+    ///     The KEYEVENTF_UNICODE constant.
+    /// </summary>
+    Unicode = 0x0004,
 }

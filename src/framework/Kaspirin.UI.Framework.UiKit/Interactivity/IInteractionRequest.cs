@@ -14,16 +14,15 @@
 
 using System;
 
-namespace Kaspirin.UI.Framework.UiKit.Interactivity
+namespace Kaspirin.UI.Framework.UiKit.Interactivity;
+
+public interface IInteractionRequest<T> where T : InteractionObject
 {
-    public interface IInteractionRequest<T> where T : InteractionObject
-    {
-        event EventHandler<InteractionRequestedEventArgs> Raised;
+    event EventHandler<InteractionRequestedEventArgs> Raised;
 
-        bool IsRaised { get; }
+    bool IsRaised { get; }
 
-        T? InteractionObject { get; }
+    T? InteractionObject { get; }
 
-        void SetSilentMode();
-    }
+    void SetSilentMode();
 }

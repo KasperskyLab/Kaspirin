@@ -15,20 +15,19 @@
 using System.Windows;
 using System.Windows.Controls;
 
-namespace Kaspirin.UI.Framework.UiKit.Controls
-{
-    [StyleTypedProperty(Property = "ItemContainerStyle", StyleTargetType = typeof(CarouselItem))]
-    public sealed class Carousel : SelectorList<CarouselItem>
-    {
-        static Carousel()
-        {
-            SelectionModeProperty.OverrideMetadata(typeof(Carousel),
-                new FrameworkPropertyMetadata(SelectionMode.Single, FrameworkPropertyMetadataOptions.None, null, CoerceSelectionMode));
-        }
+namespace Kaspirin.UI.Framework.UiKit.Controls;
 
-        private static object CoerceSelectionMode(DependencyObject d, object baseValue)
-        {
-            return SelectionMode.Single;
-        }
+[StyleTypedProperty(Property = "ItemContainerStyle", StyleTargetType = typeof(CarouselItem))]
+public sealed class Carousel : SelectorList<CarouselItem>
+{
+    static Carousel()
+    {
+        SelectionModeProperty.OverrideMetadata(typeof(Carousel),
+            new FrameworkPropertyMetadata(SelectionMode.Single, FrameworkPropertyMetadataOptions.None, null, CoerceSelectionMode));
+    }
+
+    private static object CoerceSelectionMode(DependencyObject d, object baseValue)
+    {
+        return SelectionMode.Single;
     }
 }

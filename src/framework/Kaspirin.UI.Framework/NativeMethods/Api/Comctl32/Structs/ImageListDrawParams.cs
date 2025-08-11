@@ -17,31 +17,29 @@
 using System;
 using System.Runtime.InteropServices;
 
-namespace Kaspirin.UI.Framework.NativeMethods.Api.Comctl32.Structs
+namespace Kaspirin.UI.Framework.NativeMethods.Api.Comctl32.Structs;
+
+/// <summary>
+///     <seealso href="https://learn.microsoft.com/en-us/windows/win32/api/commctrl/ns-commctrl-imagelistdrawparams">Learn more</seealso>.
+/// </summary>
+[StructLayout(LayoutKind.Sequential)]
+public struct ImageListDrawParams
 {
-    /// <summary>
-    ///     
-    /// <seealso href="https://learn.microsoft.com/en-us/windows/win32/api/commctrl/ns-commctrl-imagelistdrawparams">Learn more</seealso>.
-    /// </summary>
-    [StructLayout(LayoutKind.Sequential)]
-    public struct ImageListDrawParams
-    {
-        public int cbSize;
-        public IntPtr himl;
-        public int i;
-        public IntPtr hdcDst;
-        public int x;
-        public int y;
-        public int cx;
-        public int cy;
-        public int xBitmap;
-        public int yBitmap;
-        public int rgbBk;
-        public int rgbFg;
-        public ImageListDrawFlags fStyle;
-        public int dwRop;
-        public int fState;
-        public int Frame;
-        public int crEffect;
-    }
+    public int cbSize;
+    public IntPtr himl;
+    public int i;
+    public IntPtr hdcDst;
+    public int x;
+    public int y;
+    public int cx;
+    public int cy;
+    public int xBitmap;
+    public int yBitmap;
+    public int rgbBk;
+    public int rgbFg;
+    public ImageListDrawFlags fStyle;
+    public int dwRop;
+    public int fState;
+    public int Frame;
+    public int crEffect;
 }

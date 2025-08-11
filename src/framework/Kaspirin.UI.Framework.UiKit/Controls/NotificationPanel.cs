@@ -17,151 +17,165 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using Kaspirin.UI.Framework.UiKit.Controls.Internals;
 
-namespace Kaspirin.UI.Framework.UiKit.Controls
+namespace Kaspirin.UI.Framework.UiKit.Controls;
+
+[TemplatePart(Name = PART_Root, Type = typeof(Border))]
+public sealed class NotificationPanel : ContentControl
 {
-    [TemplatePart(Name = PART_Root, Type = typeof(Border))]
-    public class NotificationPanel : ContentControl
+    public const string PART_Root = "PART_Root";
+
+    public NotificationPanel()
     {
-        public const string PART_Root = "PART_Root";
-
-        public NotificationPanel()
-        {
-            _cornerRoundingHelper = new CornerRoundingHelper(this, InvalidateCornerRadius);
-        }
-
-        #region Header
-
-        public object Header
-        {
-            get { return GetValue(HeaderProperty); }
-            set { SetValue(HeaderProperty, value); }
-        }
-
-        public static readonly DependencyProperty HeaderProperty =
-            DependencyProperty.Register("Header", typeof(object), typeof(NotificationPanel));
-
-        #endregion
-
-        #region Icon
-
-        public ImageSource Icon
-        {
-            get { return (ImageSource)GetValue(IconProperty); }
-            set { SetValue(IconProperty, value); }
-        }
-
-        public static readonly DependencyProperty IconProperty =
-            DependencyProperty.Register("Icon", typeof(ImageSource), typeof(NotificationPanel));
-
-        #endregion
-
-        #region SubHeader
-
-        public object SubHeader
-        {
-            get { return GetValue(SubHeaderProperty); }
-            set { SetValue(SubHeaderProperty, value); }
-        }
-
-        public static readonly DependencyProperty SubHeaderProperty =
-            DependencyProperty.Register("SubHeader", typeof(object), typeof(NotificationPanel));
-
-        #endregion
-
-        #region Type
-
-        public NotificationPanelType Type
-        {
-            get { return (NotificationPanelType)GetValue(TypeProperty); }
-            set { SetValue(TypeProperty, value); }
-        }
-
-        public static readonly DependencyProperty TypeProperty =
-            DependencyProperty.Register("Type", typeof(NotificationPanelType), typeof(NotificationPanel));
-
-        #endregion
-
-        #region RightBar
-
-        public object RightBar
-        {
-            get { return GetValue(RightBarProperty); }
-            set { SetValue(RightBarProperty, value); }
-        }
-
-        public static readonly DependencyProperty RightBarProperty =
-            DependencyProperty.Register("RightBar", typeof(object), typeof(NotificationPanel));
-
-        #endregion
-
-        #region DisableRoundingTopLeft
-
-        public bool DisableRoundingTopLeft
-        {
-            get { return (bool)GetValue(DisableRoundingTopLeftProperty); }
-            set { SetValue(DisableRoundingTopLeftProperty, value); }
-        }
-
-        public static readonly DependencyProperty DisableRoundingTopLeftProperty =
-            CornerRoundingHelper.DisableRoundingTopLeftProperty.AddOwner(typeof(NotificationPanel));
-
-        #endregion
-
-        #region DisableRoundingTopRight
-
-        public bool DisableRoundingTopRight
-        {
-            get { return (bool)GetValue(DisableRoundingTopRightProperty); }
-            set { SetValue(DisableRoundingTopRightProperty, value); }
-        }
-
-        public static readonly DependencyProperty DisableRoundingTopRightProperty =
-            CornerRoundingHelper.DisableRoundingTopRightProperty.AddOwner(typeof(NotificationPanel));
-
-        #endregion
-
-        #region DisableRoundingBottomLeft
-
-        public bool DisableRoundingBottomLeft
-        {
-            get { return (bool)GetValue(DisableRoundingBottomLeftProperty); }
-            set { SetValue(DisableRoundingBottomLeftProperty, value); }
-        }
-
-        public static readonly DependencyProperty DisableRoundingBottomLeftProperty =
-            CornerRoundingHelper.DisableRoundingBottomLeftProperty.AddOwner(typeof(NotificationPanel));
-
-        #endregion
-
-        #region DisableRoundingBottomRight
-
-        public bool DisableRoundingBottomRight
-        {
-            get { return (bool)GetValue(DisableRoundingBottomRightProperty); }
-            set { SetValue(DisableRoundingBottomRightProperty, value); }
-        }
-
-        public static readonly DependencyProperty DisableRoundingBottomRightProperty =
-            CornerRoundingHelper.DisableRoundingBottomRightProperty.AddOwner(typeof(NotificationPanel));
-
-        #endregion
-
-        public override void OnApplyTemplate()
-        {
-            _root = GetTemplateChild(PART_Root) as Border;
-
-            InvalidateCornerRadius();
-        }
-
-        private void InvalidateCornerRadius()
-        {
-            if (_root != null)
-            {
-                _root.CornerRadius = _cornerRoundingHelper.GetCornerRadius();
-            }
-        }
-
-        private Border? _root;
-        private readonly CornerRoundingHelper _cornerRoundingHelper;
+        _cornerRoundingHelper = new CornerRoundingHelper(this, InvalidateCornerRadius);
     }
+
+    #region Header
+
+    public object Header
+    {
+        get => GetValue(HeaderProperty);
+        set => SetValue(HeaderProperty, value);
+    }
+
+    public static readonly DependencyProperty HeaderProperty = DependencyProperty.Register(
+        nameof(Header),
+        typeof(object),
+        typeof(NotificationPanel),
+        new PropertyMetadata(default(object)));
+
+    #endregion
+
+    #region Icon
+
+    public ImageSource Icon
+    {
+        get => (ImageSource)GetValue(IconProperty);
+        set => SetValue(IconProperty, value);
+    }
+
+    public static readonly DependencyProperty IconProperty = DependencyProperty.Register(
+        nameof(Icon),
+        typeof(ImageSource),
+        typeof(NotificationPanel),
+        new PropertyMetadata(default(ImageSource)));
+
+    #endregion
+
+    #region SubHeader
+
+    public object SubHeader
+    {
+        get => GetValue(SubHeaderProperty);
+        set => SetValue(SubHeaderProperty, value);
+    }
+
+    public static readonly DependencyProperty SubHeaderProperty = DependencyProperty.Register(
+        nameof(SubHeader),
+        typeof(object),
+        typeof(NotificationPanel),
+        new PropertyMetadata(default(object)));
+
+    #endregion
+
+    #region Type
+
+    public NotificationPanelType Type
+    {
+        get => (NotificationPanelType)GetValue(TypeProperty);
+        set => SetValue(TypeProperty, value);
+    }
+
+    public static readonly DependencyProperty TypeProperty = DependencyProperty.Register(
+        nameof(Type),
+        typeof(NotificationPanelType),
+        typeof(NotificationPanel),
+        new PropertyMetadata(default(NotificationPanelType)));
+
+    #endregion
+
+    #region RightBar
+
+    public object RightBar
+    {
+        get => GetValue(RightBarProperty);
+        set => SetValue(RightBarProperty, value);
+    }
+
+    public static readonly DependencyProperty RightBarProperty = DependencyProperty.Register(
+        nameof(RightBar),
+        typeof(object),
+        typeof(NotificationPanel),
+        new PropertyMetadata(default(object)));
+
+    #endregion
+
+    #region DisableRoundingTopLeft
+
+    public bool DisableRoundingTopLeft
+    {
+        get => (bool)GetValue(DisableRoundingTopLeftProperty);
+        set => SetValue(DisableRoundingTopLeftProperty, value);
+    }
+
+    public static readonly DependencyProperty DisableRoundingTopLeftProperty =
+        CornerRoundingHelper.DisableRoundingTopLeftProperty.AddOwner(typeof(NotificationPanel));
+
+    #endregion
+
+    #region DisableRoundingTopRight
+
+    public bool DisableRoundingTopRight
+    {
+        get => (bool)GetValue(DisableRoundingTopRightProperty);
+        set => SetValue(DisableRoundingTopRightProperty, value);
+    }
+
+    public static readonly DependencyProperty DisableRoundingTopRightProperty =
+        CornerRoundingHelper.DisableRoundingTopRightProperty.AddOwner(typeof(NotificationPanel));
+
+    #endregion
+
+    #region DisableRoundingBottomLeft
+
+    public bool DisableRoundingBottomLeft
+    {
+        get => (bool)GetValue(DisableRoundingBottomLeftProperty);
+        set => SetValue(DisableRoundingBottomLeftProperty, value);
+    }
+
+    public static readonly DependencyProperty DisableRoundingBottomLeftProperty =
+        CornerRoundingHelper.DisableRoundingBottomLeftProperty.AddOwner(typeof(NotificationPanel));
+
+    #endregion
+
+    #region DisableRoundingBottomRight
+
+    public bool DisableRoundingBottomRight
+    {
+        get => (bool)GetValue(DisableRoundingBottomRightProperty);
+        set => SetValue(DisableRoundingBottomRightProperty, value);
+    }
+
+    public static readonly DependencyProperty DisableRoundingBottomRightProperty =
+        CornerRoundingHelper.DisableRoundingBottomRightProperty.AddOwner(typeof(NotificationPanel));
+
+    #endregion
+
+    public override void OnApplyTemplate()
+    {
+        _root = GetTemplateChild(PART_Root) as Border;
+
+        InvalidateCornerRadius();
+    }
+
+    private void InvalidateCornerRadius()
+    {
+        if (_root != null)
+        {
+            _root.CornerRadius = _cornerRoundingHelper.GetCornerRadius();
+        }
+    }
+
+    private Border? _root;
+    private readonly CornerRoundingHelper _cornerRoundingHelper;
 }

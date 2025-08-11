@@ -16,19 +16,17 @@
 
 using System.Runtime.InteropServices;
 
-namespace Kaspirin.UI.Framework.NativeMethods.Api.User32.Structs
+namespace Kaspirin.UI.Framework.NativeMethods.Api.User32.Structs;
+
+/// <summary>
+///     <seealso href="https://learn.microsoft.com/en-us/windows/win32/api/winuser/ns-winuser-minmaxinfo">Learn more</seealso>.
+/// </summary>
+[StructLayout(LayoutKind.Sequential)]
+public struct MinMaxInfo
 {
-    /// <summary>
-    ///     
-    /// <seealso href="https://learn.microsoft.com/en-us/windows/win32/api/winuser/ns-winuser-minmaxinfo">Learn more</seealso>.
-    /// </summary>
-    [StructLayout(LayoutKind.Sequential)]
-    public struct MinMaxInfo
-    {
-        public NativePoint ptReserved;
-        public NativePoint ptMaxSize;
-        public NativePoint ptMaxPosition;
-        public NativePoint ptMinTrackSize;
-        public NativePoint ptMaxTrackSize;
-    };
-}
+    public NativePoint ptReserved;
+    public NativePoint ptMaxSize;
+    public NativePoint ptMaxPosition;
+    public NativePoint ptMinTrackSize;
+    public NativePoint ptMaxTrackSize;
+};

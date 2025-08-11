@@ -12,12 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Kaspirin.UI.Framework.IoC.Injection
+namespace Kaspirin.UI.Framework.IoC.Injection;
+
+/// <summary>
+///     The base class for managing the implementation constructor when creating an object in an IoC container.
+/// </summary>
+public abstract class InjectionMember
 {
-    /// <summary>
-    ///     The base class for managing the implementation constructor when creating an object in an IoC container.
-    /// </summary>
-    public abstract class InjectionMember
-    {
-    }
 }

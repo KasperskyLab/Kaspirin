@@ -12,11 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Kaspirin.UI.Framework.UiKit.Palettes
+namespace Kaspirin.UI.Framework.UiKit.Palettes;
+
+public enum UIKitPaletteExtensionMode
 {
-    public enum UIKitPaletteExtensionMode
-    {
-        Brush,
-        Color
-    }
+    Brush,
+    Color
 }

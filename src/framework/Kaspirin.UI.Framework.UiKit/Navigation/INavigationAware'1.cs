@@ -12,10 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Kaspirin.UI.Framework.UiKit.Navigation
+namespace Kaspirin.UI.Framework.UiKit.Navigation;
+
+public interface INavigationAware<TParam> : INavigationAware
 {
-    public interface INavigationAware<TParam> : INavigationAware
-    {
-        void SetParameters(TParam parameter);
-    }
+    void SetParameters(TParam parameter);
 }

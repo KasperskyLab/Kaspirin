@@ -15,30 +15,29 @@
 using System.Collections.Generic;
 using System.Globalization;
 
-namespace Kaspirin.UI.Framework.Extensions.CultureInfos
+namespace Kaspirin.UI.Framework.Extensions.CultureInfos;
+
+/// <summary>
+///     Extension methods for <see cref="CultureInfo" />.
+/// </summary>
+public static class CultureInfoExtensions
 {
     /// <summary>
-    ///     Extension methods for <see cref="CultureInfo" />.
+    ///     Returns an enumeration of the parent cultures for <paramref name="CultureInfo" />.
     /// </summary>
-    public static class CultureInfoExtensions
+    /// <param name="cultureInfo">
+    ///     Culture.
+    /// </param>
+    /// <returns>
+    ///     Enumeration for obtaining parent cultures.
+    /// </returns>
+    public static IEnumerable<CultureInfo> GetParentCultures(this CultureInfo cultureInfo)
     {
-        /// <summary>
-        ///     Returns an enumeration of the parent cultures for <paramref name="CultureInfo" />.
-        /// </summary>
-        /// <param name="cultureInfo">
-        ///     Culture.
-        /// </param>
-        /// <returns>
-        ///     Enumeration for obtaining parent cultures.
-        /// </returns>
-        public static IEnumerable<CultureInfo> GetParentCultures(this CultureInfo cultureInfo)
-        {
-            Guard.ArgumentIsNotNull(cultureInfo);
+        Guard.ArgumentIsNotNull(cultureInfo);
 
-            for (var culture = cultureInfo; !culture.Equals(CultureInfo.InvariantCulture); culture = culture.Parent)
-            {
-                yield return culture;
-            }
+        for (var culture = cultureInfo; !culture.Equals(CultureInfo.InvariantCulture); culture = culture.Parent)
+        {
+            yield return culture;
         }
     }
 }

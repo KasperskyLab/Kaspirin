@@ -42,14 +42,14 @@
 			<xs:element name="ForegroundHover" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
 			<xs:element name="ForegroundNormal" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
 			<xs:element name="ForegroundPressed" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
-			<xs:element name="IconForegroundDisabledCenterLocation" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
-			<xs:element name="IconForegroundDisabledSideLocation" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
-			<xs:element name="IconForegroundHoverCenterLocation" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
-			<xs:element name="IconForegroundHoverSideLocation" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
-			<xs:element name="IconForegroundNormalCenterLocation" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
-			<xs:element name="IconForegroundNormalSideLocation" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
-			<xs:element name="IconForegroundPressedCenterLocation" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
-			<xs:element name="IconForegroundPressedSideLocation" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="IconBrushDisabledCenterLocation" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="IconBrushDisabledSideLocation" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="IconBrushHoverCenterLocation" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="IconBrushHoverSideLocation" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="IconBrushNormalCenterLocation" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="IconBrushNormalSideLocation" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="IconBrushPressedCenterLocation" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="IconBrushPressedSideLocation" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
 			<xs:element name="IconMarginCenterLocation" type="Thickness" minOccurs="1" maxOccurs="1"/>
 			<xs:element name="IconMarginLeftLocation" type="Thickness" minOccurs="1" maxOccurs="1"/>
 			<xs:element name="IconMarginRightLocation" type="Thickness" minOccurs="1" maxOccurs="1"/>

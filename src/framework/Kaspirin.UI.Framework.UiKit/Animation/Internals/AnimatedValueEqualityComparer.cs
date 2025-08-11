@@ -12,39 +12,37 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using System;
-using System.Windows.Media;
 using System.Windows;
+using System.Windows.Media;
 
-namespace Kaspirin.UI.Framework.UiKit.Animation.Internals
+namespace Kaspirin.UI.Framework.UiKit.Animation.Internals;
+
+internal static class AnimatedValueEqualityComparer
 {
-    internal static class AnimatedValueEqualityComparer
+    public static new bool Equals(object? x, object? y)
     {
-        public static new bool Equals(object? x, object? y)
+        if (x is null && y is null)
         {
-            if (x is null && y is null)
-            {
-                return true;
-            }
+            return true;
+        }
 
-            if (x is null || y is null)
-            {
-                return false;
-            }
+        if (x is null || y is null)
+        {
+            return false;
+        }
 
-            switch (x)
-            {
-                case int when y is int:
-                case double when y is double:
-                case Thickness when y is Thickness:
-                    return x == y;
+        switch (x)
+        {
+            case int when y is int:
+            case double when y is double:
+            case Thickness when y is Thickness:
+                return x == y;
 
-                case SolidColorBrush xSolidBrush when y is SolidColorBrush ySolidBrush:
-                    return xSolidBrush.Color == ySolidBrush.Color;
+            case SolidColorBrush xSolidBrush when y is SolidColorBrush ySolidBrush:
+                return xSolidBrush.Color == ySolidBrush.Color;
 
-                default:
-                    throw new NotImplementedException($"Unable to compare animated values '{x}' ({x.GetType().Name}) and '{y}' ({x.GetType().Name})");
-            }
+            default:
+                throw new UnexpectedValueException(x, $"Unable to compare animated values '{x}' ({x.GetType().Name}) and '{y}' ({x.GetType().Name})");
         }
     }
 }

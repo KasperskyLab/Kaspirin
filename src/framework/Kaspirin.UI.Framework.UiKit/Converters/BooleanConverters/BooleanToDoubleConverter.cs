@@ -14,21 +14,20 @@
 
 using System.Windows.Data;
 
-namespace Kaspirin.UI.Framework.UiKit.Converters.BooleanConverters
+namespace Kaspirin.UI.Framework.UiKit.Converters.BooleanConverters;
+
+/// <summary>
+///     Provides an implementation of <see cref="BaseBooleanConverter{T}" /> in which the conversion
+///     result is of type <see cref="double" />.
+/// </summary>
+/// <remarks>
+///     By default, it converts <see langword="true" /> to 1, and <see langword="false" /> to 0.
+/// </remarks>
+[ValueConversion(typeof(bool), typeof(double))]
+public sealed class BooleanToDoubleConverter : BaseBooleanConverter<double>
 {
     /// <summary>
-    ///     Provides an implementation of <see cref="BaseBooleanConverter{T}" /> in which the conversion
-    ///     result is of type <see cref="double" />.
+    ///     Creates an object <see cref="BooleanToDoubleConverter" />.
     /// </summary>
-    /// <remarks>
-    ///     By default, it converts <see langword="true" /> to 1, and <see langword="false" /> to 0.
-    /// </remarks>
-    [ValueConversion(typeof(bool), typeof(double))]
-    public sealed class BooleanToDoubleConverter : BaseBooleanConverter<double>
-    {
-        /// <summary>
-        ///     Creates an object <see cref="BooleanToDoubleConverter" />.
-        /// </summary>
-        public BooleanToDoubleConverter() : base(1.0, 0.0) { }
-    }
+    public BooleanToDoubleConverter() : base(1.0, 0.0) { }
 }

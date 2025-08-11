@@ -18,30 +18,42 @@ using System.Windows.Data;
 using Kaspirin.UI.Framework.UiKit.Animation.Internals;
 using Kaspirin.UI.Framework.UiKit.MarkupExtensions;
 
-namespace Kaspirin.UI.Framework.UiKit.Animation.Markup
+namespace Kaspirin.UI.Framework.UiKit.Animation.Markup;
+
+/// <summary>
+///     Triggers an animated change in the target property for each change in the binding value <see cref="Source" />.
+/// </summary>
+public sealed class AnimatedBindingExtension : ExtendedMarkupExtension
 {
-    public sealed class AnimatedBindingExtension : ExtendedMarkupExtension
+    /// <summary>
+    ///     Initializes a new instance of the <see cref="AnimatedBindingExtension" /> class.
+    /// </summary>
+    public AnimatedBindingExtension()
     {
-        public AnimatedBindingExtension()
-        {
-            _animationSettingsProvider = ServiceLocator.Instance.GetService<IAnimationSettingsProvider>();
-            _animatedBindingFactory = ServiceLocator.Instance.GetService<AnimatedBindingFactory>();
+        _animationSettingsProvider = ServiceLocator.Instance.GetService<IAnimationSettingsProvider>();
+        _animatedBindingFactory = ServiceLocator.Instance.GetService<AnimatedBindingFactory>();
 
-            Properties = _animationSettingsProvider.DefaultAnimationProperties;
-        }
-
-        public BindingBase? Source { get; set; }
-
-        public AnimationProperties Properties { get; set; }
-
-        protected override object? ProvideForControl(IServiceProvider serviceProvider, DependencyObject targetObject, DependencyProperty targetProperty)
-        {
-            Guard.IsNotNull(Source);
-
-            return _animatedBindingFactory.CreateBinding(Source, targetObject, targetProperty, Properties)?.ProvideValue(serviceProvider);
-        }
-
-        private readonly IAnimationSettingsProvider _animationSettingsProvider;
-        private readonly AnimatedBindingFactory _animatedBindingFactory;
+        Properties = _animationSettingsProvider.DefaultAnimationProperties;
     }
+
+    /// <summary>
+    ///     The binding used to get the values.
+    /// </summary>
+    public BindingBase? Source { get; set; }
+
+    /// <summary>
+    ///     Animation properties.
+    /// </summary>
+    public AnimationProperties Properties { get; set; }
+
+    /// <inheritdoc/>
+    protected override object? ProvideForControl(IServiceProvider serviceProvider, DependencyObject targetObject, DependencyProperty targetProperty)
+    {
+        Guard.IsNotNull(Source);
+
+        return _animatedBindingFactory.CreateBinding(Source, targetObject, targetProperty, Properties)?.ProvideValue(serviceProvider);
+    }
+
+    private readonly IAnimationSettingsProvider _animationSettingsProvider;
+    private readonly AnimatedBindingFactory _animatedBindingFactory;
 }

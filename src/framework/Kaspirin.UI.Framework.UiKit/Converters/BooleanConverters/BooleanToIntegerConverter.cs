@@ -14,21 +14,20 @@
 
 using System.Windows.Data;
 
-namespace Kaspirin.UI.Framework.UiKit.Converters.BooleanConverters
+namespace Kaspirin.UI.Framework.UiKit.Converters.BooleanConverters;
+
+/// <summary>
+///     Provides an implementation of <see cref="BaseBooleanConverter{T}" /> in which the conversion
+///     result is of type <see cref="int" />.
+/// </summary>
+/// <remarks>
+///     By default, it converts <see langword="true" /> to 1, and <see langword="false" /> to 0.
+/// </remarks>
+[ValueConversion(typeof(bool), typeof(int))]
+public sealed class BooleanToIntegerConverter : BaseBooleanConverter<int>
 {
     /// <summary>
-    ///     Provides an implementation of <see cref="BaseBooleanConverter{T}" /> in which the conversion
-    ///     result is of type <see cref="int" />.
+    ///     Creates an object <see cref="BooleanToIntegerConverter" />.
     /// </summary>
-    /// <remarks>
-    ///     By default, it converts <see langword="true" /> to 1, and <see langword="false" /> to 0.
-    /// </remarks>
-    [ValueConversion(typeof(bool), typeof(int))]
-    public sealed class BooleanToIntegerConverter : BaseBooleanConverter<int>
-    {
-        /// <summary>
-        ///     Creates an object <see cref="BooleanToIntegerConverter" />.
-        /// </summary>
-        public BooleanToIntegerConverter() : base(1, 0) { }
-    }
+    public BooleanToIntegerConverter() : base(1, 0) { }
 }

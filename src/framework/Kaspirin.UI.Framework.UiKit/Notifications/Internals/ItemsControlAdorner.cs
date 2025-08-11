@@ -14,38 +14,37 @@
 
 using System.Windows.Controls;
 
-namespace Kaspirin.UI.Framework.UiKit.Notifications.Internals
+namespace Kaspirin.UI.Framework.UiKit.Notifications.Internals;
+
+internal sealed class ItemsControlAdorner : NotificationAdorner<ItemsControl>
 {
-    internal sealed class ItemsControlAdorner : NotificationAdorner<ItemsControl>
+    public ItemsControlAdorner(ItemsControl panel, NotificationLayer notificationLayer, int maxNotificationCount)
+        : base(panel, notificationLayer)
     {
-        public ItemsControlAdorner(ItemsControl panel, NotificationLayer notificationLayer, int maxNotificationCount)
-            : base(panel, notificationLayer)
-        {
-            _maxNotificationCount = maxNotificationCount;
-        }
-
-        protected override void AddNotification(ItemsControl element, NotificationView view, out bool canShowAdorner)
-        {
-            if (element.Items.Count >= _maxNotificationCount)
-            {
-                if (element.Items[0] is NotificationView notificationView)
-                {
-                    notificationView.CloseForced();
-                }
-            }
-
-            element.Items.Add(view);
-
-            canShowAdorner = element.Items.Count == 1;
-        }
-
-        protected override void RemoveNotification(ItemsControl element, NotificationView view, out bool canCloseAdorner)
-        {
-            element.Items.Remove(view);
-
-            canCloseAdorner = element.Items.Count == 0;
-        }
-
-        private readonly int _maxNotificationCount;
+        _maxNotificationCount = maxNotificationCount;
     }
+
+    protected override void AddNotification(ItemsControl element, NotificationView view, out bool canShowAdorner)
+    {
+        if (element.Items.Count >= _maxNotificationCount)
+        {
+            if (element.Items[0] is NotificationView notificationView)
+            {
+                notificationView.CloseForced();
+            }
+        }
+
+        element.Items.Add(view);
+
+        canShowAdorner = element.Items.Count == 1;
+    }
+
+    protected override void RemoveNotification(ItemsControl element, NotificationView view, out bool canCloseAdorner)
+    {
+        element.Items.Remove(view);
+
+        canCloseAdorner = element.Items.Count == 0;
+    }
+
+    private readonly int _maxNotificationCount;
 }

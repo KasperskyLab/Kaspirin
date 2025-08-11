@@ -16,37 +16,36 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Data;
 
-namespace Kaspirin.UI.Framework.UiKit.Localization.Markup.Metadata
+namespace Kaspirin.UI.Framework.UiKit.Localization.Markup.Metadata;
+
+public static class MetadataHelper
 {
-    public static class MetadataHelper
+    public static MetadataItem? GetPropertyMetadata(DependencyObject element, DependencyProperty targetProperty)
     {
-        public static MetadataItem? GetPropertyMetadata(DependencyObject element, DependencyProperty targetProperty)
+        var binding = BindingOperations.GetMultiBinding(element, targetProperty);
+        return binding switch
         {
-            var binding = BindingOperations.GetMultiBinding(element, targetProperty);
-            return binding switch
-            {
-                null => null,
-                _ => GetPropertyMetadata(binding)
-            };
+            null => null,
+            _ => GetPropertyMetadata(binding)
+        };
+    }
+
+    public static MetadataItem? GetPropertyMetadata(MultiBinding binding)
+    {
+        var sources = binding.Bindings.OfType<Binding>().Select(b => b.Source);
+
+        var metaData = sources.OfType<MetadataItem>().FirstOrDefault();
+        if (metaData != null)
+        {
+            return metaData;
         }
 
-        public static MetadataItem? GetPropertyMetadata(MultiBinding binding)
+        var resourceDelivery = sources.OfType<ResourceDelivery>().FirstOrDefault();
+        if (resourceDelivery != null)
         {
-            var sources = binding.Bindings.OfType<Binding>().Select(b => b.Source);
-
-            var metaData = sources.OfType<MetadataItem>().FirstOrDefault();
-            if (metaData != null)
-            {
-                return metaData;
-            }
-
-            var resourceDelivery = sources.OfType<ResourceDelivery>().FirstOrDefault();
-            if (resourceDelivery != null)
-            {
-                return GetPropertyMetadata(resourceDelivery, ResourceDelivery.ResourceValueProperty);
-            }
-
-            return null;
+            return GetPropertyMetadata(resourceDelivery, ResourceDelivery.ResourceValueProperty);
         }
+
+        return null;
     }
 }

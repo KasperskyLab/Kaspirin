@@ -16,84 +16,83 @@ using System;
 using System.Windows;
 using System.Windows.Threading;
 
-namespace Kaspirin.UI.Framework.Weak
+namespace Kaspirin.UI.Framework.Weak;
+
+/// <summary>
+///     Provides methods for creating a timer <see cref="DispatcherTimer" />, which stores a weak reference
+///     to the delegate executed by the timer <see cref="EventHandler" />.
+/// </summary>
+public static class WeakDispatcherTimer
 {
     /// <summary>
-    ///     Provides methods for creating a timer <see cref="DispatcherTimer" />, which stores a weak reference
-    ///     to the delegate executed by the timer <see cref="EventHandler" />.
+    ///     Creates a timer <see cref="DispatcherTimer" /> that stores a weak reference to the delegate
+    ///     being executed <paramref name="OnTimer" />.
     /// </summary>
-    public static class WeakDispatcherTimer
+    /// <param name="onTimer">
+    ///     The delegate executed by the timer event <see cref="DispatcherTimer.Tick" />.
+    /// </param>
+    /// <param name="interval">
+    ///     The timer interval.
+    /// </param>
+    /// <param name="dispatcherPriority">
+    ///     The priority with which the timer is running.
+    /// </param>
+    /// <remarks>
+    ///     The <paramref name="OnTimer" /> delegate is executed in the UI thread.
+    /// </remarks>
+    /// <returns>
+    ///     An instance of <see cref="DispatcherTimer" />.
+    /// </returns>
+    public static DispatcherTimer Create(
+        EventHandler onTimer,
+        TimeSpan interval,
+        DispatcherPriority dispatcherPriority = DispatcherPriority.Background)
     {
-        /// <summary>
-        ///     Creates a timer <see cref="DispatcherTimer" /> that stores a weak reference to the delegate
-        ///     being executed <paramref name="OnTimer" />.
-        /// </summary>
-        /// <param name="onTimer">
-        ///     The delegate executed by the timer event <see cref="DispatcherTimer.Tick" />.
-        /// </param>
-        /// <param name="interval">
-        ///     The timer interval.
-        /// </param>
-        /// <param name="dispatcherPriority">
-        ///     The priority with which the timer is running.
-        /// </param>
-        /// <remarks>
-        ///     The <paramref name="OnTimer" /> delegate is executed in the UI thread.
-        /// </remarks>
-        /// <returns>
-        ///     An instance of <see cref="DispatcherTimer" />.
-        /// </returns>
-        public static DispatcherTimer Create(
-            EventHandler onTimer,
-            TimeSpan interval,
-            DispatcherPriority dispatcherPriority = DispatcherPriority.Background)
-        {
-            var application = Guard.EnsureIsNotNull(Application.Current);
+        var application = Guard.EnsureIsNotNull(Application.Current);
 
-            var timer = new DispatcherTimer(dispatcherPriority, application.Dispatcher)
+        var timer = new DispatcherTimer(dispatcherPriority, application.Dispatcher)
+        {
+            Interval = interval
+        };
+
+        timer.Tick += WeakEventHandler.Wrap(
+            onTimer,
+            eh =>
             {
-                Interval = interval
-            };
+                timer.Tick -= eh;
+                timer.Stop();
+            });
 
-            timer.Tick += WeakEventHandler.Wrap(
-                onTimer,
-                eh =>
-                {
-                    timer.Tick -= eh;
-                    timer.Stop();
-                });
+        return timer;
+    }
 
-            return timer;
-        }
+    /// <summary>
+    ///     Creates a timer <see cref="DispatcherTimer" /> that stores a weak reference to the executed
+    ///     delegate <paramref name="OnTimer" /> and starts it.
+    /// </summary>
+    /// <param name="onTimer">
+    ///     The delegate executed by the timer event <see cref="DispatcherTimer.Tick" />.
+    /// </param>
+    /// <param name="interval">
+    ///     The timer interval.
+    /// </param>
+    /// <param name="dispatcherPriority">
+    ///     The priority with which the timer is running.
+    /// </param>
+    /// <remarks>
+    ///     The <paramref name="OnTimer" /> delegate is executed in the UI thread.
+    /// </remarks>
+    /// <returns>
+    ///     An instance of <see cref="DispatcherTimer" />.
+    /// </returns>
+    public static DispatcherTimer CreateAndStart(
+        EventHandler onTimer,
+        TimeSpan interval,
+        DispatcherPriority dispatcherPriority = DispatcherPriority.Background)
+    {
+        var timer = Create(onTimer, interval, dispatcherPriority);
+        timer.Start();
 
-        /// <summary>
-        ///     Creates a timer <see cref="DispatcherTimer" /> that stores a weak reference to the executed
-        ///     delegate <paramref name="OnTimer" /> and starts it.
-        /// </summary>
-        /// <param name="onTimer">
-        ///     The delegate executed by the timer event <see cref="DispatcherTimer.Tick" />.
-        /// </param>
-        /// <param name="interval">
-        ///     The timer interval.
-        /// </param>
-        /// <param name="dispatcherPriority">
-        ///     The priority with which the timer is running.
-        /// </param>
-        /// <remarks>
-        ///     The <paramref name="OnTimer" /> delegate is executed in the UI thread.
-        /// </remarks>
-        /// <returns>
-        ///     An instance of <see cref="DispatcherTimer" />.
-        /// </returns>
-        public static DispatcherTimer CreateAndStart(
-            EventHandler onTimer,
-            TimeSpan interval,
-            DispatcherPriority dispatcherPriority = DispatcherPriority.Background)
-        {
-            var timer = Create(onTimer, interval, dispatcherPriority);
-            timer.Start();
-
-            return timer;
-        }
+        return timer;
     }
 }

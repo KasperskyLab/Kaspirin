@@ -12,21 +12,20 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Kaspirin.UI.Framework.UiKit.Localization.Localizer.Strings.Parsing.Exceptions
+namespace Kaspirin.UI.Framework.UiKit.Localization.Localizer.Strings.Parsing.Exceptions;
+
+public sealed class ExpectedSymbolException : SyntaxErrorException
 {
-    public sealed class ExpectedSymbolException : SyntaxErrorException
+    public ExpectedSymbolException(char expectedChar, int pos, string sourceName, string sourceText)
     {
-        public ExpectedSymbolException(char expectedChar, int pos, string fileName, string sourceText)
-        {
-            ExpectedChar = expectedChar;
-            Position = new Position(pos, pos, fileName, sourceText);
-        }
-
-        public char ExpectedChar { get; }
-        public override Position Position { get; }
-
-        public override string ErrorMessage => Position.Start >= Position.SourceText.Length
-            ? $"Expected '{ExpectedChar}' symbol, but End Of File found\r\n{Position.GetStartLineTextWithPointer()}"
-            : $"Expected '{ExpectedChar}' symbol\r\n{Position.GetStartLineTextWithPointer()}";
+        ExpectedChar = expectedChar;
+        Position = new Position(pos, pos, sourceName, sourceText);
     }
+
+    public char ExpectedChar { get; }
+    public override Position Position { get; }
+
+    public override string ErrorMessage => Position.Start >= Position.SourceText.Length
+        ? $"Expected '{ExpectedChar}' symbol, but End Of File found\r\n{Position.GetStartLineTextWithPointer()}"
+        : $"Expected '{ExpectedChar}' symbol\r\n{Position.GetStartLineTextWithPointer()}";
 }

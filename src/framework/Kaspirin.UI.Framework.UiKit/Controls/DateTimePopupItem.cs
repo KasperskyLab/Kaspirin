@@ -12,63 +12,61 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using Kaspirin.UI.Framework.Mvvm;
 
-namespace Kaspirin.UI.Framework.UiKit.Controls
+namespace Kaspirin.UI.Framework.UiKit.Controls;
+
+internal sealed class DateTimePopupItem : BaseViewModel
 {
-    internal sealed class DateTimePopupItem : ViewModelBase
+    public static DateTimePopupItem Empty { get; } = new DateTimePopupItem(0, "Empty") { IsVisible = false };
+    public static DateTimePopupItem Stub { get; } = new DateTimePopupItem(0, "Stub") { IsVisible = false };
+
+    public DateTimePopupItem(int value, string? displayText = null)
     {
-        public static DateTimePopupItem Empty { get; } = new DateTimePopupItem(0, "Empty") { IsVisible = false };
-        public static DateTimePopupItem Stub { get; } = new DateTimePopupItem(0, "Stub") { IsVisible = false };
-
-        public DateTimePopupItem(int value, string? displayText = null)
-        {
-            _value = value;
-            _displayText = displayText ?? _value.ToString() ?? string.Empty;
-            _isVisible = true;
-        }
-
-        public int Value
-        {
-            get { return _value; }
-            set
-            {
-                if (_value != value)
-                {
-                    _value = value;
-                    RaisePropertyChanged(nameof(Value));
-                }
-            }
-        }
-
-        public string DisplayText
-        {
-            get { return _displayText; }
-            set
-            {
-                if (_displayText != value)
-                {
-                    _displayText = value;
-                    RaisePropertyChanged(nameof(DisplayText));
-                }
-            }
-        }
-
-        public bool IsVisible
-        {
-            get { return _isVisible; }
-            set
-            {
-                if (_isVisible != value)
-                {
-                    _isVisible = value;
-                    RaisePropertyChanged(nameof(IsVisible));
-                }
-            }
-        }
-
-        private string _displayText;
-        private int _value;
-        private bool _isVisible;
+        _value = value;
+        _displayText = displayText ?? _value.ToString() ?? string.Empty;
+        _isVisible = true;
     }
+
+    public int Value
+    {
+        get => _value;
+        set
+        {
+            if (_value != value)
+            {
+                _value = value;
+                RaisePropertyChanged(nameof(Value));
+            }
+        }
+    }
+
+    public string DisplayText
+    {
+        get => _displayText;
+        set
+        {
+            if (_displayText != value)
+            {
+                _displayText = value;
+                RaisePropertyChanged(nameof(DisplayText));
+            }
+        }
+    }
+
+    public bool IsVisible
+    {
+        get => _isVisible;
+        set
+        {
+            if (_isVisible != value)
+            {
+                _isVisible = value;
+                RaisePropertyChanged(nameof(IsVisible));
+            }
+        }
+    }
+
+    private string _displayText;
+    private int _value;
+    private bool _isVisible;
 }

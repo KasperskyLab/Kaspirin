@@ -92,10 +92,10 @@
 					<xsl:with-param name="scope" select="$id"/>
 				</xsl:call-template>
 
-				<!--IconButton_Icon_Foreground-->
+				<!--IconButton_Icon_Brush-->
 				<xsl:call-template name="generateBrushSetter">
-					<xsl:with-param name="propertyId">IconButton_Icon_Foreground</xsl:with-param>
-					<xsl:with-param name="brushName">IconForeground</xsl:with-param>
+					<xsl:with-param name="propertyId">IconButton_Icon_Brush</xsl:with-param>
+					<xsl:with-param name="brushName">IconBrush</xsl:with-param>
 					<xsl:with-param name="scopeName" select="$id" />
 				</xsl:call-template>
 

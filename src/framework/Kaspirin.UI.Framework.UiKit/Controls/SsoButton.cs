@@ -14,10 +14,9 @@
 
 using System.Windows.Controls.Primitives;
 
-namespace Kaspirin.UI.Framework.UiKit.Controls
-{
-    public sealed class SsoButton : ButtonBase
-    {
+namespace Kaspirin.UI.Framework.UiKit.Controls;
 
-    }
+public sealed class SsoButton : ButtonBase
+{
+
 }

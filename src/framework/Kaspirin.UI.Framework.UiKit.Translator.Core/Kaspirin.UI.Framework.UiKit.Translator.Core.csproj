@@ -2,6 +2,7 @@
 	<PropertyGroup>
 		<AssemblyName>kaspirin.ui.framework.uikit.translator.core</AssemblyName>
 		<RootNamespace>Kaspirin.UI.Framework.UiKit.Translator.Core</RootNamespace>
+		<CsWinRTAotOptimizerEnabled>false</CsWinRTAotOptimizerEnabled>
 	</PropertyGroup>
 
 	<Import Condition="'$(MSBuildRuntimeType)' != 'Core'" Project="$(SolutionDir)kaspirin.fw.props" />

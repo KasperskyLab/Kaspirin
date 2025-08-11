@@ -16,102 +16,126 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 
-namespace Kaspirin.UI.Framework.UiKit.Controls
+namespace Kaspirin.UI.Framework.UiKit.Controls;
+
+public abstract class NavigationMenuButtonBase : Button
 {
-    public abstract class NavigationMenuButtonBase : Button
+    static NavigationMenuButtonBase()
     {
-        static NavigationMenuButtonBase()
+        DataContextProperty.OverrideMetadata(
+            typeof(NavigationMenuButtonBase),
+            new FrameworkPropertyMetadata(new PropertyChangedCallback(OnDataContextChanged)));
+    }
+
+    protected NavigationMenuButtonBase()
+    {
+        Click += NavigateOnClick;
+    }
+
+    #region IsSelected
+
+    public bool IsSelected
+    {
+        get => (bool)GetValue(IsSelectedProperty);
+        set => SetValue(IsSelectedProperty, value);
+    }
+
+    public static readonly DependencyProperty IsSelectedProperty = DependencyProperty.Register(
+        nameof(IsSelected),
+        typeof(bool),
+        typeof(NavigationMenuButtonBase),
+        new PropertyMetadata(default(bool)));
+
+    #endregion
+
+    #region BadgeType
+
+    public BadgeType BadgeType
+    {
+        get => (BadgeType)GetValue(BadgeTypeProperty);
+        set => SetValue(BadgeTypeProperty, value);
+    }
+    public static readonly DependencyProperty BadgeTypeProperty = DependencyProperty.Register(
+        nameof(BadgeType),
+        typeof(BadgeType),
+        typeof(NavigationMenuButtonBase),
+        new PropertyMetadata(default(BadgeType)));
+
+    #endregion
+
+    #region ShowBadge
+
+    public bool ShowBadge
+    {
+        get => (bool)GetValue(ShowBadgeProperty);
+        set => SetValue(ShowBadgeProperty, value);
+    }
+    public static readonly DependencyProperty ShowBadgeProperty = DependencyProperty.Register(
+        nameof(ShowBadge),
+        typeof(bool),
+        typeof(NavigationMenuButtonBase),
+        new PropertyMetadata(default(bool)));
+
+    #endregion
+
+    #region Icon
+
+    public UIKitIcon_24 Icon
+    {
+        get => (UIKitIcon_24)GetValue(IconProperty);
+        set => SetValue(IconProperty, value);
+    }
+
+    public static readonly DependencyProperty IconProperty = DependencyProperty.Register(
+        nameof(Icon),
+        typeof(UIKitIcon_24),
+        typeof(NavigationMenuButtonBase),
+        new PropertyMetadata(default(UIKitIcon_24)));
+
+    #endregion
+
+    private void UpdateDataContextBindings()
+    {
+        if (DataContext is INavigationItem navigationItem)
         {
-            DataContextProperty.OverrideMetadata(
-                typeof(NavigationMenuButtonBase),
-                new FrameworkPropertyMetadata(new PropertyChangedCallback(OnDataContextChanged)));
-        }
-
-        #region IsSelected
-
-        public bool IsSelected
-        {
-            get { return (bool)GetValue(IsSelectedProperty); }
-            set { SetValue(IsSelectedProperty, value); }
-        }
-
-        public static readonly DependencyProperty IsSelectedProperty =
-            DependencyProperty.Register("IsSelected", typeof(bool), typeof(NavigationMenuButtonBase), new PropertyMetadata(false));
-
-        #endregion
-
-        #region BadgeType
-
-        public BadgeType BadgeType
-        {
-            get { return (BadgeType)GetValue(BadgeTypeProperty); }
-            set { SetValue(BadgeTypeProperty, value); }
-        }
-        public static readonly DependencyProperty BadgeTypeProperty =
-            DependencyProperty.Register("BadgeType", typeof(BadgeType), typeof(NavigationMenuButtonBase));
-
-        #endregion
-
-        #region ShowBadge
-
-        public bool ShowBadge
-        {
-            get { return (bool)GetValue(ShowBadgeProperty); }
-            set { SetValue(ShowBadgeProperty, value); }
-        }
-        public static readonly DependencyProperty ShowBadgeProperty =
-            DependencyProperty.Register("ShowBadge", typeof(bool), typeof(NavigationMenuButtonBase));
-
-        #endregion
-
-        #region Icon
-
-        public UIKitIcon_24 Icon
-        {
-            get { return (UIKitIcon_24)GetValue(IconProperty); }
-            set { SetValue(IconProperty, value); }
-        }
-
-        public static readonly DependencyProperty IconProperty =
-            DependencyProperty.Register("Icon", typeof(UIKitIcon_24), typeof(NavigationMenuButtonBase));
-
-        #endregion
-
-        private static void OnDataContextChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            ((NavigationMenuButtonBase)d).UpdateDataContextBindings();
-        }
-
-        private void UpdateDataContextBindings()
-        {
-            if (DataContext is INavigationItem navigationItem)
+            SetBinding(IsSelectedProperty, new Binding()
             {
-                SetBinding(IsSelectedProperty, new Binding()
-                {
-                    Source = navigationItem,
-                    Mode = BindingMode.OneWay,
-                    Path = new PropertyPath(nameof(navigationItem.IsSelected))
-                });
-                SetBinding(IsEnabledProperty, new Binding()
-                {
-                    Source = navigationItem,
-                    Mode = BindingMode.OneWay,
-                    Path = new PropertyPath(nameof(navigationItem.IsEnabled))
-                });
-                SetBinding(VisibilityProperty, new Binding()
-                {
-                    Source = navigationItem,
-                    Mode = BindingMode.OneWay,
-                    Path = new PropertyPath(nameof(navigationItem.IsVisible)),
-                    Converter = new BooleanToVisibilityConverter()
-                });
-            }
-            else
+                Source = navigationItem,
+                Mode = BindingMode.OneWay,
+                Path = new PropertyPath(nameof(navigationItem.IsSelected))
+            });
+            SetBinding(IsEnabledProperty, new Binding()
             {
-                ClearValue(IsSelectedProperty);
-                ClearValue(IsEnabledProperty);
-                ClearValue(VisibilityProperty);
-            }
+                Source = navigationItem,
+                Mode = BindingMode.OneWay,
+                Path = new PropertyPath(nameof(navigationItem.IsEnabled))
+            });
+            SetBinding(VisibilityProperty, new Binding()
+            {
+                Source = navigationItem,
+                Mode = BindingMode.OneWay,
+                Path = new PropertyPath(nameof(navigationItem.IsVisible)),
+                Converter = new BooleanToVisibilityConverter()
+            });
         }
+        else
+        {
+            ClearValue(IsSelectedProperty);
+            ClearValue(IsEnabledProperty);
+            ClearValue(VisibilityProperty);
+        }
+    }
+
+    private void NavigateOnClick(object sender, RoutedEventArgs e)
+    {
+        if (DataContext is INavigationItem navigationItem)
+        {
+            navigationItem.Navigate();
+        }
+    }
+
+    private static void OnDataContextChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+    {
+        ((NavigationMenuButtonBase)d).UpdateDataContextBindings();
     }
 }

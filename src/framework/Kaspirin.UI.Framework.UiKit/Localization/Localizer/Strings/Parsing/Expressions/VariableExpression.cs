@@ -14,14 +14,13 @@
 
 using System;
 
-namespace Kaspirin.UI.Framework.UiKit.Localization.Localizer.Strings.Parsing.Expressions
+namespace Kaspirin.UI.Framework.UiKit.Localization.Localizer.Strings.Parsing.Expressions;
+
+public sealed class VariableExpression : IExpression
 {
-    public class VariableExpression : IExpression
-    {
-        public VariableExpression(string name) => Name = name;
+    public VariableExpression(string name) => Name = name;
 
-        public string Name { get; }
+    public string Name { get; }
 
-        public object? Resolve(Func<string, object?> variableResolver) => variableResolver(Name);
-    }
+    public object? Resolve(Func<string, object?> variableResolver) => variableResolver(Name);
 }

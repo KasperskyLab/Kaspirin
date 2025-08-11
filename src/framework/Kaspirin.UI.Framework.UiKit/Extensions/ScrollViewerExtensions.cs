@@ -15,46 +15,45 @@
 using System.Windows;
 using System.Windows.Controls;
 
-namespace Kaspirin.UI.Framework.UiKit.Extensions
+namespace Kaspirin.UI.Framework.UiKit.Extensions;
+
+public static class ScrollViewerExtensions
 {
-    public static class ScrollViewerExtensions
+    public static bool CanScrollLeft(this ScrollViewer scrollViewer)
     {
-        public static bool CanScrollLeft(this ScrollViewer scrollViewer)
-        {
-            return scrollViewer.HorizontalOffset > 0;
-        }
+        return scrollViewer.HorizontalOffset > 0;
+    }
 
-        public static bool CanScrollRight(this ScrollViewer scrollViewer)
-        {
-            return scrollViewer.HorizontalOffset + scrollViewer.ViewportWidth < scrollViewer.ExtentWidth;
-        }
+    public static bool CanScrollRight(this ScrollViewer scrollViewer)
+    {
+        return scrollViewer.HorizontalOffset + scrollViewer.ViewportWidth < scrollViewer.ExtentWidth;
+    }
 
-        public static bool CanScrollTop(this ScrollViewer scrollViewer)
-        {
-            return scrollViewer.VerticalOffset > 0;
-        }
+    public static bool CanScrollTop(this ScrollViewer scrollViewer)
+    {
+        return scrollViewer.VerticalOffset > 0;
+    }
 
-        public static bool CanScrollBottom(this ScrollViewer scrollViewer)
-        {
-            return scrollViewer.VerticalOffset + scrollViewer.ViewportHeight < scrollViewer.ExtentHeight;
-        }
+    public static bool CanScrollBottom(this ScrollViewer scrollViewer)
+    {
+        return scrollViewer.VerticalOffset + scrollViewer.ViewportHeight < scrollViewer.ExtentHeight;
+    }
 
-        public static Rect GetElementBounds(this ScrollViewer scrollViewer, FrameworkElement element)
-        {
-            var elementRect = new Rect(0, 0, element.ActualWidth, element.ActualHeight);
-            var elementBounds = element.TransformToAncestor(scrollViewer).TransformBounds(elementRect);
+    public static Rect GetElementBounds(this ScrollViewer scrollViewer, FrameworkElement element)
+    {
+        var elementRect = new Rect(0, 0, element.ActualWidth, element.ActualHeight);
+        var elementBounds = element.TransformToAncestor(scrollViewer).TransformBounds(elementRect);
 
-            return elementBounds;
-        }
+        return elementBounds;
+    }
 
-        public static bool IsInViewport(this ScrollViewer scrollViewer, FrameworkElement element, bool isPartiallyVisible = true)
-        {
-            var elementBounds = GetElementBounds(scrollViewer, element);
-            var scrollRect = new Rect(0, 0, scrollViewer.ActualWidth, scrollViewer.ActualHeight);
+    public static bool IsInViewport(this ScrollViewer scrollViewer, FrameworkElement element, bool isPartiallyVisible = true)
+    {
+        var elementBounds = GetElementBounds(scrollViewer, element);
+        var scrollRect = new Rect(0, 0, scrollViewer.ActualWidth, scrollViewer.ActualHeight);
 
-            return isPartiallyVisible
-                ? scrollRect.IntersectsWith(elementBounds)
-                : scrollRect.Contains(elementBounds);
-        }
+        return isPartiallyVisible
+            ? scrollRect.IntersectsWith(elementBounds)
+            : scrollRect.Contains(elementBounds);
     }
 }

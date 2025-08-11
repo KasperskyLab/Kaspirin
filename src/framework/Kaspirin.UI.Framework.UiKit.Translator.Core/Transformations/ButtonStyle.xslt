@@ -78,66 +78,6 @@
 				<!--Style.Resources-->
 				<xsl:element name ="Style.Resources">
 
-					<!--SpinnerStyle-->
-					<xsl:call-template name="generateStyle">
-						<xsl:with-param name="targetType">visuals:Spinner</xsl:with-param>
-						<xsl:with-param name="basedOn" select="@SpinnerStyleId"/>
-						<xsl:with-param name="key">SpinnerStyle</xsl:with-param>
-						<xsl:with-param name="setters">
-							<!--Foreground-->
-							<xsl:call-template name="generateBrushSetter">
-								<xsl:with-param name="propertyId">Spinner_Foreground</xsl:with-param>
-								<xsl:with-param name="brushName">ForegroundNormal</xsl:with-param>
-								<xsl:with-param name="scopeName" select="$id"/>
-							</xsl:call-template>
-						</xsl:with-param>
-					</xsl:call-template>
-
-					<!--SpinnerStyleDisabled-->
-					<xsl:call-template name="generateStyle">
-						<xsl:with-param name="targetType">visuals:Spinner</xsl:with-param>
-						<xsl:with-param name="basedOn" select="@SpinnerStyleId"/>
-						<xsl:with-param name="key">SpinnerStyleDisabled</xsl:with-param>
-						<xsl:with-param name="setters">
-							<!--Foreground-->
-							<xsl:call-template name="generateBrushSetter">
-								<xsl:with-param name="propertyId">Spinner_Foreground</xsl:with-param>
-								<xsl:with-param name="brushName">ForegroundDisabled</xsl:with-param>
-								<xsl:with-param name="scopeName" select="$id"/>
-							</xsl:call-template>
-						</xsl:with-param>
-					</xsl:call-template>
-
-					<!--SpinnerStyleHover-->
-					<xsl:call-template name="generateStyle">
-						<xsl:with-param name="targetType">visuals:Spinner</xsl:with-param>
-						<xsl:with-param name="basedOn" select="@SpinnerStyleId"/>
-						<xsl:with-param name="key">SpinnerStyleHover</xsl:with-param>
-						<xsl:with-param name="setters">
-							<!--Foreground-->
-							<xsl:call-template name="generateBrushSetter">
-								<xsl:with-param name="propertyId">Spinner_Foreground</xsl:with-param>
-								<xsl:with-param name="brushName">ForegroundHover</xsl:with-param>
-								<xsl:with-param name="scopeName" select="$id"/>
-							</xsl:call-template>
-						</xsl:with-param>
-					</xsl:call-template>
-
-					<!--SpinnerStylePressed-->
-					<xsl:call-template name="generateStyle">
-						<xsl:with-param name="targetType">visuals:Spinner</xsl:with-param>
-						<xsl:with-param name="basedOn" select="@SpinnerStyleId"/>
-						<xsl:with-param name="key">SpinnerStylePressed</xsl:with-param>
-						<xsl:with-param name="setters">
-							<!--Foreground-->
-							<xsl:call-template name="generateBrushSetter">
-								<xsl:with-param name="propertyId">Spinner_Foreground</xsl:with-param>
-								<xsl:with-param name="brushName">ForegroundPressed</xsl:with-param>
-								<xsl:with-param name="scopeName" select="$id"/>
-							</xsl:call-template>
-						</xsl:with-param>
-					</xsl:call-template>
-
 					<!--TextStyle-->
 					<xsl:call-template name="generateStyle">
 						<xsl:with-param name="targetType">TextBlock</xsl:with-param>
@@ -232,10 +172,10 @@
 					<xsl:with-param name="scope" select="$id"/>
 				</xsl:call-template>
 
-				<!--Button_Icon_Foreground-->
+				<!--Button_Icon_Brush-->
 				<xsl:call-template name="generateBrushSetter">
-					<xsl:with-param name="propertyId">Button_Icon_Foreground</xsl:with-param>
-					<xsl:with-param name="brushName">IconForegroundNormalSideLocation</xsl:with-param>
+					<xsl:with-param name="propertyId">Button_Icon_Brush</xsl:with-param>
+					<xsl:with-param name="brushName">IconBrushNormalSideLocation</xsl:with-param>
 					<xsl:with-param name="scopeName" select="$id" />
 				</xsl:call-template>
 
@@ -257,10 +197,17 @@
 					<xsl:with-param name="propertyValue" select="@IconOpacityNormal" />
 				</xsl:call-template>
 
+				<!--Button_Spinner_Brush-->
+				<xsl:call-template name="generateBrushSetter">
+					<xsl:with-param name="propertyId">Button_Spinner_Brush</xsl:with-param>
+					<xsl:with-param name="brushName">ForegroundNormal</xsl:with-param>
+					<xsl:with-param name="scopeName" select="$id" />
+				</xsl:call-template>
+
 				<!--Button_Spinner_Style-->
 				<xsl:call-template name="generateStaticResourceSetter">
 					<xsl:with-param name="propertyId">Button_Spinner_Style</xsl:with-param>
-					<xsl:with-param name="resourceName">SpinnerStyle</xsl:with-param>
+					<xsl:with-param name="resourceName" select="@SpinnerStyleId"/>
 				</xsl:call-template>
 
 				<!--Button_FocusVisualStyle-->
@@ -346,10 +293,10 @@
 							<xsl:with-param name="scope" select="$id"/>
 						</xsl:call-template>
 
-						<!--Button_Icon_Foreground-->
+						<!--Button_Icon_Brush-->
 						<xsl:call-template name="generateBrushSetter">
-							<xsl:with-param name="propertyId">Button_Icon_Foreground</xsl:with-param>
-							<xsl:with-param name="brushName">IconForegroundDisabledSideLocation</xsl:with-param>
+							<xsl:with-param name="propertyId">Button_Icon_Brush</xsl:with-param>
+							<xsl:with-param name="brushName">IconBrushDisabledSideLocation</xsl:with-param>
 							<xsl:with-param name="scopeName" select="$id" />
 						</xsl:call-template>
 
@@ -365,10 +312,11 @@
 							<xsl:with-param name="propertyValue" select="@OpacityDisabled" />
 						</xsl:call-template>
 
-						<!--Button_Spinner_Style-->
-						<xsl:call-template name="generateStaticResourceSetter">
-							<xsl:with-param name="propertyId">Button_Spinner_Style</xsl:with-param>
-							<xsl:with-param name="resourceName">SpinnerStyleDisabled</xsl:with-param>
+						<!--Button_Spinner_Brush-->
+						<xsl:call-template name="generateBrushSetter">
+							<xsl:with-param name="propertyId">Button_Spinner_Brush</xsl:with-param>
+							<xsl:with-param name="brushName">ForegroundDisabled</xsl:with-param>
+							<xsl:with-param name="scopeName" select="$id" />
 						</xsl:call-template>
 
 					</xsl:with-param>
@@ -407,10 +355,10 @@
 							<xsl:with-param name="scope" select="$id"/>
 						</xsl:call-template>
 
-						<!--Button_Icon_Foreground-->
+						<!--Button_Icon_Brush-->
 						<xsl:call-template name="generateBrushSetter">
-							<xsl:with-param name="propertyId">Button_Icon_Foreground</xsl:with-param>
-							<xsl:with-param name="brushName">IconForegroundHoverSideLocation</xsl:with-param>
+							<xsl:with-param name="propertyId">Button_Icon_Brush</xsl:with-param>
+							<xsl:with-param name="brushName">IconBrushHoverSideLocation</xsl:with-param>
 							<xsl:with-param name="scopeName" select="$id" />
 						</xsl:call-template>
 
@@ -426,10 +374,11 @@
 							<xsl:with-param name="propertyValue" select="@OpacityHover" />
 						</xsl:call-template>
 
-						<!--Button_Spinner_Style-->
-						<xsl:call-template name="generateStaticResourceSetter">
-							<xsl:with-param name="propertyId">Button_Spinner_Style</xsl:with-param>
-							<xsl:with-param name="resourceName">SpinnerStyleHover</xsl:with-param>
+						<!--Button_Spinner_Brush-->
+						<xsl:call-template name="generateBrushSetter">
+							<xsl:with-param name="propertyId">Button_Spinner_Brush</xsl:with-param>
+							<xsl:with-param name="brushName">ForegroundHover</xsl:with-param>
+							<xsl:with-param name="scopeName" select="$id" />
 						</xsl:call-template>
 
 					</xsl:with-param>
@@ -468,10 +417,10 @@
 							<xsl:with-param name="scope" select="$id"/>
 						</xsl:call-template>
 
-						<!--Button_Icon_Foreground-->
+						<!--Button_Icon_Brush-->
 						<xsl:call-template name="generateBrushSetter">
-							<xsl:with-param name="propertyId">Button_Icon_Foreground</xsl:with-param>
-							<xsl:with-param name="brushName">IconForegroundPressedSideLocation</xsl:with-param>
+							<xsl:with-param name="propertyId">Button_Icon_Brush</xsl:with-param>
+							<xsl:with-param name="brushName">IconBrushPressedSideLocation</xsl:with-param>
 							<xsl:with-param name="scopeName" select="$id" />
 						</xsl:call-template>
 
@@ -487,12 +436,13 @@
 							<xsl:with-param name="propertyValue" select="@OpacityPressed" />
 						</xsl:call-template>
 
-						<!--Button_Spinner_Style-->
-						<xsl:call-template name="generateStaticResourceSetter">
-							<xsl:with-param name="propertyId">Button_Spinner_Style</xsl:with-param>
-							<xsl:with-param name="resourceName">SpinnerStylePressed</xsl:with-param>
+						<!--Button_Spinner_Brush-->
+						<xsl:call-template name="generateBrushSetter">
+							<xsl:with-param name="propertyId">Button_Spinner_Brush</xsl:with-param>
+							<xsl:with-param name="brushName">ForegroundPressed</xsl:with-param>
+							<xsl:with-param name="scopeName" select="$id" />
 						</xsl:call-template>
-						
+
 					</xsl:with-param>
 				</xsl:call-template>
 
@@ -543,10 +493,10 @@
 
 					<xsl:with-param name="setters">
 
-						<!--Button_Icon_Foreground-->
+						<!--Button_Icon_Brush-->
 						<xsl:call-template name="generateBrushSetter">
-							<xsl:with-param name="propertyId">Button_Icon_Foreground</xsl:with-param>
-							<xsl:with-param name="brushName">IconForegroundDisabledCenterLocation</xsl:with-param>
+							<xsl:with-param name="propertyId">Button_Icon_Brush</xsl:with-param>
+							<xsl:with-param name="brushName">IconBrushDisabledCenterLocation</xsl:with-param>
 							<xsl:with-param name="scopeName" select="$id" />
 						</xsl:call-template>
 
@@ -573,10 +523,10 @@
 
 					<xsl:with-param name="setters">
 
-						<!--Button_Icon_Foreground-->
+						<!--Button_Icon_Brush-->
 						<xsl:call-template name="generateBrushSetter">
-							<xsl:with-param name="propertyId">Button_Icon_Foreground</xsl:with-param>
-							<xsl:with-param name="brushName">IconForegroundHoverCenterLocation</xsl:with-param>
+							<xsl:with-param name="propertyId">Button_Icon_Brush</xsl:with-param>
+							<xsl:with-param name="brushName">IconBrushHoverCenterLocation</xsl:with-param>
 							<xsl:with-param name="scopeName" select="$id" />
 						</xsl:call-template>
 
@@ -603,10 +553,10 @@
 
 					<xsl:with-param name="setters">
 
-						<!--Button_Icon_Foreground-->
+						<!--Button_Icon_Brush-->
 						<xsl:call-template name="generateBrushSetter">
-							<xsl:with-param name="propertyId">Button_Icon_Foreground</xsl:with-param>
-							<xsl:with-param name="brushName">IconForegroundNormalCenterLocation</xsl:with-param>
+							<xsl:with-param name="propertyId">Button_Icon_Brush</xsl:with-param>
+							<xsl:with-param name="brushName">IconBrushNormalCenterLocation</xsl:with-param>
 							<xsl:with-param name="scopeName" select="$id" />
 						</xsl:call-template>
 
@@ -633,10 +583,10 @@
 
 					<xsl:with-param name="setters">
 
-						<!--Button_Icon_Foreground-->
+						<!--Button_Icon_Brush-->
 						<xsl:call-template name="generateBrushSetter">
-							<xsl:with-param name="propertyId">Button_Icon_Foreground</xsl:with-param>
-							<xsl:with-param name="brushName">IconForegroundPressedCenterLocation</xsl:with-param>
+							<xsl:with-param name="propertyId">Button_Icon_Brush</xsl:with-param>
+							<xsl:with-param name="brushName">IconBrushPressedCenterLocation</xsl:with-param>
 							<xsl:with-param name="scopeName" select="$id" />
 						</xsl:call-template>
 

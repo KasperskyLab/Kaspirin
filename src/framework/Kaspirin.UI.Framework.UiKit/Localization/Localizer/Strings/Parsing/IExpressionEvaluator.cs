@@ -12,18 +12,19 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#pragma warning disable CA1005 // Avoid excessive parameters on generic types.
+
 using System.Collections.Generic;
 
-namespace Kaspirin.UI.Framework.UiKit.Localization.Localizer.Strings.Parsing
+namespace Kaspirin.UI.Framework.UiKit.Localization.Localizer.Strings.Parsing;
+
+public interface IExpressionEvaluator<out TExpression, TParam, TPluralFormExpression, TOperand>
+    where TParam : TOperand
 {
-    public interface IExpressionEvaluator<out TExpression, TParam, TPluralFormExpression, TOperand>
-        where TParam: TOperand
-    {
-        TOperand StringLiteral(Token literal);
-        TParam Param(Token dollar, Token identifier);
-        TOperand KeyRef(Token identifier);
-        TOperand PluralForm(Token openingCurlyBrace, TParam param, Token colon, IEnumerable<TPluralFormExpression> pluralFormExpressions, Token closingCurlyBrace);
-        TPluralFormExpression PluralFormExpression(IEnumerable<TOperand> operands);
-        TExpression Expression(IEnumerable<TOperand> operands);
-    }
+    TOperand StringLiteral(Token literal);
+    TParam Param(Token dollar, Token identifier);
+    TOperand KeyRef(Token identifier);
+    TOperand PluralForm(Token openingCurlyBrace, TParam param, Token colon, IEnumerable<TPluralFormExpression> pluralFormExpressions, Token closingCurlyBrace);
+    TPluralFormExpression PluralFormExpression(IEnumerable<TOperand> operands);
+    TExpression Expression(IEnumerable<TOperand> operands);
 }

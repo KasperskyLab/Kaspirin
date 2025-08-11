@@ -16,83 +16,82 @@ using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 
-namespace Kaspirin.UI.Framework.UiKit.Translator.Core
+namespace Kaspirin.UI.Framework.UiKit.Translator.Core;
+
+[DataContract]
+internal sealed class Configuration
 {
+    [DataMember]
+    public string[] ExcludedControls { get; private set; }
+
+    [DataMember]
+    public IDictionary<string, ProductMediaProjectInfo> ProductMediaProjectInfoMapping { get; private set; }
+
+    [DataMember]
+    public string GeneratedStylesPath { get; private set; }
+
+    [DataMember]
+    public string GeneratedResourcesDirectory { get; private set; }
+
+    [DataMember]
+    public string FontEnumPath { get; private set; }
+
+    [DataMember]
+    public string FontNamespacePart { get; private set; }
+
+    [DataMember]
+    public string PaletteDirectory { get; private set; }
+
+    [DataMember]
+    public string PaletteEnumPath { get; private set; }
+
+    [DataMember]
+    public string PaletteNamespacePart { get; private set; }
+
+    [DataMember]
+    public string SvgDirectory { get; private set; }
+
+    [DataMember]
+    public string IconSvgDirectory { get; private set; }
+
+    [DataMember]
+    public string IconEnumPath { get; private set; }
+
+    [DataMember]
+    public bool FailOnValidationErrors { get; private set; }
+
+    [DataMember]
+    public bool FormatXamlFiles { get; private set; }
+
+    [DataMember]
+    public string UiKitPath { get; private set; }
+
+    [DataMember]
+    public string FileComment { get; internal set; }
+
     [DataContract]
-    internal sealed class Configuration
+    internal sealed class ProductMediaProjectInfo
     {
         [DataMember]
-        public string[] ExcludedControls { get; private set; }
+        public string IllustrationSvgDirectory { get; private set; }
 
         [DataMember]
-        public IDictionary<string, ProductMediaProjectInfo> ProductMediaProjectInfoMapping { get; private set; }
+        public string IllustrationEnumPath { get; private set; }
 
         [DataMember]
-        public string GeneratedStylesPath { get; private set; }
+        public string IllustrationMarkupExtensionPath { get; private set; }
 
         [DataMember]
-        public string GeneratedResourcesDirectory { get; private set; }
+        public string ProductNamespacePart { get; private set; }
+    }
 
-        [DataMember]
-        public string FontEnumPath { get; private set; }
-
-        [DataMember]
-        public string FontNamespacePart { get; private set; }
-
-        [DataMember]
-        public string PaletteDirectory { get; private set; }
-
-        [DataMember]
-        public string PaletteEnumPath { get; private set; }
-
-        [DataMember]
-        public string PaletteNamespacePart { get; private set; }
-
-        [DataMember]
-        public string SvgDirectory { get; private set; }
-
-        [DataMember]
-        public string IconSvgDirectory { get; private set; }
-
-        [DataMember]
-        public string IconEnumPath { get; private set; }
-
-        [DataMember]
-        public bool FailOnValidationErrors { get; private set; }
-
-        [DataMember]
-        public bool FormatXamlFiles { get; private set; }
-
-        [DataMember]
-        public string UiKitPath { get; private set; }
-
-        [DataMember]
-        public string FileComment { get; internal set; }
-
-        [DataContract]
-        internal sealed class ProductMediaProjectInfo
+    internal ProductMediaProjectInfo GetProductMediaProjectInfo(string product)
+    {
+        if (!ProductMediaProjectInfoMapping.TryGetValue(product, out var productMediaProjectInfo))
         {
-            [DataMember]
-            public string IllustrationSvgDirectory { get; private set; }
-
-            [DataMember]
-            public string IllustrationEnumPath { get; private set; }
-
-            [DataMember]
-            public string IllustrationMarkupExtensionPath { get; private set; }
-
-            [DataMember]
-            public string ProductNamespacePart { get; private set; }
+            throw new InvalidOperationException($"Media project info for product '{product}' is not configured");
         }
 
-        internal ProductMediaProjectInfo GetProductMediaProjectInfo(string product)
-        {
-            if (!ProductMediaProjectInfoMapping.TryGetValue(product, out var productMediaProjectInfo))
-            {
-                throw new InvalidOperationException($"Media project info for product '{product}' is not configured");
-            }
-
-            return productMediaProjectInfo;
-        }
+        return productMediaProjectInfo;
     }
 }

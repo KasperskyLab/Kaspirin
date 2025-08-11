@@ -24,8 +24,8 @@
 
 	<xs:group name="elements_SelectPresenter">
 		<xs:all>
-			<xs:element name="ArrowIconForeground" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
-			<xs:element name="ArrowIconForegroundDisabled" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="ArrowIconBrush" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="ArrowIconBrushDisabled" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
 			<xs:element name="ArrowIconMargin" type="Thickness" minOccurs="1" maxOccurs="1"/>
 			<xs:element name="BackgroundDisabled" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
 			<xs:element name="BackgroundFocus" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
@@ -50,8 +50,8 @@
 			<xs:element name="BorderThicknessNormal" type="Thickness" minOccurs="1" maxOccurs="1"/>
 			<xs:element name="CaretBrush" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
 			<xs:element name="CornerRadius" type="CornerRadius" minOccurs="1" maxOccurs="1"/>
-			<xs:element name="IconForeground" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
-			<xs:element name="IconForegroundDisabled" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="IconBrush" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="IconBrushDisabled" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
 			<xs:element name="IconMargin" type="Thickness" minOccurs="1" maxOccurs="1"/>
 			<xs:element name="Padding" type="Thickness" minOccurs="1" maxOccurs="1"/>
 			<xs:element name="PlaceholderForeground" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>

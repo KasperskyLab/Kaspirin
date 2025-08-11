@@ -16,23 +16,22 @@ using System.IO;
 using System.Runtime.Serialization.Json;
 using System.Text;
 
-namespace Kaspirin.UI.Framework.UiKit.Translator.Core
-{
-    internal static class JsonHelper
-    {
-        public static string Serialize<T>(T value)
-        {
-            var serializer = new DataContractJsonSerializer(typeof(T));
-            using var memoryStream = new MemoryStream();
-            serializer.WriteObject(memoryStream, value);
-            return Encoding.Default.GetString(memoryStream.ToArray());
-        }
+namespace Kaspirin.UI.Framework.UiKit.Translator.Core;
 
-        public static T Deserialize<T>(string json)
-        {
-            using var memoryStream = new MemoryStream(Encoding.UTF8.GetBytes(json));
-            var serializer = new DataContractJsonSerializer(typeof(T));
-            return (T)serializer.ReadObject(memoryStream);
-        }
+internal static class JsonHelper
+{
+    public static string Serialize<T>(T value)
+    {
+        var serializer = new DataContractJsonSerializer(typeof(T));
+        using var memoryStream = new MemoryStream();
+        serializer.WriteObject(memoryStream, value);
+        return Encoding.Default.GetString(memoryStream.ToArray());
+    }
+
+    public static T Deserialize<T>(string json)
+    {
+        using var memoryStream = new MemoryStream(Encoding.UTF8.GetBytes(json));
+        var serializer = new DataContractJsonSerializer(typeof(T));
+        return (T)serializer.ReadObject(memoryStream);
     }
 }

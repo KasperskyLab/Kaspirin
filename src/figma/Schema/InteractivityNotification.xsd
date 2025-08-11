@@ -32,7 +32,7 @@
 			<xs:element name="CloseButtonMargin" type="Thickness" minOccurs="1" maxOccurs="1"/>
 			<xs:element name="ContentMargin" type="Thickness" minOccurs="1" maxOccurs="1"/>
 			<xs:element name="CornerRadius" type="CornerRadius" minOccurs="1" maxOccurs="1"/>
-			<xs:element name="IconForeground" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="IconBrush" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
 			<xs:element name="IconMargin" type="Thickness" minOccurs="1" maxOccurs="1"/>
 			<xs:element name="Margin" type="Thickness" minOccurs="1" maxOccurs="1"/>
 			<xs:element name="Padding" type="Thickness" minOccurs="1" maxOccurs="1"/>

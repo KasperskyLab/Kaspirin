@@ -15,28 +15,27 @@
 using System;
 using System.Collections.Generic;
 
-namespace Kaspirin.UI.Framework.UiKit.Illustrations
+namespace Kaspirin.UI.Framework.UiKit.Illustrations;
+
+internal sealed class UIKitIllustrationMetadataStorage
 {
-    internal sealed class UIKitIllustrationMetadataStorage
+    public static void Register(Enum illustration, bool isAutoRTL, double height, double width)
     {
-        public static void Register(Enum illustration, bool isAutoRTL, double height, double width)
-        {
-            Guard.Argument(
-                !_storage.ContainsKey(illustration),
-                $"Duplicate registration of '{illustration.GetType().Name}.{illustration}' illustration metadata");
+        Guard.Argument(
+            !_storage.ContainsKey(illustration),
+            $"Duplicate registration of '{illustration.GetType().Name}.{illustration}' illustration metadata");
 
-            _storage.Add(illustration, new UIKitIllustrationMetadata(isAutoRTL, height, width));
-        }
-
-        public static UIKitIllustrationMetadata Get(Enum illustration)
-        {
-            Guard.Assert(
-                _storage.TryGetValue(illustration, out var metainfo),
-                $"Unable to get '{illustration.GetType().Name}.{illustration}' illustration metadata");
-
-            return metainfo;
-        }
-
-        private static readonly IDictionary<Enum, UIKitIllustrationMetadata> _storage = new Dictionary<Enum, UIKitIllustrationMetadata>();
+        _storage.Add(illustration, new UIKitIllustrationMetadata(isAutoRTL, height, width));
     }
+
+    public static UIKitIllustrationMetadata Get(Enum illustration)
+    {
+        Guard.Assert(
+            _storage.TryGetValue(illustration, out var metainfo),
+            $"Unable to get '{illustration.GetType().Name}.{illustration}' illustration metadata");
+
+        return metainfo;
+    }
+
+    private static readonly IDictionary<Enum, UIKitIllustrationMetadata> _storage = new Dictionary<Enum, UIKitIllustrationMetadata>();
 }

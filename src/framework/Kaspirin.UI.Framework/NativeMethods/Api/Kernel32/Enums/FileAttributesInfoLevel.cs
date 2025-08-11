@@ -14,15 +14,13 @@
 
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
 
-namespace Kaspirin.UI.Framework.NativeMethods.Api.Kernel32.Enums
+namespace Kaspirin.UI.Framework.NativeMethods.Api.Kernel32.Enums;
+
+/// <summary>
+///     <seealso href="https://learn.microsoft.com/en-us/windows/win32/api/minwinbase/ne-minwinbase-get_fileex_info_levels">Learn more</seealso>.
+/// </summary>
+public enum FileAttributesInfoLevel : uint
 {
-    /// <summary>
-    ///     
-    /// <seealso href="https://learn.microsoft.com/en-us/windows/win32/api/minwinbase/ne-minwinbase-get_fileex_info_levels">Learn more</seealso>.
-    /// </summary>
-    public enum FileAttributesInfoLevel : uint
-    {
-        GetFileExInfoStandard,
-        GetFileExMaxInfoLevel
-    }
+    GetFileExInfoStandard,
+    GetFileExMaxInfoLevel
 }

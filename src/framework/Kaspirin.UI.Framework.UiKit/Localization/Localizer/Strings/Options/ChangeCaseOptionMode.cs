@@ -12,13 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Kaspirin.UI.Framework.UiKit.Localization.Localizer.Strings.Options
+namespace Kaspirin.UI.Framework.UiKit.Localization.Localizer.Strings.Options;
+
+public enum ChangeCaseOptionMode
 {
-    public enum ChangeCaseOptionMode
-    {
-        LowercaseFirstLetterOnly,
-        LowercaseAll,
-        UppercaseFirstLetterOnly,
-        UppercaseAll,
-    }
+    LowercaseFirstLetterOnly,
+    LowercaseAll,
+    UppercaseFirstLetterOnly,
+    UppercaseAll,
 }

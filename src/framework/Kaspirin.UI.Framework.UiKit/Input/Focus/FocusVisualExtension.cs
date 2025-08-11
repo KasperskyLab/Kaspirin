@@ -18,51 +18,50 @@ using System.Windows.Controls;
 using System.Windows.Markup;
 using System.Windows.Shapes;
 
-namespace Kaspirin.UI.Framework.UiKit.Input.Focus
+namespace Kaspirin.UI.Framework.UiKit.Input.Focus;
+
+public sealed class FocusVisualExtension : MarkupExtension
 {
-    public sealed class FocusVisualExtension : MarkupExtension
+    public FocusVisualType Type { get; set; }
+    public BaseLocalizationMarkupExtension? Brush { get; set; }
+    public CornerRadius CornerRadius { get; set; }
+    public Thickness Margin { get; set; }
+    public double Thickness { get; set; }
+
+    public override object ProvideValue(IServiceProvider serviceProvider)
     {
-        public FocusVisualType Type { get; set; }
-        public LocalizationMarkupBase? Brush { get; set; }
-        public CornerRadius CornerRadius { get; set; }
-        public Thickness Margin { get; set; }
-        public double Thickness { get; set; }
+        FrameworkElementFactory focusElement;
 
-        public override object ProvideValue(IServiceProvider serviceProvider)
+        if (Type == FocusVisualType.Ellipse)
         {
-            FrameworkElementFactory focusElement;
-
-            if (Type == FocusVisualType.Ellipse)
-            {
-                focusElement = new FrameworkElementFactory(typeof(Ellipse));
-                focusElement.SetValue(Shape.StrokeThicknessProperty, Thickness);
-                focusElement.SetValue(Shape.StrokeProperty, Brush);
-            }
-            else
-            {
-                focusElement = new FrameworkElementFactory(typeof(Border));
-                focusElement.SetValue(Border.BorderBrushProperty, Brush);
-                focusElement.SetValue(Border.CornerRadiusProperty, CornerRadius);
-                focusElement.SetValue(Border.BorderThicknessProperty, new Thickness(Thickness));
-            }
-
-            focusElement.SetValue(FrameworkElement.MarginProperty, Margin);
-            focusElement.SetValue(FrameworkElement.HorizontalAlignmentProperty, HorizontalAlignment.Stretch);
-            focusElement.SetValue(FrameworkElement.VerticalAlignmentProperty, VerticalAlignment.Stretch);
-
-            var focusTemplate = new ControlTemplate
-            {
-                VisualTree = focusElement
-            };
-
-            var focusStyle = new Style();
-            focusStyle.Setters.Add(new Setter
-            {
-                Property = Control.TemplateProperty,
-                Value = focusTemplate
-            });
-
-            return focusStyle;
+            focusElement = new FrameworkElementFactory(typeof(Ellipse));
+            focusElement.SetValue(Shape.StrokeThicknessProperty, Thickness);
+            focusElement.SetValue(Shape.StrokeProperty, Brush);
         }
+        else
+        {
+            focusElement = new FrameworkElementFactory(typeof(Border));
+            focusElement.SetValue(Border.BorderBrushProperty, Brush);
+            focusElement.SetValue(Border.CornerRadiusProperty, CornerRadius);
+            focusElement.SetValue(Border.BorderThicknessProperty, new Thickness(Thickness));
+        }
+
+        focusElement.SetValue(FrameworkElement.MarginProperty, Margin);
+        focusElement.SetValue(FrameworkElement.HorizontalAlignmentProperty, HorizontalAlignment.Stretch);
+        focusElement.SetValue(FrameworkElement.VerticalAlignmentProperty, VerticalAlignment.Stretch);
+
+        var focusTemplate = new ControlTemplate
+        {
+            VisualTree = focusElement
+        };
+
+        var focusStyle = new Style();
+        focusStyle.Setters.Add(new Setter
+        {
+            Property = Control.TemplateProperty,
+            Value = focusTemplate
+        });
+
+        return focusStyle;
     }
 }

@@ -17,19 +17,17 @@
 using System;
 using System.Runtime.InteropServices;
 
-namespace Kaspirin.UI.Framework.NativeMethods.Api.User32.Structs
+namespace Kaspirin.UI.Framework.NativeMethods.Api.User32.Structs;
+
+/// <summary>
+///     <seealso href="https://learn.microsoft.com/en-us/windows/win32/dwm/windowcompositionattribdata">Learn more</seealso>.
+/// </summary>
+[StructLayout(LayoutKind.Sequential)]
+public struct WindowCompositionAttributeData
 {
-    /// <summary>
-    ///     
-    /// <seealso href="https://learn.microsoft.com/en-us/windows/win32/dwm/windowcompositionattribdata">Learn more</seealso>.
-    /// </summary>
-    [StructLayout(LayoutKind.Sequential)]
-    public struct WindowCompositionAttributeData
-    {
-        public WindowCompositionAttribute Attribute;
+    public WindowCompositionAttribute Attribute;
 
-        public IntPtr Data;
+    public IntPtr Data;
 
-        public int SizeOfData;
-    }
+    public int SizeOfData;
 }

@@ -12,187 +12,870 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
+namespace Kaspirin.UI.Framework.NativeMethods.Api.User32.Enums;
 
-namespace Kaspirin.UI.Framework.NativeMethods.Api.User32.Enums
+/// <summary>
+///     <seealso href="https://learn.microsoft.com/en-us/Windows/win32/api/winuser/nf-winuser-systemparametersinfow">Learn more</seealso>.
+/// </summary>
+public enum SpiType : uint
 {
     /// <summary>
-    ///     
-    /// <seealso href="https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-systemparametersinfow">Learn more</seealso>.
+    ///     The SPI_GETBEEP constant.
     /// </summary>
-    public enum SpiType : uint
-    {
-        SPI_GETBEEP = 0x0001,
-        SPI_SETBEEP = 0x0002,
-        SPI_GETMOUSE = 0x0003,
-        SPI_SETMOUSE = 0x0004,
-        SPI_GETBORDER = 0x0005,
-        SPI_SETBORDER = 0x0006,
-        SPI_GETKEYBOARDSPEED = 0x000A,
-        SPI_SETKEYBOARDSPEED = 0x000B,
-        SPI_LANGDRIVER = 0x000C,
-        SPI_ICONHORIZONTALSPACING = 0x000D,
-        SPI_GETSCREENSAVETIMEOUT = 0x000E,
-        SPI_SETSCREENSAVETIMEOUT = 0x000F,
-        SPI_GETSCREENSAVEACTIVE = 0x0010,
-        SPI_SETSCREENSAVEACTIVE = 0x0011,
-        SPI_GETGRIDGRANULARITY = 0x0012,
-        SPI_SETGRIDGRANULARITY = 0x0013,
-        SPI_SETDESKWALLPAPER = 0x0014,
-        SPI_SETDESKPATTERN = 0x0015,
-        SPI_GETKEYBOARDDELAY = 0x0016,
-        SPI_SETKEYBOARDDELAY = 0x0017,
-        SPI_ICONVERTICALSPACING = 0x0018,
-        SPI_GETICONTITLEWRAP = 0x0019,
-        SPI_SETICONTITLEWRAP = 0x001A,
-        SPI_GETMENUDROPALIGNMENT = 0x001B,
-        SPI_SETMENUDROPALIGNMENT = 0x001C,
-        SPI_SETDOUBLECLKWIDTH = 0x001D,
-        SPI_SETDOUBLECLKHEIGHT = 0x001E,
-        SPI_GETICONTITLELOGFONT = 0x001F,
-        SPI_SETDOUBLECLICKTIME = 0x0020,
-        SPI_SETMOUSEBUTTONSWAP = 0x0021,
-        SPI_SETICONTITLELOGFONT = 0x0022,
-        SPI_GETFASTTASKSWITCH = 0x0023,
-        SPI_SETFASTTASKSWITCH = 0x0024,
-        SPI_SETDRAGFULLWINDOWS = 0x0025,
-        SPI_GETDRAGFULLWINDOWS = 0x0026,
-        SPI_GETNONCLIENTMETRICS = 0x0029,
-        SPI_SETNONCLIENTMETRICS = 0x002A,
-        SPI_GETMINIMIZEDMETRICS = 0x002B,
-        SPI_SETMINIMIZEDMETRICS = 0x002C,
-        SPI_GETICONMETRICS = 0x002D,
-        SPI_SETICONMETRICS = 0x002E,
-        SPI_SETWORKAREA = 0x002F,
-        SPI_GETWORKAREA = 0x0030,
-        SPI_SETPENWINDOWS = 0x0031,
-        SPI_GETHIGHCONTRAST = 0x0042,
-        SPI_SETHIGHCONTRAST = 0x0043,
-        SPI_GETKEYBOARDPREF = 0x0044,
-        SPI_SETKEYBOARDPREF = 0x0045,
-        SPI_GETSCREENREADER = 0x0046,
-        SPI_SETSCREENREADER = 0x0047,
-        SPI_GETANIMATION = 0x0048,
-        SPI_SETANIMATION = 0x0049,
-        SPI_GETFONTSMOOTHING = 0x004A,
-        SPI_SETFONTSMOOTHING = 0x004B,
-        SPI_SETDRAGWIDTH = 0x004C,
-        SPI_SETDRAGHEIGHT = 0x004D,
-        SPI_SETHANDHELD = 0x004E,
-        SPI_GETLOWPOWERTIMEOUT = 0x004F,
-        SPI_GETPOWEROFFTIMEOUT = 0x0050,
-        SPI_SETLOWPOWERTIMEOUT = 0x0051,
-        SPI_SETPOWEROFFTIMEOUT = 0x0052,
-        SPI_GETLOWPOWERACTIVE = 0x0053,
-        SPI_GETPOWEROFFACTIVE = 0x0054,
-        SPI_SETLOWPOWERACTIVE = 0x0055,
-        SPI_SETPOWEROFFACTIVE = 0x0056,
-        SPI_SETCURSORS = 0x0057,
-        SPI_SETICONS = 0x0058,
-        SPI_GETDEFAULTINPUTLANG = 0x0059,
-        SPI_SETDEFAULTINPUTLANG = 0x005A,
-        SPI_SETLANGTOGGLE = 0x005B,
-        SPI_GETWINDOWSEXTENSION = 0x005C,
-        SPI_SETMOUSETRAILS = 0x005D,
-        SPI_GETMOUSETRAILS = 0x005E,
-        SPI_SETSCREENSAVERRUNNING = 0x0061,
-        SPI_SCREENSAVERRUNNING = SPI_SETSCREENSAVERRUNNING,
-        SPI_GETFILTERKEYS = 0x0032,
-        SPI_SETFILTERKEYS = 0x0033,
-        SPI_GETTOGGLEKEYS = 0x0034,
-        SPI_SETTOGGLEKEYS = 0x0035,
-        SPI_GETMOUSEKEYS = 0x0036,
-        SPI_SETMOUSEKEYS = 0x0037,
-        SPI_GETSHOWSOUNDS = 0x0038,
-        SPI_SETSHOWSOUNDS = 0x0039,
-        SPI_GETSTICKYKEYS = 0x003A,
-        SPI_SETSTICKYKEYS = 0x003B,
-        SPI_GETACCESSTIMEOUT = 0x003C,
-        SPI_SETACCESSTIMEOUT = 0x003D,
-        SPI_GETSERIALKEYS = 0x003E,
-        SPI_SETSERIALKEYS = 0x003F,
-        SPI_GETSOUNDSENTRY = 0x0040,
-        SPI_SETSOUNDSENTRY = 0x0041,
-        SPI_GETSNAPTODEFBUTTON = 0x005F,
-        SPI_SETSNAPTODEFBUTTON = 0x0060,
-        SPI_GETMOUSEHOVERWIDTH = 0x0062,
-        SPI_SETMOUSEHOVERWIDTH = 0x0063,
-        SPI_GETMOUSEHOVERHEIGHT = 0x0064,
-        SPI_SETMOUSEHOVERHEIGHT = 0x0065,
-        SPI_GETMOUSEHOVERTIME = 0x0066,
-        SPI_SETMOUSEHOVERTIME = 0x0067,
-        SPI_GETWHEELSCROLLLINES = 0x0068,
-        SPI_SETWHEELSCROLLLINES = 0x0069,
-        SPI_GETMENUSHOWDELAY = 0x006A,
-        SPI_SETMENUSHOWDELAY = 0x006B,
-        SPI_GETSHOWIMEUI = 0x006E,
-        SPI_SETSHOWIMEUI = 0x006F,
-        SPI_GETMOUSESPEED = 0x0070,
-        SPI_SETMOUSESPEED = 0x0071,
-        SPI_GETSCREENSAVERRUNNING = 0x0072,
-        SPI_GETDESKWALLPAPER = 0x0073,
-        SPI_GETACTIVEWINDOWTRACKING = 0x1000,
-        SPI_SETACTIVEWINDOWTRACKING = 0x1001,
-        SPI_GETMENUANIMATION = 0x1002,
-        SPI_SETMENUANIMATION = 0x1003,
-        SPI_GETCOMBOBOXANIMATION = 0x1004,
-        SPI_SETCOMBOBOXANIMATION = 0x1005,
-        SPI_GETLISTBOXSMOOTHSCROLLING = 0x1006,
-        SPI_SETLISTBOXSMOOTHSCROLLING = 0x1007,
-        SPI_GETGRADIENTCAPTIONS = 0x1008,
-        SPI_SETGRADIENTCAPTIONS = 0x1009,
-        SPI_GETKEYBOARDCUES = 0x100A,
-        SPI_SETKEYBOARDCUES = 0x100B,
-        SPI_GETMENUUNDERLINES = SPI_GETKEYBOARDCUES,
-        SPI_SETMENUUNDERLINES = SPI_SETKEYBOARDCUES,
-        SPI_GETACTIVEWNDTRKZORDER = 0x100C,
-        SPI_SETACTIVEWNDTRKZORDER = 0x100D,
-        SPI_GETHOTTRACKING = 0x100E,
-        SPI_SETHOTTRACKING = 0x100F,
-        SPI_GETMENUFADE = 0x1012,
-        SPI_SETMENUFADE = 0x1013,
-        SPI_GETSELECTIONFADE = 0x1014,
-        SPI_SETSELECTIONFADE = 0x1015,
-        SPI_GETTOOLTIPANIMATION = 0x1016,
-        SPI_SETTOOLTIPANIMATION = 0x1017,
-        SPI_GETTOOLTIPFADE = 0x1018,
-        SPI_SETTOOLTIPFADE = 0x1019,
-        SPI_GETCURSORSHADOW = 0x101A,
-        SPI_SETCURSORSHADOW = 0x101B,
-        SPI_GETMOUSESONAR = 0x101C,
-        SPI_SETMOUSESONAR = 0x101D,
-        SPI_GETMOUSECLICKLOCK = 0x101E,
-        SPI_SETMOUSECLICKLOCK = 0x101F,
-        SPI_GETMOUSEVANISH = 0x1020,
-        SPI_SETMOUSEVANISH = 0x1021,
-        SPI_GETFLATMENU = 0x1022,
-        SPI_SETFLATMENU = 0x1023,
-        SPI_GETDROPSHADOW = 0x1024,
-        SPI_SETDROPSHADOW = 0x1025,
-        SPI_GETBLOCKSENDINPUTRESETS = 0x1026,
-        SPI_SETBLOCKSENDINPUTRESETS = 0x1027,
-        SPI_GETUIEFFECTS = 0x103E,
-        SPI_SETUIEFFECTS = 0x103F,
-        SPI_GETCLIENTAREAANIMATION = 0x1042,
-        SPI_GETFOREGROUNDLOCKTIMEOUT = 0x2000,
-        SPI_SETFOREGROUNDLOCKTIMEOUT = 0x2001,
-        SPI_GETACTIVEWNDTRKTIMEOUT = 0x2002,
-        SPI_SETACTIVEWNDTRKTIMEOUT = 0x2003,
-        SPI_GETFOREGROUNDFLASHCOUNT = 0x2004,
-        SPI_SETFOREGROUNDFLASHCOUNT = 0x2005,
-        SPI_GETCARETWIDTH = 0x2006,
-        SPI_SETCARETWIDTH = 0x2007,
-        SPI_GETMOUSECLICKLOCKTIME = 0x2008,
-        SPI_SETMOUSECLICKLOCKTIME = 0x2009,
-        SPI_GETFONTSMOOTHINGTYPE = 0x200A,
-        SPI_SETFONTSMOOTHINGTYPE = 0x200B,
-        SPI_GETFONTSMOOTHINGCONTRAST = 0x200C,
-        SPI_SETFONTSMOOTHINGCONTRAST = 0x200D,
-        SPI_GETFOCUSBORDERWIDTH = 0x200E,
-        SPI_SETFOCUSBORDERWIDTH = 0x200F,
-        SPI_GETFOCUSBORDERHEIGHT = 0x2010,
-        SPI_SETFOCUSBORDERHEIGHT = 0x2011,
-        SPI_GETFONTSMOOTHINGORIENTATION = 0x2012,
-        SPI_SETFONTSMOOTHINGORIENTATION = 0x2013,
-    }
+    GetBeep = 0x0001,
+
+    /// <summary>
+    ///     The SPI_SETBEEP constant.
+    /// </summary>
+    SetBeep = 0x0002,
+
+    /// <summary>
+    ///     The SPI_GETMOUSE constant.
+    /// </summary>
+    GetMouse = 0x0003,
+
+    /// <summary>
+    ///     The SPI_SETMOUSE constant.
+    /// </summary>
+    SetMouse = 0x0004,
+
+    /// <summary>
+    ///     The SPI_GETBORDER constant.
+    /// </summary>
+    GetBorder = 0x0005,
+
+    /// <summary>
+    ///     The SPI_SETBORDER constant.
+    /// </summary>
+    SetBorder = 0x0006,
+
+    /// <summary>
+    ///     The SPI_GETKEYBOARDSPEED constant.
+    /// </summary>
+    GetKeyboardSpeed = 0x000A,
+
+    /// <summary>
+    ///     The SPI_SETKEYBOARDSPEED constant.
+    /// </summary>
+    SetKeyboardSpeed = 0x000B,
+
+    /// <summary>
+    ///     The SPI_LANGDRIVER constant.
+    /// </summary>
+    LangDriver = 0x000C,
+
+    /// <summary>
+    ///     The SPI_ICONHORIZONTALSPACING constant.
+    /// </summary>
+    IconHorizontalSpacing = 0x000D,
+
+    /// <summary>
+    ///     The SPI_GETSCREENSAVETIMEOUT constant.
+    /// </summary>
+    GetScreenSaveTimeout = 0x000E,
+
+    /// <summary>
+    ///     The SPI_SETSCREENSAVETIMEOUT constant.
+    /// </summary>
+    SetScreenSaveTimeout = 0x000F,
+
+    /// <summary>
+    ///     The SPI_GETSCREENSAVEACTIVE constant.
+    /// </summary>
+    GetScreenSaveActive = 0x0010,
+
+    /// <summary>
+    ///     The SPI_SETSCREENSAVEACTIVE constant.
+    /// </summary>
+    SetScreenSaveActive = 0x0011,
+
+    /// <summary>
+    ///     The SPI_GETGRIDGRANULARITY constant.
+    /// </summary>
+    GetGridGranularity = 0x0012,
+
+    /// <summary>
+    ///     The SPI_SETGRIDGRANULARITY constant.
+    /// </summary>
+    SetGridGranularity = 0x0013,
+
+    /// <summary>
+    ///     The SPI_SETDESKWALLPAPER constant.
+    /// </summary>
+    SetDeskWallpaper = 0x0014,
+
+    /// <summary>
+    ///     The SPI_SETDESKPATTERN constant.
+    /// </summary>
+    SetDeskPattern = 0x0015,
+
+    /// <summary>
+    ///     The SPI_GETKEYBOARDDELAY constant.
+    /// </summary>
+    GetKeyboardDelay = 0x0016,
+
+    /// <summary>
+    ///     The SPI_SETKEYBOARDDELAY constant.
+    /// </summary>
+    SetKeyboardDelay = 0x0017,
+
+    /// <summary>
+    ///     The SPI_ICONVERTICALSPACING constant.
+    /// </summary>
+    IconVerticalSpacing = 0x0018,
+
+    /// <summary>
+    ///     The SPI_GETICONTITLEWRAP constant.
+    /// </summary>
+    GetIconTitleWrap = 0x0019,
+
+    /// <summary>
+    ///     The SPI_SETICONTITLEWRAP constant.
+    /// </summary>
+    SetIconTitleWrap = 0x001A,
+
+    /// <summary>
+    ///     The SPI_GETMENUDROPALIGNMENT constant.
+    /// </summary>
+    GetMenuDropAlignment = 0x001B,
+
+    /// <summary>
+    ///     The SPI_SETMENUDROPALIGNMENT constant.
+    /// </summary>
+    SetMenuDropAlignment = 0x001C,
+
+    /// <summary>
+    ///     The SPI_SETDOUBLECLKWIDTH constant.
+    /// </summary>
+    SetDoubleClkWidth = 0x001D,
+
+    /// <summary>
+    ///     The SPI_SETDOUBLECLKHEIGHT constant.
+    /// </summary>
+    SetDoubleClkHeight = 0x001E,
+
+    /// <summary>
+    ///     The SPI_GETICONTITLELOGFONT constant.
+    /// </summary>
+    GetIconTitleLogFont = 0x001F,
+
+    /// <summary>
+    ///     The SPI_SETDOUBLECLICKTIME constant.
+    /// </summary>
+    SetDoubleClickTime = 0x0020,
+
+    /// <summary>
+    ///     The SPI_SETMOUSEBUTTONSWAP constant.
+    /// </summary>
+    SetMouseButtonSwap = 0x0021,
+
+    /// <summary>
+    ///     The SPI_SETICONTITLELOGFONT constant.
+    /// </summary>
+    SetIconTitleLogFont = 0x0022,
+
+    /// <summary>
+    ///     The SPI_GETFASTTASKSWITCH constant.
+    /// </summary>
+    GetFastTaskSwitch = 0x0023,
+
+    /// <summary>
+    ///     The SPI_SETFASTTASKSWITCH constant.
+    /// </summary>
+    SetFastTaskSwitch = 0x0024,
+
+    /// <summary>
+    ///     The SPI_SETDRAGFULLWINDOWS constant.
+    /// </summary>
+    SetDragFullWindows = 0x0025,
+
+    /// <summary>
+    ///     The SPI_GETDRAGFULLWINDOWS constant.
+    /// </summary>
+    GetDagFullWindows = 0x0026,
+
+    /// <summary>
+    ///     The SPI_GETNONCLIENTMETRICS constant.
+    /// </summary>
+    GetNonClientMetrics = 0x0029,
+
+    /// <summary>
+    ///     The SPI_SETNONCLIENTMETRICS constant.
+    /// </summary>
+    SetNonClientMetrics = 0x002A,
+
+    /// <summary>
+    ///     The SPI_GETMINIMIZEDMETRICS constant.
+    /// </summary>
+    GetMinimizedMetrics = 0x002B,
+
+    /// <summary>
+    ///     The SPI_SETMINIMIZEDMETRICS constant.
+    /// </summary>
+    SetMinimizedMetrics = 0x002C,
+
+    /// <summary>
+    ///     The SPI_GETICONMETRICS constant.
+    /// </summary>
+    GetIconMetrics = 0x002D,
+
+    /// <summary>
+    ///     The SPI_SETICONMETRICS constant.
+    /// </summary>
+    SetIconMetrics = 0x002E,
+
+    /// <summary>
+    ///     The SPI_SETWORKAREA constant.
+    /// </summary>
+    SetWorkArea = 0x002F,
+
+    /// <summary>
+    ///     The SPI_GETWORKAREA constant.
+    /// </summary>
+    GetWorkArea = 0x0030,
+
+    /// <summary>
+    ///     The SPI_SETPENWINDOWS constant.
+    /// </summary>
+    SetPenWindows = 0x0031,
+
+    /// <summary>
+    ///     The SPI_GETHIGHCONTRAST constant.
+    /// </summary>
+    GetHighContrast = 0x0042,
+
+    /// <summary>
+    ///     The SPI_SETHIGHCONTRAST constant.
+    /// </summary>
+    SetHighContrast = 0x0043,
+
+    /// <summary>
+    ///     The SPI_GETKEYBOARDPREF constant.
+    /// </summary>
+    GetKeyboardPref = 0x0044,
+
+    /// <summary>
+    ///     The SPI_SETKEYBOARDPREF constant.
+    /// </summary>
+    SetKeyboardPref = 0x0045,
+
+    /// <summary>
+    ///     The SPI_GETSCREENREADER constant.
+    /// </summary>
+    GetScreenReader = 0x0046,
+
+    /// <summary>
+    ///     The SPI_SETSCREENREADER constant.
+    /// </summary>
+    SetScreenReader = 0x0047,
+
+    /// <summary>
+    ///     The SPI_GETANIMATION constant.
+    /// </summary>
+    GetAnimation = 0x0048,
+
+    /// <summary>
+    ///     The SPI_SETANIMATION constant.
+    /// </summary>
+    SetAnimation = 0x0049,
+
+    /// <summary>
+    ///     The SPI_GETFONTSMOOTHING constant.
+    /// </summary>
+    GetFontSmoothing = 0x004A,
+
+    /// <summary>
+    ///     The SPI_SETFONTSMOOTHING constant.
+    /// </summary>
+    SetFontSmoothing = 0x004B,
+
+    /// <summary>
+    ///     The SPI_SETDRAGWIDTH constant.
+    /// </summary>
+    SetDragWidth = 0x004C,
+
+    /// <summary>
+    ///     The SPI_SETDRAGHEIGHT constant.
+    /// </summary>
+    SetDragHeight = 0x004D,
+
+    /// <summary>
+    ///     The SPI_SETHANDHELD constant.
+    /// </summary>
+    SetHandheld = 0x004E,
+
+    /// <summary>
+    ///     The SPI_GETLOWPOWERTIMEOUT constant.
+    /// </summary>
+    GetLowPowerTimeout = 0x004F,
+
+    /// <summary>
+    ///     The SPI_GETPOWEROFFTIMEOUT constant.
+    /// </summary>
+    GetPowerOffTimeout = 0x0050,
+
+    /// <summary>
+    ///     The SPI_SETLOWPOWERTIMEOUT constant.
+    /// </summary>
+    SetLowPowerTimeout = 0x0051,
+
+    /// <summary>
+    ///     The SPI_SETPOWEROFFTIMEOUT constant.
+    /// </summary>
+    SetPowerOffTimeout = 0x0052,
+
+    /// <summary>
+    ///     The SPI_GETLOWPOWERACTIVE constant.
+    /// </summary>
+    GetLowPowerActive = 0x0053,
+
+    /// <summary>
+    ///     The SPI_GETPOWEROFFACTIVE constant.
+    /// </summary>
+    GetPowerOffActive = 0x0054,
+
+    /// <summary>
+    ///     The SPI_SETLOWPOWERACTIVE constant.
+    /// </summary>
+    SetLowPowerActive = 0x0055,
+
+    /// <summary>
+    ///     The SPI_SETPOWEROFFACTIVE constant.
+    /// </summary>
+    SetPowerOffActive = 0x0056,
+
+    /// <summary>
+    ///     The SPI_SETCURSORS constant.
+    /// </summary>
+    SetCursors = 0x0057,
+
+    /// <summary>
+    ///     The SPI_SETICONS constant.
+    /// </summary>
+    SetIcons = 0x0058,
+
+    /// <summary>
+    ///     The SPI_GETDEFAULTINPUTLANG constant.
+    /// </summary>
+    GetDefaultInputLang = 0x0059,
+
+    /// <summary>
+    ///     The SPI_SETDEFAULTINPUTLANG constant.
+    /// </summary>
+    SetDefaultInputLang = 0x005A,
+
+    /// <summary>
+    ///     The SPI_SETLANGTOGGLE constant.
+    /// </summary>
+    SetLangToggle = 0x005B,
+
+    /// <summary>
+    ///     The SPI_GETWINDOWSEXTENSION constant.
+    /// </summary>
+    GetWindowsExtension = 0x005C,
+
+    /// <summary>
+    ///     The SPI_SETMOUSETRAILS constant.
+    /// </summary>
+    SetMouseTrails = 0x005D,
+
+    /// <summary>
+    ///     The SPI_GETMOUSETRAILS constant.
+    /// </summary>
+    GetMouseTrails = 0x005E,
+
+    /// <summary>
+    ///     The SPI_SETSCREENSAVERRUNNING constant.
+    /// </summary>
+    SetScreensaverRunning = 0x0061,
+
+    /// <summary>
+    ///     The SPI_SCREENSAVERRUNNING constant.
+    /// </summary>
+    ScreensaverRunning = SetScreensaverRunning,
+
+    /// <summary>
+    ///     The SPI_GETFILTERKEYS constant.
+    /// </summary>
+    GetFilterKeys = 0x0032,
+
+    /// <summary>
+    ///     The SPI_SETFILTERKEYS constant.
+    /// </summary>
+    SetFilterKeys = 0x0033,
+
+    /// <summary>
+    ///     The SPI_GETTOGGLEKEYS constant.
+    /// </summary>
+    GetToggleKeys = 0x0034,
+
+    /// <summary>
+    ///     The SPI_SETTOGGLEKEYS constant.
+    /// </summary>
+    SetToggleKeys = 0x0035,
+
+    /// <summary>
+    ///     The SPI_GETMOUSEKEYS constant.
+    /// </summary>
+    GetMouseKeys = 0x0036,
+
+    /// <summary>
+    ///     The SPI_SETMOUSEKEYS constant.
+    /// </summary>
+    SetMouseKeys = 0x0037,
+
+    /// <summary>
+    ///     The SPI_GETSHOWSOUNDS constant.
+    /// </summary>
+    GetShowSounds = 0x0038,
+
+    /// <summary>
+    ///     The SPI_SETSHOWSOUNDS constant.
+    /// </summary>
+    SetShowSounds = 0x0039,
+
+    /// <summary>
+    ///     The SPI_GETSTICKYKEYS constant.
+    /// </summary>
+    GetStickyKeys = 0x003A,
+
+    /// <summary>
+    ///     The SPI_SETSTICKYKEYS constant.
+    /// </summary>
+    SetStickyKeys = 0x003B,
+
+    /// <summary>
+    ///     The SPI_GETACCESSTIMEOUT constant.
+    /// </summary>
+    GetAccessTimeout = 0x003C,
+
+    /// <summary>
+    ///     The SPI_SETACCESSTIMEOUT constant.
+    /// </summary>
+    SetAccessTimeout = 0x003D,
+
+    /// <summary>
+    ///     The SPI_GETSERIALKEYS constant.
+    /// </summary>
+    GetSerialKeys = 0x003E,
+
+    /// <summary>
+    ///     The SPI_SETSERIALKEYS constant.
+    /// </summary>
+    SetSerialKeys = 0x003F,
+
+    /// <summary>
+    ///     The SPI_GETSOUNDSENTRY constant.
+    /// </summary>
+    GetSoundsEntry = 0x0040,
+
+    /// <summary>
+    ///     The SPI_SETSOUNDSENTRY constant.
+    /// </summary>
+    SetSoundsEntry = 0x0041,
+
+    /// <summary>
+    ///     The SPI_GETSNAPTODEFBUTTON constant.
+    /// </summary>
+    GetSnapToDefButton = 0x005F,
+
+    /// <summary>
+    ///     The SPI_SETSNAPTODEFBUTTON constant.
+    /// </summary>
+    SetSnapToDefButton = 0x0060,
+
+    /// <summary>
+    ///     The SPI_GETMOUSEHOVERWIDTH constant.
+    /// </summary>
+    GetMouseHoverWidth = 0x0062,
+
+    /// <summary>
+    ///     The SPI_SETMOUSEHOVERWIDTH constant.
+    /// </summary>
+    SetMouseHoverWidth = 0x0063,
+
+    /// <summary>
+    ///     The SPI_GETMOUSEHOVERHEIGHT constant.
+    /// </summary>
+    GetMouseHoverHeight = 0x0064,
+
+    /// <summary>
+    ///     The SPI_SETMOUSEHOVERHEIGHT constant.
+    /// </summary>
+    SetMouseHoverHeight = 0x0065,
+
+    /// <summary>
+    ///     The SPI_GETMOUSEHOVERTIME constant.
+    /// </summary>
+    GetMouseHoverTime = 0x0066,
+
+    /// <summary>
+    ///     The SPI_SETMOUSEHOVERTIME constant.
+    /// </summary>
+    SetMouseHoverTime = 0x0067,
+
+    /// <summary>
+    ///     The SPI_GETWHEELSCROLLLINES constant.
+    /// </summary>
+    GetWheelScrollLines = 0x0068,
+
+    /// <summary>
+    ///     The SPI_SETWHEELSCROLLLINES constant.
+    /// </summary>
+    SetWheelScrollLines = 0x0069,
+
+    /// <summary>
+    ///     The SPI_GETMENUSHOWDELAY constant.
+    /// </summary>
+    GetMenuShowDelay = 0x006A,
+
+    /// <summary>
+    ///     The SPI_SETMENUSHOWDELAY constant.
+    /// </summary>
+    SetMenuShowDelay = 0x006B,
+
+    /// <summary>
+    ///     The SPI_GETSHOWIMEUI constant.
+    /// </summary>
+    GetShowImeUi = 0x006E,
+
+    /// <summary>
+    ///     The SPI_SETSHOWIMEUI constant.
+    /// </summary>
+    SetShowImeUi = 0x006F,
+
+    /// <summary>
+    ///     The SPI_GETMOUSESPEED constant.
+    /// </summary>
+    GetMouseSpeed = 0x0070,
+
+    /// <summary>
+    ///     The SPI_SETMOUSESPEED constant.
+    /// </summary>
+    SetMouseSpeed = 0x0071,
+
+    /// <summary>
+    ///     The SPI_GETSCREENSAVERRUNNING constant.
+    /// </summary>
+    GetScreensaverRunning = 0x0072,
+
+    /// <summary>
+    ///     The SPI_GETDESKWALLPAPER constant.
+    /// </summary>
+    GetDeskWallpaper = 0x0073,
+
+    /// <summary>
+    ///     The SPI_GETACTIVEWINDOWTRACKING constant.
+    /// </summary>
+    GetActiveWindowTracking = 0x1000,
+
+    /// <summary>
+    ///     The SPI_SETACTIVEWINDOWTRACKING constant.
+    /// </summary>
+    SetActiveWindowTracking = 0x1001,
+
+    /// <summary>
+    ///     The SPI_GETMENUANIMATION constant.
+    /// </summary>
+    GetMenuAnimation = 0x1002,
+
+    /// <summary>
+    ///     The SPI_SETMENUANIMATION constant.
+    /// </summary>
+    SetMenuAnimation = 0x1003,
+
+    /// <summary>
+    ///     The SPI_GETCOMBOBOXANIMATION constant.
+    /// </summary>
+    GetComboBoxAnimation = 0x1004,
+
+    /// <summary>
+    ///     The SPI_SETCOMBOBOXANIMATION constant.
+    /// </summary>
+    SetComboBoxAnimation = 0x1005,
+
+    /// <summary>
+    ///     The SPI_GETLISTBOXSMOOTHSCROLLING constant.
+    /// </summary>
+    GetListBoxSmoothScrolling = 0x1006,
+
+    /// <summary>
+    ///     The SPI_SETLISTBOXSMOOTHSCROLLING constant.
+    /// </summary>
+    SetListBoxSmoothScrolling = 0x1007,
+
+    /// <summary>
+    ///     The SPI_GETGRADIENTCAPTIONS constant.
+    /// </summary>
+    GetGradientCaptions = 0x1008,
+
+    /// <summary>
+    ///     The SPI_SETGRADIENTCAPTIONS constant.
+    /// </summary>
+    SetGradientCaptions = 0x1009,
+
+    /// <summary>
+    ///     The SPI_GETKEYBOARDCUES constant.
+    /// </summary>
+    GetKeyboardCues = 0x100A,
+
+    /// <summary>
+    ///     The SPI_SETKEYBOARDCUES constant.
+    /// </summary>
+    SetKeyboardCues = 0x100B,
+
+    /// <summary>
+    ///     The SPI_GETMENUUNDERLINES constant.
+    /// </summary>
+    GetMenuUnderLines = GetKeyboardCues,
+
+    /// <summary>
+    ///     The SPI_SETMENUUNDERLINES constant.
+    /// </summary>
+    SetMenuUnderLines = SetKeyboardCues,
+
+    /// <summary>
+    ///     The SPI_GETACTIVEWNDTRKZORDER constant.
+    /// </summary>
+    GetActiveWndTrkZOrder = 0x100C,
+
+    /// <summary>
+    ///     The SPI_SETACTIVEWNDTRKZORDER constant.
+    /// </summary>
+    SetActiveWndTrkZOrder = 0x100D,
+
+    /// <summary>
+    ///     The SPI_GETHOTTRACKING constant.
+    /// </summary>
+    GetHotTracking = 0x100E,
+
+    /// <summary>
+    ///     The SPI_SETHOTTRACKING constant.
+    /// </summary>
+    SetHotTracking = 0x100F,
+
+    /// <summary>
+    ///     The SPI_GETMENUFADE constant.
+    /// </summary>
+    GetMenuFade = 0x1012,
+
+    /// <summary>
+    ///     The SPI_SETMENUFADE constant.
+    /// </summary>
+    SetMenuFade = 0x1013,
+
+    /// <summary>
+    ///     The SPI_GETSELECTIONFADE constant.
+    /// </summary>
+    GetSelectionFade = 0x1014,
+
+    /// <summary>
+    ///     The SPI_SETSELECTIONFADE constant.
+    /// </summary>
+    SetSelectionFade = 0x1015,
+
+    /// <summary>
+    ///     The SPI_GETTOOLTIPANIMATION constant.
+    /// </summary>
+    GetTooltipAnimation = 0x1016,
+
+    /// <summary>
+    ///     The SPI_SETTOOLTIPANIMATION constant.
+    /// </summary>
+    SetTooltipAnimation = 0x1017,
+
+    /// <summary>
+    ///     The SPI_GETTOOLTIPFADE constant.
+    /// </summary>
+    GetTooltipFade = 0x1018,
+
+    /// <summary>
+    ///     The SPI_SETTOOLTIPFADE constant.
+    /// </summary>
+    SetTooltipFade = 0x1019,
+
+    /// <summary>
+    ///     The SPI_GETCURSORSHADOW constant.
+    /// </summary>
+    GetCursorShadow = 0x101A,
+
+    /// <summary>
+    ///     The SPI_SETCURSORSHADOW constant.
+    /// </summary>
+    SetCursorShadow = 0x101B,
+
+    /// <summary>
+    ///     The SPI_GETMOUSESONAR constant.
+    /// </summary>
+    GetMouseSonar = 0x101C,
+
+    /// <summary>
+    ///     The SPI_SETMOUSESONAR constant.
+    /// </summary>
+    SetMouseSonar = 0x101D,
+
+    /// <summary>
+    ///     The SPI_GETMOUSECLICKLOCK constant.
+    /// </summary>
+    GetMouseClickLock = 0x101E,
+
+    /// <summary>
+    ///     The SPI_SETMOUSECLICKLOCK constant.
+    /// </summary>
+    SetMouseClickLock = 0x101F,
+
+    /// <summary>
+    ///     The SPI_GETMOUSEVANISH constant.
+    /// </summary>
+    GetMouseVanish = 0x1020,
+
+    /// <summary>
+    ///     The SPI_SETMOUSEVANISH constant.
+    /// </summary>
+    SetMouseVanish = 0x1021,
+
+    /// <summary>
+    ///     The SPI_GETFLATMENU constant.
+    /// </summary>
+    GetFlatMenu = 0x1022,
+
+    /// <summary>
+    ///     The SPI_SETFLATMENU constant.
+    /// </summary>
+    SetFlatMenu = 0x1023,
+
+    /// <summary>
+    ///     The SPI_GETDROPSHADOW constant.
+    /// </summary>
+    GetDropShadow = 0x1024,
+
+    /// <summary>
+    ///     The SPI_SETDROPSHADOW constant.
+    /// </summary>
+    SetDropShadow = 0x1025,
+
+    /// <summary>
+    ///     The SPI_GETBLOCKSENDINPUTRESETS constant.
+    /// </summary>
+    GetBlockSendInputResets = 0x1026,
+
+    /// <summary>
+    ///     The SPI_SETBLOCKSENDINPUTRESETS constant.
+    /// </summary>
+    SetBlockSendInputResets = 0x1027,
+
+    /// <summary>
+    ///     The SPI_GETUIEFFECTS constant.
+    /// </summary>
+    GetUiEffects = 0x103E,
+
+    /// <summary>
+    ///     The SPI_SETUIEFFECTS constant.
+    /// </summary>
+    SetUiEffects = 0x103F,
+
+    /// <summary>
+    ///     The SPI_GETCLIENTAREAANIMATION constant.
+    /// </summary>
+    GetClientAreaAnimation = 0x1042,
+
+    /// <summary>
+    ///     The SPI_GETFOREGROUNDLOCKTIMEOUT constant.
+    /// </summary>
+    GetForegroundLockTimeout = 0x2000,
+
+    /// <summary>
+    ///     The SPI_SETFOREGROUNDLOCKTIMEOUT constant.
+    /// </summary>
+    SetForegroundLockTimeout = 0x2001,
+
+    /// <summary>
+    ///     The SPI_GETACTIVEWNDTRKTIMEOUT constant.
+    /// </summary>
+    GetActiveWndTrkTimeout = 0x2002,
+
+    /// <summary>
+    ///     The SPI_SETACTIVEWNDTRKTIMEOUT constant.
+    /// </summary>
+    SetActiveWndTrkTimeout = 0x2003,
+
+    /// <summary>
+    ///     The SPI_GETFOREGROUNDFLASHCOUNT constant.
+    /// </summary>
+    GetForegroundFlashCount = 0x2004,
+
+    /// <summary>
+    ///     The SPI_SETFOREGROUNDFLASHCOUNT constant.
+    /// </summary>
+    SetForegroundFlashCount = 0x2005,
+
+    /// <summary>
+    ///     The SPI_GETCARETWIDTH constant.
+    /// </summary>
+    GetCaretWidth = 0x2006,
+
+    /// <summary>
+    ///     The SPI_SETCARETWIDTH constant.
+    /// </summary>
+    SetCaretWidth = 0x2007,
+
+    /// <summary>
+    ///     The SPI_GETMOUSECLICKLOCKTIME constant.
+    /// </summary>
+    GetMouseClickLockTime = 0x2008,
+
+    /// <summary>
+    ///     The SPI_SETMOUSECLICKLOCKTIME constant.
+    /// </summary>
+    SetMouseClickLockTime = 0x2009,
+
+    /// <summary>
+    ///     The SPI_GETFONTSMOOTHINGTYPE constant.
+    /// </summary>
+    GetFontSmoothingType = 0x200A,
+
+    /// <summary>
+    ///     The SPI_SETFONTSMOOTHINGTYPE constant.
+    /// </summary>
+    SetFontSmoothingType = 0x200B,
+
+    /// <summary>
+    ///     The SPI_GETFONTSMOOTHINGCONTRAST constant.
+    /// </summary>
+    GetFontSmoothingContrast = 0x200C,
+
+    /// <summary>
+    ///     The SPI_SETFONTSMOOTHINGCONTRAST constant.
+    /// </summary>
+    SetFontSmoothingContrast = 0x200D,
+
+    /// <summary>
+    ///     The SPI_GETFOCUSBORDERWIDTH constant.
+    /// </summary>
+    GetFocusBorderWidth = 0x200E,
+
+    /// <summary>
+    ///     The SPI_SETFOCUSBORDERWIDTH constant.
+    /// </summary>
+    SetFocusBorderWidth = 0x200F,
+
+    /// <summary>
+    ///     The SPI_GETFOCUSBORDERHEIGHT constant.
+    /// </summary>
+    GetFocusBorderHeight = 0x2010,
+
+    /// <summary>
+    ///     The SPI_SETFOCUSBORDERHEIGHT constant.
+    /// </summary>
+    SetFocusBorderHeight = 0x2011,
+
+    /// <summary>
+    ///     The SPI_GETFONTSMOOTHINGORIENTATION constant.
+    /// </summary>
+    GetFontSmoothingOrientation = 0x2012,
+
+    /// <summary>
+    ///     The SPI_SETFONTSMOOTHINGORIENTATION constant.
+    /// </summary>
+    SetFontSmoothingOrientation = 0x2013,
 }

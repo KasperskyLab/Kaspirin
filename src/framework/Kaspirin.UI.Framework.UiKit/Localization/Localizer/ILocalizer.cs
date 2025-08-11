@@ -12,14 +12,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Kaspirin.UI.Framework.UiKit.Localization.Localizer
+using System.Collections.Generic;
+
+namespace Kaspirin.UI.Framework.UiKit.Localization.Localizer;
+
+public interface ILocalizer
 {
-    public interface ILocalizer
-    {
-        ScopeMetainfo ScopeInfo { get; }
+    ScopeMetaInfo ScopeInfo { get; }
 
-        bool ContainsKey(string key);
+    void ResetCache();
 
-        bool IsValid { get; set; }
-    }
+    bool ContainsKey(string key);
+
+    IList<string> GetKeys();
 }

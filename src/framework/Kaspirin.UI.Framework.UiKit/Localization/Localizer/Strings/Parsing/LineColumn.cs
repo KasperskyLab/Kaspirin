@@ -12,17 +12,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Kaspirin.UI.Framework.UiKit.Localization.Localizer.Strings.Parsing
-{
-    public struct LineColumn
-    {
-        public LineColumn(int line, int column)
-        {
-            Line = line;
-            Column = column;
-        }
+namespace Kaspirin.UI.Framework.UiKit.Localization.Localizer.Strings.Parsing;
 
-        public int Line { get; }
-        public int Column { get; }
+public struct LineColumn
+{
+    public LineColumn(int line, int column)
+    {
+        Line = line;
+        Column = column;
     }
+
+    public int Line { get; }
+    public int Column { get; }
 }

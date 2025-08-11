@@ -12,14 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Kaspirin.UI.Framework.UiKit.Localization.Markup.Extensions.Files
+namespace Kaspirin.UI.Framework.UiKit.Localization.Markup.Extensions.Files;
+
+public enum FileExtensionMode
 {
-    public enum FileExtensionMode
-    {
-        Uri,
-        Path,
-        Content,
-        Text,
-        Stream
-    }
+    Uri,
+    Content,
+    Text,
+    Stream
 }

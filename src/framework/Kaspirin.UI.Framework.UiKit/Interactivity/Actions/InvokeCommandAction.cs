@@ -15,114 +15,134 @@
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
-using Kaspirin.UI.Framework.Mvvm;
 
-namespace Kaspirin.UI.Framework.UiKit.Interactivity.Actions
+namespace Kaspirin.UI.Framework.UiKit.Interactivity.Actions;
+
+public sealed class InvokeCommandAction : TriggerAction<DependencyObject>
 {
-    public sealed class InvokeCommandAction : TriggerAction<DependencyObject>
+    #region Command
+
+    public ICommand Command
     {
-        #region Command
+        get => (ICommand)GetValue(CommandProperty);
+        set => SetValue(CommandProperty, value);
+    }
 
-        public ICommand Command
+    public static readonly DependencyProperty CommandProperty = DependencyProperty.Register(
+        nameof(Command),
+        typeof(ICommand),
+        typeof(InvokeCommandAction),
+        new PropertyMetadata(default(ICommand)));
+
+    #endregion
+
+    #region CommandParameter
+
+    public object CommandParameter
+    {
+        get => (object)GetValue(CommandParameterProperty);
+        set => SetValue(CommandParameterProperty, value);
+    }
+
+    public static readonly DependencyProperty CommandParameterProperty = DependencyProperty.Register(
+        nameof(CommandParameter),
+        typeof(object),
+        typeof(InvokeCommandAction),
+        new PropertyMetadata(default(object)));
+
+    #endregion
+
+    #region InvokeParameter
+
+    public object? InvokeParameter
+    {
+        get => GetValue(InvokeParameterProperty);
+        private set => SetValue(_invokeParameterPropertyKey, value);
+    }
+
+    private static readonly DependencyPropertyKey _invokeParameterPropertyKey = DependencyProperty.RegisterReadOnly(
+        nameof(InvokeParameter),
+        typeof(object),
+        typeof(InvokeCommandAction),
+        new PropertyMetadata(default(object?)));
+
+    public static readonly DependencyProperty InvokeParameterProperty = _invokeParameterPropertyKey.DependencyProperty;
+
+    #endregion
+
+    protected override void Invoke(object parameter)
+    {
+        if (AssociatedObject == null)
         {
-            get => (ICommand)GetValue(CommandProperty);
-            set => SetValue(CommandProperty, value);
+            return;
         }
 
-        public static readonly DependencyProperty CommandProperty = DependencyProperty.Register(
-            nameof(Command),
-            typeof(ICommand),
-            typeof(InvokeCommandAction),
-            new PropertyMetadata(default(ICommand)));
+        InvokeParameter = parameter;
 
-        #endregion
-
-        #region CommandParameter
-
-        public object CommandParameter
+        if (Command != null)
         {
-            get => (object)GetValue(CommandParameterProperty);
-            set => SetValue(CommandParameterProperty, value);
+            InvokeCommand();
+        }
+        else if (Command == null && TryResolveCommand())
+        {
+            InvokeCommand();
         }
 
-        public static readonly DependencyProperty CommandParameterProperty = DependencyProperty.Register(
-            nameof(CommandParameter),
-            typeof(object),
-            typeof(InvokeCommandAction),
-            new PropertyMetadata(default(object)));
+        InvokeParameter = default;
+    }
 
-        #endregion
-
-        protected override void Invoke(object parameter)
+    private bool TryResolveCommand()
+    {
+        var commandBindingExpression = BindingOperations.GetBindingExpressionBase(this, CommandProperty);
+        if (commandBindingExpression != null)
         {
-            if (AssociatedObject == null)
+            if (commandBindingExpression.Status == BindingStatus.Unattached)
             {
-                return;
-            }
+                RestoreUnattachedBinding();
 
-            if (Command != null)
-            {
-                InvokeCommand();
-            }
-            else if (Command == null && TryResolveCommand())
-            {
-                InvokeCommand();
-            }
-        }
-
-        private bool TryResolveCommand()
-        {
-            var commandBindingExpression = BindingOperations.GetBindingExpressionBase(this, CommandProperty);
-            if (commandBindingExpression != null)
-            {
-                if (commandBindingExpression.Status == BindingStatus.Unattached)
-                {
-                    RestoreUnattachedBinding();
-
-                    return Command != null;
-                }
-                else
-                {
-                    _trace.TraceError($"Command property has unexpected binding status '{commandBindingExpression.Status}' " +
-                                      $"in {nameof(InvokeCommandAction)} for {AssociatedObject}.");
-                }
+                return Command != null;
             }
             else
             {
-                _trace.TraceError($"Command property is not set in {nameof(InvokeCommandAction)} for {AssociatedObject}.");
+                _trace.TraceError($"Command property has unexpected binding status '{commandBindingExpression.Status}' " +
+                                  $"in {nameof(InvokeCommandAction)} for {AssociatedObject}.");
             }
-
-            return false;
         }
-
-        private void RestoreUnattachedBinding()
+        else
         {
-            var commandBindingExpression = BindingOperations.GetBindingExpressionBase(this, CommandProperty);
-            if (commandBindingExpression != null)
-            {
-                commandBindingExpression = BindingOperations.SetBinding(this, CommandProperty, commandBindingExpression.ParentBindingBase.Clone());
-                commandBindingExpression.UpdateTarget();
-            }
-
-            var commandParameterBindingExpression = BindingOperations.GetBindingExpressionBase(this, CommandParameterProperty);
-            if (commandParameterBindingExpression != null)
-            {
-                commandParameterBindingExpression = BindingOperations.SetBinding(this, CommandParameterProperty, commandParameterBindingExpression.ParentBindingBase.Clone());
-                commandParameterBindingExpression.UpdateTarget();
-            }
+            _trace.TraceError($"Command property is not set in {nameof(InvokeCommandAction)} for {AssociatedObject}.");
         }
 
-        private void InvokeCommand()
-        {
-            Guard.IsNotNull(Command);
-
-            var invoked = CommandHelper.ExecuteCommand(Command, CommandParameter);
-            if (invoked)
-            {
-                _trace.TraceInformation($"Command invoked in {nameof(InvokeCommandAction)} for {AssociatedObject}.");
-            }
-        }
-
-        private static readonly ComponentTracer _trace = ComponentTracer.Get(UIKitComponentTracers.Interactivity);
+        return false;
     }
+
+    private void RestoreUnattachedBinding()
+    {
+        var commandBindingExpression = BindingOperations.GetBindingExpressionBase(this, CommandProperty);
+        if (commandBindingExpression != null)
+        {
+            commandBindingExpression = BindingOperations.SetBinding(this, CommandProperty, commandBindingExpression.ParentBindingBase.Clone());
+            commandBindingExpression.UpdateTarget();
+        }
+
+        var commandParameterBindingExpression = BindingOperations.GetBindingExpressionBase(this, CommandParameterProperty);
+        if (commandParameterBindingExpression != null)
+        {
+            commandParameterBindingExpression = BindingOperations.SetBinding(this, CommandParameterProperty, commandParameterBindingExpression.ParentBindingBase.Clone());
+            commandParameterBindingExpression.UpdateTarget();
+        }
+    }
+
+    private void InvokeCommand()
+    {
+        Guard.IsNotNull(Command);
+
+        var invoked = CommandHelper.ExecuteCommand(Command, CommandParameter);
+        if (invoked)
+        {
+            _trace.TraceInformation($"Command invoked in {nameof(InvokeCommandAction)} for {AssociatedObject}.");
+        }
+    }
+
+    private static readonly ComponentTracer _trace = ComponentTracer.Get(UIKitComponentTracers.Interactivity);
 }

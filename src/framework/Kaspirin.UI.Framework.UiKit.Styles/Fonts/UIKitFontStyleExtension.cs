@@ -12,10 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Kaspirin.UI.Framework.UiKit.Styles.Fonts
+namespace Kaspirin.UI.Framework.UiKit.Styles.Fonts;
+
+public sealed class UIKitFontStyleExtension : UIKitFontStyleExtension<UIKitFontStorage.UIKitFontStyle>
 {
-    public sealed class UIKitFontStyleExtension : UIKitFontStyleExtension<UIKitFontStorage.UIKitFontStyle>
-    {
-        protected override string Map(UIKitFontStorage.UIKitFontStyle style) => UIKitFontStorage.Map(style);
-    }
+    protected override string Map(UIKitFontStorage.UIKitFontStyle style) => UIKitFontStorage.Map(style);
 }

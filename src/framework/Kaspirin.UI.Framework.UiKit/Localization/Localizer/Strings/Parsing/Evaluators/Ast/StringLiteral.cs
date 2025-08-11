@@ -12,14 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Kaspirin.UI.Framework.UiKit.Localization.Localizer.Strings.Parsing.Evaluators.Ast
-{
-    public sealed class StringLiteral : Operand
-    {
-        public StringLiteral(Token value) => Value = value;
-        public override Position Position => Value.Position;
-        public override string GetText() => Position.GetText();
+namespace Kaspirin.UI.Framework.UiKit.Localization.Localizer.Strings.Parsing.Evaluators.Ast;
 
-        public Token Value { get; }
-    }
+public sealed class StringLiteral : Operand
+{
+    public StringLiteral(Token value) => Value = value;
+    public override Position Position => Value.Position;
+    public override string GetText() => Position.GetText();
+
+    public Token Value { get; }
 }

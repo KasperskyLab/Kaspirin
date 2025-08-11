@@ -39,6 +39,7 @@
 			<xs:element name="HeaderForeground" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
 			<xs:element name="HeaderMargin" type="Thickness" minOccurs="1" maxOccurs="1"/>
 			<xs:element name="IconMargin" type="Thickness" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="Shadow" type="Shadow" minOccurs="1" maxOccurs="1"/>
 			<xs:element name="StatusBackgroundDanger" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
 			<xs:element name="StatusBackgroundInfo" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
 			<xs:element name="StatusBackgroundLoading" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
@@ -46,6 +47,7 @@
 			<xs:element name="StatusBackgroundWarning" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
 			<xs:element name="StatusForegroundDanger" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
 			<xs:element name="StatusForegroundInfo" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="StatusForegroundLoading" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
 			<xs:element name="StatusForegroundPositive" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
 			<xs:element name="StatusForegroundWarning" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
 			<xs:element name="SubHeaderForeground" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>

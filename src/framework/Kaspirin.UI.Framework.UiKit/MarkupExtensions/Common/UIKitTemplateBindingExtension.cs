@@ -17,35 +17,34 @@ using System.Windows;
 using System.Windows.Data;
 using Kaspirin.UI.Framework.UiKit.Controls.Internals;
 
-namespace Kaspirin.UI.Framework.UiKit.MarkupExtensions.Common
+namespace Kaspirin.UI.Framework.UiKit.MarkupExtensions.Common;
+
+public sealed class UIKitTemplateBindingExtension : ExtendedMarkupExtension
 {
-    public sealed class UIKitTemplateBindingExtension : ExtendedMarkupExtension
+    public UIKitTemplateBindingExtension(DependencyProperty dependencyProperty)
     {
-        public UIKitTemplateBindingExtension(DependencyProperty dependencyProperty)
-        {
-            _dependencyProperty = dependencyProperty;
-        }
-
-        public IValueConverter? Converter { get; set; }
-
-        public object? ConverterParameter { get; set; }
-
-        protected override object? ProvideForSetter(IServiceProvider serviceProvider, SetterBase targetObject, object targetProperty)
-            => CreateBinding();
-
-        protected override object? ProvideValue(IServiceProvider? serviceProvider, TargetType valueType)
-            => CreateBinding().ProvideValue(serviceProvider);
-
-        private Binding CreateBinding()
-            => new()
-            {
-                Mode = BindingMode.OneWay,
-                Converter = Converter,
-                ConverterParameter = ConverterParameter,
-                Path = _dependencyProperty.AsPath(),
-                RelativeSource = new RelativeSource(RelativeSourceMode.TemplatedParent)
-            };
-
-        private readonly DependencyProperty _dependencyProperty;
+        _dependencyProperty = dependencyProperty;
     }
+
+    public IValueConverter? Converter { get; set; }
+
+    public object? ConverterParameter { get; set; }
+
+    protected override object? ProvideForSetter(IServiceProvider serviceProvider, SetterBase targetObject, object targetProperty)
+        => CreateBinding();
+
+    protected override object? ProvideValue(IServiceProvider? serviceProvider, TargetType valueType)
+        => CreateBinding().ProvideValue(serviceProvider);
+
+    private Binding CreateBinding()
+        => new()
+        {
+            Mode = BindingMode.OneWay,
+            Converter = Converter,
+            ConverterParameter = ConverterParameter,
+            Path = _dependencyProperty.AsPath(),
+            RelativeSource = new RelativeSource(RelativeSourceMode.TemplatedParent)
+        };
+
+    private readonly DependencyProperty _dependencyProperty;
 }

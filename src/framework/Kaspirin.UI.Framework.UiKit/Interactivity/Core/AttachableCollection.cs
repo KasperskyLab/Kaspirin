@@ -13,146 +13,145 @@ using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Windows;
 
-namespace Kaspirin.UI.Framework.UiKit.Interactivity.Core
+namespace Kaspirin.UI.Framework.UiKit.Interactivity.Core;
+
+public abstract class AttachableCollection<T> : FreezableCollection<T> where T : DependencyObject
 {
-    public abstract class AttachableCollection<T> : FreezableCollection<T> where T : DependencyObject
+    internal AttachableCollection()
     {
-        internal AttachableCollection()
-        {
-            var notifyCollectionChanged = (INotifyCollectionChanged)this;
-            notifyCollectionChanged.CollectionChanged += new NotifyCollectionChangedEventHandler(OnCollectionChanged);
+        var notifyCollectionChanged = (INotifyCollectionChanged)this;
+        notifyCollectionChanged.CollectionChanged += new NotifyCollectionChangedEventHandler(OnCollectionChanged);
 
-            _snapshot = new Collection<T>();
+        _snapshot = new();
+    }
+
+    public DependencyObject? AssociatedObject
+    {
+        get
+        {
+            ReadPreamble();
+            return _associatedObject;
+        }
+    }
+
+    public void Attach(DependencyObject? dependencyObject)
+    {
+        if (AssociatedObject == dependencyObject)
+        {
+            return;
         }
 
-        public DependencyObject? AssociatedObject
+        if (AssociatedObject != null)
         {
-            get
-            {
-                ReadPreamble();
-                return _associatedObject;
-            }
+            throw new InvalidOperationException("An instance of a AttachableCollection cannot be attached to more than one object at a time.");
         }
 
-        public void Attach(DependencyObject? dependencyObject)
+        WritePreamble();
+        _associatedObject = dependencyObject;
+        WritePostscript();
+
+        OnAttached();
+    }
+
+    public void Detach()
+    {
+        OnDetaching();
+        WritePreamble();
+        _associatedObject = null;
+        WritePostscript();
+    }
+
+    internal abstract void ItemAdded(T item);
+
+    internal abstract void ItemRemoved(T item);
+
+    protected abstract void OnAttached();
+
+    protected abstract void OnDetaching();
+
+    private void VerifyAdd(T item)
+    {
+        if (_snapshot.Contains(item))
         {
-            if (AssociatedObject == dependencyObject)
-            {
-                return;
-            }
-
-            if (AssociatedObject != null)
-            {
-                throw new InvalidOperationException("An instance of a AttachableCollection cannot be attached to more than one object at a time.");
-            }
-
-            WritePreamble();
-            _associatedObject = dependencyObject;
-            WritePostscript();
-
-            OnAttached();
+            throw new InvalidOperationException($"Cannot add the same instance of \"{typeof(T).Name}\" to a \"{GetType().Name}\" more than once.");
         }
+    }
 
-        public void Detach()
+    private void OnCollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
+    {
+        var newItems = e.NewItems ?? new List<T>();
+        var oldItems = e.OldItems ?? new List<T>();
+
+        switch (e.Action)
         {
-            OnDetaching();
-            WritePreamble();
-            _associatedObject = null;
-            WritePostscript();
-        }
-
-        internal abstract void ItemAdded(T item);
-
-        internal abstract void ItemRemoved(T item);
-
-        protected abstract void OnAttached();
-
-        protected abstract void OnDetaching();
-
-        private void VerifyAdd(T item)
-        {
-            if (_snapshot.Contains(item))
-            {
-                throw new InvalidOperationException($"Cannot add the same instance of \"{typeof(T).Name}\" to a \"{GetType().Name}\" more than once.");
-            }
-        }
-
-        private void OnCollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
-        {
-            var newItems = e.NewItems ?? new List<T>();
-            var oldItems = e.OldItems ?? new List<T>();
-
-            switch (e.Action)
-            {
-                case NotifyCollectionChangedAction.Add:
-                    foreach (T item in newItems)
-                    {
-                        try
-                        {
-                            VerifyAdd(item);
-                            ItemAdded(item);
-                        }
-                        finally
-                        {
-                            _snapshot.Insert(IndexOf(item), item);
-                        }
-                    }
-
-                    break;
-
-                case NotifyCollectionChangedAction.Replace:
-                    foreach (T item in oldItems)
-                    {
-                        ItemRemoved(item);
-                        _snapshot.Remove(item);
-                    }
-
-                    foreach (T item in newItems)
-                    {
-                        try
-                        {
-                            VerifyAdd(item);
-                            ItemAdded(item);
-                        }
-                        finally
-                        {
-                            _snapshot.Insert(IndexOf(item), item);
-                        }
-                    }
-
-                    break;
-
-                case NotifyCollectionChangedAction.Remove:
-                    foreach (T item in oldItems)
-                    {
-                        ItemRemoved(item);
-                        _snapshot.Remove(item);
-                    }
-
-                    break;
-
-                case NotifyCollectionChangedAction.Reset:
-                    foreach (var item in _snapshot)
-                    {
-                        ItemRemoved(item);
-                    }
-
-                    _snapshot = new Collection<T>();
-                    foreach (var item in this)
+            case NotifyCollectionChangedAction.Add:
+                foreach (T item in newItems)
+                {
+                    try
                     {
                         VerifyAdd(item);
                         ItemAdded(item);
                     }
+                    finally
+                    {
+                        _snapshot.Insert(IndexOf(item), item);
+                    }
+                }
 
-                    break;
-                case NotifyCollectionChangedAction.Move:
-                default:
-                    Guard.Fail("Unsupported collection operation attempted.");
-                    break;
-            }
+                break;
+
+            case NotifyCollectionChangedAction.Replace:
+                foreach (T item in oldItems)
+                {
+                    ItemRemoved(item);
+                    _snapshot.Remove(item);
+                }
+
+                foreach (T item in newItems)
+                {
+                    try
+                    {
+                        VerifyAdd(item);
+                        ItemAdded(item);
+                    }
+                    finally
+                    {
+                        _snapshot.Insert(IndexOf(item), item);
+                    }
+                }
+
+                break;
+
+            case NotifyCollectionChangedAction.Remove:
+                foreach (T item in oldItems)
+                {
+                    ItemRemoved(item);
+                    _snapshot.Remove(item);
+                }
+
+                break;
+
+            case NotifyCollectionChangedAction.Reset:
+                foreach (var item in _snapshot)
+                {
+                    ItemRemoved(item);
+                }
+
+                _snapshot = new();
+                foreach (var item in this)
+                {
+                    VerifyAdd(item);
+                    ItemAdded(item);
+                }
+
+                break;
+            case NotifyCollectionChangedAction.Move:
+            default:
+                Guard.Fail("Unsupported collection operation attempted.");
+                break;
         }
-
-        private Collection<T> _snapshot;
-        private DependencyObject? _associatedObject;
     }
+
+    private Collection<T> _snapshot;
+    private DependencyObject? _associatedObject;
 }

@@ -31,6 +31,38 @@
                     xmlns:xl="clr-namespace:Kaspirin.UI.Framework.UiKit.Localization.Markup.Extensions.Strings"
                     xmlns:xr="clr-namespace:Kaspirin.UI.Framework.UiKit.Localization.Markup.Extensions.Xaml">
 
+    <!--  region BarCode  -->
+
+    <Style x:Key="BarCodeUniversal"
+           TargetType="{x:Type controls:BarCode}">
+        <Setter Property="Focusable" Value="False" />
+        <Setter Property="VerticalAlignment" Value="Stretch" />
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
+        <Setter Property="FlowDirection" Value="LeftToRight" />
+        <!--  Constant values  -->
+        <Setter Property="Background" Value="{x:Static uikit:UIKitConstants.BarCodeBackground}" />
+        <Setter Property="Foreground" Value="{x:Static uikit:UIKitConstants.BarCodeForeground}" />
+        <Setter Property="BorderThickness" Value="{x:Static uikit:UIKitConstants.BarCodeBorderThickness}" />
+
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type controls:BarCode}">
+                    <Border Background="{markupCommon:UIKitTemplateBinding Background}"
+                            BorderBrush="{markupCommon:UIKitTemplateBinding Background}"
+                            BorderThickness="{markupCommon:UIKitTemplateBinding BorderThickness}">
+                        <Path x:Name="PART_PathContainer"
+                              Fill="{markupCommon:UIKitTemplateBinding Foreground}"
+                              HorizontalAlignment="Stretch"
+                              Stretch="Fill"
+                              VerticalAlignment="Stretch" />
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--  endregion  -->
+
     <!--  region FlowDocumentViewer  -->
 
     <Style x:Key="FlowDocumentViewerUniversal"
@@ -108,7 +140,7 @@
                     <controls:IconButton x:Name="PART_ActionButton"
                                          Command="{TemplateBinding Command}"
                                          Icon="{TemplateBinding Icon}"
-                                         IconForeground="{TemplateBinding IconForeground}" />
+                                         IconBrush="{TemplateBinding IconBrush}" />
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
@@ -131,7 +163,7 @@
                         <controls:IconButton x:Name="PART_ActionButton"
                                              Command="{TemplateBinding Command}"
                                              Icon="{TemplateBinding Icon}"
-                                             IconForeground="{TemplateBinding IconForeground}" />
+                                             IconBrush="{TemplateBinding IconBrush}" />
 
                         <controls:Popup x:Name="PART_Popup"
                                         IsPopupStaysOpen="False"
@@ -233,7 +265,7 @@
                     <controls:IslandLayer Type="Elevation">
                         <Grid>
                             <Border x:Name="PART_BackgroundPresenter" />
-                            <ContentPresenter />
+                            <ContentPresenter x:Name="PART_ContentPresenter" />
                         </Grid>
                     </controls:IslandLayer>
                 </ControlTemplate>
@@ -345,11 +377,14 @@
         <!--  Constant values  -->
         <Setter Property="Background" Value="{x:Static uikit:UIKitConstants.QrCodeBackground}" />
         <Setter Property="Foreground" Value="{x:Static uikit:UIKitConstants.QrCodeForeground}" />
+        <Setter Property="BorderThickness" Value="{x:Static uikit:UIKitConstants.QrCodeBorderThickness}" />
 
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type controls:QrCode}">
-                    <Border Background="{markupCommon:UIKitTemplateBinding Background}">
+                    <Border Background="{markupCommon:UIKitTemplateBinding Background}"
+                            BorderBrush="{markupCommon:UIKitTemplateBinding Background}"
+                            BorderThickness="{markupCommon:UIKitTemplateBinding BorderThickness}">
                         <Path x:Name="PART_PathContainer"
                               Fill="{markupCommon:UIKitTemplateBinding Foreground}"
                               HorizontalAlignment="Stretch"
@@ -459,6 +494,78 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+    </Style>
+
+    <!--  endregion  -->
+
+    <!--  region TextBigIconButton  -->
+
+    <Style x:Key="TextBigIconButtonUniversal"
+           TargetType="{x:Type controls:TextBigIconButton}">
+        <Setter Property="BaselineAlignment" Value="Center" />
+    </Style>
+
+    <!--  endregion  -->
+
+    <!--  region TextHint  -->
+
+    <Style x:Key="TextHintUniversal"
+           TargetType="{x:Type controls:TextHint}">
+        <Setter Property="BaselineAlignment" Value="Center" />
+    </Style>
+
+    <!--  endregion  -->
+
+    <!--  region TextIcon12  -->
+
+    <Style x:Key="TextIcon12Universal"
+           TargetType="{x:Type controls:TextIcon12}">
+        <Setter Property="BaselineAlignment" Value="Center" />
+    </Style>
+
+    <!--  endregion  -->
+
+    <!--  region TextIcon16  -->
+
+    <Style x:Key="TextIcon16Universal"
+           TargetType="{x:Type controls:TextIcon16}">
+        <Setter Property="BaselineAlignment" Value="Center" />
+    </Style>
+
+    <!--  endregion  -->
+
+    <!--  region TextIcon24  -->
+
+    <Style x:Key="TextIcon24Universal"
+           TargetType="{x:Type controls:TextIcon24}">
+        <Setter Property="BaselineAlignment" Value="Center" />
+    </Style>
+
+    <!--  endregion  -->
+
+    <!--  region TextIcon32  -->
+
+    <Style x:Key="TextIcon32Universal"
+           TargetType="{x:Type controls:TextIcon32}">
+        <Setter Property="BaselineAlignment" Value="Center" />
+    </Style>
+
+    <!--  endregion  -->
+
+    <!--  region TextIcon48  -->
+
+    <Style x:Key="TextIcon48Universal"
+           TargetType="{x:Type controls:TextIcon48}">
+        <Setter Property="BaselineAlignment" Value="Center" />
+    </Style>
+
+    <!--  endregion  -->
+
+    <!--  region TextIconButton  -->
+
+    <Style x:Key="TextIconButtonUniversal"
+           TargetType="{x:Type controls:TextIconButton}">
+        <Setter Property="BaselineAlignment" Value="Center" />
     </Style>
 
     <!--  endregion  -->

@@ -15,21 +15,23 @@
 using System.Windows;
 using System.Windows.Controls;
 
-namespace Kaspirin.UI.Framework.UiKit.Controls
+namespace Kaspirin.UI.Framework.UiKit.Controls;
+
+public sealed class IslandLayer : ContentControl
 {
-    public class IslandLayer: ContentControl
+    #region Type
+
+    public IslandType Type
     {
-        #region Type
-
-        public IslandType Type
-        {
-            get { return (IslandType)GetValue(TypeProperty); }
-            set { SetValue(TypeProperty, value); }
-        }
-
-        public static readonly DependencyProperty TypeProperty =
-            DependencyProperty.Register("Type", typeof(IslandType), typeof(IslandLayer), new PropertyMetadata(IslandType.Primary));
-
-        #endregion
+        get => (IslandType)GetValue(TypeProperty);
+        set => SetValue(TypeProperty, value);
     }
+
+    public static readonly DependencyProperty TypeProperty = DependencyProperty.Register(
+        nameof(Type),
+        typeof(IslandType),
+        typeof(IslandLayer),
+        new PropertyMetadata(IslandType.Primary));
+
+    #endregion
 }

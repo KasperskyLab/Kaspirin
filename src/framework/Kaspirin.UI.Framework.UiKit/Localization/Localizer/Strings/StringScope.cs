@@ -12,49 +12,42 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Text;
-using Kaspirin.UI.Framework.UiKit.Localization.Localizer.Strings.Parsing.Expressions;
 
-using IResourceProvider = Kaspirin.UI.Framework.UiKit.Localization.LocResources.IResourceProvider;
+namespace Kaspirin.UI.Framework.UiKit.Localization.Localizer.Strings;
 
-namespace Kaspirin.UI.Framework.UiKit.Localization.Localizer.Strings
+public sealed class StringScope : IScope<object>
 {
-    public sealed class StringScope : IScope
+    public StringScope(ResourceItem resource, ResourceProvider resourceProvider, CultureInfo cultureInfo)
     {
-        public StringScope(Uri scopeUri, IResourceProvider resourceProvider, CultureInfo cultureInfo)
-        {
-            Guard.ArgumentIsNotNull(scopeUri);
-            Guard.ArgumentIsNotNull(resourceProvider);
-            Guard.ArgumentIsNotNull(cultureInfo);
+        Guard.ArgumentIsNotNull(resource);
+        Guard.ArgumentIsNotNull(resourceProvider);
+        Guard.ArgumentIsNotNull(cultureInfo);
 
-            var scopeText = Encoding.UTF8.GetString(resourceProvider.ReadResource(scopeUri)).TrimStart(Bom);
-            var scopeResources = DictionaryBuilder.BuildScope(
-                scopeText,
-                cultureInfo,
-                filePath: scopeUri.ToString());
+        var scopeText = resourceProvider.ReadResourceString(resource, Encoding.UTF8).TrimStart(_bom);
+        var scopeName = resource.Descriptor.Scope;
+        var scopeResources = ScopeDictionaryBuilder.BuildScope(
+            scopeText,
+            scopeName,
+            cultureInfo);
 
-            ScopeUri = scopeUri;
-            Keys = scopeResources.Keys;
+        Keys = scopeResources.Keys;
 
-            _resources = scopeResources;
-        }
-
-        public Uri ScopeUri { get; }
-
-        public IEnumerable<string> Keys { get; }
-
-        public object GetValue(string key)
-        {
-            Guard.ArgumentIsNotNull(key);
-
-            return _resources[key];
-        }
-
-        private readonly IReadOnlyDictionary<string, ValueExpression> _resources;
-
-        private static readonly char[] Bom = Encoding.Unicode.GetChars(Encoding.Unicode.GetPreamble());
+        _resources = scopeResources;
     }
+
+    public IEnumerable<string> Keys { get; }
+
+    public object GetValue(string key)
+    {
+        Guard.ArgumentIsNotNull(key);
+
+        return _resources[key];
+    }
+
+    private readonly IScopeDictionary _resources;
+
+    private static readonly char[] _bom = Encoding.Unicode.GetChars(Encoding.Unicode.GetPreamble());
 }

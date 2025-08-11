@@ -12,12 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Kaspirin.UI.Framework.UiKit.Interactivity
+namespace Kaspirin.UI.Framework.UiKit.Interactivity;
+
+public enum SaveDataDecision
 {
-    public enum SaveDataDecision
-    {
-        Stay,
-        Save,
-        Discard
-    }
+    Stay,
+    Save,
+    Discard
 }

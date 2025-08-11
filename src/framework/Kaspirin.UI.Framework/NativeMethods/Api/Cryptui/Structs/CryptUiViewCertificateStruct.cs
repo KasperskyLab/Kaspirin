@@ -17,33 +17,31 @@
 using System;
 using System.Runtime.InteropServices;
 
-namespace Kaspirin.UI.Framework.NativeMethods.Api.Cryptui.Structs
+namespace Kaspirin.UI.Framework.NativeMethods.Api.Cryptui.Structs;
+
+/// <summary>
+///     <seealso href="https://learn.microsoft.com/en-us/windows/win32/api/cryptuiapi/ns-cryptuiapi-cryptui_viewcertificate_structa">Learn more</seealso>.
+/// </summary>
+[StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
+public struct CryptUiViewCertificateStruct
 {
-    /// <summary>
-    ///     
-    /// <seealso href="https://learn.microsoft.com/en-us/windows/win32/api/cryptuiapi/ns-cryptuiapi-cryptui_viewcertificate_structa">Learn more</seealso>.
-    /// </summary>
-    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
-    public struct CryptUiViewCertificateStruct
-    {
-        public int Size;
-        public IntPtr ParentHwnd;
-        public CryptUiViewFlags Flags;
-        [MarshalAs(UnmanagedType.LPWStr)]
-        public string Title;
-        public IntPtr CertificateContextPointer;
-        public IntPtr PurposesArrayPointer;
-        public int PurposesArrayLength;
-        public IntPtr CryptProviderDataPointer;
-        public bool CryptProviderDataTrustedUsage;
-        public int SignerIndex;
-        public int CertificateIndex;
-        public bool CounterSigner;
-        public int CounterSignerIndex;
-        public int StoresArrayLength;
-        public IntPtr StoresArrayPointer;
-        public int PropertySheetPagesLength;
-        public IntPtr PropertySheetPagesArrayPointer;
-        public int StartPageIndex;
-    }
+    public int Size;
+    public IntPtr ParentHwnd;
+    public CryptUiViewFlags Flags;
+    [MarshalAs(UnmanagedType.LPWStr)]
+    public string Title;
+    public IntPtr CertificateContextPointer;
+    public IntPtr PurposesArrayPointer;
+    public int PurposesArrayLength;
+    public IntPtr CryptProviderDataPointer;
+    public bool CryptProviderDataTrustedUsage;
+    public int SignerIndex;
+    public int CertificateIndex;
+    public bool CounterSigner;
+    public int CounterSignerIndex;
+    public int StoresArrayLength;
+    public IntPtr StoresArrayPointer;
+    public int PropertySheetPagesLength;
+    public IntPtr PropertySheetPagesArrayPointer;
+    public int StartPageIndex;
 }

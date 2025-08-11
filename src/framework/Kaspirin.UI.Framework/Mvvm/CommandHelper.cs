@@ -15,96 +15,95 @@
 using System.Windows;
 using System.Windows.Input;
 
-namespace Kaspirin.UI.Framework.Mvvm
+namespace Kaspirin.UI.Framework.Mvvm;
+
+/// <summary>
+///     Provides auxiliary methods for working with commands.
+/// </summary>
+public static class CommandHelper
 {
     /// <summary>
-    ///     Provides auxiliary methods for working with commands.
+    ///     Executes the command associated with the specified source.
     /// </summary>
-    public static class CommandHelper
+    /// <param name="commandSource">
+    ///     The source of the command.
+    /// </param>
+    /// <returns>
+    ///     Returns <see langword="true" /> if the command was executed successfully, otherwise <see langword="false" />.
+    /// </returns>
+    public static bool ExecuteCommandSource(ICommandSource commandSource)
     {
-        /// <summary>
-        ///     Executes the command associated with the specified source.
-        /// </summary>
-        /// <param name="commandSource">
-        ///     The source of the command.
-        /// </param>
-        /// <returns>
-        ///     Returns <see langword="true" /> if the command was executed successfully, otherwise <see langword="false" />.
-        /// </returns>
-        public static bool ExecuteCommandSource(ICommandSource commandSource)
+        Guard.ArgumentIsNotNull(commandSource);
+
+        return ExecuteCommand(
+            commandSource.Command,
+            commandSource.CommandParameter,
+            commandSource.CommandTarget ?? commandSource as IInputElement);
+    }
+
+    /// <summary>
+    ///     Executes the specified command.
+    /// </summary>
+    /// <param name="command">
+    ///     The command to execute.
+    /// </param>
+    /// <param name="parameter">
+    ///     The parameter passed to the command.
+    /// </param>
+    /// <param name="target">
+    ///     The purpose of the command (for <see cref="RoutedCommand" />).
+    /// </param>
+    /// <returns>
+    ///     Returns <see langword="true" /> if the command was executed successfully, otherwise <see langword="false" />.
+    /// </returns>
+    public static bool ExecuteCommand(ICommand? command, object? parameter = null, IInputElement? target = null)
+    {
+        if (command is null)
         {
-            Guard.ArgumentIsNotNull(commandSource);
-
-            return ExecuteCommand(
-                commandSource.Command,
-                commandSource.CommandParameter,
-                commandSource.CommandTarget ?? commandSource as IInputElement);
-        }
-
-        /// <summary>
-        ///     Executes the specified command.
-        /// </summary>
-        /// <param name="command">
-        ///     The command to execute.
-        /// </param>
-        /// <param name="parameter">
-        ///     The parameter passed to the command.
-        /// </param>
-        /// <param name="target">
-        ///     The purpose of the command (for <see cref="RoutedCommand" />).
-        /// </param>
-        /// <returns>
-        ///     Returns <see langword="true" /> if the command was executed successfully, otherwise <see langword="false" />.
-        /// </returns>
-        public static bool ExecuteCommand(ICommand? command, object? parameter = null, IInputElement? target = null)
-        {
-            if (command is null)
-            {
-                return false;
-            }
-
-            if (command is RoutedCommand routedCommand)
-            {
-                if (routedCommand.CanExecute(parameter, target))
-                {
-                    routedCommand.Execute(parameter, target);
-                    return true;
-                }
-            }
-            else if (command.CanExecute(parameter))
-            {
-                command.Execute(parameter);
-                return true;
-            }
-
             return false;
         }
 
-        /// <summary>
-        ///     Determines whether the specified command can be executed.
-        /// </summary>
-        /// <param name="command">
-        ///     The command to check.
-        /// </param>
-        /// <param name="parameter">
-        ///     The parameter passed to the command.
-        /// </param>
-        /// <param name="target">
-        ///     The purpose of the command (for <see cref="RoutedCommand" />).
-        /// </param>
-        /// <returns>
-        ///     Returns <see langword="true" /> if the command can be executed, otherwise <see langword="false" />.
-        /// </returns>
-        public static bool CanExecuteCommand(ICommand? command, object? parameter = null, IInputElement? target = null)
+        if (command is RoutedCommand routedCommand)
         {
-            if (command is null)
+            if (routedCommand.CanExecute(parameter, target))
             {
-                return false;
+                routedCommand.Execute(parameter, target);
+                return true;
             }
-
-            return command is RoutedCommand routedCommand
-                ? routedCommand.CanExecute(parameter, target)
-                : command.CanExecute(parameter);
         }
+        else if (command.CanExecute(parameter))
+        {
+            command.Execute(parameter);
+            return true;
+        }
+
+        return false;
+    }
+
+    /// <summary>
+    ///     Determines whether the specified command can be executed.
+    /// </summary>
+    /// <param name="command">
+    ///     The command to check.
+    /// </param>
+    /// <param name="parameter">
+    ///     The parameter passed to the command.
+    /// </param>
+    /// <param name="target">
+    ///     The purpose of the command (for <see cref="RoutedCommand" />).
+    /// </param>
+    /// <returns>
+    ///     Returns <see langword="true" /> if the command can be executed, otherwise <see langword="false" />.
+    /// </returns>
+    public static bool CanExecuteCommand(ICommand? command, object? parameter = null, IInputElement? target = null)
+    {
+        if (command is null)
+        {
+            return false;
+        }
+
+        return command is RoutedCommand routedCommand
+            ? routedCommand.CanExecute(parameter, target)
+            : command.CanExecute(parameter);
     }
 }

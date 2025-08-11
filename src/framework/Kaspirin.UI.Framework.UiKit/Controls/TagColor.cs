@@ -12,19 +12,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Kaspirin.UI.Framework.UiKit.Controls
+namespace Kaspirin.UI.Framework.UiKit.Controls;
+
+public enum TagColor
 {
-    public enum TagColor
-    {
-        Emerald,
-        Grass,
-        Marina,
-        Marengo,
-        Neutral,
-        Orange,
-        Purple,
-        Red,
-        Violet,
-        Yellow,
-    }
+    Emerald,
+    Grass,
+    Marina,
+    Marengo,
+    Neutral,
+    Orange,
+    Purple,
+    Red,
+    Violet,
+    Yellow,
 }

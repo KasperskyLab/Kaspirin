@@ -18,131 +18,138 @@ using System.Windows.Media;
 
 using PopupWpf = System.Windows.Controls.Primitives.Popup;
 
-namespace Kaspirin.UI.Framework.UiKit.Accessibility.TextScale
+namespace Kaspirin.UI.Framework.UiKit.Accessibility.TextScale;
+
+/// <summary>
+///     Implements a behavior for controlling text scaling in UI components.
+/// </summary>
+public sealed class TextScaleBehavior : Behavior<FrameworkElement, TextScaleBehavior>
 {
-    public sealed class TextScaleBehavior : Behavior<FrameworkElement, TextScaleBehavior>
+    /// <summary>
+    ///     Initializes a new instance of the <see cref="TextScaleBehavior" /> class.
+    /// </summary>
+    public TextScaleBehavior()
     {
-        public TextScaleBehavior()
-        {
-            _textScaleService = ServiceLocator.Instance.GetService<ITextScaleService>();
-            _currentScale = OriginScale;
-        }
-
-        protected override void OnAttached()
-        {
-            base.OnAttached();
-
-            _textScaleService.ScaleFactorChanged -= OnScaleFactorChanged;
-            _textScaleService.ScaleFactorChanged += OnScaleFactorChanged;
-
-            UpdateLayoutTransform(_textScaleService.ScaleFactor);
-        }
-
-        protected override void OnDetaching()
-        {
-            base.OnDetaching();
-
-            _textScaleService.ScaleFactorChanged -= OnScaleFactorChanged;
-
-            UpdateLayoutTransform(OriginScale);
-        }
-
-        protected override void OnAssociatedObjectLoaded()
-        {
-            base.OnAssociatedObjectLoaded();
-
-            _textScaleService.ScaleFactorChanged -= OnScaleFactorChanged;
-            _textScaleService.ScaleFactorChanged += OnScaleFactorChanged;
-
-            UpdateLayoutTransform(_textScaleService.ScaleFactor);
-        }
-
-        protected override void OnAssociatedObjectUnloaded()
-        {
-            base.OnAssociatedObjectLoaded();
-
-            _textScaleService.ScaleFactorChanged -= OnScaleFactorChanged;
-
-            UpdateLayoutTransform(OriginScale);
-        }
-
-        private void OnScaleFactorChanged(TextScaleService sender, TextScaleChangedEventArgs eventArgs)
-        {
-            UpdateLayoutTransform(eventArgs.NewScale);
-        }
-
-        private void UpdateLayoutTransform(double scale)
-        {
-            var oldScale = _currentScale;
-            var newScale = scale;
-
-            if (_currentScale.NearlyEqual(scale))
-            {
-                return;
-            }
-
-            _currentScale = scale;
-
-            if (AssociatedObject is Window window)
-            {
-                ScaleWindow(window, oldScale, newScale);
-            }
-            else if (AssociatedObject is PopupWpf popup)
-            {
-                ScalePopup(popup, newScale);
-            }
-            else if (AssociatedObject is FrameworkElement frameworkElement)
-            {
-                ScaleFrameworkElement(frameworkElement, newScale);
-            }
-        }
-
-        private void ScaleWindow(Window target, double oldScale, double newScale)
-        {
-            target.WhenLoaded(() =>
-            {
-                WindowScaleHelper.ScaleContentByTextScaleChange(target, newScale);
-
-                var canResize = target.ResizeMode == ResizeMode.CanResize ||
-                                target.ResizeMode == ResizeMode.CanResizeWithGrip;
-
-                if (canResize is false)
-                {
-                    var scaleChangeRatio = newScale / oldScale;
-                    var sizeToContent = target.SizeToContent;
-
-                    target.SetCurrentValue(Window.SizeToContentProperty, SizeToContent.Manual);
-
-                    WindowScaleHelper.ScaleWindowByTextScaleChange(target, scaleChangeRatio);
-
-                    target.SetCurrentValue(Window.SizeToContentProperty, sizeToContent);
-                }
-            });
-        }
-
-        private void ScaleFrameworkElement(FrameworkElement target, double scale)
-        {
-            target.LayoutTransform = (ScaleTransform)new ScaleTransform(scale, scale).GetAsFrozen();
-        }
-
-        private void ScalePopup(PopupWpf target, double scale)
-        {
-            if (target.Child is FrameworkElement popupChild)
-            {
-                var isPopupOpen = popupChild.IsLoaded && target.IsOpen;
-                var isTransformInherited = popupChild is ToolTip ||
-                                           popupChild is ContextMenu;
-
-                if (isPopupOpen || isTransformInherited)
-                {
-                    popupChild.LayoutTransform = (ScaleTransform)new ScaleTransform(scale, scale).GetAsFrozen();
-                }
-            }
-        }
-
-        private const double OriginScale = 1;
-
-        private readonly ITextScaleService _textScaleService;
-        private double _currentScale;
+        _textScaleService = ServiceLocator.Instance.GetService<ITextScaleService>();
+        _currentScale = OriginScale;
     }
+
+    /// <inheritdoc />
+    protected override void OnAttached()
+    {
+        base.OnAttached();
+
+        _textScaleService.ScaleFactorChanged -= OnScaleFactorChanged;
+        _textScaleService.ScaleFactorChanged += OnScaleFactorChanged;
+
+        UpdateLayoutTransform(_textScaleService.ScaleFactor);
+    }
+
+    /// <inheritdoc />
+    protected override void OnDetaching()
+    {
+        base.OnDetaching();
+
+        _textScaleService.ScaleFactorChanged -= OnScaleFactorChanged;
+
+        UpdateLayoutTransform(OriginScale);
+    }
+
+    /// <inheritdoc />
+    protected override void OnAssociatedObjectLoaded()
+    {
+        base.OnAssociatedObjectLoaded();
+
+        _textScaleService.ScaleFactorChanged -= OnScaleFactorChanged;
+        _textScaleService.ScaleFactorChanged += OnScaleFactorChanged;
+
+        UpdateLayoutTransform(_textScaleService.ScaleFactor);
+    }
+
+    /// <inheritdoc />
+    protected override void OnAssociatedObjectUnloaded()
+    {
+        base.OnAssociatedObjectLoaded();
+
+        _textScaleService.ScaleFactorChanged -= OnScaleFactorChanged;
+
+        UpdateLayoutTransform(OriginScale);
+    }
+
+    private void OnScaleFactorChanged(TextScaleService sender, TextScaleChangedEventArgs eventArgs)
+        => Executers.InUiAsync(() => UpdateLayoutTransform(eventArgs.NewScale));
+
+    private void UpdateLayoutTransform(double scale)
+    {
+        var oldScale = _currentScale;
+        var newScale = scale;
+
+        if (_currentScale.NearlyEqual(scale))
+        {
+            return;
+        }
+
+        _currentScale = scale;
+
+        if (AssociatedObject is Window window)
+        {
+            ScaleWindow(window, oldScale, newScale);
+        }
+        else if (AssociatedObject is PopupWpf popup)
+        {
+            ScalePopup(popup, newScale);
+        }
+        else if (AssociatedObject is FrameworkElement frameworkElement)
+        {
+            ScaleFrameworkElement(frameworkElement, newScale);
+        }
+    }
+
+    private void ScaleWindow(Window target, double oldScale, double newScale)
+    {
+        target.WhenLoaded(() =>
+        {
+            WindowScaleHelper.ScaleContentByTextScaleChange(target, newScale);
+
+            var canResize = target.ResizeMode == ResizeMode.CanResize ||
+                            target.ResizeMode == ResizeMode.CanResizeWithGrip;
+
+            if (canResize is false)
+            {
+                var scaleChangeRatio = newScale / oldScale;
+                var sizeToContent = target.SizeToContent;
+
+                target.SetCurrentValue(Window.SizeToContentProperty, SizeToContent.Manual);
+
+                WindowScaleHelper.ScaleWindowByTextScaleChange(target, scaleChangeRatio);
+
+                target.SetCurrentValue(Window.SizeToContentProperty, sizeToContent);
+            }
+        });
+    }
+
+    private void ScaleFrameworkElement(FrameworkElement target, double scale)
+    {
+        target.LayoutTransform = (ScaleTransform)new ScaleTransform(scale, scale).GetAsFrozen();
+    }
+
+    private void ScalePopup(PopupWpf target, double scale)
+    {
+        if (target.Child is FrameworkElement popupChild)
+        {
+            var isPopupOpen = popupChild.IsLoaded && target.IsOpen;
+            var isTransformInherited = popupChild is ToolTip ||
+                                       popupChild is ContextMenu;
+
+            if (isPopupOpen || isTransformInherited)
+            {
+                popupChild.LayoutTransform = (ScaleTransform)new ScaleTransform(scale, scale).GetAsFrozen();
+            }
+        }
+    }
+
+    private const double OriginScale = 1;
+
+    private readonly ITextScaleService _textScaleService;
+    private double _currentScale;
 }

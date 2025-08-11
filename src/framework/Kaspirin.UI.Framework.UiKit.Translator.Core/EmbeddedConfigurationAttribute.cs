@@ -14,19 +14,18 @@
 
 using System;
 
-namespace Kaspirin.UI.Framework.UiKit.Translator.Core
+namespace Kaspirin.UI.Framework.UiKit.Translator.Core;
+
+[AttributeUsage(AttributeTargets.Assembly, AllowMultiple = true)]
+internal sealed class EmbeddedConfigurationAttribute : Attribute
 {
-    [AttributeUsage(AttributeTargets.Assembly, AllowMultiple = true)]
-    internal sealed class EmbeddedConfigurationAttribute : Attribute
+    public EmbeddedConfigurationAttribute(string key, string value)
     {
-        public EmbeddedConfigurationAttribute(string key, string value)
-        {
-            Key = key;
-            Value = value;
-        }
-
-        public string Key { get; set; }
-
-        public string Value { get; set; }
+        Key = key;
+        Value = value;
     }
+
+    public string Key { get; set; }
+
+    public string Value { get; set; }
 }

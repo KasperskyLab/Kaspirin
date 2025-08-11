@@ -15,27 +15,26 @@
 using System.Windows;
 using System.Windows.Controls;
 
-namespace Kaspirin.UI.Framework.UiKit.Controls
+namespace Kaspirin.UI.Framework.UiKit.Controls;
+
+[StyleTypedProperty(Property = "ItemContainerStyle", StyleTargetType = typeof(TabMenuItem))]
+public sealed class TabMenu : SelectorList<TabMenuItem>
 {
-    [StyleTypedProperty(Property = "ItemContainerStyle", StyleTargetType = typeof(TabMenuItem))]
-    public sealed class TabMenu : SelectorList<TabMenuItem>
+    static TabMenu()
     {
-        static TabMenu()
-        {
-            SelectionModeProperty.OverrideMetadata(typeof(TabMenu),
-                new FrameworkPropertyMetadata(SelectionMode.Single, FrameworkPropertyMetadataOptions.None, null, CoerceSelectionMode));
-        }
+        SelectionModeProperty.OverrideMetadata(typeof(TabMenu),
+            new FrameworkPropertyMetadata(SelectionMode.Single, FrameworkPropertyMetadataOptions.None, null, CoerceSelectionMode));
+    }
 
-        protected override void OnSelectionChanged(SelectionChangedEventArgs e)
-        {
-            base.OnSelectionChanged(e);
+    protected override void OnSelectionChanged(SelectionChangedEventArgs e)
+    {
+        base.OnSelectionChanged(e);
 
-            this.WhenLoaded(() => ScrollIntoView(SelectedItem));
-        }
+        this.WhenLoaded(() => ScrollIntoView(SelectedItem));
+    }
 
-        private static object CoerceSelectionMode(DependencyObject d, object baseValue)
-        {
-            return SelectionMode.Single;
-        }
+    private static object CoerceSelectionMode(DependencyObject d, object baseValue)
+    {
+        return SelectionMode.Single;
     }
 }

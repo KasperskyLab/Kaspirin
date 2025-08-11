@@ -12,10 +12,23 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Kaspirin.UI.Framework.UiKit.Navigation
+namespace Kaspirin.UI.Framework.UiKit.Navigation;
+
+public abstract class NavigatableViewModel<TParams> : NavigatableViewModel, INavigationAware<TParams>
 {
-    public abstract class NavigatableViewModel<TParams> : NavigatableViewModel, INavigationAware<TParams>
+    protected NavigatableViewModel()
     {
-        public abstract void SetParameters(TParams parameter);
     }
+
+    protected NavigatableViewModel(string traceComponent)
+        : base(traceComponent)
+    {
+    }
+
+    protected NavigatableViewModel(ComponentTracer tracer)
+        : base(tracer)
+    {
+    }
+
+    public abstract void SetParameters(TParams parameter);
 }

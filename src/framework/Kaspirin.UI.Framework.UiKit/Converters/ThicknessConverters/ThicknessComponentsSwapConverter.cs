@@ -16,30 +16,29 @@ using System;
 using System.Globalization;
 using System.Windows;
 
-namespace Kaspirin.UI.Framework.UiKit.Converters.ThicknessConverters
+namespace Kaspirin.UI.Framework.UiKit.Converters.ThicknessConverters;
+
+public sealed class ThicknessComponentsSwapConverter : ValueConverterMarkupExtension<ThicknessComponentsSwapConverter>
 {
-    public sealed class ThicknessComponentsSwapConverter : ValueConverterMarkupExtension<ThicknessComponentsSwapConverter>
+    public ThicknessComponentsSwapMode Mode { get; set; } = ThicknessComponentsSwapMode.All;
+
+    public override object Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
     {
-        public ThicknessComponentsSwapMode Mode { get; set; } = ThicknessComponentsSwapMode.All;
+        Guard.ArgumentIsNotNull(value);
 
-        public override object Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
+        if (value is not Thickness thickness)
         {
-            Guard.ArgumentIsNotNull(value);
-
-            if (value is not Thickness thickness)
-            {
-                return DependencyProperty.UnsetValue;
-            }
-
-            var (left, top, right, bottom) = (thickness.Left, thickness.Top, thickness.Right, thickness.Bottom);
-
-            return Mode switch
-            {
-                ThicknessComponentsSwapMode.Horizontal => new Thickness(left: right, top, right: left, bottom),
-                ThicknessComponentsSwapMode.Vertical => new Thickness(left, top: bottom, right, bottom: top),
-                ThicknessComponentsSwapMode.All => new Thickness(left: right, top: bottom, right: left, bottom: top),
-                _ => throw new ArgumentOutOfRangeException($"Mode {Mode} not supported."),
-            };
+            return DependencyProperty.UnsetValue;
         }
+
+        var (left, top, right, bottom) = (thickness.Left, thickness.Top, thickness.Right, thickness.Bottom);
+
+        return Mode switch
+        {
+            ThicknessComponentsSwapMode.Horizontal => new Thickness(left: right, top, right: left, bottom),
+            ThicknessComponentsSwapMode.Vertical => new Thickness(left, top: bottom, right, bottom: top),
+            ThicknessComponentsSwapMode.All => new Thickness(left: right, top: bottom, right: left, bottom: top),
+            _ => throw new UnexpectedValueException(Mode)
+        };
     }
 }

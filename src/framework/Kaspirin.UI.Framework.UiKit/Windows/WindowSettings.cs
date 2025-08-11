@@ -15,34 +15,33 @@
 using System;
 using System.Windows;
 
-namespace Kaspirin.UI.Framework.UiKit.Windows
+namespace Kaspirin.UI.Framework.UiKit.Windows;
+
+public sealed class WindowSettings : IEquatable<WindowSettings>
 {
-    public sealed class WindowSettings : IEquatable<WindowSettings>
+    public string Id { get; set; } = string.Empty;
+    public int Height { get; set; } = 0;
+    public int Width { get; set; } = 0;
+    public Point? Position { get; set; } = null;
+    public bool IsMaximized { get; set; } = false;
+    public Dpi WindowDpi { get; set; } = Dpi.Default;
+
+    public override string ToString()
     {
-        public string Id { get; set; } = string.Empty;
-        public int Height { get; set; } = 0;
-        public int Width { get; set; } = 0;
-        public Point? Position { get; set; } = null;
-        public bool IsMaximized { get; set; } = false;
-        public Dpi WindowDpi { get; set; } = Dpi.Default;
+        return $"[{Id}: Size={Width}x{Height} Pos(LxT)={Position} IsMaximized={IsMaximized} WindowDpi={WindowDpi}]";
+    }
 
-        public override string ToString()
+    bool IEquatable<WindowSettings>.Equals(WindowSettings? other)
+    {
+        return other switch
         {
-            return $"[{Id}: Size={Width}x{Height} Pos(LxT)={Position} IsMaximized={IsMaximized} WindowDpi={WindowDpi}]";
-        }
-
-        bool IEquatable<WindowSettings>.Equals(WindowSettings? other)
-        {
-            return other switch
-            {
-                null => false,
-                _ => Id.Equals(other.Id, StringComparison.InvariantCulture)
-                && Height == other.Height
-                && Width == other.Width
-                && (Position == null && other.Position == null || (Position?.Equals(other.Position) ?? false))
-                && IsMaximized == other.IsMaximized
-                && WindowDpi.Equals(other.WindowDpi)
-            };
-        }
+            null => false,
+            _ => Id.Equals(other.Id, StringComparison.InvariantCulture)
+            && Height == other.Height
+            && Width == other.Width
+            && (Position == null && other.Position == null || (Position?.Equals(other.Position) ?? false))
+            && IsMaximized == other.IsMaximized
+            && WindowDpi.Equals(other.WindowDpi)
+        };
     }
 }

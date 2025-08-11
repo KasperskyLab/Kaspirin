@@ -16,62 +16,61 @@ using System;
 using System.Windows;
 using System.Windows.Interop;
 
-namespace Kaspirin.UI.Framework.UiKit.Windows
+namespace Kaspirin.UI.Framework.UiKit.Windows;
+
+public abstract class WindowHookBase
 {
-    public abstract class WindowHookBase
+    protected WindowHookBase(Window window, string hookId, string traceComponent)
     {
-        protected WindowHookBase(Window window, string hookId, string traceComponent)
-        {
-            Guard.ArgumentIsNotNull(window);
-            Guard.ArgumentIsNotNullOrEmpty(hookId);
+        Guard.ArgumentIsNotNull(window);
+        Guard.ArgumentIsNotNullOrEmpty(hookId);
 
-            HookId = hookId;
-            Tracer = ComponentTracer.Get(traceComponent);
+        HookId = hookId;
+        Tracer = ComponentTracer.Get(traceComponent);
 
-            WindowHandle = window.GetHandle(ensure: true);
+        WindowHandle = window.GetHandle(ensure: true);
 
-            Guard.Assert(WindowHandle != IntPtr.Zero);
-            _windowSource = HwndSource.FromHwnd(WindowHandle);
-        }
-
-        public string HookId { get; private set; }
-
-        public IntPtr WindowHandle { get; private set; }
-
-        public bool IsHookAttached { get; private set; }
-
-        public abstract void Attach();
-
-        public abstract void Detach();
-
-        protected ComponentTracer Tracer { get; private set; }
-
-        protected void Attach(HwndSourceHook hook)
-        {
-            Guard.ArgumentIsNotNull(hook);
-
-            if (!IsHookAttached)
-            {
-                _windowSource.AddHook(hook);
-
-                Tracer.TraceInformation($"{HookId} is attached");
-                IsHookAttached = true;
-            }
-        }
-
-        protected void Detach(HwndSourceHook hook)
-        {
-            Guard.ArgumentIsNotNull(hook);
-
-            if (IsHookAttached)
-            {
-                _windowSource.RemoveHook(hook);
-
-                Tracer.TraceInformation($"{HookId} is detached");
-                IsHookAttached = false;
-            }
-        }
-
-        private readonly HwndSource _windowSource;
+        Guard.Assert(WindowHandle != IntPtr.Zero);
+        _windowSource = HwndSource.FromHwnd(WindowHandle);
     }
+
+    public string HookId { get; private set; }
+
+    public IntPtr WindowHandle { get; private set; }
+
+    public bool IsHookAttached { get; private set; }
+
+    public abstract void Attach();
+
+    public abstract void Detach();
+
+    protected ComponentTracer Tracer { get; private set; }
+
+    protected void Attach(HwndSourceHook hook)
+    {
+        Guard.ArgumentIsNotNull(hook);
+
+        if (!IsHookAttached)
+        {
+            _windowSource.AddHook(hook);
+
+            Tracer.TraceInformation($"{HookId} is attached");
+            IsHookAttached = true;
+        }
+    }
+
+    protected void Detach(HwndSourceHook hook)
+    {
+        Guard.ArgumentIsNotNull(hook);
+
+        if (IsHookAttached)
+        {
+            _windowSource.RemoveHook(hook);
+
+            Tracer.TraceInformation($"{HookId} is detached");
+            IsHookAttached = false;
+        }
+    }
+
+    private readonly HwndSource _windowSource;
 }

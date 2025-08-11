@@ -13,21 +13,21 @@
 // limitations under the License.
 
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-#pragma warning disable KCAIDE0002 // Enum has incorrect suffix
 
 using System;
 
-namespace Kaspirin.UI.Framework.NativeMethods.Api.User32.Enums
+namespace Kaspirin.UI.Framework.NativeMethods.Api.User32.Enums;
+
+/// <summary>
+///     <seealso href="https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-getkeystate">Learn more</seealso>.
+/// </summary>
+[Flags]
+public enum KeyStateFlags : uint
 {
     /// <summary>
-    ///     
-    /// <seealso href="https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-getkeystate">Learn more</seealso>.
+    ///     The flag is not set.
     /// </summary>
-    [Flags]
-    public enum KeyStateFlags : uint
-    {
-        None = 0,
-        Toggled = 0x00000001,
-        Pressed = 0x00008000
-    }
+    None = 0,
+    Toggled = 0x00000001,
+    Pressed = 0x00008000
 }

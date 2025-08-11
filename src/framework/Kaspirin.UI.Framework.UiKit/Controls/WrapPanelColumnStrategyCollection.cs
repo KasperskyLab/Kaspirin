@@ -14,9 +14,8 @@
 
 using System.Collections.ObjectModel;
 
-namespace Kaspirin.UI.Framework.UiKit.Controls
+namespace Kaspirin.UI.Framework.UiKit.Controls;
+
+public sealed class WrapPanelColumnStrategyCollection : ObservableCollection<WrapPanelColumnStrategy>
 {
-    public sealed class WrapPanelColumnStrategyCollection : ObservableCollection<WrapPanelColumnStrategy>
-    {
-    }
 }

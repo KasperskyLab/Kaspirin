@@ -57,9 +57,9 @@
 			<xsl:with-param name="key" select="$id"/>
 			<xsl:with-param name="setters">
 
-				<!--Icon_Foreground-->
+				<!--Icon_Brush-->
 				<xsl:call-template name="generateBrushSetter">
-					<xsl:with-param name="propertyId">Icon_Foreground</xsl:with-param>
+					<xsl:with-param name="propertyId">Icon_Brush</xsl:with-param>
 					<xsl:with-param name="brushName">Foreground</xsl:with-param>
 					<xsl:with-param name="scopeName" select="$id" />
 				</xsl:call-template>

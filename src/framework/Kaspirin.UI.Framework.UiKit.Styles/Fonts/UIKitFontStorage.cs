@@ -19,54 +19,53 @@
 using System;
 using Kaspirin.UI.Framework.UiKit.Styles.Palette;
 
-namespace Kaspirin.UI.Framework.UiKit.Styles.Fonts
+namespace Kaspirin.UI.Framework.UiKit.Styles.Fonts;
+
+public sealed class UIKitFontStorage
 {
-    public sealed class UIKitFontStorage
+    public static string Map(UIKitFontStyle id)
+        => $"UiKitTextStyle{id}";
+
+    public static string Map(UIKitFontBrush id)
     {
-        public static string Map(UIKitFontStyle id)
-            => $"UiKitTextStyle{id}";
+        var paletteIdString = $"TextIconsElements{id}";
 
-        public static string Map(UIKitFontBrush id)
-        {
-            var paletteIdString = $"TextIconsElements{id}";
+        var paletteId = (UIKitPaletteStorage.UIKitPalette)Enum.Parse(typeof(UIKitPaletteStorage.UIKitPalette), paletteIdString);
 
-            var paletteId = (UIKitPaletteStorage.UIKitPalette)Enum.Parse(typeof(UIKitPaletteStorage.UIKitPalette), paletteIdString);
+        return UIKitPaletteStorage.Map(paletteId);
+    }
 
-            return UIKitPaletteStorage.Map(paletteId);
-        }
+    public enum UIKitFontBrush
+    {
+        Base,
+        BaseIcon,
+        BaseIconInvert,
+        BaseInvert,
+        Disabled,
+        DisabledInvert,
+        Emerald,
+        Primary,
+        PrimaryInvert,
+        Red,
+        Secondary,
+        SecondaryInvert,
+        Yellow
+    }
 
-        public enum UIKitFontBrush
-        {
-            Base,
-            BaseIcon,
-            BaseIconInvert,
-            BaseInvert,
-            Disabled,
-            DisabledInvert,
-            Emerald,
-            Primary,
-            PrimaryInvert,
-            Red,
-            Secondary,
-            SecondaryInvert,
-            Yellow
-        }
-
-        public enum UIKitFontStyle
-        {
-            BaseText,
-            BaseTextMonospace,
-            BaseTextSemibold,
-            Button,
-            Header1,
-            Header2,
-            Header3,
-            Header3Monospace,
-            Header4,
-            Header5,
-            SmallText,
-            SmallTextMedium,
-            Subheader
-        }
+    public enum UIKitFontStyle
+    {
+        BaseText,
+        BaseTextMonospace,
+        BaseTextSemibold,
+        Button,
+        Header1,
+        Header2,
+        Header3,
+        Header3Monospace,
+        Header4,
+        Header5,
+        SmallText,
+        SmallTextMedium,
+        Subheader
     }
 }

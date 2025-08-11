@@ -12,10 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Kaspirin.UI.Framework.UiKit.Converters.EqualityConverters
+namespace Kaspirin.UI.Framework.UiKit.Converters.EqualityConverters;
+
+public sealed class EqualityToObjectConverter : BaseEqualityConverter<object>
 {
-    public class EqualityToObjectConverter : BaseEqualityConverter<object>
-    {
-        public EqualityToObjectConverter() : base(null, null) { }
-    }
+    public EqualityToObjectConverter() : base(null, null) { }
 }

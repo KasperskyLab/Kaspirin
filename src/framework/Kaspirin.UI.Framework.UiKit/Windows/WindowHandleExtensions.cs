@@ -13,152 +13,180 @@
 // limitations under the License.
 
 using System;
-using System.Windows;
-using System.Windows.Interop;
 using System.Diagnostics.CodeAnalysis;
+using System.Windows;
 using System.Windows.Forms;
+using System.Windows.Interop;
 
-namespace Kaspirin.UI.Framework.UiKit.Windows
+namespace Kaspirin.UI.Framework.UiKit.Windows;
+
+public static class WindowHandleExtensions
 {
-    public static class WindowHandleExtensions
+    public static WindowStyleExFlags SetWindowStyleEx(this IntPtr hWnd, WindowStyleExFlags windowStyleEx)
+        => (WindowStyleExFlags)User32Dll.SetWindowLong(hWnd, WindowPropertyIndex.ExStyle, (int)windowStyleEx);
+
+    public static WindowStyleExFlags GetWindowStyleEx(this IntPtr hWnd)
+        => (WindowStyleExFlags)User32Dll.GetWindowLong(hWnd, WindowPropertyIndex.ExStyle);
+
+    public static WindowStyleFlags SetWindowStyle(this IntPtr hWnd, WindowStyleFlags windowStyle)
+        => (WindowStyleFlags)User32Dll.SetWindowLong(hWnd, WindowPropertyIndex.Style, (int)windowStyle);
+
+    public static WindowStyleFlags GetWindowStyle(this IntPtr hWnd)
+        => (WindowStyleFlags)User32Dll.GetWindowLong(hWnd, WindowPropertyIndex.Style);
+
+    public static Window GetWindow(this IntPtr hWnd)
     {
-        public static WindowStyleExFlags SetWindowStyleEx(this IntPtr hWnd, WindowStyleExFlags windowStyleEx)
-            => (WindowStyleExFlags)User32Dll.SetWindowLong(hWnd, WindowPropertyIndex.GWL_EXSTYLE, (int)windowStyleEx);
+        Guard.Assert(hWnd != IntPtr.Zero);
 
-        public static WindowStyleExFlags GetWindowStyleEx(this IntPtr hWnd)
-            => (WindowStyleExFlags)User32Dll.GetWindowLong(hWnd, WindowPropertyIndex.GWL_EXSTYLE);
+        return (Window)HwndSource.FromHwnd(hWnd).RootVisual;
+    }
 
-        public static WindowStyleFlags SetWindowStyle(this IntPtr hWnd, WindowStyleFlags windowStyle)
-            => (WindowStyleFlags)User32Dll.SetWindowLong(hWnd, WindowPropertyIndex.GWL_STYLE, (int)windowStyle);
+    public static Size GetScreenResolution(this IntPtr hWnd)
+    {
+        Guard.Assert(hWnd != IntPtr.Zero);
 
-        public static WindowStyleFlags GetWindowStyle(this IntPtr hWnd)
-            => (WindowStyleFlags)User32Dll.GetWindowLong(hWnd, WindowPropertyIndex.GWL_STYLE);
+        var screen = Screen.FromHandle(hWnd);
 
-        public static Window GetWindow(this IntPtr hWnd)
+        return new Size()
         {
-            Guard.Assert(hWnd != IntPtr.Zero);
+            Width = screen.Bounds.Width,
+            Height = screen.Bounds.Height
+        };
+    }
 
-            return (Window)HwndSource.FromHwnd(hWnd).RootVisual;
+    public static void DragWindow(this IntPtr hWnd)
+    {
+        Guard.Assert(hWnd != IntPtr.Zero);
+
+        User32Dll.SendMessage(hWnd, (uint)WindowMessage.NclButtonDown, (IntPtr)2, IntPtr.Zero);
+    }
+
+    public static void ResizeWindow(this IntPtr hwnd, WindowResizeDirection direction)
+    {
+        Guard.Assert(hwnd != IntPtr.Zero);
+
+        const int scSizeWParam = 0xF000;
+
+        User32Dll.SendMessage(hwnd, (uint)WindowMessage.SysCommand, (IntPtr)(scSizeWParam + direction), IntPtr.Zero);
+    }
+
+    public static bool TryGetWindowDpi(this IntPtr hWnd, [NotNullWhen(true)] out Dpi? result)
+    {
+        Guard.Assert(hWnd != IntPtr.Zero);
+
+        if (!OperatingSystemInfo.IsWin81OrHigher)
+        {
+            result = null;
+            return false;
         }
 
-        public static Size GetScreenResolution(this IntPtr hWnd)
+        var handleMonitor = User32Dll.MonitorFromWindow(hWnd, MonitorOptions.DefaultToNearest);
+        if (handleMonitor == IntPtr.Zero)
         {
-            Guard.Assert(hWnd != IntPtr.Zero);
-
-            var screen = Screen.FromHandle(hWnd);
-
-            return new Size()
-            {
-                Width = screen.Bounds.Width,
-                Height = screen.Bounds.Height
-            };
+            result = null;
+            return false;
         }
 
-        public static void DragWindow(this IntPtr hWnd)
-        {
-            Guard.Assert(hWnd != IntPtr.Zero);
+        uint dpiX = 1;
+        uint dpiY = 1;
 
-            User32Dll.SendMessage(hWnd, (uint)WindowMessage.WM_NCLBUTTONDOWN, (IntPtr)2, IntPtr.Zero);
+        ShcoreDll.GetDpiForMonitor(handleMonitor, MonitorDpiType.Default, ref dpiX, ref dpiY);
+
+        result = new Dpi(dpiX, dpiY);
+        return true;
+    }
+
+    public static bool TryGetWindowWorkArea(this IntPtr hWnd, out Rect result, bool normalizeToZero = true)
+    {
+        Guard.Assert(hWnd != IntPtr.Zero);
+
+        result = default;
+
+        var monitor = User32Dll.MonitorFromWindow(hWnd, MonitorOptions.DefaultToNearest);
+        if (monitor == IntPtr.Zero)
+        {
+            return false;
         }
 
-        public static void ResizeWindow(this IntPtr hwnd, WindowResizeDirection direction)
+        var monitorInfo = new MonitorInfo();
+
+        if (!User32Dll.GetMonitorInfo(monitor, ref monitorInfo))
         {
-            Guard.Assert(hwnd != IntPtr.Zero);
-
-            const int scSizeWParam = 0xF000;
-
-            User32Dll.SendMessage(hwnd, (uint)WindowMessage.WM_SYSCOMMAND, (IntPtr)(scSizeWParam + direction), IntPtr.Zero);
+            return false;
         }
 
-        public static bool TryGetWindowDpi(this IntPtr hWnd, [NotNullWhen(true)] out Dpi? result)
+        var nWorkArea = monitorInfo.Work;
+        var nMonitorArea = monitorInfo.Monitor;
+
+        var workArea = new Rect(nWorkArea.Left, nWorkArea.Top, nWorkArea.Width, nWorkArea.Height);
+
+        if (normalizeToZero)
         {
-            Guard.Assert(hWnd != IntPtr.Zero);
-
-            if (!OperatingSystemInfo.IsWin81OrHigher)
-            {
-                result = null;
-                return false;
-            }
-
-            var handleMonitor = User32Dll.MonitorFromWindow(hWnd, MonitorOptions.MONITOR_DEFAULTTONEAREST);
-            if (handleMonitor == IntPtr.Zero)
-            {
-                result = null;
-                return false;
-            }
-
-            uint dpiX = 1;
-            uint dpiY = 1;
-
-            ShcoreDll.GetDpiForMonitor(handleMonitor, MonitorDpiType.MDT_DEFAULT, ref dpiX, ref dpiY);
-
-            result = new Dpi(dpiX, dpiY);
-            return true;
+            workArea.Offset(-nMonitorArea.Left, -nMonitorArea.Top);
         }
 
-        public static bool TryGetWindowWorkArea(this IntPtr hWnd, out Rect result, bool normalizeToZero = true)
+        result = workArea;
+        return true;
+    }
+
+    public static bool IsForeground(this IntPtr hWnd)
+    {
+        Guard.Assert(hWnd != IntPtr.Zero);
+
+        var foregroundWindowHandle = User32Dll.GetForegroundWindow();
+
+        return hWnd == foregroundWindowHandle;
+    }
+
+    public static bool SetTopMost(this IntPtr hWnd)
+    {
+        Guard.Assert(hWnd != IntPtr.Zero);
+
+        return User32Dll.SetWindowPos(hWnd, (IntPtr)(-1), 0, 0, 0, 0, WindowPositionFlags.NoMove | WindowPositionFlags.NoSize);
+    }
+
+    public static bool IsTopMost(this IntPtr hWnd)
+    {
+        Guard.Assert(hWnd != IntPtr.Zero);
+
+        var style = (WindowStyleExFlags)User32Dll.GetWindowLong(hWnd, WindowPropertyIndex.ExStyle);
+
+        return EnumOperations.HasFlag(style, WindowStyleExFlags.Topmost);
+    }
+
+    public static IntPtr GetProcessId(this IntPtr hWnd)
+    {
+        Guard.Assert(hWnd != IntPtr.Zero);
+
+        User32Dll.GetWindowThreadProcessId(hWnd, out var processId);
+
+        return processId;
+    }
+
+    public static void StartFlashing(this IntPtr hWnd)
+    {
+        Guard.Assert(hWnd != IntPtr.Zero);
+
+        var fInfo = new FlashWindowInfo
         {
-            Guard.Assert(hWnd != IntPtr.Zero);
+            HWnd = hWnd,
+            Flags = FlashWindowFlags.Tray | FlashWindowFlags.TimerNoFG,
+            Count = uint.MaxValue,
+        };
 
-            result = default;
+        User32Dll.FlashWindowEx(ref fInfo);
+    }
 
-            var monitor = User32Dll.MonitorFromWindow(hWnd, MonitorOptions.MONITOR_DEFAULTTONEAREST);
-            if (monitor == IntPtr.Zero)
-            {
-                return false;
-            }
+    public static void StopFlashing(this IntPtr hWnd)
+    {
+        Guard.Assert(hWnd != IntPtr.Zero);
 
-            var monitorInfo = new MonitorInfo();
-
-            if (!User32Dll.GetMonitorInfo(monitor, ref monitorInfo))
-            {
-                return false;
-            }
-
-            var nWorkArea = monitorInfo.Work;
-            var nMonitorArea = monitorInfo.Monitor;
-
-            var workArea = new Rect(nWorkArea.Left, nWorkArea.Top, nWorkArea.Width, nWorkArea.Height);
-
-            if (normalizeToZero)
-            {
-                workArea.Offset(-nMonitorArea.Left, -nMonitorArea.Top);
-            }
-
-            result = workArea;
-            return true;
-        }
-
-        public static bool IsForeground(this IntPtr hWnd)
+        var fInfo = new FlashWindowInfo
         {
-            Guard.Assert(hWnd != IntPtr.Zero);
+            HWnd = hWnd,
+            Flags = FlashWindowFlags.Stop,
+        };
 
-            var foregroundWindowHandle = User32Dll.GetForegroundWindow();
-
-            return hWnd == foregroundWindowHandle;
-        }
-
-        public static bool SetTopMost(this IntPtr hWnd)
-        {
-            Guard.Assert(hWnd != IntPtr.Zero);
-
-            return User32Dll.SetWindowPos(hWnd, (IntPtr)(-1), 0, 0, 0, 0, WindowPositionFlags.SWP_NOMOVE | WindowPositionFlags.SWP_NOSIZE);
-        }
-
-        public static bool IsTopMost(this IntPtr hWnd)
-        {
-            Guard.Assert(hWnd != IntPtr.Zero);
-
-            var style = (WindowStyleExFlags)User32Dll.GetWindowLong(hWnd, WindowPropertyIndex.GWL_EXSTYLE);
-
-            return EnumOperations.HasFlag(style, WindowStyleExFlags.WS_EX_TOPMOST);
-        }
-
-        public static IntPtr GetProcessId(this IntPtr hWnd)
-        {
-            User32Dll.GetWindowThreadProcessId(hWnd, out var processId);
-
-            return processId;
-        }
+        User32Dll.FlashWindowEx(ref fInfo);
     }
 }

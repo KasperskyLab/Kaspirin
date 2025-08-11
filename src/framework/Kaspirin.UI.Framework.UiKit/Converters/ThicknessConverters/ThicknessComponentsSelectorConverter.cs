@@ -16,41 +16,40 @@ using System;
 using System.Globalization;
 using System.Windows;
 
-namespace Kaspirin.UI.Framework.UiKit.Converters.ThicknessConverters
+namespace Kaspirin.UI.Framework.UiKit.Converters.ThicknessConverters;
+
+public sealed class ThicknessComponentsSelectorConverter : ValueConverterMarkupExtension<ThicknessComponentsSelectorConverter>
 {
-    public sealed class ThicknessComponentsSelectorConverter : ValueConverterMarkupExtension<ThicknessComponentsSelectorConverter>
+    public bool InvertComponents { get; set; }
+
+    public override object Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
     {
-        public bool InvertComponents { get; set; }
+        Guard.ArgumentIsNotNull(value);
+        Guard.ArgumentIsNotNull(parameter);
 
-        public override object Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
+        if (value is not Thickness thickness || parameter is not ThicknessComponents components)
         {
-            Guard.ArgumentIsNotNull(value);
-            Guard.ArgumentIsNotNull(parameter);
-
-            if (value is not Thickness thickness || parameter is not ThicknessComponents components)
-            {
-                return DependencyProperty.UnsetValue;
-            }
-
-            var multiplier = InvertComponents ? -1 : 1;
-
-            var left = components is ThicknessComponents.Left or ThicknessComponents.Horizontal or ThicknessComponents.All
-                ? multiplier * thickness.Left
-                : 0;
-
-            var top = components is ThicknessComponents.Top or ThicknessComponents.Vertical or ThicknessComponents.All
-                ? multiplier * thickness.Top
-                : 0;
-
-            var right = components is ThicknessComponents.Right or ThicknessComponents.Horizontal or ThicknessComponents.All
-                ? multiplier * thickness.Right
-                : 0;
-
-            var bottom = components is ThicknessComponents.Bottom or ThicknessComponents.Vertical or ThicknessComponents.All
-                ? multiplier * thickness.Bottom
-                : 0;
-
-            return new Thickness(left, top, right, bottom);
+            return DependencyProperty.UnsetValue;
         }
+
+        var multiplier = InvertComponents ? -1 : 1;
+
+        var left = components is ThicknessComponents.Left or ThicknessComponents.Horizontal or ThicknessComponents.All
+            ? multiplier * thickness.Left
+            : 0;
+
+        var top = components is ThicknessComponents.Top or ThicknessComponents.Vertical or ThicknessComponents.All
+            ? multiplier * thickness.Top
+            : 0;
+
+        var right = components is ThicknessComponents.Right or ThicknessComponents.Horizontal or ThicknessComponents.All
+            ? multiplier * thickness.Right
+            : 0;
+
+        var bottom = components is ThicknessComponents.Bottom or ThicknessComponents.Vertical or ThicknessComponents.All
+            ? multiplier * thickness.Bottom
+            : 0;
+
+        return new Thickness(left, top, right, bottom);
     }
 }

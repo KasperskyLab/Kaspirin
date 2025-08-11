@@ -16,21 +16,23 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 
-namespace Kaspirin.UI.Framework.UiKit.Controls
+namespace Kaspirin.UI.Framework.UiKit.Controls;
+
+public abstract class IconButtonBase : Button
 {
-    public abstract class IconButtonBase : Button
+    #region IconBrush
+
+    public Brush IconBrush
     {
-        #region IconForeground
-
-        public Brush IconForeground
-        {
-            get { return (Brush)GetValue(IconForegroundProperty); }
-            set { SetValue(IconForegroundProperty, value); }
-        }
-
-        public static readonly DependencyProperty IconForegroundProperty =
-            DependencyProperty.Register("IconForeground", typeof(Brush), typeof(IconButtonBase));
-
-        #endregion
+        get => (Brush)GetValue(IconBrushProperty);
+        set => SetValue(IconBrushProperty, value);
     }
+
+    public static readonly DependencyProperty IconBrushProperty = DependencyProperty.Register(
+        nameof(IconBrush),
+        typeof(Brush),
+        typeof(IconButtonBase),
+        new PropertyMetadata(default(Brush)));
+
+    #endregion
 }

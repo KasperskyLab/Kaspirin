@@ -17,29 +17,29 @@
 using System.Runtime.InteropServices;
 using System.Text;
 
-namespace Kaspirin.UI.Framework.NativeMethods.Api.Mpr
+namespace Kaspirin.UI.Framework.NativeMethods.Api.Mpr;
+
+/// <summary>
+///     Provides API methods for functions from mpr.dll .
+/// </summary>
+public static class MprDll
 {
+    #region winnetwk.h
+
     /// <summary>
-    ///     Provides API methods for functions from mpr.dll .
+    ///     The WNetGetUniversalName API method.
+    ///     <br /><seealso href="https://learn.microsoft.com/en-us/windows/win32/api/winnetwk/nf-winnetwk-wnetgetuniversalnamew">Learn more</seealso>.
     /// </summary>
-    public static class MprDll
-    {
-        #region winnetwk.h
+    [DllImport(DllName, SetLastError = false, CharSet = CharSet.Unicode)]
+    [return: MarshalAs(UnmanagedType.U4)]
+    public static extern int WNetGetUniversalName(
+        string lpLocalPath,
+        [MarshalAs(UnmanagedType.U4)] InfoLevel infoLevel,
+        StringBuilder lpBuffer,
+        [MarshalAs(UnmanagedType.U4)] ref int lpBufferSize);
 
-        /// <summary>
-        ///     The WNetGetUniversalName API method. <br /><seealso href="https://learn.microsoft.com/en-us/windows/win32/api/winnetwk/nf-winnetwk-wnetgetuniversalnamew">Learn more</seealso>.
-        /// </summary>
-        [DllImport(DllName, SetLastError = false, CharSet = CharSet.Unicode)]
-        [return: MarshalAs(UnmanagedType.U4)]
-        public static extern int WNetGetUniversalName(
-            string lpLocalPath,
-            [MarshalAs(UnmanagedType.U4)] InfoLevel infoLevel,
-            StringBuilder lpBuffer,
-            [MarshalAs(UnmanagedType.U4)] ref int lpBufferSize);
+    #endregion
 
-        #endregion
-
-        private const string DllName = "mpr.dll";
-    }
+    private const string DllName = "mpr.dll";
 }
 

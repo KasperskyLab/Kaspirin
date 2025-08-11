@@ -12,10 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Kaspirin.UI.Framework.UiKit.Input.Focus
+namespace Kaspirin.UI.Framework.UiKit.Input.Focus;
+
+public interface IKeyboardFocusControllerHandler
 {
-    public interface IKeyboardFocusControllerHandler
-    {
-        void OnControllerCreated(IKeyboardFocusController controller);
-    }
+    void OnControllerCreated(IKeyboardFocusController controller);
 }

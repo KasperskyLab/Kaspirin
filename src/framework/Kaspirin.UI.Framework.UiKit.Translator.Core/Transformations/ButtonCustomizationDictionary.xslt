@@ -129,52 +129,52 @@
 						<xsl:with-param name="brushNode" select="ForegroundPressed"/>
 					</xsl:call-template>
 
-					<!--IconForegroundDisabledCenterLocation-->
+					<!--IconBrushDisabledCenterLocation-->
 					<xsl:call-template name="generateBrush">
-						<xsl:with-param name="key">IconForegroundDisabledCenterLocation</xsl:with-param>
-						<xsl:with-param name="brushNode" select="IconForegroundDisabledCenterLocation"/>
+						<xsl:with-param name="key">IconBrushDisabledCenterLocation</xsl:with-param>
+						<xsl:with-param name="brushNode" select="IconBrushDisabledCenterLocation"/>
 					</xsl:call-template>
 
-					<!--IconForegroundDisabledSideLocation-->
+					<!--IconBrushDisabledSideLocation-->
 					<xsl:call-template name="generateBrush">
-						<xsl:with-param name="key">IconForegroundDisabledSideLocation</xsl:with-param>
-						<xsl:with-param name="brushNode" select="IconForegroundDisabledSideLocation"/>
+						<xsl:with-param name="key">IconBrushDisabledSideLocation</xsl:with-param>
+						<xsl:with-param name="brushNode" select="IconBrushDisabledSideLocation"/>
 					</xsl:call-template>
 
-					<!--IconForegroundHoverCenterLocation-->
+					<!--IconBrushHoverCenterLocation-->
 					<xsl:call-template name="generateBrush">
-						<xsl:with-param name="key">IconForegroundHoverCenterLocation</xsl:with-param>
-						<xsl:with-param name="brushNode" select="IconForegroundHoverCenterLocation"/>
+						<xsl:with-param name="key">IconBrushHoverCenterLocation</xsl:with-param>
+						<xsl:with-param name="brushNode" select="IconBrushHoverCenterLocation"/>
 					</xsl:call-template>
 
-					<!--IconForegroundHoverSideLocation-->
+					<!--IconBrushHoverSideLocation-->
 					<xsl:call-template name="generateBrush">
-						<xsl:with-param name="key">IconForegroundHoverSideLocation</xsl:with-param>
-						<xsl:with-param name="brushNode" select="IconForegroundHoverSideLocation"/>
+						<xsl:with-param name="key">IconBrushHoverSideLocation</xsl:with-param>
+						<xsl:with-param name="brushNode" select="IconBrushHoverSideLocation"/>
 					</xsl:call-template>
 
-					<!--IconForegroundNormalCenterLocation-->
+					<!--IconBrushNormalCenterLocation-->
 					<xsl:call-template name="generateBrush">
-						<xsl:with-param name="key">IconForegroundNormalCenterLocation</xsl:with-param>
-						<xsl:with-param name="brushNode" select="IconForegroundNormalCenterLocation"/>
+						<xsl:with-param name="key">IconBrushNormalCenterLocation</xsl:with-param>
+						<xsl:with-param name="brushNode" select="IconBrushNormalCenterLocation"/>
 					</xsl:call-template>
 
-					<!--IconForegroundNormalSideLocation-->
+					<!--IconBrushNormalSideLocation-->
 					<xsl:call-template name="generateBrush">
-						<xsl:with-param name="key">IconForegroundNormalSideLocation</xsl:with-param>
-						<xsl:with-param name="brushNode" select="IconForegroundNormalSideLocation"/>
+						<xsl:with-param name="key">IconBrushNormalSideLocation</xsl:with-param>
+						<xsl:with-param name="brushNode" select="IconBrushNormalSideLocation"/>
 					</xsl:call-template>
 
-					<!--IconForegroundPressedCenterLocation-->
+					<!--IconBrushPressedCenterLocation-->
 					<xsl:call-template name="generateBrush">
-						<xsl:with-param name="key">IconForegroundPressedCenterLocation</xsl:with-param>
-						<xsl:with-param name="brushNode" select="IconForegroundPressedCenterLocation"/>
+						<xsl:with-param name="key">IconBrushPressedCenterLocation</xsl:with-param>
+						<xsl:with-param name="brushNode" select="IconBrushPressedCenterLocation"/>
 					</xsl:call-template>
 
-					<!--IconForegroundPressedSideLocation-->
+					<!--IconBrushPressedSideLocation-->
 					<xsl:call-template name="generateBrush">
-						<xsl:with-param name="key">IconForegroundPressedSideLocation</xsl:with-param>
-						<xsl:with-param name="brushNode" select="IconForegroundPressedSideLocation"/>
+						<xsl:with-param name="key">IconBrushPressedSideLocation</xsl:with-param>
+						<xsl:with-param name="brushNode" select="IconBrushPressedSideLocation"/>
 					</xsl:call-template>
 
 					<!--ShadowDisabled-->

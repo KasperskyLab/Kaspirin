@@ -12,15 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Kaspirin.UI.Framework.UiKit.Controls
+namespace Kaspirin.UI.Framework.UiKit.Controls;
+
+public enum MenuItemRole
 {
-    public enum MenuItemRole
-    {
-        TopLevelItem = 0,
-        TopLevelHeader = 1,
-        SubmenuItem = 2,
-        SubmenuHeader = 3,
-        MenuItemGroupHeader = 4,
-        MenuItemDivider = 5
-    }
+    TopLevelItem = 0,
+    TopLevelHeader = 1,
+    SubmenuItem = 2,
+    SubmenuHeader = 3,
+    MenuItemGroupHeader = 4,
+    MenuItemDivider = 5
 }

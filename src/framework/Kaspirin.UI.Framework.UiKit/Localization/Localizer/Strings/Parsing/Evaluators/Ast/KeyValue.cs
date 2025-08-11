@@ -12,31 +12,32 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Kaspirin.UI.Framework.UiKit.Localization.Localizer.Strings.Parsing.Evaluators.Ast
+#pragma warning disable CA1724 // Change either name to eliminate the conflict.
+
+namespace Kaspirin.UI.Framework.UiKit.Localization.Localizer.Strings.Parsing.Evaluators.Ast;
+
+public sealed class KeyValue : Item
 {
-    public sealed class KeyValue : Item
+    public KeyValue(Token key, Token equalsLiteral, Expression expression, Token? comment, Token? newLine)
     {
-        public KeyValue(Token key, Token equalsLiteral, Expression expression, Token? comment, Token? newLine)
-        {
-            Key = key;
-            EqualsLiteral = equalsLiteral;
-            Expression = expression;
-            Comment = comment;
-            NewLine = newLine;
-        }
-
-        public Token Key { get; }
-        public Token EqualsLiteral { get; }
-        public Expression Expression { get; }
-        public Token? Comment { get; }
-        public Token? NewLine { get; }
-        public override string GetText() => $"{Key.GetText()} = {Expression.GetText()}{GetTailText()}";
-        public override string ToString()
-        {
-            var startLineColumn = Key.Position.StartLineColumn;
-            return $"{startLineColumn.Line}:{startLineColumn.Column}: {GetText()}";
-        }
-
-        private string GetTailText() => (Comment.HasValue ? " " + Comment.Value.GetText() : "") + (NewLine.HasValue ? NewLine.Value.GetText() : "\r\n");
+        Key = key;
+        EqualsLiteral = equalsLiteral;
+        Expression = expression;
+        Comment = comment;
+        NewLine = newLine;
     }
+
+    public Token Key { get; }
+    public Token EqualsLiteral { get; }
+    public Expression Expression { get; }
+    public Token? Comment { get; }
+    public Token? NewLine { get; }
+    public override string GetText() => $"{Key.GetText()} = {Expression.GetText()}{GetTailText()}";
+    public override string ToString()
+    {
+        var startLineColumn = Key.Position.StartLineColumn;
+        return $"{startLineColumn.Line}:{startLineColumn.Column}: {GetText()}";
+    }
+
+    private string GetTailText() => (Comment.HasValue ? " " + Comment.Value.GetText() : "") + (NewLine.HasValue ? NewLine.Value.GetText() : "\r\n");
 }

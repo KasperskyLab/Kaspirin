@@ -12,95 +12,109 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using Kaspirin.UI.Framework.UiKit.Controls.Internals;
+
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Media;
+using Kaspirin.UI.Framework.UiKit.Controls.Internals;
 
-namespace Kaspirin.UI.Framework.UiKit.Controls
+namespace Kaspirin.UI.Framework.UiKit.Controls;
+
+public class MenuItem : MenuItemBase
 {
-    public class MenuItem : MenuItemBase
+    public MenuItem()
     {
-        public MenuItem()
+        Click += OnMenuItemClick;
+
+        SetBinding(MenuItemRoleProperty, new Binding()
         {
-            Click += OnMenuItemClick;
-
-            SetBinding(MenuItemRoleProperty, new Binding()
-            {
-                Source = this,
-                Mode = BindingMode.OneWay,
-                Path = RoleProperty.AsPath(),
-                Converter = _roleConverter
-            });
-        }
-
-        #region Description
-
-        public object Description
-        {
-            get { return (object)GetValue(DescriptionProperty); }
-            set { SetValue(DescriptionProperty, value); }
-        }
-
-        public static readonly DependencyProperty DescriptionProperty =
-            DependencyProperty.Register("Description", typeof(object), typeof(MenuItem));
-
-        #endregion
-
-        #region HasBadge
-
-        public bool HasBadge
-        {
-            get { return (bool)GetValue(HasBadgeProperty); }
-            set { SetValue(HasBadgeProperty, value); }
-        }
-
-        public static readonly DependencyProperty HasBadgeProperty =
-            DependencyProperty.Register("HasBadge", typeof(bool), typeof(MenuItem));
-
-        #endregion
-
-        #region IconBrush
-
-        public Brush? IconBrush
-        {
-            get { return (Brush?)GetValue(IconBrushProperty); }
-            set { SetValue(IconBrushProperty, value); }
-        }
-
-        public static readonly DependencyProperty IconBrushProperty =
-            DependencyProperty.Register("IconBrush", typeof(Brush), typeof(MenuItem));
-
-        #endregion
-
-        #region BadgeType
-
-        public BadgeType BadgeType
-        {
-            get { return (BadgeType)GetValue(BadgeTypeProperty); }
-            set { SetValue(BadgeTypeProperty, value); }
-        }
-
-        public static readonly DependencyProperty BadgeTypeProperty =
-            DependencyProperty.Register("BadgeType", typeof(BadgeType), typeof(MenuItem));
-
-        #endregion
-
-        private void OnMenuItemClick(object sender, RoutedEventArgs e)
-        {
-            ServiceLocator.Instance.GetService<IStatisticsSender>().SendClickStatistic(sender);
-
-            var contextMenu = this.FindVisualParent<ContextMenu>() ?? this.FindLogicalParent<ContextMenu>();
-            var contextMenuHolder = (contextMenu?.PlacementTarget as FrameworkElement)?.TemplatedParent;
-            if (contextMenuHolder is ContextMenuSelect contextMenuSelect)
-            {
-                contextMenuSelect.SetCurrentValue(ContextMenuSelect.SelectedItemProperty, DataContext ?? this);
-            }
-        }
-
-        private readonly IValueConverter _roleConverter = new DelegateConverter<System.Windows.Controls.MenuItemRole>(r =>
-        {
-            return (MenuItemRole)r;
+            Source = this,
+            Mode = BindingMode.OneWay,
+            Path = RoleProperty.AsPath(),
+            Converter = _roleConverter
         });
     }
+
+    #region Description
+
+    public object Description
+    {
+        get => (object)GetValue(DescriptionProperty);
+        set => SetValue(DescriptionProperty, value);
+    }
+
+    public static readonly DependencyProperty DescriptionProperty = DependencyProperty.Register(
+        nameof(Description),
+        typeof(object),
+        typeof(MenuItem),
+        new PropertyMetadata(default(object)));
+
+    #endregion
+
+    #region HasBadge
+
+    public bool HasBadge
+    {
+        get => (bool)GetValue(HasBadgeProperty);
+        set => SetValue(HasBadgeProperty, value);
+    }
+
+    public static readonly DependencyProperty HasBadgeProperty = DependencyProperty.Register(
+        nameof(HasBadge),
+        typeof(bool),
+        typeof(MenuItem),
+        new PropertyMetadata(default(bool)));
+
+    #endregion
+
+    #region IconBrush
+
+    public Brush? IconBrush
+    {
+        get => (Brush?)GetValue(IconBrushProperty);
+        set => SetValue(IconBrushProperty, value);
+    }
+
+    public static readonly DependencyProperty IconBrushProperty = DependencyProperty.Register(
+        nameof(IconBrush),
+        typeof(Brush),
+        typeof(MenuItem),
+        new PropertyMetadata(default(Brush)));
+
+    #endregion
+
+    #region BadgeType
+
+    public BadgeType BadgeType
+    {
+        get => (BadgeType)GetValue(BadgeTypeProperty);
+        set => SetValue(BadgeTypeProperty, value);
+    }
+
+    public static readonly DependencyProperty BadgeTypeProperty = DependencyProperty.Register(
+        nameof(BadgeType),
+        typeof(BadgeType),
+        typeof(MenuItem),
+        new PropertyMetadata(default(BadgeType)));
+
+    #endregion
+
+    private void OnMenuItemClick(object sender, RoutedEventArgs e)
+    {
+        var menuItem = (MenuItem)sender;
+
+        ServiceLocator.Instance.GetService<IStatisticsSender>().SendMenuItemClicked(menuItem);
+
+        var contextMenu = this.FindVisualParent<ContextMenu>() ?? this.FindLogicalParent<ContextMenu>();
+        var contextMenuHolder = (contextMenu?.PlacementTarget as FrameworkElement)?.TemplatedParent;
+        if (contextMenuHolder is ContextMenuSelect contextMenuSelect)
+        {
+            contextMenuSelect.SetCurrentValue(ContextMenuSelect.SelectedItemProperty, DataContext ?? this);
+        }
+    }
+
+    private readonly IValueConverter _roleConverter = new DelegateConverter<System.Windows.Controls.MenuItemRole>(r =>
+    {
+        return (MenuItemRole)r;
+    });
 }

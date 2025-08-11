@@ -15,11 +15,10 @@
 using System;
 using System.Windows.Forms;
 
-namespace Kaspirin.UI.Framework.UiKit.Interactivity.Actions.NativeDialogs
+namespace Kaspirin.UI.Framework.UiKit.Interactivity.Actions.NativeDialogs;
+
+public interface INativeDialogLauncher
 {
-    public interface INativeDialogLauncher
-    {
-        void ShowDialog<TDialog>(Func<TDialog> createDialog, Action<TDialog> showDialog)
-            where TDialog : CommonDialog;
-    }
+    void ShowDialog<TDialog>(Func<TDialog> createDialog, Action<TDialog> showDialog)
+        where TDialog : CommonDialog;
 }

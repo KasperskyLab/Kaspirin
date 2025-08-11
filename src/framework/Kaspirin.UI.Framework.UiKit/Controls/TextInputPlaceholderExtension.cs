@@ -15,19 +15,18 @@
 using System;
 using System.Windows.Markup;
 
-namespace Kaspirin.UI.Framework.UiKit.Controls
-{
-    public sealed class TextInputPlaceholderExtension : MarkupExtension
-    {
-        public LocExtension? Text { get; set; }
+namespace Kaspirin.UI.Framework.UiKit.Controls;
 
-        public override object? ProvideValue(IServiceProvider serviceProvider)
+public sealed class TextInputPlaceholderExtension : MarkupExtension
+{
+    public LocExtension? Text { get; set; }
+
+    public override object? ProvideValue(IServiceProvider serviceProvider)
+    {
+        return Text switch
         {
-            return Text switch
-            {
-                null => null,
-                _ => new TextInputLocPlaceholder(Text)
-            };
-        }
+            null => null,
+            _ => new TextInputLocPlaceholder(Text)
+        };
     }
 }

@@ -12,16 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Kaspirin.UI.Framework.UiKit.Converters.EqualityConverters
+namespace Kaspirin.UI.Framework.UiKit.Converters.EqualityConverters;
+
+public enum EqualityParameterType
 {
-    public enum EqualityParameterType
-    {
-        Default,
-        String,
-        Int32,
-        UInt32,
-        UInt64,
-        Double,
-        Type
-    }
+    Default,
+    String,
+    Int32,
+    UInt32,
+    UInt64,
+    Double,
+    Type
 }

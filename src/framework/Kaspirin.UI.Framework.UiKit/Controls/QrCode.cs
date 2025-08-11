@@ -12,111 +12,113 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using Kaspirin.UI.Framework.UiKit.Controls.Internals;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Media;
 using System.Windows.Shapes;
+using Kaspirin.UI.Framework.UiKit.Controls.Internals;
 
-namespace Kaspirin.UI.Framework.UiKit.Controls
+namespace Kaspirin.UI.Framework.UiKit.Controls;
+
+[TemplatePart(Name = PART_PathContainer, Type = typeof(Path))]
+public sealed class QrCode : Control
 {
-    [TemplatePart(Name = PART_PathContainer, Type = typeof(Path))]
-    public sealed class QrCode : Control
+    public const string PART_PathContainer = "PART_PathContainer";
+
+    #region Matrix
+
+    public QrCodeMatrix Matrix
     {
-        public const string PART_PathContainer = "PART_PathContainer";
+        get => (QrCodeMatrix)GetValue(MatrixProperty);
+        set => SetValue(MatrixProperty, value);
+    }
 
-        #region Matrix
+    public static readonly DependencyProperty MatrixProperty = DependencyProperty.Register(
+        nameof(Matrix),
+        typeof(QrCodeMatrix),
+        typeof(QrCode),
+        new PropertyMetadata(default(QrCodeMatrix)));
 
-        public QrCodeMatrix Matrix
+    #endregion
+
+    public override void OnApplyTemplate()
+    {
+        _qrRath = (Path)GetTemplateChild(PART_PathContainer);
+        _qrRath.SetBinding(Path.DataProperty, new Binding()
         {
-            get { return (QrCodeMatrix)GetValue(MatrixProperty); }
-            set { SetValue(MatrixProperty, value); }
+            Source = this,
+            Path = MatrixProperty.AsPath(),
+            Converter = new DelegateConverter<QrCodeMatrix>(CreateQrCodeGeometry)
+        });
+    }
+
+    private static StreamGeometry? CreateQrCodeGeometry(QrCodeMatrix? data)
+    {
+        var matrix = data?.Value;
+        if (matrix == null)
+        {
+            return null;
         }
 
-        public static readonly DependencyProperty MatrixProperty =
-            DependencyProperty.Register("Matrix", typeof(QrCodeMatrix), typeof(QrCode));
+        var rows = matrix.GetLength(0);
+        var columns = matrix.GetLength(1);
 
-        #endregion
-
-        public override void OnApplyTemplate()
+        var qrCodeStreamGeometry = new StreamGeometry()
         {
-            _qrRath = (Path)GetTemplateChild(PART_PathContainer);
-            _qrRath.SetBinding(Path.DataProperty, new Binding()
-            {
-                Source = this,
-                Path = MatrixProperty.AsPath(),
-                Converter = new DelegateConverter<QrCodeMatrix>(CreateQrCodeGeometry)
-            });
-        }
+            FillRule = FillRule.EvenOdd
+        };
 
-        private static StreamGeometry? CreateQrCodeGeometry(QrCodeMatrix? data)
+        using var context = qrCodeStreamGeometry.Open();
+
+        int? startingColumn = null;
+
+        for (var row = 0; row < rows; row++)
         {
-            var matrix = data?.Value;
-            if (matrix == null)
+            for (var column = 0; column < columns; column++)
             {
-                return null;
-            }
-
-            var rows = matrix.GetLength(0);
-            var columns = matrix.GetLength(1);
-
-            var qrCodeStreamGeometry = new StreamGeometry()
-            {
-                FillRule = FillRule.EvenOdd
-            };
-
-            using var context = qrCodeStreamGeometry.Open();
-
-            int? startingColumn = null;
-
-            for (var row = 0; row < rows; row++)
-            {
-                for (var column = 0; column < columns; column++)
+                if (matrix[row, column])
                 {
-                    if (matrix[row, column])
+                    if (startingColumn == null)
                     {
-                        if (startingColumn == null)
-                        {
-                            // Initialize starting column for current foreground color module.
-                            startingColumn = column;
-                        }
-
-                        // If this is the last foreground color module in current row, draw rectangle.
-                        if (column == columns - 1)
-                        {
-                            DrawRectGeometry(context, new Int32Rect(startingColumn.Value, row, column - startingColumn.Value + 1, 1));
-                            startingColumn = null;
-                        }
+                        // Initialize starting column for current foreground color module.
+                        startingColumn = column;
                     }
-                    else if (!matrix[row, column] && startingColumn != null)
+
+                    // If this is the last foreground color module in current row, draw rectangle.
+                    if (column == columns - 1)
                     {
-                        // This is the first background color module after a sequence of foreground color modules.
-                        // Draw rectangle for this sequence of foreground modules.
-                        DrawRectGeometry(context, new Int32Rect(startingColumn.Value, row, column - startingColumn.Value, 1));
+                        DrawRectGeometry(context, new Int32Rect(startingColumn.Value, row, column - startingColumn.Value + 1, 1));
                         startingColumn = null;
                     }
                 }
+                else if (!matrix[row, column] && startingColumn != null)
+                {
+                    // This is the first background color module after a sequence of foreground color modules.
+                    // Draw rectangle for this sequence of foreground modules.
+                    DrawRectGeometry(context, new Int32Rect(startingColumn.Value, row, column - startingColumn.Value, 1));
+                    startingColumn = null;
+                }
             }
-
-            qrCodeStreamGeometry.Freeze();
-
-            return qrCodeStreamGeometry;
         }
 
-        private static void DrawRectGeometry(StreamGeometryContext context, Int32Rect rect)
-        {
-            if (rect.IsEmpty)
-            {
-                return;
-            }
+        qrCodeStreamGeometry.Freeze();
 
-            context.BeginFigure(new Point(rect.X, rect.Y), true, true);
-            context.LineTo(new Point(rect.X, rect.Y + rect.Height), false, false);
-            context.LineTo(new Point(rect.X + rect.Width, rect.Y + rect.Height), false, false);
-            context.LineTo(new Point(rect.X + rect.Width, rect.Y), false, false);
-        }
-
-        private Path? _qrRath;
+        return qrCodeStreamGeometry;
     }
+
+    private static void DrawRectGeometry(StreamGeometryContext context, Int32Rect rect)
+    {
+        if (rect.IsEmpty)
+        {
+            return;
+        }
+
+        context.BeginFigure(new Point(rect.X, rect.Y), true, true);
+        context.LineTo(new Point(rect.X, rect.Y + rect.Height), false, false);
+        context.LineTo(new Point(rect.X + rect.Width, rect.Y + rect.Height), false, false);
+        context.LineTo(new Point(rect.X + rect.Width, rect.Y), false, false);
+    }
+
+    private Path? _qrRath;
 }

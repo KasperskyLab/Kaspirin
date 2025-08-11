@@ -12,59 +12,58 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using Kaspirin.UI.Framework.UiKit.Interactivity.Internals;
 using System;
+using Kaspirin.UI.Framework.UiKit.Interactivity.Internals;
 
-namespace Kaspirin.UI.Framework.UiKit.Interactivity
+namespace Kaspirin.UI.Framework.UiKit.Interactivity;
+
+public sealed class ConfirmationRequest : ConfirmationRequest<ConfirmationObject>
 {
-    public sealed class ConfirmationRequest : ConfirmationRequest<ConfirmationObject>
+    public new void Raise(ConfirmationObject confirmationObject)
     {
-        public new void Raise(ConfirmationObject confirmationObject)
-        {
-            Guard.ArgumentIsNotNull(confirmationObject);
+        Guard.ArgumentIsNotNull(confirmationObject);
 
-            base.Raise(confirmationObject);
-        }
+        base.Raise(confirmationObject);
+    }
 
-        public new void Raise(ConfirmationObject confirmationObject, Action? onConfirmed = null, Action? onCancelled = null)
-        {
-            Guard.ArgumentIsNotNull(confirmationObject);
+    public new void Raise(ConfirmationObject confirmationObject, Action? onConfirmed = null, Action? onCancelled = null)
+    {
+        Guard.ArgumentIsNotNull(confirmationObject);
 
-            base.Raise(confirmationObject, onConfirmed, onCancelled);
-        }
+        base.Raise(confirmationObject, onConfirmed, onCancelled);
+    }
 
-        public new void Raise(ConfirmationObject confirmationObject, Action<ConfirmationObject>? onConfirmed = null, Action<ConfirmationObject>? onCancelled = null)
-        {
-            Guard.ArgumentIsNotNull(confirmationObject);
+    public new void Raise(ConfirmationObject confirmationObject, Action<ConfirmationObject>? onConfirmed = null, Action<ConfirmationObject>? onCancelled = null)
+    {
+        Guard.ArgumentIsNotNull(confirmationObject);
 
-            base.Raise(confirmationObject, onConfirmed, onCancelled);
-        }
+        base.Raise(confirmationObject, onConfirmed, onCancelled);
+    }
 
-        public void Raise(Action onConfirmed, Action? onCancelled = null)
-        {
-            Guard.ArgumentIsNotNull(onConfirmed);
+    public void Raise(Action onConfirmed, Action? onCancelled = null)
+    {
+        Guard.ArgumentIsNotNull(onConfirmed);
 
-            base.Raise(new ConfirmationObject(), onConfirmed, onCancelled);
-        }
+        base.Raise(new ConfirmationObject(), onConfirmed, onCancelled);
+    }
 
-        public void Raise(object dataContext, Action onConfirmed, Action? onCancelled = null)
-        {
-            Guard.ArgumentIsNotNull(dataContext);
-            Guard.ArgumentIsNotNull(onConfirmed);
+    public void Raise(object dataContext, Action onConfirmed, Action? onCancelled = null)
+    {
+        Guard.ArgumentIsNotNull(dataContext);
+        Guard.ArgumentIsNotNull(onConfirmed);
 
-            var confirmationObject = new DataContextConfirmationObject(dataContext);
+        var confirmationObject = new DataContextConfirmationObject(dataContext);
 
-            base.Raise(confirmationObject, onConfirmed, onCancelled);
-        }
+        base.Raise(confirmationObject, onConfirmed, onCancelled);
+    }
 
-        public void Raise(object dataContext, Action<ConfirmationObject> onConfirmed, Action<ConfirmationObject>? onCancelled = null)
-        {
-            Guard.ArgumentIsNotNull(dataContext);
-            Guard.ArgumentIsNotNull(onConfirmed);
+    public void Raise(object dataContext, Action<ConfirmationObject> onConfirmed, Action<ConfirmationObject>? onCancelled = null)
+    {
+        Guard.ArgumentIsNotNull(dataContext);
+        Guard.ArgumentIsNotNull(onConfirmed);
 
-            var confirmationObject = new DataContextConfirmationObject(dataContext);
+        var confirmationObject = new DataContextConfirmationObject(dataContext);
 
-            base.Raise(confirmationObject, onConfirmed, onCancelled);
-        }
+        base.Raise(confirmationObject, onConfirmed, onCancelled);
     }
 }

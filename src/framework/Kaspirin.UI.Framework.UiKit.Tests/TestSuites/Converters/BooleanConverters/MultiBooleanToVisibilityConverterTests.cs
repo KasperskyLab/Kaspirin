@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using Kaspirin.UI.Framework.UiKit.Converters.BooleanConverters;
 using System;
 using System.Globalization;
 using System.Windows;
+using Kaspirin.UI.Framework.UiKit.Converters.BooleanConverters;
 
 namespace Kaspirin.UI.Framework.UiKit.Tests.TestSuites.Converters.BooleanConverters;
 

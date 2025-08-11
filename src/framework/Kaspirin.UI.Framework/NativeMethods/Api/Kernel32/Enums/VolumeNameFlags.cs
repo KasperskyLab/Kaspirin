@@ -12,23 +12,34 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-#pragma warning disable KCAIDE0002 // Enum has incorrect suffix
 
 using System;
 
-namespace Kaspirin.UI.Framework.NativeMethods.Api.Kernel32.Enums
+namespace Kaspirin.UI.Framework.NativeMethods.Api.Kernel32.Enums;
+
+/// <summary>
+///     <seealso href="https://learn.microsoft.com/en-us/windows/win32/api/fileapi/nf-fileapi-getfinalpathnamebyhandlew">Learn more</seealso>.
+/// </summary>
+[Flags]
+public enum VolumeNameFlags : uint
 {
     /// <summary>
-    ///     
-    /// <seealso href="https://learn.microsoft.com/en-us/windows/win32/api/fileapi/nf-fileapi-getfinalpathnamebyhandlew">Learn more</seealso>.
+    ///     The VOLUME_NAME_DOS constant.
     /// </summary>
-    [Flags]
-    public enum VolumeNameFlags : uint
-    {
-        VOLUME_NAME_DOS = 0x0,
-        VOLUME_NAME_GUID = 0x1,
-        VOLUME_NAME_NT = 0x2,
-        VOLUME_NAME_NONE = 0x4,
-    }
+    Dos = 0x0,
+
+    /// <summary>
+    ///     The VOLUME_NAME_GUID constant.
+    /// </summary>
+    Guid = 0x1,
+
+    /// <summary>
+    ///     The VOLUME_NAME_NT constant.
+    /// </summary>
+    Nt = 0x2,
+
+    /// <summary>
+    ///     The VOLUME_NAME_NONE constant.
+    /// </summary>
+    None = 0x4,
 }

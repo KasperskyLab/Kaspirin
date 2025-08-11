@@ -16,14 +16,12 @@
 
 using System;
 
-namespace Kaspirin.UI.Framework.NativeMethods.Api.User32.Constants
+namespace Kaspirin.UI.Framework.NativeMethods.Api.User32.Constants;
+
+/// <summary>
+///     <seealso href="https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-getguiresources">Learn more</seealso>.
+/// </summary>
+public static class KnownGetResourcePtr
 {
-    /// <summary>
-    ///     
-    /// <seealso href="https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-getguiresources">Learn more</seealso>.
-    /// </summary>
-    public static class KnownGetResourcePtr
-    {
-        public static readonly IntPtr GR_GLOBAL = new(-2);
-    }
+    public static readonly IntPtr GR_GLOBAL = new(-2);
 }

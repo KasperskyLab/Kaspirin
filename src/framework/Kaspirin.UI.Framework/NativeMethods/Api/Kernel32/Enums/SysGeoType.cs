@@ -12,33 +12,101 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
+namespace Kaspirin.UI.Framework.NativeMethods.Api.Kernel32.Enums;
 
-namespace Kaspirin.UI.Framework.NativeMethods.Api.Kernel32.Enums
+/// <summary>
+///     <seealso href="https://learn.microsoft.com/en-us/windows/win32/api/winnls/ne-winnls-sysgeotype">Learn more</seealso>.
+/// </summary>
+public enum SysGeoType : ushort
 {
+
     /// <summary>
-    ///     
-    /// <seealso href="https://learn.microsoft.com/en-us/windows/win32/api/winnls/ne-winnls-sysgeotype">Learn more</seealso>.
+    ///     The GEO_NATION constant.
     /// </summary>
-    public enum SysGeoType : ushort
-    {
-        GEO_NATION = 0x0001,
-        GEO_LATITUDE = 0x0002,
-        GEO_LONGITUDE = 0x0003,
-        GEO_ISO2 = 0x0004,
-        GEO_ISO3 = 0x0005,
-        GEO_RFC1766 = 0x0006,
-        GEO_LCID = 0x0007,
-        GEO_FRIENDLYNAME = 0x0008,
-        GEO_OFFICIALNAME = 0x0009,
-        GEO_TIMEZONES = 0x000A,
-        GEO_OFFICIALLANGUAGES = 0x000B,
-        GEO_ISO_UN_NUMBER = 0x000C,
-        GEO_PARENT = 0x000D,
-        GEO_DIALINGCODE = 0x000E,
-        GEO_CURRENCYCODE = 0x000F,
-        GEO_CURRENCYSYMBOL = 0x0010,
-        GEO_NAME = 0x0011,
-        GEO_ID = 0x0012,
-    }
+    Nation = 0x0001,
+
+    /// <summary>
+    ///     The GEO_LATITUDE constant.
+    /// </summary>
+    Latitude = 0x0002,
+
+    /// <summary>
+    ///     The GEO_LONGITUDE constant.
+    /// </summary>
+    Longitude = 0x0003,
+
+    /// <summary>
+    ///     The GEO_ISO2 constant.
+    /// </summary>
+    Iso2 = 0x0004,
+
+    /// <summary>
+    ///     The GEO_ISO3 constant.
+    /// </summary>
+    Iso3 = 0x0005,
+
+    /// <summary>
+    ///     The GEO_RFC1766 constant.
+    /// </summary>
+    Rfc1766 = 0x0006,
+
+    /// <summary>
+    ///     The GEO_LCID constant.
+    /// </summary>
+    Lcid = 0x0007,
+
+    /// <summary>
+    ///     The GEO_FRIENDLYNAME constant.
+    /// </summary>
+    FriendlyName = 0x0008,
+
+    /// <summary>
+    ///     The GEO_OFFICIALNAME constant.
+    /// </summary>
+    OfficialName = 0x0009,
+
+    /// <summary>
+    ///     The GEO_TIMEZONES constant.
+    /// </summary>
+    TimeZones = 0x000A,
+
+    /// <summary>
+    ///     The GEO_OFFICIALLANGUAGES constant.
+    /// </summary>
+    OfficialLanguages = 0x000B,
+
+    /// <summary>
+    ///     The GEO_ISO_UN_NUMBER constant.
+    /// </summary>
+    IsoUnNumber = 0x000C,
+
+    /// <summary>
+    ///     The GEO_PARENT constant.
+    /// </summary>
+    Parent = 0x000D,
+
+    /// <summary>
+    ///     The GEO_DIALINGCODE constant.
+    /// </summary>
+    DialingCode = 0x000E,
+
+    /// <summary>
+    ///     The GEO_CURRENCYCODE constant.
+    /// </summary>
+    CurrencyCode = 0x000F,
+
+    /// <summary>
+    ///     The GEO_CURRENCYSYMBOL constant.
+    /// </summary>
+    CurrencySymbol = 0x0010,
+
+    /// <summary>
+    ///     The GEO_NAME constant.
+    /// </summary>
+    Name = 0x0011,
+
+    /// <summary>
+    ///     The GEO_ID constant.
+    /// </summary>
+    Id = 0x0012,
 }

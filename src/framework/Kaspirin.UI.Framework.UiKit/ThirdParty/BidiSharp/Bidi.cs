@@ -13,6 +13,10 @@
 // Scope of modification: 
 //  - Added the ability to explicitly set BaseDirection in LogicalToVisual calls.
 
+// This file has been modified by AO Kaspersky Lab in 1/15/2025.
+// Scope of modification:
+//   - Suppress warnings.
+
 // Copyright (c) 2019 Fayyad Sufyan
 // BidiSharp: Bidirectional algorithm C# implementation
 // 
@@ -34,6 +38,11 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
+#pragma warning disable CA1502 // Rewrite or refactor the code to decrease its complexity below '26'.
+#pragma warning disable IDE1006 // Naming rule violation.
+#pragma warning disable IDE0010 // Populate switch.
+#pragma warning disable IDE0018 // Inline variable declaration.
+
 using System;
 using System.Collections.Generic;
 
@@ -51,7 +60,7 @@ namespace BidiSharp
             internal bool directionalIsolateStatus;
         }
 
-        private class IsolatingRunSequence
+        private sealed class IsolatingRunSequence
         {
             public byte level;
             public BidiClass sos;

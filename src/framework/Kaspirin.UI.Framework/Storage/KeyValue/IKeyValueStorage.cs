@@ -12,50 +12,49 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Kaspirin.UI.Framework.Storage.KeyValue
+namespace Kaspirin.UI.Framework.Storage.KeyValue;
+
+/// <summary>
+///     Interface for working with key-value storage.
+/// </summary>
+public interface IKeyValueStorage
 {
     /// <summary>
-    ///     Interface for working with key-value storage.
+    ///     Checks if there is a value for the specified key in the storage.
     /// </summary>
-    public interface IKeyValueStorage
-    {
-        /// <summary>
-        ///     Checks if there is a value for the specified key in the storage.
-        /// </summary>
-        /// <param name="key">
-        ///     The key for verification.
-        /// </param>
-        /// <returns>
-        ///     Returns <see langword="true" /> if the value is stored for the property, otherwise <see langword="false" />.
-        /// </returns>
-        bool HasValue(string key);
+    /// <param name="key">
+    ///     The key for verification.
+    /// </param>
+    /// <returns>
+    ///     Returns <see langword="true" /> if the value is stored for the property, otherwise <see langword="false" />.
+    /// </returns>
+    bool HasValue(string key);
 
-        /// <summary>
-        ///     Retrieves the value from the storage using the specified key.
-        /// </summary>
-        /// <param name="key">
-        ///     The key is for reading.
-        /// </param>
-        /// <param name="defaultValue">
-        ///     The default value.
-        /// </param>
-        /// <returns>
-        ///     The value from the repository, or <paramref name="defaultValue" /> if the key is not found.
-        /// </returns>
-        object? GetValue(string key, object? defaultValue);
+    /// <summary>
+    ///     Retrieves the value from the storage using the specified key.
+    /// </summary>
+    /// <param name="key">
+    ///     The key is for reading.
+    /// </param>
+    /// <param name="defaultValue">
+    ///     The default value.
+    /// </param>
+    /// <returns>
+    ///     The value from the repository, or <paramref name="defaultValue" /> if the key is not found.
+    /// </returns>
+    object? GetValue(string key, object? defaultValue);
 
-        /// <summary>
-        ///     Saves the value in the storage by the specified key.
-        /// </summary>
-        /// <param name="key">
-        ///     The key to save.
-        /// </param>
-        /// <param name="value">
-        ///     The stored value.
-        /// </param>
-        /// <returns>
-        ///     Returns <see langword="true" /> if the save was successful, otherwise <see langword="false" />.
-        /// </returns>
-        bool SetValue(string key, object value);
-    }
+    /// <summary>
+    ///     Saves the value in the storage by the specified key.
+    /// </summary>
+    /// <param name="key">
+    ///     The key to save.
+    /// </param>
+    /// <param name="value">
+    ///     The stored value.
+    /// </param>
+    /// <returns>
+    ///     Returns <see langword="true" /> if the save was successful, otherwise <see langword="false" />.
+    /// </returns>
+    bool SetValue(string key, object value);
 }

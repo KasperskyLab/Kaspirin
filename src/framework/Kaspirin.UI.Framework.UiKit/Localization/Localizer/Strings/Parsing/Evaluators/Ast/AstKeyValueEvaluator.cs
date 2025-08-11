@@ -14,33 +14,32 @@
 
 using System.Collections.Generic;
 
-namespace Kaspirin.UI.Framework.UiKit.Localization.Localizer.Strings.Parsing.Evaluators.Ast
+namespace Kaspirin.UI.Framework.UiKit.Localization.Localizer.Strings.Parsing.Evaluators.Ast;
+
+public sealed class AstKeyValueEvaluator : IKeyValueEvaluator<Item, Expression, Param, PluralFormExpression, Operand>
 {
-    public sealed class AstKeyValueEvaluator : IKeyValueEvaluator<Item, Expression, Param, PluralFormExpression, Operand>
+    public Item KeyValue(Token key, Token equals, Expression expression, Token? comment, Token? newLine) =>
+        new KeyValue(key, equals, expression, comment, newLine);
+    public bool ToItem(Token comment, Token newLine, out Item result)
     {
-        public Item KeyValue(Token key, Token equals, Expression expression, Token? comment, Token? newLine) =>
-            new KeyValue(key, equals, expression, comment, newLine);
-        public bool ToItem(Token comment, Token newLine, out Item result)
-        {
-            result = new Comment(comment, newLine);
-            return true;
-        }
-
-        public Operand StringLiteral(Token literal) => new StringLiteral(literal);
-
-        public Param Param(Token dollar, Token identifier) => new(dollar, identifier);
-
-        public Operand KeyRef(Token identifier) => new KeyRef(identifier);
-
-        public Operand PluralForm(
-            Token openingCurlyBrace,
-            Param param, Token colon,
-            IEnumerable<PluralFormExpression> pluralFormExpressions,
-            Token closingCurlyBrace) =>
-            new PluralForm(openingCurlyBrace, param, colon, pluralFormExpressions, closingCurlyBrace);
-
-        public PluralFormExpression PluralFormExpression(IEnumerable<Operand> operands) => new(operands);
-
-        public Expression Expression(IEnumerable<Operand> operands) => new(operands);
+        result = new Comment(comment, newLine);
+        return true;
     }
+
+    public Operand StringLiteral(Token literal) => new StringLiteral(literal);
+
+    public Param Param(Token dollar, Token identifier) => new(dollar, identifier);
+
+    public Operand KeyRef(Token identifier) => new KeyRef(identifier);
+
+    public Operand PluralForm(
+        Token openingCurlyBrace,
+        Param param, Token colon,
+        IEnumerable<PluralFormExpression> pluralFormExpressions,
+        Token closingCurlyBrace) =>
+        new PluralForm(openingCurlyBrace, param, colon, pluralFormExpressions, closingCurlyBrace);
+
+    public PluralFormExpression PluralFormExpression(IEnumerable<Operand> operands) => new(operands);
+
+    public Expression Expression(IEnumerable<Operand> operands) => new(operands);
 }

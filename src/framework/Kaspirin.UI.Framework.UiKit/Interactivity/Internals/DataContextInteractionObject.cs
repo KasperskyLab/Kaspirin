@@ -12,20 +12,19 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Kaspirin.UI.Framework.UiKit.Interactivity.Internals
+namespace Kaspirin.UI.Framework.UiKit.Interactivity.Internals;
+
+internal sealed class DataContextInteractionObject : InteractionObject
 {
-    internal class DataContextInteractionObject : InteractionObject
+    internal DataContextInteractionObject(object dataContext)
     {
-        internal DataContextInteractionObject(object dataContext)
-        {
-            _dataContext = dataContext;
-        }
-
-        public override object GetDataContext()
-        {
-            return _dataContext;
-        }
-
-        private readonly object _dataContext;
+        _dataContext = dataContext;
     }
+
+    public override object GetDataContext()
+    {
+        return _dataContext;
+    }
+
+    private readonly object _dataContext;
 }

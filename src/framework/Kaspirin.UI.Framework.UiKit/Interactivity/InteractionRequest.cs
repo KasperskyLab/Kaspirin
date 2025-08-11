@@ -12,69 +12,68 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using Kaspirin.UI.Framework.UiKit.Interactivity.Internals;
 using System;
+using Kaspirin.UI.Framework.UiKit.Interactivity.Internals;
 
-namespace Kaspirin.UI.Framework.UiKit.Interactivity
+namespace Kaspirin.UI.Framework.UiKit.Interactivity;
+
+public sealed class InteractionRequest : InteractionRequest<InteractionObject>
 {
-    public sealed class InteractionRequest : InteractionRequest<InteractionObject>
+    public void Raise()
     {
-        public void Raise()
-        {
-            base.Raise(new InteractionObject());
-        }
+        base.Raise(new InteractionObject());
+    }
 
-        public void Raise(Action onHandled)
-        {
-            Guard.ArgumentIsNotNull(onHandled);
+    public void Raise(Action onHandled)
+    {
+        Guard.ArgumentIsNotNull(onHandled);
 
-            base.Raise(new InteractionObject(), onHandled);
-        }
+        base.Raise(new InteractionObject(), onHandled);
+    }
 
-        public new void Raise(InteractionObject interactionObject)
-        {
-            Guard.ArgumentIsNotNull(interactionObject);
+    public new void Raise(InteractionObject interactionObject)
+    {
+        Guard.ArgumentIsNotNull(interactionObject);
 
-            base.Raise(interactionObject);
-        }
+        base.Raise(interactionObject);
+    }
 
-        public new void Raise(InteractionObject interactionObject, Action onHandled)
-        {
-            Guard.ArgumentIsNotNull(interactionObject);
-            Guard.ArgumentIsNotNull(onHandled);
+    public new void Raise(InteractionObject interactionObject, Action onHandled)
+    {
+        Guard.ArgumentIsNotNull(interactionObject);
+        Guard.ArgumentIsNotNull(onHandled);
 
-            base.Raise(interactionObject, onHandled);
-        }
+        base.Raise(interactionObject, onHandled);
+    }
 
-        public new void Raise(InteractionObject interactionObject, Action<InteractionObject> onHandled)
-        {
-            Guard.ArgumentIsNotNull(interactionObject);
-            Guard.ArgumentIsNotNull(onHandled);
+    public new void Raise(InteractionObject interactionObject, Action<InteractionObject> onHandled)
+    {
+        Guard.ArgumentIsNotNull(interactionObject);
+        Guard.ArgumentIsNotNull(onHandled);
 
-            base.Raise(interactionObject, onHandled);
-        }
+        base.Raise(interactionObject, onHandled);
+    }
 
-        public void Raise(object dataContext)
-        {
-            Guard.ArgumentIsNotNull(dataContext);
+    public void Raise(object dataContext)
+    {
+        Guard.ArgumentIsNotNull(dataContext);
 
-            base.Raise(new DataContextInteractionObject(dataContext));
-        }
+        base.Raise(new DataContextInteractionObject(dataContext));
+    }
 
-        public void Raise(object dataContext, Action onHandled)
-        {
-            Guard.ArgumentIsNotNull(dataContext);
-            Guard.ArgumentIsNotNull(onHandled);
+    public void Raise(object dataContext, Action onHandled)
+    {
+        Guard.ArgumentIsNotNull(dataContext);
+        Guard.ArgumentIsNotNull(onHandled);
 
-            base.Raise(new DataContextInteractionObject(dataContext), onHandled);
-        }
+        base.Raise(new DataContextInteractionObject(dataContext), onHandled);
+    }
 
-        public void Raise(object dataContext, Action<InteractionObject> onHandled)
-        {
-            Guard.ArgumentIsNotNull(dataContext);
-            Guard.ArgumentIsNotNull(onHandled);
+    public void Raise(object dataContext, Action<InteractionObject> onHandled)
+    {
+        Guard.ArgumentIsNotNull(dataContext);
+        Guard.ArgumentIsNotNull(onHandled);
 
-            base.Raise(new DataContextInteractionObject(dataContext), onHandled);
-        }
+        base.Raise(new DataContextInteractionObject(dataContext), onHandled);
     }
 }

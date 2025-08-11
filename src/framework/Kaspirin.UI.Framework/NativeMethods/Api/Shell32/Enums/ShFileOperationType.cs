@@ -12,19 +12,30 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
+namespace Kaspirin.UI.Framework.NativeMethods.Api.Shell32.Enums;
 
-namespace Kaspirin.UI.Framework.NativeMethods.Api.Shell32.Enums
+/// <summary>
+///     <seealso href="https://learn.microsoft.com/en-us/windows/win32/api/shellapi/ns-shellapi-shfileopstructa">Learn more</seealso>.
+/// </summary>
+public enum ShFileOperationType : uint
 {
     /// <summary>
-    ///     
-    /// <seealso href="https://learn.microsoft.com/en-us/windows/win32/api/shellapi/ns-shellapi-shfileopstructa">Learn more</seealso>.
+    ///     The FO_MOVE constant.
     /// </summary>
-    public enum ShFileOperationType : uint
-    {
-        FO_MOVE = 1,
-        FO_COPY = 2,
-        FO_DELETE = 3,
-        FO_RENAME = 4,
-    }
+    Move = 1,
+
+    /// <summary>
+    ///     The FO_COPY constant.
+    /// </summary>
+    Copy = 2,
+
+    /// <summary>
+    ///     The FO_DELETE constant.
+    /// </summary>
+    Delete = 3,
+
+    /// <summary>
+    ///     The FO_RENAME constant.
+    /// </summary>
+    Rename = 4,
 }

@@ -14,13 +14,12 @@
 
 using System.Windows.Input;
 
-namespace Kaspirin.UI.Framework.UiKit.Input.Shortcuts
+namespace Kaspirin.UI.Framework.UiKit.Input.Shortcuts;
+
+public static class WindowShortcuts
 {
-    public static class WindowShortcuts
-    {
-        public static WindowShortcut Search { get; } = new WindowShortcut(
-            name: nameof(Search),
-            description: "Application Search",
-            new Shortcut(Key.F, ModifierKeys.Control));
-    }
+    public static WindowShortcut Search { get; } = new WindowShortcut(
+        name: nameof(Search),
+        description: "Application Search",
+        new Shortcut(Key.F, ModifierKeys.Control));
 }

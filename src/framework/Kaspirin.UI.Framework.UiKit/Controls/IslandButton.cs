@@ -15,31 +15,30 @@
 using System.Windows;
 using System.Windows.Controls.Primitives;
 
-namespace Kaspirin.UI.Framework.UiKit.Controls
+namespace Kaspirin.UI.Framework.UiKit.Controls;
+
+public sealed class IslandButton : ButtonBase
 {
-    public class IslandButton : ButtonBase
+    public IslandButton()
     {
-        public IslandButton()
-        {
-            UIKitIslandHelper.Initialize(this);
-        }
-
-        #region Level
-
-        public IslandLevel Level => (IslandLevel)GetValue(LevelProperty);
-
-        public static readonly DependencyProperty LevelProperty =
-            UIKitIslandHelper.LevelPropertyKey.DependencyProperty.AddOwner(typeof(IslandButton));
-
-        #endregion
-
-        #region Type
-
-        public IslandType Type => (IslandType)GetValue(TypeProperty);
-
-        public static readonly DependencyProperty TypeProperty =
-            UIKitIslandHelper.TypePropertyKey.DependencyProperty.AddOwner(typeof(IslandButton));
-
-        #endregion
+        UIKitIslandHelper.Initialize(this);
     }
+
+    #region Level
+
+    public IslandLevel Level => (IslandLevel)GetValue(LevelProperty);
+
+    public static readonly DependencyProperty LevelProperty =
+        UIKitIslandHelper.LevelPropertyKey.DependencyProperty.AddOwner(typeof(IslandButton));
+
+    #endregion
+
+    #region Type
+
+    public IslandType Type => (IslandType)GetValue(TypeProperty);
+
+    public static readonly DependencyProperty TypeProperty =
+        UIKitIslandHelper.TypePropertyKey.DependencyProperty.AddOwner(typeof(IslandButton));
+
+    #endregion
 }

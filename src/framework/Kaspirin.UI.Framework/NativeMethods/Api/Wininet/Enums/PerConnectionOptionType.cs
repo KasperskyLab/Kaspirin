@@ -12,18 +12,25 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
+namespace Kaspirin.UI.Framework.NativeMethods.Api.Wininet.Enums;
 
-namespace Kaspirin.UI.Framework.NativeMethods.Api.Wininet.Enums
+/// <summary>
+///     <seealso href="https://learn.microsoft.com/en-us/windows/win32/api/wininet/ns-wininet-internet_per_conn_optiona">Learn more</seealso>.
+/// </summary>
+public enum PerConnectionOptionType
 {
     /// <summary>
-    ///     
-    /// <seealso href="https://learn.microsoft.com/en-us/windows/win32/api/wininet/ns-wininet-internet_per_conn_optiona">Learn more</seealso>.
+    ///     The INTERNET_PER_CONN_FLAGS constant.
     /// </summary>
-    public enum PerConnectionOptionType
-    {
-        INTERNET_PER_CONN_FLAGS = 1,
-        INTERNET_PER_CONN_PROXY_SERVER = 2,
-        INTERNET_PER_CONN_PROXY_BYPASS = 3,
-    }
+    Flags = 1,
+
+    /// <summary>
+    ///     The INTERNET_PER_CONN_PROXY_SERVER constant.
+    /// </summary>
+    ProxyServer = 2,
+
+    /// <summary>
+    ///     The INTERNET_PER_CONN_PROXY_BYPASS constant.
+    /// </summary>
+    ProxyBypass = 3,
 }

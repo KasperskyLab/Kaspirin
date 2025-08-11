@@ -4,10 +4,16 @@
 // Scope of modification:
 //   - Code adaptation to project requirements.
 
+// This file has been modified by AO Kaspersky Lab in 1/15/2025.
+// Scope of modification:
+//   - Suppress warnings.
+
 // Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-#nullable disable
+#pragma warning disable CS8605 // Unboxing a possibly null value.
+#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor.
+#pragma warning disable IDE0010 // Populate switch.
 
 using System.Collections;
 
@@ -33,6 +39,7 @@ namespace Kaspirin.UI.Framework.UiKit.ThirdParty.HtmlUtils
         ///     that hold the elements in various sub-components of the schema
         ///     e.g _htmlEmptyElements, etc.
         /// </summary>
+
         static HtmlSchema()
         {
             // initializes the list of all html elements
@@ -205,7 +212,7 @@ namespace Kaspirin.UI.Framework.UiKit.ThirdParty.HtmlUtils
 
         private static void InitializeInlineElements()
         {
-            _htmlInlineElements = new ArrayList
+            _htmlInlineElements = new()
             {
                 "a",
                 "abbr",
@@ -253,7 +260,7 @@ namespace Kaspirin.UI.Framework.UiKit.ThirdParty.HtmlUtils
 
         private static void InitializeBlockElements()
         {
-            _htmlBlockElements = new ArrayList
+            _htmlBlockElements = new()
             {
                 "blockquote",
                 "body",
@@ -304,7 +311,7 @@ namespace Kaspirin.UI.Framework.UiKit.ThirdParty.HtmlUtils
         {
             // Build a list of empty (no-scope) elements 
             // (element not requiring closing tags, and not accepting any content)
-            _htmlEmptyElements = new ArrayList
+            _htmlEmptyElements = new()
             {
                 "area",
                 "base",
@@ -330,7 +337,7 @@ namespace Kaspirin.UI.Framework.UiKit.ThirdParty.HtmlUtils
             // Presence in this list will allow to open
             // elements during html parsing, and adding the
             // to a tree produced by html parser.
-            _htmlOtherOpenableElements = new ArrayList
+            _htmlOtherOpenableElements = new()
             {
                 "applet",
                 "base",
@@ -362,7 +369,7 @@ namespace Kaspirin.UI.Framework.UiKit.ThirdParty.HtmlUtils
         /// </summary>
         private static void InitializeElementsClosingOnParentElementEnd()
         {
-            _htmlElementsClosingOnParentElementEnd = new ArrayList
+            _htmlElementsClosingOnParentElementEnd = new()
             {
                 "body",
                 "colgroup",
@@ -383,25 +390,25 @@ namespace Kaspirin.UI.Framework.UiKit.ThirdParty.HtmlUtils
 
         private static void InitializeElementsClosingOnNewElementStart()
         {
-            _htmlElementsClosingColgroup = new ArrayList { "colgroup", "tr", "thead", "tfoot", "tbody" };
+            _htmlElementsClosingColgroup = new() { "colgroup", "tr", "thead", "tfoot", "tbody" };
 
-            _htmlElementsClosingDd = new ArrayList { "dd", "dt" };
+            _htmlElementsClosingDd = new() { "dd", "dt" };
             // TODO: dd may end in other cases as well - if a new "p" starts, etc.
             // TODO: these are the basic "legal" cases but there may be more recovery
 
-            _htmlElementsClosingDt = new ArrayList();
+            _htmlElementsClosingDt = new();
             _htmlElementsClosingDd.Add("dd");
             _htmlElementsClosingDd.Add("dt");
             // TODO: dd may end in other cases as well - if a new "p" starts, etc.
             // TODO: these are the basic "legal" cases but there may be more recovery
 
-            _htmlElementsClosingLi = new ArrayList { "li" };
+            _htmlElementsClosingLi = new() { "li" };
             // TODO: more complex recovery
 
-            _htmlElementsClosingTbody = new ArrayList { "tbody", "thead", "tfoot" };
+            _htmlElementsClosingTbody = new() { "tbody", "thead", "tfoot" };
             // TODO: more complex recovery
 
-            _htmlElementsClosingTr = new ArrayList { "thead", "tfoot", "tbody", "tr" };
+            _htmlElementsClosingTr = new() { "thead", "tfoot", "tbody", "tr" };
             // NOTE: tr should not really close on a new thead
             // because if there are rows before a thead, it is assumed to be in tbody, whose start tag is optional
             // and thead can't come after tbody
@@ -409,16 +416,16 @@ namespace Kaspirin.UI.Framework.UiKit.ThirdParty.HtmlUtils
             // it as part of the table
             // TODO: more complex recovery
 
-            _htmlElementsClosingTd = new ArrayList { "td", "th", "tr", "tbody", "tfoot", "thead" };
+            _htmlElementsClosingTd = new() { "td", "th", "tr", "tbody", "tfoot", "thead" };
             // TODO: more complex recovery
 
-            _htmlElementsClosingTh = new ArrayList { "td", "th", "tr", "tbody", "tfoot", "thead" };
+            _htmlElementsClosingTh = new() { "td", "th", "tr", "tbody", "tfoot", "thead" };
             // TODO: more complex recovery
 
-            _htmlElementsClosingThead = new ArrayList { "tbody", "tfoot" };
+            _htmlElementsClosingThead = new() { "tbody", "tfoot" };
             // TODO: more complex recovery
 
-            _htmlElementsClosingTfoot = new ArrayList { "tbody", "thead" };
+            _htmlElementsClosingTfoot = new() { "tbody", "thead" };
             // although thead comes before tfoot, we add it because if it is found the tfoot should close
             // and some recovery processing be done on the thead
             // TODO: more complex recovery

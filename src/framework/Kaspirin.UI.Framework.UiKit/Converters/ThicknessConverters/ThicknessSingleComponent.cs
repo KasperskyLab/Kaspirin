@@ -12,13 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Kaspirin.UI.Framework.UiKit.Converters.ThicknessConverters
+namespace Kaspirin.UI.Framework.UiKit.Converters.ThicknessConverters;
+
+public enum ThicknessSingleComponent
 {
-    public enum ThicknessSingleComponent
-    {
-        Left,
-        Top,
-        Right,
-        Bottom
-    }
+    Left,
+    Top,
+    Right,
+    Bottom
 }

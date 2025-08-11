@@ -16,38 +16,37 @@ using System;
 using System.Linq.Expressions;
 using System.Windows.Input;
 
-namespace Kaspirin.UI.Framework.Mvvm
+namespace Kaspirin.UI.Framework.Mvvm;
+
+/// <summary>
+///     Provides an implementation of <see cref="ICommand" /> for performing actions using delegates,
+///     which automatically monitors all properties used in the expression for <see cref="CanExecute" />.
+///     This class automatically calls <see cref="ObservableCommand.RaiseCanExecuteChanged" /> every
+///     time these properties are changed.
+/// </summary>
+/// <remarks>
+///     For details and examples, see <see cref="ObservableCommand" />.
+/// </remarks>
+/// <typeparam name="T">
+///     The type of parameter passed to the delegates.
+/// </typeparam>
+public sealed class ObservableCommand<T> : ObservableCommand
 {
-    /// <summary>
-    ///     Provides an implementation of <see cref="ICommand" /> for performing actions using delegates,
-    ///     which automatically monitors all properties used in the expression for <see cref="CanExecute" />.
-    ///     This class automatically calls <see cref="ObservableCommand.RaiseCanExecuteChanged" /> every
-    ///     time these properties are changed.
-    /// </summary>
-    /// <remarks>
-    ///     For details and examples, see <see cref="ObservableCommand" />.
-    /// </remarks>
-    /// <typeparam name="T">
-    ///     The type of parameter passed to the delegates.
-    /// </typeparam>
-    public sealed class ObservableCommand<T> : ObservableCommand
+    /// <inheritdoc cref="ObservableCommand(Action, Expression{Func{bool}})"/>
+    public ObservableCommand(Action<T?> executeAction, Expression<Func<T?, bool>> canExecuteExpression)
+        : base(
+            o => Guard.EnsureArgumentIsNotNull(executeAction)((T?)o),
+            Expression.Lambda<Func<object?, bool>>(
+                Guard.EnsureArgumentIsNotNull(canExecuteExpression).Body,
+                Expression.Parameter(typeof(object), "o")))
     {
-        /// <inheritdoc cref="ObservableCommand(Action, Expression{Func{bool}})"/>
-        public ObservableCommand(Action<T?> executeAction, Expression<Func<T?, bool>> canExecuteExpression)
-            : base(
-                o => Guard.EnsureArgumentIsNotNull(executeAction)((T?)o),
-                Expression.Lambda<Func<object?, bool>>(
-                    Guard.EnsureArgumentIsNotNull(canExecuteExpression).Body,
-                    Expression.Parameter(typeof(object), "o")))
-        {
-        }
-
-        /// <inheritdoc cref="ObservableCommand.CanExecute()"/>
-        public bool CanExecute(T parameter)
-            => CanExecute((object?)parameter);
-
-        /// <inheritdoc cref="ObservableCommand.Execute()"/>
-        public void Execute(T parameter)
-            => Execute((object?)parameter);
     }
+
+    /// <inheritdoc cref="ObservableCommand.CanExecute()"/>
+    public bool CanExecute(T parameter)
+        => CanExecute((object?)parameter);
+
+    /// <inheritdoc cref="ObservableCommand.Execute()"/>
+    public void Execute(T parameter)
+        => Execute((object?)parameter);
 }

@@ -16,34 +16,39 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 
-namespace Kaspirin.UI.Framework.UiKit.Controls
+namespace Kaspirin.UI.Framework.UiKit.Controls;
+
+public sealed class Bullet : ContentControl
 {
-    public sealed class Bullet : ContentControl
+    #region Icon
+
+    public UIKitIcon_12 Icon
     {
-        #region Icon
-
-        public UIKitIcon_12 Icon
-        {
-            get { return (UIKitIcon_12)GetValue(IconProperty); }
-            set { SetValue(IconProperty, value); }
-        }
-
-        public static readonly DependencyProperty IconProperty =
-            DependencyProperty.Register("Icon", typeof(UIKitIcon_12), typeof(Bullet));
-
-        #endregion
-
-        #region IconBrush
-
-        public Brush? IconBrush
-        {
-            get { return (Brush?)GetValue(IconBrushProperty); }
-            set { SetValue(IconBrushProperty, value); }
-        }
-
-        public static readonly DependencyProperty IconBrushProperty =
-            DependencyProperty.Register("IconBrush", typeof(Brush), typeof(Bullet));
-
-        #endregion
+        get => (UIKitIcon_12)GetValue(IconProperty);
+        set => SetValue(IconProperty, value);
     }
+
+    public static readonly DependencyProperty IconProperty = DependencyProperty.Register(
+        nameof(Icon),
+        typeof(UIKitIcon_12),
+        typeof(Bullet),
+        new PropertyMetadata(default(UIKitIcon_12)));
+
+    #endregion
+
+    #region IconBrush
+
+    public Brush? IconBrush
+    {
+        get => (Brush?)GetValue(IconBrushProperty);
+        set => SetValue(IconBrushProperty, value);
+    }
+
+    public static readonly DependencyProperty IconBrushProperty = DependencyProperty.Register(
+        nameof(IconBrush),
+        typeof(Brush),
+        typeof(Bullet),
+        new PropertyMetadata(default(Brush)));
+
+    #endregion
 }

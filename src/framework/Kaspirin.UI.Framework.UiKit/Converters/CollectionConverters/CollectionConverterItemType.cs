@@ -12,21 +12,20 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Kaspirin.UI.Framework.UiKit.Converters.CollectionConverters
+namespace Kaspirin.UI.Framework.UiKit.Converters.CollectionConverters;
+
+public enum CollectionConverterItemType
 {
-    public enum CollectionConverterItemType
-    {
-        Any,
-        Int32,
-        Int32Nullable,
-        Int64,
-        Int64Nullable,
-        UInt32,
-        UInt32Nullable,
-        UInt64,
-        UInt64Nullable,
-        Double,
-        DoubleNullable,
-        String
-    }
+    Any,
+    Int32,
+    Int32Nullable,
+    Int64,
+    Int64Nullable,
+    UInt32,
+    UInt32Nullable,
+    UInt64,
+    UInt64Nullable,
+    Double,
+    DoubleNullable,
+    String
 }

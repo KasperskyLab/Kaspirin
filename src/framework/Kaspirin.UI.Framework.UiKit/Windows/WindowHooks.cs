@@ -12,11 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Kaspirin.UI.Framework.UiKit.Windows
+namespace Kaspirin.UI.Framework.UiKit.Windows;
+
+public static class WindowHooks
 {
-    public static class WindowHooks
-    {
-        public static string PositionOrSizeChangedHook { get; } = "PositionOrSizeChangedHook";
-        public static string DpiDisplayChangedHook { get; } = "DpiDisplayChangedHook";
-    }
+    public static string PositionOrSizeChangedHook { get; } = "PositionOrSizeChangedHook";
+    public static string DpiDisplayChangedHook { get; } = "DpiDisplayChangedHook";
 }

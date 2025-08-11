@@ -12,18 +12,25 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
+namespace Kaspirin.UI.Framework.NativeMethods.Api.Advapi32.Enums;
 
-namespace Kaspirin.UI.Framework.NativeMethods.Api.Advapi32.Enums
+/// <summary>
+///     <seealso href="https://learn.microsoft.com/en-us/windows/win32/api/wincred/ns-wincred-credentiala">Learn more</seealso>.
+/// </summary>
+public enum CredentialPersist
 {
     /// <summary>
-    ///     
-    /// <seealso href="https://learn.microsoft.com/en-us/windows/win32/api/wincred/ns-wincred-credentiala">Learn more</seealso>.
+    ///     The CRED_PERSIST_SESSION constant.
     /// </summary>
-    public enum CredentialPersist
-    {
-        CRED_PERSIST_SESSION = 1,
-        CRED_PERSIST_LOCAL_MACHINE = 2,
-        CRED_PERSIST_ENTERPRISE = 3,
-    }
+    Session = 1,
+
+    /// <summary>
+    ///     The CRED_PERSIST_LOCAL_MACHINE constant.
+    /// </summary>
+    LocalMachine = 2,
+
+    /// <summary>
+    ///     The CRED_PERSIST_ENTERPRISE constant.
+    /// </summary>
+    Enterprise = 3,
 }

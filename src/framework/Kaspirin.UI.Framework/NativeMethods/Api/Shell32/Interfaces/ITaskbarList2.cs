@@ -17,37 +17,35 @@
 using System;
 using System.Runtime.InteropServices;
 
-namespace Kaspirin.UI.Framework.NativeMethods.Api.Shell32.Interfaces
+namespace Kaspirin.UI.Framework.NativeMethods.Api.Shell32.Interfaces;
+
+/// <summary>
+///     <seealso href="https://learn.microsoft.com/en-us/windows/win32/api/shobjidl_core/nn-shobjidl_core-itaskbarlist2">Learn more</seealso>.
+/// </summary>
+[ComImport]
+[InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+[Guid(ShlGuids.IidITaskbarList2)]
+public interface ITaskbarList2 : ITaskbarList
 {
-    /// <summary>
-    ///     
-    /// <seealso href="https://learn.microsoft.com/en-us/windows/win32/api/shobjidl_core/nn-shobjidl_core-itaskbarlist2">Learn more</seealso>.
-    /// </summary>
-    [ComImport]
-    [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
-    [Guid(ShlGuids.IidITaskbarList2)]
-    public interface ITaskbarList2 : ITaskbarList
-    {
-        #region ITaskbarList redeclaration
+    #region ITaskbarList redeclaration
 
-        new void HrInit();
+    new void HrInit();
 
-        new void AddTab(
-            IntPtr hwnd);
+    new void AddTab(
+        IntPtr hwnd);
 
-        new void DeleteTab(
-            IntPtr hwnd);
+    new void DeleteTab(
+        IntPtr hwnd);
 
-        new void ActivateTab(
-            IntPtr hwnd);
+    new void ActivateTab(
+        IntPtr hwnd);
 
-        new void SetActiveAlt(
-            IntPtr hwnd);
+    new void SetActiveAlt(
+        IntPtr hwnd);
 
-        #endregion
+    #endregion
 
-        void MarkFullscreenWindow(
-            IntPtr hwnd,
-            [MarshalAs(UnmanagedType.Bool)] bool fFullscreen);
-    }
+    void MarkFullscreenWindow(
+        IntPtr hwnd,
+        [MarshalAs(UnmanagedType.Bool)] bool fFullscreen);
 }

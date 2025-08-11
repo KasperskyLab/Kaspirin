@@ -12,58 +12,88 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+
 using System;
+using System.Collections.Concurrent;
 using System.Linq;
 
-namespace Kaspirin.UI.Framework.UiKit.Localization.Localizer
+namespace Kaspirin.UI.Framework.UiKit.Localization.Localizer;
+
+public class LocalizerFactory
 {
-    public sealed class LocalizerFactory : LocalizerFactoryBase
+    public LocalizerFactory(LocalizerParameterFactory parameterFactory)
     {
-        public LocalizerFactory(LocalizerParameterFactory parameterFactory)
-        {
-            _parameterFactory = Guard.EnsureArgumentIsNotNull(parameterFactory);
-        }
-
-        protected override ILocalizer CreateLocalizer(string scope, Type type)
-        {
-            Guard.ArgumentIsNotNull(scope);
-            Guard.ArgumentIsNotNull(scope);
-
-            var parameters = _parameterFactory.Resolve(scope, type);
-
-            if (type == typeof(IStringLocalizer))
-            {
-                var fallback = parameters.Scope.FallbackScope;
-
-                return scope == fallback
-                    ? new StringLocalizer(parameters)
-                    : new StringLocalizer(parameters, (StringLocalizer)Resolve(fallback, typeof(IStringLocalizer)));
-            }
-
-            if (type == typeof(IXamlLocalizer))
-            {
-                return new XamlLocalizer(parameters);
-            }
-
-            if (type == typeof(IImageLocalizer))
-            {
-                return new ImageLocalizer(parameters);
-            }
-
-            if (type == typeof(IFileLocalizer))
-            {
-                return new FileLocalizer(parameters);
-            }
-
-            var localizerInterface = type.GetInterfaces().FirstOrDefault(i => typeof(ILocalizer).IsAssignableFrom(i) && i != typeof(ILocalizer));
-            if (localizerInterface != null)
-            {
-                return CreateLocalizer(scope, localizerInterface);
-            }
-
-            throw new LocException($"Failed to create localizer. Unknown type {type}");
-        }
-
-        private readonly LocalizerParameterFactory _parameterFactory;
+        _parameterFactory = Guard.EnsureArgumentIsNotNull(parameterFactory);
     }
+
+    public TLocalizer Resolve<TLocalizer>(string scope) where TLocalizer : ILocalizer
+    {
+        Guard.ArgumentIsNotNull(scope);
+
+        return (TLocalizer)Resolve(scope, typeof(TLocalizer));
+    }
+
+    public ILocalizer Resolve(string scope, Type localizerType)
+    {
+        Guard.ArgumentIsNotNull(scope);
+        Guard.ArgumentIsNotNull(localizerType);
+
+        var key = CreateLocalizerKey(scope, localizerType);
+
+        return _localizerCache.GetOrAdd(key, key =>
+        {
+            var parameters = _parameterFactory.Resolve(scope, localizerType);
+
+            return CreateLocalizer(parameters, localizerType);
+        });
+    }
+
+    public void ResetCache()
+    {
+        _localizerCache.Values.ToList().ForEach(l => l.ResetCache());
+    }
+
+    protected virtual LocalizerKey CreateLocalizerKey(string scope, Type localizerType)
+    {
+        return new LocalizerKey(scope, localizerType);
+    }
+
+    protected virtual ILocalizer CreateLocalizer(LocalizerParameters parameters, Type localizerType)
+    {
+        if (localizerType == typeof(IStringLocalizer))
+        {
+            var scope = parameters.Scope.Scope;
+            var fallback = parameters.Scope.FallbackScope;
+
+            return scope.Equals(fallback, StringComparison.OrdinalIgnoreCase)
+                ? new StringLocalizer(parameters)
+                : new StringLocalizer(parameters, (StringLocalizer)Resolve(fallback, typeof(IStringLocalizer)));
+        }
+
+        if (localizerType == typeof(IXamlLocalizer))
+        {
+            return new XamlLocalizer(parameters);
+        }
+
+        if (localizerType == typeof(IImageLocalizer))
+        {
+            return new ImageLocalizer(parameters);
+        }
+
+        if (localizerType == typeof(IFileLocalizer))
+        {
+            return new FileLocalizer(parameters);
+        }
+
+        var localizerInterface = localizerType.GetInterfaces().FirstOrDefault(i => typeof(ILocalizer).IsAssignableFrom(i) && i != typeof(ILocalizer));
+        if (localizerInterface != null)
+        {
+            return CreateLocalizer(parameters, localizerInterface);
+        }
+
+        throw new LocException($"Failed to create localizer. Unknown type {localizerType}");
+    }
+
+    private readonly ConcurrentDictionary<LocalizerKey, ILocalizer> _localizerCache = new();
+    private readonly LocalizerParameterFactory _parameterFactory;
 }

@@ -16,19 +16,20 @@ using System;
 using System.Globalization;
 using System.Windows;
 
-namespace Kaspirin.UI.Framework.UiKit.Converters.NumberConverters
-{
-    public sealed class MultiplierConverter : ValueConverterMarkupExtension<MultiplierConverter>
-    {
-        public double Factor { get; set; } = 1;
+using ConvertTo = System.Convert;
 
-        public override object Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
+namespace Kaspirin.UI.Framework.UiKit.Converters.NumberConverters;
+
+public sealed class MultiplierConverter : ValueConverterMarkupExtension<MultiplierConverter>
+{
+    public double Factor { get; set; } = 1;
+
+    public override object Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
+    {
+        return value switch
         {
-            return value switch
-            {
-                null or not IConvertible => DependencyProperty.UnsetValue,
-                _ => System.Convert.ToDouble(value) * Factor
-            };
-        }
+            null or not IConvertible => DependencyProperty.UnsetValue,
+            _ => ConvertTo.ToDouble(value) * Factor
+        };
     }
 }

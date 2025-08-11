@@ -65,16 +65,16 @@
 			<xs:element name="ForegroundRed" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
 			<xs:element name="ForegroundViolet" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
 			<xs:element name="ForegroundYellow" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
-			<xs:element name="IconForegroundEmerald" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
-			<xs:element name="IconForegroundGrass" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
-			<xs:element name="IconForegroundMarina" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
-			<xs:element name="IconForegroundMarengo" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
-			<xs:element name="IconForegroundNeutral" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
-			<xs:element name="IconForegroundOrange" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
-			<xs:element name="IconForegroundPurple" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
-			<xs:element name="IconForegroundRed" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
-			<xs:element name="IconForegroundViolet" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
-			<xs:element name="IconForegroundYellow" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="IconBrushEmerald" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="IconBrushGrass" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="IconBrushMarina" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="IconBrushMarengo" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="IconBrushNeutral" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="IconBrushOrange" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="IconBrushPurple" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="IconBrushRed" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="IconBrushViolet" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="IconBrushYellow" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
 			<xs:element name="IconMargin" type="Thickness" minOccurs="1" maxOccurs="1"/>
 			<xs:element name="Padding" type="Thickness" minOccurs="1" maxOccurs="1"/>
 		</xs:all>

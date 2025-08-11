@@ -51,16 +51,16 @@
 				<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 									xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
-					<!--ArrowIconForeground-->
+					<!--ArrowIconBrush-->
 					<xsl:call-template name="generateBrush">
-						<xsl:with-param name="key">ArrowIconForeground</xsl:with-param>
-						<xsl:with-param name="brushNode" select="ArrowIconForeground"/>
+						<xsl:with-param name="key">ArrowIconBrush</xsl:with-param>
+						<xsl:with-param name="brushNode" select="ArrowIconBrush"/>
 					</xsl:call-template>
 
-					<!--ArrowIconForegroundDisabled-->
+					<!--ArrowIconBrushDisabled-->
 					<xsl:call-template name="generateBrush">
-						<xsl:with-param name="key">ArrowIconForegroundDisabled</xsl:with-param>
-						<xsl:with-param name="brushNode" select="ArrowIconForegroundDisabled"/>
+						<xsl:with-param name="key">ArrowIconBrushDisabled</xsl:with-param>
+						<xsl:with-param name="brushNode" select="ArrowIconBrushDisabled"/>
 					</xsl:call-template>
 
 					<!--BackgroundDisabled-->
@@ -153,16 +153,16 @@
 						<xsl:with-param name="brushNode" select="CaretBrush"/>
 					</xsl:call-template>
 
-					<!--IconForeground-->
+					<!--IconBrush-->
 					<xsl:call-template name="generateBrush">
-						<xsl:with-param name="key">IconForeground</xsl:with-param>
-						<xsl:with-param name="brushNode" select="IconForeground"/>
+						<xsl:with-param name="key">IconBrush</xsl:with-param>
+						<xsl:with-param name="brushNode" select="IconBrush"/>
 					</xsl:call-template>
 
-					<!--IconForegroundDisabled-->
+					<!--IconBrushDisabled-->
 					<xsl:call-template name="generateBrush">
-						<xsl:with-param name="key">IconForegroundDisabled</xsl:with-param>
-						<xsl:with-param name="brushNode" select="IconForegroundDisabled"/>
+						<xsl:with-param name="key">IconBrushDisabled</xsl:with-param>
+						<xsl:with-param name="brushNode" select="IconBrushDisabled"/>
 					</xsl:call-template>
 
 					<!--PlaceholderForeground-->

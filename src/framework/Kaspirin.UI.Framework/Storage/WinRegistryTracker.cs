@@ -20,72 +20,71 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Win32;
 
-namespace Kaspirin.UI.Framework.Storage
+namespace Kaspirin.UI.Framework.Storage;
+
+/// <summary>
+///     Monitors changes in the Windows registry.
+/// </summary>
+public sealed class WinRegistryTracker : IRegistryTracker
 {
-    /// <summary>
-    ///     Monitors changes in the Windows registry.
-    /// </summary>
-    public sealed class WinRegistryTracker : IRegistryTracker
+    /// <inheritdoc cref="IRegistryTracker.TrackChangesAsync" />
+    public Task TrackChangesAsync(RegistryHive hive, RegistryView view, string regPath, CancellationToken cancellationToken, Action changed)
     {
-        /// <inheritdoc cref="IRegistryTracker.TrackChangesAsync" />
-        public Task TrackChangesAsync(RegistryHive hive, RegistryView view, string regPath, CancellationToken cancellationToken, Action changed)
+        Guard.ArgumentIsNotNullOrEmpty(regPath);
+        Guard.ArgumentIsNotNull(changed);
+
+        return Task.Factory.StartNew(() =>
         {
-            Guard.ArgumentIsNotNullOrEmpty(regPath);
-            Guard.ArgumentIsNotNull(changed);
+            using var key = RegistryKey.OpenBaseKey(hive, view).OpenSubKey(regPath);
 
-            return Task.Factory.StartNew(() =>
+            if (key == null)
             {
-                using var key = RegistryKey.OpenBaseKey(hive, view).OpenSubKey(regPath);
+                _tracer.TraceWarning($"Key for '{regPath}' not found");
+                return;
+            }
 
-                if (key == null)
+            try
+            {
+                _tracer.TraceInformation($"Started tracking '{key}' of registry changes");
+
+                while (!cancellationToken.IsCancellationRequested)
                 {
-                    _tracer.TraceWarning($"Key for '{regPath}' not found");
-                    return;
-                }
+                    using var keyChanged = new AutoResetEvent(false);
 
-                try
-                {
-                    _tracer.TraceInformation($"Started tracking '{key}' of registry changes");
+                    TrackKeyChanges(key, keyChanged);
 
-                    while (!cancellationToken.IsCancellationRequested)
+                    var handlers = new[]
                     {
-                        using var keyChanged = new AutoResetEvent(false);
+                        keyChanged,
+                        cancellationToken.WaitHandle
+                    };
 
-                        TrackKeyChanges(key, keyChanged);
-
-                        var handlers = new[]
-                        {
-                            keyChanged,
-                            cancellationToken.WaitHandle
-                        };
-
-                        if (WaitHandle.WaitAny(handlers) == Array.IndexOf(handlers, keyChanged))
-                        {
-                            Task.Factory.StartNew(changed);
-                        }
+                    if (WaitHandle.WaitAny(handlers) == Array.IndexOf(handlers, keyChanged))
+                    {
+                        Task.Factory.StartNew(changed);
                     }
                 }
-                finally
-                {
-                    _tracer.TraceInformation($"Stopped tracking '{key}' of registry changes");
-                }
-            }, cancellationToken, TaskCreationOptions.LongRunning, TaskScheduler.Default);
-        }
-
-        private static void TrackKeyChanges(RegistryKey key, WaitHandle waitHandle)
-        {
-            var regKey = key.Handle.DangerousGetHandle();
-            var notification = waitHandle.SafeWaitHandle.DangerousGetHandle();
-            var filter = RegNotifyChangeKeyValueFlags.REG_NOTIFY_CHANGE_LAST_SET;
-
-            var resultCode = Advapi32Dll.RegNotifyChangeKeyValue(regKey, watchSubtree: false, filter, notification, isAsynchronous: true);
-
-            if (resultCode != 0)
-            {
-                throw new SystemException($"Failed to track changes on '{key}'. Win32Error=0x{Marshal.GetLastWin32Error():X}");
             }
-        }
-
-        private static readonly ComponentTracer _tracer = ComponentTracer.Get(nameof(WinRegistryTracker));
+            finally
+            {
+                _tracer.TraceInformation($"Stopped tracking '{key}' of registry changes");
+            }
+        }, cancellationToken, TaskCreationOptions.LongRunning, TaskScheduler.Default);
     }
+
+    private static void TrackKeyChanges(RegistryKey key, WaitHandle waitHandle)
+    {
+        var regKey = key.Handle.DangerousGetHandle();
+        var notification = waitHandle.SafeWaitHandle.DangerousGetHandle();
+        var filter = RegNotifyChangeKeyValueFlags.ChangeLastSet;
+
+        var resultCode = Advapi32Dll.RegNotifyChangeKeyValue(regKey, watchSubtree: false, filter, notification, isAsynchronous: true);
+
+        if (resultCode != 0)
+        {
+            throw new SystemException($"Failed to track changes on '{key}'. Win32Error=0x{Marshal.GetLastWin32Error():X}");
+        }
+    }
+
+    private static readonly ComponentTracer _tracer = ComponentTracer.Get(nameof(WinRegistryTracker));
 }

@@ -12,20 +12,35 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
+namespace Kaspirin.UI.Framework.NativeMethods.Api.User32.Enums;
 
-namespace Kaspirin.UI.Framework.NativeMethods.Api.User32.Enums
+/// <summary>
+///     <seealso href="https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-mapvirtualkeyw">Learn more</seealso>.
+/// </summary>
+public enum MapVirtualKeyMapTypes : uint
 {
     /// <summary>
-    ///     
-    /// <seealso href="https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-mapvirtualkeyw">Learn more</seealso>.
+    ///     The MAPVK_VK_TO_VSC constant.
     /// </summary>
-    public enum MapVirtualKeyMapTypes : uint
-    {
-        MAPVK_VK_TO_VSC = 0x00,
-        MAPVK_VSC_TO_VK = 0x01,
-        MAPVK_VK_TO_CHAR = 0x02,
-        MAPVK_VSC_TO_VK_EX = 0x03,
-        MAPVK_VK_TO_VSC_EX = 0x04
-    }
+    VkToVsc = 0x00,
+
+    /// <summary>
+    ///     The MAPVK_VSC_TO_VK constant.
+    /// </summary>
+    VscToVk = 0x01,
+
+    /// <summary>
+    ///     The MAPVK_VK_TO_CHAR constant.
+    /// </summary>
+    VkToChar = 0x02,
+
+    /// <summary>
+    ///     The MAPVK_VSC_TO_VK_EX constant.
+    /// </summary>
+    VscToVkEx = 0x03,
+
+    /// <summary>
+    ///     The MAPVK_VK_TO_VSC_EX constant.
+    /// </summary>
+    VkToVscEx = 0x04,
 }

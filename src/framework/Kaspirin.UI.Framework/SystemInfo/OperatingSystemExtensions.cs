@@ -15,265 +15,298 @@
 using System;
 using System.Runtime.InteropServices;
 
-namespace Kaspirin.UI.Framework.SystemInfo
+namespace Kaspirin.UI.Framework.SystemInfo;
+
+/// <summary>
+///     Extension methods for <see cref="OperatingSystem" /> that provide information about the current
+///     version of the operating system.
+/// </summary>
+public static class OperatingSystemExtensions
 {
     /// <summary>
-    ///     Extension methods for <see cref="OperatingSystem" /> that provide information about the current
-    ///     version of the operating system.
+    ///     Checks whether the operating system is Windows Vista or later.
     /// </summary>
-    public static class OperatingSystemExtensions
+    /// <param name="operatingSystem">
+    ///     The operating system to check.
+    /// </param>
+    /// <returns>
+    ///     Returns <see langword="true" /> if the operating system is Windows Vista or later, otherwise <see langword="false" />.
+    /// </returns>
+    public static bool IsVistaOrHigher(this OperatingSystem operatingSystem)
     {
-        /// <summary>
-        ///     Checks whether the operating system is Windows Vista or later.
-        /// </summary>
-        /// <param name="operatingSystem">
-        ///     The operating system to check.
-        /// </param>
-        /// <returns>
-        ///     Returns <see langword="true" /> if the operating system is Windows Vista or later, otherwise <see langword="false" />.
-        /// </returns>
-        public static bool IsVistaOrHigher(this OperatingSystem operatingSystem)
-        {
-            Guard.ArgumentIsNotNull(operatingSystem);
+        Guard.ArgumentIsNotNull(operatingSystem);
 
-            return operatingSystem.Version.Major >= 6;
-        }
-
-        /// <summary>
-        ///     Checks whether the operating system is Windows 7.
-        /// </summary>
-        /// <param name="operatingSystem">
-        ///     The operating system to check.
-        /// </param>
-        /// <returns>
-        ///     Returns <see langword="true" /> if the operating system is Windows 7, otherwise <see langword="false" />.
-        /// </returns>
-        public static bool IsWin7(this OperatingSystem operatingSystem)
-        {
-            Guard.ArgumentIsNotNull(operatingSystem);
-
-            return operatingSystem.Version.Major == 6 && operatingSystem.Version.Minor == 1;
-        }
-
-        /// <summary>
-        ///     Checks whether the operating system is Windows 7 or later.
-        /// </summary>
-        /// <param name="operatingSystem">
-        ///     The operating system to check.
-        /// </param>
-        /// <returns>
-        ///     Returns <see langword="true" /> if the operating system is Windows 7 or later, otherwise <see langword="false" />.
-        /// </returns>
-        public static bool IsWin7OrHigher(this OperatingSystem operatingSystem)
-        {
-            Guard.ArgumentIsNotNull(operatingSystem);
-
-            return operatingSystem.Version.Major > 6 ||
-                   operatingSystem.Version.Major == 6 && operatingSystem.Version.Minor >= 1;
-        }
-
-        /// <summary>
-        ///     Checks if the operating system is Windows 8.
-        /// </summary>
-        /// <param name="operatingSystem">
-        ///     The operating system to check.
-        /// </param>
-        /// <returns>
-        ///     Returns <see langword="true" /> if the operating system is Windows 8, otherwise <see langword="false" />.
-        /// </returns>
-        public static bool IsWin8(this OperatingSystem operatingSystem)
-        {
-            Guard.ArgumentIsNotNull(operatingSystem);
-
-            return operatingSystem.Version.Major == 6 && operatingSystem.Version.Minor == 2;
-        }
-
-        /// <summary>
-        ///     Checks whether the operating system is Windows 8 or later.
-        /// </summary>
-        /// <param name="operatingSystem">
-        ///     The operating system to check.
-        /// </param>
-        /// <returns>
-        ///     Returns <see langword="true" /> if the operating system is Windows 8 or later, otherwise <see langword="false" />.
-        /// </returns>
-        public static bool IsWin8OrHigher(this OperatingSystem operatingSystem)
-        {
-            Guard.ArgumentIsNotNull(operatingSystem);
-
-            return operatingSystem.Version.Major > 6 ||
-                   operatingSystem.Version.Major == 6 && operatingSystem.Version.Minor >= 2;
-        }
-
-        /// <summary>
-        ///     Checks whether the operating system is Windows 8.1.
-        /// </summary>
-        /// <param name="operatingSystem">
-        ///     Not used.
-        /// </param>
-        /// <remarks>
-        ///     To check the version, the VerifyVersionInfo function is used in kernel32.dll .
-        /// </remarks>
-        /// <returns>
-        ///     Returns <see langword="true" /> if the operating system is Windows 8.1, otherwise <see langword="false" />.
-        /// </returns>
-        public static bool IsWin81(this OperatingSystem operatingSystem)
-        {
-            ulong conditionMask = 0;
-            var versionInfo = new OsVersionInfo();
-            versionInfo.OsVersionInfoSize = Marshal.SizeOf(versionInfo);
-            versionInfo.MajorVersion = 6;
-            versionInfo.MinorVersion = 3;
-            versionInfo.ServicePackMajor = 0;
-            versionInfo.ServicePackMinor = 0;
-
-            const OsVersionInfoConditionMask operation = OsVersionInfoConditionMask.VER_GREATER_EQUAL;
-
-            // Initialize the condition mask.
-            conditionMask = Kernel32Dll.VerSetConditionMask(conditionMask, OsVersionInfoTypeFlags.VER_MAJORVERSION, operation);
-            conditionMask = Kernel32Dll.VerSetConditionMask(conditionMask, OsVersionInfoTypeFlags.VER_MINORVERSION, operation);
-
-            // Perform the test.
-            return Kernel32Dll.VerifyVersionInfo(
-                ref versionInfo,
-                OsVersionInfoTypeFlags.VER_MAJORVERSION | OsVersionInfoTypeFlags.VER_MINORVERSION,
-                conditionMask);
-        }
-
-        /// <summary>
-        ///     Checks whether the operating system is Windows 8.1 or later.
-        /// </summary>
-        /// <param name="operatingSystem">
-        ///     The operating system to check.
-        /// </param>
-        /// <returns>
-        ///     Returns <see langword="true" /> if the operating system is Windows 8.1 or later, otherwise <see langword="false" />.
-        /// </returns>
-        public static bool IsWin81OrHigher(this OperatingSystem operatingSystem)
-        {
-            Guard.ArgumentIsNotNull(operatingSystem);
-
-            return operatingSystem.IsWin8OrHigher() && !operatingSystem.IsWin8();
-        }
-
-        /// <summary>
-        ///     Checks whether the operating system is Windows 10 or later.
-        /// </summary>
-        /// <param name="operatingSystem">
-        ///     The operating system to check.
-        /// </param>
-        /// <returns>
-        ///     Returns <see langword="true" /> if the operating system is Windows 10 or later, otherwise <see langword="false" />.
-        /// </returns>
-        public static bool IsWin10OrHigher(this OperatingSystem operatingSystem)
-        {
-            Guard.ArgumentIsNotNull(operatingSystem);
-
-            return operatingSystem.Version.Major >= 10;
-        }
-
-        /// <summary>
-        ///     Checks whether the operating system is Windows 10 RS1 or later.
-        /// </summary>
-        /// <param name="operatingSystem">
-        ///     The operating system to check.
-        /// </param>
-        /// <returns>
-        ///     Returns <see langword="true" /> if the operating system is Windows 10 RS1 or later, otherwise <see langword="false" />.
-        /// </returns>
-        public static bool IsWin10Rs1OrHigher(this OperatingSystem operatingSystem)
-        {
-            Guard.ArgumentIsNotNull(operatingSystem);
-
-            return operatingSystem.IsWin10OrHigher() && operatingSystem.Version.Build >= Windows10Rs1Build;
-        }
-
-        /// <summary>
-        ///     Checks whether the operating system is Windows 10 RS4 or later.
-        /// </summary>
-        /// <param name="operatingSystem">
-        ///     The operating system to check.
-        /// </param>
-        /// <returns>
-        ///     Returns <see langword="true" /> if the operating system is Windows 10 RS4 or later, otherwise <see langword="false" />.
-        /// </returns>
-        public static bool IsWin10Rs4OrHigher(this OperatingSystem operatingSystem)
-        {
-            Guard.ArgumentIsNotNull(operatingSystem);
-
-            return operatingSystem.IsWin10OrHigher() && operatingSystem.Version.Build >= Windows10Rs4Build;
-        }
-
-        /// <summary>
-        ///     Checks whether the operating system is Windows 10 RS5 or later.
-        /// </summary>
-        /// <param name="operatingSystem">
-        ///     The operating system to check.
-        /// </param>
-        /// <returns>
-        ///     Returns <see langword="true" /> if the operating system is Windows 10 RS5 or later, otherwise <see langword="false" />.
-        /// </returns>
-        public static bool IsWin10Rs5OrHigher(this OperatingSystem operatingSystem)
-        {
-            Guard.ArgumentIsNotNull(operatingSystem);
-
-            return operatingSystem.IsWin10OrHigher() && operatingSystem.Version.Build >= Windows10Rs5Build;
-        }
-
-        /// <summary>
-        ///     Checks whether the operating system is Windows 10 RS6 or later.
-        /// </summary>
-        /// <param name="operatingSystem">
-        ///     The operating system to check.
-        /// </param>
-        /// <returns>
-        ///     Returns <see langword="true" /> if the operating system is Windows 10 RS6 or later, otherwise <see langword="false" />.
-        /// </returns>
-        public static bool IsWin10Rs6OrHigher(this OperatingSystem operatingSystem)
-        {
-            Guard.ArgumentIsNotNull(operatingSystem);
-
-            return operatingSystem.IsWin10OrHigher() && operatingSystem.Version.Build >= Windows10Rs6Build;
-        }
-
-        /// <summary>
-        ///     Checks whether the operating system is Windows 10 version 19H1 or later.
-        /// </summary>
-        /// <param name="operatingSystem">
-        ///     The operating system to check.
-        /// </param>
-        /// <returns>
-        ///     Returns <see langword="true" /> if the operating system is Windows 10 version 19H1 or later,
-        ///     otherwise <see langword="false" />.
-        /// </returns>
-        public static bool IsWin10Version19H1OrHigher(this OperatingSystem operatingSystem)
-        {
-            Guard.ArgumentIsNotNull(operatingSystem);
-
-            return operatingSystem.IsWin10OrHigher() && operatingSystem.Version.Build >= Windows10Version19H1Build;
-        }
-
-        /// <summary>
-        ///     Checks whether the operating system is Windows 11 or later.
-        /// </summary>
-        /// <param name="operatingSystem">
-        ///     The operating system to check.
-        /// </param>
-        /// <returns>
-        ///     Returns <see langword="true" /> if the operating system is Windows 11 or later, otherwise <see langword="false" />.
-        /// </returns>
-        public static bool IsWin11OrHigher(this OperatingSystem operatingSystem)
-        {
-            Guard.ArgumentIsNotNull(operatingSystem);
-
-            return operatingSystem.Version.Major >= 10 && operatingSystem.Version.Build >= Windows11Version21H2Build;
-        }
-
-        private const int Windows10Rs1Build = 14393;
-        private const int Windows10Rs4Build = 17134;
-        private const int Windows10Rs5Build = 17763;
-        private const int Windows10Rs6Build = 18204;
-        private const int Windows10Version19H1Build = 18362;
-        private const int Windows11Version21H2Build = 22000;
+        return operatingSystem.Version.Major >= 6;
     }
+
+    /// <summary>
+    ///     Checks whether the operating system is Windows 7.
+    /// </summary>
+    /// <param name="operatingSystem">
+    ///     The operating system to check.
+    /// </param>
+    /// <returns>
+    ///     Returns <see langword="true" /> if the operating system is Windows 7, otherwise <see langword="false" />.
+    /// </returns>
+    public static bool IsWin7(this OperatingSystem operatingSystem)
+    {
+        Guard.ArgumentIsNotNull(operatingSystem);
+
+        return operatingSystem.Version.Major == 6 && operatingSystem.Version.Minor == 1;
+    }
+
+    /// <summary>
+    ///     Checks whether the operating system is Windows 7 or later.
+    /// </summary>
+    /// <param name="operatingSystem">
+    ///     The operating system to check.
+    /// </param>
+    /// <returns>
+    ///     Returns <see langword="true" /> if the operating system is Windows 7 or later, otherwise <see langword="false" />.
+    /// </returns>
+    public static bool IsWin7OrHigher(this OperatingSystem operatingSystem)
+    {
+        Guard.ArgumentIsNotNull(operatingSystem);
+
+        return operatingSystem.Version.Major > 6 ||
+               operatingSystem.Version.Major == 6 && operatingSystem.Version.Minor >= 1;
+    }
+
+    /// <summary>
+    ///     Checks if the operating system is Windows 8.
+    /// </summary>
+    /// <param name="operatingSystem">
+    ///     The operating system to check.
+    /// </param>
+    /// <returns>
+    ///     Returns <see langword="true" /> if the operating system is Windows 8, otherwise <see langword="false" />.
+    /// </returns>
+    public static bool IsWin8(this OperatingSystem operatingSystem)
+    {
+        Guard.ArgumentIsNotNull(operatingSystem);
+
+        return operatingSystem.Version.Major == 6 && operatingSystem.Version.Minor == 2;
+    }
+
+    /// <summary>
+    ///     Checks whether the operating system is Windows 8 or later.
+    /// </summary>
+    /// <param name="operatingSystem">
+    ///     The operating system to check.
+    /// </param>
+    /// <returns>
+    ///     Returns <see langword="true" /> if the operating system is Windows 8 or later, otherwise <see langword="false" />.
+    /// </returns>
+    public static bool IsWin8OrHigher(this OperatingSystem operatingSystem)
+    {
+        Guard.ArgumentIsNotNull(operatingSystem);
+
+        return operatingSystem.Version.Major > 6 ||
+               operatingSystem.Version.Major == 6 && operatingSystem.Version.Minor >= 2;
+    }
+
+    /// <summary>
+    ///     Checks whether the operating system is Windows 8.1.
+    /// </summary>
+    /// <param name="operatingSystem">
+    ///     Not used.
+    /// </param>
+    /// <remarks>
+    ///     To check the version, the VerifyVersionInfo function is used in kernel32.dll .
+    /// </remarks>
+    /// <returns>
+    ///     Returns <see langword="true" /> if the operating system is Windows 8.1, otherwise <see langword="false" />.
+    /// </returns>
+    public static bool IsWin81(this OperatingSystem operatingSystem)
+    {
+        ulong conditionMask = 0;
+        var versionInfo = new OsVersionInfo();
+        versionInfo.OsVersionInfoSize = Marshal.SizeOf(versionInfo);
+        versionInfo.MajorVersion = 6;
+        versionInfo.MinorVersion = 3;
+        versionInfo.ServicePackMajor = 0;
+        versionInfo.ServicePackMinor = 0;
+
+        const OsVersionInfoConditionMask operation = OsVersionInfoConditionMask.GreaterEqual;
+
+        // Initialize the condition mask.
+        conditionMask = Kernel32Dll.VerSetConditionMask(conditionMask, OsVersionInfoTypeFlags.MajorVersion, operation);
+        conditionMask = Kernel32Dll.VerSetConditionMask(conditionMask, OsVersionInfoTypeFlags.MinorVersion, operation);
+
+        // Perform the test.
+        return Kernel32Dll.VerifyVersionInfo(
+            ref versionInfo,
+            OsVersionInfoTypeFlags.MajorVersion | OsVersionInfoTypeFlags.MinorVersion,
+            conditionMask);
+    }
+
+    /// <summary>
+    ///     Checks whether the operating system is Windows 8.1 or later.
+    /// </summary>
+    /// <param name="operatingSystem">
+    ///     The operating system to check.
+    /// </param>
+    /// <returns>
+    ///     Returns <see langword="true" /> if the operating system is Windows 8.1 or later, otherwise <see langword="false" />.
+    /// </returns>
+    public static bool IsWin81OrHigher(this OperatingSystem operatingSystem)
+    {
+        Guard.ArgumentIsNotNull(operatingSystem);
+
+        return operatingSystem.IsWin8OrHigher() && !operatingSystem.IsWin8();
+    }
+
+    /// <summary>
+    ///     Checks whether the operating system is Windows 10 or later.
+    /// </summary>
+    /// <param name="operatingSystem">
+    ///     The operating system to check.
+    /// </param>
+    /// <returns>
+    ///     Returns <see langword="true" /> if the operating system is Windows 10 or later, otherwise <see langword="false" />.
+    /// </returns>
+    public static bool IsWin10OrHigher(this OperatingSystem operatingSystem)
+    {
+        Guard.ArgumentIsNotNull(operatingSystem);
+
+        return operatingSystem.Version.Major >= 10;
+    }
+
+    /// <summary>
+    ///     Checks whether the operating system is Windows 10 RS1 or later.
+    /// </summary>
+    /// <param name="operatingSystem">
+    ///     The operating system to check.
+    /// </param>
+    /// <returns>
+    ///     Returns <see langword="true" /> if the operating system is Windows 10 RS1 or later, otherwise <see langword="false" />.
+    /// </returns>
+    public static bool IsWin10Rs1OrHigher(this OperatingSystem operatingSystem)
+    {
+        Guard.ArgumentIsNotNull(operatingSystem);
+
+        return operatingSystem.IsWin10OrHigher() && operatingSystem.Version.Build >= Windows10Rs1Build;
+    }
+
+    /// <summary>
+    ///     Checks whether the operating system is Windows 10 RS3 or later.
+    /// </summary>
+    /// <param name="operatingSystem">
+    ///     The operating system to check.
+    /// </param>
+    /// <returns>
+    ///     Returns <see langword="true" /> if the operating system is Windows 10 RS3 or later, otherwise <see langword="false" />.
+    /// </returns>
+    public static bool IsWin10Rs3OrHigher(this OperatingSystem operatingSystem)
+    {
+        Guard.ArgumentIsNotNull(operatingSystem);
+
+        return operatingSystem.IsWin10OrHigher() && operatingSystem.Version.Build >= Windows10Rs3Build;
+    }
+
+    /// <summary>
+    ///     Checks whether the operating system is Windows 10 RS4 or later.
+    /// </summary>
+    /// <param name="operatingSystem">
+    ///     The operating system to check.
+    /// </param>
+    /// <returns>
+    ///     Returns <see langword="true" /> if the operating system is Windows 10 RS4 or later, otherwise <see langword="false" />.
+    /// </returns>
+    public static bool IsWin10Rs4OrHigher(this OperatingSystem operatingSystem)
+    {
+        Guard.ArgumentIsNotNull(operatingSystem);
+
+        return operatingSystem.IsWin10OrHigher() && operatingSystem.Version.Build >= Windows10Rs4Build;
+    }
+
+    /// <summary>
+    ///     Checks whether the operating system is Windows 10 RS5 or later.
+    /// </summary>
+    /// <param name="operatingSystem">
+    ///     The operating system to check.
+    /// </param>
+    /// <returns>
+    ///     Returns <see langword="true" /> if the operating system is Windows 10 RS5 or later, otherwise <see langword="false" />.
+    /// </returns>
+    public static bool IsWin10Rs5OrHigher(this OperatingSystem operatingSystem)
+    {
+        Guard.ArgumentIsNotNull(operatingSystem);
+
+        return operatingSystem.IsWin10OrHigher() && operatingSystem.Version.Build >= Windows10Rs5Build;
+    }
+
+    /// <summary>
+    ///     Checks whether the operating system is Windows 10 RS6 or later.
+    /// </summary>
+    /// <param name="operatingSystem">
+    ///     The operating system to check.
+    /// </param>
+    /// <returns>
+    ///     Returns <see langword="true" /> if the operating system is Windows 10 RS6 or later, otherwise <see langword="false" />.
+    /// </returns>
+    public static bool IsWin10Rs6OrHigher(this OperatingSystem operatingSystem)
+    {
+        Guard.ArgumentIsNotNull(operatingSystem);
+
+        return operatingSystem.IsWin10OrHigher() && operatingSystem.Version.Build >= Windows10Rs6Build;
+    }
+
+    /// <summary>
+    ///     Checks whether the operating system is Windows 10 version 19H1 or later.
+    /// </summary>
+    /// <param name="operatingSystem">
+    ///     The operating system to check.
+    /// </param>
+    /// <returns>
+    ///     Returns <see langword="true" /> if the operating system is Windows 10 version 19H1 or later,
+    ///     otherwise <see langword="false" />.
+    /// </returns>
+    public static bool IsWin10Version19H1OrHigher(this OperatingSystem operatingSystem)
+    {
+        Guard.ArgumentIsNotNull(operatingSystem);
+
+        return operatingSystem.IsWin10OrHigher() && operatingSystem.Version.Build >= Windows10Version19H1Build;
+    }
+
+    /// <summary>
+    ///     Checks whether the operating system is Windows 11 or later.
+    /// </summary>
+    /// <param name="operatingSystem">
+    ///     The operating system to check.
+    /// </param>
+    /// <returns>
+    ///     Returns <see langword="true" /> if the operating system is Windows 11 or later, otherwise <see langword="false" />.
+    /// </returns>
+    public static bool IsWin11OrHigher(this OperatingSystem operatingSystem)
+    {
+        Guard.ArgumentIsNotNull(operatingSystem);
+
+        return operatingSystem.Version.Major >= 10 && operatingSystem.Version.Build >= Windows11Version21H2Build;
+    }
+
+    /// <summary>
+    ///     Checks whether the Windows 11 operating system is version 24H2 or later.
+    /// </summary>
+    /// <param name="operatingSystem">
+    ///     The operating system to check.
+    /// </param>
+    /// <returns>
+    ///     Returns <see langword="true" /> if the operating system is Windows 11 24H2 or later, otherwise <see langword="false" />.
+    /// </returns>
+    public static bool IsWin11Version24H2OrHigher(this OperatingSystem operatingSystem)
+    {
+        Guard.ArgumentIsNotNull(operatingSystem);
+
+        return operatingSystem.Version.Major >= 10 && operatingSystem.Version.Build >= Windows11Version24H2Build;
+    }
+
+    private const int Windows10Rs1Build = 14393;
+    private const int Windows10Rs3Build = 16299;
+    private const int Windows10Rs4Build = 17134;
+    private const int Windows10Rs5Build = 17763;
+    private const int Windows10Rs6Build = 18204; // first build from 19H1
+    private const int Windows10Version19H1Build = 18362;
+    private const int Windows11Version21H2Build = 22000;
+    private const int Windows11Version24H2Build = 26100;
 }

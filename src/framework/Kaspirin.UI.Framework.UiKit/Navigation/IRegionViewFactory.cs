@@ -14,10 +14,9 @@
 
 using System.Windows;
 
-namespace Kaspirin.UI.Framework.UiKit.Navigation
+namespace Kaspirin.UI.Framework.UiKit.Navigation;
+
+public interface IRegionViewFactory
 {
-    public interface IRegionViewFactory
-    {
-        FrameworkElement CreateView(string viewName);
-    }
+    FrameworkElement CreateView(string viewName);
 }

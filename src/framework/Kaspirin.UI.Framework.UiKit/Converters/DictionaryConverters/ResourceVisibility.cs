@@ -14,15 +14,14 @@
 
 using System.Windows;
 
-namespace Kaspirin.UI.Framework.UiKit.Converters.DictionaryConverters
-{
-    public sealed class ResourceVisibility : IDictionaryConverterItem
-    {
-        public Visibility Visibility { get; set; }
+namespace Kaspirin.UI.Framework.UiKit.Converters.DictionaryConverters;
 
-        public object GetItemValue()
-        {
-            return Visibility;
-        }
+public sealed class ResourceVisibility : IDictionaryConverterItem
+{
+    public Visibility Visibility { get; set; }
+
+    public object GetItemValue()
+    {
+        return Visibility;
     }
 }

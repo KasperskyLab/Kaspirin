@@ -12,40 +12,118 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-#pragma warning disable KCAIDE0002 // Enum has incorrect suffix
-
 using System;
 
-namespace Kaspirin.UI.Framework.NativeMethods.Api.Cryptui.Enums
+namespace Kaspirin.UI.Framework.NativeMethods.Api.Cryptui.Enums;
+
+/// <summary>
+///     <seealso href="https://learn.microsoft.com/en-us/windows/win32/api/cryptuiapi/ns-cryptuiapi-cryptui_viewcertificate_structa">Learn more</seealso>.
+/// </summary>
+[Flags]
+public enum CryptUiViewFlags : uint
 {
     /// <summary>
-    ///     
-    /// <seealso href="https://learn.microsoft.com/en-us/windows/win32/api/cryptuiapi/ns-cryptuiapi-cryptui_viewcertificate_structa">Learn more</seealso>.
+    ///     The flag is not set.
     /// </summary>
-    [Flags]
-    public enum CryptUiViewFlags : uint
-    {
-        None = 0,
-        CRYPTUI_HIDE_HIERARCHYPAGE = 0x00000001,
-        CRYPTUI_HIDE_DETAILPAGE = 0x00000002,
-        CRYPTUI_DISABLE_EDITPROPERTIES = 0x00000004,
-        CRYPTUI_ENABLE_EDITPROPERTIES = 0x00000008,
-        CRYPTUI_DISABLE_ADDTOSTORE = 0x00000010,
-        CRYPTUI_ENABLE_ADDTOSTORE = 0x00000020,
-        CRYPTUI_ACCEPT_DECLINE_STYLE = 0x00000040,
-        CRYPTUI_IGNORE_UNTRUSTED_ROOT = 0x00000080,
-        CRYPTUI_DONT_OPEN_STORES = 0x00000100,
-        CRYPTUI_ONLY_OPEN_ROOT_STORE = 0x00000200,
-        CRYPTUI_WARN_UNTRUSTED_ROOT = 0x00000400,
-        CRYPTUI_ENABLE_REVOCATION_CHECKING = 0x00000800,
-        CRYPTUI_WARN_REMOTE_TRUST = 0x00001000,
-        CRYPTUI_DISABLE_EXPORT = 0x00002000,
-        CRYPTUI_ENABLE_REVOCATION_CHECK_END_CERT = 0x00004000,
-        CRYPTUI_ENABLE_REVOCATION_CHECK_CHAIN = 0x00008000,
-        CRYPTUI_ENABLE_REVOCATION_CHECK_CHAIN_EXCLUDE_ROOT = CRYPTUI_ENABLE_REVOCATION_CHECKING,
-        CRYPTUI_DISABLE_HTMLLINK = 0x00010000,
-        CRYPTUI_DISABLE_ISSUERSTATEMENT = 0x00020000,
-        CRYPTUI_CACHE_ONLY_URL_RETRIEVAL = 0x00040000,
-    }
+    None = 0,
+
+    /// <summary>
+    ///     The CRYPTUI_HIDE_HIERARCHYPAGE constant.
+    /// </summary>
+    HideHierarchyPage = 0x00000001,
+
+    /// <summary>
+    ///     The CRYPTUI_HIDE_DETAILPAGE constant.
+    /// </summary>
+    HideDetailPage = 0x00000002,
+
+    /// <summary>
+    ///     The CRYPTUI_DISABLE_EDITPROPERTIES constant.
+    /// </summary>
+    DisableEditProperties = 0x00000004,
+
+    /// <summary>
+    ///     The CRYPTUI_ENABLE_EDITPROPERTIES constant.
+    /// </summary>
+    EnableEditProperties = 0x00000008,
+
+    /// <summary>
+    ///     The CRYPTUI_DISABLE_ADDTOSTORE constant.
+    /// </summary>
+    DisableAddToStore = 0x00000010,
+
+    /// <summary>
+    ///     The CRYPTUI_ENABLE_ADDTOSTORE constant.
+    /// </summary>
+    EnableAddToStore = 0x00000020,
+
+    /// <summary>
+    ///     The CRYPTUI_ACCEPT_DECLINE_STYLE constant.
+    /// </summary>
+    AcceptDeclineStyle = 0x00000040,
+
+    /// <summary>
+    ///     The CRYPTUI_IGNORE_UNTRUSTED_ROOT constant.
+    /// </summary>
+    IgnoreUntrustedRoot = 0x00000080,
+
+    /// <summary>
+    ///     The CRYPTUI_DONT_OPEN_STORES constant.
+    /// </summary>
+    DontOpenStores = 0x00000100,
+
+    /// <summary>
+    ///     The CRYPTUI_ONLY_OPEN_ROOT_STORE constant.
+    /// </summary>
+    OnlyOpenRootStore = 0x00000200,
+
+    /// <summary>
+    ///     The CRYPTUI_WARN_UNTRUSTED_ROOT constant.
+    /// </summary>
+    WarnUntrustedRoot = 0x00000400,
+
+    /// <summary>
+    ///     The CRYPTUI_ENABLE_REVOCATION_CHECKING constant.
+    /// </summary>
+    EnableRevocationChecking = 0x00000800,
+
+    /// <summary>
+    ///     The CRYPTUI_WARN_REMOTE_TRUST constant.
+    /// </summary>
+    WarnRemoteTrust = 0x00001000,
+
+    /// <summary>
+    ///     The CRYPTUI_DISABLE_EXPORT constant.
+    /// </summary>
+    DisableExport = 0x00002000,
+
+    /// <summary>
+    ///     The CRYPTUI_ENABLE_REVOCATION_CHECK_END_CERT constant.
+    /// </summary>
+    EnableRevocationCheckEndCert = 0x00004000,
+
+    /// <summary>
+    ///     The CRYPTUI_ENABLE_REVOCATION_CHECK_CHAIN constant.
+    /// </summary>
+    EnableRevocationCheckChain = 0x00008000,
+
+    /// <summary>
+    ///     The CRYPTUI_ENABLE_REVOCATION_CHECK_CHAIN_EXCLUDE_ROOT constant.
+    /// </summary>
+    EnableRevocationCheckChainExcludeRoot = EnableRevocationChecking,
+
+    /// <summary>
+    ///     The CRYPTUI_DISABLE_HTMLLINK constant.
+    /// </summary>
+    DisableHtmlLink = 0x00010000,
+
+    /// <summary>
+    ///     The CRYPTUI_DISABLE_ISSUERSTATEMENT constant.
+    /// </summary>
+    DisableIssuerStatement = 0x00020000,
+
+    /// <summary>
+    ///     The CRYPTUI_CACHE_ONLY_URL_RETRIEVAL constant.
+    /// </summary>
+    CacheOnlyUrlRetrieval = 0x00040000,
 }

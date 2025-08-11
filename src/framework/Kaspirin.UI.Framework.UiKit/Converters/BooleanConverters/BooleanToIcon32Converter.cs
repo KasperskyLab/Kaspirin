@@ -14,21 +14,20 @@
 
 using System.Windows.Data;
 
-namespace Kaspirin.UI.Framework.UiKit.Converters.BooleanConverters
+namespace Kaspirin.UI.Framework.UiKit.Converters.BooleanConverters;
+
+/// <summary>
+///     Provides an implementation of <see cref="BaseBooleanConverter{T}" /> in which the conversion
+///     result is of type <see cref="UIKitIcon_32" />.
+/// </summary>
+/// <remarks>
+///     By default, it converts <see langword="true" /> and <see langword="false" /> to <see cref="UIKitIcon_32.UIKitUnset" />.
+/// </remarks>
+[ValueConversion(typeof(bool), typeof(UIKitIcon_32))]
+public sealed class BooleanToIcon32Converter : BaseBooleanConverter<UIKitIcon_32>
 {
     /// <summary>
-    ///     Provides an implementation of <see cref="BaseBooleanConverter{T}" /> in which the conversion
-    ///     result is of type <see cref="UIKitIcon_32" />.
+    ///     Creates an object <see cref="BooleanToIcon32Converter" />.
     /// </summary>
-    /// <remarks>
-    ///     By default, it converts <see langword="true" /> and <see langword="false" /> to <see cref="UIKitIcon_32.UIKitUnset" />.
-    /// </remarks>
-    [ValueConversion(typeof(bool), typeof(UIKitIcon_32))]
-    public sealed class BooleanToIcon32Converter : BaseBooleanConverter<UIKitIcon_32>
-    {
-        /// <summary>
-        ///     Creates an object <see cref="BooleanToIcon32Converter" />.
-        /// </summary>
-        public BooleanToIcon32Converter() : base(UIKitIcon_32.UIKitUnset, UIKitIcon_32.UIKitUnset) { }
-    }
+    public BooleanToIcon32Converter() : base(UIKitIcon_32.UIKitUnset, UIKitIcon_32.UIKitUnset) { }
 }

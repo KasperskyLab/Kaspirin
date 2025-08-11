@@ -15,107 +15,128 @@
 using System;
 using System.Threading;
 
-namespace Kaspirin.UI.Framework.UiKit.Extensions
+namespace Kaspirin.UI.Framework.UiKit.Extensions;
+
+/// <summary>
+///     Extension methods for <see cref="DateTime" />.
+/// </summary>
+public static class DateTimeExtensions
 {
-    public static class DateTimeExtensions
+    /// <summary>
+    ///     Checks whether the set time is valid for the current regional standard.
+    /// </summary>
+    /// <param name="dateTime">
+    ///     The date and time being checked.
+    /// </param>
+    /// <returns>
+    ///     Returns <see langword="true" /> if the time is valid, otherwise <see langword="false" />.
+    /// </returns>
+    public static bool IsValid(this DateTime dateTime)
     {
-        public static bool IsValid(this DateTime dateTime)
+        var minSupportedDateTime = GetMinValueForCurrentLocale();
+        var maxSupportedDateTime = GetMaxValueForCurrentLocale();
+
+        var utcDateTime = dateTime.ToUniversalTimeSafe();
+        var localDateTime = dateTime.ToLocalTimeSafe();
+
+        return utcDateTime >= minSupportedDateTime
+            && utcDateTime <= maxSupportedDateTime
+            && localDateTime >= minSupportedDateTime
+            && localDateTime <= maxSupportedDateTime;
+    }
+
+    /// <summary>
+    ///     Sets the date and time value in the range valid for the current regional standard.
+    /// </summary>
+    /// <param name="dateTime">
+    ///     The date and time being checked.
+    /// </param>
+    /// <returns>
+    ///     Returns the source object <paramref name="dateTime" /> if it is in the acceptable range, otherwise
+    ///     the date and time closest to the range.
+    /// </returns>
+    public static DateTime EnsureToBeValid(this DateTime dateTime)
+    {
+        var minSupportedDateTime = GetMinValueForCurrentLocale();
+        var maxSupportedDateTime = GetMaxValueForCurrentLocale();
+
+        var utcDateTime = dateTime.ToUniversalTimeSafe();
+        var localDateTime = dateTime.ToLocalTimeSafe();
+
+        if (utcDateTime < minSupportedDateTime || localDateTime < minSupportedDateTime)
         {
-            var minSupportedDateTime = GetMinValueForCurrentLocale();
-            var maxSupportedDateTime = GetMaxValueForCurrentLocale();
-
-            var utcDateTime = dateTime.ToUniversalTimeSafe();
-            var localDateTime = dateTime.ToLocalTimeSafe();
-
-            return utcDateTime >= minSupportedDateTime
-                && utcDateTime <= maxSupportedDateTime
-                && localDateTime >= minSupportedDateTime
-                && localDateTime <= maxSupportedDateTime;
-        }
-
-        public static DateTime EnsureToBeValid(this DateTime dateTime)
-        {
-            var minSupportedDateTime = GetMinValueForCurrentLocale();
-            var maxSupportedDateTime = GetMaxValueForCurrentLocale();
-
-            var utcDateTime = dateTime.ToUniversalTimeSafe();
-            var localDateTime = dateTime.ToLocalTimeSafe();
-
-            if (utcDateTime < minSupportedDateTime || localDateTime < minSupportedDateTime)
-            {
-                return minSupportedDateTime;
-            }
-
-            if (utcDateTime > maxSupportedDateTime || localDateTime > maxSupportedDateTime)
-            {
-                return maxSupportedDateTime;
-            }
-
-            return dateTime;
-        }
-
-        private static DateTime GetMinValueForCurrentLocale()
-        {
-            var localizationManagerCalendar = LocalizationManager.Current.DisplayCulture.CultureInfo.DateTimeFormat.Calendar;
-
-            var threadCalendar = Thread.CurrentThread.CurrentCulture
-                ?.DateTimeFormat.Calendar
-                ?? localizationManagerCalendar;
-
-            var minSupportedDateTime = localizationManagerCalendar.MinSupportedDateTime > threadCalendar.MinSupportedDateTime
-                                       ? localizationManagerCalendar.MinSupportedDateTime
-                                       : threadCalendar.MinSupportedDateTime;
-
             return minSupportedDateTime;
         }
 
-        private static DateTime GetMaxValueForCurrentLocale()
+        if (utcDateTime > maxSupportedDateTime || localDateTime > maxSupportedDateTime)
         {
-            var localizationManagerCalendar = LocalizationManager.Current.DisplayCulture.CultureInfo.DateTimeFormat.Calendar;
-
-            var threadCalendar = Thread.CurrentThread.CurrentCulture
-                ?.DateTimeFormat.Calendar
-                ?? localizationManagerCalendar;
-
-            var maxSupportedDateTime = localizationManagerCalendar.MaxSupportedDateTime < threadCalendar.MaxSupportedDateTime
-                                       ? localizationManagerCalendar.MaxSupportedDateTime
-                                       : threadCalendar.MaxSupportedDateTime;
-
             return maxSupportedDateTime;
         }
 
-        private static DateTime ToLocalTimeSafe(this DateTime time)
-        {
-            if (time == default)
-            {
-                return time;
-            }
+        return dateTime;
+    }
 
-            try
-            {
-                return time.ToLocalTime();
-            }
-            catch
-            {
-                return time;
-            }
+    private static DateTime GetMinValueForCurrentLocale()
+    {
+        var localizationManagerCalendar = LocalizationManager.DisplayCulture.CultureInfo.DateTimeFormat.Calendar;
+
+        var threadCalendar = Thread.CurrentThread.CurrentCulture
+            ?.DateTimeFormat.Calendar
+            ?? localizationManagerCalendar;
+
+        var minSupportedDateTime = localizationManagerCalendar.MinSupportedDateTime > threadCalendar.MinSupportedDateTime
+                                   ? localizationManagerCalendar.MinSupportedDateTime
+                                   : threadCalendar.MinSupportedDateTime;
+
+        return minSupportedDateTime;
+    }
+
+    private static DateTime GetMaxValueForCurrentLocale()
+    {
+        var localizationManagerCalendar = LocalizationManager.DisplayCulture.CultureInfo.DateTimeFormat.Calendar;
+
+        var threadCalendar = Thread.CurrentThread.CurrentCulture
+            ?.DateTimeFormat.Calendar
+            ?? localizationManagerCalendar;
+
+        var maxSupportedDateTime = localizationManagerCalendar.MaxSupportedDateTime < threadCalendar.MaxSupportedDateTime
+                                   ? localizationManagerCalendar.MaxSupportedDateTime
+                                   : threadCalendar.MaxSupportedDateTime;
+
+        return maxSupportedDateTime;
+    }
+
+    private static DateTime ToLocalTimeSafe(this DateTime time)
+    {
+        if (time == default)
+        {
+            return time;
         }
 
-        private static DateTime ToUniversalTimeSafe(this DateTime time)
+        try
         {
-            if (time == default)
-            {
-                return time;
-            }
+            return time.ToLocalTime();
+        }
+        catch
+        {
+            return time;
+        }
+    }
 
-            try
-            {
-                return time.ToUniversalTime();
-            }
-            catch
-            {
-                return time;
-            }
+    private static DateTime ToUniversalTimeSafe(this DateTime time)
+    {
+        if (time == default)
+        {
+            return time;
+        }
+
+        try
+        {
+            return time.ToUniversalTime();
+        }
+        catch
+        {
+            return time;
         }
     }
 }

@@ -14,22 +14,21 @@
 
 using System.Windows;
 
-namespace Kaspirin.UI.Framework.UiKit
+namespace Kaspirin.UI.Framework.UiKit;
+
+internal sealed class UIKitSetter : Setter
 {
-    internal sealed class UIKitSetter : Setter
+    public string? Id
     {
-        public string? Id
+        get { return _id; }
+        set
         {
-            get { return _id; }
-            set
-            {
-                CheckSealed();
+            CheckSealed();
 
-                _id = Guard.EnsureIsNotNull(value);
-                Property = UIKitPropertyStorage.Get(_id);
-            }
+            _id = Guard.EnsureIsNotNull(value);
+            Property = UIKitPropertyStorage.Get(_id);
         }
-
-        private string? _id;
     }
+
+    private string? _id;
 }

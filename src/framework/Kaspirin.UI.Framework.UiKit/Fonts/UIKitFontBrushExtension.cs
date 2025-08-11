@@ -15,21 +15,20 @@
 using System;
 using System.Windows.Markup;
 
-namespace Kaspirin.UI.Framework.UiKit.Fonts
+namespace Kaspirin.UI.Framework.UiKit.Fonts;
+
+[MarkupExtensionReturnType(typeof(UIKitFontBrushSettings))]
+internal sealed class UIKitFontBrushExtension : MarkupExtension
 {
-    [MarkupExtensionReturnType(typeof(UIKitFontBrushSettings))]
-    internal sealed class UIKitFontBrushExtension : MarkupExtension
+    public UIKitFontBrushExtension(string brush)
     {
-        public UIKitFontBrushExtension(string brush)
-        {
-            _brush = brush;
-        }
-
-        public override object? ProvideValue(IServiceProvider serviceProvider)
-        {
-            return new UIKitFontBrushSettings(_brush);
-        }
-
-        private readonly string _brush;
+        _brush = brush;
     }
+
+    public override object? ProvideValue(IServiceProvider serviceProvider)
+    {
+        return new UIKitFontBrushSettings(_brush);
+    }
+
+    private readonly string _brush;
 }

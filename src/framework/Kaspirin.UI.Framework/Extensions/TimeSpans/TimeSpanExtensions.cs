@@ -14,27 +14,26 @@
 
 using System;
 
-namespace Kaspirin.UI.Framework.Extensions.TimeSpans
+namespace Kaspirin.UI.Framework.Extensions.TimeSpans;
+
+/// <summary>
+///     Extension methods for <see cref="TimeSpan" />.
+/// </summary>
+public static class TimeSpanExtensions
 {
     /// <summary>
-    ///     Extension methods for <see cref="TimeSpan" />.
+    ///     Checks that the time interval is correct.
     /// </summary>
-    public static class TimeSpanExtensions
+    /// <param name="timeSpan">
+    ///     The time being checked.
+    /// </param>
+    /// <returns>
+    ///     Returns <see langword="true" /> if the time is not equal to <see cref="TimeSpan.MinValue" />
+    ///     and is not equal to <see cref="TimeSpan.MaxValue" />, otherwise —see langword="false" />.
+    /// </returns>
+    public static bool IsValid(this TimeSpan timeSpan)
     {
-        /// <summary>
-        ///     Checks that the time interval is correct.
-        /// </summary>
-        /// <param name="timeSpan">
-        ///     The time being checked.
-        /// </param>
-        /// <returns>
-        ///     Returns <see langword="true" /> if the time is not equal to <see cref="TimeSpan.MinValue" />
-        ///     and is not equal to <see cref="TimeSpan.MaxValue" />, otherwise —see langword="false" />.
-        /// </returns>
-        public static bool IsValid(this TimeSpan timeSpan)
-        {
-            return timeSpan != TimeSpan.MinValue &&
-                   timeSpan != TimeSpan.MaxValue;
-        }
+        return timeSpan != TimeSpan.MinValue &&
+               timeSpan != TimeSpan.MaxValue;
     }
 }

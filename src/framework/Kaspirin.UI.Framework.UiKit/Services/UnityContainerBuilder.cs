@@ -16,31 +16,31 @@ using Kaspirin.UI.Framework.Services.Internals;
 using Kaspirin.UI.Framework.UiKit.Animation.Internals;
 using Kaspirin.UI.Framework.UiKit.Input.Security.Internals;
 using Kaspirin.UI.Framework.UiKit.Interactivity.Internals;
-using Kaspirin.UI.Framework.UiKit.Statistics.Internals;
 using Kaspirin.UI.Framework.UiKit.Navigation;
+using Kaspirin.UI.Framework.UiKit.Statistics.Internals;
 
-namespace Kaspirin.UI.Framework.UiKit.Services
+namespace Kaspirin.UI.Framework.UiKit.Services;
+
+public static class UnityContainerBuilder
 {
-    public static class UnityContainerBuilder
+    public static void BuildUiKitServices(this IUnityContainer container)
     {
-        public static void BuildUiKitServices(this IUnityContainer container)
-        {
-            Guard.ArgumentIsNotNull(container);
+        Guard.ArgumentIsNotNull(container);
 
-            container.RegisterDefault<IRegionViewFactory, RegionViewFactory>(LifetimeManager.ContainerControlled);
-            container.RegisterDefault<IRegionBehaviorsRegistry, RegionBehaviorRegistry>(LifetimeManager.ContainerControlled);
-            container.RegisterType<Regions>(LifetimeManager.ContainerControlled);
+        container.RegisterDefault<IRegionViewFactory, RegionViewFactory>(LifetimeType.Singleton);
+        container.RegisterDefault<IRegionBehaviorsRegistry, RegionBehaviorRegistry>(LifetimeType.Singleton);
+        container.RegisterType<Regions>(LifetimeType.Singleton);
 
-            container.RegisterDefault<ISecureInputManager, EmptySecureInputManager>(LifetimeManager.ContainerControlled);
-            container.RegisterDefault<IStatisticsSender, EmptyStatisticsSender>(LifetimeManager.ContainerControlled);
-            container.RegisterDefault<INativeDialogLauncher, NativeDialogLauncher>(LifetimeManager.ContainerControlled);
-            container.RegisterDefault<IAnimationSettingsProvider, AnimationSettingsProvider>(LifetimeManager.ContainerControlled);
-            container.RegisterDefault<ITextScaleService, TextScaleService>(LifetimeManager.ContainerControlled);
-            container.RegisterDefault<IInteractionObjects, InteractionObjects>(LifetimeManager.ContainerControlled);
+        container.RegisterDefault<ISecureClipboard, SecureClipboard>(LifetimeType.Singleton);
+        container.RegisterDefault<ISecureInputManager, EmptySecureInputManager>(LifetimeType.Singleton);
+        container.RegisterDefault<IStatisticsSender, EmptyStatisticsSender>(LifetimeType.Singleton);
+        container.RegisterDefault<INativeDialogLauncher, NativeDialogLauncher>(LifetimeType.Singleton);
+        container.RegisterDefault<IAnimationSettingsProvider, AnimationSettingsProvider>(LifetimeType.Singleton);
+        container.RegisterDefault<ITextScaleService, TextScaleService>(LifetimeType.Singleton);
+        container.RegisterDefault<IInteractionObjects, InteractionObjects>(LifetimeType.Singleton);
 
-            container.RegisterType<AnimatedBindingFactory>(LifetimeManager.ContainerControlled);
+        container.RegisterType<AnimatedBindingFactory>(LifetimeType.Singleton);
 
-            container.BuildFrameworkServices();
-        }
+        container.BuildFrameworkServices();
     }
 }

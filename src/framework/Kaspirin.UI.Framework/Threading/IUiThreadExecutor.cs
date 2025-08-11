@@ -16,50 +16,59 @@ using System;
 using System.Threading.Tasks;
 using System.Windows.Threading;
 
-namespace Kaspirin.UI.Framework.Threading
+namespace Kaspirin.UI.Framework.Threading;
+
+/// <summary>
+///     An interface for executing delegates in the UI thread.
+/// </summary>
+public interface IUiThreadExecutor
 {
     /// <summary>
-    ///     An interface for executing delegates in the UI thread.
+    ///     Indicates whether it is possible to execute delegates in the UI thread.
     /// </summary>
-    public interface IUiThreadExecutor
-    {
-        /// <summary>
-        ///     The <paramref name="action" /> delegate executes synchronously in the UI thread.
-        /// </summary>
-        /// <param name="action">
-        ///     A delegate to execute.
-        /// </param>
-        /// <param name="priority">
-        ///     Priority of execution.
-        /// </param>
-        void ExecuteInUiThreadSync(Action action, DispatcherPriority priority = DispatcherPriority.Normal);
+    bool CanExecuteInUiThread { get; }
 
-        /// <summary>
-        ///     Synchronously executes the <paramref name="action" /> delegate in the UI thread and returns the result.
-        /// </summary>
-        /// <param name="action">
-        ///     A delegate to execute.
-        /// </param>
-        /// <param name="priority">
-        ///     Priority of execution.
-        /// </param>
-        /// <returns>
-        ///     The result of the delegate execution.
-        /// </returns>
-        TResult ExecuteInUiThreadSync<TResult>(Func<TResult> action, DispatcherPriority priority = DispatcherPriority.Normal);
+    /// <summary>
+    ///     Indicates whether the current thread is a UI thread.
+    /// </summary>
+    bool IsUiThread { get; }
 
-        /// <summary>
-        ///     Asynchronously executes the <paramref name="action" /> delegate in the UI thread.
-        /// </summary>
-        /// <param name="action">
-        ///     A delegate to execute.
-        /// </param>
-        /// <param name="priority">
-        ///     Priority of execution.
-        /// </param>
-        /// <returns>
-        ///     The task in which the delegate will be executed.
-        /// </returns>
-        Task ExecuteInUiThreadAsync(Action action, DispatcherPriority priority = DispatcherPriority.Normal);
-    }
+    /// <summary>
+    ///     The <paramref name="action" /> delegate executes synchronously in the UI thread.
+    /// </summary>
+    /// <param name="action">
+    ///     A delegate to execute.
+    /// </param>
+    /// <param name="priority">
+    ///     Priority of execution.
+    /// </param>
+    void ExecuteInUiThreadSync(Action action, DispatcherPriority priority = DispatcherPriority.Normal);
+
+    /// <summary>
+    ///     Synchronously executes the <paramref name="action" /> delegate in the UI thread and returns the result.
+    /// </summary>
+    /// <param name="action">
+    ///     A delegate to execute.
+    /// </param>
+    /// <param name="priority">
+    ///     Priority of execution.
+    /// </param>
+    /// <returns>
+    ///     The result of the delegate execution.
+    /// </returns>
+    TResult ExecuteInUiThreadSync<TResult>(Func<TResult> action, DispatcherPriority priority = DispatcherPriority.Normal);
+
+    /// <summary>
+    ///     Asynchronously executes the <paramref name="action" /> delegate in the UI thread.
+    /// </summary>
+    /// <param name="action">
+    ///     A delegate to execute.
+    /// </param>
+    /// <param name="priority">
+    ///     Priority of execution.
+    /// </param>
+    /// <returns>
+    ///     The task in which the delegate will be executed.
+    /// </returns>
+    Task ExecuteInUiThreadAsync(Action action, DispatcherPriority priority = DispatcherPriority.Normal);
 }

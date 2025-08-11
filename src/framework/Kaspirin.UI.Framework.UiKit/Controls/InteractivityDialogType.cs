@@ -12,15 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Kaspirin.UI.Framework.UiKit.Controls
+namespace Kaspirin.UI.Framework.UiKit.Controls;
+
+public enum InteractivityDialogType
 {
-    public enum InteractivityDialogType
-    {
-        Positive,
-        Warning,
-        Danger,
-        Info,
-        Neutral,
-        Loading
-    }
+    Positive,
+    Warning,
+    Danger,
+    Info,
+    Neutral,
+    Loading
 }

@@ -14,15 +14,14 @@
 
 using System.Globalization;
 
-namespace Kaspirin.UI.Framework.UiKit.Converters.NumberConverters
+namespace Kaspirin.UI.Framework.UiKit.Converters.NumberConverters;
+
+public sealed class NumberToPercentStringConverter : BaseNumberToFormattedStringConverter
 {
-    public sealed class NumberToPercentStringConverter : BaseNumberToFormattedStringConverter
-    {
-        private readonly CultureInfo _currentCulture = LocalizationManager.Current.FormatCulture.CultureInfo;
+    private readonly CultureInfo _currentCulture = LocalizationManager.FormatCulture.CultureInfo;
 
-        public ushort Precision { get; set; } = 0;
+    public ushort Precision { get; set; } = 0;
 
-        public override object Convert(object? value)
-            => string.Format(_currentCulture, $"{{0:P{Precision}}}", value);
-    }
+    public override object Convert(object? value)
+        => string.Format(_currentCulture, $"{{0:P{Precision}}}", value);
 }

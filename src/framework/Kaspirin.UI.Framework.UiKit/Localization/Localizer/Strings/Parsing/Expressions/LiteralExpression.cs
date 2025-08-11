@@ -14,23 +14,22 @@
 
 using System;
 
-namespace Kaspirin.UI.Framework.UiKit.Localization.Localizer.Strings.Parsing.Expressions
+namespace Kaspirin.UI.Framework.UiKit.Localization.Localizer.Strings.Parsing.Expressions;
+
+public sealed class LiteralExpression : IExpression
 {
-    public class LiteralExpression : IExpression
+    public LiteralExpression(string effectiveValue, Func<string, string> literalNormalizationFunc)
     {
-        public LiteralExpression(string effectiveValue, Func<string, string> literalNormalizationFunc)
-        {
-            _effectiveValue = effectiveValue;
-            _literalNormalizationFunc = literalNormalizationFunc;
-        }
-
-        public string Literal => _literal ??= _literalNormalizationFunc(_effectiveValue);
-
-        public string Resolve() => Literal;
-
-        private readonly string _effectiveValue;
-        private readonly Func<string, string> _literalNormalizationFunc;
-
-        private string? _literal;
+        _effectiveValue = effectiveValue;
+        _literalNormalizationFunc = literalNormalizationFunc;
     }
+
+    public string Literal => _literal ??= _literalNormalizationFunc(_effectiveValue);
+
+    public string Resolve() => Literal;
+
+    private readonly string _effectiveValue;
+    private readonly Func<string, string> _literalNormalizationFunc;
+
+    private string? _literal;
 }

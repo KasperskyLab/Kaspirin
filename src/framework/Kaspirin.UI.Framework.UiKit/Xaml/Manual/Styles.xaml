@@ -23,6 +23,18 @@
         <ResourceDictionary Source="Templates.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
+    <!--  region BarCode  -->
+
+    <Style x:Key="BarCodeDefault"
+           BasedOn="{StaticResource BarCodeUniversal}"
+           TargetType="{x:Type controls:BarCode}" />
+
+    <Style x:Key="{x:Type controls:BarCode}"
+           BasedOn="{StaticResource BarCodeDefault}"
+           TargetType="{x:Type controls:BarCode}" />
+
+    <!--  endregion  -->
+
     <!--  region FlowDocumentViewer  -->
 
     <Style x:Key="FlowDocumentViewerDefault"
@@ -224,6 +236,102 @@
     <Style x:Key="{x:Type ScrollViewer}"
            BasedOn="{StaticResource ScrollViewerDefault}"
            TargetType="{x:Type ScrollViewer}" />
+
+    <!--  endregion  -->
+
+    <!--  region TextBigIconButton  -->
+
+    <Style x:Key="TextBigIconButtonDefault"
+           BasedOn="{StaticResource TextBigIconButtonUniversal}"
+           TargetType="{x:Type controls:TextBigIconButton}" />
+
+    <Style x:Key="{x:Type controls:TextBigIconButton}"
+           BasedOn="{StaticResource TextBigIconButtonDefault}"
+           TargetType="{x:Type controls:TextBigIconButton}" />
+
+    <!--  endregion  -->
+
+    <!--  region TextHint  -->
+
+    <Style x:Key="TextHintDefault"
+           BasedOn="{StaticResource TextHintUniversal}"
+           TargetType="{x:Type controls:TextHint}" />
+
+    <Style x:Key="{x:Type controls:TextHint}"
+           BasedOn="{StaticResource TextHintDefault}"
+           TargetType="{x:Type controls:TextHint}" />
+
+    <!--  endregion  -->
+
+    <!--  region TextIcon12  -->
+
+    <Style x:Key="TextIcon12Default"
+           BasedOn="{StaticResource TextIcon12Universal}"
+           TargetType="{x:Type controls:TextIcon12}" />
+
+    <Style x:Key="{x:Type controls:TextIcon12}"
+           BasedOn="{StaticResource TextIcon12Default}"
+           TargetType="{x:Type controls:TextIcon12}" />
+
+    <!--  endregion  -->
+
+    <!--  region TextIcon16  -->
+
+    <Style x:Key="TextIcon16Default"
+           BasedOn="{StaticResource TextIcon16Universal}"
+           TargetType="{x:Type controls:TextIcon16}" />
+
+    <Style x:Key="{x:Type controls:TextIcon16}"
+           BasedOn="{StaticResource TextIcon16Default}"
+           TargetType="{x:Type controls:TextIcon16}" />
+
+    <!--  endregion  -->
+
+    <!--  region TextIcon24  -->
+
+    <Style x:Key="TextIcon24Default"
+           BasedOn="{StaticResource TextIcon24Universal}"
+           TargetType="{x:Type controls:TextIcon24}" />
+
+    <Style x:Key="{x:Type controls:TextIcon24}"
+           BasedOn="{StaticResource TextIcon24Default}"
+           TargetType="{x:Type controls:TextIcon24}" />
+
+    <!--  endregion  -->
+
+    <!--  region TextIcon32  -->
+
+    <Style x:Key="TextIcon32Default"
+           BasedOn="{StaticResource TextIcon32Universal}"
+           TargetType="{x:Type controls:TextIcon32}" />
+
+    <Style x:Key="{x:Type controls:TextIcon32}"
+           BasedOn="{StaticResource TextIcon32Default}"
+           TargetType="{x:Type controls:TextIcon32}" />
+
+    <!--  endregion  -->
+
+    <!--  region TextIcon48  -->
+
+    <Style x:Key="TextIcon48Default"
+           BasedOn="{StaticResource TextIcon48Universal}"
+           TargetType="{x:Type controls:TextIcon48}" />
+
+    <Style x:Key="{x:Type controls:TextIcon48}"
+           BasedOn="{StaticResource TextIcon48Default}"
+           TargetType="{x:Type controls:TextIcon48}" />
+
+    <!--  endregion  -->
+
+    <!--  region TextIconButton  -->
+
+    <Style x:Key="TextIconButtonDefault"
+           BasedOn="{StaticResource TextIconButtonUniversal}"
+           TargetType="{x:Type controls:TextIconButton}" />
+
+    <Style x:Key="{x:Type controls:TextIconButton}"
+           BasedOn="{StaticResource TextIconButtonDefault}"
+           TargetType="{x:Type controls:TextIconButton}" />
 
     <!--  endregion  -->
 

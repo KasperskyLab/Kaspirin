@@ -12,12 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Kaspirin.UI.Framework.UiKit.Interactivity
+namespace Kaspirin.UI.Framework.UiKit.Interactivity;
+
+public interface IInteractionObjects
 {
-    public interface IInteractionObjects
-    {
-        void Add(InteractionObject interactionObject);
-        void Remove(InteractionObject interactionObject);
-        void HandleAll();
-    }
+    void Add(InteractionObject interactionObject);
+    void Remove(InteractionObject interactionObject);
+    void HandleAll();
 }

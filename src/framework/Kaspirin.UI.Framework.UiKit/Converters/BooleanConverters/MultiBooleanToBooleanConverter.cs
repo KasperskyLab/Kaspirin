@@ -14,21 +14,20 @@
 
 using System.Windows.Data;
 
-namespace Kaspirin.UI.Framework.UiKit.Converters.BooleanConverters
+namespace Kaspirin.UI.Framework.UiKit.Converters.BooleanConverters;
+
+/// <summary>
+///     Provides an implementation of <see cref="BaseMultiBooleanConverter{T}" /> in which the conversion
+///     result is of type <see cref="bool" />.
+/// </summary>
+/// <remarks>
+///     By default, it converts <see langword="true" /> to <see langword="true" />, and <see langword="false" /> to <see langword="false" />.
+/// </remarks>
+[ValueConversion(typeof(bool), typeof(bool))]
+public sealed class MultiBooleanToBooleanConverter : BaseMultiBooleanConverter<bool>
 {
     /// <summary>
-    ///     Provides an implementation of <see cref="BaseMultiBooleanConverter{T}" /> in which the conversion
-    ///     result is of type <see cref="bool" />.
+    ///     Creates an object <see cref="MultiBooleanToBooleanConverter" />.
     /// </summary>
-    /// <remarks>
-    ///     By default, it converts <see langword="true" /> to <see langword="true" />, and <see langword="false" /> to <see langword="false" />.
-    /// </remarks>
-    [ValueConversion(typeof(bool), typeof(bool))]
-    public sealed class MultiBooleanToBooleanConverter : BaseMultiBooleanConverter<bool>
-    {
-        /// <summary>
-        ///     Creates an object <see cref="MultiBooleanToBooleanConverter" />.
-        /// </summary>
-        public MultiBooleanToBooleanConverter() : base(true, false) { }
-    }
+    public MultiBooleanToBooleanConverter() : base(true, false) { }
 }

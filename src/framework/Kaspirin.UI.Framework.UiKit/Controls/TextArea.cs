@@ -12,75 +12,78 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using Kaspirin.UI.Framework.UiKit.Controls.Internals;
 using System.Windows;
+using Kaspirin.UI.Framework.UiKit.Controls.Internals;
 
-namespace Kaspirin.UI.Framework.UiKit.Controls
+namespace Kaspirin.UI.Framework.UiKit.Controls;
+
+public sealed class TextArea : TextInputBase
 {
-    public class TextArea : TextInputBase
+    public TextArea()
     {
-        public TextArea()
-        {
-            SetValue(TextInputBaseInternals.IsMultilineProperty, true);
-        }
-
-        #region Placeholder
-
-        public string? Placeholder
-        {
-            get { return (string?)GetValue(PlaceholderProperty); }
-            set { SetValue(PlaceholderProperty, value); }
-        }
-
-        public static readonly DependencyProperty PlaceholderProperty =
-            DependencyProperty.Register("Placeholder", typeof(string), typeof(TextArea),
-                new PropertyMetadata(null, OnPlaceholderChanged));
-
-        private static void OnPlaceholderChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            var stringValue = e.NewValue as string ?? string.Empty;
-
-            d.SetValue(TextInputBaseInternals.PlaceholderProperty, new TextInputStringPlaceholder(stringValue));
-        }
-
-        #endregion
-
-        #region HasCounter
-
-        public bool HasCounter
-        {
-            get { return (bool)GetValue(HasCounterProperty); }
-            set { SetValue(HasCounterProperty, value); }
-        }
-
-        public static readonly DependencyProperty HasCounterProperty =
-            DependencyProperty.Register("HasCounter", typeof(bool), typeof(TextArea),
-                new PropertyMetadata(false, OnHasCounterChanged));
-
-        private static void OnHasCounterChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            d.SetValue(TextInputBaseInternals.HasCounterProperty, e.NewValue);
-        }
-
-        #endregion
-
-        #region InputHeight
-
-        public double InputHeight
-        {
-            get { return (double)GetValue(InputHeightProperty); }
-            set { SetValue(InputHeightProperty, value); }
-        }
-
-        public static readonly DependencyProperty InputHeightProperty =
-            DependencyProperty.Register("InputHeight", typeof(double), typeof(TextArea)
-                , new PropertyMetadata(double.NaN, InputHeightChanged));
-
-        private static void InputHeightChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            d.SetValue(TextInputBaseInternals.InputHeightProperty, e.NewValue);
-        }
-
-        #endregion
+        SetValue(TextInputBaseInternals.IsMultilineProperty, true);
     }
+
+    #region Placeholder
+
+    public string? Placeholder
+    {
+        get => (string?)GetValue(PlaceholderProperty);
+        set => SetValue(PlaceholderProperty, value);
+    }
+
+    public static readonly DependencyProperty PlaceholderProperty = DependencyProperty.Register(
+        nameof(Placeholder),
+        typeof(string),
+        typeof(TextArea),
+        new PropertyMetadata(default(string), OnPlaceholderChanged));
+
+    private static void OnPlaceholderChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+    {
+        var stringValue = e.NewValue as string ?? string.Empty;
+
+        d.SetValue(TextInputBaseInternals.PlaceholderProperty, new TextInputStringPlaceholder(stringValue));
+    }
+
+    #endregion
+
+    #region HasCounter
+
+    public bool HasCounter
+    {
+        get => (bool)GetValue(HasCounterProperty);
+        set => SetValue(HasCounterProperty, value);
+    }
+
+    public static readonly DependencyProperty HasCounterProperty = DependencyProperty.Register(
+        nameof(HasCounter),
+        typeof(bool),
+        typeof(TextArea),
+        new PropertyMetadata(default(bool), OnHasCounterChanged));
+
+    private static void OnHasCounterChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+    {
+        d.SetValue(TextInputBaseInternals.HasCounterProperty, e.NewValue);
+    }
+
+    #endregion
+
+    #region InputHeight
+
+    public double InputHeight
+    {
+        get => (double)GetValue(InputHeightProperty);
+        set => SetValue(InputHeightProperty, value);
+    }
+
+    public static readonly DependencyProperty InputHeightProperty = DependencyProperty.Register(
+        nameof(InputHeight),
+        typeof(double),
+        typeof(TextArea),
+        new PropertyMetadata(double.NaN, InputHeightChanged));
+
+    private static void InputHeightChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        => d.SetValue(TextInputBaseInternals.InputHeightProperty, e.NewValue);
+
+    #endregion
 }

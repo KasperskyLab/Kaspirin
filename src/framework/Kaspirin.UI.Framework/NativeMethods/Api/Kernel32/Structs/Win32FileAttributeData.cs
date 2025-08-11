@@ -17,20 +17,18 @@
 using System.Runtime.InteropServices;
 using FILETIME = System.Runtime.InteropServices.ComTypes.FILETIME;
 
-namespace Kaspirin.UI.Framework.NativeMethods.Api.Kernel32.Structs
+namespace Kaspirin.UI.Framework.NativeMethods.Api.Kernel32.Structs;
+
+/// <summary>
+///     <seealso href="https://learn.microsoft.com/en-us/windows/win32/api/fileapi/ns-fileapi-win32_file_attribute_data">Learn more</seealso>.
+/// </summary>
+[StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
+public struct Win32FileAttributeData
 {
-    /// <summary>
-    ///     
-    /// <seealso href="https://learn.microsoft.com/en-us/windows/win32/api/fileapi/ns-fileapi-win32_file_attribute_data">Learn more</seealso>.
-    /// </summary>
-    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
-    public struct Win32FileAttributeData
-    {
-        public FileAttributeFlags FileAttributes;
-        public FILETIME CreationTime;
-        public FILETIME LastAccessTime;
-        public FILETIME LastWriteTime;
-        public int FileSizeHigh;
-        public int FileSizeLow;
-    }
+    public FileAttributeFlags FileAttributes;
+    public FILETIME CreationTime;
+    public FILETIME LastAccessTime;
+    public FILETIME LastWriteTime;
+    public int FileSizeHigh;
+    public int FileSizeLow;
 }

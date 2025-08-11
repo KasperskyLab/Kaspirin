@@ -17,41 +17,39 @@
 using System;
 using System.Runtime.InteropServices;
 
-namespace Kaspirin.UI.Framework.NativeMethods.Api.Advapi32.Structs
+namespace Kaspirin.UI.Framework.NativeMethods.Api.Advapi32.Structs;
+
+/// <summary>
+///     <seealso href="https://learn.microsoft.com/en-us/windows/win32/api/wincred/ns-wincred-credentiala">Learn more</seealso>.
+/// </summary>
+[StructLayout(LayoutKind.Sequential)]
+public struct Credential
 {
-    /// <summary>
-    ///     
-    /// <seealso href="https://learn.microsoft.com/en-us/windows/win32/api/wincred/ns-wincred-credentiala">Learn more</seealso>.
-    /// </summary>
-    [StructLayout(LayoutKind.Sequential)]
-    public struct Credential
-    {
-        public int Flags;
+    public int Flags;
 
-        public CredentialType Type;
+    public CredentialType Type;
 
-        [MarshalAs(UnmanagedType.LPWStr)]
-        public string? TargetName;
+    [MarshalAs(UnmanagedType.LPWStr)]
+    public string? TargetName;
 
-        [MarshalAs(UnmanagedType.LPWStr)]
-        public string? Comment;
+    [MarshalAs(UnmanagedType.LPWStr)]
+    public string? Comment;
 
-        public long LastWritten;
+    public long LastWritten;
 
-        public int CredentialBlobSize;
+    public int CredentialBlobSize;
 
-        public IntPtr CredentialBlob;
+    public IntPtr CredentialBlob;
 
-        public CredentialPersist Persist;
+    public CredentialPersist Persist;
 
-        public int AttributeCount;
+    public int AttributeCount;
 
-        public IntPtr Attributes;
+    public IntPtr Attributes;
 
-        [MarshalAs(UnmanagedType.LPWStr)]
-        public string? TargetAlias;
+    [MarshalAs(UnmanagedType.LPWStr)]
+    public string? TargetAlias;
 
-        [MarshalAs(UnmanagedType.LPWStr)]
-        public string? UserName;
-    }
+    [MarshalAs(UnmanagedType.LPWStr)]
+    public string? UserName;
 }

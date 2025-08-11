@@ -12,18 +12,25 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
+namespace Kaspirin.UI.Framework.NativeMethods.Api.Kernel32.Enums;
 
-namespace Kaspirin.UI.Framework.NativeMethods.Api.Kernel32.Enums
+/// <summary>
+///     <seealso href="https://learn.microsoft.com/en-us/windows/win32/api/winnls/ne-winnls-sysgeoclass">Learn more</seealso>.
+/// </summary>
+public enum SysGeoClass : uint
 {
     /// <summary>
-    ///     
-    /// <seealso href="https://learn.microsoft.com/en-us/windows/win32/api/winnls/ne-winnls-sysgeoclass">Learn more</seealso>.
+    ///     The GEOCLASS_ALL constant.
     /// </summary>
-    public enum SysGeoClass : uint
-    {
-        GEOCLASS_ALL = 0,
-        GEOCLASS_REGION = 14,
-        GEOCLASS_NATION = 16
-    }
+    All = 0,
+
+    /// <summary>
+    ///     The GEOCLASS_REGION constant.
+    /// </summary>
+    Region = 14,
+
+    /// <summary>
+    ///     The GEOCLASS_NATION constant.
+    /// </summary>
+    Nation = 16,
 }

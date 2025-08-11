@@ -14,10 +14,9 @@
 
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
 
-namespace Kaspirin.UI.Framework.NativeMethods.Api.Comctl32.Constants
+namespace Kaspirin.UI.Framework.NativeMethods.Api.Comctl32.Constants;
+
+public static class Comctl32Guids
 {
-    public static class Comctl32Guids
-    {
-        public const string IidImageList = "46eb5926-582e-4017-9fdf-e8998daa0950";
-    }
+    public const string IidImageList = "46eb5926-582e-4017-9fdf-e8998daa0950";
 }

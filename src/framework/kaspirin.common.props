@@ -21,7 +21,7 @@
 		<ProduceReferenceAssembly>false</ProduceReferenceAssembly>
 		<DebugType>pdbonly</DebugType>
 		<Nullable>enable</Nullable>
-		<WarningsAsErrors>Nullable</WarningsAsErrors>
+		<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
 		<AllowUnsafeBlocks>True</AllowUnsafeBlocks>
 		<LangVersion>10</LangVersion>
 	</PropertyGroup>

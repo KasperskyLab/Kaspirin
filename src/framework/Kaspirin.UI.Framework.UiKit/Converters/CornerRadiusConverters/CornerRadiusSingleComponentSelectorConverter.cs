@@ -16,40 +16,39 @@ using System;
 using System.Globalization;
 using System.Windows;
 
-namespace Kaspirin.UI.Framework.UiKit.Converters.CornerRadiusConverters
+namespace Kaspirin.UI.Framework.UiKit.Converters.CornerRadiusConverters;
+
+public sealed class CornerRadiusSingleComponentSelectorConverter : ValueConverterMarkupExtension<CornerRadiusSingleComponentSelectorConverter>
 {
-    public sealed class CornerRadiusSingleComponentSelectorConverter : ValueConverterMarkupExtension<CornerRadiusSingleComponentSelectorConverter>
+    public override object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
     {
-        public override object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
+        Guard.ArgumentIsNotNull(value);
+        Guard.ArgumentIsNotNull(parameter);
+
+        if (value is not CornerRadius cornerRadius || parameter is not CornerRadiusSingleComponent component)
         {
-            Guard.ArgumentIsNotNull(value);
-            Guard.ArgumentIsNotNull(parameter);
+            return DependencyProperty.UnsetValue;
+        }
 
-            if (value is not CornerRadius cornerRadius || parameter is not CornerRadiusSingleComponent component)
-            {
-                return DependencyProperty.UnsetValue;
-            }
-
-            switch (component)
-            {
-                case CornerRadiusSingleComponent.TopLeft:
-                    return cornerRadius.TopLeft;
-                case CornerRadiusSingleComponent.TopRight:
-                    return cornerRadius.TopRight;
-                case CornerRadiusSingleComponent.BottomRight:
-                    return cornerRadius.BottomRight;
-                case CornerRadiusSingleComponent.BottomLeft:
-                    return cornerRadius.BottomLeft;
-                case CornerRadiusSingleComponent.All:
-                    Guard.Assert(
-                        cornerRadius.TopLeft.NearlyEqual(cornerRadius.TopRight) &&
-                        cornerRadius.TopLeft.NearlyEqual(cornerRadius.BottomRight) &&
-                        cornerRadius.TopLeft.NearlyEqual(cornerRadius.BottomLeft),
-                        $"CornerRadius value with equal components is expected, but got {cornerRadius}");
-                    return cornerRadius.TopLeft;
-                default:
-                    throw new ArgumentOutOfRangeException($"Value {component} not supported.");
-            }
+        switch (component)
+        {
+            case CornerRadiusSingleComponent.TopLeft:
+                return cornerRadius.TopLeft;
+            case CornerRadiusSingleComponent.TopRight:
+                return cornerRadius.TopRight;
+            case CornerRadiusSingleComponent.BottomRight:
+                return cornerRadius.BottomRight;
+            case CornerRadiusSingleComponent.BottomLeft:
+                return cornerRadius.BottomLeft;
+            case CornerRadiusSingleComponent.All:
+                Guard.Assert(
+                    cornerRadius.TopLeft.NearlyEqual(cornerRadius.TopRight) &&
+                    cornerRadius.TopLeft.NearlyEqual(cornerRadius.BottomRight) &&
+                    cornerRadius.TopLeft.NearlyEqual(cornerRadius.BottomLeft),
+                    $"CornerRadius value with equal components is expected, but got {cornerRadius}");
+                return cornerRadius.TopLeft;
+            default:
+                throw new UnexpectedValueException(component);
         }
     }
 }

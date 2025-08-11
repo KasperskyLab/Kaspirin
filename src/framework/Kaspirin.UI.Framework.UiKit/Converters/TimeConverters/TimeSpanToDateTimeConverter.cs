@@ -15,38 +15,37 @@
 using System;
 using System.Globalization;
 
-namespace Kaspirin.UI.Framework.UiKit.Converters.TimeConverters
+namespace Kaspirin.UI.Framework.UiKit.Converters.TimeConverters;
+
+public sealed class TimeSpanToDateTimeConverter : ValueConverterMarkupExtension<TimeSpanToDateTimeConverter>
 {
-    public sealed class TimeSpanToDateTimeConverter : ValueConverterMarkupExtension<TimeSpanToDateTimeConverter>
+    public override object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
     {
-        public override object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
+        return value switch
         {
-            return value switch
-            {
-                TimeSpan timeSpan => ToDateTimeSafe(timeSpan),
-                _ => value
-            };
+            TimeSpan timeSpan => ToDateTimeSafe(timeSpan),
+            _ => value
+        };
+    }
+
+    public override object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
+    {
+        return value switch
+        {
+            DateTime dateTime => new TimeSpan(dateTime.Hour, dateTime.Minute, dateTime.Second),
+            _ => value
+        };
+    }
+
+    private static DateTime ToDateTimeSafe(TimeSpan value)
+    {
+        if (value.Hours < 0 || value.Hours > 24 ||
+            value.Minutes < 0 || value.Minutes > 59 ||
+            value.Seconds < 0 || value.Seconds > 59)
+        {
+            return DateTime.MinValue;
         }
 
-        public override object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
-        {
-            return value switch
-            {
-                DateTime dateTime => new TimeSpan(dateTime.Hour, dateTime.Minute, dateTime.Second),
-                _ => value
-            };
-        }
-
-        private static DateTime ToDateTimeSafe(TimeSpan value)
-        {
-            if (value.Hours < 0 || value.Hours > 24 ||
-                value.Minutes < 0 || value.Minutes > 59 ||
-                value.Seconds < 0 || value.Seconds > 59)
-            {
-                return DateTime.MinValue;
-            }
-
-            return new DateTime(1, 1, 1, value.Hours, value.Minutes, value.Seconds);
-        }
+        return new DateTime(1, 1, 1, value.Hours, value.Minutes, value.Seconds);
     }
 }

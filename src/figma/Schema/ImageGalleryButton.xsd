@@ -38,10 +38,10 @@
 			<xs:element name="BorderThicknessPressed" type="Thickness" minOccurs="1" maxOccurs="1"/>
 			<xs:element name="CornerRadius" type="CornerRadius" minOccurs="1" maxOccurs="1"/>
 			<xs:element name="Focus" type="Focus" minOccurs="1" maxOccurs="1"/>
-			<xs:element name="IconForegroundDisabled" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
-			<xs:element name="IconForegroundHover" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
-			<xs:element name="IconForegroundNormal" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
-			<xs:element name="IconForegroundPressed" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="IconBrushDisabled" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="IconBrushHover" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="IconBrushNormal" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="IconBrushPressed" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
 		</xs:all>
 	</xs:group>
 

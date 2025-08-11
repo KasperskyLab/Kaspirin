@@ -7,21 +7,20 @@
 // Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-namespace Kaspirin.UI.Framework.UiKit.Interactivity.Core
-{
-    public abstract class EventTriggerBase<TSource> : EventTriggerBase where TSource : class
-    {
-        protected EventTriggerBase()
-            : base(typeof(TSource))
-        {
-        }
+namespace Kaspirin.UI.Framework.UiKit.Interactivity.Core;
 
-        public new TSource? Source
+public abstract class EventTriggerBase<TSource> : EventTriggerBase where TSource : class
+{
+    protected EventTriggerBase()
+        : base(typeof(TSource))
+    {
+    }
+
+    public new TSource? Source
+    {
+        get
         {
-            get
-            {
-                return (TSource?)base.Source;
-            }
+            return (TSource?)base.Source;
         }
     }
 }

@@ -15,14 +15,19 @@
 using System;
 using System.Collections.Generic;
 
-namespace Kaspirin.UI.Framework.UiKit.Localization.Localizer
+namespace Kaspirin.UI.Framework.UiKit.Localization.Localizer;
+
+public sealed class LocalizerSettings
 {
-    public sealed class LocalizerSettings
+    public static string ScopeUriMarker => "{scope}";
+
+    public string FallbackScope { get; set; } = "Common";
+
+    public IDictionary<Type, string> ScopeUriPatterns { get; set; } = new Dictionary<Type, string>
     {
-        public static string ScopeUriMarker => "{scope}";
-
-        public string FallbackScope { get; set; } = "Common";
-
-        public IDictionary<Type, string> ScopeUriPatterns { get; set; } = new Dictionary<Type, string>();
-    }
+        { typeof(IXamlLocalizer),    $"dictionaries/{ScopeUriMarker}.(xaml|baml)" },
+        { typeof(IStringLocalizer),  $"locs/{ScopeUriMarker}.lt" },
+        { typeof(IImageLocalizer),   $"images/{ScopeUriMarker}" },
+        { typeof(IFileLocalizer),    $"{ScopeUriMarker}" }
+    };
 }

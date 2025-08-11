@@ -12,34 +12,89 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-#pragma warning disable KCAIDE0002 // Enum has incorrect suffix
 
 using System;
 
-namespace Kaspirin.UI.Framework.NativeMethods.Api.User32.Enums
+namespace Kaspirin.UI.Framework.NativeMethods.Api.User32.Enums;
+
+/// <summary>
+///     <seealso href="https://learn.microsoft.com/en-us/windows/win32/api/winuser/ns-winuser-mouseinput">Learn more</seealso>.
+/// </summary>
+[Flags]
+public enum MouseInputFlags : uint
 {
     /// <summary>
-    ///     
-    /// <seealso href="https://learn.microsoft.com/en-us/windows/win32/api/winuser/ns-winuser-mouseinput">Learn more</seealso>.
+    ///     The flag is not set.
     /// </summary>
-    [Flags]
-    public enum MouseInputFlags : uint
-    {
-        None = 0,
-        MOUSEEVENTF_MOVE = 0x0001,
-        MOUSEEVENTF_LEFTDOWN = 0x0002,
-        MOUSEEVENTF_LEFTUP = 0x0004,
-        MOUSEEVENTF_RIGHTDOWN = 0x0008,
-        MOUSEEVENTF_RIGHTUP = 0x0010,
-        MOUSEEVENTF_MIDDLEDOWN = 0x0020,
-        MOUSEEVENTF_MIDDLEUP = 0x0040,
-        MOUSEEVENTF_XDOWN = 0x0080,
-        MOUSEEVENTF_XUP = 0x0100,
-        MOUSEEVENTF_WHEEL = 0x0800,
-        MOUSEEVENTF_HWHEEL = 0x1000,
-        MOUSEEVENTF_MOVE_NOCOALESCE = 0x2000,
-        MOUSEEVENTF_VIRTUALDESK = 0x4000,
-        MOUSEEVENTF_ABSOLUTE = 0x8000,
-    }
+    None = 0,
+
+    /// <summary>
+    ///     The MOUSEEVENTF_MOVE constant.
+    /// </summary>
+    Move = 0x0001,
+
+    /// <summary>
+    ///     The MOUSEEVENTF_LEFTDOWN constant.
+    /// </summary>
+    LeftDown = 0x0002,
+
+    /// <summary>
+    ///     The MOUSEEVENTF_LEFTUP constant.
+    /// </summary>
+    LeftUp = 0x0004,
+
+    /// <summary>
+    ///     The MOUSEEVENTF_RIGHTDOWN constant.
+    /// </summary>
+    RightDown = 0x0008,
+
+    /// <summary>
+    ///     The MOUSEEVENTF_RIGHTUP constant.
+    /// </summary>
+    RightUp = 0x0010,
+
+    /// <summary>
+    ///     The MOUSEEVENTF_MIDDLEDOWN constant.
+    /// </summary>
+    MiddleDown = 0x0020,
+
+    /// <summary>
+    ///     The MOUSEEVENTF_MIDDLEUP constant.
+    /// </summary>
+    MiddleUp = 0x0040,
+
+    /// <summary>
+    ///     The MOUSEEVENTF_XDOWN constant.
+    /// </summary>
+    XDown = 0x0080,
+
+    /// <summary>
+    ///     The MOUSEEVENTF_XUP constant.
+    /// </summary>
+    Xup = 0x0100,
+
+    /// <summary>
+    ///     The MOUSEEVENTF_WHEEL constant.
+    /// </summary>
+    Wheel = 0x0800,
+
+    /// <summary>
+    ///     The MOUSEEVENTF_HWHEEL constant.
+    /// </summary>
+    HWheel = 0x1000,
+
+    /// <summary>
+    ///     The MOUSEEVENTF_MOVE_NOCOALESCE constant.
+    /// </summary>
+    MoveNoCoalesce = 0x2000,
+
+    /// <summary>
+    ///     The MOUSEEVENTF_VIRTUALDESK constant.
+    /// </summary>
+    VirtualDesk = 0x4000,
+
+    /// <summary>
+    ///     The MOUSEEVENTF_ABSOLUTE constant.
+    /// </summary>
+    Absolute = 0x8000,
 }

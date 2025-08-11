@@ -14,36 +14,39 @@
 
 using System.Windows;
 
-namespace Kaspirin.UI.Framework.UiKit.Controls
+namespace Kaspirin.UI.Framework.UiKit.Controls;
+
+public abstract class InteractivityOverlayCutBase : DependencyObject
 {
-    public abstract class InteractivityOverlayCutBase : DependencyObject
+    #region ClipCornerRadius
+
+    public double ClipCornerRadius
     {
-        #region ClipCornerRadius
-
-        public double ClipCornerRadius
-        {
-            get => (double)GetValue(ClipCornerRadiusProperty);
-            set => SetValue(ClipCornerRadiusProperty, value);
-        }
-
-        public static readonly DependencyProperty ClipCornerRadiusProperty =
-            DependencyProperty.Register(nameof(ClipCornerRadius), typeof(double), typeof(InteractivityOverlayCutBase),
-                new PropertyMetadata(UIKitConstants.InteractivityOverlayClipCornerRadius));
-
-        #endregion
-
-        #region ClipExtent
-
-        public Thickness ClipExtent
-        {
-            get => (Thickness)GetValue(ClipExtentProperty);
-            set => SetValue(ClipExtentProperty, value);
-        }
-
-        public static readonly DependencyProperty ClipExtentProperty =
-            DependencyProperty.Register(nameof(ClipExtent), typeof(Thickness), typeof(InteractivityOverlayCutBase),
-                new PropertyMetadata(UIKitConstants.InteractivityOverlayClipExtent));
-
-        #endregion
+        get => (double)GetValue(ClipCornerRadiusProperty);
+        set => SetValue(ClipCornerRadiusProperty, value);
     }
+
+    public static readonly DependencyProperty ClipCornerRadiusProperty = DependencyProperty.Register(
+        nameof(ClipCornerRadius),
+        typeof(double),
+        typeof(InteractivityOverlayCutBase),
+        new PropertyMetadata(UIKitConstants.InteractivityOverlayClipCornerRadius));
+
+    #endregion
+
+    #region ClipExtent
+
+    public Thickness ClipExtent
+    {
+        get => (Thickness)GetValue(ClipExtentProperty);
+        set => SetValue(ClipExtentProperty, value);
+    }
+
+    public static readonly DependencyProperty ClipExtentProperty = DependencyProperty.Register(
+        nameof(ClipExtent),
+        typeof(Thickness),
+        typeof(InteractivityOverlayCutBase),
+        new PropertyMetadata(UIKitConstants.InteractivityOverlayClipExtent));
+
+    #endregion
 }

@@ -14,40 +14,39 @@
 
 using System.Diagnostics.CodeAnalysis;
 
-namespace Kaspirin.UI.Framework.NativeMethods.Utils
+namespace Kaspirin.UI.Framework.NativeMethods.Utils;
+
+internal static class ParamSplitter
 {
-    internal static class ParamSplitter
+    public static bool TryGetHiLoWords(int? param, [NotNullWhen(true)] out short loword, [NotNullWhen(true)] out short hiword)
     {
-        public static bool TryGetHiLoWords(int? param, [NotNullWhen(true)] out short loword, [NotNullWhen(true)] out short hiword)
+        loword = 0;
+        hiword = 0;
+
+        if (param == null)
         {
-            loword = 0;
-            hiword = 0;
-
-            if (param == null)
-            {
-                return false;
-            }
-
-            loword = (short)(param & 0xffff);
-            hiword = (short)(param >> 16);
-
-            return true;
+            return false;
         }
 
-        public static bool TryGetHiLoWords(long? param, [NotNullWhen(true)] out short loword, [NotNullWhen(true)] out short hiword)
+        loword = (short)(param & 0xffff);
+        hiword = (short)(param >> 16);
+
+        return true;
+    }
+
+    public static bool TryGetHiLoWords(long? param, [NotNullWhen(true)] out short loword, [NotNullWhen(true)] out short hiword)
+    {
+        loword = 0;
+        hiword = 0;
+
+        if (param == null)
         {
-            loword = 0;
-            hiword = 0;
-
-            if (param == null)
-            {
-                return false;
-            }
-
-            loword = (short)(param & 0xffff);
-            hiword = (short)(param >> 16);
-
-            return true;
+            return false;
         }
+
+        loword = (short)(param & 0xffff);
+        hiword = (short)(param >> 16);
+
+        return true;
     }
 }

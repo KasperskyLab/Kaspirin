@@ -12,9 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Kaspirin.UI.Framework.UiKit.Windows
-{
-    public delegate void ScreenResolutionChangedDelegate(
-        WindowScreenMonitoringService sender,
-        ScreenResolutionChangedEventArguments args);
-}
+namespace Kaspirin.UI.Framework.UiKit.Windows;
+
+public delegate void ScreenResolutionChangedDelegate(
+    WindowScreenMonitoringService sender,
+    ScreenResolutionChangedEventArguments args);

@@ -15,29 +15,28 @@
 using System;
 using System.Windows;
 
-namespace Kaspirin.UI.Framework.UiKit
-{
-    internal static class UIKitPropertyMetadataFactory
-    {
-        public static PropertyMetadata CreatePropsMetadata(
-            Type expectedSenderType,
-            string propertyName,
-            PropertyChangedCallback? onValueChanged = null,
-            object? defaultValue = null)
-        {
-            void OnValueChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
-            {
-                if (expectedSenderType.IsAssignableFrom(d.GetType()) is false)
-                {
-                    throw new InvalidOperationException($"Unexpected target object type for '{propertyName}'. Expected '{expectedSenderType}', actual '{d.GetType()}'");
-                }
+namespace Kaspirin.UI.Framework.UiKit;
 
-                onValueChanged?.Invoke(d, e);
+internal static class UIKitPropertyMetadataFactory
+{
+    public static PropertyMetadata CreatePropsMetadata(
+        Type expectedSenderType,
+        string propertyName,
+        PropertyChangedCallback? onValueChanged = null,
+        object? defaultValue = null)
+    {
+        void OnValueChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (expectedSenderType.IsAssignableFrom(d.GetType()) is false)
+            {
+                throw new InvalidOperationException($"Unexpected target object type for '{propertyName}'. Expected '{expectedSenderType}', actual '{d.GetType()}'");
             }
 
-            return defaultValue != null
-                ? new PropertyMetadata(defaultValue, OnValueChangedCallback)
-                : new PropertyMetadata(OnValueChangedCallback);
+            onValueChanged?.Invoke(d, e);
         }
+
+        return defaultValue != null
+            ? new PropertyMetadata(defaultValue, OnValueChangedCallback)
+            : new PropertyMetadata(OnValueChangedCallback);
     }
 }

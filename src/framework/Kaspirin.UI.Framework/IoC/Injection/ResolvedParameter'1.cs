@@ -12,33 +12,32 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Kaspirin.UI.Framework.IoC.Injection
+namespace Kaspirin.UI.Framework.IoC.Injection;
+
+/// <summary>
+///     It is used to provide information about the constructor parameter of the class registered in the IoC container.
+/// </summary>
+/// <typeparam name="TParameter">
+///     The type of the parameter.
+/// </typeparam>
+public sealed class ResolvedParameter<TParameter> : ResolvedParameter
 {
     /// <summary>
-    ///     It is used to provide information about the constructor parameter of the class registered in the IoC container.
+    ///     Initializes a new instance of the <see cref="ResolvedParameter{TParameter}" /> class.
     /// </summary>
-    /// <typeparam name="TParameter">
-    ///     The type of the parameter.
-    /// </typeparam>
-    public sealed class ResolvedParameter<TParameter> : ResolvedParameter
+    public ResolvedParameter()
+        : base(typeof(TParameter))
     {
-        /// <summary>
-        ///     Initializes a new instance of the <see cref="ResolvedParameter{TParameter}" /> class.
-        /// </summary>
-        public ResolvedParameter()
-            : base(typeof(TParameter))
-        {
-        }
+    }
 
-        /// <summary>
-        ///     Initializes a new instance of the <see cref="ResolvedParameter{TParameter}" /> class.
-        /// </summary>
-        /// <param name="name">
-        ///     The name of the parameter.
-        /// </param>
-        public ResolvedParameter(string name)
-            : base(typeof(TParameter), name)
-        {
-        }
+    /// <summary>
+    ///     Initializes a new instance of the <see cref="ResolvedParameter{TParameter}" /> class.
+    /// </summary>
+    /// <param name="name">
+    ///     The name of the parameter.
+    /// </param>
+    public ResolvedParameter(string name)
+        : base(typeof(TParameter), name)
+    {
     }
 }

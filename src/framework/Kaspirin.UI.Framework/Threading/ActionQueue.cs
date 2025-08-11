@@ -16,61 +16,60 @@ using System;
 using System.Collections.Concurrent;
 using System.Threading.Tasks;
 
-namespace Kaspirin.UI.Framework.Threading
+namespace Kaspirin.UI.Framework.Threading;
+
+/// <summary>
+///     Implements the logic of sequential and asynchronous execution of transmitted delegates.
+/// </summary>
+public sealed class ActionQueue
 {
     /// <summary>
-    ///     Implements the logic of sequential and asynchronous execution of transmitted delegates.
+    ///     Adds a delegate to the execution queue.
     /// </summary>
-    public sealed class ActionQueue
+    /// <param name="action">
+    ///     A delegate to execute.
+    /// </param>
+    /// <remarks>
+    ///     The delegate is executed asynchronously in a separate thread.
+    /// </remarks>
+    public void Enqueue(Action action)
     {
-        /// <summary>
-        ///     Adds a delegate to the execution queue.
-        /// </summary>
-        /// <param name="action">
-        ///     A delegate to execute.
-        /// </param>
-        /// <remarks>
-        ///     The delegate is executed asynchronously in a separate thread.
-        /// </remarks>
-        public void Enqueue(Action action)
+        Guard.ArgumentIsNotNull(action);
+
+        lock (_syncRoot)
         {
-            Guard.ArgumentIsNotNull(action);
+            _actionQueue.Enqueue(action);
 
-            lock (_syncRoot)
+            if (_queueProcessor == null)
             {
-                _actionQueue.Enqueue(action);
-
-                if (_queueProcessor == null)
-                {
-                    StartProcessing();
-                }
+                StartProcessing();
             }
         }
-
-        private void StartProcessing()
-        {
-            _queueProcessor = Task.Factory.StartNew(ProcessQueue);
-        }
-
-        private void ProcessQueue()
-        {
-            while (_actionQueue.TryDequeue(out var action))
-            {
-                action();
-            }
-
-            lock (_syncRoot)
-            {
-                _queueProcessor = null;
-                if (_actionQueue.Count > 0)
-                {
-                    StartProcessing();
-                }
-            }
-        }
-
-        private readonly object _syncRoot = new();
-        private readonly ConcurrentQueue<Action> _actionQueue = new();
-        private Task? _queueProcessor;
     }
+
+    private void StartProcessing()
+    {
+        _queueProcessor = Task.Factory.StartNew(ProcessQueue);
+    }
+
+    private void ProcessQueue()
+    {
+        while (_actionQueue.TryDequeue(out var action))
+        {
+            action();
+        }
+
+        lock (_syncRoot)
+        {
+            _queueProcessor = null;
+            if (_actionQueue.Count > 0)
+            {
+                StartProcessing();
+            }
+        }
+    }
+
+    private readonly object _syncRoot = new();
+    private readonly ConcurrentQueue<Action> _actionQueue = new();
+    private Task? _queueProcessor;
 }

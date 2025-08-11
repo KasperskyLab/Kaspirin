@@ -15,51 +15,50 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 
-namespace Kaspirin.UI.Framework.IoC.Overrides
+namespace Kaspirin.UI.Framework.IoC.Overrides;
+
+/// <summary>
+///     A base class for overriding dependency values.
+/// </summary>
+public abstract class ResolverOverride
 {
     /// <summary>
-    ///     A base class for overriding dependency values.
+    ///     The type of dependency owner.
     /// </summary>
-    public abstract class ResolverOverride
+    public Type? OwnerType { get; private set; }
+
+    /// <summary>
+    ///     Specifies the type of dependency owner.
+    /// </summary>
+    /// <typeparam name="T">
+    ///     The type of dependency owner.
+    /// </typeparam>
+    /// <returns>
+    ///     The current instance is <see cref="dependencyOverrides" />.
+    /// </returns>
+    public ResolverOverride OnType<T>()
     {
-        /// <summary>
-        ///     The type of dependency owner.
-        /// </summary>
-        public Type? OwnerType { get; private set; }
-
-        /// <summary>
-        ///     Specifies the type of dependency owner.
-        /// </summary>
-        /// <typeparam name="T">
-        ///     The type of dependency owner.
-        /// </typeparam>
-        /// <returns>
-        ///     The current instance is <see cref="dependencyOverrides" />.
-        /// </returns>
-        public ResolverOverride OnType<T>()
-        {
-            OwnerType = typeof(T);
-            return this;
-        }
-
-        /// <summary>
-        ///     Provides an overridden dependency value, if possible.
-        /// </summary>
-        /// <param name="ownerType">
-        ///     The type of dependency owner.
-        /// </param>
-        /// <param name="dependencyType">
-        ///     The type of addiction.
-        /// </param>
-        /// <param name="dependencyName">
-        ///     The name of the dependency.
-        /// </param>
-        /// <param name="value">
-        ///     An overridden value, if found.
-        /// </param>
-        /// <returns>
-        ///     Returns <see langword="true" /> if an override was found, otherwise <see langword="false" />.
-        /// </returns>
-        public abstract bool TryGetOverride(Type ownerType, Type dependencyType, string dependencyName, [NotNullWhen(true)] out object? value);
+        OwnerType = typeof(T);
+        return this;
     }
+
+    /// <summary>
+    ///     Provides an overridden dependency value, if possible.
+    /// </summary>
+    /// <param name="ownerType">
+    ///     The type of dependency owner.
+    /// </param>
+    /// <param name="dependencyType">
+    ///     The type of addiction.
+    /// </param>
+    /// <param name="dependencyName">
+    ///     The name of the dependency.
+    /// </param>
+    /// <param name="value">
+    ///     An overridden value, if found.
+    /// </param>
+    /// <returns>
+    ///     Returns <see langword="true" /> if an override was found, otherwise <see langword="false" />.
+    /// </returns>
+    public abstract bool TryGetOverride(Type ownerType, Type dependencyType, string dependencyName, [NotNullWhen(true)] out object? value);
 }

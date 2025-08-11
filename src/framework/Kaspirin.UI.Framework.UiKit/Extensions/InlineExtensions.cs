@@ -16,25 +16,24 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
 
-namespace Kaspirin.UI.Framework.UiKit.Extensions
-{
-    public static class InlineExtensions
-    {
-        public static TextBlock? FindParentTextBlock(this Inline inline)
-        {
-            var current = inline;
-            while (current != null)
-            {
-                var parent = LogicalTreeHelper.GetParent(current) as TextBlock;
-                if (parent != null)
-                {
-                    return parent;
-                }
+namespace Kaspirin.UI.Framework.UiKit.Extensions;
 
-                current = LogicalTreeHelper.GetParent(current) as Inline;
+public static class InlineExtensions
+{
+    public static TextBlock? FindParentTextBlock(this Inline inline)
+    {
+        var current = inline;
+        while (current != null)
+        {
+            var parent = LogicalTreeHelper.GetParent(current) as TextBlock;
+            if (parent != null)
+            {
+                return parent;
             }
 
-            return null;
+            current = LogicalTreeHelper.GetParent(current) as Inline;
         }
+
+        return null;
     }
 }

@@ -12,78 +12,78 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+
 using System;
 using System.Windows;
 using System.Windows.Data;
 using Kaspirin.UI.Framework.UiKit.Controls.Internals;
 
-namespace Kaspirin.UI.Framework.UiKit.Services
+namespace Kaspirin.UI.Framework.UiKit.Services;
+
+public class PropertyChangeNotifier<TControl, TProperty> : DependencyObject, IDisposable
+    where TControl : DependencyObject
 {
-    public class PropertyChangeNotifier<TControl, TProperty> : DependencyObject, IDisposable
-        where TControl : DependencyObject
+    public PropertyChangeNotifier(TControl propertySource, string path)
+        : this(propertySource, new PropertyPath(path))
     {
-        public PropertyChangeNotifier(TControl propertySource, string path)
-            : this(propertySource, new PropertyPath(path))
-        {
-        }
-
-        public PropertyChangeNotifier(TControl propertySource, DependencyProperty property)
-            : this(propertySource, property.AsPath())
-        {
-        }
-
-        public PropertyChangeNotifier(TControl propertySource, PropertyPath property)
-        {
-            Guard.ArgumentIsNotNull(propertySource);
-            Guard.ArgumentIsNotNull(property);
-
-            _propertySource = new WeakReference<TControl>(propertySource);
-
-            var binding = new Binding
-            {
-                Path = property,
-                Mode = BindingMode.OneWay,
-                Source = propertySource
-            };
-
-            BindingOperations.SetBinding(this, ValueProperty, binding);
-        }
-
-        public event Action<TControl, TProperty?, TProperty?> ValueChanged = (source, oldValue, newValue) => { };
-
-        public void Dispose()
-           => BindingOperations.ClearBinding(this, ValueProperty);
-
-        public TControl? PropertySource => _propertySource.TryGetTarget(out var target)
-            ? target
-            : null;
-
-        #region Value
-
-        public static readonly DependencyProperty ValueProperty = DependencyProperty.Register(
-            nameof(Value),
-            typeof(TProperty),
-            typeof(PropertyChangeNotifier<TControl, TProperty>),
-            new FrameworkPropertyMetadata(OnValueChanged));
-
-        public TProperty? Value
-        {
-            get => (TProperty?)GetValue(ValueProperty);
-            set => SetValue(ValueProperty, value);
-        }
-
-        private static void OnValueChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            var notifier = Guard.EnsureArgumentIsInstanceOfType<PropertyChangeNotifier<TControl, TProperty>>(d);
-
-            if (notifier.PropertySource is TControl source)
-            {
-                notifier.ValueChanged.Invoke(source, (TProperty?)e.OldValue, (TProperty?)e.NewValue);
-            }
-        }
-
-        #endregion
-
-        private readonly WeakReference<TControl> _propertySource;
     }
+
+    public PropertyChangeNotifier(TControl propertySource, DependencyProperty property)
+        : this(propertySource, property.AsPath())
+    {
+    }
+
+    public PropertyChangeNotifier(TControl propertySource, PropertyPath property)
+    {
+        Guard.ArgumentIsNotNull(propertySource);
+        Guard.ArgumentIsNotNull(property);
+
+        _propertySource = new WeakReference<TControl>(propertySource);
+
+        var binding = new Binding
+        {
+            Path = property,
+            Mode = BindingMode.OneWay,
+            Source = propertySource
+        };
+
+        BindingOperations.SetBinding(this, ValueProperty, binding);
+    }
+
+    public event Action<TControl, TProperty?, TProperty?> ValueChanged = (source, oldValue, newValue) => { };
+
+    public void Dispose()
+       => BindingOperations.ClearBinding(this, ValueProperty);
+
+    public TControl? PropertySource => _propertySource.TryGetTarget(out var target)
+        ? target
+        : null;
+
+    #region Value
+
+    public TProperty? Value
+    {
+        get => (TProperty?)GetValue(ValueProperty);
+        set => SetValue(ValueProperty, value);
+    }
+
+    public static readonly DependencyProperty ValueProperty = DependencyProperty.Register(
+        nameof(Value),
+        typeof(TProperty),
+        typeof(PropertyChangeNotifier<TControl, TProperty>),
+        new FrameworkPropertyMetadata(default(TProperty), OnValueChanged));
+
+    private static void OnValueChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+    {
+        var notifier = Guard.EnsureArgumentIsInstanceOfType<PropertyChangeNotifier<TControl, TProperty>>(d);
+
+        if (notifier.PropertySource is TControl source)
+        {
+            notifier.ValueChanged.Invoke(source, (TProperty?)e.OldValue, (TProperty?)e.NewValue);
+        }
+    }
+
+    #endregion
+
+    private readonly WeakReference<TControl> _propertySource;
 }

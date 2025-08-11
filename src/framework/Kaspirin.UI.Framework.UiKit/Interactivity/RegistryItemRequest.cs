@@ -14,30 +14,29 @@
 
 using System;
 
-namespace Kaspirin.UI.Framework.UiKit.Interactivity
+namespace Kaspirin.UI.Framework.UiKit.Interactivity;
+
+public sealed class RegistryItemRequest : InteractionRequestBase<RegistryItemObject>
 {
-    public sealed class RegistryItemRequest : InteractionRequestBase<RegistryItemObject>
+    public void Raise(Action<RegistryItemObject> onSelected)
     {
-        public void Raise(Action<RegistryItemObject> onSelected)
-        {
-            Guard.ArgumentIsNotNull(onSelected);
+        Guard.ArgumentIsNotNull(onSelected);
 
-            void OnHandled(RegistryItemObject result)
+        void OnHandled(RegistryItemObject result)
+        {
+            if (result.IsConfirmed)
             {
-                if (result.IsConfirmed)
-                {
-                    onSelected?.Invoke(result);
-                }
+                onSelected?.Invoke(result);
             }
-
-            InvokeInteraction(new RegistryItemObject(), OnHandled);
         }
 
-        protected override void OnClose()
-        {
-            Guard.IsNotNull(InteractionObject);
+        InvokeInteraction(new RegistryItemObject(), OnHandled);
+    }
 
-            InteractionObject.IsConfirmed = false;
-        }
+    protected override void OnClose()
+    {
+        Guard.IsNotNull(InteractionObject);
+
+        InteractionObject.IsConfirmed = false;
     }
 }

@@ -15,79 +15,106 @@
 using System;
 using System.Security;
 
-namespace Kaspirin.UI.Framework.Extensions.Strings
+namespace Kaspirin.UI.Framework.Extensions.Strings;
+
+/// <summary>
+///     Extension methods for <see cref="string" />.
+/// </summary>
+public static class StringExtensions
 {
     /// <summary>
-    ///     Extension methods for <see cref="string" />.
+    ///     Checks that the string <paramref name="source" /> is empty.
     /// </summary>
-    public static class StringExtensions
+    /// <param name="source">
+    ///     The original string.
+    /// </param>
+    /// <returns>
+    ///     Returns <see langword="true" /> if the string is empty, otherwise <see langword="false" />.
+    /// </returns>
+    public static bool IsEmpty(this string source)
     {
-        /// <summary>
-        ///     Checks for the presence of a substring in the source string.
-        /// </summary>
-        /// <param name="source">
-        ///     The original string.
-        /// </param>
-        /// <param name="value">
-        ///     The desired substring.
-        /// </param>
-        /// <param name="comparisonType">
-        ///     String comparison mode.
-        /// </param>
-        /// <returns>
-        ///     Returns <see langword="true" /> if the substring <paramref name="value" /> is present in the
-        ///     source string, otherwise <see langword="false" />.
-        /// </returns>
-        public static bool Contains(this string? source, string value, StringComparison comparisonType)
-        {
-            Guard.ArgumentIsNotNull(value);
+        return source.Length == 0;
+    }
 
-            return source?.IndexOf(value, comparisonType) >= 0;
+    /// <summary>
+    ///     Checks that the string <paramref name="source" /> is not empty.
+    /// </summary>
+    /// <param name="source">
+    ///     The original string.
+    /// </param>
+    /// <returns>
+    ///     Returns <see langword="true" /> if the string is not empty, otherwise <see langword="false" />.
+    /// </returns>
+    public static bool IsNotEmpty(this string source)
+    {
+        return source.Length > 0;
+    }
+
+    /// <summary>
+    ///     Checks for the presence of a substring in the source string.
+    /// </summary>
+    /// <param name="source">
+    ///     The original string.
+    /// </param>
+    /// <param name="value">
+    ///     The desired substring.
+    /// </param>
+    /// <param name="comparisonType">
+    ///     String comparison mode.
+    /// </param>
+    /// <returns>
+    ///     Returns <see langword="true" /> if the substring <paramref name="value" /> is present in the
+    ///     source string, otherwise - <see langword="false" />.
+    /// </returns>
+    public static bool Contains(this string? source, string value, StringComparison comparisonType)
+    {
+        Guard.ArgumentIsNotNull(value);
+
+        return source?.IndexOf(value, comparisonType) >= 0;
+    }
+
+    /// <summary>
+    ///     Converts the string <paramref name="source" /> into a secure string object <see cref="SecureString" />.
+    /// </summary>
+    /// <param name="source">
+    ///     The original string.
+    /// </param>
+    /// <returns>
+    ///     A string in the form of an object <see cref="SecureString" />.
+    /// </returns>
+    public static SecureString ToSecureString(this string source)
+    {
+        Guard.ArgumentIsNotNull(source);
+
+        var result = new SecureString();
+        foreach (var symbol in source)
+        {
+            result.AppendChar(symbol);
         }
 
-        /// <summary>
-        ///     Converts the string <paramref name="source" /> into a secure string object <see cref="SecureString" />.
-        /// </summary>
-        /// <param name="source">
-        ///     The original string.
-        /// </param>
-        /// <returns>
-        ///     A string in the form of an object <see cref="SecureString" />.
-        /// </returns>
-        public static SecureString ToSecureString(this string source)
+        result.MakeReadOnly();
+        return result;
+    }
+
+    /// <summary>
+    ///     Cleans up the memory block in which the string <paramref name="source" /> is stored.
+    /// </summary>
+    /// <param name="source">
+    ///     The original string.
+    /// </param>
+    /// <remarks>
+    ///     The method clears the memory block of the string if the string <paramref name="source" /> is not empty or interned.
+    /// </remarks>
+    public static unsafe void CleanupMemory(this string source)
+    {
+        if (string.IsNullOrEmpty(source) || string.IsInterned(source) != null)
         {
-            Guard.ArgumentIsNotNull(source);
-
-            var result = new SecureString();
-            foreach (var symbol in source)
-            {
-                result.AppendChar(symbol);
-            }
-
-            result.MakeReadOnly();
-            return result;
+            return;
         }
 
-        /// <summary>
-        ///     Cleans up the memory block in which the string <paramref name="source" /> is stored.
-        /// </summary>
-        /// <param name="source">
-        ///     The original string.
-        /// </param>
-        /// <remarks>
-        ///     The method clears the memory block of the string if the string <paramref name="source" /> is not empty or interned.
-        /// </remarks>
-        public static unsafe void CleanupMemory(this string source)
+        fixed (void* pointer = source)
         {
-            if (string.IsNullOrEmpty(source) || string.IsInterned(source) != null)
-            {
-                return;
-            }
-
-            fixed (void* pointer = source)
-            {
-                new Span<char>(pointer, source.Length).Clear();
-            }
+            new Span<char>(pointer, source.Length).Clear();
         }
     }
 }

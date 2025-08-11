@@ -16,162 +16,156 @@ using System;
 using System.Windows;
 using System.Windows.Input;
 
-namespace Kaspirin.UI.Framework.UiKit.Input.Focus
+namespace Kaspirin.UI.Framework.UiKit.Input.Focus;
+
+public static class KeyboardEventsHandlerBehavior
 {
-    public static class KeyboardEventsHandlerBehavior
+    #region FocusEventsHandler
+
+    public static IKeyboardFocusEventsHandler GetFocusEventsHandler(UIElement uiElement)
+        => (IKeyboardFocusEventsHandler)uiElement.GetValue(FocusEventsHandlerProperty);
+
+    public static void SetFocusEventsHandler(UIElement uiElement, IKeyboardFocusEventsHandler keyboardFocusEventsHandler)
+        => uiElement.SetValue(FocusEventsHandlerProperty, keyboardFocusEventsHandler);
+
+    public static readonly DependencyProperty FocusEventsHandlerProperty = DependencyProperty.RegisterAttached(
+        "FocusEventsHandler",
+        typeof(IKeyboardFocusEventsHandler),
+        typeof(KeyboardEventsHandlerBehavior),
+        new PropertyMetadata(default(IKeyboardFocusEventsHandler), OnFocusEventsHandlerChanged));
+
+    private static void OnFocusEventsHandlerChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)
     {
-        #region FocusEventsHandler
-
-        public static readonly DependencyProperty FocusEventsHandlerProperty =
-            DependencyProperty.RegisterAttached("FocusEventsHandler", typeof(IKeyboardFocusEventsHandler), typeof(KeyboardEventsHandlerBehavior),
-                new PropertyMetadata(OnFocusEventsHandlerChanged));
-
-        public static IKeyboardFocusEventsHandler GetFocusEventsHandler(UIElement uiElement)
+        var targetElement = dependencyObject as UIElement;
+        if (targetElement == null)
         {
-            return (IKeyboardFocusEventsHandler)uiElement.GetValue(FocusEventsHandlerProperty);
+            return;
         }
 
-        public static void SetFocusEventsHandler(UIElement uiElement, IKeyboardFocusEventsHandler keyboardFocusEventsHandler)
-        {
-            uiElement.SetValue(FocusEventsHandlerProperty, keyboardFocusEventsHandler);
-        }
+        var handler = args.NewValue as IKeyboardFocusEventsHandler;
 
-        private static void OnFocusEventsHandlerChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)
+        targetElement.WhenLoaded(() => targetElement.WhenVisible(() =>
         {
-            var targetElement = dependencyObject as UIElement;
-            if (targetElement == null)
+            var innerTargetElement = targetElement.FindVisualChildren<UIElement>().GuardedSingleOrDefault(GetIsKeyboardFocusSourceElement);
+            if (innerTargetElement != null)
             {
-                return;
+                targetElement = innerTargetElement;
             }
 
-            var handler = args.NewValue as IKeyboardFocusEventsHandler;
-
-            targetElement.WhenLoaded(() => targetElement.WhenVisible(() =>
+            if (handler != null)
             {
-                var innerTargetElement = targetElement.FindVisualChildren<UIElement>().GuardedSingleOrDefault(GetIsKeyboardFocusSourceElement);
-                if (innerTargetElement != null)
+                SubscribeToKeyboardFocusEvents(targetElement, handler);
+            }
+            else if (handler == null)
+            {
+                UnsubscribeFromKeyboardFocusEvents(targetElement);
+            }
+        }));
+    }
+
+    #endregion
+
+    #region FocusControllerHandler
+
+    public static IKeyboardFocusControllerHandler GetFocusControllerHandler(UIElement uiElement)
+        => (IKeyboardFocusControllerHandler)uiElement.GetValue(FocusControllerHandlerProperty);
+
+    public static void SetFocusControllerHandler(UIElement uiElement, IKeyboardFocusControllerHandler keyboardFocusControllerHandler)
+        => uiElement.SetValue(FocusControllerHandlerProperty, keyboardFocusControllerHandler);
+
+    public static readonly DependencyProperty FocusControllerHandlerProperty = DependencyProperty.RegisterAttached(
+        "FocusControllerHandler",
+        typeof(IKeyboardFocusControllerHandler),
+        typeof(KeyboardEventsHandlerBehavior),
+        new PropertyMetadata(default(IKeyboardFocusControllerHandler), OnFocusControllerHandlerChanged));
+
+    private static void OnFocusControllerHandlerChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)
+    {
+        var targetElement = dependencyObject as UIElement;
+        if (targetElement == null)
+        {
+            return;
+        }
+
+        if (args.NewValue is IKeyboardFocusControllerHandler handler)
+        {
+            handler.OnControllerCreated(new KeyboardFocusController(targetElement));
+        }
+    }
+
+    #endregion
+
+    #region IsKeyboardFocusSourceElement
+
+    public static bool GetIsKeyboardFocusSourceElement(DependencyObject obj)
+        => (bool)obj.GetValue(IsKeyboardFocusSourceElementProperty);
+
+    public static void SetIsKeyboardFocusSourceElement(DependencyObject obj, bool value)
+        => obj.SetValue(IsKeyboardFocusSourceElementProperty, value);
+
+    public static readonly DependencyProperty IsKeyboardFocusSourceElementProperty = DependencyProperty.RegisterAttached(
+        "IsKeyboardFocusSourceElement",
+        typeof(bool),
+        typeof(KeyboardEventsHandlerBehavior),
+        new PropertyMetadata(default(bool)));
+
+    #endregion
+
+    private static void SubscribeToKeyboardFocusEvents(UIElement inputElement, IKeyboardFocusEventsHandler handler)
+    {
+        inputElement.SetCurrentValue(FocusEventsHandlerProperty, handler);
+        inputElement.GotKeyboardFocus -= OnGotKeyboardFocus;
+        inputElement.GotKeyboardFocus += OnGotKeyboardFocus;
+        inputElement.LostKeyboardFocus -= OnLostKeyboardFocus;
+        inputElement.LostKeyboardFocus += OnLostKeyboardFocus;
+    }
+
+    private static void UnsubscribeFromKeyboardFocusEvents(UIElement inputElement)
+    {
+        inputElement.SetCurrentValue(FocusEventsHandlerProperty, null);
+        inputElement.GotKeyboardFocus -= OnGotKeyboardFocus;
+        inputElement.LostKeyboardFocus -= OnLostKeyboardFocus;
+    }
+
+    private static void OnGotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs eventArgs)
+    {
+        GetFocusEventsHandler((UIElement)sender)?.OnGotKeyboardFocus();
+    }
+
+    private static void OnLostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs eventArgs)
+    {
+        GetFocusEventsHandler((UIElement)sender)?.OnLostKeyboardFocus();
+    }
+
+    private sealed class KeyboardFocusController : IKeyboardFocusController
+    {
+        public KeyboardFocusController(UIElement targetElement)
+        {
+            _targetElement = new WeakReference<UIElement>(targetElement);
+        }
+
+        public void SetFocus()
+        {
+            Executers.InUiAsync(() =>
+            {
+                if (_targetElement.TryGetTarget(out var target))
                 {
-                    targetElement = innerTargetElement;
+                    InputFocusManager.SetInputFocus(target);
                 }
+            });
+        }
 
-                if (handler != null)
+        public void ClearFocus()
+        {
+            Executers.InUiAsync(() =>
+            {
+                if (_targetElement.TryGetTarget(out var target))
                 {
-                    SubscribeToKeyboardFocusEvents(targetElement, handler);
+                    InputFocusManager.ClearInputFocus(target);
                 }
-                else if (handler == null)
-                {
-                    UnsubscribeFromKeyboardFocusEvents(targetElement);
-                }
-            }));
+            });
         }
 
-        #endregion
-
-        #region FocusControllerHandler
-
-        public static readonly DependencyProperty FocusControllerHandlerProperty =
-            DependencyProperty.RegisterAttached("FocusControllerHandler", typeof(IKeyboardFocusControllerHandler), typeof(KeyboardEventsHandlerBehavior),
-                new PropertyMetadata(OnFocusControllerHandlerChanged));
-
-        public static IKeyboardFocusControllerHandler GetFocusControllerHandler(UIElement uiElement)
-        {
-            return (IKeyboardFocusControllerHandler)uiElement.GetValue(FocusControllerHandlerProperty);
-        }
-
-        public static void SetFocusControllerHandler(UIElement uiElement, IKeyboardFocusControllerHandler keyboardFocusControllerHandler)
-        {
-            uiElement.SetValue(FocusControllerHandlerProperty, keyboardFocusControllerHandler);
-        }
-
-        private static void OnFocusControllerHandlerChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)
-        {
-            var targetElement = dependencyObject as UIElement;
-            if (targetElement == null)
-            {
-                return;
-            }
-
-            if (args.NewValue is IKeyboardFocusControllerHandler handler)
-            {
-                handler.OnControllerCreated(new KeyboardFocusController(targetElement));
-            }
-        }
-
-        #endregion
-
-        #region IsKeyboardFocusSourceElement
-
-        public static bool GetIsKeyboardFocusSourceElement(DependencyObject obj)
-        {
-            return (bool)obj.GetValue(IsKeyboardFocusSourceElementProperty);
-        }
-
-        public static void SetIsKeyboardFocusSourceElement(DependencyObject obj, bool value)
-        {
-            obj.SetValue(IsKeyboardFocusSourceElementProperty, value);
-        }
-
-        public static readonly DependencyProperty IsKeyboardFocusSourceElementProperty =
-            DependencyProperty.RegisterAttached("IsKeyboardFocusSourceElement", typeof(bool), typeof(KeyboardEventsHandlerBehavior), new PropertyMetadata(false));
-
-        #endregion
-
-        private static void SubscribeToKeyboardFocusEvents(UIElement inputElement, IKeyboardFocusEventsHandler handler)
-        {
-            inputElement.SetCurrentValue(FocusEventsHandlerProperty, handler);
-            inputElement.GotKeyboardFocus -= OnGotKeyboardFocus;
-            inputElement.GotKeyboardFocus += OnGotKeyboardFocus;
-            inputElement.LostKeyboardFocus -= OnLostKeyboardFocus;
-            inputElement.LostKeyboardFocus += OnLostKeyboardFocus;
-        }
-
-        private static void UnsubscribeFromKeyboardFocusEvents(UIElement inputElement)
-        {
-            inputElement.SetCurrentValue(FocusEventsHandlerProperty, null);
-            inputElement.GotKeyboardFocus -= OnGotKeyboardFocus;
-            inputElement.LostKeyboardFocus -= OnLostKeyboardFocus;
-        }
-
-        private static void OnGotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs eventArgs)
-        {
-            GetFocusEventsHandler((UIElement)sender)?.OnGotKeyboardFocus();
-        }
-
-        private static void OnLostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs eventArgs)
-        {
-            GetFocusEventsHandler((UIElement)sender)?.OnLostKeyboardFocus();
-        }
-
-        private sealed class KeyboardFocusController : IKeyboardFocusController
-        {
-            public KeyboardFocusController(UIElement targetElement)
-            {
-                _targetElement = new WeakReference<UIElement>(targetElement);
-            }
-
-            public void SetFocus()
-            {
-                Executers.InUiAsync(() =>
-                {
-                    if (_targetElement.TryGetTarget(out var target))
-                    {
-                        InputFocusManager.SetInputFocus(target);
-                    }
-                });
-            }
-
-            public void ClearFocus()
-            {
-                Executers.InUiAsync(() =>
-                {
-                    if (_targetElement.TryGetTarget(out var target))
-                    {
-                        InputFocusManager.ClearInputFocus(target);
-                    }
-                });
-            }
-
-            private readonly WeakReference<UIElement> _targetElement;
-        }
+        private readonly WeakReference<UIElement> _targetElement;
     }
 }

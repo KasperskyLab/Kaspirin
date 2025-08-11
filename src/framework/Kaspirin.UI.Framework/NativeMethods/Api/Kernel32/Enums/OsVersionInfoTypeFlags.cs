@@ -12,28 +12,59 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-#pragma warning disable KCAIDE0002 // Enum has incorrect suffix
 
 using System;
 
-namespace Kaspirin.UI.Framework.NativeMethods.Api.Kernel32.Enums
+namespace Kaspirin.UI.Framework.NativeMethods.Api.Kernel32.Enums;
+
+/// <summary>
+///     <seealso href="https://learn.microsoft.com/en-us/windows/win32/api/winbase/nf-winbase-verifyversioninfow">Learn more</seealso>.
+/// </summary>
+[Flags]
+public enum OsVersionInfoTypeFlags : uint
 {
     /// <summary>
-    ///     
-    /// <seealso href="https://learn.microsoft.com/en-us/windows/win32/api/winbase/nf-winbase-verifyversioninfow">Learn more</seealso>.
+    ///     The flag is not set.
     /// </summary>
-    [Flags]
-    public enum OsVersionInfoTypeFlags : uint
-    {
-        None = 0,
-        VER_MINORVERSION = 0x1,
-        VER_MAJORVERSION = 0x2,
-        VER_BUILDNUMBER = 0x4,
-        VER_PLATFORMID = 0x8,
-        VER_SERVICEPACKMINOR = 0x10,
-        VER_SERVICEPACKMAJOR = 0x20,
-        VER_SUITENAME = 0x40,
-        VER_PRODUCT_TYPE = 0x80
-    }
+    None = 0,
+
+    /// <summary>
+    ///     The VER_MINORVERSION constant.
+    /// </summary>
+    MinorVersion = 0x1,
+
+    /// <summary>
+    ///     The VER_MAJORVERSION constant.
+    /// </summary>
+    MajorVersion = 0x2,
+
+    /// <summary>
+    ///     The VER_BUILDNUMBER constant.
+    /// </summary>
+    BuildNumber = 0x4,
+
+    /// <summary>
+    ///     The VER_PLATFORMID constant.
+    /// </summary>
+    PlatformId = 0x8,
+
+    /// <summary>
+    ///     The VER_SERVICEPACKMINOR constant.
+    /// </summary>
+    ServicePackMinor = 0x10,
+
+    /// <summary>
+    ///     The VER_SERVICEPACKMAJOR constant.
+    /// </summary>
+    ServicePackMajor = 0x20,
+
+    /// <summary>
+    ///     The VER_SUITENAME constant.
+    /// </summary>
+    SuiteName = 0x40,
+
+    /// <summary>
+    ///     The VER_PRODUCT_TYPE constant.
+    /// </summary>
+    ProductType = 0x80,
 }

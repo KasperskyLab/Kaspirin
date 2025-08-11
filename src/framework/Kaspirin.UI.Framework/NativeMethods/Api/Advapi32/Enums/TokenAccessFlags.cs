@@ -12,30 +12,69 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-#pragma warning disable KCAIDE0002 // Enum has incorrect suffix
 
 using System;
 
-namespace Kaspirin.UI.Framework.NativeMethods.Api.Advapi32.Enums
+namespace Kaspirin.UI.Framework.NativeMethods.Api.Advapi32.Enums;
+
+/// <summary>
+///     <seealso href="https://learn.microsoft.com/en-us/windows/win32/secauthz/access-rights-for-access-token-objects">Learn more</seealso>.
+/// </summary>
+[Flags]
+public enum TokenAccessFlags : uint
 {
     /// <summary>
-    ///     
-    /// <seealso href="https://learn.microsoft.com/en-us/windows/win32/secauthz/access-rights-for-access-token-objects">Learn more</seealso>.
+    ///     The flag is not set.
     /// </summary>
-    [Flags]
-    public enum TokenAccessFlags : uint
-    {
-        None = 0,
-        STANDARD_RIGHTS_REQUIRED = 0x000F0000,
-        STANDARD_RIGHTS_READ = 0x00020000,
-        TOKEN_ASSIGN_PRIMARY = 0x0001,
-        TOKEN_DUPLICATE = 0x0002,
-        TOKEN_IMPERSONATE = 0x0004,
-        TOKEN_QUERY = 0x0008,
-        TOKEN_QUERY_SOURCE = 0x0010,
-        TOKEN_ADJUST_PRIVILEGES = 0x0020,
-        TOKEN_ADJUST_GROUPS = 0x0040,
-        TOKEN_READ = STANDARD_RIGHTS_READ | TOKEN_QUERY,
-    }
+    None = 0,
+
+    /// <summary>
+    ///     The STANDARD_RIGHTS_REQUIRED constant.
+    /// </summary>
+    StandardRightsRequired = 0x000F0000,
+
+    /// <summary>
+    ///     The STANDARD_RIGHTS_READ constant.
+    /// </summary>
+    StandardRightsRead = 0x00020000,
+
+    /// <summary>
+    ///     The TOKEN_ASSIGN_PRIMARY constant.
+    /// </summary>
+    AssignPrimary = 0x0001,
+
+    /// <summary>
+    ///     The TOKEN_DUPLICATE constant.
+    /// </summary>
+    Duplicate = 0x0002,
+
+    /// <summary>
+    ///     The TOKEN_IMPERSONATE constant.
+    /// </summary>
+    Impersonate = 0x0004,
+
+    /// <summary>
+    ///     The TOKEN_QUERY constant.
+    /// </summary>
+    Query = 0x0008,
+
+    /// <summary>
+    ///     The TOKEN_QUERY_SOURCE constant.
+    /// </summary>
+    QuerySource = 0x0010,
+
+    /// <summary>
+    ///     The TOKEN_ADJUST_PRIVILEGES constant.
+    /// </summary>
+    AdjustPrivileges = 0x0020,
+
+    /// <summary>
+    ///     The TOKEN_ADJUST_GROUPS constant.
+    /// </summary>
+    AdjustGroups = 0x0040,
+
+    /// <summary>
+    ///     The TOKEN_READ constant.
+    /// </summary>
+    Read = StandardRightsRead | Query,
 }

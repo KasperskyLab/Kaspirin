@@ -12,23 +12,26 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+
 using System.Windows;
 
-namespace Kaspirin.UI.Framework.UiKit.Controls
+namespace Kaspirin.UI.Framework.UiKit.Controls;
+
+public class MenuItemBase : System.Windows.Controls.MenuItem
 {
-    public class MenuItemBase : System.Windows.Controls.MenuItem
+    #region MenuItemRole
+
+    public MenuItemRole MenuItemRole
     {
-        #region MenuItemRole
-
-        public MenuItemRole MenuItemRole
-        {
-            get { return (MenuItemRole)GetValue(MenuItemRoleProperty); }
-            set { SetValue(MenuItemRoleProperty, value); }
-        }
-
-        public static readonly DependencyProperty MenuItemRoleProperty =
-            DependencyProperty.Register("MenuItemRole", typeof(MenuItemRole), typeof(MenuItemBase));
-
-        #endregion
+        get => (MenuItemRole)GetValue(MenuItemRoleProperty);
+        set => SetValue(MenuItemRoleProperty, value);
     }
+
+    public static readonly DependencyProperty MenuItemRoleProperty = DependencyProperty.Register(
+        nameof(MenuItemRole),
+        typeof(MenuItemRole),
+        typeof(MenuItemBase),
+        new PropertyMetadata(default(MenuItemRole)));
+
+    #endregion
 }

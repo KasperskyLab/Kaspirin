@@ -12,24 +12,39 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-#pragma warning disable KCAIDE0002 // Enum has incorrect suffix
 
 using System;
 
-namespace Kaspirin.UI.Framework.NativeMethods.Api.User32.Enums
+namespace Kaspirin.UI.Framework.NativeMethods.Api.User32.Enums;
+
+/// <summary>
+///     <seealso href="https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-registerhotkey">Learn more</seealso>.
+/// </summary>
+[Flags]
+public enum KeyModifierFlags : uint
 {
     /// <summary>
-    ///     
-    /// <seealso href="https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-registerhotkey">Learn more</seealso>.
+    ///     The flag is not set.
     /// </summary>
-    [Flags]
-    public enum KeyModifierFlags : uint
-    {
-        None = 0,
-        MOD_ALT = 1,
-        MOD_CONTROL = 2,
-        MOD_SHIFT = 4,
-        MOD_WIN = 8
-    }
+    None = 0,
+
+    /// <summary>
+    ///     The MOD_ALT constant.
+    /// </summary>
+    Alt = 1,
+
+    /// <summary>
+    ///     The MOD_CONTROL constant.
+    /// </summary>
+    Control = 2,
+
+    /// <summary>
+    ///     The MOD_SHIFT constant.
+    /// </summary>
+    Shift = 4,
+
+    /// <summary>
+    ///     The MOD_WIN constant.
+    /// </summary>
+    Win = 8,
 }

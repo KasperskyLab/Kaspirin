@@ -15,21 +15,23 @@
 using System.Windows;
 using System.Windows.Controls;
 
-namespace Kaspirin.UI.Framework.UiKit.Controls
+namespace Kaspirin.UI.Framework.UiKit.Controls;
+
+public sealed class StatusBullet : ContentControl
 {
-    public sealed class StatusBullet : ContentControl
+    #region Type
+
+    public StatusBulletType Type
     {
-        #region Type
-
-        public StatusBulletType Type
-        {
-            get { return (StatusBulletType)GetValue(TypeProperty); }
-            set { SetValue(TypeProperty, value); }
-        }
-
-        public static readonly DependencyProperty TypeProperty =
-            DependencyProperty.Register("Type", typeof(StatusBulletType), typeof(StatusBullet));
-
-        #endregion
+        get => (StatusBulletType)GetValue(TypeProperty);
+        set => SetValue(TypeProperty, value);
     }
+
+    public static readonly DependencyProperty TypeProperty = DependencyProperty.Register(
+        nameof(Type),
+        typeof(StatusBulletType),
+        typeof(StatusBullet),
+        new PropertyMetadata(default(StatusBulletType)));
+
+    #endregion
 }

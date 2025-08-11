@@ -12,24 +12,23 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Kaspirin.UI.Framework.UiKit.Illustrations
+namespace Kaspirin.UI.Framework.UiKit.Illustrations;
+
+internal sealed class UIKitIllustrationMetadata
 {
-    internal sealed class UIKitIllustrationMetadata
+    public UIKitIllustrationMetadata(bool isAutoRTL, double height, double width)
     {
-        public UIKitIllustrationMetadata(bool isAutoRTL, double height, double width)
-        {
-            Guard.Argument(height > 0);
-            Guard.Argument(width > 0);
+        Guard.Argument(height > 0);
+        Guard.Argument(width > 0);
 
-            IsAutoRTL = isAutoRTL;
-            Height = height;
-            Width = width;
-        }
-
-        public bool IsAutoRTL { get; }
-
-        public double Height { get; }
-
-        public double Width { get; }
+        IsAutoRTL = isAutoRTL;
+        Height = height;
+        Width = width;
     }
+
+    public bool IsAutoRTL { get; }
+
+    public double Height { get; }
+
+    public double Width { get; }
 }

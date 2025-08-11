@@ -12,10 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Kaspirin.UI.Framework.UiKit.Converters.CollectionConverters
+namespace Kaspirin.UI.Framework.UiKit.Converters.CollectionConverters;
+
+public sealed class CollectionToObjectConverter : BaseCollectionConverter<object>
 {
-    public sealed class CollectionToObjectConverter : BaseCollectionConverter<object>
-    {
-        public CollectionToObjectConverter() : base(null, null) { }
-    }
+    public CollectionToObjectConverter() : base(null, null) { }
 }

@@ -14,40 +14,39 @@
 
 using System;
 
-namespace Kaspirin.UI.Framework.Extensions.DateTimes
+namespace Kaspirin.UI.Framework.Extensions.DateTimes;
+
+/// <summary>
+///     Extension methods for working with a date in UNIX format.
+/// </summary>
+public static class DateTimeUnix
 {
     /// <summary>
-    ///     Extension methods for working with a date in UNIX format.
+    ///     Converts the time <paramref name="dateTime" /> to UNIX seconds.
     /// </summary>
-    public static class DateTimeUnix
-    {
-        /// <summary>
-        ///     Converts the time <paramref name="dateTime" /> to UNIX seconds.
-        /// </summary>
-        /// <param name="dateTime">
-        ///     Time.
-        /// </param>
-        /// <returns>
-        ///     UNIX seconds as an integer.
-        /// </returns>
-        public static int ToUnixTimeStamp(this DateTime dateTime)
-            => (int)(dateTime - InitialDateTime).TotalSeconds;
+    /// <param name="dateTime">
+    ///     Time.
+    /// </param>
+    /// <returns>
+    ///     UNIX seconds as an integer.
+    /// </returns>
+    public static int ToUnixTimeStamp(this DateTime dateTime)
+        => (int)(dateTime - InitialDateTime).TotalSeconds;
 
-        /// <summary>
-        ///     Converts UNIX seconds to an object <see cref="DateTime" />.
-        /// </summary>
-        /// <param name="unixTimeStamp">
-        ///     UNIX seconds.
-        /// </param>
-        /// <returns>
-        ///     UNIX seconds as an object <see cref="DateTime" />.
-        /// </returns>
-        public static DateTime FromUnixTimeStamp(this int unixTimeStamp)
-            => InitialDateTime.AddSeconds(unixTimeStamp);
+    /// <summary>
+    ///     Converts UNIX seconds to an object <see cref="DateTime" />.
+    /// </summary>
+    /// <param name="unixTimeStamp">
+    ///     UNIX seconds.
+    /// </param>
+    /// <returns>
+    ///     UNIX seconds as an object <see cref="DateTime" />.
+    /// </returns>
+    public static DateTime FromUnixTimeStamp(this int unixTimeStamp)
+        => InitialDateTime.AddSeconds(unixTimeStamp);
 
-        /// <summary>
-        ///     The starting date accepted in UNIX systems is 01.01.1970 00:00:00 UTC.
-        /// </summary>
-        public static DateTime InitialDateTime { get; } = new(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
-    }
+    /// <summary>
+    ///     The starting date accepted in UNIX systems is 01.01.1970 00:00:00 UTC.
+    /// </summary>
+    public static DateTime InitialDateTime { get; } = new(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
 }

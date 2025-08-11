@@ -12,11 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Kaspirin.UI.Framework.NativeMethods
+namespace Kaspirin.UI.Framework.NativeMethods.Utils;
+
+internal static class PathConstants
 {
-    internal static class PathConstants
-    {
-        public const int MaxPathLength = 260;
-        public const int MaxAlternatePathLength = 14;
-    }
+    public const int MaxPathLength = 260;
+    public const int MaxAlternatePathLength = 14;
 }

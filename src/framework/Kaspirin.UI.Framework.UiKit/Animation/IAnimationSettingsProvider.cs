@@ -14,20 +14,46 @@
 
 using System;
 
-namespace Kaspirin.UI.Framework.UiKit.Animation
+namespace Kaspirin.UI.Framework.UiKit.Animation;
+
+/// <summary>
+///     Interface of the animation settings provider.
+/// </summary>
+public interface IAnimationSettingsProvider
 {
-    public interface IAnimationSettingsProvider
-    {
-        event EventHandler AnimationEnabledChanged;
+    /// <summary>
+    ///     Event about a property change <see cref="IsAnimationEnabled" />.
+    /// </summary>
+    event EventHandler AnimationEnabledChanged;
 
-        event EventHandler Initialized;
+    /// <summary>
+    ///     The event about the completion of provider initialization.
+    /// </summary>
+    event EventHandler Initialized;
 
-        bool IsAnimationEnabled { get; }
+    /// <summary>
+    ///     Indicates whether animation is enabled.
+    /// </summary>
+    bool IsAnimationEnabled { get; }
 
-        bool IsInitialized { get; }
+    /// <summary>
+    ///     Indicates whether the initialization of the provider has been completed.
+    /// </summary>
+    bool IsInitialized { get; }
 
-        AnimationProperties DefaultAnimationProperties { get; }
+    /// <summary>
+    ///     Provides standard animation properties.
+    /// </summary>
+    AnimationProperties DefaultAnimationProperties { get; }
 
-        int? GetDesiredFrameRate(AnimationRenderQuality quality = AnimationRenderQuality.Auto);
-    }
+    /// <summary>
+    ///     Returns the desired frame rate depending on the specified <paramref name="quality" />.
+    /// </summary>
+    /// <param name="quality">
+    ///     Animation quality.
+    /// </param>
+    /// <returns>
+    ///     The desired frame rate, or <see langword="null" /> if <paramref name="quality" /> is <see cref="AnimationRenderQuality.Auto" />.
+    /// </returns>
+    int? GetDesiredFrameRate(AnimationRenderQuality quality = AnimationRenderQuality.Auto);
 }

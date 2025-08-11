@@ -15,34 +15,33 @@
 using System;
 using System.Windows.Input;
 
-namespace Kaspirin.UI.Framework.Mvvm
+namespace Kaspirin.UI.Framework.Mvvm;
+
+/// <summary>
+///     Provides an implementation of <see cref="ICommand" /> to perform actions using delegates.
+/// </summary>
+/// <typeparam name="T">
+///     The type of parameter passed to the delegates.
+/// </typeparam>
+public class DelegateCommand<T> : DelegateCommand
 {
-    /// <summary>
-    ///     Provides an implementation of <see cref="ICommand" /> to perform actions using delegates.
-    /// </summary>
-    /// <typeparam name="T">
-    ///     The type of parameter passed to the delegates.
-    /// </typeparam>
-    public sealed class DelegateCommand<T> : DelegateCommand
+    /// <inheritdoc cref="DelegateCommand(Action)"/>
+    public DelegateCommand(Action<T?> executeMethod)
+        : this(executeMethod, o => true)
     {
-        /// <inheritdoc cref="DelegateCommand(Action)"/>
-        public DelegateCommand(Action<T?> executeMethod)
-            : this(executeMethod, o => true)
-        {
-        }
-
-        /// <inheritdoc cref="DelegateCommand(Action, Func{bool})"/>
-        public DelegateCommand(Action<T?> executeMethod, Func<T?, bool> canExecuteMethod)
-            : base(o => executeMethod((T?)o), o => canExecuteMethod((T?)o))
-        {
-        }
-
-        /// <inheritdoc cref="DelegateCommand.CanExecute()"/>
-        public bool CanExecute(T parameter)
-            => CanExecute((object?)parameter);
-
-        /// <inheritdoc cref="DelegateCommand.Execute()"/>
-        public void Execute(T parameter)
-            => Execute((object?)parameter);
     }
+
+    /// <inheritdoc cref="DelegateCommand(Action, Func{bool})"/>
+    public DelegateCommand(Action<T?> executeMethod, Func<T?, bool> canExecuteMethod)
+        : base(o => executeMethod((T?)o), o => canExecuteMethod((T?)o))
+    {
+    }
+
+    /// <inheritdoc cref="DelegateCommand.CanExecute()"/>
+    public bool CanExecute(T parameter)
+        => CanExecute((object?)parameter);
+
+    /// <inheritdoc cref="DelegateCommand.Execute()"/>
+    public void Execute(T parameter)
+        => Execute((object?)parameter);
 }

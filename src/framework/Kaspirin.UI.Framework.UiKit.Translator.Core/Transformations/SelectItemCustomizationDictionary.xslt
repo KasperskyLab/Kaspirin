@@ -57,10 +57,22 @@
 						<xsl:with-param name="brushNode" select="BackgroundHover"/>
 					</xsl:call-template>
 
+					<!--BackgroundHoverSelected-->
+					<xsl:call-template name="generateBrush">
+						<xsl:with-param name="key">BackgroundHoverSelected</xsl:with-param>
+						<xsl:with-param name="brushNode" select="BackgroundHoverSelected"/>
+					</xsl:call-template>
+
 					<!--BackgroundNormal-->
 					<xsl:call-template name="generateBrush">
 						<xsl:with-param name="key">BackgroundNormal</xsl:with-param>
 						<xsl:with-param name="brushNode" select="BackgroundNormal"/>
+					</xsl:call-template>
+
+					<!--BackgroundNormalSelected-->
+					<xsl:call-template name="generateBrush">
+						<xsl:with-param name="key">BackgroundNormalSelected</xsl:with-param>
+						<xsl:with-param name="brushNode" select="BackgroundNormalSelected"/>
 					</xsl:call-template>
 
 					<!--BackgroundPressed-->
@@ -69,16 +81,16 @@
 						<xsl:with-param name="brushNode" select="BackgroundPressed"/>
 					</xsl:call-template>
 
-					<!--IconForeground-->
+					<!--BackgroundPressedSelected-->
 					<xsl:call-template name="generateBrush">
-						<xsl:with-param name="key">IconForeground</xsl:with-param>
-						<xsl:with-param name="brushNode" select="IconForeground"/>
+						<xsl:with-param name="key">BackgroundPressedSelected</xsl:with-param>
+						<xsl:with-param name="brushNode" select="BackgroundPressedSelected"/>
 					</xsl:call-template>
 
-					<!--SelectionBackground-->
+					<!--IconBrush-->
 					<xsl:call-template name="generateBrush">
-						<xsl:with-param name="key">SelectionBackground</xsl:with-param>
-						<xsl:with-param name="brushNode" select="SelectionBackground"/>
+						<xsl:with-param name="key">IconBrush</xsl:with-param>
+						<xsl:with-param name="brushNode" select="IconBrush"/>
 					</xsl:call-template>
 
 					<!--TextForeground-->

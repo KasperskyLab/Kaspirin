@@ -17,30 +17,30 @@
 using System;
 using System.Runtime.InteropServices;
 
-namespace Kaspirin.UI.Framework.NativeMethods.Api.Winspool
+namespace Kaspirin.UI.Framework.NativeMethods.Api.Winspool;
+
+/// <summary>
+///     Provides API methods for functions from winspool.drv.
+/// </summary>
+public static class WinspoolDrv
 {
+    #region winspool.h
+
     /// <summary>
-    ///     Provides API methods for functions from winspool.drv.
+    ///     The EnumPrinters API method.
+    ///     <br /><seealso href="https://learn.microsoft.com/en-us/windows/win32/printdocs/enumprinters">Learn more</seealso>.
     /// </summary>
-    public static class WinspoolDrv
-    {
-        #region winspool.h
+    [DllImport(DllName, CharSet = CharSet.Auto, SetLastError = false)]
+    public static extern int EnumPrinters(
+        WinspoolEnumObjectType flags,
+        string name,
+        WinspoolPrinterLevel level,
+        IntPtr printerEnum,
+        int bufferSize,
+        out int bytesNeeded,
+        out int bytesReturned);
 
-        /// <summary>
-        ///     The EnumPrinters API method. <br /><seealso href="https://learn.microsoft.com/en-us/windows/win32/printdocs/enumprinters">Learn more</seealso>.
-        /// </summary>
-        [DllImport(DllName, CharSet = CharSet.Auto, SetLastError = false)]
-        public static extern int EnumPrinters(
-            WinspoolEnumObjectType flags,
-            string name,
-            WinspoolPrinterLevel level,
-            IntPtr printerEnum,
-            int bufferSize,
-            out int bytesNeeded,
-            out int bytesReturned);
+    private const string DllName = "winspool.drv";
 
-        private const string DllName = "winspool.drv";
-
-        #endregion
-    }
+    #endregion
 }

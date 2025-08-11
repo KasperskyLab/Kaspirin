@@ -14,31 +14,30 @@
 
 using System;
 
-namespace Kaspirin.UI.Framework.UiKit.Interactivity
+namespace Kaspirin.UI.Framework.UiKit.Interactivity;
+
+public class InteractionRequest<T> : InteractionRequestBase<T> where T : InteractionObject
 {
-    public class InteractionRequest<T> : InteractionRequestBase<T> where T : InteractionObject
+    public void Raise(T interactionObject)
     {
-        public void Raise(T interactionObject)
-        {
-            Guard.ArgumentIsNotNull(interactionObject);
+        Guard.ArgumentIsNotNull(interactionObject);
 
-            Raise(interactionObject, _ => { });
-        }
+        Raise(interactionObject, _ => { });
+    }
 
-        public void Raise(T interactionObject, Action onHandled)
-        {
-            Guard.ArgumentIsNotNull(interactionObject);
-            Guard.ArgumentIsNotNull(onHandled);
+    public void Raise(T interactionObject, Action onHandled)
+    {
+        Guard.ArgumentIsNotNull(interactionObject);
+        Guard.ArgumentIsNotNull(onHandled);
 
-            Raise(interactionObject, o => onHandled.Invoke());
-        }
+        Raise(interactionObject, o => onHandled.Invoke());
+    }
 
-        public void Raise(T interactionObject, Action<T> onHandled)
-        {
-            Guard.ArgumentIsNotNull(interactionObject);
-            Guard.ArgumentIsNotNull(onHandled);
+    public void Raise(T interactionObject, Action<T> onHandled)
+    {
+        Guard.ArgumentIsNotNull(interactionObject);
+        Guard.ArgumentIsNotNull(onHandled);
 
-            InvokeInteraction(interactionObject, onHandled);
-        }
+        InvokeInteraction(interactionObject, onHandled);
     }
 }

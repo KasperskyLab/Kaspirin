@@ -14,10 +14,9 @@
 
 using Kaspirin.UI.Framework.UiKit.Palettes;
 
-namespace Kaspirin.UI.Framework.UiKit.Styles.Palette
+namespace Kaspirin.UI.Framework.UiKit.Styles.Palette;
+
+public sealed class UIKitPaletteExtension : UIKitPaletteExtension<UIKitPaletteStorage.UIKitPalette>
 {
-    public sealed class UIKitPaletteExtension : UIKitPaletteExtension<UIKitPaletteStorage.UIKitPalette>
-    {
-        protected override string Map(UIKitPaletteStorage.UIKitPalette id) => UIKitPaletteStorage.Map(id);
-    }
+    protected override string Map(UIKitPaletteStorage.UIKitPalette id) => UIKitPaletteStorage.Map(id);
 }

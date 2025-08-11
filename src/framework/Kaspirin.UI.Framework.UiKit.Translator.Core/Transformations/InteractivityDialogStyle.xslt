@@ -67,9 +67,9 @@
 						<xsl:with-param name="key">ButtonStyle</xsl:with-param>
 						<xsl:with-param name="setters">
 
-							<!--IconForeground-->
+							<!--IconBrush-->
 							<xsl:call-template name="generateSetterViaAttribute">
-								<xsl:with-param name="propertyName">IconForeground</xsl:with-param>
+								<xsl:with-param name="propertyName">IconBrush</xsl:with-param>
 								<xsl:with-param name="propertyValue">
 									<xsl:call-template name="generateResExtension">
 										<xsl:with-param name="key">ButtonForeground</xsl:with-param>
@@ -259,7 +259,7 @@
 					<xsl:with-param name="propertyId">InteractivityDialog_HeaderContainer_Margin</xsl:with-param>
 					<xsl:with-param name="marginNode" select="HeaderContainerMargin" />
 				</xsl:call-template>
-				
+
 				<!--InteractivityDialog_Header_Margin-->
 				<xsl:call-template name="generateMarginSetter">
 					<xsl:with-param name="propertyId">InteractivityDialog_Header_Margin</xsl:with-param>
@@ -411,6 +411,13 @@
 							<xsl:with-param name="scopeName" select="$id" />
 						</xsl:call-template>
 
+						<!--InteractivityDialog_Status_Foreground-->
+						<xsl:call-template name="generateBrushSetter">
+							<xsl:with-param name="propertyId">InteractivityDialog_Status_Foreground</xsl:with-param>
+							<xsl:with-param name="brushName">StatusForegroundLoading</xsl:with-param>
+							<xsl:with-param name="scopeName" select="$id" />
+						</xsl:call-template>
+
 					</xsl:with-param>
 				</xsl:call-template>
 
@@ -516,7 +523,7 @@
 
 					</xsl:with-param>
 				</xsl:call-template>
-				
+
 			</xsl:with-param>
 		</xsl:call-template>
 	</xsl:template>

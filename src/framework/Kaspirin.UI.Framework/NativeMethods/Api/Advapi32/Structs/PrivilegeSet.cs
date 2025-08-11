@@ -16,22 +16,20 @@
 
 using System.Runtime.InteropServices;
 
-namespace Kaspirin.UI.Framework.NativeMethods.Api.Advapi32.Structs
+namespace Kaspirin.UI.Framework.NativeMethods.Api.Advapi32.Structs;
+
+/// <summary>
+///     <seealso href="https://learn.microsoft.com/en-us/windows/win32/api/winnt/ns-winnt-privilege_set">Learn more</seealso>.
+/// </summary>
+[StructLayout(LayoutKind.Sequential)]
+public struct PrivilegeSet
 {
-    /// <summary>
-    ///     
-    /// <seealso href="https://learn.microsoft.com/en-us/windows/win32/api/winnt/ns-winnt-privilege_set">Learn more</seealso>.
-    /// </summary>
-    [StructLayout(LayoutKind.Sequential)]
-    public struct PrivilegeSet
-    {
-        public uint PrivilegeCount;
+    public uint PrivilegeCount;
 
-        public uint Control;
+    public uint Control;
 
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst = PrivilegeItemsCount)]
-        public LuidAndAttributes[] Privilege;
+    [MarshalAs(UnmanagedType.ByValArray, SizeConst = PrivilegeItemsCount)]
+    public LuidAndAttributes[] Privilege;
 
-        private const int PrivilegeItemsCount = 16;
-    }
+    private const int PrivilegeItemsCount = 16;
 }

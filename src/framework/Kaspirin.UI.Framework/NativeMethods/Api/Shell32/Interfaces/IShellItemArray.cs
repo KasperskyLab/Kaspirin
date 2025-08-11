@@ -16,32 +16,30 @@
 
 using System.Runtime.InteropServices;
 
-namespace Kaspirin.UI.Framework.NativeMethods.Api.Shell32.Interfaces
+namespace Kaspirin.UI.Framework.NativeMethods.Api.Shell32.Interfaces;
+
+/// <summary>
+///     <seealso href="https://learn.microsoft.com/en-us/windows/win32/api/shobjidl_core/nn-shobjidl_core-ishellitemarray">Learn more</seealso>.
+/// </summary>
+[ComImport]
+[InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+[Guid(ShlGuids.IidIShellItemArray)]
+public interface IShellItemArray
 {
-    /// <summary>
-    ///     
-    /// <seealso href="https://learn.microsoft.com/en-us/windows/win32/api/shobjidl_core/nn-shobjidl_core-ishellitemarray">Learn more</seealso>.
-    /// </summary>
-    [ComImport]
-    [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
-    [Guid(ShlGuids.IidIShellItemArray)]
-    public interface IShellItemArray
-    {
-        int BindToHandler(/*Arguments omitted*/);
+    int BindToHandler(/*Arguments omitted*/);
 
-        int GetPropertyStore(/*Arguments omitted*/);
+    int GetPropertyStore(/*Arguments omitted*/);
 
-        int GetPropertyDescriptionList(/*Arguments omitted*/);
+    int GetPropertyDescriptionList(/*Arguments omitted*/);
 
-        int GetAttributes(/*Arguments omitted*/);
+    int GetAttributes(/*Arguments omitted*/);
 
-        int GetCount(
-            out int pdwNumItems);
+    int GetCount(
+        out int pdwNumItems);
 
-        int GetItemAt(
-            int dwIndex,
-            out IShellItem ppsi);
+    int GetItemAt(
+        int dwIndex,
+        out IShellItem ppsi);
 
-        int EnumItems(/*Arguments omitted*/);
-    }
+    int EnumItems(/*Arguments omitted*/);
 }

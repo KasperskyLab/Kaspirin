@@ -14,31 +14,26 @@
 
 using System.Windows;
 
-namespace Kaspirin.UI.Framework.UiKit.Controls.Internals
+namespace Kaspirin.UI.Framework.UiKit.Controls.Internals;
+
+internal static class SsoButtonInternals
 {
-    internal static class SsoButtonInternals
-    {
-        #region Icon
+    #region Icon
 
-        public static UIKitIcon_16 GetIcon(DependencyObject obj)
-        {
-            return (UIKitIcon_16)obj.GetValue(IconProperty);
-        }
+    public static UIKitIcon_16 GetIcon(DependencyObject obj)
+        => (UIKitIcon_16)obj.GetValue(IconProperty);
 
-        public static void SetIcon(DependencyObject obj, UIKitIcon_16 value)
-        {
-            obj.SetValue(IconProperty, value);
-        }
+    public static void SetIcon(DependencyObject obj, UIKitIcon_16 value)
+        => obj.SetValue(IconProperty, value);
 
-        public static readonly DependencyProperty IconProperty =
-            DependencyProperty.RegisterAttached("Icon", typeof(UIKitIcon_16), typeof(SsoButtonInternals),
-                UIKitPropertyMetadataFactory.CreatePropsMetadata(typeof(SsoButton), nameof(IconProperty), OnIconChanged));
+    public static readonly DependencyProperty IconProperty = DependencyProperty.RegisterAttached(
+        "Icon",
+        typeof(UIKitIcon_16),
+        typeof(SsoButtonInternals),
+        UIKitPropertyMetadataFactory.CreatePropsMetadata(typeof(SsoButton), nameof(IconProperty), OnIconChanged));
 
-        private static void OnIconChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            d.SetValue(ButtonBaseInternals.LeftIcon16Property, e.NewValue);
-        }
+    private static void OnIconChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        => d.SetValue(ButtonBaseInternals.LeftIcon16Property, e.NewValue);
 
-        #endregion
-    }
+    #endregion
 }

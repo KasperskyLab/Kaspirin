@@ -12,76 +12,95 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#pragma warning disable KCAIDE0006 // Class should be abstract or sealed
-
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Threading;
 
-namespace Kaspirin.UI.Framework.Threading
+namespace Kaspirin.UI.Framework.Threading;
+
+/// <summary>
+///     Executes delegates in the UI thread using the WPF application manager Application.Current.Dispatcher.
+/// </summary>
+public class WpfUiThreadExecutor : IUiThreadExecutor
 {
-    /// <summary>
-    ///     Executes delegates in the UI thread using the WPF application manager Application.Current.Dispatcher.
-    /// </summary>
-    public class WpfUiThreadExecutor : IUiThreadExecutor
+    /// <inheritdoc />
+    public virtual bool CanExecuteInUiThread => TryGetApplication(out _);
+
+    /// <inheritdoc />
+    public virtual bool IsUiThread => GetApplication().CheckAccess();
+
+    /// <inheritdoc />
+    public virtual void ExecuteInUiThreadSync(Action action, DispatcherPriority priority = DispatcherPriority.Normal)
     {
-        /// <inheritdoc />
-        public virtual void ExecuteInUiThreadSync(Action action, DispatcherPriority priority = DispatcherPriority.Normal)
+        var application = GetApplication();
+
+        if (application.CheckAccess())
         {
-            var application = GetApplication();
-
-            if (application.CheckAccess())
-            {
-                action();
-                return;
-            }
-
-            application.Dispatcher.Invoke(priority, action);
+            action();
+            return;
         }
 
-        /// <inheritdoc />
-        public virtual TResult ExecuteInUiThreadSync<TResult>(Func<TResult> action, DispatcherPriority priority = DispatcherPriority.Normal)
+        application.Dispatcher.Invoke(priority, action);
+    }
+
+    /// <inheritdoc />
+    public virtual TResult ExecuteInUiThreadSync<TResult>(Func<TResult> action, DispatcherPriority priority = DispatcherPriority.Normal)
+    {
+        var application = GetApplication();
+
+        if (application.CheckAccess())
         {
-            var application = GetApplication();
-
-            if (application.CheckAccess())
-            {
-                return action();
-            }
-
-            return (TResult)application.Dispatcher.Invoke(priority, action);
+            return action();
         }
 
-        /// <inheritdoc />
-        public virtual Task ExecuteInUiThreadAsync(Action action, DispatcherPriority priority = DispatcherPriority.Normal)
-        {
-            var application = GetApplication();
+        return (TResult)application.Dispatcher.Invoke(priority, action);
+    }
+
+    /// <inheritdoc />
+    public virtual Task ExecuteInUiThreadAsync(Action action, DispatcherPriority priority = DispatcherPriority.Normal)
+    {
+        var application = GetApplication();
 
 #if NETCOREAPP
-            return application.Dispatcher.BeginInvoke(priority, action).Task;
+        return application.Dispatcher.BeginInvoke(priority, action).Task;
 #else
-            var tcs = new TaskCompletionSource<object>();
-            application.Dispatcher.BeginInvoke(priority, (Action)(() =>
-            {
-                action();
-                tcs.SetResult(null);
-            }));
+        var tcs = new TaskCompletionSource<object>();
+        application.Dispatcher.BeginInvoke(priority, (Action)(() =>
+        {
+            action();
+            tcs.SetResult(null!);
+        }));
 
-            return tcs.Task;
+        return tcs.Task;
 #endif
-        }
-
-        /// <summary>
-        ///     Gets the value from <see cref="Application.Current" />.
-        /// </summary>
-        /// <returns>
-        ///     The current instance of the application.
-        /// </returns>
-        /// <exception cref="InvalidOperationException">
-        ///     It is thrown if the value of <see cref="Application.Current" /> is <see langword="null" />.
-        /// </exception>
-        protected static Application GetApplication()
-            => Application.Current ?? throw new InvalidOperationException("Application.Current is null");
     }
+
+    /// <summary>
+    ///     Gets the current instance of the application from <see cref="Application.Current" />.
+    /// </summary>
+    /// <returns>
+    ///     The current instance of the application.
+    /// </returns>
+    /// <exception cref="InvalidOperationException">
+    ///     It is thrown if the value of <see cref="Application.Current" /> is <see langword="null" />.
+    /// </exception>
+    protected static Application GetApplication()
+        => TryGetApplication(out var application)
+            ? application
+            : throw new InvalidOperationException("Application.Current is null");
+
+    /// <summary>
+    ///     Checks the availability of the current application instance <see cref="Application.Current" />.
+    /// </summary>
+    /// <param name="application">
+    ///     The current instance of the application.
+    /// </param>
+    /// <returns>
+    ///     Returns <see langword="true" /> if <see cref="Application.Current" /> is not equal to <see langword="null" />,
+    ///     otherwise - <see langword="false" />.
+    /// </returns>
+    protected static bool TryGetApplication([NotNullWhen(true)] out Application? application)
+        => (application = Application.Current) != null;
 }

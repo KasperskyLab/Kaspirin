@@ -12,16 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Kaspirin.UI.Framework.UiKit.Controls
+namespace Kaspirin.UI.Framework.UiKit.Controls;
+
+public interface INavigationItem
 {
-    public interface INavigationItem
-    {
-        bool IsEnabled { get; }
+    bool IsEnabled { get; }
 
-        bool IsVisible { get; }
+    bool IsVisible { get; }
 
-        bool IsSelected { get; set; }
+    bool IsSelected { get; set; }
 
-        void Navigate();
-    }
+    void Navigate();
 }
