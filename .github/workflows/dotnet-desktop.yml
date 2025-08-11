@@ -17,7 +17,7 @@ jobs:
     runs-on: windows-latest
 
     env:
-      Solution_Name: src\framework\kaspirin.sln
+      Solution_Path: src\framework\kaspirin.sln
 
     steps:
     - name: Checkout
@@ -37,7 +37,7 @@ jobs:
 
     # Execute all unit tests in the solution
     - name: Execute unit tests
-      run: dotnet test --logger trx --results-directory "TestResults-trx"
+      run: dotnet test $env:Solution_Path --logger trx --results-directory "TestResults-trx"
       
     - name: Upload dotnet test results
       uses: actions/upload-artifact@v4
@@ -48,6 +48,6 @@ jobs:
 
     # Restore the application to populate the obj folder with RuntimeIdentifiers
     - name: Restore the application
-      run: msbuild $env:Solution_Name /t:Restore /p:Configuration=$env:Configuration
+      run: msbuild $env:Solution_Path /t:Restore /p:Configuration=$env:Configuration
       env:
         Configuration: ${{ matrix.configuration }}
