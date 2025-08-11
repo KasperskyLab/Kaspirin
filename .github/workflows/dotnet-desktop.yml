@@ -42,7 +42,7 @@ jobs:
     - name: Upload dotnet test results
       uses: actions/upload-artifact@v4
       with:
-        name: dotnet-results-trx
+        name: dotnet-results-trx-$env:Configuration
         path: TestResults-trx
       if: ${{ always() }}
 
