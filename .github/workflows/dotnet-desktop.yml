@@ -42,13 +42,13 @@ jobs:
 
     # Execute all unit tests in the solution
     - name: Execute unit tests
-      run: dotnet test $env:Solution_Path  -c $env:Configuration --logger trx --results-directory "$env:Configuration\TestResults-trx"
+      run: dotnet test $env:Solution_Path  -c $env:Configuration --logger trx --results-directory "TestResults-trx"
       
     - name: Upload dotnet test results
       uses: actions/upload-artifact@v4
       with:
-        name: dotnet-results-trx
-        path: $env:Configuration\TestResults-trx
+        name: dotnet-results-trx-${{ env.Configuration }}
+        path: TestResults-trx
       if: ${{ always() }}
 
     # Restore the application to populate the obj folder with RuntimeIdentifiers
