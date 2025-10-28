@@ -1,4 +1,4 @@
-// Copyright © 2024 AO Kaspersky Lab.
+// Copyright © 2025 AO Kaspersky Lab.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,9 +12,19 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Kaspirin.UI.Framework.UiKit.Illustrations;
+using System;
 
-public static class UIKitIllustrations
+namespace Kaspirin.UI.Framework.UiKit.Palettes;
+
+internal sealed class UIKitPaletteMetadata
 {
-    public const string Unset = "UIKitUnset";
+    public UIKitPaletteMetadata(Enum scope, string resourceKey)
+    {
+        Scope = scope;
+        ResourceKey = resourceKey;
+    }
+
+    public Enum Scope { get; }
+
+    public string ResourceKey { get; }
 }

@@ -25,6 +25,12 @@
     <SolidColorBrush x:Key="BorderColor" Color="{Res Transparent, Scope=Palette}" />
     <SolidColorBrush x:Key="ButtonForeground" Color="{Res Text-Icons-Elements_Secondary, Scope=Palette}" />
     <SolidColorBrush x:Key="HeaderForeground" Color="{Res Text-Icons-Elements_Primary, Scope=Palette}" />
+    <DropShadowEffect x:Key="Shadow"
+                      BlurRadius="24"
+                      Color="#18274b"
+                      Direction="-90"
+                      Opacity="0.12"
+                      ShadowDepth="6" />
     <SolidColorBrush x:Key="StatusBackgroundDanger" Color="{Res Status_High-Subtle, Scope=Palette}" />
     <SolidColorBrush x:Key="StatusBackgroundInfo" Color="{Res Status_Info-Subtle, Scope=Palette}" />
     <SolidColorBrush x:Key="StatusBackgroundLoading" Color="{Res Status_Positive-Subtle, Scope=Palette}" />

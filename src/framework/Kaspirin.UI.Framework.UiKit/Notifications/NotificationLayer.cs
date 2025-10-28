@@ -23,17 +23,40 @@ using Kaspirin.UI.Framework.UiKit.Notifications.Internals;
 
 namespace Kaspirin.UI.Framework.UiKit.Notifications;
 
+[TemplatePart(Name = PART_Content, Type = typeof(ContentPresenter))]
 public sealed class NotificationLayer : ContentControl
 {
+    public const string PART_Content = "PART_Content";
+    public const string DefaultLayerName = "RootLayer";
+
+    public NotificationLayer()
+    {
+        _tracer = ComponentTracer.Get(UIKitComponentTracers.Notification, this);
+        _adornerFactory = new NotificationAdornerFactory(this);
+    }
+
     public override void OnApplyTemplate()
     {
-        _content = (ContentPresenter)GetTemplateChild("PART_Content");
+        _content = Guard.EnsureIsInstanceOfType<ContentPresenter>(GetTemplateChild(PART_Content));
+    }
+
+    public NotificationView? TopmostNotification
+    {
+        get => _topmostNotification;
+        internal set
+        {
+            if (_topmostNotification != value)
+            {
+                _topmostNotification = value;
+                RaiseEvent(new RoutedEventArgs(TopmostNotificationChangedEvent));
+            }
+        }
     }
 
     public bool IsModalState
     {
-        get { return _isModalState; }
-        internal set
+        get => _isModalState;
+        private set
         {
             if (_isModalState != value)
             {
@@ -47,6 +70,22 @@ public sealed class NotificationLayer : ContentControl
             }
         }
     }
+
+    #region TopmostNotificationChanged Event
+
+    public event RoutedEventHandler TopmostNotificationChanged
+    {
+        add => AddHandler(TopmostNotificationChangedEvent, value);
+        remove => RemoveHandler(TopmostNotificationChangedEvent, value);
+    }
+
+    public static readonly RoutedEvent TopmostNotificationChangedEvent = EventManager.RegisterRoutedEvent(
+        nameof(TopmostNotificationChanged),
+        RoutingStrategy.Bubble,
+        typeof(RoutedEventHandler),
+        typeof(NotificationLayer));
+
+    #endregion
 
     #region IsModalStateChanged Event
 
@@ -66,9 +105,9 @@ public sealed class NotificationLayer : ContentControl
 
     #region LayerName
 
-    public string? LayerName
+    public string LayerName
     {
-        get { return (string?)GetValue(LayerNameProperty); }
+        get { return (string)GetValue(LayerNameProperty); }
         set { SetValue(LayerNameProperty, value); }
     }
 
@@ -76,11 +115,11 @@ public sealed class NotificationLayer : ContentControl
         nameof(LayerName),
         typeof(string),
         typeof(NotificationLayer),
-        new PropertyMetadata(default(string)));
+        new PropertyMetadata(DefaultLayerName));
 
     #endregion
 
-    public static NotificationLayer? FindLayer(DependencyObject source, bool isModal, string? name = null)
+    public static NotificationLayer? FindLayer(DependencyObject source, bool isModal, string name = DefaultLayerName)
     {
         var lookupOrigin = Guard.EnsureArgumentIsNotNull(source);
         if (lookupOrigin is Window window)
@@ -104,28 +143,44 @@ public sealed class NotificationLayer : ContentControl
             : lookupOrigin.FindVisualParents<NotificationLayer>().GuardedSingleOrDefault(l => l.LayerName == name);
     }
 
+    public override string ToString()
+    {
+        return $"{nameof(NotificationLayer)} ({LayerName})";
+    }
+
     internal void AddNotification(NotificationView notification, Action? onAdded = null, Action? onRemoved = null)
     {
+        var onAddedCallback = () => notification.WhenLoaded(() => onAdded?.Invoke());
+        var onRemovedCallback = () => notification.WhenUnloaded(() => onRemoved?.Invoke());
+
         var isKnownNotification = _visibleNotifications.Any(i => i.Notification == notification) ||
-                                  _queuedModalNotifications.Any(i => i.Notification == notification);
+                                  _modalNotificationQueue.Any(i => i.Notification == notification) ||
+                                  _modalNotificationStack.Any(i => i.Notification == notification);
         if (isKnownNotification)
         {
-            _trace.TraceWarning($"Notification {notification} is already on NotificationLayer.");
+            _tracer.TraceWarning($"Notification is already on {this}. {notification}");
             return;
         }
 
-        var notificationInfo = new NotificationViewInfo(notification, GetNotificationAdorner(notification), onAdded, onRemoved);
-        if (notificationInfo.Notification.IsModal)
-        {
-            var modalNotification = _visibleNotifications.GuardedSingleOrDefault(i => i.Notification.IsModal);
-            if (modalNotification != null)
-            {
-                _queuedModalNotifications.Add(notificationInfo);
+        var notificationSettings = notification.DisplaySettings;
 
-                _trace.TraceWarning($"Another modal notification {modalNotification.Notification} with " +
-                                    $"state {modalNotification.Notification.State} is already on NotificationLayer.");
+        var notificationAdorner = _adornerFactory.GetAdorner(notificationSettings);
+        var notificationInfo = new NotificationViewInfo(notification, notificationAdorner, onAddedCallback, onRemovedCallback);
+
+        if (notificationSettings.DisplayMode == NotificationDisplayMode.Modal)
+        {
+            var hasAnyModals = _visibleNotifications.Any(n => n.Notification.DisplaySettings.IsModal);
+            if (hasAnyModals)
+            {
+                _modalNotificationQueue.Add(notificationInfo);
+
+                _tracer.TraceInformation($"Notification added notification queue of {this}. {notification}");
                 return;
             }
+        }
+        else if (notificationSettings.DisplayMode == NotificationDisplayMode.ModalTopmost)
+        {
+            _modalNotificationStack.Add(notificationInfo);
         }
 
         ProcessAddNotification(notificationInfo);
@@ -134,11 +189,12 @@ public sealed class NotificationLayer : ContentControl
     internal void RemoveNotification(NotificationView notification)
     {
         var notificationInfo = _visibleNotifications.SingleOrDefault(i => i.Notification == notification) ??
-                               _queuedModalNotifications.SingleOrDefault(i => i.Notification == notification);
+                               _modalNotificationQueue.SingleOrDefault(i => i.Notification == notification) ??
+                               _modalNotificationStack.SingleOrDefault(i => i.Notification == notification);
 
         if (notificationInfo == null)
         {
-            _trace.TraceWarning($"Notification {notification} is not found in NotificationLayer.");
+            _tracer.TraceWarning($"Notification is not found in {this}. {notification}");
             return;
         }
 
@@ -155,54 +211,62 @@ public sealed class NotificationLayer : ContentControl
         return Guard.EnsureIsNotNull(_content);
     }
 
-    private INotificationAdorner GetNotificationAdorner(NotificationView notification)
-        => notification.IsModal
-            ? NotificationAdornerFactory.CreateContentAdorner(this)
-            : NotificationAdornerFactory.FindOrCreateItemsAdorner(this, notification.LocationSettings, notification.MaxNotificationCount);
-
     private void ProcessAddNotification(NotificationViewInfo notificationInfo)
     {
-        var notification = notificationInfo.Notification;
-
-        if (notification.IsModal)
+        if (!_visibleNotifications.Contains(notificationInfo))
         {
-            SuppressBackwardInteraction(notification);
+            _visibleNotifications.Add(notificationInfo);
+
+            var notification = notificationInfo.Notification;
+            if (notification.DisplaySettings.IsModal)
+            {
+                SuppressBackwardInteraction();
+            }
+
+            notificationInfo.Adorner.AddNotification(notification);
+            notificationInfo.OnAdded.Invoke();
+
+            _tracer.TraceInformation($"Notification added on {this}. {notification}");
         }
-
-        _visibleNotifications.Add(notificationInfo);
-
-        notificationInfo.Adorner.AddNotification(notification);
-        notificationInfo.OnAdded?.Invoke();
     }
 
     private void ProcessRemoveNotification(NotificationViewInfo notificationInfo)
     {
-        var notification = notificationInfo.Notification;
-
-        if (_queuedModalNotifications.Contains(notificationInfo))
+        if (_modalNotificationQueue.Contains(notificationInfo))
         {
-            _queuedModalNotifications.Remove(notificationInfo);
+            _modalNotificationQueue.Remove(notificationInfo);
+        }
+
+        if (_modalNotificationStack.Contains(notificationInfo))
+        {
+            _modalNotificationStack.Remove(notificationInfo);
         }
 
         if (_visibleNotifications.Contains(notificationInfo))
         {
             _visibleNotifications.Remove(notificationInfo);
 
-            if (notification.IsModal)
+            var notification = notificationInfo.Notification;
+            if (notification.DisplaySettings.IsModal)
             {
                 RestoreBackwardInteraction();
             }
 
             notificationInfo.Adorner.RemoveNotification(notification);
-            notificationInfo.OnRemoved?.Invoke();
+            notificationInfo.OnRemoved.Invoke();
 
-            var nextModal = _queuedModalNotifications.FirstOrDefault();
-            if (nextModal != null)
+            if (_modalNotificationStack.None())
             {
-                _queuedModalNotifications.Remove(nextModal);
+                var nextModal = _modalNotificationQueue.FirstOrDefault();
+                if (nextModal != null)
+                {
+                    _modalNotificationQueue.Remove(nextModal);
 
-                ProcessAddNotification(nextModal);
+                    ProcessAddNotification(nextModal);
+                }
             }
+
+            _tracer.TraceInformation($"Notification removed from {this}. {notification}");
         }
     }
 
@@ -215,28 +279,40 @@ public sealed class NotificationLayer : ContentControl
         }
     }
 
-    private void SuppressBackwardInteraction(NotificationView notification)
+    private void SuppressBackwardInteraction()
     {
-        AccessKeyManager.AddAccessKeyPressedHandler(_content, HandleAccessKey);
-        KeyboardNavigation.SetTabNavigation(_content, KeyboardNavigationMode.None);
-        KeyboardNavigation.SetDirectionalNavigation(_content, KeyboardNavigationMode.None);
+        var visibleModals = _visibleNotifications.Where(n => n.Notification.DisplaySettings.IsModal).ToArray();
 
-        var isFocusOnNotification = notification.FindVisualChildren<UIElement>().Any(o => o.IsFocused);
+        var backwardLayer = visibleModals.Length == 1
+            ? (DependencyObject?)_content
+            : (DependencyObject?)visibleModals[visibleModals.Length - 2].Notification;
+
+        AccessKeyManager.AddAccessKeyPressedHandler(backwardLayer, HandleAccessKey);
+        KeyboardNavigation.SetTabNavigation(backwardLayer, KeyboardNavigationMode.None);
+        KeyboardNavigation.SetDirectionalNavigation(backwardLayer, KeyboardNavigationMode.None);
+
+        var isFocusOnNotification = visibleModals.Last().Notification.FindVisualChildren<UIElement>().Any(o => o.IsFocused);
         if (isFocusOnNotification is false)
         {
             InputFocusManager.ClearInputFocus(this);
         }
 
-        IsModalState = true;
+        IsModalState = visibleModals.Length > 0;
     }
 
     private void RestoreBackwardInteraction()
     {
-        AccessKeyManager.RemoveAccessKeyPressedHandler(_content, HandleAccessKey);
-        KeyboardNavigation.SetTabNavigation(_content, KeyboardNavigationMode.Continue);
-        KeyboardNavigation.SetDirectionalNavigation(_content, KeyboardNavigationMode.Continue);
+        var visibleModals = _visibleNotifications.Where(n => n.Notification.DisplaySettings.IsModal).ToArray();
 
-        IsModalState = false;
+        var backwardLayer = visibleModals.Length == 0
+            ? (DependencyObject?)_content
+            : (DependencyObject?)visibleModals.Last().Notification;
+
+        AccessKeyManager.RemoveAccessKeyPressedHandler(backwardLayer, HandleAccessKey);
+        KeyboardNavigation.SetTabNavigation(backwardLayer, KeyboardNavigationMode.Continue);
+        KeyboardNavigation.SetDirectionalNavigation(backwardLayer, KeyboardNavigationMode.Continue);
+
+        IsModalState = visibleModals.Length > 0;
     }
 
     private static void HandleAccessKey(object sender, AccessKeyPressedEventArgs e)
@@ -250,7 +326,7 @@ public sealed class NotificationLayer : ContentControl
 
     private sealed class NotificationViewInfo
     {
-        public NotificationViewInfo(NotificationView notification, INotificationAdorner adorner, Action? onAdded, Action? onRemoved)
+        public NotificationViewInfo(NotificationView notification, INotificationAdorner adorner, Action onAdded, Action onRemoved)
         {
             Notification = notification;
             Adorner = adorner;
@@ -260,15 +336,17 @@ public sealed class NotificationLayer : ContentControl
 
         public INotificationAdorner Adorner { get; }
         public NotificationView Notification { get; }
-        public Action? OnAdded { get; }
-        public Action? OnRemoved { get; }
+        public Action OnAdded { get; }
+        public Action OnRemoved { get; }
     }
 
     private readonly List<NotificationViewInfo> _visibleNotifications = new();
-    private readonly List<NotificationViewInfo> _queuedModalNotifications = new();
+    private readonly List<NotificationViewInfo> _modalNotificationQueue = new();
+    private readonly List<NotificationViewInfo> _modalNotificationStack = new();
+    private readonly NotificationAdornerFactory _adornerFactory;
+    private readonly ComponentTracer _tracer;
 
     private bool _isModalState;
     private ContentPresenter? _content;
-
-    private static readonly ComponentTracer _trace = ComponentTracer.Get(UIKitComponentTracers.Notification);
+    private NotificationView? _topmostNotification;
 }

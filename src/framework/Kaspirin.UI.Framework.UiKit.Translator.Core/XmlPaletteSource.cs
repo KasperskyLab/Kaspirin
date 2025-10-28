@@ -57,15 +57,24 @@ internal sealed class XmlPaletteSource
     private PaletteItem NodeToDto(XElement paletteBrushElement)
     {
         var brushId = paletteBrushElement.Attribute(Const.BrushIdAttributeName)?.Value;
+        var brushName = paletteBrushElement.Attribute(Const.BrushNameAttributeName)?.Value;
+        var brushScope = paletteBrushElement.Attribute(Const.BrushScopeAttributeName)?.Value;
+
         if (string.IsNullOrWhiteSpace(brushId))
         {
             throw new InvalidOperationException($"Unable to determine id in paletteBrush element: {paletteBrushElement}");
         }
 
+        if (string.IsNullOrWhiteSpace(brushName))
+        {
+            throw new InvalidOperationException($"Unable to determine brushName in paletteBrush element: {paletteBrushElement}");
+        }
+
         return new PaletteItem()
         {
             Id = brushId,
-            Name = brushId.Replace("-", "").Replace("_", ""),
+            Name = brushName,
+            Scope = brushScope,
         };
     }
 }

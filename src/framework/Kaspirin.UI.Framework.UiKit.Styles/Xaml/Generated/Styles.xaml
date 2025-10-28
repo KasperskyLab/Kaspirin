@@ -1,12 +1,12 @@
 <!--
     Copyright © 2024 AO Kaspersky Lab.
-
+    
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
     You may obtain a copy of the License at
-
-        http://www.apache.org/licenses/LICENSE-2.0
-
+    
+    http://www.apache.org/licenses/LICENSE-2.0
+    
     Unless required by applicable law or agreed to in writing, software
     distributed under the License is distributed on an "AS IS" BASIS,
     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -1078,6 +1078,22 @@
 
     <Style x:Key="SsoButtonYandexRuWhite"
            BasedOn="{StaticResource UiKitSsoButtonYandexRuWhite}"
+           TargetType="{x:Type visuals:SsoButton}" />
+
+    <Style x:Key="SsoButtonWeChatColor"
+           BasedOn="{StaticResource UiKitSsoButtonWeChatColor}"
+           TargetType="{x:Type visuals:SsoButton}" />
+
+    <Style x:Key="SsoButtonWeChatWhite"
+           BasedOn="{StaticResource UiKitSsoButtonWeChatWhite}"
+           TargetType="{x:Type visuals:SsoButton}" />
+
+    <Style x:Key="SsoButtonWeiboColor"
+           BasedOn="{StaticResource UiKitSsoButtonWeiboColor}"
+           TargetType="{x:Type visuals:SsoButton}" />
+
+    <Style x:Key="SsoButtonWeiboWhite"
+           BasedOn="{StaticResource UiKitSsoButtonWeiboWhite}"
            TargetType="{x:Type visuals:SsoButton}" />
 
     <Style x:Key="SsoButtonDefault"

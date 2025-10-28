@@ -13,13 +13,10 @@
 // limitations under the License.
 
 using System;
-
-using DoesNotReturnAttribute = System.Diagnostics.CodeAnalysis.DoesNotReturnAttribute;
-using DoesNotReturnIfAttribute = System.Diagnostics.CodeAnalysis.DoesNotReturnIfAttribute;
-
-#if NET6_0_OR_GREATER
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
-#else
+
+#if !NET6_0_OR_GREATER
 using Kaspirin.UI.Framework.BackwardCompatibility;
 #endif
 

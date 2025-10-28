@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -27,12 +28,14 @@ public sealed class FontEnumGenerator
         string enumFileTargetPath,
         string fontNamespacePart,
         string paletteNamespacePart,
+        string paletteFontScope,
         string comment,
         TaskLoggingHelper log)
     {
         _enumFileTargetPath = enumFileTargetPath;
         _fontNamespacePart = fontNamespacePart;
         _paletteNamespacePart = paletteNamespacePart;
+        _paletteFontScope = paletteFontScope;
         _comment = comment;
         _log = log;
     }
@@ -93,19 +96,18 @@ public sealed class FontEnumGenerator
     private string FillEnum(IList<Font> fontItems, IList<PaletteItem> paletteItems, string enumsFile)
     {
         var fontsString = string.Join(",\r\n", fontItems
-            .Select(i => $"{_indent}{_indent}{i.Name}"));
+            .Select(i => $"{_indent}{i.Name}"));
 
         var brushesString = string.Join(",\r\n", paletteItems
-            .Where(i => i.Name.Contains(Const.UIKitPaletteTextIconsBrushPrefix))
-            .Select(i => i.Name.Replace(Const.UIKitPaletteTextIconsBrushPrefix, ""))
-            .Select(i => $"{_indent}{_indent}{i}"));
+            .Where(i => string.Equals(i.Scope ,_paletteFontScope, StringComparison.CurrentCultureIgnoreCase))
+            .Select(i => $"{_indent}{i.Name}"));
 
         return enumsFile
             .Replace("@FontStyles", fontsString)
             .Replace("@FontStyles", fontsString)
             .Replace("@FontStyleIdPrefix", Const.TextStyleIdPrefix)
             .Replace("@FontBrushes", brushesString)
-            .Replace("@FontBrushPrefix", Const.UIKitPaletteTextIconsBrushPrefix);
+            .Replace("@FontBrushPrefix", _paletteFontScope);
     }
 
     private void SaveEnums(string enumFile)
@@ -121,6 +123,7 @@ public sealed class FontEnumGenerator
     private readonly string _enumFileTargetPath;
     private readonly string _fontNamespacePart;
     private readonly string _paletteNamespacePart;
+    private readonly string _paletteFontScope;
     private readonly string _comment;
     private readonly TaskLoggingHelper _log;
 }

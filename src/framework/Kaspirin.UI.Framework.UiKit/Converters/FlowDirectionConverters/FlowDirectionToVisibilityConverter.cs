@@ -29,7 +29,7 @@ namespace Kaspirin.UI.Framework.UiKit.Converters.FlowDirectionConverters;
 public sealed class FlowDirectionToVisibilityConverter : BaseFlowDirectionConverter<Visibility>
 {
     /// <summary>
-    ///     Creates an object <see cref="FlowDirectionToVisibilityConverter" />.
+    ///     Initializes a new instance of the <see cref="FlowDirectionToVisibilityConverter" /> class.
     /// </summary>
     public FlowDirectionToVisibilityConverter() : base(Visibility.Visible, Visibility.Collapsed) { }
 }

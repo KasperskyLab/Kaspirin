@@ -28,7 +28,7 @@ namespace Kaspirin.UI.Framework.UiKit.Converters;
 public sealed class DelegateConverter<TValue> : IValueConverter
 {
     /// <summary>
-    ///     Creates an object <see cref="DelegateConverter{TValue}" />.
+    ///     Initializes a new instance of the <see cref="DelegateConverter{TValue}" /> class.
     /// </summary>
     /// <param name="convert">
     ///     The delegate for the <see cref="Convert" /> method.

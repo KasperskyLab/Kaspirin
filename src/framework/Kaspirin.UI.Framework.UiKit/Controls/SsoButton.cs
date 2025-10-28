@@ -12,11 +12,20 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System.Windows;
 using System.Windows.Controls.Primitives;
 
 namespace Kaspirin.UI.Framework.UiKit.Controls;
 
 public sealed class SsoButton : ButtonBase
 {
+    static SsoButton()
+    {
+        ContentProperty.OverrideMetadata(
+            typeof(SsoButton),
+            new FrameworkPropertyMetadata(default, null, CoerceContent));
+    }
 
+    private static object? CoerceContent(DependencyObject d, object baseValue)
+        => null;
 }

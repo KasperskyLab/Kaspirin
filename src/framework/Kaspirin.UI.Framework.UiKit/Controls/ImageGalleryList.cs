@@ -38,7 +38,7 @@ public sealed class ImageGalleryList : Control
 
     public ImageGalleryList()
     {
-        _animatedBindingFactory = ServiceLocator.Instance.GetService<AnimatedBindingFactory>();
+        _animatedBindingFactory = ServiceLocator.GetService<AnimatedBindingFactory>();
         _animationProperties = UIKitConstants.ImageGalleryListAnimationProperties;
 
         _defaultAnimationDuration = _animationProperties.Duration;

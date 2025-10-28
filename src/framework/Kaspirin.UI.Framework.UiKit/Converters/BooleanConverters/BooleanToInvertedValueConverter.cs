@@ -27,7 +27,7 @@ namespace Kaspirin.UI.Framework.UiKit.Converters.BooleanConverters;
 public sealed class BooleanToInvertedValueConverter : BaseBooleanConverter<bool>
 {
     /// <summary>
-    ///     Creates an object <see cref="BooleanToInvertedValueConverter" />.
+    ///     Initializes a new instance of the <see cref="BooleanToInvertedValueConverter" /> class.
     /// </summary>
     public BooleanToInvertedValueConverter() : base(false, true) { }
 }

@@ -31,7 +31,7 @@ namespace Kaspirin.UI.Framework.UiKit.Converters.FlowDirectionConverters;
 public abstract class BaseFlowDirectionConverter<T> : ValueConverterMarkupExtension<BaseFlowDirectionConverter<T>>
 {
     /// <summary>
-    ///     Creates an object <see cref="BaseFlowDirectionConverter{T}" />.
+    ///     Initializes a new instance of the <see cref="BaseFlowDirectionConverter{T}" /> class.
     /// </summary>
     /// <param name="ltrValue">
     ///     The default result when converting the value is <see cref="FlowDirection.LeftToRight" />.

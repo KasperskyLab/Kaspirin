@@ -14,13 +14,9 @@
 
 namespace Kaspirin.UI.Framework.UiKit.Interactivity;
 
-public sealed class FileSystemPathObject : ConfirmationObject
+public class FileSystemPathObject : ConfirmationObject
 {
     public string? Path { get; set; }
 
     public string[]? Paths { get; set; }
-
-    public bool IncludeSubfolders { get; set; }
-
-    public FileSystemPathObjectType ObjectType { get; set; }
 }

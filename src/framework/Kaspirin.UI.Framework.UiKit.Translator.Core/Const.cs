@@ -35,8 +35,7 @@ internal static class Const
     public const string UIKitIllustrationMarkupExtensionTemplateFilename = "UIKitIllustrations.MarkupExtension.Template.cs";
     public const string UIKitIllustrationTemplateDirectory = "Translation\\Illustrations";
 
-    public const string UIKitPaletteTextIconsBrushPrefix = "TextIconsElements";
-    public const string UIKitPaletteTemplateFilename = "UIKitPalettes.Template.cs";
+    public const string UIKitPaletteTemplateFilename = "UIKitPalettes.Enums.Template.cs";
     public const string UIKitPaletteTemplateDirectory = "Translation\\Palettes";
 
     public const string SchemaResourcesDirectory = "Schema";
@@ -61,6 +60,8 @@ internal static class Const
     public const string BrushesElementName = "Brushes";
     public const string BrushElementName = "PaletteBrush";
     public const string BrushIdAttributeName = "Id";
+    public const string BrushNameAttributeName = "BrushName";
+    public const string BrushScopeAttributeName = "BrushScope";
 
     public const string DefaultPaletteId = "Light";
     public const string PaletteFilename = "Palette";

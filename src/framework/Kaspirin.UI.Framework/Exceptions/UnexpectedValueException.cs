@@ -14,12 +14,7 @@
 
 using System;
 using System.Runtime.Serialization;
-
-#if NET6_0_OR_GREATER
 using System.Runtime.CompilerServices;
-#else
-using Kaspirin.UI.Framework.BackwardCompatibility;
-#endif
 
 namespace Kaspirin.UI.Framework.Exceptions;
 

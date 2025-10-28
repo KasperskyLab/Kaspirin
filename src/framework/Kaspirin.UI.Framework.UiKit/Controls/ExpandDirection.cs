@@ -1,4 +1,4 @@
-// Copyright © 2024 AO Kaspersky Lab.
+// Copyright © 2025 AO Kaspersky Lab.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,13 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using System.Windows;
+namespace Kaspirin.UI.Framework.UiKit.Controls;
 
-namespace Kaspirin.UI.Framework.UiKit.Notifications;
-
-public sealed class NotificationLocationSettings
+public enum ExpandDirection
 {
-    public static NotificationLocationSettings Default { get; } = new NotificationLocationSettings();
-
-    public VerticalAlignment ModallessViewVerticalAlignment { get; set; } = VerticalAlignment.Bottom;
+    Width,
+    Height,
+    WidthAndHeight
 }

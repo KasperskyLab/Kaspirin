@@ -26,7 +26,7 @@ internal sealed class SelectPopupDecorator : PopupDecorator
 {
     static SelectPopupDecorator()
     {
-        MinHeightProperty.OverrideMetadata(typeof(SelectPopupDecorator), new FrameworkPropertyMetadata(UIKitConstants.SelectPopupDecoratorMinHeight));
+        PopupMinHeightProperty.OverrideMetadata(typeof(SelectPopupDecorator), new PropertyMetadata(UIKitConstants.SelectPopupDecoratorMinHeight));
     }
 
     public SelectPopupDecorator()

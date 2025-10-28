@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -28,5 +29,11 @@ internal sealed class InteractionObjects : IInteractionObjects
     public void HandleAll()
         => _activeObjects.ToList().ForEach(obj => obj.Handle());
 
-    private readonly List<InteractionObject> _activeObjects = new();
+    public IEnumerator<InteractionObject> GetEnumerator()
+        => _activeObjects.ToList().GetEnumerator();
+
+    IEnumerator IEnumerable.GetEnumerator()
+        => GetEnumerator();
+
+    private readonly HashSet<InteractionObject> _activeObjects = new();
 }

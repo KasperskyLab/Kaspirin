@@ -53,8 +53,8 @@ public sealed class PasswordInput : Control, ISecureInputClient
 
     public PasswordInput()
     {
-        _sessionProvider = ServiceLocator.Instance.GetService<ISessionProvider>();
-        _secureInputManager = ServiceLocator.Instance.GetService<ISecureInputManager>();
+        _sessionProvider = ServiceLocator.GetService<ISessionProvider>();
+        _secureInputManager = ServiceLocator.GetService<ISecureInputManager>();
 
         MouseLeftButtonDown += (o, e) => SetFocus();
         Loaded += OnLoaded;

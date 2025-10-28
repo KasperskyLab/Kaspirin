@@ -12,11 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using NotNullAttribute = System.Diagnostics.CodeAnalysis.NotNullAttribute;
-
-#if NET6_0_OR_GREATER
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
-#else
+
+#if !NET6_0_OR_GREATER
 using Kaspirin.UI.Framework.BackwardCompatibility;
 #endif
 

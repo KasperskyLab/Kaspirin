@@ -766,5 +766,5 @@ public abstract class TextInputBase : TextBox
     private bool _textChangedOnCoerce;
     private string? _lastFilteredText;
 
-    private readonly Lazy<ISecureClipboard> _secureClipboard = new(ServiceLocator.Instance.GetService<ISecureClipboard>);
+    private readonly Lazy<ISecureClipboard> _secureClipboard = new(ServiceLocator.GetService<ISecureClipboard>);
 }

@@ -132,7 +132,7 @@ internal sealed class PalettesGenerator : GeneratorBase
                 MessageImportance.High,
                 counter > 0
                     ? $"XAML non-default palettes generation completed: {counter} file(s) created."
-                    : $"There are no non-default palletes inside palettes XSLT-transformation result. Skip XAML non-default palettes generation.");
+                    : $"There are no non-default palettes inside palettes XSLT-transformation result. Skip XAML non-default palettes generation.");
         }
         catch (Exception ex)
         {

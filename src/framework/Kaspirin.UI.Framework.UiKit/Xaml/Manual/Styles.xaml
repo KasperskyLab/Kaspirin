@@ -35,6 +35,18 @@
 
     <!--  endregion  -->
 
+    <!--  region ExpandPanel  -->
+
+    <Style x:Key="ExpandPanelDefault"
+           BasedOn="{StaticResource ExpandPanelUniversal}"
+           TargetType="{x:Type controls:ExpandPanel}" />
+
+    <Style x:Key="{x:Type controls:ExpandPanel}"
+           BasedOn="{StaticResource ExpandPanelDefault}"
+           TargetType="{x:Type controls:ExpandPanel}" />
+
+    <!--  endregion  -->
+
     <!--  region FlowDocumentViewer  -->
 
     <Style x:Key="FlowDocumentViewerDefault"

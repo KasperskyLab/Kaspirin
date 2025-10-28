@@ -110,7 +110,7 @@ public sealed class SaveFileAction : TriggerAction<FrameworkElement>
 
         var pathObject = (FileSystemPathObject)args.InteractionObject;
 
-        ServiceLocator.Instance.GetService<INativeDialogLauncher>().ShowDialog(
+        ServiceLocator.GetService<INativeDialogLauncher>().ShowDialog(
                 createDialog: () =>
                 {
                     var dialog = new SaveFileDialog
@@ -138,7 +138,6 @@ public sealed class SaveFileAction : TriggerAction<FrameworkElement>
                     if (dialog.ShowDialog() == DialogResult.OK)
                     {
                         pathObject.Path = dialog.FileName;
-                        pathObject.ObjectType = FileSystemPathObjectType.File;
                         pathObject.IsConfirmed = true;
                     }
                 });

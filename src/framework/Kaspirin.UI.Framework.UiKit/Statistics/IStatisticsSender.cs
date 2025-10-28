@@ -12,7 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using System.Windows;
 using Kaspirin.UI.Framework.UiKit.Controls;
 using Dialog = System.Windows.Forms.CommonDialog;
 

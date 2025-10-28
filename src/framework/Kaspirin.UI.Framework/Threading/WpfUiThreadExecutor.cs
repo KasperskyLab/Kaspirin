@@ -23,17 +23,34 @@ namespace Kaspirin.UI.Framework.Threading;
 /// <summary>
 ///     Executes delegates in the UI thread using the WPF application manager Application.Current.Dispatcher.
 /// </summary>
-public class WpfUiThreadExecutor : IUiThreadExecutor
+public sealed class WpfUiThreadExecutor : IUiThreadExecutor
 {
-    /// <inheritdoc />
-    public virtual bool CanExecuteInUiThread => TryGetApplication(out _);
-
-    /// <inheritdoc />
-    public virtual bool IsUiThread => GetApplication().CheckAccess();
-
-    /// <inheritdoc />
-    public virtual void ExecuteInUiThreadSync(Action action, DispatcherPriority priority = DispatcherPriority.Normal)
+    /// <summary>
+    ///     Initializes a new instance of the <see cref="WpfUiThreadExecutor" /> class.
+    /// </summary>
+    public WpfUiThreadExecutor()
     {
+        _tracer = ComponentTracer.Get(ComponentTracers.Threading, this);
+    }
+
+    /// <inheritdoc />
+    public bool ThrowIfNotAvailable { get; set; } = true;
+
+    /// <inheritdoc />
+    public bool IsAvailable => TryGetApplication(out _);
+
+    /// <inheritdoc />
+    public bool IsUiThread => GetApplication().CheckAccess();
+
+    /// <inheritdoc />
+    public void ExecuteInUiThreadSync(Action action, DispatcherPriority priority = DispatcherPriority.Normal)
+    {
+        if (!CheckIsAvailable())
+        {
+            _tracer.TraceMethodWarning("Cant execute action in UI thread now.");
+            return;
+        }
+
         var application = GetApplication();
 
         if (application.CheckAccess())
@@ -46,8 +63,14 @@ public class WpfUiThreadExecutor : IUiThreadExecutor
     }
 
     /// <inheritdoc />
-    public virtual TResult ExecuteInUiThreadSync<TResult>(Func<TResult> action, DispatcherPriority priority = DispatcherPriority.Normal)
+    public TResult ExecuteInUiThreadSync<TResult>(Func<TResult> action, DispatcherPriority priority = DispatcherPriority.Normal)
     {
+        if (!CheckIsAvailable())
+        {
+            _tracer.TraceMethodWarning("Cant execute action in UI thread now.");
+            return default!;
+        }
+
         var application = GetApplication();
 
         if (application.CheckAccess())
@@ -59,14 +82,27 @@ public class WpfUiThreadExecutor : IUiThreadExecutor
     }
 
     /// <inheritdoc />
-    public virtual Task ExecuteInUiThreadAsync(Action action, DispatcherPriority priority = DispatcherPriority.Normal)
+    public Task ExecuteInUiThreadAsync(Action action, DispatcherPriority priority = DispatcherPriority.Normal)
     {
+        var tcs = new TaskCompletionSource<object>();
+
+        if (!CheckIsAvailable())
+        {
+
+#if NETCOREAPP
+            return Task.CompletedTask;
+#else
+            tcs.SetResult(null!);
+            return tcs.Task;
+#endif
+        }
+
         var application = GetApplication();
 
 #if NETCOREAPP
         return application.Dispatcher.BeginInvoke(priority, action).Task;
 #else
-        var tcs = new TaskCompletionSource<object>();
+
         application.Dispatcher.BeginInvoke(priority, (Action)(() =>
         {
             action();
@@ -75,6 +111,24 @@ public class WpfUiThreadExecutor : IUiThreadExecutor
 
         return tcs.Task;
 #endif
+    }
+
+    private bool CheckIsAvailable()
+    {
+        if (!IsAvailable)
+        {
+            const string err = "Cant execute action in UI thread now.";
+
+            if (ThrowIfNotAvailable)
+            {
+                throw new InvalidOperationException(err);
+            }
+
+            _tracer.TraceMethodWarning("Cant execute action in UI thread now.");
+            return false;
+        }
+
+        return true;
     }
 
     /// <summary>
@@ -86,7 +140,7 @@ public class WpfUiThreadExecutor : IUiThreadExecutor
     /// <exception cref="InvalidOperationException">
     ///     It is thrown if the value of <see cref="Application.Current" /> is <see langword="null" />.
     /// </exception>
-    protected static Application GetApplication()
+    private static Application GetApplication()
         => TryGetApplication(out var application)
             ? application
             : throw new InvalidOperationException("Application.Current is null");
@@ -101,6 +155,8 @@ public class WpfUiThreadExecutor : IUiThreadExecutor
     ///     Returns <see langword="true" /> if <see cref="Application.Current" /> is not equal to <see langword="null" />,
     ///     otherwise - <see langword="false" />.
     /// </returns>
-    protected static bool TryGetApplication([NotNullWhen(true)] out Application? application)
+    private static bool TryGetApplication([NotNullWhen(true)] out Application? application)
         => (application = Application.Current) != null;
+
+    private readonly ComponentTracer _tracer;
 }

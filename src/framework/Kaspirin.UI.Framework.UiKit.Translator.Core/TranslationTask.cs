@@ -221,6 +221,7 @@ public sealed class TranslationTask : ConfigurableTask
             _configuration.FontEnumPath,
             _configuration.FontNamespacePart,
             _configuration.PaletteNamespacePart,
+            _configuration.PaletteFontScope,
             _configuration.FileComment,
             Log);
 

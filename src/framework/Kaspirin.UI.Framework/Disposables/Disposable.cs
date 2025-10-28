@@ -25,7 +25,7 @@ namespace Kaspirin.UI.Framework.Disposables;
 public static class Disposable
 {
     /// <summary>
-    ///     Creates an object <see cref="IDisposable" /> that executes <paramref name="disposeAction" />
+    ///     Initializes a new instance of the <see cref="IDisposable" /> class, which executes <paramref name="disposeAction" />
     ///     after calling <see cref="IDisposable.Dispose" /> for this object.
     /// </summary>
     /// <param name="disposeAction">
@@ -42,7 +42,7 @@ public static class Disposable
     }
 
     /// <summary>
-    ///     Creates an object <see cref="IDisposable" /> that executes <see cref="IDisposable.Dispose" />
+    ///     Initializes a new instance of the <see cref="IDisposable" /> class, which executes <see cref="IDisposable.Dispose" />
     ///     for each element <paramref name="disposables" /> after calling <see cref="IDisposable.Dispose" /> for this object.
     /// </summary>
     /// <param name="disposables">

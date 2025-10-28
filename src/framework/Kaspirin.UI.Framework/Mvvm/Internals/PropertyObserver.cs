@@ -27,7 +27,7 @@ namespace Kaspirin.UI.Framework.Mvvm.Internals;
 /// </summary>
 internal sealed class PropertyObserver
 {
-    internal static PropertyObserver[] CreatePropertyObservers<T>(Expression<Func<object?, T>> expression, Action action)
+    internal static PropertyObserver[] CreatePropertyObservers<T>(Expression<Func<T>> expression, Action action)
     {
         var body = Guard.EnsureArgumentIsNotNull(expression).Body;
 

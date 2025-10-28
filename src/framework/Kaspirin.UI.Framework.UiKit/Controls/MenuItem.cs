@@ -103,7 +103,7 @@ public class MenuItem : MenuItemBase
     {
         var menuItem = (MenuItem)sender;
 
-        ServiceLocator.Instance.GetService<IStatisticsSender>().SendMenuItemClicked(menuItem);
+        ServiceLocator.GetService<IStatisticsSender>().SendMenuItemClicked(menuItem);
 
         var contextMenu = this.FindVisualParent<ContextMenu>() ?? this.FindLogicalParent<ContextMenu>();
         var contextMenuHolder = (contextMenu?.PlacementTarget as FrameworkElement)?.TemplatedParent;

@@ -31,7 +31,7 @@ namespace Kaspirin.UI.Framework.UiKit.Converters.BooleanConverters;
 public abstract class BaseMultiBooleanConverter<T> : MultiValueConverterMarkupExtension<BaseMultiBooleanConverter<T>>
 {
     /// <summary>
-    ///     Creates an object <see cref="BaseMultiBooleanConverter{T}" />.
+    ///     Initializes a new instance of the <see cref="BaseMultiBooleanConverter{T}" /> class.
     /// </summary>
     /// <param name="trueValue">
     ///     The default result when converting the value <see langword="true" />.

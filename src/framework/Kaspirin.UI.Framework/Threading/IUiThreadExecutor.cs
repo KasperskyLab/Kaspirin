@@ -24,9 +24,14 @@ namespace Kaspirin.UI.Framework.Threading;
 public interface IUiThreadExecutor
 {
     /// <summary>
+    ///     Specifies whether an exception should be thrown if the delegate cannot be executed in the UI thread.
+    /// </summary>
+    bool ThrowIfNotAvailable { get; set; }
+
+    /// <summary>
     ///     Indicates whether it is possible to execute delegates in the UI thread.
     /// </summary>
-    bool CanExecuteInUiThread { get; }
+    bool IsAvailable { get; }
 
     /// <summary>
     ///     Indicates whether the current thread is a UI thread.

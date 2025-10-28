@@ -103,5 +103,5 @@ public sealed class TextInputCopyAction : InputActionBase
     private TextInput? _textInput;
     private PropertyChangeNotifier<TextInput, string>? _textInputTextNotifier;
 
-    private readonly Lazy<ISecureClipboard> _secureClipboard = new(ServiceLocator.Instance.GetService<ISecureClipboard>);
+    private readonly Lazy<ISecureClipboard> _secureClipboard = new(ServiceLocator.GetService<ISecureClipboard>);
 }

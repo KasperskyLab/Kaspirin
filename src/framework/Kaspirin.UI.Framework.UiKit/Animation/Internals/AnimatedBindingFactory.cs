@@ -110,11 +110,13 @@ internal sealed class AnimatedBindingFactory
             var isInstant = properties?.Duration == TimeSpan.Zero &&
                             properties?.Delay == TimeSpan.Zero;
 
+            var isDisabled = !_animationSettingsProvider.IsAnimationEnabled;
+
             var isUnset = properties == null ||
                           newValue == null ||
                           newValue == DependencyProperty.UnsetValue;
 
-            var skipAnimation = isFirstTime || isInstant || isUnset;
+            var skipAnimation = isFirstTime || isInstant || isUnset || isDisabled;
 
             if (skipAnimation)
             {
@@ -139,6 +141,10 @@ internal sealed class AnimatedBindingFactory
             {
                 targetObject.WhenInitialized(() => StartAnimation(targetObject, targetProperty, newValue!, properties, onCompletedCallback));
             }
+            else
+            {
+                targetObject.WhenInitialized(() => StopAnimation(targetObject, targetProperty));
+            }
 
             return currentValue;
         }
@@ -151,6 +157,16 @@ internal sealed class AnimatedBindingFactory
         }
     }
 
+    private void StopAnimation(DependencyObject targetObject, DependencyProperty targetProperty)
+    {
+        var bindingProperties = GetBindingProperties(targetObject, targetProperty);
+        bindingProperties.AnimatingValue = null;
+
+        bindingProperties.Storyboard?.Children.Clear();
+        bindingProperties.Storyboard?.Remove();
+        bindingProperties.Storyboard = null;
+    }
+
     private void StartAnimation(
         DependencyObject targetObject,
         DependencyProperty targetProperty,
@@ -160,26 +176,16 @@ internal sealed class AnimatedBindingFactory
     {
         var animationProperties = properties ?? _animationSettingsProvider.DefaultAnimationProperties;
         var animationFrameRate = _animationSettingsProvider.GetDesiredFrameRate();
+        var animation = AnimationFactory.CreateAnimation(targetObject, targetProperty, animationFrameRate, animationProperties, value, onCompletedCallback);
 
         var bindingProperties = GetBindingProperties(targetObject, targetProperty);
         bindingProperties.AnimatingValue = value;
 
-        var animation = AnimationFactory.CreateAnimation(
-            targetObject,
-            targetProperty,
-            animationFrameRate,
-            animationProperties,
-            value);
-
-        var storyboard = new Storyboard();
-
-        if (onCompletedCallback != null)
-        {
-            storyboard.Completed += (o, e) => onCompletedCallback.Invoke();
-        }
-
-        storyboard.Children.Add(animation);
-        storyboard.Begin();
+        bindingProperties.Storyboard?.Children.Clear();
+        bindingProperties.Storyboard?.Remove();
+        bindingProperties.Storyboard = new Storyboard();
+        bindingProperties.Storyboard.Children.Add(animation);
+        bindingProperties.Storyboard.Begin();
     }
 
     #region AnimatedBindingProperties
@@ -217,6 +223,8 @@ internal sealed class AnimatedBindingFactory
         public bool IsInitialized { get; set; }
 
         public object? AnimatingValue { get; set; }
+
+        public Storyboard? Storyboard { get; set; }
     }
 
     #endregion

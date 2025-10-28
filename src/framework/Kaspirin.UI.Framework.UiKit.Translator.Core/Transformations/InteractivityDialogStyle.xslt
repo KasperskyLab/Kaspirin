@@ -68,14 +68,10 @@
 						<xsl:with-param name="setters">
 
 							<!--IconBrush-->
-							<xsl:call-template name="generateSetterViaAttribute">
+							<xsl:call-template name="generateBrushSetter">
 								<xsl:with-param name="propertyName">IconBrush</xsl:with-param>
-								<xsl:with-param name="propertyValue">
-									<xsl:call-template name="generateResExtension">
-										<xsl:with-param name="key">ButtonForeground</xsl:with-param>
-										<xsl:with-param name="scope" select="$id"/>
-									</xsl:call-template>
-								</xsl:with-param>
+								<xsl:with-param name="brushName">ButtonForeground</xsl:with-param>
+								<xsl:with-param name="scopeName" select="$id"/>
 							</xsl:call-template>
 
 						</xsl:with-param>
@@ -118,14 +114,10 @@
 						<xsl:with-param name="key">HeaderStyle</xsl:with-param>
 						<xsl:with-param name="setters">
 							<!--TextElement.Foreground-->
-							<xsl:call-template name="generateSetterViaAttribute">
+							<xsl:call-template name="generateBrushSetter">
 								<xsl:with-param name="propertyName">TextElement.Foreground</xsl:with-param>
-								<xsl:with-param name="propertyValue">
-									<xsl:call-template name="generateResExtension">
-										<xsl:with-param name="key">HeaderForeground</xsl:with-param>
-										<xsl:with-param name="scope" select="$id"/>
-									</xsl:call-template>
-								</xsl:with-param>
+								<xsl:with-param name="brushName">HeaderForeground</xsl:with-param>
+								<xsl:with-param name="scopeName" select="$id"/>
 							</xsl:call-template>
 						</xsl:with-param>
 					</xsl:call-template>
@@ -137,14 +129,10 @@
 						<xsl:with-param name="key">SubHeaderStyle</xsl:with-param>
 						<xsl:with-param name="setters">
 							<!--TextElement.Foreground-->
-							<xsl:call-template name="generateSetterViaAttribute">
+							<xsl:call-template name="generateBrushSetter">
 								<xsl:with-param name="propertyName">TextElement.Foreground</xsl:with-param>
-								<xsl:with-param name="propertyValue">
-									<xsl:call-template name="generateResExtension">
-										<xsl:with-param name="key">SubHeaderForeground</xsl:with-param>
-										<xsl:with-param name="scope" select="$id"/>
-									</xsl:call-template>
-								</xsl:with-param>
+								<xsl:with-param name="brushName">SubHeaderForeground</xsl:with-param>
+								<xsl:with-param name="scopeName" select="$id"/>
 							</xsl:call-template>
 						</xsl:with-param>
 					</xsl:call-template>
@@ -156,14 +144,10 @@
 						<xsl:with-param name="key">TextStyle</xsl:with-param>
 						<xsl:with-param name="setters">
 							<!--TextElement.Foreground-->
-							<xsl:call-template name="generateSetterViaAttribute">
+							<xsl:call-template name="generateBrushSetter">
 								<xsl:with-param name="propertyName">TextElement.Foreground</xsl:with-param>
-								<xsl:with-param name="propertyValue">
-									<xsl:call-template name="generateResExtension">
-										<xsl:with-param name="key">TextForeground</xsl:with-param>
-										<xsl:with-param name="scope" select="$id"/>
-									</xsl:call-template>
-								</xsl:with-param>
+								<xsl:with-param name="brushName">TextForeground</xsl:with-param>
+								<xsl:with-param name="scopeName" select="$id"/>
 							</xsl:call-template>
 						</xsl:with-param>
 					</xsl:call-template>
@@ -304,6 +288,12 @@
 				<!--InteractivityDialog_Padding-->
 				<xsl:call-template name="generatePaddingSetter">
 					<xsl:with-param name="propertyId">InteractivityDialog_Padding</xsl:with-param>
+				</xsl:call-template>
+
+				<!--InteractivityDialog_Shadow-->
+				<xsl:call-template name="generateShadowSetter">
+					<xsl:with-param name="propertyId">InteractivityDialog_Shadow</xsl:with-param>
+					<xsl:with-param name="scope" select="$id"/>
 				</xsl:call-template>
 
 				<!--InteractivityDialog_Spinner_Style-->
@@ -479,9 +469,9 @@
 					</xsl:with-param>
 				</xsl:call-template>
 
-				<!--[DialogSize = Standard trigger]-->
+				<!--[DialogWidth = Standard trigger]-->
 				<xsl:call-template name="generateTrigger">
-					<xsl:with-param name="propertyName">DialogSize</xsl:with-param>
+					<xsl:with-param name="propertyName">DialogWidth</xsl:with-param>
 					<xsl:with-param name="propertyValue">Standard</xsl:with-param>
 					<xsl:with-param name="setters">
 
@@ -494,9 +484,9 @@
 					</xsl:with-param>
 				</xsl:call-template>
 
-				<!--[DialogSize = Medium trigger]-->
+				<!--[DialogWidth = Medium trigger]-->
 				<xsl:call-template name="generateTrigger">
-					<xsl:with-param name="propertyName">DialogSize</xsl:with-param>
+					<xsl:with-param name="propertyName">DialogWidth</xsl:with-param>
 					<xsl:with-param name="propertyValue">Medium</xsl:with-param>
 					<xsl:with-param name="setters">
 
@@ -509,9 +499,9 @@
 					</xsl:with-param>
 				</xsl:call-template>
 
-				<!--[DialogSize = Wide trigger]-->
+				<!--[DialogWidth = Wide trigger]-->
 				<xsl:call-template name="generateTrigger">
-					<xsl:with-param name="propertyName">DialogSize</xsl:with-param>
+					<xsl:with-param name="propertyName">DialogWidth</xsl:with-param>
 					<xsl:with-param name="propertyValue">Wide</xsl:with-param>
 					<xsl:with-param name="setters">
 

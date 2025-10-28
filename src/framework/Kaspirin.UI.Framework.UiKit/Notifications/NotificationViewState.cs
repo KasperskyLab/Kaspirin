@@ -17,6 +17,7 @@ namespace Kaspirin.UI.Framework.UiKit.Notifications;
 public enum NotificationViewState
 {
     Initial,
+    Pending,
     Error,
     Closed,
     Closing,

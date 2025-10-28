@@ -113,5 +113,5 @@ public sealed class PasswordInputCopyAction : InputActionBase
     private PasswordInput? _passwordInput;
     private PropertyChangeNotifier<PasswordInput, SecureString>? _passwordInputTextNotifier;
 
-    private readonly Lazy<ISecureClipboard> _secureClipboard = new(ServiceLocator.Instance.GetService<ISecureClipboard>);
+    private readonly Lazy<ISecureClipboard> _secureClipboard = new(ServiceLocator.GetService<ISecureClipboard>);
 }

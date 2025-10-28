@@ -23,15 +23,59 @@ namespace Kaspirin.UI.Framework.UiKit.Extensions;
 public static class DateTimeExtensions
 {
     /// <summary>
-    ///     Checks whether the set time is valid for the current regional standard.
+    ///     Checks that the set time is not equal to the default value and is within the calendar range
+    ///     for the current regional standard.
     /// </summary>
     /// <param name="dateTime">
-    ///     The date and time being checked.
+    ///     The value being checked.
+    /// </param>
+    /// <returns>
+    ///     Returns <see langword="true" /> if the value is not equal to <see langword="default" /> and
+    ///     is within the calendar range for the current regional standard, otherwise - <see langword="false" />.
+    /// </returns>
+    public static bool IsValid(this DateTime dateTime)
+    {
+        return dateTime.IsNotDefault() && dateTime.IsInCalendarRange();
+    }
+
+    /// <summary>
+    ///     Checks that the set time is equal to the default value.
+    /// </summary>
+    /// <param name="dateTime">
+    ///     The value being checked.
+    /// </param>
+    /// <returns>
+    ///     Returns <see langword="true" /> if the value is <see langword="default" />, otherwise <see langword="false" />.
+    /// </returns>
+    public static bool IsDefault(this DateTime dateTime)
+    {
+        return dateTime == default;
+    }
+
+    /// <summary>
+    ///     Checks that the set time is not equal to the default value.
+    /// </summary>
+    /// <param name="dateTime">
+    ///     The value being checked.
+    /// </param>
+    /// <returns>
+    ///     Returns <see langword="true" /> if the value is not equal to <see langword="default" />, otherwise - <see langword="false" />.
+    /// </returns>
+    public static bool IsNotDefault(this DateTime dateTime)
+    {
+        return dateTime != default;
+    }
+
+    /// <summary>
+    ///     Checks that the set time is within the calendar range for the current regional standard.
+    /// </summary>
+    /// <param name="dateTime">
+    ///     The value being checked.
     /// </param>
     /// <returns>
     ///     Returns <see langword="true" /> if the time is valid, otherwise <see langword="false" />.
     /// </returns>
-    public static bool IsValid(this DateTime dateTime)
+    public static bool IsInCalendarRange(this DateTime dateTime)
     {
         var minSupportedDateTime = GetMinValueForCurrentLocale();
         var maxSupportedDateTime = GetMaxValueForCurrentLocale();
@@ -46,16 +90,17 @@ public static class DateTimeExtensions
     }
 
     /// <summary>
-    ///     Sets the date and time value in the range valid for the current regional standard.
+    ///     Sets the date and time value in the range valid for the current regional standard if the value
+    ///     being checked falls outside this range.
     /// </summary>
     /// <param name="dateTime">
-    ///     The date and time being checked.
+    ///     The value being checked.
     /// </param>
     /// <returns>
     ///     Returns the source object <paramref name="dateTime" /> if it is in the acceptable range, otherwise
-    ///     the date and time closest to the range.
+    ///     - the date and time closest to the range.
     /// </returns>
-    public static DateTime EnsureToBeValid(this DateTime dateTime)
+    public static DateTime EnsureIsInCalendarRange(this DateTime dateTime)
     {
         var minSupportedDateTime = GetMinValueForCurrentLocale();
         var maxSupportedDateTime = GetMaxValueForCurrentLocale();

@@ -32,7 +32,7 @@ namespace Kaspirin.UI.Framework.UiKit.Converters.BooleanConverters;
 public abstract class BaseBooleanConverter<T> : ValueConverterMarkupExtension<BaseBooleanConverter<T>>
 {
     /// <summary>
-    ///     Creates an object <see cref="BaseBooleanConverter{T}" />.
+    ///     Initializes a new instance of the <see cref="BaseBooleanConverter{T}" /> class.
     /// </summary>
     /// <param name="trueValue">
     ///     The default result when converting the value <see langword="true" />.

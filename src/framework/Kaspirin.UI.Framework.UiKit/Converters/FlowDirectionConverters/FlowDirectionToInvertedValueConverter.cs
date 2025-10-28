@@ -29,7 +29,7 @@ namespace Kaspirin.UI.Framework.UiKit.Converters.FlowDirectionConverters;
 public sealed class FlowDirectionToInvertedValueConverter : BaseFlowDirectionConverter<FlowDirection>
 {
     /// <summary>
-    ///     Creates an object <see cref="FlowDirectionToInvertedValueConverter" />.
+    ///     Initializes a new instance of the <see cref="FlowDirectionToInvertedValueConverter" /> class.
     /// </summary>
     public FlowDirectionToInvertedValueConverter() : base(FlowDirection.RightToLeft, FlowDirection.LeftToRight) { }
 }

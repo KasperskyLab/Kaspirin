@@ -1,4 +1,4 @@
-// Copyright © 2024 AO Kaspersky Lab.
+// Copyright © 2025 AO Kaspersky Lab.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -20,7 +20,7 @@ using System.Windows.Media;
 
 namespace Kaspirin.UI.Framework.UiKit.Controls.Internals;
 
-internal sealed class TextBlockFontBehavior : Behavior<TextBlock, TextBlockFontBehavior>
+internal sealed class FrameworkElementFontBehavior : Behavior<FrameworkElement, FrameworkElementFontBehavior>
 {
     #region Style
 
@@ -33,14 +33,14 @@ internal sealed class TextBlockFontBehavior : Behavior<TextBlock, TextBlockFontB
     public static readonly DependencyProperty StyleProperty = DependencyProperty.RegisterAttached(
         "Style",
         typeof(UIKitFontStyleSettings),
-        typeof(TextBlockFontBehavior),
+        typeof(FrameworkElementFontBehavior),
         new PropertyMetadata(default(UIKitFontStyleSettings), OnStyleChanged));
 
     private static void OnStyleChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
     {
-        if (d is TextBlock textBlock && GetIsEnabled(textBlock))
+        if (d is FrameworkElement frameworkElement && GetIsEnabled(frameworkElement))
         {
-            GetBehavior(textBlock).UpdateTextBlock();
+            GetBehavior(frameworkElement).UpdateTextBlock();
         }
     }
 
@@ -57,14 +57,14 @@ internal sealed class TextBlockFontBehavior : Behavior<TextBlock, TextBlockFontB
     public static readonly DependencyProperty BrushProperty = DependencyProperty.RegisterAttached(
         "Brush",
         typeof(UIKitFontBrushSettings),
-        typeof(TextBlockFontBehavior),
+        typeof(FrameworkElementFontBehavior),
         new PropertyMetadata(default(UIKitFontBrushSettings), OnBrushChanged));
 
     private static void OnBrushChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
     {
-        if (d is TextBlock textBlock && GetIsEnabled(textBlock))
+        if (d is FrameworkElement frameworkElement && GetIsEnabled(frameworkElement))
         {
-            GetBehavior(textBlock).UpdateTextBlock();
+            GetBehavior(frameworkElement).UpdateTextBlock();
         }
     }
 
@@ -130,29 +130,29 @@ internal sealed class TextBlockFontBehavior : Behavior<TextBlock, TextBlockFontB
     {
         Guard.IsNotNull(AssociatedObject);
 
-        _originalLineHeight = AssociatedObject.LineHeight;
-        _originalLineStackingStrategy = AssociatedObject.LineStackingStrategy;
-        _originalFontFamily = AssociatedObject.FontFamily;
-        _originalFontSize = AssociatedObject.FontSize;
-        _originalFontStyle = AssociatedObject.FontStyle;
-        _originalFontWeight = AssociatedObject.FontWeight;
-        _originalForeground = AssociatedObject.Foreground;
+        _originalLineHeight = AssociatedObject.GetValue<double>(TextBlock.LineHeightProperty);
+        _originalLineStackingStrategy = AssociatedObject.GetValue<LineStackingStrategy>(TextBlock.LineStackingStrategyProperty);
+        _originalFontFamily = AssociatedObject.GetValue<FontFamily>(TextBlock.FontFamilyProperty);
+        _originalFontSize = AssociatedObject.GetValue<double>(TextBlock.FontSizeProperty);
+        _originalFontStyle = AssociatedObject.GetValue<FontStyle>(TextBlock.FontStyleProperty);
+        _originalFontWeight = AssociatedObject.GetValue<FontWeight>(TextBlock.FontWeightProperty);
+        _originalForeground = AssociatedObject.GetValue<Brush>(TextBlock.ForegroundProperty);
     }
 
     private void ResetToOriginalValues()
     {
         Guard.IsNotNull(AssociatedObject);
 
-        AssociatedObject.LineHeight = _originalLineHeight;
-        AssociatedObject.LineStackingStrategy = _originalLineStackingStrategy;
-        AssociatedObject.FontFamily = _originalFontFamily;
-        AssociatedObject.FontSize = _originalFontSize;
-        AssociatedObject.FontStyle = _originalFontStyle;
-        AssociatedObject.FontWeight = _originalFontWeight;
-        AssociatedObject.Foreground = _originalForeground;
+        AssociatedObject.SetValue(TextBlock.LineHeightProperty, _originalLineHeight);
+        AssociatedObject.SetValue(TextBlock.LineStackingStrategyProperty, _originalLineStackingStrategy);
+        AssociatedObject.SetValue(TextBlock.FontFamilyProperty, _originalFontFamily);
+        AssociatedObject.SetValue(TextBlock.FontSizeProperty, _originalFontSize);
+        AssociatedObject.SetValue(TextBlock.FontStyleProperty, _originalFontStyle);
+        AssociatedObject.SetValue(TextBlock.FontWeightProperty, _originalFontWeight);
+        AssociatedObject.SetValue(TextBlock.ForegroundProperty, _originalForeground);
     }
 
-    public static void SetValueOrBinding(FrameworkElement frameworkElement, DependencyProperty dependencyProperty, object? value)
+    private static void SetValueOrBinding(FrameworkElement frameworkElement, DependencyProperty dependencyProperty, object? value)
     {
         Guard.ArgumentIsNotNull(frameworkElement);
         Guard.ArgumentIsNotNull(dependencyProperty);
@@ -194,7 +194,7 @@ internal sealed class TextBlockFontBehavior : Behavior<TextBlock, TextBlockFontB
     private LineStackingStrategy _originalLineStackingStrategy;
     private FontFamily? _originalFontFamily;
     private double _originalFontSize;
+    private Brush? _originalForeground;
     private FontStyle _originalFontStyle;
     private FontWeight _originalFontWeight;
-    private Brush? _originalForeground;
 }

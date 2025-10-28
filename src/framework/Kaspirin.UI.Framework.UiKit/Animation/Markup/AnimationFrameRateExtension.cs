@@ -29,5 +29,5 @@ public sealed class AnimationFrameRateExtension : MarkupExtension
 
     /// <inheritdoc/>
     public override object? ProvideValue(IServiceProvider serviceProvider)
-        => ServiceLocator.Instance.GetService<IAnimationSettingsProvider>().GetDesiredFrameRate(RenderQuality);
+        => ServiceLocator.GetService<IAnimationSettingsProvider>().GetDesiredFrameRate(RenderQuality);
 }

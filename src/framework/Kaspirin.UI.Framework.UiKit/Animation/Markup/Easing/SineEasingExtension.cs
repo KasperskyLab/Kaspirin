@@ -17,7 +17,7 @@ using System.Windows.Media.Animation;
 namespace Kaspirin.UI.Framework.UiKit.Animation.Markup.Easing;
 
 /// <summary>
-///     Markup extension for initializing the <see cref="SineEase" /> class in XAML.
+///     Extending the markup for initializing the <see cref="SineEase" /> class in XAML.
 /// </summary>
 public sealed class SineEasingExtension : EasingExtensionBase
 {

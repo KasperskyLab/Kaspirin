@@ -86,16 +86,16 @@ public sealed class WrapPanelAdaptable : Panel
 
     #endregion
 
-    #region HasNeighbours
+    #region HasNeighbors
 
-    public static bool GetHasNeighbours(UIElement textBox)
-        => (bool)textBox.GetValue(HasNeighboursProperty);
+    public static bool GetHasNeighbors(UIElement textBox)
+        => (bool)textBox.GetValue(HasNeighborsProperty);
 
-    public static void SetHasNeighbours(UIElement textBox, bool hasNeighbours)
-        => textBox.SetValue(HasNeighboursProperty, hasNeighbours);
+    public static void SetHasNeighbors(UIElement textBox, bool hasNeighbors)
+        => textBox.SetValue(HasNeighborsProperty, hasNeighbors);
 
-    public static readonly DependencyProperty HasNeighboursProperty = DependencyProperty.RegisterAttached(
-        "HasNeighbours",
+    public static readonly DependencyProperty HasNeighborsProperty = DependencyProperty.RegisterAttached(
+        "HasNeighbors",
         typeof(bool),
         typeof(WrapPanelAdaptable),
         new FrameworkPropertyMetadata(default(bool), FrameworkPropertyMetadataOptions.Inherits));
@@ -124,7 +124,7 @@ public sealed class WrapPanelAdaptable : Panel
     {
         var panelHeight = 0.0;
         var panelWidth = availableSize.Width;
-        var columnStrategy = UpdateActualColumnStrateg(panelWidth);
+        var columnStrategy = UpdateActualColumnStrategy(panelWidth);
         var columnsCount = columnStrategy.Count;
         var columnWidth = panelWidth / columnStrategy.Count;
 
@@ -161,7 +161,7 @@ public sealed class WrapPanelAdaptable : Panel
 
             row.Seal(skipRowAlign);
             row.Measure();
-            row.SetNeighbours();
+            row.SetNeighbors();
 
             panelHeight += row.Height;
         }
@@ -182,7 +182,7 @@ public sealed class WrapPanelAdaptable : Panel
     {
         var panelHeight = 0.0;
         var panelWidth = finalSize.Width;
-        var columnStrategy = UpdateActualColumnStrateg(panelWidth);
+        var columnStrategy = UpdateActualColumnStrategy(panelWidth);
         var columnsCount = columnStrategy.Count;
         var columnWidth = panelWidth / columnStrategy.Count;
 
@@ -192,7 +192,7 @@ public sealed class WrapPanelAdaptable : Panel
             return new Size(0, 0);
         }
 
-        var panelRows = new List<PanelRow>() { new PanelRow(columnsCount, columnWidth) };
+        var panelRows = new List<PanelRow>() { new(columnsCount, columnWidth) };
         var currentRow = panelRows.Last();
 
         foreach (var item in children)
@@ -221,7 +221,7 @@ public sealed class WrapPanelAdaptable : Panel
         return new Size(panelWidth, panelHeight);
     }
 
-    private WrapPanelColumnStrategy UpdateActualColumnStrateg(double panelWidth)
+    private WrapPanelColumnStrategy UpdateActualColumnStrategy(double panelWidth)
     {
         var effectiveStrategy = ColumnStrategies?.LastOrDefault(s => s.FromWidth.LesserOrNearlyEqual(panelWidth) && panelWidth.LesserOrNearlyEqual(s.ToWidth)) ?? WrapPanelColumnStrategy.Default;
         if (effectiveStrategy != ActualColumnStrategy)
@@ -339,7 +339,7 @@ public sealed class WrapPanelAdaptable : Panel
             _isSealed = true;
         }
 
-        public void SetNeighbours() => _items.ForEach(i => i.Item.SetValue(HasNeighboursProperty, _items.Count > 1));
+        public void SetNeighbors() => _items.ForEach(i => i.Item.SetValue(HasNeighborsProperty, _items.Count > 1));
 
         public void Measure()
         {

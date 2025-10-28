@@ -26,7 +26,7 @@ namespace Kaspirin.UI.Framework.UiKit.Converters;
 public sealed class CompositeConverter : IValueConverter
 {
     /// <summary>
-    ///     Creates an object <see cref="CompositeConverter" />.
+    ///     Initializes a new instance of the <see cref="CompositeConverter" /> class.
     /// </summary>
     /// <param name="converters">
     ///     Converters involved in sequential conversion.

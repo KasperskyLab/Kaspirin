@@ -30,7 +30,7 @@ public sealed class TextScaleBehavior : Behavior<FrameworkElement, TextScaleBeha
     /// </summary>
     public TextScaleBehavior()
     {
-        _textScaleService = ServiceLocator.Instance.GetService<ITextScaleService>();
+        _textScaleService = ServiceLocator.GetService<ITextScaleService>();
         _currentScale = OriginScale;
     }
 

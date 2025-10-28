@@ -1,0 +1,14 @@
+﻿<Project>
+	<PropertyGroup>
+		<RootNamespace>Kaspirin.UI.Framework.Tests.Services</RootNamespace>
+		<AssemblyName>kaspirin.ui.framework.tests.services</AssemblyName>
+	</PropertyGroup>
+
+	<Import Project="$(SolutionDir)kaspirin.net.props" />
+
+	<Import Project="Sdk.props" Sdk="Microsoft.NET.Sdk" />
+	<Import Project="Sdk.targets" Sdk="Microsoft.NET.Sdk" />
+
+	<Import Project="$(MSTestProps)" />
+	<Import Project="$(FrameworkProps)" />
+</Project>

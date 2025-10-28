@@ -23,8 +23,8 @@ internal sealed class ContextMenuPopupDecorator : PopupDecorator
 {
     static ContextMenuPopupDecorator()
     {
-        MaxWidthProperty.OverrideMetadata(typeof(ContextMenuPopupDecorator), new FrameworkPropertyMetadata(UIKitConstants.ContextMenuPopupDecoratorMaxWidth));
-        MinWidthProperty.OverrideMetadata(typeof(ContextMenuPopupDecorator), new FrameworkPropertyMetadata(UIKitConstants.ContextMenuPopupDecoratorMinWidth));
+        PopupMaxWidthProperty.OverrideMetadata(typeof(ContextMenuPopupDecorator), new PropertyMetadata(UIKitConstants.ContextMenuPopupDecoratorMaxWidth));
+        PopupMinWidthProperty.OverrideMetadata(typeof(ContextMenuPopupDecorator), new PropertyMetadata(UIKitConstants.ContextMenuPopupDecoratorMinWidth));
     }
 
     public ContextMenuPopupDecorator()

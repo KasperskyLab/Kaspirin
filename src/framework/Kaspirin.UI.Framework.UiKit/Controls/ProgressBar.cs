@@ -19,11 +19,17 @@ using Kaspirin.UI.Framework.UiKit.Controls.Internals;
 
 namespace Kaspirin.UI.Framework.UiKit.Controls;
 
-[TemplatePart(Name = "PART_AnimatedIndicator", Type = typeof(FrameworkElement))]
+[TemplatePart(Name = PART_AnimatedIndicator, Type = typeof(RoundedPanel))]
+[TemplatePart(Name = PART_RootPanel, Type = typeof(RoundedPanel))]
 public sealed class ProgressBar : System.Windows.Controls.ProgressBar
 {
+    public const string PART_AnimatedIndicator = "PART_AnimatedIndicator";
+    public const string PART_RootPanel = "PART_RootPanel";
+
     public ProgressBar()
     {
+        _cornerRoundingHelper = new CornerRoundingHelper(this, InvalidateCornerRadius);
+
         _storyboard = new();
         _storyboard.SetFrameRate();
 
@@ -160,11 +166,64 @@ public sealed class ProgressBar : System.Windows.Controls.ProgressBar
 
     #endregion
 
+    #region DisableRoundingTopLeft
+
+    public bool DisableRoundingTopLeft
+    {
+        get => (bool)GetValue(DisableRoundingTopLeftProperty);
+        set => SetValue(DisableRoundingTopLeftProperty, value);
+    }
+
+    public static readonly DependencyProperty DisableRoundingTopLeftProperty =
+        CornerRoundingHelper.DisableRoundingTopLeftProperty.AddOwner(typeof(ProgressBar));
+
+    #endregion
+
+    #region DisableRoundingTopRight
+
+    public bool DisableRoundingTopRight
+    {
+        get => (bool)GetValue(DisableRoundingTopRightProperty);
+        set => SetValue(DisableRoundingTopRightProperty, value);
+    }
+
+    public static readonly DependencyProperty DisableRoundingTopRightProperty =
+        CornerRoundingHelper.DisableRoundingTopRightProperty.AddOwner(typeof(ProgressBar));
+
+    #endregion
+
+    #region DisableRoundingBottomLeft
+
+    public bool DisableRoundingBottomLeft
+    {
+        get => (bool)GetValue(DisableRoundingBottomLeftProperty);
+        set => SetValue(DisableRoundingBottomLeftProperty, value);
+    }
+
+    public static readonly DependencyProperty DisableRoundingBottomLeftProperty =
+        CornerRoundingHelper.DisableRoundingBottomLeftProperty.AddOwner(typeof(ProgressBar));
+
+    #endregion
+
+    #region DisableRoundingBottomRight
+
+    public bool DisableRoundingBottomRight
+    {
+        get => (bool)GetValue(DisableRoundingBottomRightProperty);
+        set => SetValue(DisableRoundingBottomRightProperty, value);
+    }
+
+    public static readonly DependencyProperty DisableRoundingBottomRightProperty =
+        CornerRoundingHelper.DisableRoundingBottomRightProperty.AddOwner(typeof(ProgressBar));
+
+    #endregion
+
     public override void OnApplyTemplate()
     {
         base.OnApplyTemplate(); //Apply PART_GlowRect, PART_Track, PART_Indicator here
 
-        _animatedIndicator = GetTemplateChild("PART_AnimatedIndicator") as FrameworkElement;
+        _animatedIndicator = Guard.EnsureIsInstanceOfType<RoundedPanel>(GetTemplateChild(PART_AnimatedIndicator));
+        _root = Guard.EnsureIsInstanceOfType<RoundedPanel>(GetTemplateChild(PART_RootPanel));
     }
 
     private void OnSizeChanged(object sender, SizeChangedEventArgs e)
@@ -233,9 +292,22 @@ public sealed class ProgressBar : System.Windows.Controls.ProgressBar
         return animation;
     }
 
+    private void InvalidateCornerRadius()
+    {
+        if (_root == null || _animatedIndicator == null)
+        {
+            return;
+        }
+
+        _root.CornerRadius = _cornerRoundingHelper.GetCornerRadius();
+        _animatedIndicator.CornerRadius = _cornerRoundingHelper.GetCornerRadius();
+    }
+
+    private readonly CornerRoundingHelper _cornerRoundingHelper;
     private readonly Storyboard _storyboard;
 
-    private FrameworkElement? _animatedIndicator;
+    private RoundedPanel? _animatedIndicator;
+    private RoundedPanel? _root;
 
     private static readonly Duration _animationDuration = new(TimeSpan.FromMilliseconds(500));
 }

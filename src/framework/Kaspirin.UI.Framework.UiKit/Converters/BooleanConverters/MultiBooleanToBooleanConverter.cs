@@ -27,7 +27,7 @@ namespace Kaspirin.UI.Framework.UiKit.Converters.BooleanConverters;
 public sealed class MultiBooleanToBooleanConverter : BaseMultiBooleanConverter<bool>
 {
     /// <summary>
-    ///     Creates an object <see cref="MultiBooleanToBooleanConverter" />.
+    ///     Initializes a new instance of the <see cref="MultiBooleanToBooleanConverter" /> class.
     /// </summary>
     public MultiBooleanToBooleanConverter() : base(true, false) { }
 }

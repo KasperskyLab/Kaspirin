@@ -1,4 +1,4 @@
-// Copyright © 2024 AO Kaspersky Lab.
+// Copyright © 2025 AO Kaspersky Lab.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -18,10 +18,60 @@
 
 using System;
 using Kaspirin.UI.Framework.UiKit.Styles.Palette;
+using Kaspirin.UI.Framework.UiKit.Palettes;
 
 namespace Kaspirin.UI.Framework.UiKit.Styles.Fonts;
 
-public sealed class UIKitFontStorage
+public enum UIKitFontBrush
+{
+    Base,
+    BaseIcon,
+    BaseIconInvert,
+    BaseInvert,
+    Disabled,
+    DisabledInvert,
+    Emerald,
+    Primary,
+    PrimaryInvert,
+    Red,
+    Secondary,
+    SecondaryInvert,
+    Yellow
+}
+
+public enum UIKitFontStyle
+{
+    BaseText,
+    BaseTextMonospace,
+    BaseTextSemibold,
+    Button,
+    Header1,
+    Header2,
+    Header3,
+    Header3Monospace,
+    Header4,
+    Header5,
+    SmallText,
+    SmallTextMedium,
+    Subheader
+}
+
+public sealed class UIKitFontBrushExtension : UIKitFontBrushExtension<UIKitFontBrush>
+{
+    static UIKitFontBrushExtension()
+    {
+        UIKitPaletteMetadataRegistrar.RegisterMetadata();
+    }
+
+    protected override string Map(UIKitFontBrush brush) => UIKitFontMetadataProvider.Map(brush);
+}
+
+public sealed class UIKitFontStyleExtension : UIKitFontStyleExtension<UIKitFontStyle>
+{
+    protected override string Map(UIKitFontStyle style) => UIKitFontMetadataProvider.Map(style);
+}
+
+internal static class UIKitFontMetadataProvider
 {
     public static string Map(UIKitFontStyle id)
         => $"UiKitTextStyle{id}";
@@ -30,42 +80,8 @@ public sealed class UIKitFontStorage
     {
         var paletteIdString = $"TextIconsElements{id}";
 
-        var paletteId = (UIKitPaletteStorage.UIKitPalette)Enum.Parse(typeof(UIKitPaletteStorage.UIKitPalette), paletteIdString);
+        var paletteId = (UIKitPalette)Enum.Parse(typeof(UIKitPalette), paletteIdString);
 
-        return UIKitPaletteStorage.Map(paletteId);
-    }
-
-    public enum UIKitFontBrush
-    {
-        Base,
-        BaseIcon,
-        BaseIconInvert,
-        BaseInvert,
-        Disabled,
-        DisabledInvert,
-        Emerald,
-        Primary,
-        PrimaryInvert,
-        Red,
-        Secondary,
-        SecondaryInvert,
-        Yellow
-    }
-
-    public enum UIKitFontStyle
-    {
-        BaseText,
-        BaseTextMonospace,
-        BaseTextSemibold,
-        Button,
-        Header1,
-        Header2,
-        Header3,
-        Header3Monospace,
-        Header4,
-        Header5,
-        SmallText,
-        SmallTextMedium,
-        Subheader
+        return UIKitPaletteMetadataStorage.Get(paletteId).ResourceKey;
     }
 }

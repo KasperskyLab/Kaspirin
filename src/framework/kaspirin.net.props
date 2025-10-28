@@ -1,9 +1,12 @@
 <Project>
 	<PropertyGroup>
 		<FrameworkProps>$(MSBuildThisFileDirectory)Kaspirin.UI.Framework\framework.props</FrameworkProps>
+		<FrameworkTestServicesProps>$(MSBuildThisFileDirectory)Kaspirin.UI.Framework.Tests.Services\framework.tests.services.props</FrameworkTestServicesProps>
 		<FrameworkUIKitProps>$(MSBuildThisFileDirectory)Kaspirin.UI.Framework.UiKit\framework.uikit.props</FrameworkUIKitProps>
 		<FrameworkUIKitStylesProps>$(MSBuildThisFileDirectory)Kaspirin.UI.Framework.UiKit.Styles\framework.uikit.styles.props</FrameworkUIKitStylesProps>
 		<FrameworkUIKitMediaProps>$(MSBuildThisFileDirectory)Kaspirin.UI.Framework.UiKit.Media\framework.uikit.media.props</FrameworkUIKitMediaProps>
+
+		<MSTestProps>$(MSBuildThisFileDirectory)mstest.imports.props</MSTestProps>
 	</PropertyGroup>
 
 	<PropertyGroup>

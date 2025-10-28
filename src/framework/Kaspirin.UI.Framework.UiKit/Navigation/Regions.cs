@@ -54,7 +54,7 @@ public sealed class Regions : IEnumerable<Region>
         new PropertyMetadata(default(string), OnRegionNameChanged));
 
     private static void OnRegionNameChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        => ServiceLocator.Instance.GetService<Regions>().CreateRegion(d);
+        => ServiceLocator.GetService<Regions>().CreateRegion(d);
 
     #endregion
 

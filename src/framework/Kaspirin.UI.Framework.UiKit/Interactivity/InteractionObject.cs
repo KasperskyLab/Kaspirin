@@ -35,7 +35,13 @@ public class InteractionObject : BaseViewModel
         HandleCommand = new DelegateCommand(Handle);
     }
 
-    public event Action PreviewDecided = () => { };
+    public InteractionObject(ComponentTracerParameters tracerParameters)
+        : base(tracerParameters)
+    {
+        HandleCommand = new DelegateCommand(Handle);
+    }
+
+    public event Action Handled = () => { };
 
     public event Action Decided = () => { };
 
@@ -53,15 +59,13 @@ public class InteractionObject : BaseViewModel
 
     public void Handle()
     {
-        OnHandle();
+        OnHandled();
+        Handled.Invoke();
 
         if (_isDecided)
         {
             return;
         }
-
-        OnPreviewDecided();
-        PreviewDecided.Invoke();
 
         IsDecided = true;
 
@@ -106,15 +110,11 @@ public class InteractionObject : BaseViewModel
     {
     }
 
-    protected virtual void OnPreviewDecided()
+    protected virtual void OnHandled()
     {
     }
 
     protected virtual void OnDecided()
-    {
-    }
-
-    protected virtual void OnHandle()
     {
     }
 

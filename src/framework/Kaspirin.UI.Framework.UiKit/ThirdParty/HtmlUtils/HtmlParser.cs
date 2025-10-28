@@ -4,6 +4,10 @@
 // Scope of modification:
 //   - Code adaptation to project requirements.
 
+// This file has been modified by AO Kaspersky Lab in 9/12/2025.
+// Scope of modification:
+//   - Fix href attribute parsing.
+
 // Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
@@ -513,7 +517,7 @@ namespace Kaspirin.UI.Framework.UiKit.ThirdParty.HtmlUtils
                     var attributeName = _htmlLexicalAnalyzer.NextToken;
                     _htmlLexicalAnalyzer.GetNextEqualSignToken();
 
-                    _htmlLexicalAnalyzer.GetNextAtomToken();
+                    _htmlLexicalAnalyzer.GetNextAtomToken(attributeName);
 
                     var attributeValue = _htmlLexicalAnalyzer.NextToken;
                     xmlElement.SetAttribute(attributeName, attributeValue);

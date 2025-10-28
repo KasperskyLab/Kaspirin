@@ -102,7 +102,7 @@ public sealed class Illustration : Control
             ? new UIKitIllustrationBuilder(illustration)
             : null;
 
-        IsUnset = uiKitIllustration is null || uiKitIllustration.IllustrationName == UIKitIllustrations.Unset;
+        IsUnset = uiKitIllustration is null || uiKitIllustration.IllustrationName == UIKitConstants.IconUnsetValue;
 
         if (IsUnset)
         {

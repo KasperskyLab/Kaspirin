@@ -67,14 +67,10 @@
 						<xsl:with-param name="key">EstimationTextStyle</xsl:with-param>
 						<xsl:with-param name="setters">
 							<!--TextElement.Foreground-->
-							<xsl:call-template name="generateSetterViaAttribute">
+							<xsl:call-template name="generateBrushSetter">
 								<xsl:with-param name="propertyName">TextElement.Foreground</xsl:with-param>
-								<xsl:with-param name="propertyValue">
-									<xsl:call-template name="generateResExtension">
-										<xsl:with-param name="key">EstimationForeground</xsl:with-param>
-										<xsl:with-param name="scope" select="$id"/>
-									</xsl:call-template>
-								</xsl:with-param>
+								<xsl:with-param name="brushName">EstimationForeground</xsl:with-param>
+								<xsl:with-param name="scopeName" select="$id"/>
 							</xsl:call-template>
 						</xsl:with-param>
 					</xsl:call-template>
@@ -86,14 +82,10 @@
 						<xsl:with-param name="key">EstimationTextDisabledStyle</xsl:with-param>
 						<xsl:with-param name="setters">
 							<!--TextElement.Foreground-->
-							<xsl:call-template name="generateSetterViaAttribute">
+							<xsl:call-template name="generateBrushSetter">
 								<xsl:with-param name="propertyName">TextElement.Foreground</xsl:with-param>
-								<xsl:with-param name="propertyValue">
-									<xsl:call-template name="generateResExtension">
-										<xsl:with-param name="key">EstimationForegroundDisabled</xsl:with-param>
-										<xsl:with-param name="scope" select="$id"/>
-									</xsl:call-template>
-								</xsl:with-param>
+								<xsl:with-param name="brushName">EstimationForegroundDisabled</xsl:with-param>
+								<xsl:with-param name="scopeName" select="$id"/>
 							</xsl:call-template>
 						</xsl:with-param>
 					</xsl:call-template>
@@ -105,14 +97,10 @@
 						<xsl:with-param name="key">StateTextStyle</xsl:with-param>
 						<xsl:with-param name="setters">
 							<!--TextElement.Foreground-->
-							<xsl:call-template name="generateSetterViaAttribute">
+							<xsl:call-template name="generateBrushSetter">
 								<xsl:with-param name="propertyName">TextElement.Foreground</xsl:with-param>
-								<xsl:with-param name="propertyValue">
-									<xsl:call-template name="generateResExtension">
-										<xsl:with-param name="key">StateForeground</xsl:with-param>
-										<xsl:with-param name="scope" select="$id"/>
-									</xsl:call-template>
-								</xsl:with-param>
+								<xsl:with-param name="brushName">StateForeground</xsl:with-param>
+								<xsl:with-param name="scopeName" select="$id"/>
 							</xsl:call-template>
 						</xsl:with-param>
 					</xsl:call-template>
@@ -124,14 +112,10 @@
 						<xsl:with-param name="key">StateTextDisabledStyle</xsl:with-param>
 						<xsl:with-param name="setters">
 							<!--TextElement.Foreground-->
-							<xsl:call-template name="generateSetterViaAttribute">
+							<xsl:call-template name="generateBrushSetter">
 								<xsl:with-param name="propertyName">TextElement.Foreground</xsl:with-param>
-								<xsl:with-param name="propertyValue">
-									<xsl:call-template name="generateResExtension">
-										<xsl:with-param name="key">StateForegroundDisabled</xsl:with-param>
-										<xsl:with-param name="scope" select="$id"/>
-									</xsl:call-template>
-								</xsl:with-param>
+								<xsl:with-param name="brushName">StateForegroundDisabled</xsl:with-param>
+								<xsl:with-param name="scopeName" select="$id"/>
 							</xsl:call-template>
 						</xsl:with-param>
 					</xsl:call-template>
@@ -143,14 +127,10 @@
 						<xsl:with-param name="key">ValueTextStyle</xsl:with-param>
 						<xsl:with-param name="setters">
 							<!--TextElement.Foreground-->
-							<xsl:call-template name="generateSetterViaAttribute">
+							<xsl:call-template name="generateBrushSetter">
 								<xsl:with-param name="propertyName">TextElement.Foreground</xsl:with-param>
-								<xsl:with-param name="propertyValue">
-									<xsl:call-template name="generateResExtension">
-										<xsl:with-param name="key">ValueForeground</xsl:with-param>
-										<xsl:with-param name="scope" select="$id"/>
-									</xsl:call-template>
-								</xsl:with-param>
+								<xsl:with-param name="brushName">ValueForeground</xsl:with-param>
+								<xsl:with-param name="scopeName" select="$id"/>
 							</xsl:call-template>
 						</xsl:with-param>
 					</xsl:call-template>
@@ -162,29 +142,24 @@
 						<xsl:with-param name="key">ValueTextDisabledStyle</xsl:with-param>
 						<xsl:with-param name="setters">
 							<!--TextElement.Foreground-->
-							<xsl:call-template name="generateSetterViaAttribute">
+							<xsl:call-template name="generateBrushSetter">
 								<xsl:with-param name="propertyName">TextElement.Foreground</xsl:with-param>
-								<xsl:with-param name="propertyValue">
-									<xsl:call-template name="generateResExtension">
-										<xsl:with-param name="key">ValueForegroundDisabled</xsl:with-param>
-										<xsl:with-param name="scope" select="$id"/>
-									</xsl:call-template>
-								</xsl:with-param>
+								<xsl:with-param name="brushName">ValueForegroundDisabled</xsl:with-param>
+								<xsl:with-param name="scopeName" select="$id"/>
 							</xsl:call-template>
 						</xsl:with-param>
 					</xsl:call-template>
 				</xsl:element>
 
-
+				<!-- ProgressBar_CornerRadius-->
+				<xsl:call-template name="generateCornerRadiusSetter">
+					<xsl:with-param name="propertyId">ProgressBar_CornerRadius</xsl:with-param>
+				</xsl:call-template>
 
 				<!--ProgressBar_EstimationTextStyle-->
-				<xsl:call-template name="generateUiKitSetterViaAttribute">
+				<xsl:call-template name="generateStaticResourceSetter">
 					<xsl:with-param name="propertyId">ProgressBar_EstimationTextStyle</xsl:with-param>
-					<xsl:with-param name="propertyValue">
-						<xsl:call-template name="generateStaticResource">
-							<xsl:with-param name="key">EstimationTextStyle</xsl:with-param>
-						</xsl:call-template>
-					</xsl:with-param>
+					<xsl:with-param name="resourceName">EstimationTextStyle</xsl:with-param>
 				</xsl:call-template>
 
 				<!--ProgressBar_Glow_Brush-->
@@ -212,11 +187,6 @@
 					<xsl:with-param name="scopeName" select="$id" />
 				</xsl:call-template>
 
-				<!-- ProgressBar_Track_CornerRadius-->
-				<xsl:call-template name="generateCornerRadiusSetter">
-					<xsl:with-param name="propertyId">ProgressBar_Track_CornerRadius</xsl:with-param>
-				</xsl:call-template>
-
 				<!--ProgressBar_Track_Height-->
 				<xsl:call-template name="generateHeightSetter">
 					<xsl:with-param name="propertyId">ProgressBar_Track_Height</xsl:with-param>
@@ -229,23 +199,15 @@
 				</xsl:call-template>
 
 				<!--ProgressBar_StateTextStyle-->
-				<xsl:call-template name="generateUiKitSetterViaAttribute">
+				<xsl:call-template name="generateStaticResourceSetter">
 					<xsl:with-param name="propertyId">ProgressBar_StateTextStyle</xsl:with-param>
-					<xsl:with-param name="propertyValue">
-						<xsl:call-template name="generateStaticResource">
-							<xsl:with-param name="key">StateTextStyle</xsl:with-param>
-						</xsl:call-template>
-					</xsl:with-param>
+					<xsl:with-param name="resourceName">StateTextStyle</xsl:with-param>
 				</xsl:call-template>
 
 				<!--ProgressBar_ValueTextStyle-->
-				<xsl:call-template name="generateUiKitSetterViaAttribute">
+				<xsl:call-template name="generateStaticResourceSetter">
 					<xsl:with-param name="propertyId">ProgressBar_ValueTextStyle</xsl:with-param>
-					<xsl:with-param name="propertyValue">
-						<xsl:call-template name="generateStaticResource">
-							<xsl:with-param name="key">ValueTextStyle</xsl:with-param>
-						</xsl:call-template>
-					</xsl:with-param>
+					<xsl:with-param name="resourceName">ValueTextStyle</xsl:with-param>
 				</xsl:call-template>
 
 			</xsl:with-param>
@@ -339,13 +301,9 @@
 					<xsl:with-param name="setters">
 
 						<!--ProgressBar_EstimationTextStyle-->
-						<xsl:call-template name="generateUiKitSetterViaAttribute">
+						<xsl:call-template name="generateStaticResourceSetter">
 							<xsl:with-param name="propertyId">ProgressBar_EstimationTextStyle</xsl:with-param>
-							<xsl:with-param name="propertyValue">
-								<xsl:call-template name="generateStaticResource">
-									<xsl:with-param name="key">EstimationTextDisabledStyle</xsl:with-param>
-								</xsl:call-template>
-							</xsl:with-param>
+							<xsl:with-param name="resourceName">EstimationTextDisabledStyle</xsl:with-param>
 						</xsl:call-template>
 
 						<!--ProgressBar_Indicator_Foreground-->
@@ -356,23 +314,15 @@
 						</xsl:call-template>
 
 						<!--ProgressBar_StateTextStyle-->
-						<xsl:call-template name="generateUiKitSetterViaAttribute">
+						<xsl:call-template name="generateStaticResourceSetter">
 							<xsl:with-param name="propertyId">ProgressBar_StateTextStyle</xsl:with-param>
-							<xsl:with-param name="propertyValue">
-								<xsl:call-template name="generateStaticResource">
-									<xsl:with-param name="key">StateTextDisabledStyle</xsl:with-param>
-								</xsl:call-template>
-							</xsl:with-param>
+							<xsl:with-param name="resourceName">StateTextDisabledStyle</xsl:with-param>
 						</xsl:call-template>
 
 						<!--ProgressBar_ValueTextStyle-->
-						<xsl:call-template name="generateUiKitSetterViaAttribute">
+						<xsl:call-template name="generateStaticResourceSetter">
 							<xsl:with-param name="propertyId">ProgressBar_ValueTextStyle</xsl:with-param>
-							<xsl:with-param name="propertyValue">
-								<xsl:call-template name="generateStaticResource">
-									<xsl:with-param name="key">ValueTextDisabledStyle</xsl:with-param>
-								</xsl:call-template>
-							</xsl:with-param>
+							<xsl:with-param name="resourceName">ValueTextDisabledStyle</xsl:with-param>
 						</xsl:call-template>
 
 					</xsl:with-param>

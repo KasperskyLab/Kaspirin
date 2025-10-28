@@ -1,4 +1,4 @@
-// Copyright © 2024 AO Kaspersky Lab.
+// Copyright © 2025 AO Kaspersky Lab.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,9 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Kaspirin.UI.Framework.UiKit.Styles.Fonts;
+namespace Kaspirin.UI.Framework.UiKit.Controls;
 
-public sealed class UIKitFontStyleExtension : UIKitFontStyleExtension<UIKitFontStorage.UIKitFontStyle>
+public enum InteractivityDialogWidth
 {
-    protected override string Map(UIKitFontStorage.UIKitFontStyle style) => UIKitFontStorage.Map(style);
+    Standard,
+    Medium,
+    Wide,
+    Auto
 }

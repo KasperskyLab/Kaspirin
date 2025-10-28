@@ -27,7 +27,7 @@ namespace Kaspirin.UI.Framework.UiKit.Converters.BooleanConverters;
 public sealed class BooleanToIntegerConverter : BaseBooleanConverter<int>
 {
     /// <summary>
-    ///     Creates an object <see cref="BooleanToIntegerConverter" />.
+    ///     Initializes a new instance of the <see cref="BooleanToIntegerConverter" /> class.
     /// </summary>
     public BooleanToIntegerConverter() : base(1, 0) { }
 }

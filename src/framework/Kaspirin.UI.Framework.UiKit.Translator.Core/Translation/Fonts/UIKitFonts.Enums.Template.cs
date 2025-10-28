@@ -15,10 +15,36 @@
 @FileComment
 using System;
 using Kaspirin.UI.Framework.UiKit.@PaletteNamespacePart.Palette;
+using Kaspirin.UI.Framework.UiKit.Palettes;
 
 namespace Kaspirin.UI.Framework.UiKit.@FontNamespacePart.Fonts;
 
-public sealed class UIKitFontStorage
+public enum UIKitFontBrush
+{
+@FontBrushes
+}
+
+public enum UIKitFontStyle
+{
+@FontStyles
+}
+
+public sealed class UIKitFontBrushExtension : UIKitFontBrushExtension<UIKitFontBrush>
+{
+    static UIKitFontBrushExtension()
+    {
+        UIKitPaletteMetadataRegistrar.RegisterMetadata();
+    }
+
+    protected override string Map(UIKitFontBrush brush) => UIKitFontMetadataProvider.Map(brush);
+}
+
+public sealed class UIKitFontStyleExtension : UIKitFontStyleExtension<UIKitFontStyle>
+{
+    protected override string Map(UIKitFontStyle style) => UIKitFontMetadataProvider.Map(style);
+}
+
+internal static class UIKitFontMetadataProvider
 {
     public static string Map(UIKitFontStyle id)
         => $"@FontStyleIdPrefix{id}";
@@ -27,18 +53,8 @@ public sealed class UIKitFontStorage
     {
         var paletteIdString = $"@FontBrushPrefix{id}";
 
-        var paletteId = (UIKitPaletteStorage.UIKitPalette)Enum.Parse(typeof(UIKitPaletteStorage.UIKitPalette), paletteIdString);
+        var paletteId = (UIKitPalette)Enum.Parse(typeof(UIKitPalette), paletteIdString);
 
-        return UIKitPaletteStorage.Map(paletteId);
-    }
-
-    public enum UIKitFontBrush
-    {
-@FontBrushes
-    }
-
-    public enum UIKitFontStyle
-    {
-@FontStyles
+        return UIKitPaletteMetadataStorage.Get(paletteId).ResourceKey;
     }
 }

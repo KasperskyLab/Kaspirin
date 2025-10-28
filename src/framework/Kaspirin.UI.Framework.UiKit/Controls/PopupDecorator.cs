@@ -56,6 +56,70 @@ internal abstract class PopupDecorator : ContentControl
 
     #endregion
 
+    #region PopupMaxHeight
+
+    public double PopupMaxHeight
+    {
+        get => (double)GetValue(PopupMaxHeightProperty);
+        set => SetValue(PopupMaxHeightProperty, value);
+    }
+
+    public static readonly DependencyProperty PopupMaxHeightProperty = DependencyProperty.Register(
+        nameof(PopupMaxHeight),
+        typeof(double),
+        typeof(PopupDecorator),
+        new PropertyMetadata(double.PositiveInfinity));
+
+    #endregion
+
+    #region PopupMaxWidth
+
+    public double PopupMaxWidth
+    {
+        get => (double)GetValue(PopupMaxWidthProperty);
+        set => SetValue(PopupMaxWidthProperty, value);
+    }
+
+    public static readonly DependencyProperty PopupMaxWidthProperty = DependencyProperty.Register(
+        nameof(PopupMaxWidth),
+        typeof(double),
+        typeof(PopupDecorator),
+        new PropertyMetadata(double.PositiveInfinity));
+
+    #endregion
+
+    #region PopupMinHeight
+
+    public double PopupMinHeight
+    {
+        get => (double)GetValue(PopupMinHeightProperty);
+        set => SetValue(PopupMinHeightProperty, value);
+    }
+
+    public static readonly DependencyProperty PopupMinHeightProperty = DependencyProperty.Register(
+        nameof(PopupMinHeight),
+        typeof(double),
+        typeof(PopupDecorator),
+        new PropertyMetadata(0.0));
+
+    #endregion
+
+    #region PopupMinWidth
+
+    public double PopupMinWidth
+    {
+        get => (double)GetValue(PopupMinWidthProperty);
+        set => SetValue(PopupMinWidthProperty, value);
+    }
+
+    public static readonly DependencyProperty PopupMinWidthProperty = DependencyProperty.Register(
+        nameof(PopupMinWidth),
+        typeof(double),
+        typeof(PopupDecorator),
+        new PropertyMetadata(0.0));
+
+    #endregion
+
     public override void OnApplyTemplate()
     {
         _background = Guard.EnsureIsInstanceOfType<Decorator>(GetTemplateChild(PART_BackgroundDecorator));

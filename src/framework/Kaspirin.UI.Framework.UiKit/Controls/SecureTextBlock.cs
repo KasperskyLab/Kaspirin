@@ -54,7 +54,9 @@ public sealed class SecureTextBlock : Control
         nameof(SecureText),
         typeof(SecureString),
         typeof(SecureTextBlock),
-        new FrameworkPropertyMetadata(new SecureString(), FrameworkPropertyMetadataOptions.AffectsRender));
+        new FrameworkPropertyMetadata(
+            new SecureString(),
+            FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.AffectsMeasure));
 
     #endregion
 
@@ -70,7 +72,85 @@ public sealed class SecureTextBlock : Control
         nameof(TextAlignment),
         typeof(TextAlignment),
         typeof(SecureTextBlock),
-        new FrameworkPropertyMetadata(default(TextAlignment), FrameworkPropertyMetadataOptions.AffectsRender));
+        new FrameworkPropertyMetadata(
+            default(TextAlignment),
+            FrameworkPropertyMetadataOptions.AffectsRender));
+
+    #endregion
+
+    #region FontStyle
+
+    public new UIKitFontStyleSettings FontStyle
+    {
+        get => (UIKitFontStyleSettings)GetValue(FontStyleProperty);
+        set => SetValue(FontStyleProperty, value);
+    }
+
+    public static new readonly DependencyProperty FontStyleProperty = DependencyProperty.Register(
+        nameof(FontStyle),
+        typeof(UIKitFontStyleSettings),
+        typeof(SecureTextBlock),
+        new FrameworkPropertyMetadata(
+            default(UIKitFontStyleSettings),
+            FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.AffectsMeasure,
+            OnFontStyleChanged));
+
+    private static void OnFontStyleChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+    {
+        if (e.NewValue != null)
+        {
+            d.SetValue(FrameworkElementFontBehavior.StyleProperty, e.NewValue);
+            d.SetValue(FrameworkElementFontBehavior.IsEnabledProperty, true);
+        }
+        else
+        {
+            d.SetValue(FrameworkElementFontBehavior.StyleProperty, DependencyProperty.UnsetValue);
+
+            if (d.GetValue(FontStyleProperty) == null &&
+                d.GetValue(FontBrushProperty) == null)
+            {
+                d.SetValue(FrameworkElementFontBehavior.IsEnabledProperty, false);
+            }
+        }
+    }
+
+    #endregion
+
+    #region FontBrush
+
+    public UIKitFontBrushSettings FontBrush
+    {
+        get => (UIKitFontBrushSettings)GetValue(FontBrushProperty);
+        set => SetValue(FontBrushProperty, value);
+    }
+
+    public static readonly DependencyProperty FontBrushProperty = DependencyProperty.Register(
+        nameof(FontBrush),
+        typeof(UIKitFontBrushSettings),
+        typeof(SecureTextBlock),
+        new FrameworkPropertyMetadata(
+            default(UIKitFontBrushSettings),
+            FrameworkPropertyMetadataOptions.AffectsRender,
+            OnFontBrushChanged));
+
+    private static void OnFontBrushChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+    {
+        if (e.NewValue != null)
+        {
+            d.SetValue(FrameworkElementFontBehavior.BrushProperty, e.NewValue);
+            d.SetValue(FrameworkElementFontBehavior.IsEnabledProperty, true);
+        }
+        else
+        {
+            d.SetValue(FrameworkElementFontBehavior.BrushProperty, DependencyProperty.UnsetValue);
+
+            if (d.GetValue(FontStyleProperty) == null &&
+                d.GetValue(FontBrushProperty) == null)
+            {
+                d.SetValue(FrameworkElementFontBehavior.IsEnabledProperty, false);
+            }
+        }
+    }
 
     #endregion
 
@@ -78,15 +158,12 @@ public sealed class SecureTextBlock : Control
     {
         var desiredSize = base.MeasureOverride(constraint);
 
-        if (Visibility != Visibility.Collapsed)
+        if (Visibility == Visibility.Collapsed)
         {
-            _lineSpacing = FontFamily.LineSpacing;
-            _baseline = FontFamily.Baseline;
-
-            return GetDesiredSize(constraint);
+            return desiredSize;
         }
 
-        return desiredSize;
+        return GetDesiredSize(constraint);
     }
 
     protected override void OnRender(DrawingContext ctx)
@@ -113,6 +190,9 @@ public sealed class SecureTextBlock : Control
         }
     }
 
+    private bool IsBlockLineHeight => TextBlock.GetLineStackingStrategy(this) is LineStackingStrategy.BlockLineHeight;
+    private double LineHeight => TextBlock.GetLineHeight(this);
+
     private void OnIsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
     {
         if (e.NewValue is true)
@@ -131,7 +211,7 @@ public sealed class SecureTextBlock : Control
 
         try
         {
-            DrawText(ctx, text, LocalizationManager.DisplayCulture.XmlLanguage);
+            DrawText(ctx, text);
         }
         finally
         {
@@ -139,7 +219,7 @@ public sealed class SecureTextBlock : Control
         }
     }
 
-    private void DrawText(DrawingContext ctx, string text, XmlLanguage language)
+    private void DrawText(DrawingContext ctx, string text)
     {
         if (TextAlignment != TextAlignment.Center && Padding.Left + Padding.Right >= RenderSize.Width)
         {
@@ -153,18 +233,18 @@ public sealed class SecureTextBlock : Control
         {
             if (FlowDirection == FlowDirection.LeftToRight)
             {
-                DrawGlyphRun(ctx, chars, FontSize, language);
+                DrawGlyphRun(ctx, chars);
             }
             else
             {
-                var textSize = MeasureChars(chars, FontSize, language);
+                var textSize = MeasureChars(chars);
                 var paddingHorizontalOffset = GetPaddingHorizontalOffset(textSize.Width);
 
                 ctx.PushTransform(CreateAntiInversionTransform(2 * paddingHorizontalOffset + textSize.Width));
 
                 try
                 {
-                    DrawGlyphRun(ctx, chars, FontSize, language);
+                    DrawGlyphRun(ctx, chars);
                 }
                 finally
                 {
@@ -192,43 +272,32 @@ public sealed class SecureTextBlock : Control
         };
     }
 
-    private void DrawGlyphRun(DrawingContext ctx, IList<char> chars, double renderingEmSize, XmlLanguage language)
+    private void DrawGlyphRun(DrawingContext ctx, IList<char> chars)
     {
+        var renderingEmSize = FontSize;
+        var language = LocalizationManager.DisplayCulture.XmlLanguage;
         var glyphIndicesAndAdvanceWidths = GetGlyphIndicesAndAdvanceWidths(chars, renderingEmSize, language, out var textWidth);
 
         var xOffset = GetPaddingHorizontalOffset(textWidth);
+        var yOffset = GetStringVerticalOffset();
+
+        if (UseLayoutRounding)
+        {
+            xOffset = Math.Round(xOffset);
+            yOffset = Math.Round(yOffset);
+        }
 
         foreach (var (glyphTypeface, (glyphIndices, advanceWidths)) in glyphIndicesAndAdvanceWidths)
         {
             try
             {
-                var yOffset = (_baseline + _lineSpacing - glyphTypeface!.Height) * renderingEmSize;
-
-                var isBlockLineHeight = TextBlock.GetLineStackingStrategy(this) is LineStackingStrategy.BlockLineHeight;
-                if (isBlockLineHeight)
-                {
-                    yOffset = renderingEmSize + _baseline;
-                }
-
-                yOffset += Padding.Top;
-
-                if (UseLayoutRounding)
-                {
-                    xOffset = Math.Round(xOffset);
-                    yOffset = Math.Round(yOffset);
-                }
-
-#if NET6_0_OR_GREATER
-                var dpi = (float)VisualTreeHelper.GetDpi(this).PixelsPerDip;
-#endif
-
                 var glyphRun = new GlyphRun(
                     glyphTypeface,
                     bidiLevel: (int)FlowDirection.LeftToRight,
                     isSideways: false,
                     renderingEmSize,
 #if NET6_0_OR_GREATER
-                    dpi,
+                    pixelsPerDip: (float)VisualTreeHelper.GetDpi(this).PixelsPerDip,
 #endif
                     glyphIndices,
                     baselineOrigin: new Point(xOffset, yOffset),
@@ -251,6 +320,37 @@ public sealed class SecureTextBlock : Control
                 Dispatcher.BeginInvoke(() => ClearList(glyphIndices), DispatcherPriority.Render);
             }
         }
+    }
+
+    private double GetStringVerticalOffset()
+    {
+        const string emptyString = " ";
+
+        var fText = new FormattedText(
+            emptyString,
+            LocalizationManager.DisplayCulture.CultureInfo,
+            FlowDirection,
+            new Typeface(
+                FontFamily,
+                base.FontStyle,
+                FontWeight,
+                FontStretch),
+            FontSize,
+            Foreground
+#if NETCOREAPP
+            , (float)VisualTreeHelper.GetDpi(this).PixelsPerDip);
+#else
+                );
+#endif
+
+        if (IsBlockLineHeight)
+        {
+            fText.LineHeight = LineHeight;
+        }
+
+        var offset = fText.Baseline + Padding.Top;
+
+        return offset;
     }
 
     private (GlyphTypeface GlyphTypeface, (List<ushort> GlyphIndices, List<double> AdvanceWidths))[] GetGlyphIndicesAndAdvanceWidths(
@@ -346,7 +446,7 @@ public sealed class SecureTextBlock : Control
 
         try
         {
-            var textSize = MeasureText(text, FontSize, LocalizationManager.DisplayCulture.XmlLanguage);
+            var textSize = MeasureText(text);
 
             var height = Padding.Top + textSize.Height + Padding.Bottom;
             var width = Padding.Left + textSize.Width + Padding.Right;
@@ -367,14 +467,14 @@ public sealed class SecureTextBlock : Control
         }
     }
 
-    private Size MeasureText(string text, double renderingEmSize, XmlLanguage language)
+    private Size MeasureText(string text)
     {
         var chars = Bidi.LogicalToVisualChars(text, (BaseDirection)FlowDirection);
         ApplyArabicPresentationForms(chars);
 
         try
         {
-            return MeasureChars(chars, renderingEmSize, language);
+            return MeasureChars(chars);
         }
         finally
         {
@@ -382,14 +482,16 @@ public sealed class SecureTextBlock : Control
         }
     }
 
-    private Size MeasureChars(IList<char> chars, double renderingEmSize, XmlLanguage language)
+    private Size MeasureChars(IList<char> chars)
     {
-        var height = _lineSpacing * FontSize;
+        var fontSize = FontSize;
+        var language = LocalizationManager.DisplayCulture.XmlLanguage;
+        var height = IsBlockLineHeight ? LineHeight : FontFamily.LineSpacing * FontSize;
         var width = 0d;
 
         foreach (var c in chars)
         {
-            if (!TryGetAdvanceWidth(c, renderingEmSize, language, out _, out _, out var advanceWidth))
+            if (!TryGetAdvanceWidth(c, fontSize, language, out _, out _, out var advanceWidth))
             {
                 continue;
             }
@@ -409,7 +511,7 @@ public sealed class SecureTextBlock : Control
 
     private bool TryGetGlyphTypeface(FontFamily fontFamily, char c, XmlLanguage language, out GlyphTypeface? glyphTypeface, out double emScale)
     {
-        var typeface = new Typeface(fontFamily, FontStyle, FontWeight, FontStretch);
+        var typeface = new Typeface(fontFamily, base.FontStyle, FontWeight, FontStretch);
         if (!typeface.TryGetGlyphTypeface(out glyphTypeface) || !glyphTypeface.CharacterToGlyphMap.ContainsKey(c))
         {
             glyphTypeface = null;
@@ -509,7 +611,4 @@ public sealed class SecureTextBlock : Control
             }
         }
     }
-
-    private double _lineSpacing;
-    private double _baseline;
 }

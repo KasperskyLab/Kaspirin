@@ -13,30 +13,33 @@
 // limitations under the License.
 
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
+using Kaspirin.UI.Framework.UiKit.Controls.Internals;
 
 namespace Kaspirin.UI.Framework.UiKit.Controls;
 
 [TemplatePart(Name = PART_CloseButton, Type = typeof(Button))]
-public class InteractivityDialog : ContentControl
+[TemplatePart(Name = PART_Overlay, Type = typeof(InteractivityOverlay))]
+[TemplatePart(Name = PART_Dialog, Type = typeof(FrameworkElement))]
+public class InteractivityDialog : ContentControl, INotificationAnimatable
 {
     public const string PART_CloseButton = "PART_CloseButton";
+    public const string PART_Overlay = "PART_Overlay";
+    public const string PART_Dialog = "PART_Dialog";
+
+    public const string DefaultScopeName = "RootScope";
 
     public InteractivityDialog()
     {
-        Loaded += OnLoaded;
-    }
-
-    public override void OnApplyTemplate()
-    {
-        _closeButton = GetTemplateChild(PART_CloseButton) as Button;
-
-        SetCloseAction();
+        this.WhenLoaded(OnLoaded);
     }
 
     #region OverlayBehavior
@@ -71,19 +74,55 @@ public class InteractivityDialog : ContentControl
 
     #endregion
 
-    #region DialogSize
+    #region DialogActualHeight
 
-    public InteractivityDialogSize DialogSize
+    public double DialogActualHeight
     {
-        get => (InteractivityDialogSize)GetValue(DialogSizeProperty);
-        set => SetValue(DialogSizeProperty, value);
+        get => (double)GetValue(DialogActualHeightProperty);
+        private set => SetValue(_dialogActualHeightPropertyKey, value);
     }
 
-    public static readonly DependencyProperty DialogSizeProperty = DependencyProperty.Register(
-        nameof(DialogSize),
-        typeof(InteractivityDialogSize),
+    private static readonly DependencyPropertyKey _dialogActualHeightPropertyKey = DependencyProperty.RegisterReadOnly(
+        nameof(DialogActualHeight),
+        typeof(double),
         typeof(InteractivityDialog),
-        new PropertyMetadata(InteractivityDialogSize.Standard));
+        new PropertyMetadata(default(double)));
+
+    public static readonly DependencyProperty DialogActualHeightProperty = _dialogActualHeightPropertyKey.DependencyProperty;
+
+    #endregion
+
+    #region DialogActualWidth
+
+    public double DialogActualWidth
+    {
+        get => (double)GetValue(DialogActualWidthProperty);
+        private set => SetValue(_dialogActualWidthPropertyKey, value);
+    }
+
+    private static readonly DependencyPropertyKey _dialogActualWidthPropertyKey = DependencyProperty.RegisterReadOnly(
+        nameof(DialogActualWidth),
+        typeof(double),
+        typeof(InteractivityDialog),
+        new PropertyMetadata(default(double)));
+
+    public static readonly DependencyProperty DialogActualWidthProperty = _dialogActualWidthPropertyKey.DependencyProperty;
+
+    #endregion
+
+    #region DialogWidth
+
+    public InteractivityDialogWidth DialogWidth
+    {
+        get => (InteractivityDialogWidth)GetValue(DialogWidthProperty);
+        set => SetValue(DialogWidthProperty, value);
+    }
+
+    public static readonly DependencyProperty DialogWidthProperty = DependencyProperty.Register(
+        nameof(DialogWidth),
+        typeof(InteractivityDialogWidth),
+        typeof(InteractivityDialog),
+        new PropertyMetadata(InteractivityDialogWidth.Standard));
 
     #endregion
 
@@ -100,6 +139,60 @@ public class InteractivityDialog : ContentControl
         typeof(Thickness),
         typeof(InteractivityDialog),
         new PropertyMetadata(default(Thickness)));
+
+    #endregion
+
+    #region DialogHeight
+
+    public double DialogHeight
+    {
+        get => (double)GetValue(DialogHeightProperty);
+        set => SetValue(DialogHeightProperty, value);
+    }
+
+    public static readonly DependencyProperty DialogHeightProperty = DependencyProperty.Register(
+        nameof(DialogHeight),
+        typeof(double),
+        typeof(InteractivityDialog),
+        new PropertyMetadata(double.NaN));
+
+    #endregion
+
+    #region DialogMaxHeight
+
+    public double DialogMaxHeight
+    {
+        get => (double)GetValue(DialogMaxHeightProperty);
+        set => SetValue(DialogMaxHeightProperty, value);
+    }
+
+    public static readonly DependencyProperty DialogMaxHeightProperty = DependencyProperty.Register(
+        nameof(DialogMaxHeightProperty),
+        typeof(double),
+        typeof(InteractivityDialog),
+        new PropertyMetadata(double.MaxValue, OnDialogMaxHeightChanged));
+
+    private static void OnDialogMaxHeightChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        => ((InteractivityDialog)d).OnDialogMaxHeightChanged();
+
+    #endregion
+
+    #region DialogMinHeight
+
+    public double DialogMinHeight
+    {
+        get => (double)GetValue(DialogMinHeightProperty);
+        set => SetValue(DialogMinHeightProperty, value);
+    }
+
+    public static readonly DependencyProperty DialogMinHeightProperty = DependencyProperty.Register(
+        nameof(DialogMinHeightProperty),
+        typeof(double),
+        typeof(InteractivityDialog),
+        new PropertyMetadata(default(double), OnDialogMinHeightChanged));
+
+    private static void OnDialogMinHeightChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        => ((InteractivityDialog)d).OnDialogMinHeightChanged();
 
     #endregion
 
@@ -282,7 +375,116 @@ public class InteractivityDialog : ContentControl
 
     #endregion
 
-    private void OnLoaded(object sender, RoutedEventArgs e)
+    #region ScopeName
+
+    public string ScopeName
+    {
+        get => (string)GetValue(ScopeNameProperty);
+        set => SetValue(ScopeNameProperty, value);
+    }
+
+    public static readonly DependencyProperty ScopeNameProperty = DependencyProperty.Register(
+        nameof(ScopeName),
+        typeof(string),
+        typeof(InteractivityDialog),
+        new PropertyMetadata(DefaultScopeName));
+
+    #endregion
+
+    #region INotificationAnimatable
+
+    void INotificationAnimatable.OnOpening(Action? completedCallback)
+    {
+        InteractivityDialogScope.Register(this, completedCallback);
+    }
+
+    void INotificationAnimatable.OnClosing(Action? completedCallback)
+    {
+        InteractivityDialogScope.Unregister(this, completedCallback);
+    }
+
+    #endregion
+
+    public override void OnApplyTemplate()
+    {
+        _closeButton = Guard.EnsureIsInstanceOfType<Button>(GetTemplateChild(PART_CloseButton));
+        _overlay = Guard.EnsureIsInstanceOfType<InteractivityOverlay>(GetTemplateChild(PART_Overlay));
+        _dialog = Guard.EnsureIsInstanceOfType<FrameworkElement>(GetTemplateChild(PART_Dialog));
+        _dialog.SizeChanged += OnDialogSizeChanged;
+        _dialog.SetBinding(ContentControl.MaxWidthProperty, new Binding() { Source = this, Path = ActualWidthProperty.AsPath() });
+        _dialog.SetBinding(ContentControl.MaxHeightProperty, new MultiBinding
+        {
+            Bindings =
+            {
+                new Binding(){ Source = this, Path = DialogMaxHeightProperty.AsPath() },
+                new Binding(){ Source = this, Path = ActualHeightProperty.AsPath() },
+            },
+            Converter = new DelegateMultiConverter(values => Math.Min((double)values[0]!, (double)values[1]!))
+        });
+        _dialog.SetBinding(ContentControl.MinHeightProperty, new MultiBinding
+        {
+            Bindings =
+            {
+                new Binding(){ Source = this, Path = DialogMinHeightProperty.AsPath() },
+                new Binding(){ Source = this, Path = ActualHeightProperty.AsPath() },
+            },
+            Converter = new DelegateMultiConverter(values => Math.Min((double)values[0]!, (double)values[1]!))
+        });
+
+        SetCloseAction();
+    }
+
+    public override string ToString()
+    {
+        var sb = new StringBuilder();
+
+        sb.Append($"{nameof(InteractivityDialog)} [");
+
+        if (CheckAccess())
+        {
+            sb.Append($"DataContext:{DataContext?.GetType().Name ?? "<null>"}");
+        }
+        else
+        {
+            sb.Append(base.ToString());
+        }
+
+        sb.Append(']');
+
+        return sb.ToString();
+    }
+
+    internal void ShowContent(Action? continueCallback)
+    {
+        if (_overlay != null)
+        {
+            _overlay.ShowContent(continueCallback);
+        }
+        else
+        {
+            continueCallback?.Invoke();
+        }
+    }
+
+    internal void HideContent(Action? continueCallback)
+    {
+        if (_overlay != null)
+        {
+            _overlay.HideContent(continueCallback);
+        }
+        else
+        {
+            continueCallback?.Invoke();
+        }
+    }
+
+    internal void ShowOverlay()
+        => _overlay?.ShowOverlay();
+
+    internal void HideOverlay()
+        => _overlay?.HideOverlay();
+
+    private void OnLoaded()
     {
         SetCloseAction();
     }
@@ -330,8 +532,34 @@ public class InteractivityDialog : ContentControl
     private IEnumerable<Button> GetCancelButtons()
         => this.FindVisualChildren<Button>(b => b.IsCancel).Except(new[] { _closeButton! });
 
-    private Button? _closeButton;
+    private void OnDialogMaxHeightChanged()
+    {
+        SetCurrentValue(DialogMaxHeightProperty, Math.Max(DialogMinHeight, DialogMaxHeight));
+    }
 
+    private void OnDialogMinHeightChanged()
+    {
+        if (DialogMinHeight < 0)
+        {
+            DialogMinHeight = 0;
+        }
+        else
+        {
+            SetCurrentValue(DialogMinHeightProperty, Math.Min(DialogMinHeight, DialogMaxHeight));
+        }
+    }
+
+    private void OnDialogSizeChanged(object sender, SizeChangedEventArgs e)
+    {
+        var dialog = Guard.EnsureIsInstanceOfType<FrameworkElement>(sender);
+
+        DialogActualHeight = dialog.ActualHeight;
+        DialogActualWidth = dialog.ActualWidth;
+    }
+
+    private Button? _closeButton;
+    private InteractivityOverlay? _overlay;
+    private FrameworkElement? _dialog;
     private readonly List<Button> _cancelButtons = new();
 
     private const string EscKey = "\u001b";

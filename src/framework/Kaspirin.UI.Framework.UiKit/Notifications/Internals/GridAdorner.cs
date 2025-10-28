@@ -1,4 +1,4 @@
-// Copyright © 2024 AO Kaspersky Lab.
+// Copyright © 2025 AO Kaspersky Lab.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -16,24 +16,16 @@ using System.Windows.Controls;
 
 namespace Kaspirin.UI.Framework.UiKit.Notifications.Internals;
 
-internal sealed class ContentControlAdorner : NotificationAdorner<ContentControl>
+internal sealed class GridAdorner : NotificationAdorner<Grid>
 {
-    public ContentControlAdorner(ContentControl panel, NotificationLayer notificationLayer)
+    public GridAdorner(Grid panel, NotificationLayer notificationLayer)
         : base(panel, notificationLayer)
     {
     }
 
-    protected override void AddNotification(ContentControl element, NotificationView view, out bool canShowAdorner)
-    {
-        element.Content = view;
+    protected override void AddNotification(Grid element, NotificationView view)
+        => element.Children.Add(view);
 
-        canShowAdorner = true;
-    }
-
-    protected override void RemoveNotification(ContentControl element, NotificationView view, out bool canCloseAdorner)
-    {
-        element.Content = null;
-
-        canCloseAdorner = true;
-    }
+    protected override void RemoveNotification(Grid element, NotificationView view)
+        => element.Children.Remove(view);
 }

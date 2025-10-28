@@ -75,6 +75,12 @@
 						<xsl:with-param name="brushNode" select="HeaderForeground"/>
 					</xsl:call-template>
 
+					<!--Shadow-->
+					<xsl:call-template name="generateShadowEffectFromShadowElement">
+						<xsl:with-param name="key">Shadow</xsl:with-param>
+						<xsl:with-param name="shadowNode" select="Shadow"/>
+					</xsl:call-template>
+
 					<!--StatusBackgroundDanger-->
 					<xsl:call-template name="generateBrush">
 						<xsl:with-param name="key">StatusBackgroundDanger</xsl:with-param>
