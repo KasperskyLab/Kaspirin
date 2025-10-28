@@ -23,6 +23,24 @@ public class ConfirmationObject : InteractionObject
         ConfirmCommand = new DelegateCommand(Confirm, CanConfirm);
     }
 
+    public ConfirmationObject(string traceComponent)
+        : base(traceComponent)
+    {
+        ConfirmCommand = new DelegateCommand(Confirm, CanConfirm);
+    }
+
+    public ConfirmationObject(ComponentTracer tracer)
+        : base(tracer)
+    {
+        ConfirmCommand = new DelegateCommand(Confirm, CanConfirm);
+    }
+
+    public ConfirmationObject(ComponentTracerParameters tracerParameters)
+        : base(tracerParameters)
+    {
+        ConfirmCommand = new DelegateCommand(Confirm, CanConfirm);
+    }
+
     public ConfirmationObject(Action onConfirmed, Action? onCancelled = null) : this()
     {
         Guard.ArgumentIsNotNull(onConfirmed);

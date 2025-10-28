@@ -18,64 +18,67 @@ using System.Windows.Controls;
 
 namespace Kaspirin.UI.Framework.UiKit.Notifications.Internals;
 
-internal static class NotificationAdornerFactory
+internal sealed class NotificationAdornerFactory
 {
-    public static INotificationAdorner CreateContentAdorner(NotificationLayer notificationLayer)
+    public NotificationAdornerFactory(NotificationLayer notificationLayer)
     {
-        Guard.ArgumentIsNotNull(notificationLayer);
-
-        var panel = new ContentControl { Focusable = false };
-
-        return new ContentControlAdorner(panel, notificationLayer);
+        _notificationLayer = Guard.EnsureArgumentIsNotNull(notificationLayer);
     }
 
-    public static INotificationAdorner FindOrCreateItemsAdorner(
-        NotificationLayer notificationLayer,
-        NotificationLocationSettings? locationSettings,
-        int maxNotificationCount)
+    public INotificationAdorner GetAdorner(NotificationDisplaySettings settings)
     {
-        Guard.ArgumentIsNotNull(notificationLayer);
-
-        return FindItemsAdorner(notificationLayer)
-            ?? CreateItemsAdorner(notificationLayer, locationSettings, maxNotificationCount);
+        return settings.IsModal ? GetModalAdorner(settings) : GetNonModalAdorner(settings);
     }
 
-    private static ItemsControlAdorner? FindItemsAdorner(NotificationLayer notificationLayer)
+    private INotificationAdorner GetModalAdorner(NotificationDisplaySettings settings)
     {
-        var notificationAdorner = notificationLayer.GetAdornerLayer();
-        var contentElement = notificationLayer.GetContentElement();
-
-        var adorners = notificationAdorner.GetAdorners(contentElement);
-        if (adorners != null)
-        {
-            return adorners.OfType<ItemsControlAdorner>().FirstOrDefault();
-        }
-
-        return null;
+        return FindAdorner<GridAdorner>() ?? CreateModalAdorner(settings);
     }
 
-    private static ItemsControlAdorner CreateItemsAdorner(
-        NotificationLayer notificationLayer,
-        NotificationLocationSettings? locationSettings,
-        int maxNotificationCount)
+    private INotificationAdorner GetNonModalAdorner(NotificationDisplaySettings settings)
     {
-        locationSettings ??= NotificationLocationSettings.Default;
+        return FindAdorner<ItemsControlAdorner>() ?? CreateNonModalAdorner(settings);
+    }
 
+    private GridAdorner CreateModalAdorner(NotificationDisplaySettings settings)
+    {
+        var panel = new Grid { Focusable = false };
+
+        return new GridAdorner(panel, _notificationLayer);
+    }
+
+    private ItemsControlAdorner CreateNonModalAdorner(NotificationDisplaySettings settings)
+    {
         var stackPanelFactory = new FrameworkElementFactory(typeof(StackPanel));
-        stackPanelFactory.SetValue(
-            FrameworkElement.VerticalAlignmentProperty,
-            locationSettings.ModallessViewVerticalAlignment);
+        stackPanelFactory.SetValue(FrameworkElement.VerticalAlignmentProperty, VerticalAlignment.Bottom);
 
         var panel = new ItemsControl
         {
             Focusable = false,
-            VerticalAlignment = locationSettings.ModallessViewVerticalAlignment,
+            VerticalAlignment = VerticalAlignment.Bottom,
             ItemsPanel = new ItemsPanelTemplate()
             {
                 VisualTree = stackPanelFactory,
             }
         };
 
-        return new ItemsControlAdorner(panel, notificationLayer, maxNotificationCount);
+        return new ItemsControlAdorner(panel, _notificationLayer);
     }
+
+    private TNotificationAdorner? FindAdorner<TNotificationAdorner>()
+        where TNotificationAdorner : INotificationAdorner
+    {
+        var notificationAdorner = _notificationLayer.GetAdornerLayer();
+        var contentElement = _notificationLayer.GetContentElement();
+
+        var adorners = notificationAdorner.GetAdorners(contentElement);
+        if (adorners != null)
+        {
+            return adorners.OfType<TNotificationAdorner>().FirstOrDefault();
+        }
+
+        return default;
+    }
+
+    private readonly NotificationLayer _notificationLayer;
 }

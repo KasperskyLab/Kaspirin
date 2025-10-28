@@ -28,7 +28,7 @@ namespace Kaspirin.UI.Framework.UiKit.Converters.FlowDirectionConverters;
 public sealed class FlowDirectionToObjectConverter : BaseFlowDirectionConverter<object>
 {
     /// <summary>
-    ///     Creates an object <see cref="FlowDirectionToObjectConverter" />.
+    ///     Initializes a new instance of the <see cref="FlowDirectionToObjectConverter" /> class.
     /// </summary>
     public FlowDirectionToObjectConverter() : base(null, null) { }
 }

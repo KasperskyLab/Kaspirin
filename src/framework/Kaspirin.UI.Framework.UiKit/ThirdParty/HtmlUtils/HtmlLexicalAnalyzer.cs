@@ -4,6 +4,10 @@
 // Scope of modification:
 //   - Code adaptation to project requirements.
 
+// This file has been modified by AO Kaspersky Lab in 9/12/2025.
+// Scope of modification:
+//   - Fix href attribute parsing.
+
 // Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
@@ -241,7 +245,7 @@ namespace Kaspirin.UI.Framework.UiKit.ThirdParty.HtmlUtils
         ///     Even if there is no appropriate token it returns Atom value
         ///     Does not guarantee token reader advancing.
         /// </summary>
-        internal void GetNextAtomToken()
+        internal void GetNextAtomToken(string attributeName)
         {
             Guard.Assert(NextTokenType != HtmlTokenType.Eof);
             _nextToken.Length = 0;
@@ -259,7 +263,7 @@ namespace Kaspirin.UI.Framework.UiKit.ThirdParty.HtmlUtils
                 while (!(NextCharacter == startingQuote && !IsNextCharacterEntity) && !IsAtEndOfStream)
                 {
                     _nextToken.Append(NextCharacter);
-                    GetNextCharacter();
+                    GetNextCharacter(attributeName);
                 }
 
                 if (NextCharacter == startingQuote)
@@ -320,7 +324,7 @@ namespace Kaspirin.UI.Framework.UiKit.ThirdParty.HtmlUtils
         ///     Throws InvalidOperationException if attempted to be called on EndOfStream
         ///     condition.
         /// </remarks>
-        private void GetNextCharacter()
+        private void GetNextCharacter(string? attributeName = null)
         {
             if (_nextCharacterCode == -1)
             {
@@ -336,7 +340,7 @@ namespace Kaspirin.UI.Framework.UiKit.ThirdParty.HtmlUtils
 
             ReadLookAheadCharacter();
 
-            if (NextCharacter == '&')
+            if (NextCharacter == '&' && attributeName?.Equals("href") == false)
             {
                 if (_lookAheadCharacter == '#')
                 {

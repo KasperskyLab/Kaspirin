@@ -180,7 +180,7 @@ internal static class PasswordInputHelper
 
     private static readonly Lazy<PropertyInfo> _passwordBoxSelectionProperty = new(GetPasswordBoxSelectionProperty);
     private static readonly Lazy<MethodInfo> _passwordBoxSelectMethod = new(GetPasswordBoxSelectMethod);
-    private static readonly Lazy<ISecureClipboard> _secureClipboard = new(ServiceLocator.Instance.GetService<ISecureClipboard>);
+    private static readonly Lazy<ISecureClipboard> _secureClipboard = new(ServiceLocator.GetService<ISecureClipboard>);
 
     private static Lazy<PropertyInfo>? _iTextRangeStartProperty;
     private static Lazy<PropertyInfo>? _iTextRangeEndProperty;

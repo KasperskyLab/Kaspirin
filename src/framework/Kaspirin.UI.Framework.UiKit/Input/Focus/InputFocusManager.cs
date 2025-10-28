@@ -21,9 +21,14 @@ namespace Kaspirin.UI.Framework.UiKit.Input.Focus;
 
 public static class InputFocusManager
 {
-    public static void ClearInputFocus(UIElement target)
+    public static void ClearInputFocus(UIElement? target = null)
     {
-        Guard.ArgumentIsNotNull(target);
+        target ??= Keyboard.FocusedElement as UIElement;
+
+        if (target == null)
+        {
+            return;
+        }
 
         var window = target.GetWindow();
         if (window == null)

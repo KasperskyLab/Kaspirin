@@ -95,7 +95,7 @@ public abstract class IconBase<TUIKitIcons> : IconBase where TUIKitIcons : Enum
         ApplyIconBrush(uiKitIcon.IconName, iconMetadata, IconBrush);
         ApplyFlowDirection(uiKitIcon.IconName, iconMetadata);
 
-        IsUnset = uiKitIcon.IconName == UIKitIcons.Unset;
+        IsUnset = uiKitIcon.IconName == UIKitConstants.IconUnsetValue;
 
         if (IsUnset)
         {
@@ -132,7 +132,7 @@ public abstract class IconBase<TUIKitIcons> : IconBase where TUIKitIcons : Enum
             return;
         }
 
-        if (iconName == UIKitIcons.Unset || iconMetadata.IsColorfull)
+        if (iconName == UIKitConstants.IconUnsetValue || iconMetadata.IsColorfull)
         {
             Image.ClearValue(ImageProps.SvgBrushProperty);
         }
@@ -149,7 +149,7 @@ public abstract class IconBase<TUIKitIcons> : IconBase where TUIKitIcons : Enum
             return;
         }
 
-        if (iconName == UIKitIcons.Unset)
+        if (iconName == UIKitConstants.IconUnsetValue)
         {
             Image.ClearValue(FlowDirectionProperty);
         }

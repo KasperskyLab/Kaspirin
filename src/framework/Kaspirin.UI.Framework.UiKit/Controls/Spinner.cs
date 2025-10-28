@@ -27,7 +27,7 @@ public sealed class Spinner : Control
 
     public Spinner()
     {
-        var animationSettings = ServiceLocator.Instance.GetService<IAnimationSettingsProvider>();
+        var animationSettings = ServiceLocator.GetService<IAnimationSettingsProvider>();
         var frameRate = animationSettings.GetDesiredFrameRate(AnimationRenderQuality.Low);
         if (frameRate == null || frameRate <= 0)
         {

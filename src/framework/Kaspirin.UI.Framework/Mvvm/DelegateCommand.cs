@@ -13,7 +13,6 @@
 // limitations under the License.
 
 using System;
-using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace Kaspirin.UI.Framework.Mvvm;
@@ -21,32 +20,8 @@ namespace Kaspirin.UI.Framework.Mvvm;
 /// <summary>
 ///     Provides an implementation of <see cref="ICommand" /> to perform actions using delegates.
 /// </summary>
-public class DelegateCommand : ICommand
+public class DelegateCommand : BaseCommand, ICommand
 {
-    /// <summary>
-    ///     Creates a new instance of the <see cref="DelegateCommand" /> class, which executes the specified delegate as asynchronous.
-    /// </summary>
-    /// <param name="action">
-    ///     The function to execute.
-    /// </param>
-    /// <returns>
-    ///     A new instance of the <see cref="DelegateCommand" /> class.
-    /// </returns>
-    public static DelegateCommand CreateAsync(Action action)
-        => new(() => Task.Factory.StartNew(action));
-
-    /// <summary>
-    ///     Creates a new instance of the <see cref="DelegateCommand" /> class that executes the specified delegate.
-    /// </summary>
-    /// <param name="action">
-    ///     The function to execute.
-    /// </param>
-    /// <returns>
-    ///     A new instance of the <see cref="DelegateCommand" /> class.
-    /// </returns>
-    public static DelegateCommand CreateFrom(Func<bool> action)
-        => new(() => action());
-
     /// <summary>
     ///     Initializes a new instance of the <see cref="DelegateCommand" /> class with the specified delegate to execute.
     /// </summary>
@@ -69,9 +44,8 @@ public class DelegateCommand : ICommand
     ///     A delegate to determine whether a command can be executed.
     /// </param>
     public DelegateCommand(Action executeMethod, Func<bool> canExecuteMethod)
+        : this(parameter => executeMethod(), parameter => canExecuteMethod())
     {
-        _execute = o => executeMethod();
-        _canExecute = o => canExecuteMethod();
     }
 
     /// <summary>
@@ -86,14 +60,9 @@ public class DelegateCommand : ICommand
     /// </param>
     protected DelegateCommand(Action<object?> executeMethod, Func<object?, bool> canExecuteMethod)
     {
-        _execute = executeMethod;
-        _canExecute = canExecuteMethod;
+        _execute = Guard.EnsureArgumentIsNotNull(executeMethod);
+        _canExecute = Guard.EnsureArgumentIsNotNull(canExecuteMethod);
     }
-
-    /// <summary>
-    ///     An event that occurs when the ability to execute a command changes.
-    /// </summary>
-    public event EventHandler? CanExecuteChanged;
 
     /// <summary>
     ///     Determines whether the command can be executed.
@@ -105,65 +74,21 @@ public class DelegateCommand : ICommand
         => CanExecute(null);
 
     /// <summary>
-    ///     Determines whether the command can be executed with the specified parameter.
-    /// </summary>
-    /// <param name="parameter">
-    ///     The parameter used to determine whether the command can be executed.
-    /// </param>
-    /// <returns>
-    ///     Returns the value <see langword="true" /> if the command can be executed, otherwise <see langword="false" />.
-    /// </returns>
-    public bool CanExecute(object? parameter)
-    {
-        return _canExecute switch
-        {
-            null => true,
-            _ => _canExecute(parameter)
-        };
-    }
-
-    /// <summary>
     ///     Executes the command.
     /// </summary>
     public void Execute()
         => Execute(null);
 
-    /// <summary>
-    ///     Executes the command.
-    /// </summary>
-    /// <param name="parameter">
-    ///     A command parameter.
-    /// </param>
-    public void Execute(object? parameter)
+    /// <inheritdoc/>
+    public override bool CanExecute(object? parameter)
+        => _canExecute.Invoke(parameter);
+
+    /// <inheritdoc/>
+    public override void Execute(object? parameter)
     {
         if (CanExecute(parameter))
         {
-            _execute(parameter);
-        }
-    }
-
-    /// <summary>
-    ///     Triggers the <see cref="CanExecuteChanged" /> event.
-    /// </summary>
-    public void RaiseCanExecuteChanged()
-    {
-        var handler = CanExecuteChanged;
-        if (handler == null)
-        {
-            return;
-        }
-
-        var executer = Executers.Implementation;
-        if (executer.CanExecuteInUiThread && executer.IsUiThread is false)
-        {
-            executer.ExecuteInUiThreadAsync(() =>
-            {
-                handler.Invoke(this, EventArgs.Empty);
-            });
-        }
-        else
-        {
-            handler.Invoke(this, EventArgs.Empty);
+            _execute.Invoke(parameter);
         }
     }
 

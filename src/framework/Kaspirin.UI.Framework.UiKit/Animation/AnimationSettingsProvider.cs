@@ -55,7 +55,7 @@ public sealed class AnimationSettingsProvider : IAnimationSettingsProvider
     public bool IsAnimationEnabled
     {
         get => _isAnimationEnabled;
-        private set
+        internal set
         {
             if (_isAnimationEnabled == value)
             {

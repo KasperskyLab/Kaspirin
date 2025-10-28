@@ -13,6 +13,8 @@
 // limitations under the License.
 
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Documents;
@@ -31,6 +33,7 @@ internal abstract class NotificationAdorner<TElement> : Adorner, INotificationAd
         _notificationLayer = Guard.EnsureArgumentIsNotNull(notificationLayer);
 
         _visualCollection = new VisualCollection(this) { _element };
+        _notifications = new();
 
         _element.SetBinding(WidthProperty, new Binding
         {
@@ -55,9 +58,12 @@ internal abstract class NotificationAdorner<TElement> : Adorner, INotificationAd
     {
         if (_element != null)
         {
-            AddNotification(_element, view, out var canShowAdorner);
+            _notifications.Add(view);
+            _notificationLayer.TopmostNotification = _notifications.LastOrDefault(n => n.DisplaySettings.IsModal);
 
-            if (canShowAdorner)
+            AddNotification(_element, view);
+
+            if (_notifications.Count == 1)
             {
                 ShowAdorner();
             }
@@ -68,18 +74,21 @@ internal abstract class NotificationAdorner<TElement> : Adorner, INotificationAd
     {
         if (_element != null)
         {
-            RemoveNotification(_element, view, out var canCloseAdorner);
+            _notifications.Remove(view);
+            _notificationLayer.TopmostNotification = _notifications.LastOrDefault(n => n.DisplaySettings.IsModal);
 
-            if (canCloseAdorner)
+            RemoveNotification(_element, view);
+
+            if (_notifications.Count == 0)
             {
                 CloseAdorner();
             }
         }
     }
 
-    protected abstract void AddNotification(TElement element, NotificationView view, out bool canShowAdorner);
+    protected abstract void AddNotification(TElement element, NotificationView view);
 
-    protected abstract void RemoveNotification(TElement element, NotificationView view, out bool canShowAdorner);
+    protected abstract void RemoveNotification(TElement element, NotificationView view);
 
     protected override Size MeasureOverride(Size constraint)
     {
@@ -130,4 +139,5 @@ internal abstract class NotificationAdorner<TElement> : Adorner, INotificationAd
 
     private readonly VisualCollection _visualCollection;
     private readonly NotificationLayer _notificationLayer;
+    private readonly List<NotificationView> _notifications;
 }

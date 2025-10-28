@@ -1,12 +1,12 @@
 <!--
     Copyright © 2024 AO Kaspersky Lab.
-
+    
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
     You may obtain a copy of the License at
-
-        http://www.apache.org/licenses/LICENSE-2.0
-
+    
+    http://www.apache.org/licenses/LICENSE-2.0
+    
     Unless required by applicable law or agreed to in writing, software
     distributed under the License is distributed on an "AS IS" BASIS,
     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -3885,6 +3885,7 @@
         <uikit:UIKitSetter Id="InteractivityDialog_Icon_Margin" Value="0,0,20,0" />
         <uikit:UIKitSetter Id="InteractivityDialog_Icon_Width" Value="48" />
         <uikit:UIKitSetter Id="InteractivityDialog_InteractivityOverlayStyle" Value="{StaticResource UiKitInteractivityOverlayModal}" />
+        <uikit:UIKitSetter Id="InteractivityDialog_Shadow" Value="{Res Shadow, Scope=UiKitInteractivityDialog}" />
         <uikit:UIKitSetter Id="InteractivityDialog_Spinner_Style" Value="{StaticResource UiKitSpinner24}" />
         <uikit:UIKitSetter Id="InteractivityDialog_Status_Background_Height" Value="48" />
         <uikit:UIKitSetter Id="InteractivityDialog_Status_Background_Width" Value="48" />
@@ -3915,13 +3916,13 @@
                 <uikit:UIKitSetter Id="InteractivityDialog_Status_Foreground" Value="{Res StatusForegroundWarning, Scope=UiKitInteractivityDialog}" />
                 <uikit:UIKitSetter Id="InteractivityDialog_Status_IconName" Value="StatusWarningSolid" />
             </Trigger>
-            <Trigger Property="DialogSize" Value="Standard">
+            <Trigger Property="DialogWidth" Value="Standard">
                 <uikit:UIKitSetter Id="InteractivityDialog_Width" Value="550" />
             </Trigger>
-            <Trigger Property="DialogSize" Value="Medium">
+            <Trigger Property="DialogWidth" Value="Medium">
                 <uikit:UIKitSetter Id="InteractivityDialog_Width" Value="650" />
             </Trigger>
-            <Trigger Property="DialogSize" Value="Wide">
+            <Trigger Property="DialogWidth" Value="Wide">
                 <uikit:UIKitSetter Id="InteractivityDialog_Width" Value="800" />
             </Trigger>
         </Style.Triggers>
@@ -5948,12 +5949,12 @@
                 <Setter Property="TextElement.Foreground" Value="{Res ValueForegroundDisabled, Scope=UiKitProgressBarSmall}" />
             </Style>
         </Style.Resources>
+        <uikit:UIKitSetter Id="ProgressBar_CornerRadius" Value="2" />
         <uikit:UIKitSetter Id="ProgressBar_EstimationTextStyle" Value="{StaticResource EstimationTextStyle}" />
         <uikit:UIKitSetter Id="ProgressBar_Glow_Brush" Value="{Res GlowColor, Scope=UiKitProgressBarSmall}" />
         <uikit:UIKitSetter Id="ProgressBar_Glow_Width" Value="64" />
         <uikit:UIKitSetter Id="ProgressBar_Padding" Value="0,4,0,0" />
         <uikit:UIKitSetter Id="ProgressBar_Track_Background" Value="{Res Background, Scope=UiKitProgressBarSmall}" />
-        <uikit:UIKitSetter Id="ProgressBar_Track_CornerRadius" Value="2" />
         <uikit:UIKitSetter Id="ProgressBar_Track_Height" Value="4" />
         <uikit:UIKitSetter Id="ProgressBar_State_Margin" Value="0,0,2,0" />
         <uikit:UIKitSetter Id="ProgressBar_StateTextStyle" Value="{StaticResource StateTextStyle}" />
@@ -6018,12 +6019,12 @@
                 <Setter Property="TextElement.Foreground" Value="{Res ValueForegroundDisabled, Scope=UiKitProgressBarStandart}" />
             </Style>
         </Style.Resources>
+        <uikit:UIKitSetter Id="ProgressBar_CornerRadius" Value="4" />
         <uikit:UIKitSetter Id="ProgressBar_EstimationTextStyle" Value="{StaticResource EstimationTextStyle}" />
         <uikit:UIKitSetter Id="ProgressBar_Glow_Brush" Value="{Res GlowColor, Scope=UiKitProgressBarStandart}" />
         <uikit:UIKitSetter Id="ProgressBar_Glow_Width" Value="64" />
         <uikit:UIKitSetter Id="ProgressBar_Padding" Value="0,4,0,0" />
         <uikit:UIKitSetter Id="ProgressBar_Track_Background" Value="{Res Background, Scope=UiKitProgressBarStandart}" />
-        <uikit:UIKitSetter Id="ProgressBar_Track_CornerRadius" Value="4" />
         <uikit:UIKitSetter Id="ProgressBar_Track_Height" Value="8" />
         <uikit:UIKitSetter Id="ProgressBar_State_Margin" Value="0,0,2,0" />
         <uikit:UIKitSetter Id="ProgressBar_StateTextStyle" Value="{StaticResource StateTextStyle}" />

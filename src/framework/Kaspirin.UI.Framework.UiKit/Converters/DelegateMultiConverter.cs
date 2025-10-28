@@ -24,7 +24,7 @@ namespace Kaspirin.UI.Framework.UiKit.Converters;
 public sealed class DelegateMultiConverter : IMultiValueConverter
 {
     /// <summary>
-    ///     Creates an object <see cref="DelegateMultiConverter" />.
+    ///     Initializes a new instance of the <see cref="DelegateMultiConverter" /> class.
     /// </summary>
     /// <param name="convert">
     ///     The delegate for the <see cref="Convert" /> method.

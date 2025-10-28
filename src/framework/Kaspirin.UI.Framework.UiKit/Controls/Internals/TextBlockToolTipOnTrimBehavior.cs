@@ -52,21 +52,19 @@ internal sealed class TextBlockToolTipOnTrimBehavior : Behavior<TextBlock, TextB
     {
         textBlock.WhenLoaded(() =>
         {
-            if (string.IsNullOrEmpty(textBlock.Text))
+            var text = textBlock.GetTextOrInlineContent();
+            if (text.IsNullOrEmpty())
             {
                 return;
             }
 
-            var currentCompareInfoHash = GetTextBlockCompareInfoHash(textBlock);
-            if (_lastCompareInfoHash == currentCompareInfoHash)
+            var currentHash = GetTextBlockCompareInfoHash(textBlock);
+            if (currentHash != _lastCompareInfoHash)
             {
-                return;
-            }
+                _lastCompareInfoHash = currentHash;
 
-            _lastCompareInfoHash = currentCompareInfoHash;
-            textBlock.ToolTip = textBlock.IsTextTrimmed()
-                ? textBlock.GetTextOrInlineContent()
-                : null;
+                textBlock.ToolTip = textBlock.IsTextTrimmed() ? text : null;
+            }
         });
     }
 

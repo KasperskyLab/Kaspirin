@@ -29,7 +29,7 @@ namespace Kaspirin.UI.Framework.UiKit.Converters.BooleanConverters;
 public sealed class BooleanToVisibilityConverter : BaseBooleanConverter<Visibility>
 {
     /// <summary>
-    ///     Creates an object <see cref="BooleanToVisibilityConverter" />.
+    ///     Initializes a new instance of the <see cref="BooleanToVisibilityConverter" /> class.
     /// </summary>
     public BooleanToVisibilityConverter() : base(Visibility.Visible, Visibility.Collapsed) { }
 }

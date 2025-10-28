@@ -32,6 +32,11 @@ public abstract class NavigatableViewModel : BaseViewModel, INavigationAware
     {
     }
 
+    protected NavigatableViewModel(ComponentTracerParameters tracerParameters)
+        : base(tracerParameters)
+    {
+    }
+
     public virtual void OnNavigatedFrom(NavigationContext context)
     {
     }

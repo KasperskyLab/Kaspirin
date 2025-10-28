@@ -25,7 +25,7 @@ namespace Kaspirin.UI.Framework.UiKit.Converters;
 public sealed class CompositeMultiConverter : IMultiValueConverter
 {
     /// <summary>
-    ///     Creates an object <see cref="CompositeMultiConverter" />.
+    ///     Initializes a new instance of the <see cref="CompositeMultiConverter" /> class.
     /// </summary>
     /// <param name="multiValueConverter">
     ///     A multiconverter involved in sequential conversion.

@@ -35,7 +35,10 @@ public abstract class UIKitPaletteExtension<TPaletteEnum> : MarkupExtension wher
         }.ProvideValue(serviceProvider);
     }
 
-    protected abstract string Map(TPaletteEnum id);
+    protected virtual string Map(TPaletteEnum id)
+    {
+        return UIKitPaletteMetadataStorage.Get(id).ResourceKey;
+    }
 
     private sealed class PaletteExtension : BaseLocalizationMarkupExtension
     {

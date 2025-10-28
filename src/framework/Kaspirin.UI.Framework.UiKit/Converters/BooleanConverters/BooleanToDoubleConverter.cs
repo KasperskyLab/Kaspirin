@@ -27,7 +27,7 @@ namespace Kaspirin.UI.Framework.UiKit.Converters.BooleanConverters;
 public sealed class BooleanToDoubleConverter : BaseBooleanConverter<double>
 {
     /// <summary>
-    ///     Creates an object <see cref="BooleanToDoubleConverter" />.
+    ///     Initializes a new instance of the <see cref="BooleanToDoubleConverter" /> class.
     /// </summary>
     public BooleanToDoubleConverter() : base(1.0, 0.0) { }
 }

@@ -12,9 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System.Collections.Generic;
+
 namespace Kaspirin.UI.Framework.UiKit.Interactivity;
 
-public interface IInteractionObjects
+public interface IInteractionObjects : IEnumerable<InteractionObject>
 {
     void Add(InteractionObject interactionObject);
     void Remove(InteractionObject interactionObject);

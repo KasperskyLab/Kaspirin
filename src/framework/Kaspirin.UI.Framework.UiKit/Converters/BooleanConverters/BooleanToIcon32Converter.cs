@@ -27,7 +27,7 @@ namespace Kaspirin.UI.Framework.UiKit.Converters.BooleanConverters;
 public sealed class BooleanToIcon32Converter : BaseBooleanConverter<UIKitIcon_32>
 {
     /// <summary>
-    ///     Creates an object <see cref="BooleanToIcon32Converter" />.
+    ///     Initializes a new instance of the <see cref="BooleanToIcon32Converter" /> class.
     /// </summary>
     public BooleanToIcon32Converter() : base(UIKitIcon_32.UIKitUnset, UIKitIcon_32.UIKitUnset) { }
 }

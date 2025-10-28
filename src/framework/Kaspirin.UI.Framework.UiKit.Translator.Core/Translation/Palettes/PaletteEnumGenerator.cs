@@ -48,7 +48,7 @@ internal sealed class PaletteEnumGenerator
     private IList<PaletteItem> GetPaletteItems(string uiKitContent) =>
         new XmlPaletteSource()
         .GetPalettes(uiKitContent)
-        .OrderBy(r => r.Name)
+        .OrderBy(r => r.Id)
         .ToList();
 
     private void Translate(IList<PaletteItem> paletteItems)
@@ -57,8 +57,8 @@ internal sealed class PaletteEnumGenerator
 
         enumFile = CommentGenerator.AddFileComment(enumFile, _comment);
         enumFile = FillNamespace(enumFile);
-        enumFile = FillEnum(paletteItems, enumFile);
-        enumFile = FillMapping(paletteItems, enumFile);
+        enumFile = FillEnums(paletteItems, enumFile);
+        enumFile = FillMetadata(paletteItems, enumFile);
 
         SaveEnum(enumFile);
     }
@@ -78,21 +78,35 @@ internal sealed class PaletteEnumGenerator
         return enumFile.Replace("@PaletteNamespacePart", _paletteNamespacePart);
     }
 
-    private string FillEnum(IList<PaletteItem> paletteItems, string enumFile)
+    private string FillEnums(IList<PaletteItem> paletteItems, string enumFile)
     {
         var paletteItemsString = string.Join(",\r\n", paletteItems
             .Where(i => i.Name != "Transparent")
-            .Select(i => $"{_indent}{_indent}{i.Name}"));
+            .Select(i => $"{_indent}{i.Scope}{i.Name}"));
 
-        return enumFile.Replace($"@PaletteItems", paletteItemsString);
+        var paletteItemScopesString = string.Join(",\r\n", paletteItems
+            .Where(i => i.Scope != null)
+            .GroupBy(i => i.Scope)
+            .OrderBy(i => i.Key)
+            .Select(i => $"{_indent}{i.Key}"));
+
+        enumFile = enumFile.Replace($"@PaletteItems", paletteItemsString);
+        enumFile = enumFile.Replace($"@PaletteItemScopes", paletteItemScopesString);
+
+        return enumFile;
     }
 
-    private string FillMapping(IList<PaletteItem> paletteItems, string enumFile)
+    private string FillMetadata(IList<PaletteItem> paletteItems, string enumsFile)
     {
-        var paletteMappingString = string.Join(",\r\n", paletteItems
-            .Select(i => $"{_indent}{_indent}{{ UIKitPalette.{i.Name}, \"{i.Id}\" }}"));
+        var paletteMetadata = string.Join("\r\n", paletteItems
+            .Select(i =>
+                $"{_indent}{_indent}{_indent}" +
+                $"UIKitPaletteMetadataStorage.Register(" +
+                    $"color: UIKitPalette.{i.Scope}{i.Name}, " +
+                    $"scope: UIKitPaletteScope.{i.Scope ?? "UIKitUnset"}, " +
+                    $"resourceId: \"{i.Id}\");"));
 
-        return enumFile.Replace("@PaletteMapping", paletteMappingString);
+        return enumsFile.Replace("@PaletteMetadataRegistration", paletteMetadata);
     }
 
     private void SaveEnum(string enumFile)

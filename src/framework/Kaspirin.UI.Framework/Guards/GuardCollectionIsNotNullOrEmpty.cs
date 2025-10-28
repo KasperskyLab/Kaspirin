@@ -13,14 +13,8 @@
 // limitations under the License.
 
 using System.Collections.Generic;
-
-using NotNullAttribute = System.Diagnostics.CodeAnalysis.NotNullAttribute;
-
-#if NET6_0_OR_GREATER
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
-#else
-using Kaspirin.UI.Framework.BackwardCompatibility;
-#endif
 
 namespace Kaspirin.UI.Framework.Guards;
 

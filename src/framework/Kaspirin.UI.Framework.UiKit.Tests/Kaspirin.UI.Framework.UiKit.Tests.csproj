@@ -7,34 +7,20 @@
 	</PropertyGroup>
 
 	<Import Project="$(SolutionDir)kaspirin.net.props" />
+
 	<Import Project="Sdk.props" Sdk="Microsoft.NET.Sdk" />
 
 	<ItemGroup>
-		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.3.0" />
-		<PackageReference Include="MSTest.TestAdapter" Version="3.8.2"/>
-		<PackageReference Include="MSTest.TestFramework" Version="3.8.2"/>
-	</ItemGroup>
-
-	<ItemGroup>
-		<Using Include="Microsoft.VisualStudio.TestTools.UnitTesting" />
-	</ItemGroup>
-	
-	<ItemGroup>
-		<Resource Include="Resources\**\*.svg" />
-		<Resource Include="Resources\**\*.lt" />
-		<Resource Include="Resources\**\*.jpg" />
-		<Resource Include="Resources\**\*.png" />
-		<Resource Include="Resources\**\*.ico" />
-		<Resource Include="Resources\**\*.txt" />
-	</ItemGroup>
-
-	<ItemGroup>
-		<PackageReference Include="SharpVectors" Version="1.8.4" />
+		<Resource Include="Resources\**\images\**\*.*" />
+		<Resource Include="Resources\**\files\**\*.*" />
+		<Resource Include="Resources\**\locs\**\*.*" />
 	</ItemGroup>
 
 	<Import Project="Sdk.targets" Sdk="Microsoft.NET.Sdk" />
 
+	<Import Project="$(MSTestProps)" />
 	<Import Project="$(FrameworkProps)" />
 	<Import Project="$(FrameworkUIKitProps)" />
+	<Import Project="$(FrameworkTestServicesProps)" />
 
 </Project>

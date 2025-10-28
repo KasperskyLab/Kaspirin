@@ -19,6 +19,11 @@ namespace Kaspirin.UI.Framework.UiKit.Interactivity;
 
 public abstract class InteractionRequestBase<T> : InteractionRequestBase, IInteractionRequest<T> where T : InteractionObject
 {
+    protected InteractionRequestBase()
+    {
+        _trace = ComponentTracer.Get(UIKitComponentTracers.Interactivity, this);
+    }
+
     public event EventHandler<InteractionRequestedEventArgs> TriggerActionRaised = (s, a) => { };
 
     public event EventHandler<InteractionRequestedEventArgs> Raised = (s, a) => { };
@@ -33,7 +38,14 @@ public abstract class InteractionRequestBase<T> : InteractionRequestBase, IInter
     {
         _silentMode = true;
 
-        _trace.TraceInformation("SilentMode is active");
+        _trace.TraceInformation("Silent mode is active");
+    }
+
+    public void SetSynchronizedMode()
+    {
+        _synchronizedMode = true;
+
+        _trace.TraceInformation("Synchronized mode is active");
     }
 
     public void Close()
@@ -46,11 +58,6 @@ public abstract class InteractionRequestBase<T> : InteractionRequestBase, IInter
         }
     }
 
-    public void CloseAll()
-    {
-        GetStorage().HandleAll();
-    }
-
     internal protected void InvokeInteraction(T interactionObject, Action<T> callback)
     {
         Guard.ArgumentIsNotNull(interactionObject);
@@ -59,6 +66,12 @@ public abstract class InteractionRequestBase<T> : InteractionRequestBase, IInter
         if (IsRaised)
         {
             _trace.TraceWarning("Interaction suppressed because it is already active");
+            return;
+        }
+
+        if (interactionObject.IsDecided)
+        {
+            _trace.TraceWarning("Interaction suppressed because InteractionObject is already handled");
             return;
         }
 
@@ -74,20 +87,14 @@ public abstract class InteractionRequestBase<T> : InteractionRequestBase, IInter
 
         InteractionTask = CreateInteractionTask();
 
-        var eventArgs = new InteractionRequestedEventArgs(InteractionObject);
-
-        if (_silentMode is false)
+        if (_synchronizedMode)
         {
-            _trace.TraceInformation("Raise TriggerAction event");
-
-            TriggerActionRaised.Invoke(this, eventArgs);
+            DispatcherFrameAction.Run(RaiseEvents);
         }
         else
         {
-            _trace.TraceInformation("TriggerAction event skipped");
+            RaiseEvents();
         }
-
-        Raised.Invoke(this, eventArgs);
     }
 
     protected virtual void OnClose() { }
@@ -105,6 +112,10 @@ public abstract class InteractionRequestBase<T> : InteractionRequestBase, IInter
         _callback = null;
 
         _silentMode = false;
+        _synchronizedMode = false;
+
+        _interactionFrameContext?.CloseFrame();
+        _interactionFrameContext = null;
 
         _interactionTaskCompletionSource.SetResult(InteractionObject);
         _interactionTaskCompletionSource = null;
@@ -119,8 +130,27 @@ public abstract class InteractionRequestBase<T> : InteractionRequestBase, IInter
         _trace.TraceInformation("Interaction completed");
     }
 
+    private void RaiseEvents(DispatcherFrameContext? frameContext = null)
+    {
+        Guard.IsNotNull(InteractionObject);
+
+        _interactionFrameContext = frameContext;
+
+        var eventArgs = new InteractionRequestedEventArgs(InteractionObject);
+
+        if (_silentMode)
+        {
+            Raised.Invoke(this, eventArgs);
+        }
+        else
+        {
+            TriggerActionRaised.Invoke(this, eventArgs);
+            Raised.Invoke(this, eventArgs);
+        }
+    }
+
     private IInteractionObjects GetStorage()
-        => ServiceLocator.Instance.GetService<IInteractionObjects>();
+        => ServiceLocator.GetService<IInteractionObjects>();
 
     private Task<T> CreateInteractionTask()
     {
@@ -130,8 +160,10 @@ public abstract class InteractionRequestBase<T> : InteractionRequestBase, IInter
     }
 
     private bool _silentMode;
+    private bool _synchronizedMode;
     private Action<T>? _callback;
     private TaskCompletionSource<T>? _interactionTaskCompletionSource;
+    private DispatcherFrameContext? _interactionFrameContext;
 
-    private static readonly ComponentTracer _trace = ComponentTracer.Get(UIKitComponentTracers.Interactivity);
+    private readonly ComponentTracer _trace;
 }

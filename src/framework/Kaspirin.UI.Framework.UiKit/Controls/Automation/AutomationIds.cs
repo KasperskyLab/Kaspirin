@@ -1,4 +1,4 @@
-// Copyright © 2024 AO Kaspersky Lab.
+// Copyright © 2025 AO Kaspersky Lab.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,26 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-@FileComment
-using System.Collections.Generic;
+namespace Kaspirin.UI.Framework.UiKit.Controls.Automation;
 
-namespace Kaspirin.UI.Framework.UiKit.@PaletteNamespacePart.Palette;
-
-public static class UIKitPaletteStorage
+public static class AutomationIds
 {
-    public static string Map(UIKitPalette id)
-    {
-        return PaletteMapping[id];
-    }
+    public static string ButtonClose { get; } = "Close";
 
-    private static IDictionary<UIKitPalette, string> PaletteMapping { get; } = new Dictionary<UIKitPalette, string>
-    {
-@PaletteMapping
-    };
-
-    public enum UIKitPalette
-    {
-        Transparent = 0,
-@PaletteItems
-    }
+    public static string ButtonHelp { get; } = "Help";
 }

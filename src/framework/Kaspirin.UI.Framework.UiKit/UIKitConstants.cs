@@ -27,6 +27,7 @@ internal static class UIKitConstants
 
     //Internal
     public static string IconsScope { get; } = "Svg";
+    public static string IconUnsetValue { get; } = "UIKitUnset";
     public static string PaletteScope { get; } = "Palette";
     public static string LocalizationScope { get; } = "UiKit";
 
@@ -74,8 +75,11 @@ internal static class UIKitConstants
     //InteractivityDialog
     public static Thickness InteractivityDialogMargin { get; } = new Thickness(12);
 
+    //InteractivityNotification
+    public static TimeSpan InteractivityNotificationAutoCloseTimeout { get; } = TimeSpan.FromSeconds(4);
+
     //InteractivityOverlay
-    public static Thickness InteractivityOverlayClipExtent { get; } = new Thickness(4);
+    public static Thickness InteractivityOverlayClipMargin { get; } = new Thickness(4);
     public static double InteractivityOverlayClipCornerRadius { get; } = 6;
 
     //ListMenu
@@ -114,7 +118,7 @@ internal static class UIKitConstants
     public static double SearchWidth { get; } = 150;
 
     //SelectPopupDecorator
-    public static double SelectPopupDecoratorMinHeight { get; } = 80;
+    public static double SelectPopupDecoratorMinHeight { get; } = 48;
 
     //TabMenuItem
     public static int TabMenuItemMaxCounter { get; } = 100;

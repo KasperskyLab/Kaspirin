@@ -20,7 +20,8 @@ namespace Kaspirin.UI.Framework.UiKit.Accessibility.TextScale;
 public sealed class TextScaleChangedEventArgs
 {
     /// <summary>
-    ///     Creates a new instance of <see cref="TextScaleChangedEventArgs" /> with the specified values of the old and new scale.
+    ///     Initializes a new instance of the <see cref="TextScaleChangedEventArgs" /> class with the specified
+    ///     values of the old and new scales.
     /// </summary>
     /// <param name="oldScale">
     ///     The old scale value.

@@ -23,6 +23,20 @@ namespace Kaspirin.UI.Framework.Extensions.Strings;
 public static class StringExtensions
 {
     /// <summary>
+    ///     Returns the original string if it is not equal to <see langword="null" />, otherwise it returns an empty string.
+    /// </summary>
+    /// <param name="source">
+    ///     The original string.
+    /// </param>
+    /// <returns>
+    ///     The original string or an empty string if the original string is <see langword="null" />.
+    /// </returns>
+    public static string OrEmpty(this string? source)
+    {
+        return source ?? string.Empty;
+    }
+
+    /// <summary>
     ///     Checks that the string <paramref name="source" /> is empty.
     /// </summary>
     /// <param name="source">
@@ -37,6 +51,21 @@ public static class StringExtensions
     }
 
     /// <summary>
+    ///     Checks that the string <paramref name="source" /> is empty or equal to <see langword="null" />.
+    /// </summary>
+    /// <param name="source">
+    ///     The original string.
+    /// </param>
+    /// <returns>
+    ///     Returns <see langword="true" /> if the string is empty or equal to <see langword="null" />,
+    ///     otherwise - <see langword="false" />.
+    /// </returns>
+    public static bool IsNullOrEmpty(this string? source)
+    {
+        return source == null || source.Length == 0;
+    }
+
+    /// <summary>
     ///     Checks that the string <paramref name="source" /> is not empty.
     /// </summary>
     /// <param name="source">
@@ -48,6 +77,21 @@ public static class StringExtensions
     public static bool IsNotEmpty(this string source)
     {
         return source.Length > 0;
+    }
+
+    /// <summary>
+    ///     Checks that the string <paramref name="source" /> is not empty and is not equal to <see langword="null" />.
+    /// </summary>
+    /// <param name="source">
+    ///     The original string.
+    /// </param>
+    /// <returns>
+    ///     Returns <see langword="true" /> if the string is not empty and is not equal to <see langword="null" />,
+    ///     otherwise - <see langword="false" />.
+    /// </returns>
+    public static bool IsNotNullOrEmpty(this string? source)
+    {
+        return source?.Length > 0;
     }
 
     /// <summary>

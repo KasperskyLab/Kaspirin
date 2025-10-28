@@ -25,12 +25,15 @@ public sealed class InteractivityOverlayCutExtension : MarkupExtension
     public double? ClipCornerRadius { get; set; }
     public bool? CloseOnMouseClick { get; set; }
     public bool? CloseOnMouseWheel { get; set; }
-    public Thickness? ClipExtent { get; set; }
+    public Thickness? ClipMargin { get; set; }
     public object? Decorator { get; set; }
     public DataTemplate? DecoratorTemplate { get; set; }
     public double? DecoratorHorizontalOffset { get; set; }
     public InteractivityOverlayCutDecoratorPosition? DecoratorPosition { get; set; }
     public double? DecoratorVerticalOffset { get; set; }
+    public object? PopupContent { get; set; }
+    public DataTemplate? PopupContentTemplate { get; set; }
+    public PopupPosition? PopupPosition { get; set; }
 
     public override object ProvideValue(IServiceProvider serviceProvider)
     {
@@ -40,6 +43,8 @@ public sealed class InteractivityOverlayCutExtension : MarkupExtension
         {
             Decorator = Decorator,
             DecoratorTemplate = DecoratorTemplate,
+            PopupContent = PopupContent,
+            PopupContentTemplate = PopupContentTemplate,
         };
 
         if (AllowsInteraction != null)
@@ -52,9 +57,9 @@ public sealed class InteractivityOverlayCutExtension : MarkupExtension
             overlayCut.ClipCornerRadius = ClipCornerRadius.Value;
         }
 
-        if (ClipExtent != null)
+        if (ClipMargin != null)
         {
-            overlayCut.ClipExtent = ClipExtent.Value;
+            overlayCut.ClipMargin = ClipMargin.Value;
         }
 
         if (CloseOnMouseClick != null)
@@ -80,6 +85,11 @@ public sealed class InteractivityOverlayCutExtension : MarkupExtension
         if (DecoratorVerticalOffset != null)
         {
             overlayCut.DecoratorVerticalOffset = DecoratorVerticalOffset.Value;
+        }
+
+        if (PopupPosition != null)
+        {
+            overlayCut.PopupPosition = PopupPosition.Value;
         }
 
         return new InteractivityOverlayCutCollection()

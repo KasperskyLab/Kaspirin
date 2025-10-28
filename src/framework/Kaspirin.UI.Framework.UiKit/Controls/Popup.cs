@@ -44,12 +44,41 @@ public sealed class Popup : Control
         Loaded += PopupControlLoaded;
         Unloaded += PopupControlUnloaded;
 
+        _animationSettings = ServiceLocator.GetService<IAnimationSettingsProvider>();
         _timer = WeakDispatcherTimer.Create(UpdatePopupPositionOnTimer, TimeSpan.FromMilliseconds(250), DispatcherPriority.Render);
     }
 
-    public event EventHandler Opened = (_, _) => { };
+    #region Opened Event
 
-    public event EventHandler Closed = (_, _) => { };
+    public event RoutedEventHandler Opened
+    {
+        add => AddHandler(OpenedEvent, value);
+        remove => RemoveHandler(OpenedEvent, value);
+    }
+
+    public static readonly RoutedEvent OpenedEvent = EventManager.RegisterRoutedEvent(
+        nameof(Opened),
+        RoutingStrategy.Bubble,
+        typeof(RoutedEventHandler),
+        typeof(Popup));
+
+    #endregion
+
+    #region Closed Event
+
+    public event RoutedEventHandler Closed
+    {
+        add => AddHandler(ClosedEvent, value);
+        remove => RemoveHandler(ClosedEvent, value);
+    }
+
+    public static readonly RoutedEvent ClosedEvent = EventManager.RegisterRoutedEvent(
+        nameof(Closed),
+        RoutingStrategy.Bubble,
+        typeof(RoutedEventHandler),
+        typeof(Popup));
+
+    #endregion
 
     #region PopupTarget
 
@@ -93,7 +122,7 @@ public sealed class Popup : Control
 
     #region PopupContent
 
-    public object PopupContent
+    public object? PopupContent
     {
         get => GetValue(PopupContentProperty);
         set => SetValue(PopupContentProperty, value);
@@ -261,6 +290,9 @@ public sealed class Popup : Control
         _popup.MouseDown += (s, e) => e.Handled = true;
         _popup.Placement = PlacementMode.Custom;
         _popup.CustomPopupPlacementCallback = PopupPlacementCallback;
+        _popup.PopupAnimation = _animationSettings.IsAnimationEnabled
+            ? PopupAnimation.Fade
+            : PopupAnimation.None;
 
         _popupArrow = (Image)GetTemplateChild("PART_PopupArrow");
         _popupRoot = (Border)GetTemplateChild("PART_PopupRoot");
@@ -392,14 +424,17 @@ public sealed class Popup : Control
             return;
         }
 
+        var isTopmostPopup = _notificationLayer?.TopmostNotification == _notificationView;
         var isTargetVisible = IsPopupTargetVisible();
-        var isNotModalState = _notificationLayer?.IsModalState != true;
         var isWindowActive = _currentWindow?.IsActive == true;
         var isWindowNotMinimized = _currentWindow?.WindowState != WindowState.Minimized;
 
-        _popupRoot.Visibility = isTargetVisible && isNotModalState && isWindowActive && isWindowNotMinimized
+        var canShowPopup = isTargetVisible && isTopmostPopup && isWindowActive && isWindowNotMinimized;
+
+        _popupRoot.IsHitTestVisible = canShowPopup;
+        _popupRoot.Visibility = canShowPopup
             ? Visibility.Visible
-            : Visibility.Collapsed;
+            : Visibility.Hidden;
     }
 
     private void UpdatePopupPosition()
@@ -441,7 +476,7 @@ public sealed class Popup : Control
 
         SetCurrentValue(IsPopupOpenProperty, true);
 
-        Opened(this, EventArgs.Empty);
+        RaiseEvent(new RoutedEventArgs(OpenedEvent));
     }
 
     private void ClosePopup()
@@ -450,7 +485,7 @@ public sealed class Popup : Control
 
         SetCurrentValue(IsPopupOpenProperty, false);
 
-        Closed(this, EventArgs.Empty);
+        RaiseEvent(new RoutedEventArgs(ClosedEvent));
     }
 
     private bool IsPopupTargetVisible()
@@ -585,16 +620,15 @@ public sealed class Popup : Control
             return;
         }
 
-        var isNotNotification = _popupTarget.FindVisualParent<NotificationView>() is null;
-        if (isNotNotification)
-        {
-            var notificationLayer = NotificationLayer.FindLayer(_popupTarget, isModal: true);
-            if (notificationLayer is not null)
-            {
-                _notificationLayer = notificationLayer;
+        _notificationView = _popupTarget.FindVisualParent<NotificationView>();
 
-                _notificationLayer.IsModalStateChanged += InvalidatePopup;
-            }
+        var notificationLayer = NotificationLayer.FindLayer(_popupTarget, isModal: true);
+        if (notificationLayer is not null)
+        {
+            _notificationLayer = notificationLayer;
+
+            _notificationLayer.IsModalStateChanged += InvalidatePopup;
+            _notificationLayer.TopmostNotificationChanged += InvalidatePopup;
         }
     }
 
@@ -640,8 +674,10 @@ public sealed class Popup : Control
         if (_notificationLayer is not null)
         {
             _notificationLayer.IsModalStateChanged -= InvalidatePopup;
+            _notificationLayer.TopmostNotificationChanged -= InvalidatePopup;
 
             _notificationLayer = null;
+            _notificationView = null;
         }
     }
 
@@ -685,6 +721,8 @@ public sealed class Popup : Control
     private NotificationLayer? _notificationLayer;
     private ScrollViewer[]? _parentScrolls;
     private FrameworkElement? _popupTarget;
+    private NotificationView? _notificationView;
 
+    private readonly IAnimationSettingsProvider _animationSettings;
     private readonly DispatcherTimer _timer;
 }

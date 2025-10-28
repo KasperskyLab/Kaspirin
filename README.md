@@ -1,6 +1,6 @@
- <img src="docs/logo.png" alt="Kaspirin"/>
- 
- # Kaspirin Documentation
+<img src="docs/logo.png" alt="Kaspirin"/>
+
+# Kaspirin Documentation
 
 This documentation provides a brief overview of the key functionality provided by the Kaspirin platform, which consists of the following projects:
 
@@ -69,12 +69,86 @@ To get started with Kaspirin, you need to:
     * Kaspirin.UI.Framework.UiKit
     * Kaspirin.UI.Framework.UiKit.Styles
     * Kaspirin.UI.Framework.UiKit.Media;
+
+```xml
+<Project>
+    ...
+
+    <Import Project="$(SolutionDir)kaspirin.net.props" />
+
+    ...
+
+    <!-- This code apply all necessary assemblies in the csproj file of the project, as well as the usage of GlobalUsings.cs. -->
+
+    <Import Project="$(FrameworkProps)" />
+    <Import Project="$(FrameworkUIKitProps)" />
+    <Import Project="$(FrameworkUIKitStylesProps)" />
+    <Import Project="$(FrameworkUIKitMediaProps)" />
+</Project>
+```
+
+
 3. Add to Application.Resources:
     * a link to the Visuals.xaml dictionary from Kaspirin.UI.Framework.UiKit.Styles
+
+```xml
+<Application ... >
+    <Application.Resources>
+        <ResourceDictionary>
+
+            <!-- This code apply all xaml styles declared in Kaspirin.UI.Framework.UiKit -->
+
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/kaspirin.ui.framework.uikit.styles;component/Visuals.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+            ...
+
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>
+```
+
+
 4. Add to the application initialization code the following steps:
     * Initialization of logging
-    * Initialization of the container
+    * Initialization of the IoC container
     * Initialization of the localization manager
+    * Initialization of UI thread
+
+```csharp
+public static class Program
+{
+    public static void Main()
+    {
+        // (optional) Initialize logging by implementing ITracerBackend interface.
+        // By default, the DefaultTraceListener is used for logging.
+        // var tracer = GetTracerBackend();
+        // var isReleaseMode = GetReleaseMode();
+        // TracerInstaller.InstallTracer(isReleaseMode, tracer);
+
+        // Initializing IoC container
+        var container = new RapidUnityContainer();
+
+        // Overriding interfaces and initializing additional services
+        // should be done before calling BuildUiKitServices method.
+        container.BuildUiKitServices();
+
+        // Registering IoC container in ServiceLocator.
+        ServiceLocator.SetContainer(container);
+
+        // Initializing Localization Manager.
+        LocalizationManager.Initialize(culture: "en-US");
+
+        // Creating UI thread.
+        var wpfThread = new WpfThread(() => new App().Run());
+
+        // Starting WPF application in UI thread.
+        wpfThread.Start();
+    }
+}
+```
+
 
 ## Releases
 

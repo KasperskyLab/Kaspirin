@@ -110,7 +110,7 @@ public sealed class ChooseFileAction : TriggerAction<FrameworkElement>
 
         var pathObject = (FileSystemPathObject)args.InteractionObject;
 
-        ServiceLocator.Instance.GetService<INativeDialogLauncher>().ShowDialog(
+        ServiceLocator.GetService<INativeDialogLauncher>().ShowDialog(
                 createDialog: () =>
                 {
                     var dialog = new OpenFileDialog
@@ -146,7 +146,6 @@ public sealed class ChooseFileAction : TriggerAction<FrameworkElement>
                             pathObject.Path = dialog.FileName;
                         }
 
-                        pathObject.ObjectType = FileSystemPathObjectType.File;
                         pathObject.IsConfirmed = true;
                     }
                 });

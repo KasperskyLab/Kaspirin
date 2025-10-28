@@ -19,7 +19,7 @@ namespace Kaspirin.UI.Framework.UiKit.Styles.Converters;
 
 public sealed class ResourcePalette : IDictionaryConverterItem
 {
-    public UIKitPaletteStorage.UIKitPalette Id { get; set; }
+    public UIKitPalette Id { get; set; }
 
     public object GetItemValue()
     {

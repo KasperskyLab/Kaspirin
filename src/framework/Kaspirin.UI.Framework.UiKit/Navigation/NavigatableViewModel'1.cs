@@ -25,8 +25,8 @@ public abstract class NavigatableViewModel<TParams> : NavigatableViewModel, INav
     {
     }
 
-    protected NavigatableViewModel(ComponentTracer tracer)
-        : base(tracer)
+    protected NavigatableViewModel(ComponentTracerParameters tracerParameters)
+        : base(tracerParameters)
     {
     }
 

@@ -15,16 +15,15 @@
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
-using System.Threading;
 using System.Windows.Input;
 using Kaspirin.UI.Framework.Mvvm.Internals;
 
 namespace Kaspirin.UI.Framework.Mvvm;
 
 /// <summary>
-///     Provides an implementation of <see cref="ICommand" /> that automatically monitors all properties
-///     used in the expression for checking <see cref="CanExecute()" />. This class automatically calls <see cref="RaiseCanExecuteChanged" />
-///     every time these properties are changed.
+///     Provides an implementation <see cref="ICommand" /> that automatically monitors all properties
+///     used in the expression for validation <see cref="CanExecute()" />. This class automatically
+///     calls <see cref="BaseCommand.RaiseCanExecuteChanged" /> every time these properties are changed.
 /// </summary>
 /// <remarks>
 ///     Only the properties <b> defined explicitly in the expression </b> will be automatically
@@ -45,7 +44,7 @@ namespace Kaspirin.UI.Framework.Mvvm;
 ///     new ObservableCommand(() => DoSomeWork(), () => ConditionProp ? PropToObserve1 : PropToObserve2) == "test")
 ///     </code>
 /// </remarks>
-public class ObservableCommand : ICommand
+public class ObservableCommand : BaseCommand, ICommand
 {
     /// <summary>
     ///     Initializes a new instance of the <see cref="ObservableCommand" /> class with the specified
@@ -58,19 +57,8 @@ public class ObservableCommand : ICommand
     ///     An expression to determine whether a command can be executed.
     /// </param>
     public ObservableCommand(Action executeAction, Expression<Func<bool>> canExecuteExpression)
+        : this(parameter => executeAction(), canExecuteExpression)
     {
-        Guard.ArgumentIsNotNull(executeAction);
-        Guard.ArgumentIsNotNull(canExecuteExpression);
-
-        var canExecuteWrapperExpression = Expression.Lambda<Func<object?, bool>>(
-            canExecuteExpression.Body,
-            Expression.Parameter(typeof(object), "o"));
-
-        _synchronizationContext = SynchronizationContext.Current;
-        _execute = o => executeAction();
-        _canExecute = canExecuteWrapperExpression.Compile();
-
-        ObserveProperties(canExecuteWrapperExpression);
     }
 
     /// <summary>
@@ -83,22 +71,13 @@ public class ObservableCommand : ICommand
     /// <param name="canExecuteExpression">
     ///     An expression to determine whether a command can be executed.
     /// </param>
-    protected ObservableCommand(Action<object?> executeAction, Expression<Func<object?, bool>> canExecuteExpression)
+    protected ObservableCommand(Action<object?> executeAction, Expression<Func<bool>> canExecuteExpression)
     {
-        Guard.ArgumentIsNotNull(executeAction);
-        Guard.ArgumentIsNotNull(canExecuteExpression);
-
-        _synchronizationContext = SynchronizationContext.Current;
-        _execute = executeAction;
-        _canExecute = canExecuteExpression.Compile();
+        _execute = Guard.EnsureArgumentIsNotNull(executeAction);
+        _canExecute = Guard.EnsureArgumentIsNotNull(canExecuteExpression).Compile();
 
         ObserveProperties(canExecuteExpression);
     }
-
-    /// <summary>
-    ///     An event that occurs when the ability to execute a command changes.
-    /// </summary>
-    public event EventHandler? CanExecuteChanged;
 
     /// <summary>
     ///     Determines whether the command can be executed.
@@ -110,59 +89,21 @@ public class ObservableCommand : ICommand
         => CanExecute(null);
 
     /// <summary>
-    ///     Determines whether the command can be executed with the specified parameter.
-    /// </summary>
-    /// <param name="parameter">
-    ///     The parameter used to determine whether the command can be executed.
-    /// </param>
-    /// <returns>
-    ///     Returns the value <see langword="true" /> if the command can be executed, otherwise <see langword="false" />.
-    /// </returns>
-    public bool CanExecute(object? parameter)
-    {
-        return _canExecute switch
-        {
-            null => true,
-            _ => _canExecute(parameter)
-        };
-    }
-
-    /// <summary>
     ///     Executes the command.
     /// </summary>
     public void Execute()
         => Execute(null);
 
-    /// <summary>
-    ///     Executes the command.
-    /// </summary>
-    /// <param name="parameter">
-    ///     A command parameter.
-    /// </param>
-    public void Execute(object? parameter)
+    /// <inheritdoc/>
+    public override bool CanExecute(object? parameter)
+        => _canExecute.Invoke();
+
+    /// <inheritdoc/>
+    public override void Execute(object? parameter)
     {
         if (CanExecute(parameter))
         {
-            _execute(parameter);
-        }
-    }
-
-    /// <summary>
-    ///     Triggers the <see cref="CanExecuteChanged" /> event.
-    /// </summary>
-    public void RaiseCanExecuteChanged()
-    {
-        var handler = CanExecuteChanged;
-        if (handler != null)
-        {
-            if (_synchronizationContext != null && _synchronizationContext != SynchronizationContext.Current)
-            {
-                _synchronizationContext.Post((o) => handler.Invoke(this, EventArgs.Empty), null);
-            }
-            else
-            {
-                handler.Invoke(this, EventArgs.Empty);
-            }
+            _execute.Invoke(parameter);
         }
     }
 
@@ -175,7 +116,7 @@ public class ObservableCommand : ICommand
     /// <exception cref="ArgumentException">
     ///     It is thrown out if the expression is already observed.
     /// </exception>
-    protected void ObserveProperties(Expression<Func<object?, bool>> canExecuteExpression)
+    protected void ObserveProperties(Expression<Func<bool>> canExecuteExpression)
     {
         Guard.Argument(
             _observedExpressions.Add(canExecuteExpression.ToString()),
@@ -186,7 +127,6 @@ public class ObservableCommand : ICommand
 
     private readonly HashSet<string> _observedExpressions = new();
     private readonly List<PropertyObserver> _propertyObservers = new();
-    private readonly SynchronizationContext? _synchronizationContext;
     private readonly Action<object?> _execute;
-    private readonly Func<object?, bool> _canExecute;
+    private readonly Func<bool> _canExecute;
 }

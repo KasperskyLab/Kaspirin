@@ -12,14 +12,25 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using Kaspirin.UI.Framework.UiKit.Controls.Internals;
 
 namespace Kaspirin.UI.Framework.UiKit.Controls;
 
-public sealed class InteractivityNotification : ContentControl
+public sealed class InteractivityNotification : ContentControl, INotificationAnimatable
 {
+    public const string DefaultScopeName = "RootScope";
+
+    public InteractivityNotification()
+    {
+        _deferredClose = new DeferredAction(() => Close(forced: false));
+
+        this.WhenLoaded(OnLoaded);
+    }
+
     #region Type
 
     public InteractivityNotificationType Type
@@ -115,4 +126,124 @@ public sealed class InteractivityNotification : ContentControl
         new PropertyMetadata(default(ICommand)));
 
     #endregion
+
+    #region AutoCloseTimeout
+
+    public TimeSpan AutoCloseTimeout
+    {
+        get => (TimeSpan)GetValue(AutoCloseTimeoutProperty);
+        set => SetValue(AutoCloseTimeoutProperty, value);
+    }
+
+    public static readonly DependencyProperty AutoCloseTimeoutProperty = DependencyProperty.Register(
+        nameof(AutoCloseTimeout),
+        typeof(TimeSpan),
+        typeof(InteractivityNotification),
+        new PropertyMetadata(default(TimeSpan)));
+
+    #endregion
+
+    #region ScopeName
+
+    public string ScopeName
+    {
+        get => (string)GetValue(ScopeNameProperty);
+        set => SetValue(ScopeNameProperty, value);
+    }
+
+    public static readonly DependencyProperty ScopeNameProperty = DependencyProperty.Register(
+        nameof(ScopeName),
+        typeof(string),
+        typeof(InteractivityNotification),
+        new PropertyMetadata(DefaultScopeName));
+
+    #endregion
+
+    #region ScopeMaxNotificationCount
+
+    public int ScopeMaxNotificationCount
+    {
+        get => (int)GetValue(ScopeMaxNotificationCountProperty);
+        set => SetValue(ScopeMaxNotificationCountProperty, value);
+    }
+
+    public static readonly DependencyProperty ScopeMaxNotificationCountProperty = DependencyProperty.Register(
+        nameof(ScopeMaxNotificationCount),
+        typeof(int),
+        typeof(InteractivityNotification),
+        new PropertyMetadata(1));
+
+    #endregion
+
+    #region INotificationAnimatable
+
+    void INotificationAnimatable.OnOpening(Action? completedCallback)
+    {
+        InteractivityNotificationScope.Register(this, completedCallback);
+    }
+
+    void INotificationAnimatable.OnClosing(Action? completedCallback)
+    {
+        InteractivityNotificationScope.Unregister(this, completedCallback);
+    }
+
+    #endregion
+
+    internal void ShowContent(Action? continueCallback)
+    {
+        _mediaProvider.LaunchShowAnimation(this, continueCallback);
+    }
+
+    internal void HideContent(Action? continueCallback)
+    {
+        _mediaProvider.LaunchHideAnimation(this, continueCallback);
+    }
+
+    internal void Close(bool forced = false)
+    {
+        if (forced)
+        {
+            _notificationView?.CloseForced();
+        }
+        else
+        {
+            _notificationView?.Close();
+        }
+    }
+
+    private void OnLoaded()
+    {
+        var hasAutoClose = AutoCloseTimeout != TimeSpan.Zero;
+
+        var notificationView = this.FindVisualParent<NotificationView>();
+        if (notificationView != null && hasAutoClose)
+        {
+            _notificationView = notificationView;
+            _notificationView.WhenOpened(() =>
+            {
+                if (!IsMouseOver)
+                {
+                    StartAutoClose();
+                }
+            });
+
+            MouseLeave += (o, eventArgs) => StartAutoClose();
+            MouseEnter += (o, eventArgs) => StopAutoClose();
+        }
+    }
+
+    private void StartAutoClose()
+    {
+        _deferredClose.Execute(AutoCloseTimeout);
+    }
+
+    private void StopAutoClose()
+    {
+        _deferredClose.Cancel();
+    }
+
+    private readonly DeferredAction _deferredClose;
+    private readonly InteractivityMediaProvider _mediaProvider = new();
+
+    private NotificationView? _notificationView;
 }

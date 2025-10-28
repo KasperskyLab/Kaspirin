@@ -47,8 +47,7 @@ public static class EnumerableExtensions
     }
 
     /// <summary>
-    ///     Searches for the index of the first element in the enumeration that meets the verification
-    ///     condition <paramref name="predict" />.
+    ///     Returns the index of the first element in the enumeration that satisfies the verification condition <paramref name="predicate" />.
     /// </summary>
     /// <typeparam name="T">
     ///     The type of the element.
@@ -62,16 +61,24 @@ public static class EnumerableExtensions
     /// <returns>
     ///     Returns the index of the first found element, or -1 if the element is not found.
     /// </returns>
-    public static int FindIndex<T>(this IEnumerable<T> source, Predicate<T> predicate)
+    public static int IndexOf<T>(this IEnumerable<T> source, Predicate<T> predicate)
     {
         Guard.ArgumentIsNotNull(source);
         Guard.ArgumentIsNotNull(predicate);
 
-        var foundItem = source
-            .Select((element, index) => new { IsTrue = predicate(element), Index = index })
-            .FirstOrDefault(item => item.IsTrue);
+        var index = 0;
 
-        return foundItem == null ? -1 : foundItem.Index;
+        foreach (var item in source)
+        {
+            if (predicate(item))
+            {
+                return index;
+            }
+
+            ++index;
+        }
+
+        return -1;
     }
 
     /// <summary>

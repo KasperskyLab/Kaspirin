@@ -66,11 +66,17 @@ public sealed class ComponentTracer
         {
             Guard.Assert(value.In(_expectedTraceLevels));
 
-            var oldValue = _maxTraceLevel;
-            _maxTraceLevel = value;
+            if (_maxTraceLevel != value)
+            {
+                var oldValue = _maxTraceLevel;
+                var newValue = value;
 
-            UpdateTraceLevels();
-            Get(ComponentTracers.Log).TraceInformation($"Maximal trace level is updated from {oldValue} to {value}");
+                _maxTraceLevel = value;
+
+                UpdateTraceLevels();
+
+                Get(ComponentTracers.Log).TraceInformation($"Maximal trace level is updated from {oldValue} to {newValue}");
+            }
         }
     }
 
@@ -84,10 +90,7 @@ public sealed class ComponentTracer
     ///     The <see cref="ComponentTracer" /> object for the specified component.
     /// </returns>
     public static ComponentTracer Get(string traceComponent)
-        => Get(
-            traceComponent: traceComponent,
-            prefix: string.Empty,
-            hash: null);
+        => Get(new ComponentTracerParameters(traceComponent));
 
     /// <summary>
     ///     Retrieves the <see cref="ComponentTracer" /> object for the specified trace component.
@@ -102,10 +105,10 @@ public sealed class ComponentTracer
     ///     The <see cref="ComponentTracer" /> object for the specified component.
     /// </returns>
     public static ComponentTracer Get(object source, bool appendHash = false)
-        => Get(
-            traceComponent: Guard.EnsureArgumentIsNotNull(source).GetType().Name,
-            prefix: string.Empty,
-            hash: appendHash ? source.GetHashCode() : null);
+        => Get(new ComponentTracerParameters(Guard.EnsureArgumentIsNotNull(source).GetType().Name)
+        {
+            HashSource = appendHash ? source : null,
+        });
 
     /// <summary>
     ///     Retrieves the <see cref="ComponentTracer" /> object for the specified trace component.
@@ -123,10 +126,11 @@ public sealed class ComponentTracer
     ///     The <see cref="ComponentTracer" /> object for the specified component.
     /// </returns>
     public static ComponentTracer Get(string traceComponent, object source, bool appendHash = false)
-        => Get(
-            traceComponent: traceComponent,
-            prefix: Guard.EnsureArgumentIsNotNull(source).GetType().Name,
-            hash: appendHash ? source.GetHashCode() : null);
+        => Get(new ComponentTracerParameters(traceComponent)
+        {
+            PrefixSource = source,
+            HashSource = appendHash ? source : null,
+        });
 
     /// <summary>
     ///     Retrieves the <see cref="ComponentTracer" /> object for the specified trace component.
@@ -138,23 +142,43 @@ public sealed class ComponentTracer
     ///     The prefix of the message.
     /// </param>
     /// <param name="hash">
-    ///     The hash code of the traceable component.
+    ///     The hash code of the traced component.
     /// </param>
     /// <returns>
     ///     The <see cref="ComponentTracer" /> object for the specified component.
     /// </returns>
     public static ComponentTracer Get(string traceComponent, string prefix, object? hash = null)
-    {
-        Guard.ArgumentIsNotNullOrEmpty(traceComponent);
-        Guard.ArgumentIsNotNull(prefix);
-
-        if (hash == null)
+        => Get(new ComponentTracerParameters(traceComponent)
         {
-            return _tracersMap.GetOrAdd(traceComponent + prefix, _ => new ComponentTracer(traceComponent, prefix, null));
+            PrefixSource = prefix,
+            PrefixFunc = o => (string)o,
+            HashSource = hash,
+        });
+
+    /// <summary>
+    ///     Retrieves the <see cref="ComponentTracer" /> object for the specified trace component.
+    /// </summary>
+    /// <param name="parameters">
+    ///     Tracer parameters.
+    /// </param>
+    /// <returns>
+    ///     The <see cref="ComponentTracer" /> object for the specified component.
+    /// </returns>
+    public static ComponentTracer Get(ComponentTracerParameters parameters)
+    {
+        Guard.ArgumentIsNotNull(parameters);
+
+        var hasHash = parameters.HashSource != null && parameters.HashFunc != null;
+        if (hasHash)
+        {
+            return new ComponentTracer(parameters);
         }
         else
         {
-            return new ComponentTracer(traceComponent, prefix, hash);
+            var tracerKey = GetTracerKey(parameters);
+
+            // if tracer has no hash part is message, we can cache tracer instance.
+            return _tracersMap.GetOrAdd(tracerKey, _ => new ComponentTracer(parameters));
         }
     }
 
@@ -274,7 +298,7 @@ public sealed class ComponentTracer
     ///     The name of the method.
     /// </param>
     public void TraceMethodStart(string? message = null, [CallerMemberName] string? method = null)
-        => TraceDebug($"{method}: method is started{(message == null ? "" : (". " + message))}");
+        => TraceDebug($"{method}: method is started.{(message == null ? string.Empty : (" " + message))}");
 
     /// <summary>
     ///     Writes a debugging message to the trace about the completion of the method execution.
@@ -286,7 +310,7 @@ public sealed class ComponentTracer
     ///     The name of the method.
     /// </param>
     public void TraceMethodFinish(string? message = null, [CallerMemberName] string? method = null)
-        => TraceDebug($"{method}: method is finished{(message == null ? "" : (". " + message))}");
+        => TraceDebug($"{method}: method is finished.{(message == null ? string.Empty : (" " + message))}");
 
     /// <summary>
     ///     Writes a debugging message to the trace with the name of the method.
@@ -311,7 +335,7 @@ public sealed class ComponentTracer
     ///     The name of the method.
     /// </param>
     public void TraceMethodDebug(
-        ref InfoInterpolatedStringHandler interpolatedStringHandler,
+        ref DebugInterpolatedStringHandler interpolatedStringHandler,
         [CallerMemberName] string? method = null)
     {
         TraceDebug($"{method}: {interpolatedStringHandler.ToStringAndClear()}");
@@ -369,7 +393,7 @@ public sealed class ComponentTracer
     ///     The name of the method.
     /// </param>
     public void TraceMethodWarning(
-        ref InfoInterpolatedStringHandler interpolatedStringHandler,
+        ref WarnInterpolatedStringHandler interpolatedStringHandler,
         [CallerMemberName] string? method = null)
     {
         TraceWarning($"{method}: {interpolatedStringHandler.ToStringAndClear()}");
@@ -398,26 +422,32 @@ public sealed class ComponentTracer
     ///     The name of the method.
     /// </param>
     public void TraceMethodError(
-        ref InfoInterpolatedStringHandler interpolatedStringHandler,
+        ref ErrorInterpolatedStringHandler interpolatedStringHandler,
         [CallerMemberName] string? method = null)
     {
         TraceError($"{method}: {interpolatedStringHandler.ToStringAndClear()}");
     }
 
-    private ComponentTracer(string traceComponent, string? prefix, object? hash)
+    private ComponentTracer(ComponentTracerParameters parameters)
     {
-        _tracePrefix = $"{traceComponent}\t";
+        _tracePrefix = $"{parameters.TraceComponent}\t";
 
-        var hashStr = hash?.ToString();
-
-        if (!string.IsNullOrEmpty(hashStr))
+        if (parameters.HashSource != null)
         {
-            _tracePrefix = _tracePrefix + $"hash:{hashStr}\t";
+            var hash = parameters.HashFunc?.Invoke(parameters.HashSource);
+            if (hash.IsNotNullOrEmpty())
+            {
+                _tracePrefix += $"hash:{hash}\t";
+            }
         }
 
-        if (!string.IsNullOrEmpty(prefix))
+        if (parameters.PrefixSource != null)
         {
-            _tracePrefix = _tracePrefix + prefix + " ";
+            var prefix = parameters.PrefixFunc?.Invoke(parameters.PrefixSource);
+            if (prefix.IsNotNullOrEmpty())
+            {
+                _tracePrefix += $"{prefix} ";
+            }
         }
     }
 
@@ -429,10 +459,27 @@ public sealed class ComponentTracer
         CanTraceError = _maxTraceLevel >= TraceEventType.Error;
     }
 
+    private static string GetTracerKey(ComponentTracerParameters parameters)
+    {
+        var key = parameters.TraceComponent;
+
+        if (parameters.PrefixSource != null)
+        {
+            key += parameters.PrefixSource.GetType().Name;
+
+            if (parameters.PrefixFunc != null)
+            {
+                key += parameters.PrefixFunc.Invoke(parameters.PrefixSource);
+            }
+        }
+
+        return key;
+    }
+
     private readonly string _tracePrefix;
 
     private static readonly ConcurrentDictionary<string, ComponentTracer> _tracersMap = new();
-    private static readonly object[] _emptyArgs = new object[0];
+
     private static readonly TraceEventType[] _expectedTraceLevels =
     {
         0, // Used to disable tracing.

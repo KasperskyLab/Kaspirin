@@ -32,7 +32,7 @@ public abstract class BaseViewModel : BaseAppObject, INotifyPropertyChanged
     }
 
     /// <summary>
-    ///     Creates a new instance of the <see cref="BaseViewModel" /> class.
+    ///     Initializes a new instance of the <see cref="BaseViewModel" /> class.
     /// </summary>
     /// <param name="traceComponent">
     ///     The name of the component for the message tracer.
@@ -43,13 +43,29 @@ public abstract class BaseViewModel : BaseAppObject, INotifyPropertyChanged
     }
 
     /// <summary>
-    ///     Creates a new instance of the <see cref="BaseViewModel" /> class.
+    ///     Initializes a new instance of the <see cref="BaseViewModel" /> class.
     /// </summary>
     /// <param name="tracer">
     ///     The message tracer.
     /// </param>
     protected BaseViewModel(ComponentTracer tracer)
         : base(tracer)
+    {
+    }
+
+    /// <summary>
+    ///     Initializes a new instance of the <see cref="BaseViewModel" /> class.
+    /// </summary>
+    /// <param name="tracerParameters">
+    ///     Message tracer parameters.
+    /// </param>
+    /// <remarks>
+    ///     If the properties <see cref="ComponentTracerParameters.HashSource" /> or <see cref="ComponentTracerParameters.PrefixSource" />
+    ///     of the <paramref name="tracerParameters" /> object are <see langword="null" />, then <see langword="this" />
+    ///     is automatically inserted there.
+    /// </remarks>
+    protected BaseViewModel(ComponentTracerParameters tracerParameters)
+        : base(tracerParameters)
     {
     }
 
@@ -108,10 +124,10 @@ public abstract class BaseViewModel : BaseAppObject, INotifyPropertyChanged
     ///     The name of the property.
     /// </param>
     /// <returns>
-    ///     Returns <see langword="true" /> if the property value has been changed, otherwise <see langword="false" />.
+    ///     Returns <see langword="true" /> if the property value has been changed, otherwise - <see langword="false" />.
     /// </returns>
     protected virtual bool SetProperty<T>(ref T storage, T value, [CallerMemberName] string? propertyName = default)
-        => SetProperty(ref storage, value, onChanged: default, propertyName);
+        => SetProperty(ref storage, value, onChanged: default(Action<T?>), propertyName);
 
     /// <summary>
     ///     Sets the value of the property and generates a property change event if the value has changed.
@@ -132,9 +148,33 @@ public abstract class BaseViewModel : BaseAppObject, INotifyPropertyChanged
     ///     The name of the property.
     /// </param>
     /// <returns>
-    ///     Returns <see langword="true" /> if the property value has been changed, otherwise <see langword="false" />.
+    ///     Returns <see langword="true" /> if the property value has been changed, otherwise - <see langword="false" />.
     /// </returns>
     protected virtual bool SetProperty<T>(ref T storage, T value, Action? onChanged, [CallerMemberName] string? propertyName = default)
+        => SetProperty(ref storage, value, onChanged: v => onChanged?.Invoke(), propertyName);
+
+    /// <summary>
+    ///     Sets the value of the property and generates a property change event if the value has changed.
+    /// </summary>
+    /// <typeparam name="T">
+    ///     The type of the property.
+    /// </typeparam>
+    /// <param name="storage">
+    ///     A reference to the property.
+    /// </param>
+    /// <param name="value">
+    ///     The new value of the property.
+    /// </param>
+    /// <param name="onChanged">
+    ///     The action that will be performed after the property is changed.
+    /// </param>
+    /// <param name="propertyName">
+    ///     The name of the property.
+    /// </param>
+    /// <returns>
+    ///     Returns <see langword="true" /> if the property value has been changed, otherwise - <see langword="false" />.
+    /// </returns>
+    protected virtual bool SetProperty<T>(ref T storage, T value, Action<T>? onChanged, [CallerMemberName] string? propertyName = default)
     {
         if (EqualityComparer<T>.Default.Equals(storage, value))
         {
@@ -142,7 +182,7 @@ public abstract class BaseViewModel : BaseAppObject, INotifyPropertyChanged
         }
 
         storage = value;
-        onChanged?.Invoke();
+        onChanged?.Invoke(value);
 
         RaisePropertyChangedCore(propertyName);
 
@@ -156,7 +196,7 @@ public abstract class BaseViewModel : BaseAppObject, INotifyPropertyChanged
     private void RaisePropertyChangedCore(string? propertyName)
     {
         var executer = Executers.Implementation;
-        if (executer.CanExecuteInUiThread && executer.IsUiThread is false)
+        if (executer.IsAvailable && executer.IsUiThread is false)
         {
             executer.ExecuteInUiThreadAsync(() => RaiseEvent(this, propertyName));
         }

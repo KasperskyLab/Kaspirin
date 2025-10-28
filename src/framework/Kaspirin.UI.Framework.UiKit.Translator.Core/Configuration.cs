@@ -49,6 +49,9 @@ internal sealed class Configuration
     public string PaletteNamespacePart { get; private set; }
 
     [DataMember]
+    public string PaletteFontScope { get; private set; }
+
+    [DataMember]
     public string SvgDirectory { get; private set; }
 
     [DataMember]
@@ -67,7 +70,7 @@ internal sealed class Configuration
     public string UiKitPath { get; private set; }
 
     [DataMember]
-    public string FileComment { get; internal set; }
+    public string FileComment { get; private set; }
 
     [DataContract]
     internal sealed class ProductMediaProjectInfo

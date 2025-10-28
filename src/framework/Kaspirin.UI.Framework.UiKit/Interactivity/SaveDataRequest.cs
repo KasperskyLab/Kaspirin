@@ -52,7 +52,7 @@ public sealed class SaveDataRequest : SaveDataRequest<SaveDataObject>
     {
         Guard.ArgumentIsNotNull(onConfirmed);
 
-        base.Raise(new SaveDataObject(), onConfirmed, onCancelled);
+        base.Raise(new SaveDataObject(), onSave: onConfirmed, onCancel: onCancelled);
     }
 
     public void Raise(object dataContext, Action onSave, Action? onDiscard = null, Action? onCancel = null)

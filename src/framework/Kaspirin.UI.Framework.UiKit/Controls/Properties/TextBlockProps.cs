@@ -87,17 +87,17 @@ public static class TextBlockProps
     {
         if (e.NewValue != null)
         {
-            d.SetValue(TextBlockFontBehavior.StyleProperty, e.NewValue);
-            d.SetValue(TextBlockFontBehavior.IsEnabledProperty, true);
+            d.SetValue(FrameworkElementFontBehavior.StyleProperty, e.NewValue);
+            d.SetValue(FrameworkElementFontBehavior.IsEnabledProperty, true);
         }
         else
         {
-            d.SetValue(TextBlockFontBehavior.StyleProperty, DependencyProperty.UnsetValue);
+            d.SetValue(FrameworkElementFontBehavior.StyleProperty, DependencyProperty.UnsetValue);
 
             if (d.GetValue(FontStyleProperty) == null &&
                 d.GetValue(FontBrushProperty) == null)
             {
-                d.SetValue(TextBlockFontBehavior.IsEnabledProperty, false);
+                d.SetValue(FrameworkElementFontBehavior.IsEnabledProperty, false);
             }
         }
     }
@@ -122,17 +122,17 @@ public static class TextBlockProps
     {
         if (e.NewValue != null)
         {
-            d.SetValue(TextBlockFontBehavior.BrushProperty, e.NewValue);
-            d.SetValue(TextBlockFontBehavior.IsEnabledProperty, true);
+            d.SetValue(FrameworkElementFontBehavior.BrushProperty, e.NewValue);
+            d.SetValue(FrameworkElementFontBehavior.IsEnabledProperty, true);
         }
         else
         {
-            d.SetValue(TextBlockFontBehavior.BrushProperty, DependencyProperty.UnsetValue);
+            d.SetValue(FrameworkElementFontBehavior.BrushProperty, DependencyProperty.UnsetValue);
 
             if (d.GetValue(FontStyleProperty) == null &&
                 d.GetValue(FontBrushProperty) == null)
             {
-                d.SetValue(TextBlockFontBehavior.IsEnabledProperty, false);
+                d.SetValue(FrameworkElementFontBehavior.IsEnabledProperty, false);
             }
         }
     }

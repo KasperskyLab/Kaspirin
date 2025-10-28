@@ -16,8 +16,40 @@ using System.Windows;
 
 namespace Kaspirin.UI.Framework.UiKit.Controls;
 
-public sealed class InteractivityOverlayCut : InteractivityOverlayCutBase
+public sealed class InteractivityOverlayCut : DependencyObject
 {
+    #region ClipCornerRadius
+
+    public double ClipCornerRadius
+    {
+        get => (double)GetValue(ClipCornerRadiusProperty);
+        set => SetValue(ClipCornerRadiusProperty, value);
+    }
+
+    public static readonly DependencyProperty ClipCornerRadiusProperty = DependencyProperty.Register(
+        nameof(ClipCornerRadius),
+        typeof(double),
+        typeof(InteractivityOverlayCut),
+        new PropertyMetadata(UIKitConstants.InteractivityOverlayClipCornerRadius));
+
+    #endregion
+
+    #region ClipMargin
+
+    public Thickness ClipMargin
+    {
+        get => (Thickness)GetValue(ClipMarginProperty);
+        set => SetValue(ClipMarginProperty, value);
+    }
+
+    public static readonly DependencyProperty ClipMarginProperty = DependencyProperty.Register(
+        nameof(ClipMargin),
+        typeof(Thickness),
+        typeof(InteractivityOverlayCut),
+        new PropertyMetadata(UIKitConstants.InteractivityOverlayClipMargin));
+
+    #endregion
+
     #region AllowsInteraction
 
     public bool AllowsInteraction
@@ -143,6 +175,54 @@ public sealed class InteractivityOverlayCut : InteractivityOverlayCutBase
         typeof(double),
         typeof(InteractivityOverlayCut),
         new PropertyMetadata(default(double)));
+
+    #endregion
+
+    #region PopupPosition
+
+    public PopupPosition PopupPosition
+    {
+        get => (PopupPosition)GetValue(PopupPositionProperty);
+        set => SetValue(PopupPositionProperty, value);
+    }
+
+    public static readonly DependencyProperty PopupPositionProperty = DependencyProperty.Register(
+        nameof(PopupPosition),
+        typeof(PopupPosition),
+        typeof(InteractivityOverlayCut),
+        new PropertyMetadata(PopupPosition.Top));
+
+    #endregion
+
+    #region PopupContent
+
+    public object? PopupContent
+    {
+        get => (object?)GetValue(PopupContentProperty);
+        set => SetValue(PopupContentProperty, value);
+    }
+
+    public static readonly DependencyProperty PopupContentProperty = DependencyProperty.Register(
+        nameof(PopupContent),
+        typeof(object),
+        typeof(InteractivityOverlayCut),
+        new PropertyMetadata(default(object)));
+
+    #endregion
+
+    #region PopupContentTemplate
+
+    public DataTemplate? PopupContentTemplate
+    {
+        get => (DataTemplate?)GetValue(PopupContentTemplateProperty);
+        set => SetValue(PopupContentTemplateProperty, value);
+    }
+
+    public static readonly DependencyProperty PopupContentTemplateProperty = DependencyProperty.Register(
+        nameof(PopupContentTemplate),
+        typeof(DataTemplate),
+        typeof(InteractivityOverlayCut),
+        new PropertyMetadata(default(DataTemplate)));
 
     #endregion
 }

@@ -23,12 +23,16 @@ using System.Windows.Threading;
 
 namespace Kaspirin.UI.Framework.UiKit.Controls;
 
+[TemplatePart(Name = PART_Content, Type = typeof(ContentPresenter))]
 [TemplatePart(Name = PART_OverlayBackground, Type = typeof(Border))]
 [TemplatePart(Name = PART_OverlayCutDecoratorsContainer, Type = typeof(Canvas))]
-public sealed class InteractivityOverlay : ContentControl
+[TemplatePart(Name = PART_OverlayCutPopup, Type = typeof(Popup))]
+public sealed class InteractivityOverlay : ContentControl, INotificationAnimatable
 {
+    public const string PART_Content = "PART_Content";
     public const string PART_OverlayBackground = "PART_OverlayBackground";
     public const string PART_OverlayCutDecoratorsContainer = "PART_OverlayCutDecoratorsContainer";
+    public const string PART_OverlayCutPopup = "PART_OverlayCutPopup";
 
     public InteractivityOverlay()
     {
@@ -146,12 +150,59 @@ public sealed class InteractivityOverlay : ContentControl
 
     #endregion
 
+    #region INotificationAnimatable
+
+    void INotificationAnimatable.OnOpening(Action? completedCallback)
+    {
+        ShowContent(completedCallback);
+        ShowOverlay();
+    }
+
+    void INotificationAnimatable.OnClosing(Action? completedCallback)
+    {
+        HideContent(completedCallback);
+        HideOverlay();
+    }
+
+    #endregion
+
     public override void OnApplyTemplate()
     {
         _overlayCutDecoratorsContainer = Guard.EnsureIsInstanceOfType<Canvas>(GetTemplateChild(PART_OverlayCutDecoratorsContainer));
+        _overlayCutPopup = Guard.EnsureIsInstanceOfType<Popup>(GetTemplateChild(PART_OverlayCutPopup));
+        _content = Guard.EnsureIsInstanceOfType<ContentPresenter>(GetTemplateChild(PART_Content));
 
         _overlayBackground = Guard.EnsureIsInstanceOfType<Border>(GetTemplateChild(PART_OverlayBackground));
         _overlayBackground.MouseLeftButtonDown += OnBackgroundPressed;
+    }
+
+    internal void ShowContent(Action? completedCallback)
+    {
+        Guard.IsNotNull(_content);
+
+        _contentMediaProvider.LaunchShowAnimation(_content, completedCallback);
+    }
+
+    internal void HideContent(Action? completedCallback)
+    {
+        Guard.IsNotNull(_content);
+
+        _contentMediaProvider.LaunchHideAnimation(_content, completedCallback);
+    }
+
+    internal void ShowOverlay()
+    {
+        Guard.IsNotNull(_overlayBackground);
+
+        _overlayMediaProvider.LaunchShowAnimation(_overlayBackground);
+    }
+
+    internal void HideOverlay()
+    {
+        Guard.IsNotNull(_overlayBackground);
+
+        _overlayMediaProvider.LaunchHideAnimation(_overlayBackground);
+
     }
 
     protected override Size ArrangeOverride(Size arrangeBounds)
@@ -188,7 +239,8 @@ public sealed class InteractivityOverlay : ContentControl
         if (_parentNotificationView == null ||
             _parentNotificationLayer == null ||
             _overlayBackground == null ||
-            _overlayCutDecoratorsContainer == null)
+            _overlayCutDecoratorsContainer == null ||
+            _overlayCutPopup == null)
         {
             return;
         }
@@ -199,6 +251,7 @@ public sealed class InteractivityOverlay : ContentControl
         var backgroundClip = contentGeometry;
 
         ClearOverlayCutDecorators();
+        ClearOverlayCutPopup();
         ClearElementsTracking();
 
         foreach (var item in clipTargetElements)
@@ -213,7 +266,7 @@ public sealed class InteractivityOverlay : ContentControl
                 continue;
             }
 
-            var overlayCutRect = GetOverlayCutRect(_parentNotificationLayer, element, overlayCut.ClipExtent);
+            var overlayCutRect = GetOverlayCutRect(_parentNotificationLayer, element, overlayCut.ClipMargin);
             overlayClip = ExcludeRect(overlayClip, overlayCutRect, overlayCut.ClipCornerRadius);
 
             if (overlayCut.AllowsInteraction)
@@ -227,6 +280,12 @@ public sealed class InteractivityOverlay : ContentControl
                 var decoratorPresenter = CreateDecorator(item);
 
                 _overlayCutDecoratorsContainer.Children.Add(decoratorPresenter);
+            }
+
+            if (overlayCut.PopupContent != null ||
+                overlayCut.PopupContentTemplate != null)
+            {
+                ShowOverlayCutPopup(element, overlayCut);
             }
         }
 
@@ -278,10 +337,13 @@ public sealed class InteractivityOverlay : ContentControl
         if (parentNotificationView != null)
         {
             _parentNotificationView = parentNotificationView;
-            _parentNotificationLayer = Guard.EnsureIsNotNull(_parentNotificationView.NotificationLayer);
+            _parentNotificationLayer = _parentNotificationView.NotificationLayer;
 
-            _parentNotificationLayer.PreviewMouseDown += OnNotificationLayerPreviewMouseDown;
-            _parentNotificationLayer.PreviewMouseWheel += OnNotificationLayerPreviewMouseWheel;
+            if (_parentNotificationLayer != null)
+            {
+                _parentNotificationLayer.PreviewMouseDown += OnNotificationLayerPreviewMouseDown;
+                _parentNotificationLayer.PreviewMouseWheel += OnNotificationLayerPreviewMouseWheel;
+            }
         }
 
         UpdateClipArea();
@@ -302,9 +364,11 @@ public sealed class InteractivityOverlay : ContentControl
     private void OnNotificationLayerPreviewMouseWheel(object? sender, MouseWheelEventArgs e)
         => TryCloseOverlayOnMouseWheel(e);
 
-    private void OnElementSizeChanged(object sender, SizeChangedEventArgs e) => UpdateClipArea();
+    private void OnElementSizeChanged(object sender, SizeChangedEventArgs e)
+        => UpdateClipArea();
 
-    private void OnElementIsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e) => UpdateClipArea();
+    private void OnElementIsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        => UpdateClipArea();
 
     private void OnBackgroundPressed(object sender, MouseButtonEventArgs e)
     {
@@ -329,7 +393,7 @@ public sealed class InteractivityOverlay : ContentControl
         => CommandHelper.ExecuteCommand(OverlayCommand);
 
     private void CloseInteraction()
-        => _parentNotificationView?.CloseSmooth();
+        => _parentNotificationView?.Close();
 
     private void DragWindow()
     {
@@ -382,6 +446,44 @@ public sealed class InteractivityOverlay : ContentControl
         });
 
         _overlayCutDecoratorsContainer.Children.Clear();
+    }
+
+    private void ClearOverlayCutPopup()
+    {
+        if (_overlayCutPopup is null)
+        {
+            return;
+        }
+
+        _overlayCutPopup.ClearValue(Popup.IsPopupOpenProperty);
+        _overlayCutPopup.ClearValue(Popup.PopupTargetProperty);
+        _overlayCutPopup.ClearValue(Popup.PopupContentProperty);
+        _overlayCutPopup.ClearValue(Popup.PopupContentTemplateProperty);
+        _overlayCutPopup.ClearValue(Popup.PopupPositionProperty);
+        _overlayCutPopup.ClearValue(Popup.PopupOffsetProperty);
+    }
+
+    private void ShowOverlayCutPopup(FrameworkElement target, InteractivityOverlayCut overlayCut)
+    {
+        if (_overlayCutPopup == null)
+        {
+            return;
+        }
+
+        _overlayCutPopup.IsPopupOpen = true;
+        _overlayCutPopup.IsPopupStaysOpen = true;
+        _overlayCutPopup.PopupContent = overlayCut.PopupContent;
+        _overlayCutPopup.PopupContentTemplate = overlayCut.PopupContentTemplate;
+        _overlayCutPopup.PopupPosition = overlayCut.PopupPosition;
+        _overlayCutPopup.PopupTarget = target;
+        _overlayCutPopup.PopupOffset = overlayCut.PopupPosition switch
+        {
+            PopupPosition.Left => overlayCut.ClipMargin.Left,
+            PopupPosition.Top => overlayCut.ClipMargin.Top,
+            PopupPosition.Right => overlayCut.ClipMargin.Right,
+            PopupPosition.Bottom => overlayCut.ClipMargin.Bottom,
+            _ => 0
+        };
     }
 
     private static void BringIntoViewOnTop(FrameworkElement frameworkElement)
@@ -466,7 +568,7 @@ public sealed class InteractivityOverlay : ContentControl
                 overlayCutDecoratorTargetLocation,
                 overlayCutDecoratorTarget.ActualHeight,
                 overlayCutDecoratorTarget.ActualWidth,
-                overlayCut.ClipExtent,
+                overlayCut.ClipMargin,
                 overlayCut.DecoratorPosition,
                 decoratorPresenter.ActualHeight,
                 decoratorPresenter.ActualWidth,
@@ -521,20 +623,20 @@ public sealed class InteractivityOverlay : ContentControl
         Point decoratorTargetLocation,
         double decoratorTargetHeight,
         double decoratorTargetWidth,
-        Thickness decoratorTargetClipExtent,
+        Thickness decoratorTargetClipMargin,
         InteractivityOverlayCutDecoratorPosition decoratorPosition,
         double decoratorHeight,
         double decoratorWidth,
         double horizontalOffset,
         double verticalOffset)
     {
-        var xLeft = decoratorTargetLocation.X - decoratorTargetClipExtent.Left - decoratorWidth + horizontalOffset;
+        var xLeft = decoratorTargetLocation.X - decoratorTargetClipMargin.Left - decoratorWidth + horizontalOffset;
         var xCenter = decoratorTargetLocation.X + (decoratorTargetWidth - decoratorWidth) / 2d + horizontalOffset;
-        var xRight = decoratorTargetLocation.X + decoratorTargetClipExtent.Right + decoratorTargetWidth + horizontalOffset;
+        var xRight = decoratorTargetLocation.X + decoratorTargetClipMargin.Right + decoratorTargetWidth + horizontalOffset;
 
-        var yTop = decoratorTargetLocation.Y - decoratorTargetClipExtent.Top - decoratorHeight + verticalOffset;
+        var yTop = decoratorTargetLocation.Y - decoratorTargetClipMargin.Top - decoratorHeight + verticalOffset;
         var yCenter = decoratorTargetLocation.Y + (decoratorTargetHeight - decoratorHeight) / 2d + verticalOffset;
-        var yBottom = decoratorTargetLocation.Y + decoratorTargetClipExtent.Bottom + decoratorTargetHeight + verticalOffset;
+        var yBottom = decoratorTargetLocation.Y + decoratorTargetClipMargin.Bottom + decoratorTargetHeight + verticalOffset;
 
         return decoratorPosition switch
         {
@@ -554,7 +656,7 @@ public sealed class InteractivityOverlay : ContentControl
     {
         var mousePosition = args.GetPosition(pair.Element);
 
-        var margin = pair.OverlayCut.ClipExtent;
+        var margin = pair.OverlayCut.ClipMargin;
         mousePosition.X += margin.Left;
         mousePosition.Y += margin.Top;
 
@@ -593,10 +695,14 @@ public sealed class InteractivityOverlay : ContentControl
     }
 
     private readonly IList<FrameworkElement> _sizeAndVisibilityChangeTrackedElements = new List<FrameworkElement>();
+    private readonly InteractivityMediaProvider _contentMediaProvider = new();
+    private readonly InteractivityMediaProvider _overlayMediaProvider = new();
 
     private Size _overlayBounds;
     private Border? _overlayBackground;
     private Canvas? _overlayCutDecoratorsContainer;
+    private Popup? _overlayCutPopup;
+    private ContentPresenter? _content;
     private NotificationView? _parentNotificationView;
     private NotificationLayer? _parentNotificationLayer;
 

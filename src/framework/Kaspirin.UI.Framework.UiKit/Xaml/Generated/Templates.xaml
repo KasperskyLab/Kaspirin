@@ -16,6 +16,7 @@
 
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:automation="clr-namespace:Kaspirin.UI.Framework.UiKit.Controls.Automation"
                     xmlns:booleanConverters="clr-namespace:Kaspirin.UI.Framework.UiKit.Converters.BooleanConverters"
                     xmlns:controls="clr-namespace:Kaspirin.UI.Framework.UiKit.Controls"
                     xmlns:equalityConverters="clr-namespace:Kaspirin.UI.Framework.UiKit.Converters.EqualityConverters"
@@ -490,6 +491,13 @@
                             <Setter Property="Visibility" TargetName="PART_IconLeft" Value="Collapsed" />
                             <Setter Property="Visibility" TargetName="PART_Spinner" Value="Visible" />
                         </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="internals:ButtonBaseInternals.IsBusy" Value="True" />
+                                <Condition Property="Content" Value="{x:Null}" />
+                            </MultiTrigger.Conditions>
+                            <Setter Property="Visibility" TargetName="PART_IconRight" Value="Collapsed" />
+                        </MultiTrigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
@@ -1768,174 +1776,177 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type controls:InteractivityDialog}">
-                    <controls:InteractivityOverlay OverlayBehavior="{markupCommon:UIKitTemplateBinding OverlayBehavior}"
+                    <controls:InteractivityOverlay x:Name="PART_Overlay"
+                                                   OverlayBehavior="{markupCommon:UIKitTemplateBinding OverlayBehavior}"
                                                    OverlayCommand="{markupCommon:UIKitTemplateBinding OverlayCommand}"
                                                    Style="{uikit:UIKitBinding InteractivityDialog_InteractivityOverlayStyle}">
-                        <controls:RoundedPanel x:Name="PART_Dialog"
-                                               Background="{uikit:UIKitBinding InteractivityDialog_Background}"
-                                               BorderBrush="{uikit:UIKitBinding InteractivityDialog_BorderBrush}"
-                                               BorderThickness="{uikit:UIKitBinding InteractivityDialog_BorderThickness}"
-                                               CornerRadius="{uikit:UIKitBinding InteractivityDialog_CornerRadius}"
-                                               HorizontalAlignment="Stretch"
-                                               Margin="{markupCommon:UIKitTemplateBinding DialogMargin}"
-                                               VerticalAlignment="Center"
-                                               Width="{uikit:UIKitBinding InteractivityDialog_Width}">
-                            <Grid Grid.IsSharedSizeScope="True">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto" />
-                                    <RowDefinition Height="*" />
-                                    <RowDefinition Height="Auto" />
-                                </Grid.RowDefinitions>
+                        <Border x:Name="PART_Dialog"
+                                Height="{markupCommon:UIKitTemplateBinding DialogHeight}"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Width="{uikit:UIKitBinding InteractivityDialog_Width}">
+                            <controls:RoundedPanel Background="{uikit:UIKitBinding InteractivityDialog_Background}"
+                                                   BorderBrush="{uikit:UIKitBinding InteractivityDialog_BorderBrush}"
+                                                   BorderThickness="{uikit:UIKitBinding InteractivityDialog_BorderThickness}"
+                                                   CornerRadius="{uikit:UIKitBinding InteractivityDialog_CornerRadius}"
+                                                   Effect="{uikit:UIKitBinding InteractivityDialog_Shadow}"
+                                                   Margin="{markupCommon:UIKitTemplateBinding DialogMargin}">
+                                <Grid Grid.IsSharedSizeScope="True">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="*" />
+                                        <RowDefinition Height="Auto" />
+                                    </Grid.RowDefinitions>
 
-                                <StackPanel x:Name="PART_ButtonsContainer"
-                                            Grid.Row="0"
-                                            HorizontalAlignment="Right"
-                                            Margin="{uikit:UIKitBinding InteractivityDialog_ButtonsContainer_Margin}"
-                                            Orientation="Horizontal"
-                                            Panel.ZIndex="1"
-                                            VerticalAlignment="Top">
-                                    <controls:IconButton Command="{markupCommon:UIKitTemplateBinding HelpButtonCommand}"
-                                                         Icon="{uikit:UIKitBinding InteractivityDialog_Button_HelpIcon}"
-                                                         Margin="{uikit:UIKitBinding InteractivityDialog_Button_Margin}"
-                                                         Style="{uikit:UIKitBinding InteractivityDialog_Button_Style}"
-                                                         Visibility="{markupCommon:UIKitTemplateBinding HasHelpButton,
-                                                                                                        Converter={booleanConverters:BooleanToVisibilityConverter False=Hidden}}" />
-                                    <controls:IconButton x:Name="PART_CloseButton"
-                                                         notifications:NotificationViewBehavior.IsCloseButton="True"
-                                                         Command="{markupCommon:UIKitTemplateBinding CloseButtonCommand}"
-                                                         Icon="{uikit:UIKitBinding InteractivityDialog_Button_CloseIcon}"
-                                                         Margin="{uikit:UIKitBinding InteractivityDialog_Button_Margin}"
-                                                         Style="{uikit:UIKitBinding InteractivityDialog_Button_Style}"
-                                                         Visibility="{markupCommon:UIKitTemplateBinding HasCloseButton,
-                                                                                                        Converter={booleanConverters:BooleanToVisibilityConverter}}" />
-                                </StackPanel>
+                                    <StackPanel x:Name="PART_ButtonsContainer"
+                                                Grid.Row="0"
+                                                HorizontalAlignment="Right"
+                                                Margin="{uikit:UIKitBinding InteractivityDialog_ButtonsContainer_Margin}"
+                                                Orientation="Horizontal"
+                                                Panel.ZIndex="1"
+                                                VerticalAlignment="Top">
+                                        <controls:IconButton AutomationProperties.AutomationId="{x:Static automation:AutomationIds.ButtonHelp}"
+                                                             Command="{markupCommon:UIKitTemplateBinding HelpButtonCommand}"
+                                                             Icon="{uikit:UIKitBinding InteractivityDialog_Button_HelpIcon}"
+                                                             Margin="{uikit:UIKitBinding InteractivityDialog_Button_Margin}"
+                                                             Style="{uikit:UIKitBinding InteractivityDialog_Button_Style}"
+                                                             Visibility="{markupCommon:UIKitTemplateBinding HasHelpButton,
+                                                                                                            Converter={booleanConverters:BooleanToVisibilityConverter False=Hidden}}" />
+                                        <controls:IconButton x:Name="PART_CloseButton"
+                                                             notifications:NotificationViewBehavior.IsCloseButton="True"
+                                                             AutomationProperties.AutomationId="{x:Static automation:AutomationIds.ButtonClose}"
+                                                             Command="{markupCommon:UIKitTemplateBinding CloseButtonCommand}"
+                                                             Icon="{uikit:UIKitBinding InteractivityDialog_Button_CloseIcon}"
+                                                             Margin="{uikit:UIKitBinding InteractivityDialog_Button_Margin}"
+                                                             Style="{uikit:UIKitBinding InteractivityDialog_Button_Style}"
+                                                             Visibility="{markupCommon:UIKitTemplateBinding HasCloseButton,
+                                                                                                            Converter={booleanConverters:BooleanToVisibilityConverter}}" />
+                                    </StackPanel>
 
-                                <Grid x:Name="PART_Header"
-                                      Grid.Row="0"
-                                      Margin="{uikit:UIKitBinding InteractivityDialog_HeaderContainer_Margin}">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition SharedSizeGroup="StatusColumn" Width="Auto" />
-                                        <ColumnDefinition Width="*" />
-                                    </Grid.ColumnDefinitions>
+                                    <Grid x:Name="PART_Header"
+                                          Grid.Row="0"
+                                          Margin="{uikit:UIKitBinding InteractivityDialog_HeaderContainer_Margin}">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition SharedSizeGroup="StatusColumn" Width="Auto" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
 
-                                    <Grid Grid.Column="0"
-                                          Margin="{uikit:UIKitBinding InteractivityDialog_Icon_Margin}"
-                                          VerticalAlignment="Top"
-                                          Visibility="{markupBinding:CompactMultiBinding Binding1={Binding Visibility,
-                                                                                                           ElementName=PART_Status,
-                                                                                                           Converter={equalityConverters:EqualityToBooleanConverter},
-                                                                                                           ConverterParameter={x:Static Visibility.Collapsed}},
-                                                                                         Binding2={Binding Visibility,
-                                                                                                           ElementName=PART_Icon,
-                                                                                                           Converter={equalityConverters:EqualityToBooleanConverter},
-                                                                                                           ConverterParameter={x:Static Visibility.Collapsed}},
-                                                                                         Converter={booleanConverters:MultiBooleanToVisibilityInverseConverter}}">
+                                        <Grid Grid.Column="0"
+                                              Margin="{uikit:UIKitBinding InteractivityDialog_Icon_Margin}"
+                                              VerticalAlignment="Top"
+                                              Visibility="{markupBinding:CompactMultiBinding Binding1={Binding Visibility,
+                                                                                                               ElementName=PART_Status,
+                                                                                                               Converter={equalityConverters:EqualityToBooleanConverter},
+                                                                                                               ConverterParameter={x:Static Visibility.Collapsed}},
+                                                                                             Binding2={Binding Visibility,
+                                                                                                               ElementName=PART_Icon,
+                                                                                                               Converter={equalityConverters:EqualityToBooleanConverter},
+                                                                                                               ConverterParameter={x:Static Visibility.Collapsed}},
+                                                                                             Converter={booleanConverters:MultiBooleanToVisibilityInverseConverter}}">
 
-                                        <Grid x:Name="PART_Status"
-                                              Visibility="{markupCommon:UIKitTemplateBinding Icon,
-                                                                                             Converter={equalityConverters:EqualityToVisibilityConverter},
-                                                                                             ConverterParameter={x:Null}}">
-                                            <Ellipse Fill="{uikit:UIKitBinding InteractivityDialog_Status_Background}"
-                                                     Height="{uikit:UIKitBinding InteractivityDialog_Status_Background_Height}"
-                                                     Width="{uikit:UIKitBinding InteractivityDialog_Status_Background_Width}" />
-                                            <controls:Icon24 HorizontalAlignment="Center"
-                                                             Icon="{uikit:UIKitBinding InteractivityDialog_Status_IconName}"
-                                                             IconBrush="{uikit:UIKitBinding InteractivityDialog_Status_Foreground}"
-                                                             VerticalAlignment="Center"
-                                                             Visibility="{markupCommon:UIKitTemplateBinding Type,
-                                                                                                            Converter={equalityConverters:EqualityToVisibilityInverseConverter},
-                                                                                                            ConverterParameter={x:Static controls:InteractivityDialogType.Loading}}" />
-                                            <controls:Spinner HorizontalAlignment="Center"
-                                                              SpinnerBrush="{uikit:UIKitBinding InteractivityDialog_Status_Foreground}"
-                                                              Style="{uikit:UIKitBinding InteractivityDialog_Spinner_Style}"
-                                                              VerticalAlignment="Center"
-                                                              Visibility="{markupCommon:UIKitTemplateBinding Type,
-                                                                                                             Converter={equalityConverters:EqualityToVisibilityConverter},
-                                                                                                             ConverterParameter={x:Static controls:InteractivityDialogType.Loading}}" />
+                                            <Grid x:Name="PART_Status"
+                                                  Visibility="{markupCommon:UIKitTemplateBinding Icon,
+                                                                                                 Converter={equalityConverters:EqualityToVisibilityConverter},
+                                                                                                 ConverterParameter={x:Null}}">
+                                                <Ellipse Fill="{uikit:UIKitBinding InteractivityDialog_Status_Background}"
+                                                         Height="{uikit:UIKitBinding InteractivityDialog_Status_Background_Height}"
+                                                         Width="{uikit:UIKitBinding InteractivityDialog_Status_Background_Width}" />
+                                                <controls:Icon24 HorizontalAlignment="Center"
+                                                                 Icon="{uikit:UIKitBinding InteractivityDialog_Status_IconName}"
+                                                                 IconBrush="{uikit:UIKitBinding InteractivityDialog_Status_Foreground}"
+                                                                 VerticalAlignment="Center"
+                                                                 Visibility="{markupCommon:UIKitTemplateBinding Type,
+                                                                                                                Converter={equalityConverters:EqualityToVisibilityInverseConverter},
+                                                                                                                ConverterParameter={x:Static controls:InteractivityDialogType.Loading}}" />
+                                                <controls:Spinner HorizontalAlignment="Center"
+                                                                  SpinnerBrush="{uikit:UIKitBinding InteractivityDialog_Status_Foreground}"
+                                                                  Style="{uikit:UIKitBinding InteractivityDialog_Spinner_Style}"
+                                                                  VerticalAlignment="Center"
+                                                                  Visibility="{markupCommon:UIKitTemplateBinding Type,
+                                                                                                                 Converter={equalityConverters:EqualityToVisibilityConverter},
+                                                                                                                 ConverterParameter={x:Static controls:InteractivityDialogType.Loading}}" />
+                                            </Grid>
+
+                                            <Image x:Name="PART_Icon"
+                                                   Height="{uikit:UIKitBinding InteractivityDialog_Icon_Height}"
+                                                   Source="{markupCommon:UIKitTemplateBinding Icon}"
+                                                   Visibility="{markupCommon:UIKitTemplateBinding Icon,
+                                                                                                  Converter={equalityConverters:EqualityToVisibilityInverseConverter},
+                                                                                                  ConverterParameter={x:Null}}"
+                                                   Width="{uikit:UIKitBinding InteractivityDialog_Icon_Width}" />
                                         </Grid>
 
-                                        <Image x:Name="PART_Icon"
-                                               Height="{uikit:UIKitBinding InteractivityDialog_Icon_Height}"
-                                               Source="{markupCommon:UIKitTemplateBinding Icon}"
-                                               Visibility="{markupCommon:UIKitTemplateBinding Icon,
-                                                                                              Converter={equalityConverters:EqualityToVisibilityInverseConverter},
-                                                                                              ConverterParameter={x:Null}}"
-                                               Width="{uikit:UIKitBinding InteractivityDialog_Icon_Width}" />
+                                        <StackPanel Grid.Column="1"
+                                                    VerticalAlignment="Center">
+
+                                            <uikit:UIKitContentPresenter x:Name="PART_HeaderPresenter"
+                                                                         ContentSource="Header"
+                                                                         Margin="{uikit:UIKitBinding InteractivityDialog_Header_Margin}">
+                                                <uikit:UIKitContentPresenter.ContentImpicitStyles>
+                                                    <uikit:UIKitStyleHolder StyleRef="{uikit:UIKitImplicitStyle InteractivityDialog_HeaderStyle,
+                                                                                                                BasedOnStyle={StaticResource TextWrappingTextBlock},
+                                                                                                                StateAwareAncestorType={x:Type controls:InteractivityDialog}}" />
+                                                </uikit:UIKitContentPresenter.ContentImpicitStyles>
+                                            </uikit:UIKitContentPresenter>
+                                            <uikit:UIKitContentPresenter x:Name="PART_SubHeaderPresenter"
+                                                                         ContentSource="SubHeader"
+                                                                         Margin="{uikit:UIKitBinding InteractivityDialog_SubHeader_Margin}">
+                                                <uikit:UIKitContentPresenter.ContentImpicitStyles>
+                                                    <uikit:UIKitStyleHolder StyleRef="{uikit:UIKitImplicitStyle InteractivityDialog_SubHeaderStyle,
+                                                                                                                BasedOnStyle={StaticResource TextWrappingTextBlock},
+                                                                                                                StateAwareAncestorType={x:Type controls:InteractivityDialog}}" />
+                                                </uikit:UIKitContentPresenter.ContentImpicitStyles>
+                                            </uikit:UIKitContentPresenter>
+                                            <uikit:UIKitContentPresenter x:Name="PART_DescriptionPresenter"
+                                                                         ContentSource="Description"
+                                                                         Margin="{uikit:UIKitBinding InteractivityDialog_Description_Margin}">
+                                                <uikit:UIKitContentPresenter.ContentImpicitStyles>
+                                                    <uikit:UIKitStyleHolder StyleRef="{uikit:UIKitImplicitStyle InteractivityDialog_DescriptionStyle,
+                                                                                                                BasedOnStyle={StaticResource TextWrappingTextBlock},
+                                                                                                                StateAwareAncestorType={x:Type controls:InteractivityDialog}}" />
+                                                </uikit:UIKitContentPresenter.ContentImpicitStyles>
+                                            </uikit:UIKitContentPresenter>
+                                        </StackPanel>
                                     </Grid>
 
-                                    <StackPanel Grid.Column="1"
-                                                VerticalAlignment="Center">
-
-                                        <uikit:UIKitContentPresenter x:Name="PART_HeaderPresenter"
-                                                                     ContentSource="Header"
-                                                                     Margin="{uikit:UIKitBinding InteractivityDialog_Header_Margin}">
-                                            <uikit:UIKitContentPresenter.ContentImpicitStyles>
-                                                <uikit:UIKitStyleHolder StyleRef="{uikit:UIKitImplicitStyle InteractivityDialog_HeaderStyle,
-                                                                                                            BasedOnStyle={StaticResource TextWrappingTextBlock},
-                                                                                                            StateAwareAncestorType={x:Type controls:InteractivityDialog}}" />
-                                            </uikit:UIKitContentPresenter.ContentImpicitStyles>
-                                        </uikit:UIKitContentPresenter>
-                                        <uikit:UIKitContentPresenter x:Name="PART_SubHeaderPresenter"
-                                                                     ContentSource="SubHeader"
-                                                                     Margin="{uikit:UIKitBinding InteractivityDialog_SubHeader_Margin}">
-                                            <uikit:UIKitContentPresenter.ContentImpicitStyles>
-                                                <uikit:UIKitStyleHolder StyleRef="{uikit:UIKitImplicitStyle InteractivityDialog_SubHeaderStyle,
-                                                                                                            BasedOnStyle={StaticResource TextWrappingTextBlock},
-                                                                                                            StateAwareAncestorType={x:Type controls:InteractivityDialog}}" />
-                                            </uikit:UIKitContentPresenter.ContentImpicitStyles>
-                                        </uikit:UIKitContentPresenter>
-                                        <uikit:UIKitContentPresenter x:Name="PART_DescriptionPresenter"
-                                                                     ContentSource="Description"
-                                                                     Margin="{uikit:UIKitBinding InteractivityDialog_Description_Margin}">
+                                    <Grid x:Name="PART_Content"
+                                          Grid.Row="1"
+                                          Margin="{uikit:UIKitBinding InteractivityDialog_ContentContainer_Margin}">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition SharedSizeGroup="StatusColumn" Width="Auto" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <uikit:UIKitContentPresenter x:Name="PART_ContentPresenter"
+                                                                     Grid.Column="0"
+                                                                     Grid.ColumnSpan="2"
+                                                                     ContentSource="Content">
                                             <uikit:UIKitContentPresenter.ContentImpicitStyles>
                                                 <uikit:UIKitStyleHolder StyleRef="{uikit:UIKitImplicitStyle InteractivityDialog_DescriptionStyle,
                                                                                                             BasedOnStyle={StaticResource TextWrappingTextBlock},
                                                                                                             StateAwareAncestorType={x:Type controls:InteractivityDialog}}" />
                                             </uikit:UIKitContentPresenter.ContentImpicitStyles>
                                         </uikit:UIKitContentPresenter>
-                                    </StackPanel>
-                                </Grid>
+                                    </Grid>
 
-                                <Grid x:Name="PART_Content"
-                                      Grid.Row="1"
-                                      Margin="{uikit:UIKitBinding InteractivityDialog_ContentContainer_Margin}">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition SharedSizeGroup="StatusColumn" Width="Auto" />
-                                        <ColumnDefinition Width="*" />
-                                    </Grid.ColumnDefinitions>
-                                    <uikit:UIKitContentPresenter x:Name="PART_ContentPresenter"
-                                                                 Grid.Column="0"
-                                                                 Grid.ColumnSpan="2"
-                                                                 ContentSource="Content">
+                                    <uikit:UIKitContentPresenter x:Name="PART_FooterPresenter"
+                                                                 Grid.Row="2"
+                                                                 ContentSource="Footer"
+                                                                 Margin="{uikit:UIKitBinding InteractivityDialog_FooterContainer_Margin}">
                                         <uikit:UIKitContentPresenter.ContentImpicitStyles>
                                             <uikit:UIKitStyleHolder StyleRef="{uikit:UIKitImplicitStyle InteractivityDialog_DescriptionStyle,
                                                                                                         BasedOnStyle={StaticResource TextWrappingTextBlock},
                                                                                                         StateAwareAncestorType={x:Type controls:InteractivityDialog}}" />
+                                            <uikit:UIKitStyleHolder StyleRef="{uikit:UIKitImplicitStyle InteractivityDialog_FooterStyle,
+                                                                                                        TargetType={x:Type controls:InteractivityDialogFooter}}" />
                                         </uikit:UIKitContentPresenter.ContentImpicitStyles>
                                     </uikit:UIKitContentPresenter>
                                 </Grid>
-
-
-                                <uikit:UIKitContentPresenter x:Name="PART_FooterPresenter"
-                                                             Grid.Row="2"
-                                                             ContentSource="Footer"
-                                                             Margin="{uikit:UIKitBinding InteractivityDialog_FooterContainer_Margin}">
-                                    <uikit:UIKitContentPresenter.ContentImpicitStyles>
-                                        <uikit:UIKitStyleHolder StyleRef="{uikit:UIKitImplicitStyle InteractivityDialog_DescriptionStyle,
-                                                                                                    BasedOnStyle={StaticResource TextWrappingTextBlock},
-                                                                                                    StateAwareAncestorType={x:Type controls:InteractivityDialog}}" />
-                                        <uikit:UIKitStyleHolder StyleRef="{uikit:UIKitImplicitStyle InteractivityDialog_FooterStyle,
-                                                                                                    TargetType={x:Type controls:InteractivityDialogFooter}}" />
-                                    </uikit:UIKitContentPresenter.ContentImpicitStyles>
-                                </uikit:UIKitContentPresenter>
-                            </Grid>
-                        </controls:RoundedPanel>
+                            </controls:RoundedPanel>
+                        </Border>
                     </controls:InteractivityOverlay>
                     <ControlTemplate.Triggers>
-                        <Trigger Property="DialogSize" Value="SizeToContent">
+                        <Trigger Property="DialogWidth" Value="Auto">
                             <Setter Property="Width" TargetName="PART_Dialog" Value="NaN" />
-                            <Setter Property="VerticalAlignment" TargetName="PART_Dialog" Value="Center" />
-                            <Setter Property="HorizontalAlignment" TargetName="PART_Dialog" Value="Center" />
                         </Trigger>
                         <Trigger Property="SubHeader" Value="{x:Null}">
                             <Setter Property="Visibility" TargetName="PART_SubHeaderPresenter" Value="Collapsed" />
@@ -2086,6 +2097,8 @@
         <Setter Property="VerticalAlignment" Value="Center" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="UseLayoutRounding" Value="True" />
+        <!--  Constant values  -->
+        <Setter Property="AutoCloseTimeout" Value="{x:Static uikit:UIKitConstants.InteractivityNotificationAutoCloseTimeout}" />
 
         <Setter Property="Template">
             <Setter.Value>
@@ -2158,6 +2171,7 @@
                             <controls:IconButton x:Name="PART_CloseButton"
                                                  Grid.Column="2"
                                                  notifications:NotificationViewBehavior.IsCloseButton="True"
+                                                 AutomationProperties.AutomationId="{x:Static automation:AutomationIds.ButtonClose}"
                                                  Command="{markupCommon:UIKitTemplateBinding CloseButtonCommand}"
                                                  HorizontalAlignment="Center"
                                                  Margin="{uikit:UIKitBinding InteractivityNotification_CloseButtton_Margin}"
@@ -2203,7 +2217,9 @@
 
                         <Canvas x:Name="PART_OverlayCutDecoratorsContainer" />
 
-                        <ContentPresenter />
+                        <controls:Popup x:Name="PART_OverlayCutPopup" />
+
+                        <ContentPresenter x:Name="PART_Content" />
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>
@@ -2218,8 +2234,10 @@
            TargetType="{x:Type controls:Island}">
         <Setter Property="Focusable" Value="False" />
         <Setter Property="HorizontalAlignment" Value="Stretch" />
+        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
         <Setter Property="OverridesDefaultStyle" Value="True" />
         <Setter Property="VerticalAlignment" Value="Stretch" />
+        <Setter Property="VerticalContentAlignment" Value="Stretch" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="UseLayoutRounding" Value="True" />
         <Setter Property="Padding" Value="{uikit:UIKitBinding Island_Padding, Mode=Self, Type={x:Type Thickness}}" />
@@ -2233,7 +2251,8 @@
                                            CornerRadius="{uikit:UIKitBinding Island_CornerRadius}"
                                            Effect="{uikit:UIKitBinding Island_Shadow}"
                                            Padding="{markupCommon:UIKitTemplateBinding Padding}">
-                        <ContentPresenter />
+                        <ContentPresenter HorizontalAlignment="{markupCommon:UIKitTemplateBinding HorizontalContentAlignment}"
+                                          VerticalAlignment="{markupCommon:UIKitTemplateBinding VerticalContentAlignment}" />
                     </controls:RoundedPanel>
                 </ControlTemplate>
             </Setter.Value>
@@ -2248,8 +2267,10 @@
            TargetType="{x:Type controls:IslandButton}">
         <Setter Property="Cursor" Value="Hand" />
         <Setter Property="HorizontalAlignment" Value="Stretch" />
+        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
         <Setter Property="OverridesDefaultStyle" Value="True" />
         <Setter Property="VerticalAlignment" Value="Stretch" />
+        <Setter Property="VerticalContentAlignment" Value="Stretch" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="UseLayoutRounding" Value="True" />
         <Setter Property="FocusVisualStyle" Value="{uikit:UIKitBinding IslandButton_FocusVisualStyle, Mode=Self, Type={x:Type Style}}" />
@@ -2264,7 +2285,8 @@
                                            CornerRadius="{uikit:UIKitBinding IslandButton_CornerRadius}"
                                            Effect="{uikit:UIKitBinding IslandButton_Shadow}"
                                            Padding="{markupCommon:UIKitTemplateBinding Padding}">
-                        <ContentPresenter />
+                        <ContentPresenter HorizontalAlignment="{markupCommon:UIKitTemplateBinding HorizontalContentAlignment}"
+                                          VerticalAlignment="{markupCommon:UIKitTemplateBinding VerticalContentAlignment}" />
                     </controls:RoundedPanel>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="False">
@@ -2293,8 +2315,10 @@
            TargetType="{x:Type controls:IslandToggleButton}">
         <Setter Property="Cursor" Value="Hand" />
         <Setter Property="HorizontalAlignment" Value="Stretch" />
+        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
         <Setter Property="OverridesDefaultStyle" Value="True" />
         <Setter Property="VerticalAlignment" Value="Stretch" />
+        <Setter Property="VerticalContentAlignment" Value="Stretch" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="UseLayoutRounding" Value="True" />
         <Setter Property="FocusVisualStyle" Value="{uikit:UIKitBinding IslandToggleButton_FocusVisualStyle, Mode=Self, Type={x:Type Style}}" />
@@ -2309,7 +2333,8 @@
                                            CornerRadius="{uikit:UIKitBinding IslandToggleButton_CornerRadius}"
                                            Effect="{uikit:UIKitBinding IslandToggleButton_Shadow}"
                                            Padding="{markupCommon:UIKitTemplateBinding Padding}">
-                        <ContentPresenter />
+                        <ContentPresenter HorizontalAlignment="{markupCommon:UIKitTemplateBinding HorizontalContentAlignment}"
+                                          VerticalAlignment="{markupCommon:UIKitTemplateBinding VerticalContentAlignment}" />
                     </controls:RoundedPanel>
                     <ControlTemplate.Triggers>
                         <MultiTrigger>
@@ -3675,7 +3700,11 @@
                 <ControlTemplate TargetType="{x:Type controls:PopupDecorator}">
                     <Grid Margin="{Binding Effect,
                                            ElementName=PART_BackgroundDecorator,
-                                           Converter={internals:ShadowMarginConverter}}">
+                                           Converter={internals:ShadowMarginConverter}}"
+                          MaxHeight="{markupCommon:UIKitTemplateBinding PopupMaxHeight}"
+                          MaxWidth="{markupCommon:UIKitTemplateBinding PopupMaxWidth}"
+                          MinHeight="{markupCommon:UIKitTemplateBinding PopupMinHeight}"
+                          MinWidth="{markupCommon:UIKitTemplateBinding PopupMinWidth}">
                         <Border x:Name="PART_BackgroundDecorator"
                                 Background="{uikit:UIKitBinding PopupDecorator_Background}"
                                 CornerRadius="{uikit:UIKitBinding PopupDecorator_CornerRadius}"
@@ -3709,7 +3738,7 @@
                     <StackPanel>
                         <controls:RoundedPanel x:Name="PART_RootPanel"
                                                Background="{uikit:UIKitBinding ProgressBar_Track_Background}"
-                                               CornerRadius="{uikit:UIKitBinding ProgressBar_Track_CornerRadius}"
+                                               CornerRadius="{uikit:UIKitBinding ProgressBar_CornerRadius}"
                                                Height="{uikit:UIKitBinding ProgressBar_Track_Height}">
                             <Grid>
                                 <Border Name="PART_Track"
@@ -3719,7 +3748,7 @@
 
                                 <controls:RoundedPanel x:Name="PART_AnimatedIndicator"
                                                        Background="{uikit:UIKitBinding ProgressBar_Indicator_Foreground}"
-                                                       CornerRadius="{uikit:UIKitBinding ProgressBar_Track_CornerRadius}"
+                                                       CornerRadius="{uikit:UIKitBinding ProgressBar_CornerRadius}"
                                                        HorizontalAlignment="Left">
                                     <Grid>
                                         <Rectangle x:Name="PART_GlowRect"

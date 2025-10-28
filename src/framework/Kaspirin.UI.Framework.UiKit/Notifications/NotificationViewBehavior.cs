@@ -116,12 +116,14 @@ public static class NotificationViewBehavior
 
     private static void CloseAndConfirmOnClick(object sender, RoutedEventArgs routedEventArgs)
     {
-        CloseNotification((DependencyObject)sender, confirm: true);
+        // Async operation required here, because Button.Click handler must be executed after Button.Command operation.
+        Executers.InUiAsync(() => CloseNotification((DependencyObject)sender, confirm: true));
     }
 
     private static void CloseOnClick(object sender, RoutedEventArgs routedEventArgs)
     {
-        CloseNotification((DependencyObject)sender, confirm: false);
+        // Async operation required here, because Button.Click handler must be executed after Button.Command operation.
+        Executers.InUiAsync(() => CloseNotification((DependencyObject)sender, confirm: false));
     }
 
     private static void CloseOnFlagChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -145,7 +147,7 @@ public static class NotificationViewBehavior
             confirmation.IsConfirmed = true;
         }
 
-        view.CloseSmooth();
+        view.Close();
     }
 
     private static readonly DependencyProperty _interactionObjectProperty = DependencyProperty.RegisterAttached(

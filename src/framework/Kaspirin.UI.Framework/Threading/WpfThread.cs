@@ -48,16 +48,27 @@ public sealed class WpfThread
     {
         Guard.ArgumentIsNotNull(startAction);
 
+        _tracer = ComponentTracer.Get(ComponentTracers.Threading, this);
+
+        threadCulture ??= Thread.CurrentThread.CurrentCulture;
+        threadUICulture ??= Thread.CurrentThread.CurrentUICulture;
+
         _wpfThread = new Thread(() => startAction())
         {
             Name = threadName,
-            CurrentCulture = threadCulture ?? Thread.CurrentThread.CurrentCulture,
-            CurrentUICulture = threadUICulture ?? Thread.CurrentThread.CurrentUICulture
+            CurrentCulture = threadCulture,
+            CurrentUICulture = threadUICulture
         };
 
         _wpfThread.SetApartmentState(ApartmentState.STA);
 
         Guard.SetUiThreadId(_wpfThread.ManagedThreadId);
+
+        _tracer.TraceInformation($"UI-Thread created. [" +
+                                 $"ID:0x{_wpfThread.ManagedThreadId:X}]; " +
+                                 $"Name:{_wpfThread.Name}; " +
+                                 $"Culture:{threadCulture.Name}; " +
+                                 $"UICulture:{threadUICulture.Name}]");
     }
 
     /// <summary>
@@ -90,5 +101,6 @@ public sealed class WpfThread
     public void Join()
         => _wpfThread.Join();
 
+    private readonly ComponentTracer _tracer;
     private readonly Thread _wpfThread;
 }

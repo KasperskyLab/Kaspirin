@@ -22,4 +22,5 @@ internal static class ComponentTracers
     public static readonly string Log = "Log";
     public static readonly string Exception = "Exception";
     public static readonly string SystemInfo = "SystemInfo";
+    public static readonly string Threading = "Threading";
 }

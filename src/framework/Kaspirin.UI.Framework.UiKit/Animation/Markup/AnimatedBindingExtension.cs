@@ -30,8 +30,8 @@ public sealed class AnimatedBindingExtension : ExtendedMarkupExtension
     /// </summary>
     public AnimatedBindingExtension()
     {
-        _animationSettingsProvider = ServiceLocator.Instance.GetService<IAnimationSettingsProvider>();
-        _animatedBindingFactory = ServiceLocator.Instance.GetService<AnimatedBindingFactory>();
+        _animationSettingsProvider = ServiceLocator.GetService<IAnimationSettingsProvider>();
+        _animatedBindingFactory = ServiceLocator.GetService<AnimatedBindingFactory>();
 
         Properties = _animationSettingsProvider.DefaultAnimationProperties;
     }

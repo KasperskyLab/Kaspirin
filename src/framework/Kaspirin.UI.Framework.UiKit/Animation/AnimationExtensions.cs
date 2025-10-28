@@ -27,14 +27,14 @@ public static class AnimationExtensions
     ///     Forcibly converts the set time to <see cref="Duration" />, considering the possibility of animation.
     /// </summary>
     /// <param name="duration">
-    ///     It's time for the transformation.
+    ///     Time for transformation.
     /// </param>
     /// <returns>
     ///     The initial time, or 1 millisecond if animation is disabled.
     /// </returns>
     public static Duration CoerceDuration(this Duration duration)
     {
-        return ServiceLocator.Instance.GetService<IAnimationSettingsProvider>().IsAnimationEnabled
+        return ServiceLocator.GetService<IAnimationSettingsProvider>().IsAnimationEnabled
             ? duration
             : _instant;
     }
@@ -43,14 +43,14 @@ public static class AnimationExtensions
     ///     Forcibly converts the set time to <see cref="Duration" />, considering the possibility of animation.
     /// </summary>
     /// <param name="duration">
-    ///     It's time for the transformation.
+    ///     Time for transformation.
     /// </param>
     /// <returns>
     ///     The initial time, or 1 millisecond if animation is disabled.
     /// </returns>
     public static Duration CoerceDuration(this TimeSpan duration)
     {
-        return ServiceLocator.Instance.GetService<IAnimationSettingsProvider>().IsAnimationEnabled
+        return ServiceLocator.GetService<IAnimationSettingsProvider>().IsAnimationEnabled
             ? new Duration(duration)
             : _instant;
     }
@@ -66,7 +66,7 @@ public static class AnimationExtensions
     /// </param>
     public static void SetFrameRate(this Storyboard storyboard, AnimationRenderQuality quality = AnimationRenderQuality.Auto)
     {
-        var frameRate = ServiceLocator.Instance.GetService<IAnimationSettingsProvider>().GetDesiredFrameRate(quality);
+        var frameRate = ServiceLocator.GetService<IAnimationSettingsProvider>().GetDesiredFrameRate(quality);
 
         storyboard.SetValue(Timeline.DesiredFrameRateProperty, frameRate);
     }

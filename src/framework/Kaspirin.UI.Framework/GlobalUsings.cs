@@ -27,6 +27,7 @@ global using Kaspirin.UI.Framework.Extensions.Doubles;
 global using Kaspirin.UI.Framework.Extensions.Enumerables;
 global using Kaspirin.UI.Framework.Extensions.Enums;
 global using Kaspirin.UI.Framework.Extensions.Exceptions;
+global using Kaspirin.UI.Framework.Extensions.Lists;
 global using Kaspirin.UI.Framework.Extensions.Objects;
 global using Kaspirin.UI.Framework.Extensions.SecureStrings;
 global using Kaspirin.UI.Framework.Extensions.Strings;

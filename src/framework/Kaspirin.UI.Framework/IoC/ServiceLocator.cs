@@ -26,11 +26,6 @@ namespace Kaspirin.UI.Framework.IoC;
 public sealed class ServiceLocator
 {
     /// <summary>
-    ///     The current instance is <see cref="ServiceLocator" />.
-    /// </summary>
-    public static ServiceLocator Instance => Guard.EnsureIsNotNull(_instance).Value;
-
-    /// <summary>
     ///     Sets <paramref name="container" /> as the current container for this <see cref="ServiceLocator" />.
     /// </summary>
     /// <param name="container">
@@ -56,12 +51,16 @@ public sealed class ServiceLocator
     /// <returns>
     ///     An instance of the requested service.
     /// </returns>
-    public TService GetService<TService>() => _unityContainer.Resolve<TService>();
+    public static TService GetService<TService>()
+        => Instance.GetServiceImpl<TService>();
+
+    private static ServiceLocator Instance => Guard.EnsureIsNotNull(_instance).Value;
 
     private ServiceLocator(IUnityContainer unityContainer)
-    {
-        _unityContainer = unityContainer;
-    }
+        => _unityContainer = unityContainer;
+
+    private TService GetServiceImpl<TService>()
+        => _unityContainer.Resolve<TService>();
 
     private static Lazy<ServiceLocator>? _instance;
     private readonly IUnityContainer _unityContainer;

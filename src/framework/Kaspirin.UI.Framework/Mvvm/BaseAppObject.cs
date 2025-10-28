@@ -20,7 +20,7 @@ namespace Kaspirin.UI.Framework.Mvvm;
 public abstract class BaseAppObject
 {
     /// <summary>
-    ///     Creates a new instance of the <see cref="BaseAppObject" /> class.
+    ///     Initializes a new instance of the <see cref="BaseAppObject" /> class.
     /// </summary>
     /// <remarks>
     ///     The tracer <see cref="Tracer" /> uses the type name as the component name.
@@ -33,7 +33,7 @@ public abstract class BaseAppObject
     }
 
     /// <summary>
-    ///     Creates a new instance of the <see cref="BaseAppObject" /> class.
+    ///     Initializes a new instance of the <see cref="BaseAppObject" /> class.
     /// </summary>
     /// <param name="traceComponent">
     ///     The name of the component for the message tracer.
@@ -51,7 +51,7 @@ public abstract class BaseAppObject
     }
 
     /// <summary>
-    ///     Creates a new instance of the <see cref="BaseAppObject" /> class.
+    ///     Initializes a new instance of the <see cref="BaseAppObject" /> class.
     /// </summary>
     /// <param name="tracer">
     ///     The message tracer.
@@ -61,6 +61,27 @@ public abstract class BaseAppObject
         Guard.ArgumentIsNotNull(tracer);
 
         Tracer = tracer;
+    }
+
+    /// <summary>
+    ///     Initializes a new instance of the <see cref="BaseAppObject" /> class.
+    /// </summary>
+    /// <param name="tracerParameters">
+    ///     Message tracer parameters.
+    /// </param>
+    /// <remarks>
+    ///     If the properties <see cref="ComponentTracerParameters.HashSource" /> or <see cref="ComponentTracerParameters.PrefixSource" />
+    ///     of the <paramref name="tracerParameters" /> object are <see langword="null" />, then <see langword="this" />
+    ///     is automatically inserted there.
+    /// </remarks>
+    protected BaseAppObject(ComponentTracerParameters tracerParameters)
+    {
+        Guard.ArgumentIsNotNull(tracerParameters);
+
+        tracerParameters.HashSource ??= this;
+        tracerParameters.PrefixSource ??= this;
+
+        Tracer = ComponentTracer.Get(tracerParameters);
     }
 
     /// <summary>

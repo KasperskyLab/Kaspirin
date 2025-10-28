@@ -12,7 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using System;
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
@@ -25,6 +24,11 @@ namespace Kaspirin.UI.Framework.UiKit.Notifications;
 [ContentProperty("Content")]
 public sealed class NotificationAction : TriggerAction<FrameworkElement>
 {
+    public NotificationAction()
+    {
+        _tracer = ComponentTracer.Get(UIKitComponentTracers.Notification, this);
+    }
+
     #region Content
     [Bindable(true)]
     public object Content
@@ -51,141 +55,67 @@ public sealed class NotificationAction : TriggerAction<FrameworkElement>
 
     #endregion
 
-    #region AutoCloseTimeout
+    #region DisplayMode
 
-    public TimeSpan AutoCloseTimeout
+    public NotificationDisplayMode DisplayMode
     {
-        get => (TimeSpan)GetValue(AutoCloseTimeoutProperty);
-        set => SetValue(AutoCloseTimeoutProperty, value);
+        get => (NotificationDisplayMode)GetValue(DisplayModeProperty);
+        set => SetValue(DisplayModeProperty, value);
     }
 
-    public static readonly DependencyProperty AutoCloseTimeoutProperty = DependencyProperty.Register(
-        nameof(AutoCloseTimeout),
-        typeof(TimeSpan),
+    public static readonly DependencyProperty DisplayModeProperty = DependencyProperty.Register(
+        nameof(DisplayMode),
+        typeof(NotificationDisplayMode),
         typeof(NotificationAction),
-        new PropertyMetadata(TimeSpan.FromSeconds(4)));
+        new PropertyMetadata(NotificationDisplayMode.Modal));
 
     #endregion
 
-    #region IsModal
+    #region LayerName
 
-    public bool IsModal
+    public string LayerName
     {
-        get => (bool)GetValue(IsModalProperty);
-        set => SetValue(IsModalProperty, value);
+        get => (string)GetValue(LayerNameProperty);
+        set => SetValue(LayerNameProperty, value);
     }
 
-    public static readonly DependencyProperty IsModalProperty = DependencyProperty.Register(
-        nameof(IsModal),
-        typeof(bool),
-        typeof(NotificationAction),
-        new PropertyMetadata(true));
-
-    #endregion
-
-    #region NotificationLayerName
-
-    public string? NotificationLayerName
-    {
-        get => (string?)GetValue(NotificationLayerNameProperty);
-        set => SetValue(NotificationLayerNameProperty, value);
-    }
-
-    public static readonly DependencyProperty NotificationLayerNameProperty = DependencyProperty.Register(
-        nameof(NotificationLayerName),
+    public static readonly DependencyProperty LayerNameProperty = DependencyProperty.Register(
+        nameof(LayerName),
         typeof(string),
         typeof(NotificationAction),
-        new PropertyMetadata(default(string)));
-
-    #endregion
-
-    #region MaxNotificationCount
-
-    public int MaxNotificationCount
-    {
-        get => (int)GetValue(MaxNotificationCountProperty);
-        set => SetValue(MaxNotificationCountProperty, value);
-    }
-
-    public static readonly DependencyProperty MaxNotificationCountProperty = DependencyProperty.Register(
-        nameof(MaxNotificationCount),
-        typeof(int),
-        typeof(NotificationAction),
-        new PropertyMetadata(10));
-
-    #endregion
-
-    #region NotificationLocation
-
-    public NotificationLocationSettings LocationSettings
-    {
-        get => (NotificationLocationSettings)GetValue(LocationSettingsProperty);
-        set => SetValue(LocationSettingsProperty, value);
-    }
-
-    public static readonly DependencyProperty LocationSettingsProperty = DependencyProperty.Register(
-        nameof(LocationSettings),
-        typeof(NotificationLocationSettings),
-        typeof(NotificationAction),
-        new PropertyMetadata(default(NotificationLocationSettings)));
+        new PropertyMetadata(NotificationLayer.DefaultLayerName));
 
     #endregion
 
     protected override void Invoke(object parameter)
     {
-        _trace.TraceDebug($"NotificationAction.Invoke called, parameter={parameter?.GetType().Name}");
+        _tracer.TraceMethodCall();
 
-        var args = parameter as InteractionRequestedEventArgs;
+        var interactionObject = Guard.EnsureArgumentIsInstanceOfType<InteractionRequestedEventArgs>(parameter).InteractionObject;
 
-        if (args == null || args.InteractionObject == null)
-        {
-            _trace.TraceDebug($"Skip NotificationAction.Invoke, args={args}, args.InteractionObject={args?.InteractionObject?.GetType().Name}");
-            return;
-        }
-
-        var view = _view;
-        if (view != null)
-        {
-            if (view.IsClosing)
-            {
-                view.CloseForced();
-            }
-            else if (view.IsModal)
-            {
-                _trace.TraceWarning("Skipping notification view, because another modal view is active");
-                return;
-            }
-        }
-
-        var interactionObject = args.InteractionObject;
-
-        _trace.TraceDebug($"Start creating NotificationView with interactionObject={interactionObject.GetType().Name}");
-
+        Guard.Assert(interactionObject.IsDecided == false);
         Guard.IsNotNull(AssociatedObject);
+        Guard.AssertIsUiThread();
 
-        view = NotificationLauncher.Create(
+        var displaySettings = new NotificationDisplaySettings()
+        {
+            LayerName = LayerName,
+            DisplayMode = DisplayMode,
+        };
+
+        var view = NotificationLauncher.Create(
             associatedObject: AssociatedObject,
             content: Content ?? interactionObject.GetDataContext(),
             contentTemplate: ContentTemplate,
-            locationSettings: LocationSettings,
-            notificationLayerName: NotificationLayerName,
-            autoCloseTimeout: AutoCloseTimeout,
-            maxNotificationCount: MaxNotificationCount,
-            isModal: IsModal);
+            displaySettings: displaySettings);
 
-        _trace.TraceDebug($"NotificationView with interactionObject={interactionObject.GetType().Name} created");
-
-        interactionObject.PreviewDecided += () => view.CloseSmooth();
+        interactionObject.Decided += () => OnDecided(view);
 
         view.Opened += (s, e) => OnOpened(interactionObject);
         view.Closed += (s, e) => OnClosed(interactionObject);
 
-        _trace.TraceDebug($"Show NotificationView with interactionObject={interactionObject.GetType().Name}");
-
         view.SetInteractionObject(interactionObject);
         view.Show();
-
-        _view = view;
     }
 
     private void OnOpened(InteractionObject interactionObject)
@@ -201,11 +131,15 @@ public sealed class NotificationAction : TriggerAction<FrameworkElement>
         }
 
         interactionObject.InteractionCompleted();
-
-        _view = null;
     }
 
-    private NotificationView? _view;
+    private void OnDecided(NotificationView notificationView)
+    {
+        if (notificationView.State.NotIn(NotificationViewState.Closing, NotificationViewState.Closed))
+        {
+            notificationView.Close();
+        }
+    }
 
-    private static readonly ComponentTracer _trace = ComponentTracer.Get(UIKitComponentTracers.Notification);
+    private readonly ComponentTracer _tracer;
 }

@@ -29,7 +29,7 @@ namespace Kaspirin.UI.Framework.UiKit.Converters.BooleanConverters;
 public sealed class MultiBooleanToVisibilityConverter : BaseMultiBooleanConverter<Visibility>
 {
     /// <summary>
-    ///     Creates an object <see cref="MultiBooleanToVisibilityConverter" />.
+    ///     Initializes a new instance of the <see cref="MultiBooleanToVisibilityConverter" /> class.
     /// </summary>
     public MultiBooleanToVisibilityConverter() : base(Visibility.Visible, Visibility.Collapsed) { }
 }
