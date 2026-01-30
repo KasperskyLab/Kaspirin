@@ -13,6 +13,7 @@
 // limitations under the License.
 
 using System;
+using System.Windows.Media;
 
 namespace Kaspirin.UI.Framework.WinRT;
 
@@ -37,7 +38,20 @@ public interface IWinRTUISettings
     double TextScaleFactor { get; }
 
     /// <summary>
+    ///     Gets the system color for the specified <paramref name="ColorType" />.
+    /// </summary>
+    /// <returns>
+    ///     The value of the system color.
+    /// </returns>
+    Color? GetColorValue(WinRTUIColorType colorType);
+
+    /// <summary>
     ///     Event about changing the setting <see cref="TextScaleFactor" />.
     /// </summary>
     event EventHandler? TextScaleFactorChanged;
+
+    /// <summary>
+    ///     An event about changing the system colors.
+    /// </summary>
+    event EventHandler? ColorValuesChanged;
 }

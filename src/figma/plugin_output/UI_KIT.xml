@@ -1,67 +1,67 @@
 <UiKit Source="[Kaspirin] Parsing File" Page="UI KIT">
     <Controls>
         <TextStyles>
-            <TextStyle FontFamily="Text" FontSize="14" FontStyle="NORMAL" FontWeight="REGULAR" Id="UiKitTextStyleBaseText" LineHeight="20" TextDecorations="NONE">
+            <TextStyle FontFamily="Text" FontPriority="11" FontSize="14" FontStyle="NORMAL" FontWeight="REGULAR" Id="UiKitTextStyleBaseText" IsHeader="false" LineHeight="20" TextDecorations="NONE">
                 <Foreground>
                     <SolidBrush BlendMode="NORMAL" PaletteStyleId="Text-Icons-Elements_Primary" Type="SOLID"/>
                 </Foreground>
             </TextStyle>
-            <TextStyle FontFamily="Mono" FontSize="14" FontStyle="NORMAL" FontWeight="REGULAR" Id="UiKitTextStyleBaseTextMonospace" LineHeight="20" TextDecorations="NONE">
+            <TextStyle FontFamily="Mono" FontPriority="10" FontSize="14" FontStyle="NORMAL" FontWeight="REGULAR" Id="UiKitTextStyleBaseTextMonospace" IsHeader="false" LineHeight="20" TextDecorations="NONE">
                 <Foreground>
                     <SolidBrush BlendMode="NORMAL" PaletteStyleId="Text-Icons-Elements_Primary" Type="SOLID"/>
                 </Foreground>
             </TextStyle>
-            <TextStyle FontFamily="Text" FontSize="14" FontStyle="NORMAL" FontWeight="SEMIBOLD" Id="UiKitTextStyleBaseTextSemibold" LineHeight="20" TextDecorations="NONE">
+            <TextStyle FontFamily="Text" FontPriority="9" FontSize="14" FontStyle="NORMAL" FontWeight="SEMIBOLD" Id="UiKitTextStyleBaseTextSemibold" IsHeader="false" LineHeight="20" TextDecorations="NONE">
                 <Foreground>
                     <SolidBrush BlendMode="NORMAL" PaletteStyleId="Text-Icons-Elements_Primary" Type="SOLID"/>
                 </Foreground>
             </TextStyle>
-            <TextStyle FontFamily="Text" FontSize="14" FontStyle="NORMAL" FontWeight="SEMIBOLD" Id="UiKitTextStyleButton" LineHeight="20" TextDecorations="NONE">
+            <TextStyle FontFamily="Text" FontPriority="8" FontSize="14" FontStyle="NORMAL" FontWeight="SEMIBOLD" Id="UiKitTextStyleButton" IsHeader="false" LineHeight="20" TextDecorations="NONE">
                 <Foreground>
                     <SolidBrush BlendMode="NORMAL" PaletteStyleId="Text-Icons-Elements_Primary" Type="SOLID"/>
                 </Foreground>
             </TextStyle>
-            <TextStyle FontFamily="Text" FontSize="28" FontStyle="NORMAL" FontWeight="SEMIBOLD" Id="UiKitTextStyleHeader1" LineHeight="32" TextDecorations="NONE">
+            <TextStyle FontFamily="Text" FontPriority="1" FontSize="28" FontStyle="NORMAL" FontWeight="SEMIBOLD" Id="UiKitTextStyleHeader1" IsHeader="true" LineHeight="32" TextDecorations="NONE">
                 <Foreground>
                     <SolidBrush BlendMode="NORMAL" PaletteStyleId="Text-Icons-Elements_Primary" Type="SOLID"/>
                 </Foreground>
             </TextStyle>
-            <TextStyle FontFamily="Text" FontSize="24" FontStyle="NORMAL" FontWeight="SEMIBOLD" Id="UiKitTextStyleHeader2" LineHeight="28" TextDecorations="NONE">
+            <TextStyle FontFamily="Text" FontPriority="2" FontSize="24" FontStyle="NORMAL" FontWeight="SEMIBOLD" Id="UiKitTextStyleHeader2" IsHeader="true" LineHeight="28" TextDecorations="NONE">
                 <Foreground>
                     <SolidBrush BlendMode="NORMAL" PaletteStyleId="Text-Icons-Elements_Primary" Type="SOLID"/>
                 </Foreground>
             </TextStyle>
-            <TextStyle FontFamily="Text" FontSize="18" FontStyle="NORMAL" FontWeight="SEMIBOLD" Id="UiKitTextStyleHeader3" LineHeight="24" TextDecorations="NONE">
+            <TextStyle FontFamily="Text" FontPriority="4" FontSize="18" FontStyle="NORMAL" FontWeight="SEMIBOLD" Id="UiKitTextStyleHeader3" IsHeader="true" LineHeight="24" TextDecorations="NONE">
                 <Foreground>
                     <SolidBrush BlendMode="NORMAL" PaletteStyleId="Text-Icons-Elements_Primary" Type="SOLID"/>
                 </Foreground>
             </TextStyle>
-            <TextStyle FontFamily="Mono" FontSize="18" FontStyle="NORMAL" FontWeight="BOLD" Id="UiKitTextStyleHeader3Monospace" LineHeight="24" TextDecorations="NONE">
+            <TextStyle FontFamily="Mono" FontPriority="3" FontSize="18" FontStyle="NORMAL" FontWeight="BOLD" Id="UiKitTextStyleHeader3Monospace" IsHeader="true" LineHeight="24" TextDecorations="NONE">
                 <Foreground>
                     <SolidBrush BlendMode="NORMAL" PaletteStyleId="Text-Icons-Elements_Primary" Type="SOLID"/>
                 </Foreground>
             </TextStyle>
-            <TextStyle FontFamily="Text" FontSize="16" FontStyle="NORMAL" FontWeight="SEMIBOLD" Id="UiKitTextStyleHeader4" LineHeight="20" TextDecorations="NONE">
+            <TextStyle FontFamily="Text" FontPriority="5" FontSize="16" FontStyle="NORMAL" FontWeight="SEMIBOLD" Id="UiKitTextStyleHeader4" IsHeader="true" LineHeight="20" TextDecorations="NONE">
                 <Foreground>
                     <SolidBrush BlendMode="NORMAL" PaletteStyleId="Text-Icons-Elements_Primary" Type="SOLID"/>
                 </Foreground>
             </TextStyle>
-            <TextStyle FontFamily="Text" FontSize="14" FontStyle="NORMAL" FontWeight="SEMIBOLD" Id="UiKitTextStyleHeader5" LineHeight="20" TextDecorations="NONE">
+            <TextStyle FontFamily="Text" FontPriority="6" FontSize="14" FontStyle="NORMAL" FontWeight="SEMIBOLD" Id="UiKitTextStyleHeader5" IsHeader="true" LineHeight="20" TextDecorations="NONE">
                 <Foreground>
                     <SolidBrush BlendMode="NORMAL" PaletteStyleId="Text-Icons-Elements_Primary" Type="SOLID"/>
                 </Foreground>
             </TextStyle>
-            <TextStyle FontFamily="Text" FontSize="12" FontStyle="NORMAL" FontWeight="REGULAR" Id="UiKitTextStyleSmallText" LineHeight="16" TextDecorations="NONE">
+            <TextStyle FontFamily="Text" FontPriority="13" FontSize="12" FontStyle="NORMAL" FontWeight="REGULAR" Id="UiKitTextStyleSmallText" IsHeader="false" LineHeight="16" TextDecorations="NONE">
                 <Foreground>
                     <SolidBrush BlendMode="NORMAL" PaletteStyleId="Text-Icons-Elements_Primary" Type="SOLID"/>
                 </Foreground>
             </TextStyle>
-            <TextStyle FontFamily="Text" FontSize="12" FontStyle="NORMAL" FontWeight="MEDIUM" Id="UiKitTextStyleSmallTextMedium" LineHeight="16" TextDecorations="NONE">
+            <TextStyle FontFamily="Text" FontPriority="12" FontSize="12" FontStyle="NORMAL" FontWeight="MEDIUM" Id="UiKitTextStyleSmallTextMedium" IsHeader="false" LineHeight="16" TextDecorations="NONE">
                 <Foreground>
                     <SolidBrush BlendMode="NORMAL" PaletteStyleId="Text-Icons-Elements_Primary" Type="SOLID"/>
                 </Foreground>
             </TextStyle>
-            <TextStyle FontFamily="Text" FontSize="20" FontStyle="NORMAL" FontWeight="SEMIBOLD" Id="UiKitTextStyleSubheader" LineHeight="24" TextDecorations="NONE">
+            <TextStyle FontFamily="Text" FontPriority="7" FontSize="20" FontStyle="NORMAL" FontWeight="SEMIBOLD" Id="UiKitTextStyleSubheader" IsHeader="true" LineHeight="24" TextDecorations="NONE">
                 <Foreground>
                     <SolidBrush BlendMode="NORMAL" PaletteStyleId="Text-Icons-Elements_Primary" Type="SOLID"/>
                 </Foreground>
@@ -75,7 +75,7 @@
                 <Icon>
                     <Svg>
                         <![CDATA[<svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path fill-rule="evenodd" clip-rule="evenodd" d="M6 0.75C6 0.335786 6.33747 -0.00491726 6.74851 0.0462347C9.70897 0.414647 12 2.93977 12 6C12 9.31371 9.31371 12 6 12C2.93977 12 0.414647 9.70897 0.0462348 6.74851C-0.00491724 6.33747 0.335786 6 0.75 6C1.16421 6 1.49345 6.33831 1.56169 6.74686C1.91746 8.87669 3.76916 10.5 6 10.5C8.48528 10.5 10.5 8.48528 10.5 6C10.5 3.76916 8.87669 1.91746 6.74686 1.56169C6.33831 1.49345 6 1.16421 6 0.75Z" fill="#1DA189"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M5.95703 0.708984C5.95703 0.294771 6.2945 -0.0459329 6.70554 0.00521911C9.666 0.373631 11.957 2.89876 11.957 5.95898C11.957 9.27269 9.27074 11.959 5.95703 11.959C2.89681 11.959 0.371678 9.66795 0.00326604 6.7075C-0.047886 6.29645 0.292818 5.95898 0.707031 5.95898C1.12124 5.95898 1.45048 6.29729 1.51872 6.70584C1.87449 8.83567 3.72619 10.459 5.95703 10.459C8.44231 10.459 10.457 8.44427 10.457 5.95898C10.457 3.72814 8.83372 1.87644 6.70389 1.52068C6.29534 1.45243 5.95703 1.1232 5.95703 0.708984Z" fill="#1DA189"/>
 </svg>
 ]]>
                     </Svg>
@@ -88,7 +88,7 @@
                 <Icon>
                     <Svg>
                         <![CDATA[<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path fill-rule="evenodd" clip-rule="evenodd" d="M8 1C8 0.447715 8.44996 -0.00655635 8.99801 0.0616463C12.9453 0.552862 16 3.9197 16 8C16 12.4183 12.4183 16 8 16C3.9197 16 0.552863 12.9453 0.0616464 8.99801C-0.00655632 8.44996 0.447715 8 1 8C1.55228 8 1.99127 8.45107 2.08226 8.99581C2.55661 11.8356 5.02554 14 8 14C11.3137 14 14 11.3137 14 8C14 5.02554 11.8356 2.55661 8.99581 2.08226C8.45108 1.99127 8 1.55228 8 1Z" fill="#1DA189"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M7.94531 0.945312C7.94531 0.393028 8.39527 -0.0612438 8.94333 0.00695881C12.8906 0.498175 15.9453 3.86501 15.9453 7.94531C15.9453 12.3636 12.3636 15.9453 7.94531 15.9453C3.86501 15.9453 0.498175 12.8906 0.00695887 8.94333C-0.0612438 8.39527 0.393028 7.94531 0.945312 7.94531C1.4976 7.94531 1.93658 8.39639 2.02757 8.94112C2.50192 11.7809 4.97085 13.9453 7.94531 13.9453C11.259 13.9453 13.9453 11.259 13.9453 7.94531C13.9453 4.97085 11.7809 2.50192 8.94113 2.02757C8.39639 1.93658 7.94531 1.4976 7.94531 0.945312Z" fill="#1DA189"/>
 </svg>
 ]]>
                     </Svg>
@@ -101,7 +101,7 @@
                 <Icon>
                     <Svg>
                         <![CDATA[<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path fill-rule="evenodd" clip-rule="evenodd" d="M12 1C12 0.447715 12.4493 -0.00434558 12.9997 0.041049C19.1594 0.549057 24 5.70923 24 12C24 18.6274 18.6274 24 12 24C5.70923 24 0.549057 19.1594 0.041049 12.9997C-0.00434557 12.4493 0.447715 12 1 12C1.55228 12 1.99475 12.449 2.04924 12.9986C2.55031 18.0526 6.81417 22 12 22C17.5228 22 22 17.5228 22 12C22 6.81417 18.0526 2.55031 12.9986 2.04924C12.449 1.99475 12 1.55228 12 1Z" fill="#1DA189"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M11.9609 0.961914C11.9609 0.409629 12.4102 -0.0424315 12.9606 0.00296303C19.1203 0.510971 23.9609 5.67115 23.9609 11.9619C23.9609 18.5893 18.5884 23.9619 11.9609 23.9619C5.67017 23.9619 0.509994 19.1213 0.00198649 12.9616C-0.0434081 12.4112 0.408653 11.9619 0.960938 11.9619C1.51322 11.9619 1.95568 12.4109 2.01017 12.9605C2.51125 18.0145 6.77511 21.9619 11.9609 21.9619C17.4838 21.9619 21.9609 17.4848 21.9609 11.9619C21.9609 6.77609 18.0135 2.51223 12.9595 2.01115C12.4099 1.95666 11.9609 1.5142 11.9609 0.961914Z" fill="#1DA189"/>
 </svg>
 ]]>
                     </Svg>
@@ -114,7 +114,7 @@
                 <Icon>
                     <Svg>
                         <![CDATA[<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path fill-rule="evenodd" clip-rule="evenodd" d="M24 2C24 0.895431 24.8986 -0.00869116 25.9994 0.0820979C38.3187 1.09811 48 11.4185 48 24C48 37.2548 37.2548 48 24 48C11.4185 48 1.09811 38.3187 0.082098 25.9994C-0.00869114 24.8986 0.895431 24 2 24C3.10457 24 3.98949 24.898 4.09847 25.9972C5.10062 36.1052 13.6283 44 24 44C35.0457 44 44 35.0457 44 24C44 13.6283 36.1052 5.10062 25.9972 4.09847C24.898 3.9895 24 3.10457 24 2Z" fill="#1DA189"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M23.9258 1.92383C23.9258 0.819259 24.8243 -0.084863 25.9252 0.00592606C38.2445 1.02194 47.9258 11.3423 47.9258 23.9238C47.9258 37.1787 37.1806 47.9238 23.9258 47.9238C11.3442 47.9238 1.02389 38.2426 0.00787923 25.9232C-0.0829099 24.8224 0.821212 23.9238 1.92578 23.9238C3.03035 23.9238 3.91528 24.8218 4.02425 25.921C5.02641 36.029 13.5541 43.9238 23.9258 43.9238C34.9715 43.9238 43.9258 34.9695 43.9258 23.9238C43.9258 13.5522 36.031 5.02445 25.923 4.0223C24.8238 3.91332 23.9258 3.0284 23.9258 1.92383Z" fill="#1DA189"/>
 </svg>
 ]]>
                     </Svg>
@@ -140,7 +140,7 @@
                 <Icon>
                     <Svg>
                         <![CDATA[<svg width="8" height="8" viewBox="0 0 8 8" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path fill-rule="evenodd" clip-rule="evenodd" d="M4 0.5C4 0.223858 4.22498 -0.00327817 4.49901 0.0308232C6.47264 0.276431 8 1.95985 8 4C8 6.20914 6.20914 8 4 8C1.95985 8 0.276431 6.47264 0.0308232 4.49901C-0.00327816 4.22498 0.223858 4 0.5 4C0.776142 4 0.995633 4.22554 1.04113 4.49791C1.2783 5.91779 2.51277 7 4 7C5.65685 7 7 5.65685 7 4C7 2.51277 5.91779 1.2783 4.49791 1.04113C4.22554 0.995633 4 0.776142 4 0.5Z" fill="#1DA189"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M3.97266 0.472656C3.97266 0.196514 4.19763 -0.0306219 4.47166 0.00347941C6.4453 0.249087 7.97266 1.93251 7.97266 3.97266C7.97266 6.1818 6.1818 7.97266 3.97266 7.97266C1.93251 7.97266 0.249088 6.4453 0.00347944 4.47166C-0.0306219 4.19763 0.196514 3.97266 0.472656 3.97266C0.748799 3.97266 0.968289 4.19819 1.01378 4.47056C1.25096 5.89045 2.48543 6.97266 3.97266 6.97266C5.62951 6.97266 6.97266 5.62951 6.97266 3.97266C6.97266 2.48543 5.89045 1.25096 4.47056 1.01379C4.19819 0.968289 3.97266 0.748799 3.97266 0.472656Z" fill="#1DA189"/>
 </svg>
 ]]>
                     </Svg>
@@ -1522,6 +1522,240 @@
                 <IconMarginRightLocation Left="8"/>
                 <Padding Bottom="6" Left="16" Right="16" Top="6"/>
             </Button>
+            <Button Height="24" IconOpacityDisabled="1" IconOpacityHover="1" IconOpacityNormal="1" IconOpacityPressed="1" Id="UiKitSmallButtonBaseOutlineSecondary" OpacityDisabled="1" OpacityHover="1" OpacityNormal="1" OpacityPressed="1" SpinnerStyleId="UiKitSpinner12" TextStyleIdDisabled="UiKitTextStyleSmallTextMedium" TextStyleIdHover="UiKitTextStyleSmallTextMedium" TextStyleIdNormal="UiKitTextStyleSmallTextMedium" TextStyleIdPressed="UiKitTextStyleSmallTextMedium">
+                <BackgroundDisabled>
+                    <SolidBrush BlendMode="NORMAL" PaletteStyleId="Transparent" Type="SOLID"/>
+                </BackgroundDisabled>
+                <BackgroundHover>
+                    <SolidBrush BlendMode="NORMAL" PaletteStyleId="ControlsBG_Gray-Hover" Type="SOLID"/>
+                </BackgroundHover>
+                <BackgroundNormal>
+                    <SolidBrush BlendMode="NORMAL" PaletteStyleId="Transparent" Type="SOLID"/>
+                </BackgroundNormal>
+                <BackgroundPressed>
+                    <SolidBrush BlendMode="NORMAL" PaletteStyleId="ControlsBG_Gray-Pressed" Type="SOLID"/>
+                </BackgroundPressed>
+                <BorderColorDisabled>
+                    <SolidBrush BlendMode="NORMAL" PaletteStyleId="Elements_SeparatorBold" Type="SOLID"/>
+                </BorderColorDisabled>
+                <BorderColorHover>
+                    <SolidBrush BlendMode="NORMAL" PaletteStyleId="Elements_SeparatorBold" Type="SOLID"/>
+                </BorderColorHover>
+                <BorderColorNormal>
+                    <SolidBrush BlendMode="NORMAL" PaletteStyleId="Elements_SeparatorBold" Type="SOLID"/>
+                </BorderColorNormal>
+                <BorderColorPressed>
+                    <SolidBrush BlendMode="NORMAL" PaletteStyleId="Elements_SeparatorBold" Type="SOLID"/>
+                </BorderColorPressed>
+                <BorderThicknessDisabled Bottom="1" Left="1" Right="1" Top="1"/>
+                <BorderThicknessHover Bottom="1" Left="1" Right="1" Top="1"/>
+                <BorderThicknessNormal Bottom="1" Left="1" Right="1" Top="1"/>
+                <BorderThicknessPressed Bottom="1" Left="1" Right="1" Top="1"/>
+                <CornerRadius BottomLeft="4" BottomRight="4" TopLeft="4" TopRight="4"/>
+                <Focus Thickness="2" Type="RECTANGLE">
+                    <Color>
+                        <SolidBrush BlendMode="NORMAL" PaletteStyleId="ControlsBG_Emerald-Default-Focus-Loading" Type="SOLID"/>
+                    </Color>
+                    <CornerRadius BottomLeft="8" BottomRight="8" TopLeft="8" TopRight="8"/>
+                    <Margin Bottom="-4" Left="-4" Right="-4" Top="-4"/>
+                </Focus>
+                <ForegroundDisabled>
+                    <SolidBrush BlendMode="NORMAL" PaletteStyleId="Text-Icons-Elements_Disabled" Type="SOLID"/>
+                </ForegroundDisabled>
+                <ForegroundHover>
+                    <SolidBrush BlendMode="NORMAL" PaletteStyleId="Text-Icons-Elements_Primary" Type="SOLID"/>
+                </ForegroundHover>
+                <ForegroundNormal>
+                    <SolidBrush BlendMode="NORMAL" PaletteStyleId="Text-Icons-Elements_Primary" Type="SOLID"/>
+                </ForegroundNormal>
+                <ForegroundPressed>
+                    <SolidBrush BlendMode="NORMAL" PaletteStyleId="Text-Icons-Elements_Primary" Type="SOLID"/>
+                </ForegroundPressed>
+                <IconBrushDisabledCenterLocation>
+                    <SolidBrush BlendMode="NORMAL" PaletteStyleId="Text-Icons-Elements_Disabled" Type="SOLID"/>
+                </IconBrushDisabledCenterLocation>
+                <IconBrushDisabledSideLocation>
+                    <SolidBrush BlendMode="NORMAL" PaletteStyleId="Text-Icons-Elements_Disabled" Type="SOLID"/>
+                </IconBrushDisabledSideLocation>
+                <IconBrushHoverCenterLocation>
+                    <SolidBrush BlendMode="NORMAL" PaletteStyleId="Text-Icons-Elements_Primary" Type="SOLID"/>
+                </IconBrushHoverCenterLocation>
+                <IconBrushHoverSideLocation>
+                    <SolidBrush BlendMode="NORMAL" PaletteStyleId="Text-Icons-Elements_Primary" Type="SOLID"/>
+                </IconBrushHoverSideLocation>
+                <IconBrushNormalCenterLocation>
+                    <SolidBrush BlendMode="NORMAL" PaletteStyleId="Text-Icons-Elements_Primary" Type="SOLID"/>
+                </IconBrushNormalCenterLocation>
+                <IconBrushNormalSideLocation>
+                    <SolidBrush BlendMode="NORMAL" PaletteStyleId="Text-Icons-Elements_Primary" Type="SOLID"/>
+                </IconBrushNormalSideLocation>
+                <IconBrushPressedCenterLocation>
+                    <SolidBrush BlendMode="NORMAL" PaletteStyleId="Text-Icons-Elements_Primary" Type="SOLID"/>
+                </IconBrushPressedCenterLocation>
+                <IconBrushPressedSideLocation>
+                    <SolidBrush BlendMode="NORMAL" PaletteStyleId="Text-Icons-Elements_Primary" Type="SOLID"/>
+                </IconBrushPressedSideLocation>
+                <IconMarginCenterLocation Bottom="4" Left="4" Right="4" Top="4"/>
+                <IconMarginLeftLocation Right="4"/>
+                <IconMarginRightLocation Left="4"/>
+                <Padding Bottom="4" Left="8" Right="8" Top="4"/>
+            </Button>
+            <Button Height="24" IconOpacityDisabled="1" IconOpacityHover="1" IconOpacityNormal="1" IconOpacityPressed="1" Id="UiKitSmallButtonBasePrimary" OpacityDisabled="1" OpacityHover="1" OpacityNormal="1" OpacityPressed="1" SpinnerStyleId="UiKitSpinner12" TextStyleIdDisabled="UiKitTextStyleSmallTextMedium" TextStyleIdHover="UiKitTextStyleSmallTextMedium" TextStyleIdNormal="UiKitTextStyleSmallTextMedium" TextStyleIdPressed="UiKitTextStyleSmallTextMedium">
+                <BackgroundDisabled>
+                    <SolidBrush BlendMode="NORMAL" PaletteStyleId="Surface_ColdGrey" Type="SOLID"/>
+                </BackgroundDisabled>
+                <BackgroundHover>
+                    <SolidBrush BlendMode="NORMAL" PaletteStyleId="ControlsBG_Emerald-Hover" Type="SOLID"/>
+                </BackgroundHover>
+                <BackgroundNormal>
+                    <SolidBrush BlendMode="NORMAL" PaletteStyleId="ControlsBG_Emerald-Default-Focus-Loading" Type="SOLID"/>
+                </BackgroundNormal>
+                <BackgroundPressed>
+                    <SolidBrush BlendMode="NORMAL" PaletteStyleId="ControlsBG_Emerald-Pressed" Type="SOLID"/>
+                </BackgroundPressed>
+                <BorderColorDisabled>
+                    <SolidBrush BlendMode="NORMAL" PaletteStyleId="Elements_SeparatorBold" Type="SOLID"/>
+                </BorderColorDisabled>
+                <BorderColorHover>
+                    <SolidBrush BlendMode="NORMAL" PaletteStyleId="Transparent" Type="SOLID"/>
+                </BorderColorHover>
+                <BorderColorNormal>
+                    <SolidBrush BlendMode="NORMAL" PaletteStyleId="Transparent" Type="SOLID"/>
+                </BorderColorNormal>
+                <BorderColorPressed>
+                    <SolidBrush BlendMode="NORMAL" PaletteStyleId="Transparent" Type="SOLID"/>
+                </BorderColorPressed>
+                <BorderThicknessDisabled Bottom="1" Left="1" Right="1" Top="1"/>
+                <BorderThicknessHover Bottom="0" Left="0" Right="0" Top="0"/>
+                <BorderThicknessNormal Bottom="0" Left="0" Right="0" Top="0"/>
+                <BorderThicknessPressed Bottom="0" Left="0" Right="0" Top="0"/>
+                <CornerRadius BottomLeft="4" BottomRight="4" TopLeft="4" TopRight="4"/>
+                <Focus Thickness="2" Type="RECTANGLE">
+                    <Color>
+                        <SolidBrush BlendMode="NORMAL" PaletteStyleId="ControlsBG_Emerald-Default-Focus-Loading" Type="SOLID"/>
+                    </Color>
+                    <CornerRadius BottomLeft="8" BottomRight="8" TopLeft="8" TopRight="8"/>
+                    <Margin Bottom="-4" Left="-4" Right="-4" Top="-4"/>
+                </Focus>
+                <ForegroundDisabled>
+                    <SolidBrush BlendMode="NORMAL" PaletteStyleId="Text-Icons-Elements_Disabled" Type="SOLID"/>
+                </ForegroundDisabled>
+                <ForegroundHover>
+                    <SolidBrush BlendMode="NORMAL" PaletteStyleId="FixedColor_BaseWhite" Type="SOLID"/>
+                </ForegroundHover>
+                <ForegroundNormal>
+                    <SolidBrush BlendMode="NORMAL" PaletteStyleId="FixedColor_BaseWhite" Type="SOLID"/>
+                </ForegroundNormal>
+                <ForegroundPressed>
+                    <SolidBrush BlendMode="NORMAL" PaletteStyleId="FixedColor_BaseWhite" Type="SOLID"/>
+                </ForegroundPressed>
+                <IconBrushDisabledCenterLocation>
+                    <SolidBrush BlendMode="NORMAL" PaletteStyleId="Text-Icons-Elements_Disabled" Type="SOLID"/>
+                </IconBrushDisabledCenterLocation>
+                <IconBrushDisabledSideLocation>
+                    <SolidBrush BlendMode="NORMAL" PaletteStyleId="Text-Icons-Elements_Disabled" Type="SOLID"/>
+                </IconBrushDisabledSideLocation>
+                <IconBrushHoverCenterLocation>
+                    <SolidBrush BlendMode="NORMAL" PaletteStyleId="FixedColor_BaseWhite" Type="SOLID"/>
+                </IconBrushHoverCenterLocation>
+                <IconBrushHoverSideLocation>
+                    <SolidBrush BlendMode="NORMAL" PaletteStyleId="FixedColor_BaseWhite" Type="SOLID"/>
+                </IconBrushHoverSideLocation>
+                <IconBrushNormalCenterLocation>
+                    <SolidBrush BlendMode="NORMAL" PaletteStyleId="FixedColor_BaseWhite" Type="SOLID"/>
+                </IconBrushNormalCenterLocation>
+                <IconBrushNormalSideLocation>
+                    <SolidBrush BlendMode="NORMAL" PaletteStyleId="FixedColor_BaseWhite" Type="SOLID"/>
+                </IconBrushNormalSideLocation>
+                <IconBrushPressedCenterLocation>
+                    <SolidBrush BlendMode="NORMAL" PaletteStyleId="FixedColor_BaseWhite" Type="SOLID"/>
+                </IconBrushPressedCenterLocation>
+                <IconBrushPressedSideLocation>
+                    <SolidBrush BlendMode="NORMAL" PaletteStyleId="FixedColor_BaseWhite" Type="SOLID"/>
+                </IconBrushPressedSideLocation>
+                <IconMarginCenterLocation Bottom="4" Left="4" Right="4" Top="4"/>
+                <IconMarginLeftLocation Right="4"/>
+                <IconMarginRightLocation Left="4"/>
+                <Padding Bottom="4" Left="8" Right="8" Top="4"/>
+            </Button>
+            <Button Height="24" IconOpacityDisabled="1" IconOpacityHover="1" IconOpacityNormal="1" IconOpacityPressed="1" Id="UiKitSmallButtonBaseSecondary" OpacityDisabled="1" OpacityHover="1" OpacityNormal="1" OpacityPressed="1" SpinnerStyleId="UiKitSpinner12" TextStyleIdDisabled="UiKitTextStyleSmallTextMedium" TextStyleIdHover="UiKitTextStyleSmallTextMedium" TextStyleIdNormal="UiKitTextStyleSmallTextMedium" TextStyleIdPressed="UiKitTextStyleSmallTextMedium">
+                <BackgroundDisabled>
+                    <SolidBrush BlendMode="NORMAL" PaletteStyleId="Surface_ColdGrey" Type="SOLID"/>
+                </BackgroundDisabled>
+                <BackgroundHover>
+                    <SolidBrush BlendMode="NORMAL" PaletteStyleId="ControlsBG_White-Hover" Type="SOLID"/>
+                </BackgroundHover>
+                <BackgroundNormal>
+                    <SolidBrush BlendMode="NORMAL" PaletteStyleId="ControlsBG_White-Default-Focus-Loading" Type="SOLID"/>
+                </BackgroundNormal>
+                <BackgroundPressed>
+                    <SolidBrush BlendMode="NORMAL" PaletteStyleId="ControlsBG_White-Pressed" Type="SOLID"/>
+                </BackgroundPressed>
+                <BorderColorDisabled>
+                    <SolidBrush BlendMode="NORMAL" PaletteStyleId="Elements_SeparatorBold" Type="SOLID"/>
+                </BorderColorDisabled>
+                <BorderColorHover>
+                    <SolidBrush BlendMode="NORMAL" PaletteStyleId="Elements_SeparatorBold" Type="SOLID"/>
+                </BorderColorHover>
+                <BorderColorNormal>
+                    <SolidBrush BlendMode="NORMAL" PaletteStyleId="Elements_SeparatorBold" Type="SOLID"/>
+                </BorderColorNormal>
+                <BorderColorPressed>
+                    <SolidBrush BlendMode="NORMAL" PaletteStyleId="Elements_SeparatorBold" Type="SOLID"/>
+                </BorderColorPressed>
+                <BorderThicknessDisabled Bottom="1" Left="1" Right="1" Top="1"/>
+                <BorderThicknessHover Bottom="1" Left="1" Right="1" Top="1"/>
+                <BorderThicknessNormal Bottom="1" Left="1" Right="1" Top="1"/>
+                <BorderThicknessPressed Bottom="1" Left="1" Right="1" Top="1"/>
+                <CornerRadius BottomLeft="4" BottomRight="4" TopLeft="4" TopRight="4"/>
+                <Focus Thickness="2" Type="RECTANGLE">
+                    <Color>
+                        <SolidBrush BlendMode="NORMAL" PaletteStyleId="ControlsBG_Emerald-Default-Focus-Loading" Type="SOLID"/>
+                    </Color>
+                    <CornerRadius BottomLeft="8" BottomRight="8" TopLeft="8" TopRight="8"/>
+                    <Margin Bottom="-4" Left="-4" Right="-4" Top="-4"/>
+                </Focus>
+                <ForegroundDisabled>
+                    <SolidBrush BlendMode="NORMAL" PaletteStyleId="Text-Icons-Elements_Disabled" Type="SOLID"/>
+                </ForegroundDisabled>
+                <ForegroundHover>
+                    <SolidBrush BlendMode="NORMAL" PaletteStyleId="Text-Icons-Elements_Primary" Type="SOLID"/>
+                </ForegroundHover>
+                <ForegroundNormal>
+                    <SolidBrush BlendMode="NORMAL" PaletteStyleId="Text-Icons-Elements_Primary" Type="SOLID"/>
+                </ForegroundNormal>
+                <ForegroundPressed>
+                    <SolidBrush BlendMode="NORMAL" PaletteStyleId="Text-Icons-Elements_Primary" Type="SOLID"/>
+                </ForegroundPressed>
+                <IconBrushDisabledCenterLocation>
+                    <SolidBrush BlendMode="NORMAL" PaletteStyleId="Text-Icons-Elements_Disabled" Type="SOLID"/>
+                </IconBrushDisabledCenterLocation>
+                <IconBrushDisabledSideLocation>
+                    <SolidBrush BlendMode="NORMAL" PaletteStyleId="Text-Icons-Elements_Disabled" Type="SOLID"/>
+                </IconBrushDisabledSideLocation>
+                <IconBrushHoverCenterLocation>
+                    <SolidBrush BlendMode="NORMAL" PaletteStyleId="Text-Icons-Elements_Primary" Type="SOLID"/>
+                </IconBrushHoverCenterLocation>
+                <IconBrushHoverSideLocation>
+                    <SolidBrush BlendMode="NORMAL" PaletteStyleId="Text-Icons-Elements_Primary" Type="SOLID"/>
+                </IconBrushHoverSideLocation>
+                <IconBrushNormalCenterLocation>
+                    <SolidBrush BlendMode="NORMAL" PaletteStyleId="Text-Icons-Elements_Primary" Type="SOLID"/>
+                </IconBrushNormalCenterLocation>
+                <IconBrushNormalSideLocation>
+                    <SolidBrush BlendMode="NORMAL" PaletteStyleId="Text-Icons-Elements_Primary" Type="SOLID"/>
+                </IconBrushNormalSideLocation>
+                <IconBrushPressedCenterLocation>
+                    <SolidBrush BlendMode="NORMAL" PaletteStyleId="Text-Icons-Elements_Primary" Type="SOLID"/>
+                </IconBrushPressedCenterLocation>
+                <IconBrushPressedSideLocation>
+                    <SolidBrush BlendMode="NORMAL" PaletteStyleId="Text-Icons-Elements_Primary" Type="SOLID"/>
+                </IconBrushPressedSideLocation>
+                <IconMarginCenterLocation Bottom="4" Left="4" Right="4" Top="4"/>
+                <IconMarginLeftLocation Right="4"/>
+                <IconMarginRightLocation Left="4"/>
+                <Padding Bottom="4" Left="8" Right="8" Top="4"/>
+            </Button>
         </Buttons>
         <IconButtons>
             <IconButton IconOpacityDisabled="0.4" IconOpacityHover="1" IconOpacityNormal="1" IconOpacityPressed="1" Id="UiKitIconButton16">
@@ -2307,8 +2541,8 @@
                 <Padding Bottom="6" Left="8" Right="8" Top="6"/>
                 <PopupArrowIconBottom>
                     <Svg>
-                        <![CDATA[<svg width="13" height="6" viewBox="0 0 13 6" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path fill-rule="evenodd" clip-rule="evenodd" d="M12.5 0L7.20711 5.29289C6.81658 5.68342 6.18342 5.68342 5.79289 5.29289L0.5 0L12.5 0Z" fill="#DB3545"/>
+                        <![CDATA[<svg width="12" height="6" viewBox="0 0 12 6" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M12 0L6.70711 5.29289C6.31658 5.68342 5.68342 5.68342 5.29289 5.29289L0 0L12 0Z" fill="#DB3545"/>
 </svg>
 ]]>
                     </Svg>
@@ -2316,7 +2550,7 @@
                 <PopupArrowIconLeft>
                     <Svg>
                         <![CDATA[<svg width="6" height="12" viewBox="0 0 6 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path fill-rule="evenodd" clip-rule="evenodd" d="M6 12L0.707107 6.70711C0.316583 6.31658 0.316583 5.68342 0.707107 5.29289L6 0V12Z" fill="#DB3545"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M5.58594 12L0.293044 6.70711C-0.0974799 6.31658 -0.0974799 5.68342 0.293044 5.29289L5.58594 0V12Z" fill="#DB3545"/>
 </svg>
 ]]>
                     </Svg>
@@ -2331,8 +2565,8 @@
                 </PopupArrowIconRight>
                 <PopupArrowIconTop>
                     <Svg>
-                        <![CDATA[<svg width="13" height="6" viewBox="0 0 13 6" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path fill-rule="evenodd" clip-rule="evenodd" d="M0.5 6L5.79289 0.707107C6.18342 0.316583 6.81658 0.316583 7.20711 0.707107L12.5 6L0.5 6Z" fill="#DB3545"/>
+                        <![CDATA[<svg width="12" height="6" viewBox="0 0 12 6" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M0 5.58594L5.29289 0.293044C5.68342 -0.0974799 6.31658 -0.0974799 6.70711 0.293044L12 5.58594L0 5.58594Z" fill="#DB3545"/>
 </svg>
 ]]>
                     </Svg>
@@ -2355,8 +2589,8 @@
                 <Padding Bottom="6" Left="8" Right="8" Top="6"/>
                 <PopupArrowIconBottom>
                     <Svg>
-                        <![CDATA[<svg width="13" height="6" viewBox="0 0 13 6" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path fill-rule="evenodd" clip-rule="evenodd" d="M12.5 0L7.20711 5.29289C6.81658 5.68342 6.18342 5.68342 5.79289 5.29289L0.5 0L12.5 0Z" fill="#2A3541" fill-opacity="0.95"/>
+                        <![CDATA[<svg width="12" height="6" viewBox="0 0 12 6" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M12 0L6.70711 5.29289C6.31658 5.68342 5.68342 5.68342 5.29289 5.29289L0 0L12 0Z" fill="#2A3541" fill-opacity="0.95"/>
 </svg>
 ]]>
                     </Svg>
@@ -2364,7 +2598,7 @@
                 <PopupArrowIconLeft>
                     <Svg>
                         <![CDATA[<svg width="6" height="12" viewBox="0 0 6 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path fill-rule="evenodd" clip-rule="evenodd" d="M6 12L0.707107 6.70711C0.316583 6.31658 0.316583 5.68342 0.707107 5.29289L6 0V12Z" fill="#2A3541" fill-opacity="0.95"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M5.58594 12L0.293044 6.70711C-0.0974799 6.31658 -0.0974799 5.68342 0.293044 5.29289L5.58594 0V12Z" fill="#2A3541" fill-opacity="0.95"/>
 </svg>
 ]]>
                     </Svg>
@@ -2379,8 +2613,8 @@
                 </PopupArrowIconRight>
                 <PopupArrowIconTop>
                     <Svg>
-                        <![CDATA[<svg width="13" height="6" viewBox="0 0 13 6" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path fill-rule="evenodd" clip-rule="evenodd" d="M0.5 6L5.79289 0.707107C6.18342 0.316583 6.81658 0.316583 7.20711 0.707107L12.5 6L0.5 6Z" fill="#2A3541" fill-opacity="0.95"/>
+                        <![CDATA[<svg width="12" height="6" viewBox="0 0 12 6" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M0 5.58594L5.29289 0.293044C5.68342 -0.0974799 6.31658 -0.0974799 6.70711 0.293044L12 5.58594L0 5.58594Z" fill="#2A3541" fill-opacity="0.95"/>
 </svg>
 ]]>
                     </Svg>
@@ -3084,7 +3318,7 @@
                 <Icon>
                     <Svg>
                         <![CDATA[<svg width="10" height="8" viewBox="0 0 10 8" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path fill-rule="evenodd" clip-rule="evenodd" d="M9.36395 0.233155C9.7999 0.572225 9.87843 1.2005 9.53936 1.63645L4.93802 7.55247C4.5486 8.05315 3.81756 8.12161 3.34195 7.70195L0.58839 5.27234C0.174266 4.90694 0.134771 4.27501 0.500174 3.86089C0.865578 3.44676 1.49751 3.40727 1.91163 3.77267L3.94719 5.56875L7.96066 0.408566C8.29973 -0.0273809 8.92801 -0.105915 9.36395 0.233155Z" fill="#F5F8FB"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M9.11395 0.210694C9.5499 0.549764 9.62843 1.17804 9.28936 1.61399L4.68802 7.53C4.2986 8.03069 3.56756 8.09915 3.09195 7.67949L0.33839 5.24988C-0.0757335 4.88448 -0.115229 4.25255 0.250174 3.83842C0.615578 3.4243 1.24751 3.3848 1.66163 3.75021L3.69719 5.54628L7.71066 0.386105C8.04973 -0.0498418 8.67801 -0.128376 9.11395 0.210694Z" fill="#F5F8FB"/>
 </svg>
 ]]>
                     </Svg>
@@ -4264,13 +4498,49 @@
             </NavigationMenuFooterButton>
         </NavigationMenuFooterButtons>
         <NotificationHints>
-            <NotificationHint IconNameDanger="StatusDanger" IconNameInfo="StatusInfo" IconNamePositive="StatusPositive" IconNameWarning="StatusWarning" Id="UiKitNotificationHint" TextStyleId="UiKitTextStyleBaseText">
+            <NotificationHint IconNameDanger="StatusDanger" IconNameInfo="StatusInfo" IconNameNeutral="StatusInfo" IconNamePositive="StatusPositive" IconNameWarning="StatusWarning" Id="UiKitNotificationHintColor" TextStyleId="UiKitTextStyleBaseText">
+                <ForegroundDanger>
+                    <SolidBrush BlendMode="NORMAL" PaletteStyleId="Status_High" Type="SOLID"/>
+                </ForegroundDanger>
+                <ForegroundInfo>
+                    <SolidBrush BlendMode="NORMAL" PaletteStyleId="Status_Info" Type="SOLID"/>
+                </ForegroundInfo>
+                <ForegroundNeutral>
+                    <SolidBrush BlendMode="NORMAL" PaletteStyleId="Text-Icons-Elements_BaseIcon" Type="SOLID"/>
+                </ForegroundNeutral>
+                <ForegroundPositive>
+                    <SolidBrush BlendMode="NORMAL" PaletteStyleId="Status_Positive" Type="SOLID"/>
+                </ForegroundPositive>
+                <ForegroundWarning>
+                    <SolidBrush BlendMode="NORMAL" PaletteStyleId="Tags_Yellow-Invert" Type="SOLID"/>
+                </ForegroundWarning>
+                <IconBrushDanger>
+                    <SolidBrush BlendMode="NORMAL" PaletteStyleId="Status_High" Type="SOLID"/>
+                </IconBrushDanger>
+                <IconBrushInfo>
+                    <SolidBrush BlendMode="NORMAL" PaletteStyleId="Status_Info" Type="SOLID"/>
+                </IconBrushInfo>
+                <IconBrushNeutral>
+                    <SolidBrush BlendMode="NORMAL" PaletteStyleId="Text-Icons-Elements_BaseIcon" Type="SOLID"/>
+                </IconBrushNeutral>
+                <IconBrushPositive>
+                    <SolidBrush BlendMode="NORMAL" PaletteStyleId="Status_Positive" Type="SOLID"/>
+                </IconBrushPositive>
+                <IconBrushWarning>
+                    <SolidBrush BlendMode="NORMAL" PaletteStyleId="Tags_Yellow-Invert" Type="SOLID"/>
+                </IconBrushWarning>
+                <IconMargin Bottom="0" Left="0" Right="8" Top="2"/>
+            </NotificationHint>
+            <NotificationHint IconNameDanger="StatusDanger" IconNameInfo="StatusInfo" IconNameNeutral="StatusInfo" IconNamePositive="StatusPositive" IconNameWarning="StatusWarning" Id="UiKitNotificationHintDefault" TextStyleId="UiKitTextStyleBaseText">
                 <ForegroundDanger>
                     <SolidBrush BlendMode="NORMAL" PaletteStyleId="Text-Icons-Elements_Primary" Type="SOLID"/>
                 </ForegroundDanger>
                 <ForegroundInfo>
                     <SolidBrush BlendMode="NORMAL" PaletteStyleId="Text-Icons-Elements_Primary" Type="SOLID"/>
                 </ForegroundInfo>
+                <ForegroundNeutral>
+                    <SolidBrush BlendMode="NORMAL" PaletteStyleId="Text-Icons-Elements_Primary" Type="SOLID"/>
+                </ForegroundNeutral>
                 <ForegroundPositive>
                     <SolidBrush BlendMode="NORMAL" PaletteStyleId="Text-Icons-Elements_Primary" Type="SOLID"/>
                 </ForegroundPositive>
@@ -4283,6 +4553,9 @@
                 <IconBrushInfo>
                     <SolidBrush BlendMode="NORMAL" PaletteStyleId="Status_Info" Type="SOLID"/>
                 </IconBrushInfo>
+                <IconBrushNeutral>
+                    <SolidBrush BlendMode="NORMAL" PaletteStyleId="Status_Low" Type="SOLID"/>
+                </IconBrushNeutral>
                 <IconBrushPositive>
                     <SolidBrush BlendMode="NORMAL" PaletteStyleId="Status_Positive" Type="SOLID"/>
                 </IconBrushPositive>
@@ -4841,6 +5114,13 @@
                 <BackgroundPressed>
                     <SolidBrush BlendMode="NORMAL" PaletteStyleId="Status_Info-Subtle-Transparent_20" Type="SOLID"/>
                 </BackgroundPressed>
+                <Focus Thickness="2" Type="RECTANGLE">
+                    <Color>
+                        <SolidBrush BlendMode="NORMAL" PaletteStyleId="ControlsBG_Emerald-Default-Focus-Loading" Type="SOLID"/>
+                    </Color>
+                    <CornerRadius BottomLeft="8" BottomRight="8" TopLeft="8" TopRight="8"/>
+                    <Margin Bottom="-4" Left="-6" Right="-6" Top="-4"/>
+                </Focus>
                 <ForegroundHover>
                     <SolidBrush BlendMode="NORMAL" PaletteStyleId="ControlsBG_Emerald-Hover" Type="SOLID"/>
                 </ForegroundHover>
@@ -7984,7 +8264,7 @@
     <SvgIcons>
         <SvgIcon Height="12" Id="12 / Bullet" IsAutoRTL="false" IsColorfull="false" Name="Bullet" OriginName="12 / Bullet" OriginNodeId="188025e5071c2da16562d940f2c31b87826752f6" Width="12">
             <Vectors>
-                <Vector IsRTL="false">
+                <Vector Hash="5a35f49709ac7174ed8e2778aeaf5b8a" IsRTL="false">
                     <Data>
                         <Svg>
                             <![CDATA[<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="none" viewBox="0 0 12 12"><path stroke="#000" d="M1.5 1.5h9v9h-9z"/></svg>]]>
@@ -7995,7 +8275,7 @@
         </SvgIcon>
         <SvgIcon Height="12" Id="12 / Check" IsAutoRTL="false" IsColorfull="false" Name="Check" OriginName="12 / Bullet_check" OriginNodeId="d8a151daadd77402922365796512e402117b59ea" Width="12">
             <Vectors>
-                <Vector IsRTL="false">
+                <Vector Hash="59c169ca29107348136bbde662c46539" IsRTL="false">
                     <Data>
                         <Svg>
                             <![CDATA[<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="none" viewBox="0 0 12 12"><path stroke="#000" d="M1.5 1.5h9v9h-9z"/></svg>]]>
@@ -8006,7 +8286,7 @@
         </SvgIcon>
         <SvgIcon Height="12" Id="12 / Icon Stub" IsAutoRTL="false" IsColorfull="false" Name="IconStub" OriginName="12 / Icon Stub" OriginNodeId="f145d7f2cd4bff799c183b5c0a2803d736e63d35" Width="12">
             <Vectors>
-                <Vector IsRTL="false">
+                <Vector Hash="06b21a63f2fee56265755d6dd1d1753e" IsRTL="false">
                     <Data>
                         <Svg>
                             <![CDATA[<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="none" viewBox="0 0 12 12"><path stroke="#000" d="M1.5 1.5h9v9h-9z"/></svg>]]>
@@ -8017,7 +8297,7 @@
         </SvgIcon>
         <SvgIcon Height="16" Id="16 / Add" IsAutoRTL="false" IsColorfull="false" Name="Add" OriginName="16 / Plus_M" OriginNodeId="ae588741f0780f0aa7cb654c42589f44279cc1b0" Width="16">
             <Vectors>
-                <Vector IsRTL="false">
+                <Vector Hash="e4a080ad3e6f886feabce4f54da5d9b8" IsRTL="false">
                     <Data>
                         <Svg>
                             <![CDATA[<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 16 16"><path stroke="#000" d="M1.5 1.5h13v13h-13z"/></svg>]]>
@@ -8028,7 +8308,7 @@
         </SvgIcon>
         <SvgIcon Height="16" Id="16 / Arrow Down" IsAutoRTL="false" IsColorfull="false" Name="ArrowDown" OriginName="16 / Arrow_Down" OriginNodeId="2084e9104b8d59413cbf30fe957c76e2659092ee" Width="16">
             <Vectors>
-                <Vector IsRTL="false">
+                <Vector Hash="a2aa3c887aac55561a8bbbb44c8f03a4" IsRTL="false">
                     <Data>
                         <Svg>
                             <![CDATA[<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 16 16"><path stroke="#000" d="M1.5 1.5h13v13h-13z"/></svg>]]>
@@ -8039,7 +8319,7 @@
         </SvgIcon>
         <SvgIcon Height="16" Id="16 / Arrow Down 3" IsAutoRTL="false" IsColorfull="false" Name="ArrowDown3" OriginName="16 / Arrow_Down" OriginNodeId="4644019947eefe6f04aaf31195dcbe83b09bebab" Width="16">
             <Vectors>
-                <Vector IsRTL="false">
+                <Vector Hash="73a1efb4281c59789a731461e50650a5" IsRTL="false">
                     <Data>
                         <Svg>
                             <![CDATA[<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 16 16"><path stroke="#000" d="M1.5 1.5h13v13h-13z"/></svg>]]>
@@ -8050,7 +8330,7 @@
         </SvgIcon>
         <SvgIcon Height="16" Id="16 / Arrow To Line Down" IsAutoRTL="false" IsColorfull="false" Name="ArrowToLineDown" OriginName="16 / To_The_Bottom" OriginNodeId="01dd6e62d9d23df702178b7362a55cd7fbbe16b0" Width="16">
             <Vectors>
-                <Vector IsRTL="false">
+                <Vector Hash="f4789b120721641f85156c181681d393" IsRTL="false">
                     <Data>
                         <Svg>
                             <![CDATA[<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 16 16"><path stroke="#000" d="M1.5 1.5h13v13h-13z"/></svg>]]>
@@ -8061,7 +8341,7 @@
         </SvgIcon>
         <SvgIcon Height="16" Id="16 / Arrow To Line Up" IsAutoRTL="false" IsColorfull="false" Name="ArrowToLineUp" OriginName="16 / To_The_Top" OriginNodeId="10cec7c6221bf081ec3687a927b3528e224f2a2b" Width="16">
             <Vectors>
-                <Vector IsRTL="false">
+                <Vector Hash="75bd62d79efad8a16d4fe0f453dcb88a" IsRTL="false">
                     <Data>
                         <Svg>
                             <![CDATA[<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 16 16"><path stroke="#000" d="M1.5 1.5h13v13h-13z"/></svg>]]>
@@ -8072,7 +8352,7 @@
         </SvgIcon>
         <SvgIcon Height="16" Id="16 / Arrow Up" IsAutoRTL="false" IsColorfull="false" Name="ArrowUp" OriginName="16 / Arrow_Up" OriginNodeId="28c123aa7b06631101b8758fc0cd834fb194618e" Width="16">
             <Vectors>
-                <Vector IsRTL="false">
+                <Vector Hash="9fbee240dae14e8fa383f85d93d73a16" IsRTL="false">
                     <Data>
                         <Svg>
                             <![CDATA[<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 16 16"><path stroke="#000" d="M1.5 1.5h13v13h-13z"/></svg>]]>
@@ -8083,7 +8363,7 @@
         </SvgIcon>
         <SvgIcon Height="16" Id="16 / Arrow Up 3" IsAutoRTL="false" IsColorfull="false" Name="ArrowUp3" OriginName="16 / Arrow_Up" OriginNodeId="7b2e800a5cfdd5c935be5d1a8fed1af5a5c30c2d" Width="16">
             <Vectors>
-                <Vector IsRTL="false">
+                <Vector Hash="2298e10d6f55dbfeb429f145468e6ca9" IsRTL="false">
                     <Data>
                         <Svg>
                             <![CDATA[<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 16 16"><path stroke="#000" d="M1.5 1.5h13v13h-13z"/></svg>]]>
@@ -8094,7 +8374,7 @@
         </SvgIcon>
         <SvgIcon Height="16" Id="16 / AutoRTL / Arrow Change" IsAutoRTL="true" IsColorfull="false" Name="ArrowChange" OriginName="16 / Change" OriginNodeId="17cdefd4dcc30933f99f93eadc9b6c1779f9c7c9" Width="16">
             <Vectors>
-                <Vector IsRTL="false">
+                <Vector Hash="3e3a326cc4ee093e495af55de96472fb" IsRTL="false">
                     <Data>
                         <Svg>
                             <![CDATA[<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 16 16"><path stroke="#000" d="M1.5 1.5h13v13h-13z"/></svg>]]>
@@ -8105,7 +8385,7 @@
         </SvgIcon>
         <SvgIcon Height="16" Id="16 / AutoRTL / Arrow Left" IsAutoRTL="true" IsColorfull="false" Name="ArrowLeft" OriginName="16 / Arrow_Left" OriginNodeId="0f7258e8401e82e358a8a1ca7d38d84b3bacf016" Width="16">
             <Vectors>
-                <Vector IsRTL="false">
+                <Vector Hash="fa5a630976178b6d143aacac28cb7ebc" IsRTL="false">
                     <Data>
                         <Svg>
                             <![CDATA[<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 16 16"><path stroke="#000" d="M1.5 1.5h13v13h-13z"/></svg>]]>
@@ -8116,7 +8396,7 @@
         </SvgIcon>
         <SvgIcon Height="16" Id="16 / AutoRTL / Arrow Left 3" IsAutoRTL="true" IsColorfull="false" Name="ArrowLeft3" OriginName="16 / Arrow_Back" OriginNodeId="b31b4ccb9568c2a2ea7c77303d92c45ea45328d2" Width="16">
             <Vectors>
-                <Vector IsRTL="false">
+                <Vector Hash="2f055346aefe06f35d15cb286c4926b1" IsRTL="false">
                     <Data>
                         <Svg>
                             <![CDATA[<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 16 16"><path stroke="#000" d="M1.5 1.5h13v13h-13z"/></svg>]]>
@@ -8127,7 +8407,7 @@
         </SvgIcon>
         <SvgIcon Height="16" Id="16 / AutoRTL / Arrow Right" IsAutoRTL="true" IsColorfull="false" Name="ArrowRight" OriginName="16 / Arrow_Right" OriginNodeId="b9da2f2cdede4687134cc33c874c3271fb4d6771" Width="16">
             <Vectors>
-                <Vector IsRTL="false">
+                <Vector Hash="175651ce21ad84b1b6f1a00259a01cfe" IsRTL="false">
                     <Data>
                         <Svg>
                             <![CDATA[<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 16 16"><path stroke="#000" d="M1.5 1.5h13v13h-13z"/></svg>]]>
@@ -8138,7 +8418,7 @@
         </SvgIcon>
         <SvgIcon Height="16" Id="16 / AutoRTL / Arrow Right 3" IsAutoRTL="true" IsColorfull="false" Name="ArrowRight3" OriginName="16 / Arrow_Forward" OriginNodeId="699d0a2ac9b5e0db02b78033e4591d48501404ff" Width="16">
             <Vectors>
-                <Vector IsRTL="false">
+                <Vector Hash="9717918efb6697e417e2f4023cde44e7" IsRTL="false">
                     <Data>
                         <Svg>
                             <![CDATA[<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 16 16"><path stroke="#000" d="M1.5 1.5h13v13h-13z"/></svg>]]>
@@ -8149,7 +8429,7 @@
         </SvgIcon>
         <SvgIcon Height="16" Id="16 / AutoRTL / Arrow To Line Left" IsAutoRTL="true" IsColorfull="false" Name="ArrowToLineLeft" OriginName="16 / To_The_Right" OriginNodeId="efef80d1d702c3e62b3dd529bfeac4cebeac6779" Width="16">
             <Vectors>
-                <Vector IsRTL="false">
+                <Vector Hash="fecd32002bc755dd3db6486a5e4bd2b2" IsRTL="false">
                     <Data>
                         <Svg>
                             <![CDATA[<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 16 16"><path stroke="#000" d="M1.5 1.5h13v13h-13z"/></svg>]]>
@@ -8160,7 +8440,7 @@
         </SvgIcon>
         <SvgIcon Height="16" Id="16 / AutoRTL / Arrow To Line Right" IsAutoRTL="true" IsColorfull="false" Name="ArrowToLineRight" OriginName="16 / To_The_Right" OriginNodeId="228cc4add78a1bf28619016ca5a9ba61b1382504" Width="16">
             <Vectors>
-                <Vector IsRTL="false">
+                <Vector Hash="5bf321f091821d64d711a6595eba7390" IsRTL="false">
                     <Data>
                         <Svg>
                             <![CDATA[<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 16 16"><path stroke="#000" d="M1.5 1.5h13v13h-13z"/></svg>]]>
@@ -8171,7 +8451,7 @@
         </SvgIcon>
         <SvgIcon Height="16" Id="16 / AutoRTL / Page Left" IsAutoRTL="true" IsColorfull="false" Name="PageLeft" OriginName="16 / Page_Left" OriginNodeId="4f266c4592a3016499de7e68f8b79ae1094f12f1" Width="16">
             <Vectors>
-                <Vector IsRTL="false">
+                <Vector Hash="1452b7c34735daa701c65cacd9357b2c" IsRTL="false">
                     <Data>
                         <Svg>
                             <![CDATA[<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 16 16"><path stroke="#000" d="M1.5 1.5h13v13h-13z"/></svg>]]>
@@ -8182,7 +8462,7 @@
         </SvgIcon>
         <SvgIcon Height="16" Id="16 / AutoRTL / Page Right" IsAutoRTL="true" IsColorfull="false" Name="PageRight" OriginName="16 / Page_Right" OriginNodeId="92b409835c2ed320ba217a7d210489c613abb5ab" Width="16">
             <Vectors>
-                <Vector IsRTL="false">
+                <Vector Hash="5aa86d224b24df33e28c5e1565bf8a57" IsRTL="false">
                     <Data>
                         <Svg>
                             <![CDATA[<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 16 16"><path stroke="#000" d="M1.5 1.5h13v13h-13z"/></svg>]]>
@@ -8193,7 +8473,7 @@
         </SvgIcon>
         <SvgIcon Height="16" Id="16 / AutoRTL / Status Question" IsAutoRTL="true" IsColorfull="false" Name="StatusQuestion" OriginName="16 / Status_Question_Outline" OriginNodeId="9bc4cb5ab0b4495b20e7294cf2b613d57a4c0308" Width="16">
             <Vectors>
-                <Vector IsRTL="false">
+                <Vector Hash="ffac657d37cb0c83e41bf76175809213" IsRTL="false">
                     <Data>
                         <Svg>
                             <![CDATA[<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 16 16"><path stroke="#000" d="M1.5 1.5h13v13h-13z"/></svg>]]>
@@ -8204,7 +8484,7 @@
         </SvgIcon>
         <SvgIcon Height="16" Id="16 / AutoRTL / Status Question Solid" IsAutoRTL="true" IsColorfull="false" Name="StatusQuestionSolid" OriginName="16 / Status_Question_Solid" OriginNodeId="8541576cef6bcfa8a5f83338c9495bb4e97a19ba" Width="16">
             <Vectors>
-                <Vector IsRTL="false">
+                <Vector Hash="ff43c56ea1f604f03535ef94cc087670" IsRTL="false">
                     <Data>
                         <Svg>
                             <![CDATA[<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 16 16"><path stroke="#000" d="M1.5 1.5h13v13h-13z"/></svg>]]>
@@ -8215,7 +8495,7 @@
         </SvgIcon>
         <SvgIcon Height="16" Id="16 / Calendar" IsAutoRTL="false" IsColorfull="false" Name="Calendar" OriginName="16 / Calendar" OriginNodeId="fe0b0796e74a98e8bb89b4c93dd1c9a5e1aceeba" Width="16">
             <Vectors>
-                <Vector IsRTL="false">
+                <Vector Hash="b1b00d3176d7177d94c98f3be8000574" IsRTL="false">
                     <Data>
                         <Svg>
                             <![CDATA[<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 16 16"><path stroke="#000" d="M1.5 1.5h13v13h-13z"/></svg>]]>
@@ -8226,7 +8506,7 @@
         </SvgIcon>
         <SvgIcon Height="16" Id="16 / Check" IsAutoRTL="false" IsColorfull="false" Name="Check" OriginName="16 / Ok_M" OriginNodeId="dcf24debfa433feda18b44aeb96dfd7bb2892293" Width="16">
             <Vectors>
-                <Vector IsRTL="false">
+                <Vector Hash="dd5f34f47e1b97d08070b8ca35c09b25" IsRTL="false">
                     <Data>
                         <Svg>
                             <![CDATA[<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 16 16"><path stroke="#000" d="M1.5 1.5h13v13h-13z"/></svg>]]>
@@ -8237,7 +8517,7 @@
         </SvgIcon>
         <SvgIcon Height="16" Id="16 / Clear" IsAutoRTL="false" IsColorfull="false" Name="Clear" OriginName="16 / Cross_S" OriginNodeId="dfb99546443e2b6bc8a817edf89b74d558f2926a" Width="16">
             <Vectors>
-                <Vector IsRTL="false">
+                <Vector Hash="dd4f54a848ecd1686143b9fa895037ca" IsRTL="false">
                     <Data>
                         <Svg>
                             <![CDATA[<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 16 16"><path stroke="#000" d="M1.5 1.5h13v13h-13z"/></svg>]]>
@@ -8248,7 +8528,7 @@
         </SvgIcon>
         <SvgIcon Height="16" Id="16 / Copy" IsAutoRTL="false" IsColorfull="false" Name="Copy" OriginName="16 / Copy" OriginNodeId="74b251b427a59d925e3a4257551e3b917f23c3d0" Width="16">
             <Vectors>
-                <Vector IsRTL="false">
+                <Vector Hash="572901c31b1a67c3d72e90d34b81d677" IsRTL="false">
                     <Data>
                         <Svg>
                             <![CDATA[<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 16 16"><path stroke="#000" d="M1.5 1.5h13v13h-13z"/></svg>]]>
@@ -8259,7 +8539,7 @@
         </SvgIcon>
         <SvgIcon Height="16" Id="16 / Cut" IsAutoRTL="false" IsColorfull="false" Name="Cut" OriginName="16 / Cut" OriginNodeId="e662690c56ce6e55bc87c3a80e19e27dcf03e66f" Width="16">
             <Vectors>
-                <Vector IsRTL="false">
+                <Vector Hash="2d430c840208be8b0f1236d1f52fc257" IsRTL="false">
                     <Data>
                         <Svg>
                             <![CDATA[<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 16 16"><path stroke="#000" d="M1.5 1.5h13v13h-13z"/></svg>]]>
@@ -8270,7 +8550,7 @@
         </SvgIcon>
         <SvgIcon Height="16" Id="16 / Device Laptop" IsAutoRTL="false" IsColorfull="false" Name="DeviceLaptop" OriginName="16 / Laptop" OriginNodeId="a387d6e50be6f42f617059f74495a18ad22751aa" Width="16">
             <Vectors>
-                <Vector IsRTL="false">
+                <Vector Hash="e173da80931a5a687b9364ba9de1268b" IsRTL="false">
                     <Data>
                         <Svg>
                             <![CDATA[<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 16 16"><path stroke="#000" d="M1.5 1.5h13v13h-13z"/></svg>]]>
@@ -8281,7 +8561,7 @@
         </SvgIcon>
         <SvgIcon Height="16" Id="16 / Eye Hide" IsAutoRTL="false" IsColorfull="false" Name="EyeHide" OriginName="16 / Password_Hide" OriginNodeId="12adb70f4a17945aa360a32292612dc24956cabb" Width="16">
             <Vectors>
-                <Vector IsRTL="false">
+                <Vector Hash="72b4f0d3787b02a3d2a75284910086b3" IsRTL="false">
                     <Data>
                         <Svg>
                             <![CDATA[<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 16 16"><path stroke="#000" d="M1.5 1.5h13v13h-13z"/></svg>]]>
@@ -8292,7 +8572,7 @@
         </SvgIcon>
         <SvgIcon Height="16" Id="16 / Eye Show" IsAutoRTL="false" IsColorfull="false" Name="EyeShow" OriginName="16 / Password_Show" OriginNodeId="873a8130b0e6f35ee9f6c86afacfac42375d08b8" Width="16">
             <Vectors>
-                <Vector IsRTL="false">
+                <Vector Hash="58f7ec2c3e3c8a326612f476bf3c2a7b" IsRTL="false">
                     <Data>
                         <Svg>
                             <![CDATA[<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 16 16"><path stroke="#000" d="M1.5 1.5h13v13h-13z"/></svg>]]>
@@ -8303,7 +8583,7 @@
         </SvgIcon>
         <SvgIcon Height="16" Id="16 / Frame Image" IsAutoRTL="false" IsColorfull="false" Name="FrameImage" OriginName="16 / Photo_Frame" OriginNodeId="101e2b9dfec27083c3c6cfca8755562dc21c2dc4" Width="16">
             <Vectors>
-                <Vector IsRTL="false">
+                <Vector Hash="06f8b3ce1ce2cf25a7ffdd1fd77413b3" IsRTL="false">
                     <Data>
                         <Svg>
                             <![CDATA[<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 16 16"><path stroke="#000" d="M1.5 1.5h13v13h-13z"/></svg>]]>
@@ -8314,7 +8594,7 @@
         </SvgIcon>
         <SvgIcon Height="16" Id="16 / Grid" IsAutoRTL="false" IsColorfull="false" Name="Grid" OriginName="16 / Grid" OriginNodeId="6d65569df9de136147a090e8fdaef971111039e3" Width="16">
             <Vectors>
-                <Vector IsRTL="false">
+                <Vector Hash="76db93e4149e9b67d8363defe8b2e577" IsRTL="false">
                     <Data>
                         <Svg>
                             <![CDATA[<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 16 16"><path stroke="#000" d="M1.5 1.5h13v13h-13z"/></svg>]]>
@@ -8325,7 +8605,7 @@
         </SvgIcon>
         <SvgIcon Height="16" Id="16 / Icon Stub" IsAutoRTL="false" IsColorfull="false" Name="IconStub" OriginName="16 / Icon Stub" OriginNodeId="05cd5c07946d03b3cab77194f4ed6790460324ed" Width="16">
             <Vectors>
-                <Vector IsRTL="false">
+                <Vector Hash="968607e26f52ffb0449b376bc0495ab6" IsRTL="false">
                     <Data>
                         <Svg>
                             <![CDATA[<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 16 16"><path stroke="#000" d="M1.5 1.5h13v13h-13z"/></svg>]]>
@@ -8336,7 +8616,7 @@
         </SvgIcon>
         <SvgIcon Height="16" Id="16 / Link External" IsAutoRTL="false" IsColorfull="false" Name="LinkExternal" OriginName="16 / Link_External" OriginNodeId="27437a24f993c210cbb3796f837ed67eb246c173" Width="16">
             <Vectors>
-                <Vector IsRTL="false">
+                <Vector Hash="cfa0d12ea6259b33501720ec084f809d" IsRTL="false">
                     <Data>
                         <Svg>
                             <![CDATA[<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 16 16"><path stroke="#000" d="M1.5 1.5h13v13h-13z"/></svg>]]>
@@ -8347,7 +8627,7 @@
         </SvgIcon>
         <SvgIcon Height="16" Id="16 / Minus" IsAutoRTL="false" IsColorfull="false" Name="Minus" OriginName="16 / Minus_M" OriginNodeId="f9f7ea1606c6ccac31392449f466b871084d33c8" Width="16">
             <Vectors>
-                <Vector IsRTL="false">
+                <Vector Hash="2b5917e82c9421362d5e67d54e71fef2" IsRTL="false">
                     <Data>
                         <Svg>
                             <![CDATA[<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 16 16"><path stroke="#000" d="M1.5 1.5h13v13h-13z"/></svg>]]>
@@ -8358,7 +8638,7 @@
         </SvgIcon>
         <SvgIcon Height="16" Id="16 / Moon" IsAutoRTL="false" IsColorfull="false" Name="Moon" OriginName="16 / Moon" OriginNodeId="bc0efbe610ac53701736b3d3e2d4635aa164d7da" Width="16">
             <Vectors>
-                <Vector IsRTL="false">
+                <Vector Hash="d196df7aeaa6582380e03e6a6a3f58f3" IsRTL="false">
                     <Data>
                         <Svg>
                             <![CDATA[<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 16 16"><path stroke="#000" d="M1.5 1.5h13v13h-13z"/></svg>]]>
@@ -8369,7 +8649,7 @@
         </SvgIcon>
         <SvgIcon Height="16" Id="16 / Page Down" IsAutoRTL="false" IsColorfull="false" Name="PageDown" OriginName="16 / Page_Down" OriginNodeId="28e5f9767d6a2c00aa094a6b84bdff8851c9052c" Width="16">
             <Vectors>
-                <Vector IsRTL="false">
+                <Vector Hash="9ed6d0bc97322ca2991b0e09ca71100a" IsRTL="false">
                     <Data>
                         <Svg>
                             <![CDATA[<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 16 16"><path stroke="#000" d="M1.5 1.5h13v13h-13z"/></svg>]]>
@@ -8380,7 +8660,7 @@
         </SvgIcon>
         <SvgIcon Height="16" Id="16 / Page Up" IsAutoRTL="false" IsColorfull="false" Name="PageUp" OriginName="16 / Page_Up" OriginNodeId="24614224702970b13e8d6b7355adbb6f4a9f8507" Width="16">
             <Vectors>
-                <Vector IsRTL="false">
+                <Vector Hash="a4e0bb58f824c62e91dc5e194e00ceee" IsRTL="false">
                     <Data>
                         <Svg>
                             <![CDATA[<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 16 16"><path stroke="#000" d="M1.5 1.5h13v13h-13z"/></svg>]]>
@@ -8391,7 +8671,7 @@
         </SvgIcon>
         <SvgIcon Height="16" Id="16 / Paste" IsAutoRTL="false" IsColorfull="false" Name="Paste" OriginName="16 / Paste" OriginNodeId="229f35427776e09af7795d8c8097602fcbadb409" Width="16">
             <Vectors>
-                <Vector IsRTL="false">
+                <Vector Hash="af3f32a340b73cadfd6bb9aae4ae5aee" IsRTL="false">
                     <Data>
                         <Svg>
                             <![CDATA[<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 16 16"><path stroke="#000" d="M1.5 1.5h13v13h-13z"/></svg>]]>
@@ -8402,7 +8682,7 @@
         </SvgIcon>
         <SvgIcon Height="16" Id="16 / Placeholder" IsAutoRTL="false" IsColorfull="false" Name="Placeholder" OriginName="16 / Placeholder" OriginNodeId="78f159d944b54388832b08513cef1ba64b760e33" Width="16">
             <Vectors>
-                <Vector IsRTL="false">
+                <Vector Hash="ba9bb6f970c747a0213ff092cdaee2a5" IsRTL="false">
                     <Data>
                         <Svg>
                             <![CDATA[<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 16 16"><path stroke="#000" d="M1.5 1.5h13v13h-13z"/></svg>]]>
@@ -8413,7 +8693,7 @@
         </SvgIcon>
         <SvgIcon Height="16" Id="16 / Placeholder 2" IsAutoRTL="false" IsColorfull="false" Name="Placeholder2" OriginName="16 / Placeholder_2" OriginNodeId="0c37fe0a34153ff0fe581dde2d47e3f455e79bda" Width="16">
             <Vectors>
-                <Vector IsRTL="false">
+                <Vector Hash="d830c0d5a9df4f8d1e2c825d6e9d4a61" IsRTL="false">
                     <Data>
                         <Svg>
                             <![CDATA[<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 16 16"><path stroke="#000" d="M1.5 1.5h13v13h-13z"/></svg>]]>
@@ -8424,7 +8704,7 @@
         </SvgIcon>
         <SvgIcon Height="16" Id="16 / Pointer" IsAutoRTL="false" IsColorfull="false" Name="Pointer" OriginName="16 / Pointer" OriginNodeId="b4649c4a9410919673ea6412ce94158c944846db" Width="16">
             <Vectors>
-                <Vector IsRTL="false">
+                <Vector Hash="eff41490673dc387e35f477a8f1024e3" IsRTL="false">
                     <Data>
                         <Svg>
                             <![CDATA[<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 16 16"><path stroke="#000" d="M1.5 1.5h13v13h-13z"/></svg>]]>
@@ -8435,7 +8715,18 @@
         </SvgIcon>
         <SvgIcon Height="16" Id="16 / Ring Clock" IsAutoRTL="false" IsColorfull="false" Name="RingClock" OriginName="16 / Clock" OriginNodeId="a7b009c42a5ef8b4704a6bd13ac9f091e656f23a" Width="16">
             <Vectors>
-                <Vector IsRTL="false">
+                <Vector Hash="68f1365d9ad1edc69f5fdc887fba3d99" IsRTL="false">
+                    <Data>
+                        <Svg>
+                            <![CDATA[<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 16 16"><path stroke="#000" d="M1.5 1.5h13v13h-13z"/></svg>]]>
+                        </Svg>
+                    </Data>
+                </Vector>
+            </Vectors>
+        </SvgIcon>
+        <SvgIcon Height="16" Id="16 / Ring Dot" IsAutoRTL="false" IsColorfull="false" Name="RingDot" OriginName="16 / Rec" OriginNodeId="da85f4c58f2cb21affcebbac34c37699394c031a" Width="16">
+            <Vectors>
+                <Vector Hash="209972f1f8a78a9c5eec60fd267330b1" IsRTL="false">
                     <Data>
                         <Svg>
                             <![CDATA[<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 16 16"><path stroke="#000" d="M1.5 1.5h13v13h-13z"/></svg>]]>
@@ -8446,7 +8737,7 @@
         </SvgIcon>
         <SvgIcon Height="16" Id="16 / Ring Play" IsAutoRTL="false" IsColorfull="false" Name="RingPlay" OriginName="16 / Play" OriginNodeId="dcd478cdad8ebc51918ee5c3ff13462246f1045f" Width="16">
             <Vectors>
-                <Vector IsRTL="false">
+                <Vector Hash="67682c6f041f3762f5bcc1f103bc9340" IsRTL="false">
                     <Data>
                         <Svg>
                             <![CDATA[<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 16 16"><path stroke="#000" d="M1.5 1.5h13v13h-13z"/></svg>]]>
@@ -8457,7 +8748,7 @@
         </SvgIcon>
         <SvgIcon Height="16" Id="16 / Sandbox" IsAutoRTL="false" IsColorfull="false" Name="Sandbox" OriginName="16 / Sandbox" OriginNodeId="b71d15bd868baa1db4314fd4c3eac40843de6642" Width="16">
             <Vectors>
-                <Vector IsRTL="false">
+                <Vector Hash="7879635fbaf2d6714187f6772c9c53b7" IsRTL="false">
                     <Data>
                         <Svg>
                             <![CDATA[<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 16 16"><path stroke="#000" d="M1.5 1.5h13v13h-13z"/></svg>]]>
@@ -8468,7 +8759,7 @@
         </SvgIcon>
         <SvgIcon Height="16" Id="16 / Search" IsAutoRTL="false" IsColorfull="false" Name="Search" OriginName="16 / Search" OriginNodeId="f2fb86266b92ce37970d69bded8743f1a3e7f3a6" Width="16">
             <Vectors>
-                <Vector IsRTL="false">
+                <Vector Hash="0fe87c76d48b6c237fc0aba5839dd6bb" IsRTL="false">
                     <Data>
                         <Svg>
                             <![CDATA[<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 16 16"><path stroke="#000" d="M1.5 1.5h13v13h-13z"/></svg>]]>
@@ -8479,7 +8770,7 @@
         </SvgIcon>
         <SvgIcon Height="16" Id="16 / Settings" IsAutoRTL="false" IsColorfull="false" Name="Settings" OriginName="16 / Settings_Gear" OriginNodeId="7698ab57240de76d286ec8b3424b923d16d35bc5" Width="16">
             <Vectors>
-                <Vector IsRTL="false">
+                <Vector Hash="26c526107b21b9df0eb100786d344fda" IsRTL="false">
                     <Data>
                         <Svg>
                             <![CDATA[<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 16 16"><path stroke="#000" d="M1.5 1.5h13v13h-13z"/></svg>]]>
@@ -8490,7 +8781,7 @@
         </SvgIcon>
         <SvgIcon Height="16" Id="16 / Settings 2" IsAutoRTL="false" IsColorfull="false" Name="Settings2" OriginName="16 / Settings" OriginNodeId="054f75cc911a8c129fe5f298c9ef277a0573191e" Width="16">
             <Vectors>
-                <Vector IsRTL="false">
+                <Vector Hash="8c4f72eb7907aab93bc28b22a8361dac" IsRTL="false">
                     <Data>
                         <Svg>
                             <![CDATA[<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 16 16"><path stroke="#000" d="M1.5 1.5h13v13h-13z"/></svg>]]>
@@ -8501,7 +8792,7 @@
         </SvgIcon>
         <SvgIcon Height="16" Id="16 / Status Danger" IsAutoRTL="false" IsColorfull="false" Name="StatusDanger" OriginName="16 / Status_Danger_Outline_Circle" OriginNodeId="1080251a08374b8db05aefae99715fe39b296ab6" Width="16">
             <Vectors>
-                <Vector IsRTL="false">
+                <Vector Hash="05f2c6db883e467528c35338eb0fb0d4" IsRTL="false">
                     <Data>
                         <Svg>
                             <![CDATA[<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 16 16"><path stroke="#000" d="M1.5 1.5h13v13h-13z"/></svg>]]>
@@ -8512,7 +8803,7 @@
         </SvgIcon>
         <SvgIcon Height="16" Id="16 / Status Danger 2" IsAutoRTL="false" IsColorfull="false" Name="StatusDanger2" OriginName="16 / Status_Danger_Outline_Square" OriginNodeId="33af22288e5a8418dd90e8fb7c8c343399081a69" Width="16">
             <Vectors>
-                <Vector IsRTL="false">
+                <Vector Hash="5c45c1d908719c3c7b12249e3d779a03" IsRTL="false">
                     <Data>
                         <Svg>
                             <![CDATA[<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 16 16"><path stroke="#000" d="M1.5 1.5h13v13h-13z"/></svg>]]>
@@ -8523,7 +8814,7 @@
         </SvgIcon>
         <SvgIcon Height="16" Id="16 / Status Danger Solid" IsAutoRTL="false" IsColorfull="false" Name="StatusDangerSolid" OriginName="16 / Status_Danger_Solid" OriginNodeId="550f6c1918340c0df2d096193df9b1473689327a" Width="16">
             <Vectors>
-                <Vector IsRTL="false">
+                <Vector Hash="770a0a24f559de266b961948bbd52a46" IsRTL="false">
                     <Data>
                         <Svg>
                             <![CDATA[<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 16 16"><path stroke="#000" d="M1.5 1.5h13v13h-13z"/></svg>]]>
@@ -8534,7 +8825,7 @@
         </SvgIcon>
         <SvgIcon Height="16" Id="16 / Status Danger Solid 2" IsAutoRTL="false" IsColorfull="false" Name="StatusDangerSolid2" OriginName="16 / Status_Danger_Square_Solid" OriginNodeId="107317ee54286b441a950de651c167165306c853" Width="16">
             <Vectors>
-                <Vector IsRTL="false">
+                <Vector Hash="fabdb5e78f86ef80ce15343035e26884" IsRTL="false">
                     <Data>
                         <Svg>
                             <![CDATA[<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 16 16"><path stroke="#000" d="M1.5 1.5h13v13h-13z"/></svg>]]>
@@ -8545,7 +8836,7 @@
         </SvgIcon>
         <SvgIcon Height="16" Id="16 / Status Error" IsAutoRTL="false" IsColorfull="false" Name="StatusError" OriginName="16 / Status_Error_Outline" OriginNodeId="9fe5c087aa4a4ff22c067f43ed7fae6e82aca142" Width="16">
             <Vectors>
-                <Vector IsRTL="false">
+                <Vector Hash="3517dfec97ce86be35b295a766242a63" IsRTL="false">
                     <Data>
                         <Svg>
                             <![CDATA[<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 16 16"><path stroke="#000" d="M1.5 1.5h13v13h-13z"/></svg>]]>
@@ -8556,7 +8847,7 @@
         </SvgIcon>
         <SvgIcon Height="16" Id="16 / Status Error Solid" IsAutoRTL="false" IsColorfull="false" Name="StatusErrorSolid" OriginName="16 / Status_Error_Solid" OriginNodeId="35310cb7318da6194974be095ccfe350ddc7c043" Width="16">
             <Vectors>
-                <Vector IsRTL="false">
+                <Vector Hash="dfb1a00e0edfd65e18a606e55a07ffd1" IsRTL="false">
                     <Data>
                         <Svg>
                             <![CDATA[<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 16 16"><path stroke="#000" d="M1.5 1.5h13v13h-13z"/></svg>]]>
@@ -8567,7 +8858,7 @@
         </SvgIcon>
         <SvgIcon Height="16" Id="16 / Status Info" IsAutoRTL="false" IsColorfull="false" Name="StatusInfo" OriginName="16 / Status_Info_Outline" OriginNodeId="9f4350670426f4d7160a8a11ab9ef5c33ef26c92" Width="16">
             <Vectors>
-                <Vector IsRTL="false">
+                <Vector Hash="e52012409ed5780126e18b930ec07b39" IsRTL="false">
                     <Data>
                         <Svg>
                             <![CDATA[<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 16 16"><path stroke="#000" d="M1.5 1.5h13v13h-13z"/></svg>]]>
@@ -8578,7 +8869,7 @@
         </SvgIcon>
         <SvgIcon Height="16" Id="16 / Status Info Solid" IsAutoRTL="false" IsColorfull="false" Name="StatusInfoSolid" OriginName="16 / Status_Info_Solid" OriginNodeId="7251d77dea2cc9ae3caf4b05917f869a1379b790" Width="16">
             <Vectors>
-                <Vector IsRTL="false">
+                <Vector Hash="5ee4b73181a3be19b25a0caf719a42ad" IsRTL="false">
                     <Data>
                         <Svg>
                             <![CDATA[<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 16 16"><path stroke="#000" d="M1.5 1.5h13v13h-13z"/></svg>]]>
@@ -8589,7 +8880,7 @@
         </SvgIcon>
         <SvgIcon Height="16" Id="16 / Status Positive" IsAutoRTL="false" IsColorfull="false" Name="StatusPositive" OriginName="16 / Status_OK_Outline" OriginNodeId="920feabed3b56fb60fd4284e99223dde401ab76d" Width="16">
             <Vectors>
-                <Vector IsRTL="false">
+                <Vector Hash="c1e4ce98ba84c570088d047f0311d3be" IsRTL="false">
                     <Data>
                         <Svg>
                             <![CDATA[<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 16 16"><path stroke="#000" d="M1.5 1.5h13v13h-13z"/></svg>]]>
@@ -8600,7 +8891,7 @@
         </SvgIcon>
         <SvgIcon Height="16" Id="16 / Status Positive Solid" IsAutoRTL="false" IsColorfull="false" Name="StatusPositiveSolid" OriginName="16 / Status_OK_Solid" OriginNodeId="a43328024200e62984fa41240e5dfe650bce3114" Width="16">
             <Vectors>
-                <Vector IsRTL="false">
+                <Vector Hash="26f9644e5b94a17ac700432fcb033070" IsRTL="false">
                     <Data>
                         <Svg>
                             <![CDATA[<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 16 16"><path stroke="#000" d="M1.5 1.5h13v13h-13z"/></svg>]]>
@@ -8611,7 +8902,7 @@
         </SvgIcon>
         <SvgIcon Height="16" Id="16 / Status Warning" IsAutoRTL="false" IsColorfull="false" Name="StatusWarning" OriginName="16 / Status_Warning_Outline" OriginNodeId="664a383a7ba2b5e3021132652e3d84db88742ca4" Width="16">
             <Vectors>
-                <Vector IsRTL="false">
+                <Vector Hash="042231f4f070ab313649cab658e1b3cf" IsRTL="false">
                     <Data>
                         <Svg>
                             <![CDATA[<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 16 16"><path stroke="#000" d="M1.5 1.5h13v13h-13z"/></svg>]]>
@@ -8622,7 +8913,7 @@
         </SvgIcon>
         <SvgIcon Height="16" Id="16 / Status Warning 2" IsAutoRTL="false" IsColorfull="false" Name="StatusWarning2" OriginName="16 / Status_High_Outline" OriginNodeId="e1415eb537d63e37d2d132bac1723e1315782695" Width="16">
             <Vectors>
-                <Vector IsRTL="false">
+                <Vector Hash="ba4df2a2365cbb63d52e7c9b6e1c414d" IsRTL="false">
                     <Data>
                         <Svg>
                             <![CDATA[<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 16 16"><path stroke="#000" d="M1.5 1.5h13v13h-13z"/></svg>]]>
@@ -8633,7 +8924,7 @@
         </SvgIcon>
         <SvgIcon Height="16" Id="16 / Status Warning Solid" IsAutoRTL="false" IsColorfull="false" Name="StatusWarningSolid" OriginName="16 / Status_Warning_Solid" OriginNodeId="718a49dd95daeaf3ff1a48659a2d1fa64dfb3f0b" Width="16">
             <Vectors>
-                <Vector IsRTL="false">
+                <Vector Hash="61dae349ae73068478df3b80768c9915" IsRTL="false">
                     <Data>
                         <Svg>
                             <![CDATA[<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 16 16"><path stroke="#000" d="M1.5 1.5h13v13h-13z"/></svg>]]>
@@ -8644,7 +8935,7 @@
         </SvgIcon>
         <SvgIcon Height="16" Id="16 / Status Warning Solid 2" IsAutoRTL="false" IsColorfull="false" Name="StatusWarningSolid2" OriginName="16 / Status_High_Solid" OriginNodeId="e0d84257d59ed2224d534d9f13995e726a5ef979" Width="16">
             <Vectors>
-                <Vector IsRTL="false">
+                <Vector Hash="1ff63667a7ca8e6fb9639cd6f9de75fc" IsRTL="false">
                     <Data>
                         <Svg>
                             <![CDATA[<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 16 16"><path stroke="#000" d="M1.5 1.5h13v13h-13z"/></svg>]]>
@@ -8655,7 +8946,7 @@
         </SvgIcon>
         <SvgIcon Height="16" Id="16 / Sun" IsAutoRTL="false" IsColorfull="false" Name="Sun" OriginName="16 / Status_New_Outline" OriginNodeId="46ed8b391431d8844ad5e73c7d4f5e4cb151525f" Width="16">
             <Vectors>
-                <Vector IsRTL="false">
+                <Vector Hash="ba8f6e8071e894f6881b2d5ae38e5cfb" IsRTL="false">
                     <Data>
                         <Svg>
                             <![CDATA[<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 16 16"><path stroke="#000" d="M1.5 1.5h13v13h-13z"/></svg>]]>
@@ -8666,7 +8957,7 @@
         </SvgIcon>
         <SvgIcon Height="16" Id="16 / Text CapsLock" IsAutoRTL="false" IsColorfull="false" Name="TextCapsLock" OriginName="16 / CapsLock" OriginNodeId="1ce823928f4ce736212970d386ce35535842fc42" Width="16">
             <Vectors>
-                <Vector IsRTL="false">
+                <Vector Hash="98fab62ca321ef096463bb3dfd953109" IsRTL="false">
                     <Data>
                         <Svg>
                             <![CDATA[<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 16 16"><path stroke="#000" d="M1.5 1.5h13v13h-13z"/></svg>]]>
@@ -8677,7 +8968,7 @@
         </SvgIcon>
         <SvgIcon Height="16" Id="16 / Text CapsLock Solid" IsAutoRTL="false" IsColorfull="false" Name="TextCapsLockSolid" OriginName="16 / CapsLock_Solid" OriginNodeId="f4d7580e04ba5258e196832909739f62d8054000" Width="16">
             <Vectors>
-                <Vector IsRTL="false">
+                <Vector Hash="9745fc4244f70306f32eeeb2e2f4aec8" IsRTL="false">
                     <Data>
                         <Svg>
                             <![CDATA[<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 16 16"><path stroke="#000" d="M1.5 1.5h13v13h-13z"/></svg>]]>
@@ -8688,7 +8979,18 @@
         </SvgIcon>
         <SvgIcon Height="16" Id="16 / Text Size" IsAutoRTL="false" IsColorfull="false" Name="TextSize" OriginName="16 / Text_2" OriginNodeId="684345b611bc5463e451b5fb25e8bf847d3a9b11" Width="16">
             <Vectors>
-                <Vector IsRTL="false">
+                <Vector Hash="308eb59ad62c19aaba1ef21d18203276" IsRTL="false">
+                    <Data>
+                        <Svg>
+                            <![CDATA[<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 16 16"><path stroke="#000" d="M1.5 1.5h13v13h-13z"/></svg>]]>
+                        </Svg>
+                    </Data>
+                </Vector>
+            </Vectors>
+        </SvgIcon>
+        <SvgIcon Height="16" Id="16 / Timer 2" IsAutoRTL="false" IsColorfull="false" Name="Timer2" OriginName="16 / Stopwatch" OriginNodeId="5355eb4a1664e5055df779476b62bd0f19eff0e2" Width="16">
+            <Vectors>
+                <Vector Hash="9a829f21e0f647e0c5fd7f75f081644c" IsRTL="false">
                     <Data>
                         <Svg>
                             <![CDATA[<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 16 16"><path stroke="#000" d="M1.5 1.5h13v13h-13z"/></svg>]]>
@@ -8699,7 +9001,7 @@
         </SvgIcon>
         <SvgIcon Height="16" Id="16 / Toggle Light Dark" IsAutoRTL="false" IsColorfull="false" Name="ToggleLightDark" OriginName="16 / Online_Offline_Toggle" OriginNodeId="6b76da34f7760cda2cab17bfae3f95ceaabb5075" Width="16">
             <Vectors>
-                <Vector IsRTL="false">
+                <Vector Hash="c72fb1d4f1d7412c9da02d35e174ef1d" IsRTL="false">
                     <Data>
                         <Svg>
                             <![CDATA[<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 16 16"><path stroke="#000" d="M1.5 1.5h13v13h-13z"/></svg>]]>
@@ -8710,7 +9012,7 @@
         </SvgIcon>
         <SvgIcon Height="16" Id="16 / Wizard" IsAutoRTL="false" IsColorfull="false" Name="Wizard" OriginName="16 / Wizard" OriginNodeId="0f3c73e6040b007c3cba5bc46fc4a59e00de8bd9" Width="16">
             <Vectors>
-                <Vector IsRTL="false">
+                <Vector Hash="527fb3c59100c14d80bae4c1bd73122b" IsRTL="false">
                     <Data>
                         <Svg>
                             <![CDATA[<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 16 16"><path stroke="#000" d="M1.5 1.5h13v13h-13z"/></svg>]]>
@@ -8721,7 +9023,7 @@
         </SvgIcon>
         <SvgIcon Height="24" Id="24 / Add" IsAutoRTL="false" IsColorfull="false" Name="Add" OriginName="24 / Plus" OriginNodeId="27902a060d0b5e16f05851e19dce911d1c992ffc" Width="24">
             <Vectors>
-                <Vector IsRTL="false">
+                <Vector Hash="a358429c1a00a67eb01155f5f08afbfa" IsRTL="false">
                     <Data>
                         <Svg>
                             <![CDATA[<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="#000" d="M3.5 3.5h17v17h-17z"/></svg>]]>
@@ -8732,7 +9034,7 @@
         </SvgIcon>
         <SvgIcon Height="24" Id="24 / Arrow Down" IsAutoRTL="false" IsColorfull="false" Name="ArrowDown" OriginName="24 / Arrow_Down" OriginNodeId="7f7c2b9d7a6758178fe51a8aeaa0b29c3bb95b23" Width="24">
             <Vectors>
-                <Vector IsRTL="false">
+                <Vector Hash="d470e5a76f96d060fca1024f50e0af4c" IsRTL="false">
                     <Data>
                         <Svg>
                             <![CDATA[<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="#000" d="M3.5 3.5h17v17h-17z"/></svg>]]>
@@ -8743,7 +9045,7 @@
         </SvgIcon>
         <SvgIcon Height="24" Id="24 / Arrow Down 3" IsAutoRTL="false" IsColorfull="false" Name="ArrowDown3" OriginName="24 / Arrow_Down" OriginNodeId="394a1b8d21ac48ac49c3694d13ed0420ed7cab9c" Width="24">
             <Vectors>
-                <Vector IsRTL="false">
+                <Vector Hash="d032334d208863f0527cc25f697dcf50" IsRTL="false">
                     <Data>
                         <Svg>
                             <![CDATA[<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="#000" d="M3.5 3.5h17v17h-17z"/></svg>]]>
@@ -8754,7 +9056,7 @@
         </SvgIcon>
         <SvgIcon Height="24" Id="24 / Arrow To Line Down" IsAutoRTL="false" IsColorfull="false" Name="ArrowToLineDown" OriginName="24 / To_The_Bottom" OriginNodeId="aa70368fce624c502c301ad389e22d428f3d240a" Width="24">
             <Vectors>
-                <Vector IsRTL="false">
+                <Vector Hash="f9bd92bcfc7d03f97c07234533ec2b77" IsRTL="false">
                     <Data>
                         <Svg>
                             <![CDATA[<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="#000" d="M3.5 3.5h17v17h-17z"/></svg>]]>
@@ -8765,7 +9067,7 @@
         </SvgIcon>
         <SvgIcon Height="24" Id="24 / Arrow To Line Up" IsAutoRTL="false" IsColorfull="false" Name="ArrowToLineUp" OriginName="24 / To_The_Top" OriginNodeId="ea8e0e02e65841563fa5a799509b417d5a1baf26" Width="24">
             <Vectors>
-                <Vector IsRTL="false">
+                <Vector Hash="a62d73ca9d814d66d999c58cf5e80aac" IsRTL="false">
                     <Data>
                         <Svg>
                             <![CDATA[<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="#000" d="M3.5 3.5h17v17h-17z"/></svg>]]>
@@ -8776,7 +9078,7 @@
         </SvgIcon>
         <SvgIcon Height="24" Id="24 / Arrow Up" IsAutoRTL="false" IsColorfull="false" Name="ArrowUp" OriginName="24 / Arrow_Up" OriginNodeId="115ffe4cd2887b0267ac3011d714774e99270c7c" Width="24">
             <Vectors>
-                <Vector IsRTL="false">
+                <Vector Hash="90422d81fed52cf33edc3e4ff5903285" IsRTL="false">
                     <Data>
                         <Svg>
                             <![CDATA[<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="#000" d="M3.5 3.5h17v17h-17z"/></svg>]]>
@@ -8787,7 +9089,7 @@
         </SvgIcon>
         <SvgIcon Height="24" Id="24 / Arrow Up 3" IsAutoRTL="false" IsColorfull="false" Name="ArrowUp3" OriginName="24 / Arrow_Up" OriginNodeId="19e10031b844aa1d7a00bdcc6c97956e0b4b2725" Width="24">
             <Vectors>
-                <Vector IsRTL="false">
+                <Vector Hash="1cb9bc97e973aac2697d91c1d4a8c56f" IsRTL="false">
                     <Data>
                         <Svg>
                             <![CDATA[<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="#000" d="M3.5 3.5h17v17h-17z"/></svg>]]>
@@ -8798,7 +9100,7 @@
         </SvgIcon>
         <SvgIcon Height="24" Id="24 / AutoRTL / Arrow Change" IsAutoRTL="true" IsColorfull="false" Name="ArrowChange" OriginName="24 / Change" OriginNodeId="2b342cf636daf2102bb18b2a2cc47177fd77f51b" Width="24">
             <Vectors>
-                <Vector IsRTL="false">
+                <Vector Hash="d54baa31bcd192232bf82cb8a9825dbc" IsRTL="false">
                     <Data>
                         <Svg>
                             <![CDATA[<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="#000" d="M3.5 3.5h17v17h-17z"/></svg>]]>
@@ -8809,7 +9111,7 @@
         </SvgIcon>
         <SvgIcon Height="24" Id="24 / AutoRTL / Arrow Left" IsAutoRTL="true" IsColorfull="false" Name="ArrowLeft" OriginName="24 / Arrow_Left" OriginNodeId="7fbbd3a607a421309dbda8f8d2b2ac513711265a" Width="24">
             <Vectors>
-                <Vector IsRTL="false">
+                <Vector Hash="861efe28476d744d6250f160424d5ef2" IsRTL="false">
                     <Data>
                         <Svg>
                             <![CDATA[<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="#000" d="M3.5 3.5h17v17h-17z"/></svg>]]>
@@ -8820,7 +9122,7 @@
         </SvgIcon>
         <SvgIcon Height="24" Id="24 / AutoRTL / Arrow Left 3" IsAutoRTL="true" IsColorfull="false" Name="ArrowLeft3" OriginName="24 / Arrow_Back " OriginNodeId="fe507eca858f0a87040aa04f1dd21111b0477509" Width="24">
             <Vectors>
-                <Vector IsRTL="false">
+                <Vector Hash="001e55e87dd86db3d1b131fc42298a95" IsRTL="false">
                     <Data>
                         <Svg>
                             <![CDATA[<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="#000" d="M3.5 3.5h17v17h-17z"/></svg>]]>
@@ -8831,7 +9133,7 @@
         </SvgIcon>
         <SvgIcon Height="24" Id="24 / AutoRTL / Arrow Right" IsAutoRTL="true" IsColorfull="false" Name="ArrowRight" OriginName="24 / Arrow_Right" OriginNodeId="4a9fcee9d595de51feb2d4ad8c7d26e205242863" Width="24">
             <Vectors>
-                <Vector IsRTL="false">
+                <Vector Hash="d737e2705f44be5333e237b1f1cd978b" IsRTL="false">
                     <Data>
                         <Svg>
                             <![CDATA[<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="#000" d="M3.5 3.5h17v17h-17z"/></svg>]]>
@@ -8842,7 +9144,7 @@
         </SvgIcon>
         <SvgIcon Height="24" Id="24 / AutoRTL / Arrow Right 3" IsAutoRTL="true" IsColorfull="false" Name="ArrowRight3" OriginName="24 / Arrow_Forward" OriginNodeId="ea6df6cb7ffdbd5b2fb50236b486a7d8c0d9b09c" Width="24">
             <Vectors>
-                <Vector IsRTL="false">
+                <Vector Hash="e510f3d6ef6ff9da0107191f815916b6" IsRTL="false">
                     <Data>
                         <Svg>
                             <![CDATA[<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="#000" d="M3.5 3.5h17v17h-17z"/></svg>]]>
@@ -8853,7 +9155,7 @@
         </SvgIcon>
         <SvgIcon Height="24" Id="24 / AutoRTL / Arrow To Line Left" IsAutoRTL="true" IsColorfull="false" Name="ArrowToLineLeft" OriginName="24 / To_The_Left" OriginNodeId="79c685196265af8a3d46692189cbe97c06db0f70" Width="24">
             <Vectors>
-                <Vector IsRTL="false">
+                <Vector Hash="c0380101205a5f61ca6c3f2143226850" IsRTL="false">
                     <Data>
                         <Svg>
                             <![CDATA[<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="#000" d="M3.5 3.5h17v17h-17z"/></svg>]]>
@@ -8864,7 +9166,7 @@
         </SvgIcon>
         <SvgIcon Height="24" Id="24 / AutoRTL / Arrow To Line Right" IsAutoRTL="true" IsColorfull="false" Name="ArrowToLineRight" OriginName="24 / To_The_Right" OriginNodeId="0d88dbfa4e1769e43ecc82ee98bcc7a8ea6831e9" Width="24">
             <Vectors>
-                <Vector IsRTL="false">
+                <Vector Hash="b90819487b31efd48c1730e043176df1" IsRTL="false">
                     <Data>
                         <Svg>
                             <![CDATA[<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="#000" d="M3.5 3.5h17v17h-17z"/></svg>]]>
@@ -8875,7 +9177,7 @@
         </SvgIcon>
         <SvgIcon Height="24" Id="24 / AutoRTL / Page Left" IsAutoRTL="true" IsColorfull="false" Name="PageLeft" OriginName="24 / Page_Left" OriginNodeId="158718e1621d6897332d34a36f9d6ca79e591778" Width="24">
             <Vectors>
-                <Vector IsRTL="false">
+                <Vector Hash="d070db6dbb09ed6dc6472fa79bbf4bfd" IsRTL="false">
                     <Data>
                         <Svg>
                             <![CDATA[<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="#000" d="M3.5 3.5h17v17h-17z"/></svg>]]>
@@ -8886,7 +9188,7 @@
         </SvgIcon>
         <SvgIcon Height="24" Id="24 / AutoRTL / Page Right" IsAutoRTL="true" IsColorfull="false" Name="PageRight" OriginName="24 / Page_Right" OriginNodeId="ae743eea54a11bd9571c3b866b2491b6b0d03e09" Width="24">
             <Vectors>
-                <Vector IsRTL="false">
+                <Vector Hash="d41d4509bcbc83aa2c76f319e255ea93" IsRTL="false">
                     <Data>
                         <Svg>
                             <![CDATA[<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="#000" d="M3.5 3.5h17v17h-17z"/></svg>]]>
@@ -8897,7 +9199,7 @@
         </SvgIcon>
         <SvgIcon Height="24" Id="24 / AutoRTL / Status Question" IsAutoRTL="true" IsColorfull="false" Name="StatusQuestion" OriginName="24 / Status_Question_Outline" OriginNodeId="1822395e13ed4c7da349029668c19711d35cfc11" Width="24">
             <Vectors>
-                <Vector IsRTL="false">
+                <Vector Hash="da6cfff71b9cf81f17d3f5792a90f3ef" IsRTL="false">
                     <Data>
                         <Svg>
                             <![CDATA[<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="#000" d="M3.5 3.5h17v17h-17z"/></svg>]]>
@@ -8908,7 +9210,7 @@
         </SvgIcon>
         <SvgIcon Height="24" Id="24 / AutoRTL / Status Question Solid" IsAutoRTL="true" IsColorfull="false" Name="StatusQuestionSolid" OriginName="24 / Status_Question_Solid" OriginNodeId="f39d54a9f10a2dea729468729f527fb2939abc75" Width="24">
             <Vectors>
-                <Vector IsRTL="false">
+                <Vector Hash="8605ed2487c42673101a23e707e6f342" IsRTL="false">
                     <Data>
                         <Svg>
                             <![CDATA[<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="#000" d="M3.5 3.5h17v17h-17z"/></svg>]]>
@@ -8919,7 +9221,7 @@
         </SvgIcon>
         <SvgIcon Height="24" Id="24 / Calendar" IsAutoRTL="false" IsColorfull="false" Name="Calendar" OriginName="24 / Calendar" OriginNodeId="e8ea0fe9e938b10a71646990093ee0229b5afeaf" Width="24">
             <Vectors>
-                <Vector IsRTL="false">
+                <Vector Hash="16940c4adfdda5ddd7f8f28522f13214" IsRTL="false">
                     <Data>
                         <Svg>
                             <![CDATA[<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="#000" d="M3.5 3.5h17v17h-17z"/></svg>]]>
@@ -8930,7 +9232,7 @@
         </SvgIcon>
         <SvgIcon Height="24" Id="24 / Check" IsAutoRTL="false" IsColorfull="false" Name="Check" OriginName="24 / Ok" OriginNodeId="e1c806d57aa0d7317416358322d2bd3edec08463" Width="24">
             <Vectors>
-                <Vector IsRTL="false">
+                <Vector Hash="932868726133a6cb70828766ea179541" IsRTL="false">
                     <Data>
                         <Svg>
                             <![CDATA[<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="#000" d="M3.5 3.5h17v17h-17z"/></svg>]]>
@@ -8941,7 +9243,7 @@
         </SvgIcon>
         <SvgIcon Height="24" Id="24 / Clear" IsAutoRTL="false" IsColorfull="false" Name="Clear" OriginName="24 / Cross" OriginNodeId="46a5c182d87a33d0b11b3c47ff0781246742935f" Width="24">
             <Vectors>
-                <Vector IsRTL="false">
+                <Vector Hash="caeaa86c6613e2d1fa410b039787a69f" IsRTL="false">
                     <Data>
                         <Svg>
                             <![CDATA[<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="#000" d="M3.5 3.5h17v17h-17z"/></svg>]]>
@@ -8952,7 +9254,7 @@
         </SvgIcon>
         <SvgIcon Height="24" Id="24 / Copy" IsAutoRTL="false" IsColorfull="false" Name="Copy" OriginName="24 / Copy" OriginNodeId="cb5c1a4289f21f80e81bd3adeda1f79402b7534a" Width="24">
             <Vectors>
-                <Vector IsRTL="false">
+                <Vector Hash="6ab91a2f4cf15499f49a79a6fae6cbab" IsRTL="false">
                     <Data>
                         <Svg>
                             <![CDATA[<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="#000" d="M3.5 3.5h17v17h-17z"/></svg>]]>
@@ -8963,7 +9265,7 @@
         </SvgIcon>
         <SvgIcon Height="24" Id="24 / Cut" IsAutoRTL="false" IsColorfull="false" Name="Cut" OriginName="24 / Cut" OriginNodeId="87c810d9a0103a4726e95ae8b1880535b9164ea5" Width="24">
             <Vectors>
-                <Vector IsRTL="false">
+                <Vector Hash="b6006c3b6ef91435ebb448431ecfa9bb" IsRTL="false">
                     <Data>
                         <Svg>
                             <![CDATA[<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="#000" d="M3.5 3.5h17v17h-17z"/></svg>]]>
@@ -8974,7 +9276,7 @@
         </SvgIcon>
         <SvgIcon Height="24" Id="24 / Device Laptop" IsAutoRTL="false" IsColorfull="false" Name="DeviceLaptop" OriginName="24 / Laptop" OriginNodeId="129d7cc2d7491385b0a1db040d0408fd01d8529b" Width="24">
             <Vectors>
-                <Vector IsRTL="false">
+                <Vector Hash="883dba20b57f20fdd61d7b7ce1ab46bc" IsRTL="false">
                     <Data>
                         <Svg>
                             <![CDATA[<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="#000" d="M3.5 3.5h17v17h-17z"/></svg>]]>
@@ -8985,7 +9287,7 @@
         </SvgIcon>
         <SvgIcon Height="24" Id="24 / Eye Hide" IsAutoRTL="false" IsColorfull="false" Name="EyeHide" OriginName="24 / Password_Hide" OriginNodeId="becfaf78102bfabb2d2840d0cf99782147ac2034" Width="24">
             <Vectors>
-                <Vector IsRTL="false">
+                <Vector Hash="a7cdaf1ef7c421bf1036eb076fc16be2" IsRTL="false">
                     <Data>
                         <Svg>
                             <![CDATA[<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="#000" d="M3.5 3.5h17v17h-17z"/></svg>]]>
@@ -8996,7 +9298,7 @@
         </SvgIcon>
         <SvgIcon Height="24" Id="24 / Eye Show" IsAutoRTL="false" IsColorfull="false" Name="EyeShow" OriginName="24 / Password_Show" OriginNodeId="9faa94e7f2317197010498ebbb563f2254d4c7b0" Width="24">
             <Vectors>
-                <Vector IsRTL="false">
+                <Vector Hash="f48addfb6278c7eab375502c7c356601" IsRTL="false">
                     <Data>
                         <Svg>
                             <![CDATA[<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="#000" d="M3.5 3.5h17v17h-17z"/></svg>]]>
@@ -9007,7 +9309,7 @@
         </SvgIcon>
         <SvgIcon Height="24" Id="24 / Frame Image" IsAutoRTL="false" IsColorfull="false" Name="FrameImage" OriginName="24 / Photo_Frame" OriginNodeId="8c7283401483f4a0233a2c99932f4610d5af37b4" Width="24">
             <Vectors>
-                <Vector IsRTL="false">
+                <Vector Hash="37b1458577750ecc6529dc779f03ae64" IsRTL="false">
                     <Data>
                         <Svg>
                             <![CDATA[<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="#000" d="M3.5 3.5h17v17h-17z"/></svg>]]>
@@ -9018,7 +9320,7 @@
         </SvgIcon>
         <SvgIcon Height="24" Id="24 / Grid" IsAutoRTL="false" IsColorfull="false" Name="Grid" OriginName="24 / Grid" OriginNodeId="0cc9109494e3bf0d41bd1b703cd6a0a34c042423" Width="24">
             <Vectors>
-                <Vector IsRTL="false">
+                <Vector Hash="75debaa6101185667468c83369a93c24" IsRTL="false">
                     <Data>
                         <Svg>
                             <![CDATA[<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="#000" d="M3.5 3.5h17v17h-17z"/></svg>]]>
@@ -9029,7 +9331,7 @@
         </SvgIcon>
         <SvgIcon Height="24" Id="24 / Icon Stub" IsAutoRTL="false" IsColorfull="false" Name="IconStub" OriginName="24 / Icon Stub" OriginNodeId="3bb867d6b7564f9a469388720c45bb788ef96b04" Width="24">
             <Vectors>
-                <Vector IsRTL="false">
+                <Vector Hash="7030781eac58487a1de5db2a6acef464" IsRTL="false">
                     <Data>
                         <Svg>
                             <![CDATA[<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="#000" d="M3.5 3.5h17v17h-17z"/></svg>]]>
@@ -9040,7 +9342,7 @@
         </SvgIcon>
         <SvgIcon Height="24" Id="24 / Link External" IsAutoRTL="false" IsColorfull="false" Name="LinkExternal" OriginName="24 / Link_External" OriginNodeId="b931e329e3d5493ccd6aa3b4055e9c656e12817c" Width="24">
             <Vectors>
-                <Vector IsRTL="false">
+                <Vector Hash="7270627c1a9c9c837c5a151fa6fa20fc" IsRTL="false">
                     <Data>
                         <Svg>
                             <![CDATA[<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="#000" d="M3.5 3.5h17v17h-17z"/></svg>]]>
@@ -9051,7 +9353,7 @@
         </SvgIcon>
         <SvgIcon Height="24" Id="24 / Minus" IsAutoRTL="false" IsColorfull="false" Name="Minus" OriginName="24 / Minus" OriginNodeId="771b4eb929dc91888f535d09ddcaf9fc97b461cf" Width="24">
             <Vectors>
-                <Vector IsRTL="false">
+                <Vector Hash="cf582bbf10aac77db0880988b126deba" IsRTL="false">
                     <Data>
                         <Svg>
                             <![CDATA[<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="#000" d="M3.5 3.5h17v17h-17z"/></svg>]]>
@@ -9062,7 +9364,7 @@
         </SvgIcon>
         <SvgIcon Height="24" Id="24 / Moon" IsAutoRTL="false" IsColorfull="false" Name="Moon" OriginName="24 / Moon" OriginNodeId="e9ff99217f981eb31c9ee7f05ab510010a1c8bf9" Width="24">
             <Vectors>
-                <Vector IsRTL="false">
+                <Vector Hash="fe298e21a7d89101af46cdcef28281f2" IsRTL="false">
                     <Data>
                         <Svg>
                             <![CDATA[<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="#000" d="M3.5 3.5h17v17h-17z"/></svg>]]>
@@ -9073,7 +9375,7 @@
         </SvgIcon>
         <SvgIcon Height="24" Id="24 / Page Down" IsAutoRTL="false" IsColorfull="false" Name="PageDown" OriginName="24 / Page_Down" OriginNodeId="bb0b4e290f345f904950e62ebc9fc7b6ff6eae62" Width="24">
             <Vectors>
-                <Vector IsRTL="false">
+                <Vector Hash="ec1ba720b50ccba68ff116ffc2261495" IsRTL="false">
                     <Data>
                         <Svg>
                             <![CDATA[<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="#000" d="M3.5 3.5h17v17h-17z"/></svg>]]>
@@ -9084,7 +9386,7 @@
         </SvgIcon>
         <SvgIcon Height="24" Id="24 / Page Up" IsAutoRTL="false" IsColorfull="false" Name="PageUp" OriginName="24 / Page_Up" OriginNodeId="e572fa6d40a639b4b83e68fa5455e8ee3b38b745" Width="24">
             <Vectors>
-                <Vector IsRTL="false">
+                <Vector Hash="289dff20f0f1196f1edf86dc0e067d89" IsRTL="false">
                     <Data>
                         <Svg>
                             <![CDATA[<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="#000" d="M3.5 3.5h17v17h-17z"/></svg>]]>
@@ -9095,7 +9397,7 @@
         </SvgIcon>
         <SvgIcon Height="24" Id="24 / Paste" IsAutoRTL="false" IsColorfull="false" Name="Paste" OriginName="24 / Paste" OriginNodeId="a2fbb1f67d25478312650a5ea4763c2254d72c3b" Width="24">
             <Vectors>
-                <Vector IsRTL="false">
+                <Vector Hash="cc5478bcdcb8ac1515b097d4efd65573" IsRTL="false">
                     <Data>
                         <Svg>
                             <![CDATA[<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="#000" d="M3.5 3.5h17v17h-17z"/></svg>]]>
@@ -9106,7 +9408,7 @@
         </SvgIcon>
         <SvgIcon Height="24" Id="24 / Placeholder" IsAutoRTL="false" IsColorfull="false" Name="Placeholder" OriginName="24 / Placeholder" OriginNodeId="8f41a22bbcc480927bbcfa0a7da392400ea603d0" Width="24">
             <Vectors>
-                <Vector IsRTL="false">
+                <Vector Hash="43877224faa3f1fa7195a5503c4fe584" IsRTL="false">
                     <Data>
                         <Svg>
                             <![CDATA[<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="#000" d="M3.5 3.5h17v17h-17z"/></svg>]]>
@@ -9117,7 +9419,7 @@
         </SvgIcon>
         <SvgIcon Height="24" Id="24 / Placeholder 2" IsAutoRTL="false" IsColorfull="false" Name="Placeholder2" OriginName="24 / Placeholder_2" OriginNodeId="a7df8259eaba74ba2e3769eeed4fc67e73a18722" Width="24">
             <Vectors>
-                <Vector IsRTL="false">
+                <Vector Hash="74207a623800f329cd461983ccbbc781" IsRTL="false">
                     <Data>
                         <Svg>
                             <![CDATA[<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="#000" d="M3.5 3.5h17v17h-17z"/></svg>]]>
@@ -9128,7 +9430,7 @@
         </SvgIcon>
         <SvgIcon Height="24" Id="24 / Pointer" IsAutoRTL="false" IsColorfull="false" Name="Pointer" OriginName="24 / Pointer" OriginNodeId="34827695d6a14ecbac23a1f6c146b75cfd36c07d" Width="24">
             <Vectors>
-                <Vector IsRTL="false">
+                <Vector Hash="b94478bff725562f394d5025d90c9161" IsRTL="false">
                     <Data>
                         <Svg>
                             <![CDATA[<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="#000" d="M3.5 3.5h17v17h-17z"/></svg>]]>
@@ -9139,7 +9441,18 @@
         </SvgIcon>
         <SvgIcon Height="24" Id="24 / Ring Clock" IsAutoRTL="false" IsColorfull="false" Name="RingClock" OriginName="24 / Clock" OriginNodeId="ac95d41c2f84b6f533b2f9f548a7489749bf9d66" Width="24">
             <Vectors>
-                <Vector IsRTL="false">
+                <Vector Hash="68a1280ec46894141d017bccf1674325" IsRTL="false">
+                    <Data>
+                        <Svg>
+                            <![CDATA[<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="#000" d="M3.5 3.5h17v17h-17z"/></svg>]]>
+                        </Svg>
+                    </Data>
+                </Vector>
+            </Vectors>
+        </SvgIcon>
+        <SvgIcon Height="24" Id="24 / Ring Dot" IsAutoRTL="false" IsColorfull="false" Name="RingDot" OriginName="24 / Rec" OriginNodeId="418163930f55db7f9f34fc95ab7d7bb5cc2a8d51" Width="24">
+            <Vectors>
+                <Vector Hash="b0a503c82279229e8db17e4687c9d66e" IsRTL="false">
                     <Data>
                         <Svg>
                             <![CDATA[<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="#000" d="M3.5 3.5h17v17h-17z"/></svg>]]>
@@ -9150,7 +9463,7 @@
         </SvgIcon>
         <SvgIcon Height="24" Id="24 / Ring Play" IsAutoRTL="false" IsColorfull="false" Name="RingPlay" OriginName="24 / Play" OriginNodeId="d6644d99b075ad9792dd62c4823d10a230bb1fe6" Width="24">
             <Vectors>
-                <Vector IsRTL="false">
+                <Vector Hash="bcbc73f4d37d4eecdd26c4f38cb624ea" IsRTL="false">
                     <Data>
                         <Svg>
                             <![CDATA[<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="#000" d="M3.5 3.5h17v17h-17z"/></svg>]]>
@@ -9161,7 +9474,7 @@
         </SvgIcon>
         <SvgIcon Height="24" Id="24 / Sandbox" IsAutoRTL="false" IsColorfull="false" Name="Sandbox" OriginName="24 / Sandbox" OriginNodeId="4b7ab174d372506096b394bbad50bf968770db57" Width="24">
             <Vectors>
-                <Vector IsRTL="false">
+                <Vector Hash="047e4a8b1902103e43bce12b373150c1" IsRTL="false">
                     <Data>
                         <Svg>
                             <![CDATA[<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="#000" d="M3.5 3.5h17v17h-17z"/></svg>]]>
@@ -9172,7 +9485,7 @@
         </SvgIcon>
         <SvgIcon Height="24" Id="24 / Search" IsAutoRTL="false" IsColorfull="false" Name="Search" OriginName="24 / Search" OriginNodeId="eab78bfa3481e0a7647a955adcdbfd07046cade2" Width="24">
             <Vectors>
-                <Vector IsRTL="false">
+                <Vector Hash="b34734b75974384624d4d1611b27a971" IsRTL="false">
                     <Data>
                         <Svg>
                             <![CDATA[<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="#000" d="M3.5 3.5h17v17h-17z"/></svg>]]>
@@ -9183,7 +9496,7 @@
         </SvgIcon>
         <SvgIcon Height="24" Id="24 / Settings" IsAutoRTL="false" IsColorfull="false" Name="Settings" OriginName="24 / Settings_Gear" OriginNodeId="94ddc3a4cf7ab824f44c3f8a4f1ab841da293e43" Width="24">
             <Vectors>
-                <Vector IsRTL="false">
+                <Vector Hash="e7f062e27932c471f45a16034cec4efd" IsRTL="false">
                     <Data>
                         <Svg>
                             <![CDATA[<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="#000" d="M3.5 3.5h17v17h-17z"/></svg>]]>
@@ -9194,7 +9507,7 @@
         </SvgIcon>
         <SvgIcon Height="24" Id="24 / Settings 2" IsAutoRTL="false" IsColorfull="false" Name="Settings2" OriginName="24 / Settings" OriginNodeId="bdefc62ae2f983e04f42ef5e2d95f32789dc979c" Width="24">
             <Vectors>
-                <Vector IsRTL="false">
+                <Vector Hash="af55553955eb2e4d659e34b084646f20" IsRTL="false">
                     <Data>
                         <Svg>
                             <![CDATA[<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="#000" d="M3.5 3.5h17v17h-17z"/></svg>]]>
@@ -9205,7 +9518,7 @@
         </SvgIcon>
         <SvgIcon Height="24" Id="24 / Status Danger" IsAutoRTL="false" IsColorfull="false" Name="StatusDanger" OriginName="24 / Status_Danger_Outline_Circle" OriginNodeId="cc93ce6698aee65a2b32135cd2f85aaca04dd49f" Width="24">
             <Vectors>
-                <Vector IsRTL="false">
+                <Vector Hash="79ef2ce222840c676d8068dc1cacc279" IsRTL="false">
                     <Data>
                         <Svg>
                             <![CDATA[<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="#000" d="M3.5 3.5h17v17h-17z"/></svg>]]>
@@ -9216,7 +9529,7 @@
         </SvgIcon>
         <SvgIcon Height="24" Id="24 / Status Danger 2" IsAutoRTL="false" IsColorfull="false" Name="StatusDanger2" OriginName="24 / Status_Danger_Outline_Square" OriginNodeId="2e091699f436779b1e99fbb01e47bac390a3efd6" Width="24">
             <Vectors>
-                <Vector IsRTL="false">
+                <Vector Hash="9493c6990e03a561b37b9c26f3434677" IsRTL="false">
                     <Data>
                         <Svg>
                             <![CDATA[<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="#000" d="M3.5 3.5h17v17h-17z"/></svg>]]>
@@ -9227,7 +9540,7 @@
         </SvgIcon>
         <SvgIcon Height="24" Id="24 / Status Danger Solid" IsAutoRTL="false" IsColorfull="false" Name="StatusDangerSolid" OriginName="24 / Status_Danger_Solid" OriginNodeId="0da5343af7becafbcb199717966850116bf19b26" Width="24">
             <Vectors>
-                <Vector IsRTL="false">
+                <Vector Hash="397fd99790fdbf626d685fd7c6026bc1" IsRTL="false">
                     <Data>
                         <Svg>
                             <![CDATA[<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="#000" d="M3.5 3.5h17v17h-17z"/></svg>]]>
@@ -9238,7 +9551,7 @@
         </SvgIcon>
         <SvgIcon Height="24" Id="24 / Status Danger Solid 2" IsAutoRTL="false" IsColorfull="false" Name="StatusDangerSolid2" OriginName="24 / Status_Danger_Square_Solid" OriginNodeId="e487c72929b681abf30bf12d836f405f848b38cc" Width="24">
             <Vectors>
-                <Vector IsRTL="false">
+                <Vector Hash="192d46635a8810f9c77f0a3a249ce018" IsRTL="false">
                     <Data>
                         <Svg>
                             <![CDATA[<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="#000" d="M3.5 3.5h17v17h-17z"/></svg>]]>
@@ -9249,7 +9562,7 @@
         </SvgIcon>
         <SvgIcon Height="24" Id="24 / Status Error" IsAutoRTL="false" IsColorfull="false" Name="StatusError" OriginName="24 / Status_Error_Outline" OriginNodeId="2762ea60004e5a247750fdf21f7ec04049ef2d2c" Width="24">
             <Vectors>
-                <Vector IsRTL="false">
+                <Vector Hash="78267e04875ee23aeaaad97ad95074e0" IsRTL="false">
                     <Data>
                         <Svg>
                             <![CDATA[<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="#000" d="M3.5 3.5h17v17h-17z"/></svg>]]>
@@ -9260,7 +9573,7 @@
         </SvgIcon>
         <SvgIcon Height="24" Id="24 / Status Error Solid" IsAutoRTL="false" IsColorfull="false" Name="StatusErrorSolid" OriginName="24 / Status_Error_Solid" OriginNodeId="406d1a0d147fd03c259c9080181c86cad233deea" Width="24">
             <Vectors>
-                <Vector IsRTL="false">
+                <Vector Hash="d51a6ebb9c3f28dfb15b33ce880a021c" IsRTL="false">
                     <Data>
                         <Svg>
                             <![CDATA[<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="#000" d="M3.5 3.5h17v17h-17z"/></svg>]]>
@@ -9271,7 +9584,7 @@
         </SvgIcon>
         <SvgIcon Height="24" Id="24 / Status Info" IsAutoRTL="false" IsColorfull="false" Name="StatusInfo" OriginName="24 / Status_Info_Outline" OriginNodeId="36495e027c50c73b4a3ce055d6f2464eacd2ea85" Width="24">
             <Vectors>
-                <Vector IsRTL="false">
+                <Vector Hash="78048a02bed16e0bdcadffaaa7837238" IsRTL="false">
                     <Data>
                         <Svg>
                             <![CDATA[<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="#000" d="M3.5 3.5h17v17h-17z"/></svg>]]>
@@ -9282,7 +9595,7 @@
         </SvgIcon>
         <SvgIcon Height="24" Id="24 / Status Info Solid" IsAutoRTL="false" IsColorfull="false" Name="StatusInfoSolid" OriginName="24 / Status_Info_Solid" OriginNodeId="84d6d837a4c81efca94ea0e5186f898c11c5a1e9" Width="24">
             <Vectors>
-                <Vector IsRTL="false">
+                <Vector Hash="e6f49fcee24a68e17fc0d2d49ded2252" IsRTL="false">
                     <Data>
                         <Svg>
                             <![CDATA[<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="#000" d="M3.5 3.5h17v17h-17z"/></svg>]]>
@@ -9293,7 +9606,7 @@
         </SvgIcon>
         <SvgIcon Height="24" Id="24 / Status Positive" IsAutoRTL="false" IsColorfull="false" Name="StatusPositive" OriginName="24 / Status_OK_Outline" OriginNodeId="ef5566884cf7bf219248f3a1460cacdb051f13aa" Width="24">
             <Vectors>
-                <Vector IsRTL="false">
+                <Vector Hash="b93922a2bad6626eaeed7bfec9ed1ea6" IsRTL="false">
                     <Data>
                         <Svg>
                             <![CDATA[<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="#000" d="M3.5 3.5h17v17h-17z"/></svg>]]>
@@ -9304,7 +9617,7 @@
         </SvgIcon>
         <SvgIcon Height="24" Id="24 / Status Positive Solid" IsAutoRTL="false" IsColorfull="false" Name="StatusPositiveSolid" OriginName="24 / Status_OK_Solid" OriginNodeId="bd1ffdddd039a670511a242415eef31551e41ce9" Width="24">
             <Vectors>
-                <Vector IsRTL="false">
+                <Vector Hash="7b1197f2d999fb449b330a512043a56d" IsRTL="false">
                     <Data>
                         <Svg>
                             <![CDATA[<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="#000" d="M3.5 3.5h17v17h-17z"/></svg>]]>
@@ -9315,7 +9628,7 @@
         </SvgIcon>
         <SvgIcon Height="24" Id="24 / Status Warning" IsAutoRTL="false" IsColorfull="false" Name="StatusWarning" OriginName="24 / Status_Warning_Outline" OriginNodeId="9044c17b79d094cf4894b5a9ac2c9827328baaa7" Width="24">
             <Vectors>
-                <Vector IsRTL="false">
+                <Vector Hash="82e55379a7ff0ab0273cbe7fdedb6256" IsRTL="false">
                     <Data>
                         <Svg>
                             <![CDATA[<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="#000" d="M3.5 3.5h17v17h-17z"/></svg>]]>
@@ -9326,7 +9639,7 @@
         </SvgIcon>
         <SvgIcon Height="24" Id="24 / Status Warning 2" IsAutoRTL="false" IsColorfull="false" Name="StatusWarning2" OriginName="24 / Status_High_Outline" OriginNodeId="23de0a168c15aa9cd441d0ffe176f2cb9da379d1" Width="24">
             <Vectors>
-                <Vector IsRTL="false">
+                <Vector Hash="012922f9fbfb02699d30e4a049dc161f" IsRTL="false">
                     <Data>
                         <Svg>
                             <![CDATA[<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="#000" d="M3.5 3.5h17v17h-17z"/></svg>]]>
@@ -9337,7 +9650,7 @@
         </SvgIcon>
         <SvgIcon Height="24" Id="24 / Status Warning Solid" IsAutoRTL="false" IsColorfull="false" Name="StatusWarningSolid" OriginName="24 / Status_Warning_Solid" OriginNodeId="42d6fe92793330fe02c3e3d25ce10cc5979e70ee" Width="24">
             <Vectors>
-                <Vector IsRTL="false">
+                <Vector Hash="721c60927394781ea67d170339936ebd" IsRTL="false">
                     <Data>
                         <Svg>
                             <![CDATA[<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="#000" d="M3.5 3.5h17v17h-17z"/></svg>]]>
@@ -9348,7 +9661,7 @@
         </SvgIcon>
         <SvgIcon Height="24" Id="24 / Status Warning Solid 2" IsAutoRTL="false" IsColorfull="false" Name="StatusWarningSolid2" OriginName="24 / Status_High_Solid" OriginNodeId="a93893d0770fcde5d2bc893d8b26f49de55fc546" Width="24">
             <Vectors>
-                <Vector IsRTL="false">
+                <Vector Hash="88a9dd8293cd2b76cce4c8e764b5988f" IsRTL="false">
                     <Data>
                         <Svg>
                             <![CDATA[<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="#000" d="M3.5 3.5h17v17h-17z"/></svg>]]>
@@ -9359,7 +9672,7 @@
         </SvgIcon>
         <SvgIcon Height="24" Id="24 / Sun" IsAutoRTL="false" IsColorfull="false" Name="Sun" OriginName="24 / Sun" OriginNodeId="1155ca59ce917cbbaeb54f51137f684bdc0eb4ae" Width="24">
             <Vectors>
-                <Vector IsRTL="false">
+                <Vector Hash="f9608b0c01e30bacf968776e3d503772" IsRTL="false">
                     <Data>
                         <Svg>
                             <![CDATA[<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="#000" d="M3.5 3.5h17v17h-17z"/></svg>]]>
@@ -9370,7 +9683,7 @@
         </SvgIcon>
         <SvgIcon Height="24" Id="24 / Text CapsLock" IsAutoRTL="false" IsColorfull="false" Name="TextCapsLock" OriginName="24 / CapsLock" OriginNodeId="d2492d7f19a12a444b61877a87ec478d25f12ec4" Width="24">
             <Vectors>
-                <Vector IsRTL="false">
+                <Vector Hash="fc540ac18c94fc014dc722724d1140d8" IsRTL="false">
                     <Data>
                         <Svg>
                             <![CDATA[<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="#000" d="M3.5 3.5h17v17h-17z"/></svg>]]>
@@ -9381,7 +9694,7 @@
         </SvgIcon>
         <SvgIcon Height="24" Id="24 / Text CapsLock Solid" IsAutoRTL="false" IsColorfull="false" Name="TextCapsLockSolid" OriginName="24 / CapsLock_Solid" OriginNodeId="915ef8fc0fc7bba25b10094e10f46f135aa23b50" Width="24">
             <Vectors>
-                <Vector IsRTL="false">
+                <Vector Hash="5af8ea01a296b5febb074e26120534eb" IsRTL="false">
                     <Data>
                         <Svg>
                             <![CDATA[<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="#000" d="M3.5 3.5h17v17h-17z"/></svg>]]>
@@ -9392,7 +9705,18 @@
         </SvgIcon>
         <SvgIcon Height="24" Id="24 / Text Size" IsAutoRTL="false" IsColorfull="false" Name="TextSize" OriginName="24 / Text_2" OriginNodeId="a67267def0bf15ad928f08aa885e3ae61482e401" Width="24">
             <Vectors>
-                <Vector IsRTL="false">
+                <Vector Hash="66d348f645630eba550486fbc3bd7eca" IsRTL="false">
+                    <Data>
+                        <Svg>
+                            <![CDATA[<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="#000" d="M3.5 3.5h17v17h-17z"/></svg>]]>
+                        </Svg>
+                    </Data>
+                </Vector>
+            </Vectors>
+        </SvgIcon>
+        <SvgIcon Height="24" Id="24 / Timer 2" IsAutoRTL="false" IsColorfull="false" Name="Timer2" OriginName="24 / Stopwatch" OriginNodeId="451e5a32327f660b2033c8ffb9150c61e85b5c80" Width="24">
+            <Vectors>
+                <Vector Hash="cad4ca6de5d0df310376057980179261" IsRTL="false">
                     <Data>
                         <Svg>
                             <![CDATA[<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="#000" d="M3.5 3.5h17v17h-17z"/></svg>]]>
@@ -9403,7 +9727,7 @@
         </SvgIcon>
         <SvgIcon Height="24" Id="24 / Toggle Light Dark" IsAutoRTL="false" IsColorfull="false" Name="ToggleLightDark" OriginName="24 / Online_Offline_Toggle" OriginNodeId="8be4a8f23e2fd953c13e7f20bc21066909f8b0c2" Width="24">
             <Vectors>
-                <Vector IsRTL="false">
+                <Vector Hash="8d5652476215b91a0278eaa57ec72bb9" IsRTL="false">
                     <Data>
                         <Svg>
                             <![CDATA[<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="#000" d="M3.5 3.5h17v17h-17z"/></svg>]]>
@@ -9414,7 +9738,7 @@
         </SvgIcon>
         <SvgIcon Height="24" Id="24 / Wizard" IsAutoRTL="false" IsColorfull="false" Name="Wizard" OriginName="24 / Wizard" OriginNodeId="c4e9c4433868a9ed189ba8acb90ee92108e20774" Width="24">
             <Vectors>
-                <Vector IsRTL="false">
+                <Vector Hash="56b0cfb9369249caf78715555e3bae5c" IsRTL="false">
                     <Data>
                         <Svg>
                             <![CDATA[<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="#000" d="M3.5 3.5h17v17h-17z"/></svg>]]>
@@ -9425,7 +9749,7 @@
         </SvgIcon>
         <SvgIcon Height="32" Id="32 / Icon Stub" IsAutoRTL="false" IsColorfull="false" Name="IconStub" OriginName="32 / Icon Stub" OriginNodeId="cd16c0347ba0d76e73160ce16564125963a1e6f2" Width="32">
             <Vectors>
-                <Vector IsRTL="false">
+                <Vector Hash="f0e6eff8b0c810d808800d4f7dd961bd" IsRTL="false">
                     <Data>
                         <Svg>
                             <![CDATA[<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="none" viewBox="0 0 32 32"><path stroke="#000" d="M4.5 4.5h23v23h-23z"/></svg>]]>
@@ -9436,7 +9760,7 @@
         </SvgIcon>
         <SvgIcon Height="48" Id="48 / Icon Stub" IsAutoRTL="false" IsColorfull="false" Name="IconStub" OriginName="48 / Icon Stub" OriginNodeId="5f22f20f519a478b95f1deed3e9577c0e6d88f29" Width="48">
             <Vectors>
-                <Vector IsRTL="false">
+                <Vector Hash="53a9bbbdd1498487373c370c51cfcf91" IsRTL="false">
                     <Data>
                         <Svg>
                             <![CDATA[<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="none" viewBox="0 0 48 48"><path stroke="#000" d="M4.5 4.5h39v39h-39z"/></svg>]]>
@@ -9449,14 +9773,14 @@
     <Illustrations>
         <Illustration Height="64" Id="Default / ExampleOne / Image1" IsAutoRTL="false" Name="Image1" OriginName="Image1" Product="Default" Scope="ExampleOne" Width="64">
             <Vectors>
-                <Vector IsRTL="false" Theme="Light">
+                <Vector Hash="fd1c2649154c804b0006f572ce31820c" IsRTL="false" Theme="Light">
                     <Data>
                         <Svg>
                             <![CDATA[<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="none"><path fill="#CCC" d="M45 10H15a5 5 0 0 0-5 5v30a5 5 0 0 0 5 5h30a5 5 0 0 0 5-5V15a5 5 0 0 0-5-5"/><path fill="#666" d="M35 20H25a5 5 0 0 0-5 5v10a5 5 0 0 0 5 5h10a5 5 0 0 0 5-5V25a5 5 0 0 0-5-5m7-18 20 20H42zm-2 43H20a5 5 0 0 0 0 10h20a5 5 0 0 0 0-10"/><path stroke="#000" stroke-width="2" d="M57 2H7a5 5 0 0 0-5 5v50a5 5 0 0 0 5 5h50a5 5 0 0 0 5-5V7a5 5 0 0 0-5-5Z"/></svg>]]>
                         </Svg>
                     </Data>
                 </Vector>
-                <Vector IsRTL="false" Theme="Dark">
+                <Vector Hash="74c89ab09bfb4b6dc38b956adf769b64" IsRTL="false" Theme="Dark">
                     <Data>
                         <Svg>
                             <![CDATA[<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="none"><path fill="#333" d="M45 10H15a5 5 0 0 0-5 5v30a5 5 0 0 0 5 5h30a5 5 0 0 0 5-5V15a5 5 0 0 0-5-5"/><path fill="#555" d="M35 20H25a5 5 0 0 0-5 5v10a5 5 0 0 0 5 5h10a5 5 0 0 0 5-5V25a5 5 0 0 0-5-5m7-18 20 20H42zm-2 43H20a5 5 0 0 0 0 10h20a5 5 0 0 0 0-10"/><path stroke="#fff" stroke-width="2" d="M57 2H7a5 5 0 0 0-5 5v50a5 5 0 0 0 5 5h50a5 5 0 0 0 5-5V7a5 5 0 0 0-5-5Z"/></svg>]]>
@@ -9467,14 +9791,14 @@
         </Illustration>
         <Illustration Height="64" Id="Default / ExampleOne / Image2" IsAutoRTL="false" Name="Image2" OriginName="Image2" Product="Default" Scope="ExampleOne" Width="64">
             <Vectors>
-                <Vector IsRTL="false" Theme="Light">
+                <Vector Hash="66636081beeaf8c02e9cc9646c06b854" IsRTL="false" Theme="Light">
                     <Data>
                         <Svg>
                             <![CDATA[<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="none"><path fill="#CCC" d="M45 10H15a5 5 0 0 0-5 5v30a5 5 0 0 0 5 5h30a5 5 0 0 0 5-5V15a5 5 0 0 0-5-5"/><path fill="#666" d="M25 24H15a5 5 0 0 0-5 5v10a5 5 0 0 0 5 5h10a5 5 0 0 0 5-5V29a5 5 0 0 0-5-5"/><path fill="#666" d="m10 30 20 20H10z"/><path fill="#666" d="M45 40H25a5 5 0 0 0 0 10h20a5 5 0 0 0 0-10"/><path stroke="#000" stroke-width="2" d="M57 2H7a5 5 0 0 0-5 5v50a5 5 0 0 0 5 5h50a5 5 0 0 0 5-5V7a5 5 0 0 0-5-5Z"/></svg>]]>
                         </Svg>
                     </Data>
                 </Vector>
-                <Vector IsRTL="false" Theme="Dark">
+                <Vector Hash="8add517059006e36633e2a3305eb1459" IsRTL="false" Theme="Dark">
                     <Data>
                         <Svg>
                             <![CDATA[<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="none"><path fill="#333" d="M45 10H15a5 5 0 0 0-5 5v30a5 5 0 0 0 5 5h30a5 5 0 0 0 5-5V15a5 5 0 0 0-5-5"/><path fill="#555" d="M25 25H15a5 5 0 0 0-5 5v10a5 5 0 0 0 5 5h10a5 5 0 0 0 5-5V30a5 5 0 0 0-5-5"/><path fill="#555" d="m10 30 20 20H10z"/><path fill="#555" d="M45 40H25a5 5 0 0 0 0 10h20a5 5 0 0 0 0-10"/><path stroke="#fff" stroke-width="2" d="M57 2H7a5 5 0 0 0-5 5v50a5 5 0 0 0 5 5h50a5 5 0 0 0 5-5V7a5 5 0 0 0-5-5Z"/></svg>]]>

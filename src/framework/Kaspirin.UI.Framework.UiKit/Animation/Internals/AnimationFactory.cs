@@ -21,10 +21,9 @@ namespace Kaspirin.UI.Framework.UiKit.Animation.Internals;
 
 internal static class AnimationFactory
 {
-    internal static AnimationTimeline CreateAnimation(
+    public static AnimationTimeline CreateAnimation(
         DependencyObject targetDependencyObject,
         DependencyProperty targetDependencyProperty,
-        int? desiredFrameRate,
         AnimationProperties properties,
         object value,
         Action? onCompletedCallback)
@@ -68,7 +67,6 @@ internal static class AnimationFactory
 
         animation.SetValue(Storyboard.TargetProperty, targetDependencyObject);
         animation.SetValue(Storyboard.TargetPropertyProperty, propertyPath);
-        animation.SetValue(Timeline.DesiredFrameRateProperty, desiredFrameRate);
         animation.Freeze();
 
         return animation;

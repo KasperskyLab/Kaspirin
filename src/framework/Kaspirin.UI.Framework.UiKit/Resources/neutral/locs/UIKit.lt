@@ -1,4 +1,17 @@
-﻿DateTimeInputAction_SelectDateToolTip = 'Select date'
+﻿BadgeCounter_AutomationName = $Type + ': quantity ' + $Counter
+BadgeText_AutomationName = $Type + ' ' + $Text
+Badge_Type_Danger_AutomationName = 'Danger'
+Badge_Type_Info_AutomationName = 'Info'
+Badge_Type_Neutral_AutomationName = 'Message'
+Badge_Type_Positive_AutomationName = 'Positive'
+Badge_Type_Warning_AutomationName = 'Warning'
+
+Button_AcceleratorKeyEnter = 'Enter'
+Button_AcceleratorKeyEscape = 'Escape'
+
+ContextMenuButton_ContextMenuButtonToolTip = 'Show menu'
+
+DateTimeInputAction_SelectDateToolTip = 'Select date'
 DateTimeInputAction_SelectTimeToolTip = 'Select time'
 
 DateTimePopupPresenter_CancelToolTip = 'Cancel'
@@ -6,11 +19,41 @@ DateTimePopupPresenter_ConfirmToolTip = 'Confirm'
 
 EnumerableToStringJoinConverter_Separator = ', '
 
+FadeLine_LeftButtonToolTip = 'Move left'
+FadeLine_RightButtonToolTip = 'Move right'
+
 ImageGallery_Counter = $CurrentIndex + ' of ' + $TotalIndex
 
 InputContextMenu_Copy = 'Copy'
 InputContextMenu_Cut = 'Cut'
 InputContextMenu_Paste = 'Paste'
+
+InteractivityDialog_AutomationName = 'Modal window, ' + $Type + ': ' + $Header
+InteractivityDialog_ButtonCloseToolTip = 'Close'
+InteractivityDialog_ButtonHelpToolTip = 'Help'
+InteractivityDialog_Shown_AutomationName = 'Modal window shown.'
+InteractivityDialog_Type_Danger_AutomationName = 'Danger'
+InteractivityDialog_Type_Info_AutomationName = 'Info'
+InteractivityDialog_Type_Loading_AutomationName = 'Loading'
+InteractivityDialog_Type_Neutral_AutomationName = 'Message'
+InteractivityDialog_Type_Positive_AutomationName = 'Positive'
+InteractivityDialog_Type_Warning_AutomationName = 'Warning'
+
+InteractivityNotification_AutomationName = 'Notification, ' + $Type + ': ' + $Text
+InteractivityNotification_ButtonCloseToolTip = 'Close'
+InteractivityNotification_Shown_AutomationName = 'Notification shown. ' + $Type + ': ' + $Text
+InteractivityNotification_Type_Danger_AutomationName = 'Danger'
+InteractivityNotification_Type_Info_AutomationName = 'Info'
+InteractivityNotification_Type_Neutral_AutomationName = 'Message'
+InteractivityNotification_Type_Positive_AutomationName = 'Positive'
+InteractivityNotification_Type_Warning_AutomationName = 'Warning'
+
+LocalizedControlTypeHyperlink = 'Hyperlink'
+LocalizedControlTypeImage = 'Image'
+
+NavigationMenuButton_AutomationName = $Caption + ' ' + $Counter
+NavigationMenuButton_AutomationHelpText = $Description + ' ' + $BadgeType
+NavigationMenuFooterButton_AutomationHelpText = $HelpText + ' ' + $BadgeType
 
 NotificationSpinner_Header = 'Please wait...'
 
@@ -18,34 +61,70 @@ NumberInputAction_DecreaseToolTip = 'Decrease'
 NumberInputAction_IncreaseToolTip = 'Increase'
 
 PasswordInputCapsLockAction_CapsLockOnToolTip = 'Caps Lock is on.'
+PasswordInputCapsLockAction_UntoggleCapsLockToolTip = 'Turn off Caps Lock.'
 PasswordInputCopyAction_CopyToolTip = 'Copy'
 PasswordInputRevealAction_HideToolTip = 'Hide'
 PasswordInputRevealAction_ShowToolTip = 'Show'
 
-ScrollBarContextMenu_ScrollHere = 'Scroll here'
-ScrollBarContextMenu_ScrollToTop = 'Top'
-ScrollBarContextMenu_ScrollToBottom = 'Bottom'
-ScrollBarContextMenu_ScrollToLeft = 'Left edge'
-ScrollBarContextMenu_ScrollToRight = 'Right edge'
-ScrollBarContextMenu_PageUp = 'Page up'
-ScrollBarContextMenu_PageDown = 'Page down'
-ScrollBarContextMenu_PageLeft = 'Page left'
-ScrollBarContextMenu_PageRight = 'Page right'
-ScrollBarContextMenu_LineUp = 'Line up'
 ScrollBarContextMenu_LineDown = 'Line down'
 ScrollBarContextMenu_LineLeft = 'Line left'
 ScrollBarContextMenu_LineRight = 'Line right'
+ScrollBarContextMenu_LineUp = 'Line up'
+ScrollBarContextMenu_PageDown = 'Page down'
+ScrollBarContextMenu_PageLeft = 'Page left'
+ScrollBarContextMenu_PageRight = 'Page right'
+ScrollBarContextMenu_PageUp = 'Page up'
+ScrollBarContextMenu_ScrollHere = 'Scroll here'
+ScrollBarContextMenu_ScrollToBottom = 'Bottom'
+ScrollBarContextMenu_ScrollToLeft = 'Left edge'
+ScrollBarContextMenu_ScrollToRight = 'Right edge'
+ScrollBarContextMenu_ScrollToTop = 'Top'
 
 Search_ClearToolTip = 'Clear'
-Search_PlaceholderText = 'Search'
 Search_Pattern_PlaceholderTextAndShortcut = $PlaceholderText + ' (' + $Shortcut + ')'
 Search_Pattern_PlaceholderTextOnly = $PlaceholderText
 Search_Pattern_ShortcutOnly = $Shortcut
+Search_PlaceholderText = 'Search'
 
 Select_Placeholder = 'Select an item'
 
 SelectableText_AfterCopy = 'Copied.'
 SelectableText_BeforeCopy = 'Click to copy.'
+SelectableText_Ready_AutomationHelpText = 'Click to copy to clipboard'
+SelectableText_Shown_AutomationName = 'Text copied to clipboard: ' + $Text
+
+SplitButton_ContextMenuButtonToolTip = 'Additional actions'
+
+StatusBullet_AutomationName = $Type + ': ' + $Message
+StatusBullet_Type_Danger_AutomationName = 'Danger'
+StatusBullet_Type_Info_AutomationName = 'Info'
+StatusBullet_Type_Neutral_AutomationName = 'Message'
+StatusBullet_Type_Positive_AutomationName = 'Positive'
+StatusBullet_Type_Warning_AutomationName = 'Warning'
+
+StatusTag_AutomationName = $Type + ': ' + $Message
+StatusTag_Type_Danger_AutomationName = 'Danger'
+StatusTag_Type_Info_AutomationName = 'Info'
+StatusTag_Type_Neutral_AutomationName = 'Message'
+StatusTag_Type_Positive_AutomationName = 'Positive'
+StatusTag_Type_Warning_AutomationName = 'Warning'
+
+Switch_AutomationName = 'ToggleSwitch'
+
+Tag_AutomationHelpText = 'Color ' + $Color
+Tag_AutomationName = 'Tag: ' + $Text
+Tag_Color_Emerald_AutomationName = 'emerald'
+Tag_Color_Grass_AutomationName = 'grass'
+Tag_Color_Marengo_AutomationName = 'marengo'
+Tag_Color_Marina_AutomationName = 'marina'
+Tag_Color_Neutral_AutomationName = 'neutral'
+Tag_Color_Orange_AutomationName = 'orange'
+Tag_Color_Purple_AutomationName = 'purple'
+Tag_Color_Red_AutomationName = 'red'
+Tag_Color_Violet_AutomationName = 'violet'
+Tag_Color_Yellow_AutomationName = 'yellow'
+
+TextHint_DetailsToolTip = 'Details'
 
 TextInputCopyAction_CopyToolTip = 'Copy'
 

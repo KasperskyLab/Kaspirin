@@ -14,13 +14,15 @@
 
 using System;
 using System.Windows;
+using System.Windows.Automation;
 using System.Windows.Controls;
-using System.Windows.Documents;
+using System.Windows.Data;
+using Kaspirin.UI.Framework.UiKit.Controls.Internals;
 
 namespace Kaspirin.UI.Framework.UiKit.Controls;
 
-[TemplatePart(Name = "PART_TextHyperlink", Type = typeof(Hyperlink))]
-[TemplatePart(Name = "PART_TextContainer", Type = typeof(TextBlock))]
+[TemplatePart(Name = PART_TextHyperlink, Type = typeof(SelectableTextHyperlink))]
+[TemplatePart(Name = PART_TextContainer, Type = typeof(TextBlock))]
 public sealed class SelectableText : Control
 {
     public const string PART_TextHyperlink = "PART_TextHyperlink";
@@ -28,7 +30,7 @@ public sealed class SelectableText : Control
 
     public SelectableText()
     {
-        _resetStateAction = new DeferredAction(ResetState, TimeSpan.FromMilliseconds(1200));
+        _resetStateAction = DeferredActionFactory.CreateDebouncerOnUi(ResetState, TimeSpan.FromMilliseconds(1200));
     }
 
     #region FontStyle
@@ -152,8 +154,15 @@ public sealed class SelectableText : Control
 
     public override void OnApplyTemplate()
     {
-        _textButton = (Hyperlink)GetTemplateChild("PART_TextHyperlink");
+        _textContainer = Guard.EnsureIsInstanceOfType<TextBlock>(GetTemplateChild(PART_TextContainer));
+        _textContainer.SetBinding(AccessibilityProperties.IsPronounceableProperty, new Binding { Source = this, Path = AccessibilityProperties.IsPronounceableProperty.AsPath() });
+
+        _textButton = Guard.EnsureIsInstanceOfType<SelectableTextHyperlink>(GetTemplateChild(PART_TextHyperlink));
         _textButton.Command = new DelegateCommand(CopyText);
+        _textButton.SetBinding(AccessibilityProperties.LabelProperty, new Binding { Source = this, Path = AccessibilityProperties.LabelProperty.AsPath() });
+        _textButton.SetBinding(AutomationProperties.NameProperty, new Binding { Source = this, Path = AutomationProperties.NameProperty.AsPath() });
+        _textButton.SetBinding(AutomationProperties.LabeledByProperty, new Binding { Source = this, Path = AutomationProperties.LabeledByProperty.AsPath() });
+        _textButton.SetBinding(AutomationProperties.HelpTextProperty, new Binding { Source = this, Path = AutomationProperties.HelpTextProperty.AsPath() });
     }
 
     protected override void OnPropertyChanged(DependencyPropertyChangedEventArgs e)
@@ -191,7 +200,8 @@ public sealed class SelectableText : Control
         State = SelectableTextState.Rest;
     }
 
-    private Hyperlink? _textButton;
+    private TextBlock? _textContainer;
+    private SelectableTextHyperlink? _textButton;
 
-    private readonly DeferredAction _resetStateAction;
+    private readonly IDeferredAction _resetStateAction;
 }

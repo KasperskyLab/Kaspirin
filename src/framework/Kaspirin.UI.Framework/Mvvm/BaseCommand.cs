@@ -13,7 +13,9 @@
 // limitations under the License.
 
 using System;
+using System.Threading;
 using System.Windows.Input;
+using System.Windows.Threading;
 
 namespace Kaspirin.UI.Framework.Mvvm
 {
@@ -60,13 +62,13 @@ namespace Kaspirin.UI.Framework.Mvvm
                 return;
             }
 
-            var executer = Executers.Implementation;
-            if (executer.IsAvailable && executer.IsUiThread is false)
+            var executor = Executers.DispatcherExecutor;
+            if (executor.IsAvailable && executor.VerifyThread() is false)
             {
-                executer.ExecuteInUiThreadAsync(() =>
-                {
-                    handler.Invoke(this, EventArgs.Empty);
-                });
+                executor.ExecuteAsync(
+                    action: () => handler.Invoke(this, EventArgs.Empty),
+                    priority: DispatcherPriority.Normal,
+                    cancellationToken: CancellationToken.None);
             }
             else
             {

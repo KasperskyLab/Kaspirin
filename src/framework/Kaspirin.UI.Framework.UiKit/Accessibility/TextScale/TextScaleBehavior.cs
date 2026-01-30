@@ -76,7 +76,7 @@ public sealed class TextScaleBehavior : Behavior<FrameworkElement, TextScaleBeha
         UpdateLayoutTransform(OriginScale);
     }
 
-    private void OnScaleFactorChanged(TextScaleService sender, TextScaleChangedEventArgs eventArgs)
+    private void OnScaleFactorChanged(ITextScaleService sender, TextScaleChangedEventArgs eventArgs)
         => Executers.InUiAsync(() => UpdateLayoutTransform(eventArgs.NewScale));
 
     private void UpdateLayoutTransform(double scale)

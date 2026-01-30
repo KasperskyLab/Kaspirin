@@ -21,7 +21,9 @@ using System.Windows.Markup;
 #endif
 
 [assembly: XmlnsDefinition("http://schemas.kaspirin.com/common/uikit", "Kaspirin.UI.Framework.UiKit")]
+[assembly: XmlnsDefinition("http://schemas.kaspirin.com/common/visuals", "Kaspirin.UI.Framework.UiKit.Accessibility")]
 [assembly: XmlnsDefinition("http://schemas.kaspirin.com/common/visuals", "Kaspirin.UI.Framework.UiKit.Accessibility.TextScale")]
+[assembly: XmlnsDefinition("http://schemas.kaspirin.com/common/visuals", "Kaspirin.UI.Framework.UiKit.Animation")]
 [assembly: XmlnsDefinition("http://schemas.kaspirin.com/common/visuals", "Kaspirin.UI.Framework.UiKit.Animation.Markup")]
 [assembly: XmlnsDefinition("http://schemas.kaspirin.com/common/visuals", "Kaspirin.UI.Framework.UiKit.Animation.Markup.Easing")]
 [assembly: XmlnsDefinition("http://schemas.kaspirin.com/common/visuals", "Kaspirin.UI.Framework.UiKit.Controls")]
@@ -56,6 +58,7 @@ using System.Windows.Markup;
 [assembly: XmlnsDefinition("http://schemas.kaspirin.com/common/visuals", "Kaspirin.UI.Framework.UiKit.MarkupExtensions")]
 [assembly: XmlnsDefinition("http://schemas.kaspirin.com/common/visuals", "Kaspirin.UI.Framework.UiKit.Navigation")]
 [assembly: XmlnsDefinition("http://schemas.kaspirin.com/common/visuals", "Kaspirin.UI.Framework.UiKit.Notifications")]
+[assembly: XmlnsDefinition("http://schemas.kaspirin.com/common/visuals", "Kaspirin.UI.Framework.UiKit.Theme")]
 [assembly: XmlnsDefinition("http://schemas.kaspirin.com/common/visuals", "Kaspirin.UI.Framework.UiKit.Windows")]
 
 [assembly: XmlnsDefinition("http://schemas.microsoft.com/winfx/2006/xaml/presentation", "Kaspirin.UI.Framework.UiKit.MarkupExtensions.Common")]

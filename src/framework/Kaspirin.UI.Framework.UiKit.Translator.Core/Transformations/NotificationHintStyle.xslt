@@ -67,14 +67,10 @@
 						<xsl:with-param name="key">TextStyleDanger</xsl:with-param>
 						<xsl:with-param name="setters">
 							<!--TextElement.Foreground-->
-							<xsl:call-template name="generateSetterViaAttribute">
+							<xsl:call-template name="generateBrushSetter">
 								<xsl:with-param name="propertyName">TextElement.Foreground</xsl:with-param>
-								<xsl:with-param name="propertyValue">
-									<xsl:call-template name="generateResExtension">
-										<xsl:with-param name="key">ForegroundDanger</xsl:with-param>
-										<xsl:with-param name="scope" select="$id"/>
-									</xsl:call-template>
-								</xsl:with-param>
+								<xsl:with-param name="brushName">ForegroundDanger</xsl:with-param>
+								<xsl:with-param name="scopeName" select="$id"/>
 							</xsl:call-template>
 						</xsl:with-param>
 					</xsl:call-template>
@@ -86,14 +82,25 @@
 						<xsl:with-param name="key">TextStyleInfo</xsl:with-param>
 						<xsl:with-param name="setters">
 							<!--TextElement.Foreground-->
-							<xsl:call-template name="generateSetterViaAttribute">
+							<xsl:call-template name="generateBrushSetter">
 								<xsl:with-param name="propertyName">TextElement.Foreground</xsl:with-param>
-								<xsl:with-param name="propertyValue">
-									<xsl:call-template name="generateResExtension">
-										<xsl:with-param name="key">ForegroundInfo</xsl:with-param>
-										<xsl:with-param name="scope" select="$id"/>
-									</xsl:call-template>
-								</xsl:with-param>
+								<xsl:with-param name="brushName">ForegroundInfo</xsl:with-param>
+								<xsl:with-param name="scopeName" select="$id"/>
+							</xsl:call-template>
+						</xsl:with-param>
+					</xsl:call-template>
+
+					<!--TextStyleNeutral-->
+					<xsl:call-template name="generateStyle">
+						<xsl:with-param name="targetType">TextBlock</xsl:with-param>
+						<xsl:with-param name="basedOn" select="@TextStyleId"/>
+						<xsl:with-param name="key">TextStyleNeutral</xsl:with-param>
+						<xsl:with-param name="setters">
+							<!--TextElement.Foreground-->
+							<xsl:call-template name="generateBrushSetter">
+								<xsl:with-param name="propertyName">TextElement.Foreground</xsl:with-param>
+								<xsl:with-param name="brushName">ForegroundNeutral</xsl:with-param>
+								<xsl:with-param name="scopeName" select="$id"/>
 							</xsl:call-template>
 						</xsl:with-param>
 					</xsl:call-template>
@@ -105,14 +112,10 @@
 						<xsl:with-param name="key">TextStylePositive</xsl:with-param>
 						<xsl:with-param name="setters">
 							<!--TextElement.Foreground-->
-							<xsl:call-template name="generateSetterViaAttribute">
+							<xsl:call-template name="generateBrushSetter">
 								<xsl:with-param name="propertyName">TextElement.Foreground</xsl:with-param>
-								<xsl:with-param name="propertyValue">
-									<xsl:call-template name="generateResExtension">
-										<xsl:with-param name="key">ForegroundPositive</xsl:with-param>
-										<xsl:with-param name="scope" select="$id"/>
-									</xsl:call-template>
-								</xsl:with-param>
+								<xsl:with-param name="brushName">ForegroundPositive</xsl:with-param>
+								<xsl:with-param name="scopeName" select="$id"/>
 							</xsl:call-template>
 						</xsl:with-param>
 					</xsl:call-template>
@@ -124,14 +127,10 @@
 						<xsl:with-param name="key">TextStyleWarning</xsl:with-param>
 						<xsl:with-param name="setters">
 							<!--TextElement.Foreground-->
-							<xsl:call-template name="generateSetterViaAttribute">
+							<xsl:call-template name="generateBrushSetter">
 								<xsl:with-param name="propertyName">TextElement.Foreground</xsl:with-param>
-								<xsl:with-param name="propertyValue">
-									<xsl:call-template name="generateResExtension">
-										<xsl:with-param name="key">ForegroundWarning</xsl:with-param>
-										<xsl:with-param name="scope" select="$id"/>
-									</xsl:call-template>
-								</xsl:with-param>
+								<xsl:with-param name="brushName">ForegroundWarning</xsl:with-param>
+								<xsl:with-param name="scopeName" select="$id"/>
 							</xsl:call-template>
 						</xsl:with-param>
 					</xsl:call-template>
@@ -199,6 +198,34 @@
 						<xsl:call-template name="generateStaticResourceSetter">
 							<xsl:with-param name="propertyId">NotificationHint_TextStyle</xsl:with-param>
 							<xsl:with-param name="resourceName">TextStyleInfo</xsl:with-param>
+						</xsl:call-template>
+
+					</xsl:with-param>
+				</xsl:call-template>
+
+				<!--[Neutral trigger]-->
+				<xsl:call-template name="generateTrigger">
+					<xsl:with-param name="propertyName">Type</xsl:with-param>
+					<xsl:with-param name="propertyValue">Neutral</xsl:with-param>
+					<xsl:with-param name="setters">
+
+						<!--NotificationHint_Icon_Color-->
+						<xsl:call-template name="generateBrushSetter">
+							<xsl:with-param name="propertyId">NotificationHint_Icon_Color</xsl:with-param>
+							<xsl:with-param name="brushName">IconBrushNeutral</xsl:with-param>
+							<xsl:with-param name="scopeName" select="$id" />
+						</xsl:call-template>
+
+						<!--NotificationHint_Icon_Name-->
+						<xsl:call-template name="generateUiKitSetterViaAttribute">
+							<xsl:with-param name="propertyId">NotificationHint_Icon_Name</xsl:with-param>
+							<xsl:with-param name="propertyValue" select="@IconNameNeutral" />
+						</xsl:call-template>
+
+						<!--NotificationHint_TextStyle-->
+						<xsl:call-template name="generateStaticResourceSetter">
+							<xsl:with-param name="propertyId">NotificationHint_TextStyle</xsl:with-param>
+							<xsl:with-param name="resourceName">TextStyleNeutral</xsl:with-param>
 						</xsl:call-template>
 
 					</xsl:with-param>

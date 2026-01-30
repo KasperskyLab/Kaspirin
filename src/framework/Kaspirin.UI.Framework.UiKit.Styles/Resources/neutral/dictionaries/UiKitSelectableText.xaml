@@ -24,6 +24,7 @@
     <SolidColorBrush x:Key="BackgroundHover" Color="{Res Transparent, Scope=Palette}" />
     <SolidColorBrush x:Key="BackgroundNormal" Color="{Res Transparent, Scope=Palette}" />
     <SolidColorBrush x:Key="BackgroundPressed" Color="{Res Status_Info-Subtle-Transparent_20, Scope=Palette}" />
+    <SolidColorBrush x:Key="FocusVisualBrush" Color="{Res ControlsBG_Emerald-Default-Focus-Loading, Scope=Palette}" />
     <SolidColorBrush x:Key="ForegroundHover" Color="{Res ControlsBG_Emerald-Hover, Scope=Palette}" />
     <SolidColorBrush x:Key="ForegroundNormal" Color="{Res ControlsBG_Emerald-Default-Focus-Loading, Scope=Palette}" />
     <SolidColorBrush x:Key="ForegroundPressed" Color="{Res ControlsBG_Emerald-Pressed, Scope=Palette}" />

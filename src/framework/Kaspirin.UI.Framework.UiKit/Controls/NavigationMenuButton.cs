@@ -13,6 +13,8 @@
 // limitations under the License.
 
 using System.Windows;
+using System.Windows.Automation.Peers;
+using Kaspirin.UI.Framework.UiKit.Controls.Automation;
 
 namespace Kaspirin.UI.Framework.UiKit.Controls;
 
@@ -98,4 +100,9 @@ public sealed class NavigationMenuButton : NavigationMenuButtonBase
         new PropertyMetadata(default(bool)));
 
     #endregion
+
+    protected override AutomationPeer OnCreateAutomationPeer()
+    {
+        return new NavigationMenuButtonAutomationPeer(this);
+    }
 }

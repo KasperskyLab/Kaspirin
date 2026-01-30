@@ -39,6 +39,16 @@ public sealed class UIKitFontBrushExtension : UIKitFontBrushExtension<UIKitFontB
     protected override string Map(UIKitFontBrush brush) => UIKitFontMetadataProvider.Map(brush);
 }
 
+public sealed class UIKitFontPaletteExtension : UIKitFontBrushExtension<UIKitPalette>
+{
+    static UIKitFontPaletteExtension()
+    {
+        UIKitPaletteMetadataRegistrar.RegisterMetadata();
+    }
+
+    protected override string Map(UIKitPalette brush) => UIKitPaletteMetadataStorage.Get(brush).ResourceKey;
+}
+
 public sealed class UIKitFontStyleExtension : UIKitFontStyleExtension<UIKitFontStyle>
 {
     protected override string Map(UIKitFontStyle style) => UIKitFontMetadataProvider.Map(style);

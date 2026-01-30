@@ -18,9 +18,11 @@ using System.Windows.Controls;
 
 namespace Kaspirin.UI.Framework.UiKit.Controls;
 
+[TemplatePart(Name = PART_Root, Type = typeof(Island))]
 [TemplatePart(Name = PART_ScrollViewer, Type = typeof(ScrollViewer))]
 public sealed class TextViewer : Control
 {
+    public const string PART_Root = "PART_Root";
     public const string PART_ScrollViewer = "PART_ScrollViewer";
 
     #region Text
@@ -64,24 +66,29 @@ public sealed class TextViewer : Control
 
     public override void OnApplyTemplate()
     {
-        _scrollViewer = Guard.EnsureIsInstanceOfType<ScrollViewer>(GetTemplateChild(PART_ScrollViewer));
-        _scrollViewer.ScrollChanged += OnScrollViewerScrollChanged;
+        _root = Guard.EnsureIsInstanceOfType<Island>(GetTemplateChild(PART_Root));
+        _root.SetValue(AccessibilityProperties.IsIgnoredProperty, true);
+
+        ScrollViewer = Guard.EnsureIsInstanceOfType<ScrollViewer>(GetTemplateChild(PART_ScrollViewer));
+        ScrollViewer.ScrollChanged += OnScrollViewerScrollChanged;
     }
 
     public void PageDown()
-        => _scrollViewer?.PageDown();
+        => ScrollViewer?.PageDown();
 
     public void PageUp()
-        => _scrollViewer?.PageUp();
+        => ScrollViewer?.PageUp();
 
     public void ScrollToHome()
-        => _scrollViewer?.ScrollToHome();
+        => ScrollViewer?.ScrollToHome();
 
     public void ScrollToBottom()
-        => _scrollViewer?.ScrollToBottom();
+        => ScrollViewer?.ScrollToBottom();
 
     public void ScrollToOffset(double offset)
-        => _scrollViewer?.ScrollToVerticalOffset(offset);
+        => ScrollViewer?.ScrollToVerticalOffset(offset);
+
+    internal ScrollViewer? ScrollViewer { get; private set; }
 
     private void OnTextChanged()
     {
@@ -99,15 +106,15 @@ public sealed class TextViewer : Control
 
     private void OnScrollViewerScrollChanged(object sender, ScrollChangedEventArgs e)
     {
-        _scrollViewer?.WhenLoaded(InvalidateTextViewed);
+        ScrollViewer?.WhenLoaded(InvalidateTextViewed);
     }
 
     private void InvalidateTextViewed()
     {
-        Guard.IsNotNull(_scrollViewer);
+        Guard.IsNotNull(ScrollViewer);
 
-        var isOnTop = _scrollViewer.VerticalOffset.NearlyZero();
-        var isOnBottom = (_scrollViewer.VerticalOffset + _scrollViewer.ViewportHeight).NearlyEqual(_scrollViewer.ExtentHeight);
+        var isOnTop = ScrollViewer.VerticalOffset.NearlyZero();
+        var isOnBottom = (ScrollViewer.VerticalOffset + ScrollViewer.ViewportHeight).NearlyEqual(ScrollViewer.ExtentHeight);
 
         _textStartViewed = _textStartViewed || isOnTop;
         _textEndViewed = _textEndViewed || isOnBottom;
@@ -127,5 +134,5 @@ public sealed class TextViewer : Control
     private bool _textEndViewed;
     private bool _textViewedEventSent;
 
-    private ScrollViewer? _scrollViewer;
+    private Island? _root;
 }

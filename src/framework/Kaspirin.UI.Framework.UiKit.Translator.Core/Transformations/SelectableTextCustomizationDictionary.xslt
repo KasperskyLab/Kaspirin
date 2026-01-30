@@ -68,7 +68,13 @@
 						<xsl:with-param name="key">BackgroundPressed</xsl:with-param>
 						<xsl:with-param name="brushNode" select="BackgroundPressed"/>
 					</xsl:call-template>
-					
+
+					<!--FocusVisualBrush-->
+					<xsl:call-template name="generateBrush">
+						<xsl:with-param name="key">FocusVisualBrush</xsl:with-param>
+						<xsl:with-param name="brushNode" select="Focus/Color"/>
+					</xsl:call-template>
+
 					<!--ForegroundHover-->
 					<xsl:call-template name="generateBrush">
 						<xsl:with-param name="key">ForegroundHover</xsl:with-param>

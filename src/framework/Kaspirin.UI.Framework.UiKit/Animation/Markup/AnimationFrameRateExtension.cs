@@ -25,9 +25,9 @@ public sealed class AnimationFrameRateExtension : MarkupExtension
     /// <summary>
     ///     Animation quality.
     /// </summary>
-    public AnimationRenderQuality RenderQuality { get; set; } = AnimationRenderQuality.Auto;
+    public AnimationRenderQuality RenderQuality { get; set; } = AnimationRenderQuality.Default;
 
     /// <inheritdoc/>
     public override object? ProvideValue(IServiceProvider serviceProvider)
-        => ServiceLocator.GetService<IAnimationSettingsProvider>().GetDesiredFrameRate(RenderQuality);
+        => ServiceLocator.GetService<IAnimationManager>().GetDesiredFrameRate(RenderQuality);
 }

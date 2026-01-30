@@ -13,6 +13,8 @@
 // limitations under the License.
 
 using System.Windows;
+using System.Windows.Automation.Peers;
+using Kaspirin.UI.Framework.UiKit.Controls.Automation;
 
 namespace Kaspirin.UI.Framework.UiKit.Controls;
 
@@ -49,4 +51,9 @@ public sealed class StatusTag : TagBase
         new PropertyMetadata(default(StatusTagType)));
 
     #endregion
+
+    protected override AutomationPeer OnCreateAutomationPeer()
+    {
+        return new StatusTagAutomationPeer(this);
+    }
 }

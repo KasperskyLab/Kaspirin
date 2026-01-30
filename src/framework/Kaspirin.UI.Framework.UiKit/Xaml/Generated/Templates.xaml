@@ -16,6 +16,7 @@
 
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:accessibility="clr-namespace:Kaspirin.UI.Framework.UiKit.Accessibility"
                     xmlns:automation="clr-namespace:Kaspirin.UI.Framework.UiKit.Controls.Automation"
                     xmlns:booleanConverters="clr-namespace:Kaspirin.UI.Framework.UiKit.Converters.BooleanConverters"
                     xmlns:controls="clr-namespace:Kaspirin.UI.Framework.UiKit.Controls"
@@ -367,6 +368,7 @@
         <Setter Property="VerticalAlignment" Value="Center" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="UseLayoutRounding" Value="True" />
+        <Setter Property="internals:ButtonBaseAcceleratorKeyBehavior.IsEnabled" Value="True" />
         <Setter Property="FocusVisualStyle" Value="{uikit:UIKitBinding Button_FocusVisualStyle, Mode=Self, Type={x:Type Style}}" />
         <!--  Constant values  -->
         <Setter Property="MinWidth" Value="{x:Static uikit:UIKitConstants.ButtonMinWidth}" />
@@ -985,7 +987,8 @@
                                   ContentTemplate="{markupCommon:UIKitTemplateBinding ContentTemplate}"
                                   HorizontalAlignment="Stretch"
                                   Style="{uikit:UIKitBinding ContextMenuButton_ToggleButton_Style}"
-                                  TabIndex="{markupCommon:UIKitTemplateBinding TabIndex}" />
+                                  TabIndex="{markupCommon:UIKitTemplateBinding TabIndex}"
+                                  ToolTip="{markupCommon:UIKitTemplateBinding ContextMenuButtonToolTip}" />
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsChecked" SourceName="PART_MenuTargetButton" Value="True">
                             <Setter Property="internals:ButtonBaseInternals.RightIcon16" TargetName="PART_MenuTargetButton" Value="{markupCommon:UIKitTemplateBinding IconMenuOpened}" />
@@ -993,6 +996,13 @@
                         <Trigger Property="IsChecked" SourceName="PART_MenuTargetButton" Value="False">
                             <Setter Property="internals:ButtonBaseInternals.RightIcon16" TargetName="PART_MenuTargetButton" Value="{markupCommon:UIKitTemplateBinding IconMenuClosed}" />
                         </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="Content" Value="{x:Null}" />
+                                <Condition Property="ContentTemplate" Value="{x:Null}" />
+                            </MultiTrigger.Conditions>
+                            <Setter Property="ContextMenuButtonToolTip" Value="{xl:Loc ContextMenuButton_ContextMenuButtonToolTip, Scope=UiKit}" />
+                        </MultiTrigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
@@ -1010,12 +1020,13 @@
                 <Setter Property="Focusable" Value="False" />
                 <Setter Property="VerticalAlignment" Value="Center" />
                 <Setter Property="HorizontalAlignment" Value="Center" />
-                <Setter Property="ToolTip" Value="{xl:Loc DateTimeInputAction_SelectDateToolTip, Scope=UiKit}" />
 
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="{x:Type controls:DateTimeInputAction}">
-                            <controls:IconButton x:Name="PART_ActionButton" />
+                            <controls:IconButton x:Name="PART_ActionButton"
+                                                 ToolTip="{xl:Loc DateTimeInputAction_SelectDateToolTip,
+                                                                  Scope=UiKit}" />
                             <ControlTemplate.Triggers>
                                 <Trigger Property="SelectionMode" Value="Date">
                                     <Setter Property="Icon" TargetName="PART_ActionButton" Value="{uikit:UIKitBinding DateTimeInput_ActionDate_IconName, Type={x:Type icons:UIKitIcon_16}, Mode=FindAncestor, AncestorType={x:Type controls:DateTimeInput}}" />
@@ -1077,6 +1088,7 @@
         <Setter Property="VerticalAlignment" Value="Stretch" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="UseLayoutRounding" Value="True" />
+        <Setter Property="internals:ButtonBaseAcceleratorKeyBehavior.IsEnabled" Value="True" />
         <Setter Property="FocusVisualStyle" Value="{uikit:UIKitBinding DateTimePopupFooterButton_FocusVisualStyle, Mode=Self, Type={x:Type Style}}" />
 
         <Setter Property="Template">
@@ -1357,6 +1369,8 @@
                                                 Focusable="False"
                                                 Icon="{uikit:UIKitBinding FadeLine_IconButton_LeftIcon}"
                                                 Style="{uikit:UIKitBinding FadeLine_IconButtonStyle}"
+                                                ToolTip="{Loc Key=FadeLine_LeftButtonToolTip,
+                                                              Scope=UiKit}"
                                                 VerticalAlignment="Center" />
                         <ScrollViewer x:Name="PART_ScrollViewer"
                                       Grid.Column="1"
@@ -1370,6 +1384,8 @@
                                                 Focusable="False"
                                                 Icon="{uikit:UIKitBinding FadeLine_IconButton_RightIcon}"
                                                 Style="{uikit:UIKitBinding FadeLine_IconButtonStyle}"
+                                                ToolTip="{Loc Key=FadeLine_RightButtonToolTip,
+                                                              Scope=UiKit}"
                                                 VerticalAlignment="Center" />
                     </Grid>
                     <ControlTemplate.Triggers>
@@ -1648,8 +1664,7 @@
                                       properties:ScrollViewerProps.OuterHorizontalScrollBar="False"
                                       HorizontalScrollBarVisibility="Auto"
                                       VerticalScrollBarVisibility="Disabled">
-                            <ItemsControl Focusable="False"
-                                          ItemsSource="{markupCommon:UIKitTemplateBinding ImageSources}">
+                            <ItemsControl ItemsSource="{markupCommon:UIKitTemplateBinding ImageSources}">
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate>
                                         <Grid>
@@ -1810,6 +1825,8 @@
                                                              Icon="{uikit:UIKitBinding InteractivityDialog_Button_HelpIcon}"
                                                              Margin="{uikit:UIKitBinding InteractivityDialog_Button_Margin}"
                                                              Style="{uikit:UIKitBinding InteractivityDialog_Button_Style}"
+                                                             ToolTip="{Loc InteractivityDialog_ButtonHelpToolTip,
+                                                                           Scope=UiKit}"
                                                              Visibility="{markupCommon:UIKitTemplateBinding HasHelpButton,
                                                                                                             Converter={booleanConverters:BooleanToVisibilityConverter False=Hidden}}" />
                                         <controls:IconButton x:Name="PART_CloseButton"
@@ -1819,6 +1836,8 @@
                                                              Icon="{uikit:UIKitBinding InteractivityDialog_Button_CloseIcon}"
                                                              Margin="{uikit:UIKitBinding InteractivityDialog_Button_Margin}"
                                                              Style="{uikit:UIKitBinding InteractivityDialog_Button_Style}"
+                                                             ToolTip="{Loc InteractivityDialog_ButtonCloseToolTip,
+                                                                           Scope=UiKit}"
                                                              Visibility="{markupCommon:UIKitTemplateBinding HasCloseButton,
                                                                                                             Converter={booleanConverters:BooleanToVisibilityConverter}}" />
                                     </StackPanel>
@@ -2176,6 +2195,8 @@
                                                  HorizontalAlignment="Center"
                                                  Margin="{uikit:UIKitBinding InteractivityNotification_CloseButtton_Margin}"
                                                  Style="{uikit:UIKitBinding InteractivityNotification_CloseButttonStyle}"
+                                                 ToolTip="{Loc InteractivityNotification_ButtonCloseToolTip,
+                                                               Scope=UiKit}"
                                                  VerticalAlignment="Top" />
                         </Grid>
                     </controls:RoundedPanel>
@@ -3304,11 +3325,11 @@
                             <controls:IconButton x:Name="PART_ActionButton" />
                             <ControlTemplate.Triggers>
                                 <Trigger Property="ActionType" Value="Decrease">
-                                    <Setter Property="ToolTip" Value="{xl:Loc NumberInputAction_DecreaseToolTip, Scope=UiKit}" />
+                                    <Setter Property="ToolTip" TargetName="PART_ActionButton" Value="{xl:Loc NumberInputAction_DecreaseToolTip, Scope=UiKit}" />
                                     <Setter Property="Icon" TargetName="PART_ActionButton" Value="{uikit:UIKitBinding NumberInput_ActionDecrease_IconName, Type={x:Type icons:UIKitIcon_16}, Mode=FindAncestor, AncestorType={x:Type controls:NumberInput}}" />
                                 </Trigger>
                                 <Trigger Property="ActionType" Value="Increase">
-                                    <Setter Property="ToolTip" Value="{xl:Loc NumberInputAction_IncreaseToolTip, Scope=UiKit}" />
+                                    <Setter Property="ToolTip" TargetName="PART_ActionButton" Value="{xl:Loc NumberInputAction_IncreaseToolTip, Scope=UiKit}" />
                                     <Setter Property="Icon" TargetName="PART_ActionButton" Value="{uikit:UIKitBinding NumberInput_ActionIncrease_IconName, Type={x:Type icons:UIKitIcon_16}, Mode=FindAncestor, AncestorType={x:Type controls:NumberInput}}" />
                                 </Trigger>
                             </ControlTemplate.Triggers>
@@ -3379,7 +3400,6 @@
                         <uikit:UIKitContentPresenter x:Name="PART_Label"
                                                      Grid.Row="0"
                                                      Content="{markupCommon:UIKitTemplateBinding Label}"
-                                                     IsHitTestVisible="False"
                                                      Margin="{uikit:UIKitBinding PasswordInput_Label_Margin}">
                             <uikit:UIKitContentPresenter.ContentImpicitStyles>
                                 <uikit:UIKitStyleHolder StyleRef="{uikit:UIKitImplicitStyle PasswordInput_LabelStyle,
@@ -3469,7 +3489,6 @@
                                                VerticalAlignment="Top" />
 
                                     <ItemsControl Grid.Column="1"
-                                                  Focusable="False"
                                                   ItemsSource="{markupCommon:UIKitTemplateBinding controls:PasswordInput.ActionBar}"
                                                   Margin="{uikit:UIKitBinding PasswordInput_ActionBar_Margin}"
                                                   VerticalAlignment="Center">
@@ -4137,39 +4156,39 @@
                                              IconBrush="{uikit:UIKitBinding Search_IconBrush}"
                                              Margin="{uikit:UIKitBinding Search_IconMargin}" />
 
-                            <controls:TextInput x:Name="PART_TextInput"
-                                                Grid.Column="1"
-                                                focus:KeyboardEventsHandlerBehavior.IsKeyboardFocusSourceElement="True"
-                                                vs:StateService.TextInputState="{markupCommon:UIKitTemplateBinding vs:StateService.TextInputState}"
-                                                ContextMenu="{StaticResource InputContextMenu}"
-                                                Style="{uikit:UIKitBinding Search_TextInputStyle}"
-                                                TabIndex="{markupCommon:UIKitTemplateBinding TabIndex}">
-                                <controls:TextInput.Template>
+                            <controls:SearchInput x:Name="PART_SearchInput"
+                                                  Grid.Column="1"
+                                                  focus:KeyboardEventsHandlerBehavior.IsKeyboardFocusSourceElement="True"
+                                                  vs:StateService.TextInputState="{markupCommon:UIKitTemplateBinding vs:StateService.TextInputState}"
+                                                  ContextMenu="{StaticResource InputContextMenu}"
+                                                  Style="{uikit:UIKitBinding Search_SearchInputStyle}"
+                                                  TabIndex="{markupCommon:UIKitTemplateBinding TabIndex}">
+                                <controls:SearchInput.Template>
                                     <ControlTemplate>
                                         <Grid>
                                             <ScrollViewer x:Name="PART_ContentHost"
                                                           ClipToBounds="True" />
 
                                             <TextBlock x:Name="PART_ContentStub"
-                                                       Background="{uikit:UIKitBinding Search_TextInput_CaretBrush}"
-                                                       Foreground="{uikit:UIKitBinding Search_TextInput_TextForeground}"
-                                                       Margin="{uikit:UIKitBinding Search_TextInput_Padding}"
-                                                       Style="{uikit:UIKitBinding Search_TextInput_TextStyle}"
+                                                       Background="{uikit:UIKitBinding Search_SearchInput_CaretBrush}"
+                                                       Foreground="{uikit:UIKitBinding Search_SearchInput_TextForeground}"
+                                                       Margin="{uikit:UIKitBinding Search_SearchInput_Padding}"
+                                                       Style="{uikit:UIKitBinding Search_SearchInput_TextStyle}"
                                                        TextTrimming="CharacterEllipsis"
                                                        VerticalAlignment="Top"
                                                        Visibility="Collapsed" />
 
                                             <TextBlock x:Name="PART_Placeholder"
-                                                       Foreground="{uikit:UIKitBinding Search_TextInput_PlaceholderForeground}"
+                                                       Foreground="{uikit:UIKitBinding Search_SearchInput_PlaceholderForeground}"
                                                        IsHitTestVisible="False"
-                                                       Margin="{uikit:UIKitBinding Search_TextInput_Padding}"
-                                                       Style="{uikit:UIKitBinding Search_TextInput_PlaceholderStyle}"
+                                                       Margin="{uikit:UIKitBinding Search_SearchInput_Padding}"
+                                                       Style="{uikit:UIKitBinding Search_SearchInput_PlaceholderStyle}"
                                                        TextTrimming="CharacterEllipsis"
                                                        VerticalAlignment="Top" />
                                         </Grid>
                                     </ControlTemplate>
-                                </controls:TextInput.Template>
-                            </controls:TextInput>
+                                </controls:SearchInput.Template>
+                            </controls:SearchInput>
 
                             <controls:IconButton x:Name="PART_ClearButton"
                                                  Grid.Column="2"
@@ -4340,6 +4359,7 @@
         <Setter Property="VerticalAlignment" Value="Center" />
         <Setter Property="HorizontalAlignment" Value="Stretch" />
         <Setter Property="OverridesDefaultStyle" Value="True" />
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="Cursor" Value="Hand" />
 
         <Setter Property="Template">
@@ -4568,6 +4588,9 @@
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter Property="vs:StateService.TextInputState" Value="Hover" />
                         </Trigger>
+                        <Trigger Property="IsActive" Value="True">
+                            <Setter Property="vs:StateService.TextInputState" Value="Focus" />
+                        </Trigger>
                         <Trigger Property="IsKeyboardFocusWithin" Value="True">
                             <Setter Property="vs:StateService.TextInputState" Value="Focus" />
                         </Trigger>
@@ -4624,17 +4647,26 @@
                                    properties:TextBlockProps.FontStyle="{markupCommon:UIKitTemplateBinding FontStyle}"
                                    TextTrimming="{markupCommon:UIKitTemplateBinding TextTrimming}"
                                    TextWrapping="{markupCommon:UIKitTemplateBinding TextWrapping}">
-                            <Hyperlink x:Name="PART_TextHyperlink"
-                                       Focusable="False"
-                                       Style="{uikit:UIKitBinding SelectableText_HyperlinkStyle}">
+                            <controls:SelectableTextHyperlink x:Name="PART_TextHyperlink"
+                                                              Style="{uikit:UIKitBinding SelectableText_HyperlinkStyle}">
                                 <Run Text="{markupCommon:UIKitTemplateBinding Text}" />
-                            </Hyperlink>
+                            </controls:SelectableTextHyperlink>
                         </TextBlock>
-                        <controls:Popup x:Name="PART_Popup"
-                                        IsPopupHitTestVisible="False"
+                        <controls:Popup IsPopupHitTestVisible="False"
                                         IsPopupOpen="{markupCommon:UIKitTemplateBinding State,
-                                                                                        Converter={equalityConverters:EqualityToBooleanInverseConverter},
-                                                                                        ConverterParameter={x:Static controls:SelectableTextState.Rest}}"
+                                                                                        Converter={equalityConverters:EqualityToBooleanConverter},
+                                                                                        ConverterParameter={x:Static controls:SelectableTextState.Ready}}"
+                                        PopupContent="{xl:Loc SelectableText_BeforeCopy,
+                                                              Scope=UiKit}"
+                                        PopupPosition="Top"
+                                        PopupTarget="{Binding ElementName=PART_TextContainer}"
+                                        Style="{uikit:UIKitBinding SelectableText_PopupStyle}" />
+                        <controls:Popup IsPopupHitTestVisible="False"
+                                        IsPopupOpen="{markupCommon:UIKitTemplateBinding State,
+                                                                                        Converter={equalityConverters:EqualityToBooleanConverter},
+                                                                                        ConverterParameter={x:Static controls:SelectableTextState.Done}}"
+                                        PopupContent="{xl:Loc SelectableText_AfterCopy,
+                                                              Scope=UiKit}"
                                         PopupPosition="Top"
                                         PopupTarget="{Binding ElementName=PART_TextContainer}"
                                         Style="{uikit:UIKitBinding SelectableText_PopupStyle}" />
@@ -4647,12 +4679,8 @@
                             </MultiTrigger.Conditions>
                             <Setter Property="Foreground" TargetName="PART_TextHyperlink" Value="{Binding Foreground, ElementName=PART_TextContainer}" />
                         </MultiTrigger>
-                        <Trigger Property="State" Value="Ready">
-                            <Setter Property="PopupContent" TargetName="PART_Popup" Value="{xl:Loc SelectableText_BeforeCopy, Scope=UiKit}" />
-                        </Trigger>
                         <Trigger Property="State" Value="Done">
                             <Setter Property="Background" TargetName="PART_TextHyperlink" Value="{uikit:UIKitBinding SelectableText_HyperlinkBackgroundPressed, Mode=TemplatedParent, Type={x:Type Brush}}" />
-                            <Setter Property="PopupContent" TargetName="PART_Popup" Value="{xl:Loc SelectableText_AfterCopy, Scope=UiKit}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -4701,6 +4729,7 @@
         <Setter Property="VerticalAlignment" Value="Center" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="UseLayoutRounding" Value="True" />
+        <Setter Property="ContextMenuButtonToolTip" Value="{xl:Loc SplitButton_ContextMenuButtonToolTip, Scope=UiKit}" />
         <Setter Property="IconMenuClosed" Value="{uikit:UIKitBinding SplitButton_ToggleButton_MenuClosedIcon, Mode=Self, Type={x:Type icons:UIKitIcon_16}}" />
         <Setter Property="IconMenuOpened" Value="{uikit:UIKitBinding SplitButton_ToggleButton_MenuOpenedIcon, Mode=Self, Type={x:Type icons:UIKitIcon_16}}" />
 
@@ -4724,7 +4753,8 @@
                                 ContentTemplate="{markupCommon:UIKitTemplateBinding ContentTemplate}"
                                 HorizontalAlignment="Stretch"
                                 IsEnabled="{markupCommon:UIKitTemplateBinding IsMainButtonEnabled}"
-                                Style="{uikit:UIKitBinding SplitButton_MainButton_Style}" />
+                                Style="{uikit:UIKitBinding SplitButton_MainButton_Style}"
+                                ToolTip="{markupCommon:UIKitTemplateBinding MainButtonToolTip}" />
                         <controls:Divider Grid.Column="1"
                                           Orientation="Vertical"
                                           Style="{uikit:UIKitBinding SplitButton_Divider_Style}" />
@@ -4732,7 +4762,8 @@
                                       Grid.Column="2"
                                       properties:ToggleButtonProps.IsBusy="{markupCommon:UIKitTemplateBinding IsContextMenuButtonBusy}"
                                       IsEnabled="{markupCommon:UIKitTemplateBinding IsContextMenuButtonEnabled}"
-                                      Style="{uikit:UIKitBinding SplitButton_ToggleButton_Style}" />
+                                      Style="{uikit:UIKitBinding SplitButton_ToggleButton_Style}"
+                                      ToolTip="{markupCommon:UIKitTemplateBinding ContextMenuButtonToolTip}" />
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsChecked" SourceName="PART_MenuTargetButton" Value="True">
@@ -4916,11 +4947,11 @@
         </Style.Resources>
 
         <Setter Property="Cursor" Value="Hand" />
-        <Setter Property="Focusable" Value="False" />
         <Setter Property="HorizontalAlignment" Value="Center" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="UseLayoutRounding" Value="True" />
         <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="FocusVisualStyle" Value="{uikit:UIKitBinding Switch_FocusVisualStyle, Mode=Self, Type={x:Type Style}}" />
 
         <Setter Property="Template">
             <Setter.Value>
@@ -4976,7 +5007,7 @@
                     </ControlTemplate.Resources>
 
                     <Slider x:Name="PART_Switcher"
-                            FocusVisualStyle="{uikit:UIKitBinding Switch_FocusVisualStyle}"
+                            Focusable="False"
                             Height="{uikit:UIKitBinding Switch_Height}"
                             IsSnapToTickEnabled="False"
                             Maximum="1"
@@ -5303,7 +5334,6 @@
 
                                     <ItemsControl x:Name="PART_ActionBar"
                                                   Grid.Column="1"
-                                                  Focusable="False"
                                                   ItemsSource="{markupCommon:UIKitTemplateBinding internals:TextInputBaseInternals.ActionBar}"
                                                   Margin="{uikit:UIKitBinding TextInput_ActionBar_Margin}"
                                                   VerticalAlignment="Center">
@@ -5462,27 +5492,38 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type controls:TextViewer}">
-                    <controls:Island Style="{uikit:UIKitBinding TextViewer_IslandStyle}">
+                    <controls:Island x:Name="PART_Root"
+                                     Style="{uikit:UIKitBinding TextViewer_IslandStyle}">
                         <ScrollViewer x:Name="PART_ScrollViewer"
                                       properties:ScrollViewerProps.IsBorderFadeEnabled="True">
-                            <TextBox ContextMenu="{StaticResource InputReadOnlyContextMenu}"
-                                     FocusVisualStyle="{x:Null}"
-                                     IsReadOnly="True"
-                                     IsReadOnlyCaretVisible="False"
-                                     IsTabStop="False"
-                                     OverridesDefaultStyle="True"
-                                     Padding="{uikit:UIKitBinding TextViewer_Padding}"
-                                     Style="{uikit:UIKitBinding TextViewer_TextStyle}"
-                                     Text="{markupCommon:UIKitTemplateBinding Text}"
-                                     TextWrapping="Wrap">
-                                <TextBox.Template>
-                                    <ControlTemplate>
-                                        <ScrollViewer x:Name="PART_ContentHost" />
-                                    </ControlTemplate>
-                                </TextBox.Template>
-                            </TextBox>
+                            <controls:TextViewerBox x:Name="PART_TextViewerBox"
+                                                    Padding="{uikit:UIKitBinding TextViewer_Padding}"
+                                                    Style="{uikit:UIKitBinding TextViewer_TextStyle}"
+                                                    Text="{markupCommon:UIKitTemplateBinding Text}" />
                         </ScrollViewer>
                     </controls:Island>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--  endregion  -->
+
+    <!--  region TextViewerBox  -->
+
+    <Style x:Key="TextViewerBoxUniversal"
+           TargetType="{x:Type controls:TextViewerBox}">
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="IsReadOnly" Value="True" />
+        <Setter Property="IsReadOnlyCaretVisible" Value="True" />
+        <Setter Property="OverridesDefaultStyle" Value="True" />
+        <Setter Property="TextWrapping" Value="Wrap" />
+        <Setter Property="ContextMenu" Value="{StaticResource InputReadOnlyContextMenu}" />
+
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type controls:TextViewerBox}">
+                    <ScrollViewer x:Name="PART_ContentHost" />
                 </ControlTemplate>
             </Setter.Value>
         </Setter>

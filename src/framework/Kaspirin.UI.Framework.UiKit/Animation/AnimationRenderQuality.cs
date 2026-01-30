@@ -19,7 +19,7 @@ namespace Kaspirin.UI.Framework.UiKit.Animation;
 /// </summary>
 public enum AnimationRenderQuality
 {
-    Auto,
+    Default,
     High,
     Low
 }

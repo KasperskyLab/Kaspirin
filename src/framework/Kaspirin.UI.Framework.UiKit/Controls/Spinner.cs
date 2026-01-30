@@ -27,19 +27,19 @@ public sealed class Spinner : Control
 
     public Spinner()
     {
-        var animationSettings = ServiceLocator.GetService<IAnimationSettingsProvider>();
+        var animationSettings = ServiceLocator.GetService<IAnimationManager>();
         var frameRate = animationSettings.GetDesiredFrameRate(AnimationRenderQuality.Low);
-        if (frameRate == null || frameRate <= 0)
+        if (frameRate <= 0)
         {
             throw new Exception(
-                $"Unexpected value provided from {nameof(IAnimationSettingsProvider)}.{nameof(IAnimationSettingsProvider.GetDesiredFrameRate)}. " +
+                $"Unexpected value provided from {nameof(IAnimationManager)}.{nameof(IAnimationManager.GetDesiredFrameRate)}. " +
                 $"FrameRate must be greater than zero.");
         }
 
         _isVisibleChangedNotifier = new PropertyChangeNotifier<Spinner, bool>(this, Spinner.IsVisibleProperty);
         _isVisibleChangedNotifier.ValueChanged += OnIsVisibleChanged;
 
-        _frameRate = frameRate.Value;
+        _frameRate = frameRate;
         _animationTimerInterval = TimeSpan.FromSeconds(1D / _frameRate);
     }
 

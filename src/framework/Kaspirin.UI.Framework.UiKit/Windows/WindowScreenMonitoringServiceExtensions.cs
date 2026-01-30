@@ -14,6 +14,7 @@
 
 using System;
 using System.Windows;
+using Kaspirin.UI.Framework.Services.Internals;
 
 namespace Kaspirin.UI.Framework.UiKit.Windows;
 
@@ -21,23 +22,12 @@ public static class WindowScreenMonitoringServiceExtensions
 {
     public static void WhenInitialized(this WindowScreenMonitoringService service, Action action)
     {
-        Guard.ArgumentIsNotNull(service);
-        Guard.ArgumentIsNotNull(action);
-
-        if (service.IsInitialized)
-        {
-            action();
-        }
-        else
-        {
-            service.Initialized += OnInitialized;
-        }
-
-        void OnInitialized()
-        {
-            service.Initialized -= OnInitialized;
-            action();
-        }
+        EventSubscriber.OnceOrNow(
+            source: service,
+            condition: e => e.IsInitialized,
+            subscribeCallback: eh => service.Initialized += eh,
+            unsubscribeCallback: eh => service.Initialized -= eh,
+            action: action);
     }
 
     public static double GetWindowScaleX(this WindowScreenMonitoringService service, DpiType to)

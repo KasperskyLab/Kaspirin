@@ -62,19 +62,24 @@
 					<xsl:with-param name="scope" select = "$id"/>
 				</xsl:call-template>
 
-				<xsl:if test="@LineHeight">
-					<!--[TextBlock] LineHeight-->
-					<xsl:call-template name="generateSetterViaAttribute">
-						<xsl:with-param name="propertyName">TextBlock.LineHeight</xsl:with-param>
-						<xsl:with-param name="propertyValue" select = "@LineHeight"/>
-					</xsl:call-template>
+				<!--[TextBlock] LineHeight-->
+				<xsl:call-template name="generateSetterViaAttribute">
+					<xsl:with-param name="propertyName">TextBlock.LineHeight</xsl:with-param>
+					<xsl:with-param name="propertyValue" select = "@LineHeight"/>
+				</xsl:call-template>
 
-					<!--[TextBlock] LineStackingStrategy-->
-					<xsl:call-template name="generateSetterViaAttribute">
-						<xsl:with-param name="propertyName">TextBlock.LineStackingStrategy</xsl:with-param>
-						<xsl:with-param name="propertyValue">BlockLineHeight</xsl:with-param>
-					</xsl:call-template>
-				</xsl:if>
+				<!--[TextBlock] LineStackingStrategy-->
+				<xsl:call-template name="generateSetterViaAttribute">
+					<xsl:with-param name="propertyName">TextBlock.LineStackingStrategy</xsl:with-param>
+					<xsl:with-param name="propertyValue">BlockLineHeight</xsl:with-param>
+				</xsl:call-template>
+
+				<!--[TextElement] Foreground-->
+				<xsl:call-template name="generateBrushSetter">
+					<xsl:with-param name="propertyName">TextElement.Foreground</xsl:with-param>
+					<xsl:with-param name="brushName">Foreground</xsl:with-param>
+					<xsl:with-param name="scopeName" select="$id"/>
+				</xsl:call-template>
 
 				<!--
 				   [TextElement] FontFamily
@@ -83,25 +88,16 @@
 				   [TextElement] FontWeight
 				-->
 				<xsl:call-template name="generateFontSetters">
-					<xsl:with-param name="fontFamilyPropertyName">TextElement.FontFamily</xsl:with-param>
-					<xsl:with-param name="fontSizePropertyName">TextElement.FontSize</xsl:with-param>
-					<xsl:with-param name="fontStylePropertyName">TextElement.FontStyle</xsl:with-param>
-					<xsl:with-param name="fontWeightPropertyName">TextElement.FontWeight</xsl:with-param>
 					<xsl:with-param name="fontNode" select = "."/>
 				</xsl:call-template>
 
-				<!--[TextElement] Foreground-->
-				<xsl:if test="Foreground">
-					<xsl:call-template name="generateSetterViaAttribute">
-						<xsl:with-param name="propertyName">TextElement.Foreground</xsl:with-param>
-						<xsl:with-param name="propertyValue">
-							<xsl:call-template name="generateResExtension">
-								<xsl:with-param name="key">Foreground</xsl:with-param>
-								<xsl:with-param name="scope" select="$id"/>
-							</xsl:call-template>
-						</xsl:with-param>
-					</xsl:call-template>
-				</xsl:if>
+				<!--
+				   [AccessibilityProperties] FontPriority
+				   [AccessibilityProperties] IsHeader
+				-->
+				<xsl:call-template name="generateFontAccessibilitySetters">
+					<xsl:with-param name="fontNode" select = "."/>
+				</xsl:call-template>
 
 			</xsl:with-param>
 		</xsl:call-template>

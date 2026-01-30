@@ -16,9 +16,12 @@ namespace Kaspirin.UI.Framework.UiKit;
 
 internal static class UIKitComponentTracers
 {
+    public static string Animation = "Animation";
+    public static string Accessibility = "Accessibility";
     public static string Converters = "Converters";
     public static string Notification = "Notification";
     public static string Interactivity = "Interactivity";
     public static string Navigation = "Navigation";
+    public static string Theme = "Theme";
     public static string Localization = "Localization";
 }

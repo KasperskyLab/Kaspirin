@@ -62,19 +62,16 @@
 
 					<!--TextStyle-->
 					<xsl:call-template name="generateStyle">
-						<xsl:with-param name="targetType">TextBox</xsl:with-param>
-						<xsl:with-param name="basedOn" select="@TextStyleId"/>
+						<xsl:with-param name="targetType">visuals:TextViewerBox</xsl:with-param>
+						<xsl:with-param name="basedOn" select="concat('{visuals:MultiStyle TextViewerBoxUniversal ', @TextStyleId, '}')"/>
+						<xsl:with-param name="basedOnStaticResource" select="false()"/>
 						<xsl:with-param name="key">TextStyle</xsl:with-param>
 						<xsl:with-param name="setters">
 							<!--TextElement.Foreground-->
-							<xsl:call-template name="generateSetterViaAttribute">
+							<xsl:call-template name="generateBrushSetter">
 								<xsl:with-param name="propertyName">TextElement.Foreground</xsl:with-param>
-								<xsl:with-param name="propertyValue">
-									<xsl:call-template name="generateResExtension">
-										<xsl:with-param name="key">TextForeground</xsl:with-param>
-										<xsl:with-param name="scope" select="$id"/>
-									</xsl:call-template>
-								</xsl:with-param>
+								<xsl:with-param name="brushName">TextForeground</xsl:with-param>
+								<xsl:with-param name="scopeName" select="$id"/>
 							</xsl:call-template>
 						</xsl:with-param>
 					</xsl:call-template>

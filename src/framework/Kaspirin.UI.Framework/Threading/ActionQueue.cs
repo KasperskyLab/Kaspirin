@@ -14,6 +14,7 @@
 
 using System;
 using System.Collections.Concurrent;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Kaspirin.UI.Framework.Threading;
@@ -23,6 +24,17 @@ namespace Kaspirin.UI.Framework.Threading;
 /// </summary>
 public sealed class ActionQueue
 {
+    /// <summary>
+    ///     Initializes a new instance of the <see cref="ActionQueue" /> class.
+    /// </summary>
+    /// <param name="executor">
+    ///     Delegate executor.
+    /// </param>
+    public ActionQueue(IExecutor executor)
+    {
+        _executor = Guard.EnsureArgumentIsNotNull(executor);
+    }
+
     /// <summary>
     ///     Adds a delegate to the execution queue.
     /// </summary>
@@ -49,7 +61,9 @@ public sealed class ActionQueue
 
     private void StartProcessing()
     {
-        _queueProcessor = Task.Factory.StartNew(ProcessQueue);
+        _queueProcessor = _executor.ExecuteAsync(
+            action: ProcessQueue,
+            cancellationToken: CancellationToken.None);
     }
 
     private void ProcessQueue()
@@ -71,5 +85,7 @@ public sealed class ActionQueue
 
     private readonly object _syncRoot = new();
     private readonly ConcurrentQueue<Action> _actionQueue = new();
+    private readonly IExecutor _executor;
+
     private Task? _queueProcessor;
 }

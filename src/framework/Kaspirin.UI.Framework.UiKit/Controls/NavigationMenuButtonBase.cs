@@ -18,14 +18,24 @@ using System.Windows.Data;
 
 namespace Kaspirin.UI.Framework.UiKit.Controls;
 
+[TemplatePart(Name = PART_Marker, Type = typeof(Badge))]
 public abstract class NavigationMenuButtonBase : Button
 {
+    public const string PART_Marker = "PART_Marker";
+
     static NavigationMenuButtonBase()
     {
         DataContextProperty.OverrideMetadata(
             typeof(NavigationMenuButtonBase),
             new FrameworkPropertyMetadata(new PropertyChangedCallback(OnDataContextChanged)));
     }
+
+    public override void OnApplyTemplate()
+    {
+        ButtonBadge = Guard.EnsureIsInstanceOfType<Badge>(GetTemplateChild(PART_Marker));
+    }
+
+    internal Badge? ButtonBadge { get; set; }
 
     protected NavigationMenuButtonBase()
     {

@@ -13,7 +13,7 @@
 // limitations under the License.
 
 using System;
-using System.Windows;
+using Kaspirin.UI.Framework.Services.Internals;
 
 namespace Kaspirin.UI.Framework.UiKit.Notifications
 {
@@ -21,44 +21,22 @@ namespace Kaspirin.UI.Framework.UiKit.Notifications
     {
         public static void WhenOpened(this NotificationView notificationView, Action action)
         {
-            Guard.ArgumentIsNotNull(notificationView);
-
-            void OnOpened(object sender, RoutedEventArgs e)
-            {
-                notificationView.Opened -= OnOpened;
-
-                action();
-            }
-
-            if (notificationView.IsOpened)
-            {
-                action();
-            }
-            else
-            {
-                notificationView.Opened += OnOpened;
-            }
+            EventSubscriber.OnceOrNow(
+                source: notificationView,
+                condition: notificationView => notificationView.IsOpened,
+                subscribeCallback: eh => notificationView.Opened += eh,
+                unsubscribeCallback: eh => notificationView.Opened -= eh,
+                action: action);
         }
 
         public static void WhenClosed(this NotificationView notificationView, Action action)
         {
-            Guard.ArgumentIsNotNull(notificationView);
-
-            void OnClosed(object sender, RoutedEventArgs e)
-            {
-                notificationView.Closed -= OnClosed;
-
-                action();
-            }
-
-            if (notificationView.IsClosed)
-            {
-                action();
-            }
-            else
-            {
-                notificationView.Closed += OnClosed;
-            }
+            EventSubscriber.OnceOrNow(
+                source: notificationView,
+                condition: notificationView => notificationView.IsClosed,
+                subscribeCallback: eh => notificationView.Closed += eh,
+                unsubscribeCallback: eh => notificationView.Closed -= eh,
+                action: action);
         }
     }
 }

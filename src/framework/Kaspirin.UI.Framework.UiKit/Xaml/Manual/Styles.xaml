@@ -35,6 +35,30 @@
 
     <!--  endregion  -->
 
+    <!--  region ContentControl  -->
+
+    <Style x:Key="ContentControlDefault"
+           BasedOn="{StaticResource ContentControlUniversal}"
+           TargetType="{x:Type ContentControl}" />
+
+    <Style x:Key="{x:Type ContentControl}"
+           BasedOn="{StaticResource ContentControlDefault}"
+           TargetType="{x:Type ContentControl}" />
+
+    <!--  endregion  -->
+
+    <!--  region ExpandButton  -->
+
+    <Style x:Key="ExpandButtonDefault"
+           BasedOn="{StaticResource ExpandButtonUniversal}"
+           TargetType="{x:Type controls:ExpandButton}" />
+
+    <Style x:Key="{x:Type controls:ExpandButton}"
+           BasedOn="{StaticResource ExpandButtonDefault}"
+           TargetType="{x:Type controls:ExpandButton}" />
+
+    <!--  endregion  -->
+
     <!--  region ExpandPanel  -->
 
     <Style x:Key="ExpandPanelDefault"
@@ -128,6 +152,18 @@
     <Style x:Key="{x:Type controls:IslandLayer}"
            BasedOn="{StaticResource IslandLayerDefault}"
            TargetType="{x:Type controls:IslandLayer}" />
+
+    <!--  endregion  -->
+
+    <!--  region ItemsControl  -->
+
+    <Style x:Key="ItemsControlDefault"
+           BasedOn="{StaticResource ItemsControlUniversal}"
+           TargetType="{x:Type ItemsControl}" />
+
+    <Style x:Key="{x:Type ItemsControl}"
+           BasedOn="{StaticResource ItemsControlDefault}"
+           TargetType="{x:Type ItemsControl}" />
 
     <!--  endregion  -->
 

@@ -23,7 +23,9 @@ public abstract class TextInputPlaceholder
 {
     protected TextInputPlaceholder() { }
 
-    public abstract IEnumerable<Inline> GetPlaceholderText(string? value, bool isRTL);
+    public abstract IEnumerable<Inline> GetInlineElements(string? value, bool isRTL);
+
+    public abstract string? GetAccessibilityText(string? value);
 
     public abstract string? FilterInputText(string? value);
 }

@@ -92,14 +92,11 @@ internal sealed class SelectInfoProvider
         if (newHighlightContainer != null)
         {
             newHighlightContainer.IsHighlighted = true;
-        }
+            newHighlightContainer.Focus();
 
-        if (scrollIntoView)
-        {
-            var newHighlightItem = _highlightedInfo?.GetItem();
-            if (newHighlightItem != null)
+            if (scrollIntoView)
             {
-                _select.ScrollIntoView(newHighlightItem);
+                newHighlightContainer.BringIntoView();
             }
         }
     }

@@ -73,6 +73,7 @@ public enum UIKitIcon_16
     Placeholder2,
     Pointer,
     RingClock,
+    RingDot,
     RingPlay,
     Sandbox,
     Search,
@@ -98,6 +99,7 @@ public enum UIKitIcon_16
     TextCapsLock,
     TextCapsLockSolid,
     TextSize,
+    Timer2,
     ToggleLightDark,
     Wizard
 }
@@ -143,6 +145,7 @@ public enum UIKitIcon_24
     Placeholder2,
     Pointer,
     RingClock,
+    RingDot,
     RingPlay,
     Sandbox,
     Search,
@@ -168,6 +171,7 @@ public enum UIKitIcon_24
     TextCapsLock,
     TextCapsLockSolid,
     TextSize,
+    Timer2,
     ToggleLightDark,
     Wizard
 }

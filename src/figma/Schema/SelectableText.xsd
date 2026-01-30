@@ -27,6 +27,7 @@
 			<xs:element name="BackgroundHover" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
 			<xs:element name="BackgroundPressed" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
 			<xs:element name="BackgroundNormal" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="Focus" type="Focus" minOccurs="1" maxOccurs="1"/>
 			<xs:element name="ForegroundHover" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
 			<xs:element name="ForegroundNormal" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
 			<xs:element name="ForegroundPressed" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>

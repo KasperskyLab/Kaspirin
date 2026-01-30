@@ -16,6 +16,7 @@ using System;
 using System.Linq;
 using System.Windows;
 using System.Windows.Documents;
+using Kaspirin.UI.Framework.UiKit.Localization.Patchers;
 
 namespace Kaspirin.UI.Framework.UiKit.Localization;
 
@@ -82,6 +83,8 @@ public sealed class LocalizationManager
 
         _instance?.Dispose();
         _instance = new LocalizationManager(parameters);
+
+        ResourcePatcher.PatchResources();
     }
 
     public static void Initialize(string culture, string? theme = null, string? prefix = null)
@@ -130,6 +133,11 @@ public sealed class LocalizationManager
     public static void ChangePrefix(string? prefix)
     {
         GetInstance().ChangePrefixImpl(prefix);
+    }
+
+    public static void ResetCache()
+    {
+        GetInstance().ResetCacheImpl();
     }
 
     #endregion
@@ -197,11 +205,10 @@ public sealed class LocalizationManager
         _theme = theme;
 
         _resourceProvider.SetTheme(theme);
-        _localizerFactory.ResetCache();
+
+        ResetCacheImpl();
 
         ThemeChangedInternal.Invoke();
-
-        _metadataStorage.Items.ToList().ForEach(m => m.Update());
     }
 
     private void ChangePrefixImpl(string? prefix)
@@ -216,11 +223,10 @@ public sealed class LocalizationManager
         _prefix = prefix;
 
         _resourceProvider.SetPrefix(prefix);
-        _localizerFactory.ResetCache();
+
+        ResetCacheImpl();
 
         PrefixChangedInternal.Invoke();
-
-        _metadataStorage.Items.ToList().ForEach(m => m.Update());
     }
 
     private void ChangeCultureImpl(string culture)
@@ -237,10 +243,15 @@ public sealed class LocalizationManager
         _culture = culture;
 
         _displayCulture.SetCulture(culture);
-        _localizerFactory.ResetCache();
+
+        ResetCacheImpl();
 
         CultureChangedInternal.Invoke();
+    }
 
+    private void ResetCacheImpl()
+    {
+        _localizerFactory.ResetCache();
         _metadataStorage.Items.ToList().ForEach(m => m.Update());
     }
 

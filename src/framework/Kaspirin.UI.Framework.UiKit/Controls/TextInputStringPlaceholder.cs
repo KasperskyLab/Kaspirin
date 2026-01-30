@@ -26,7 +26,7 @@ public sealed class TextInputStringPlaceholder : TextInputPlaceholder
         _text = text;
     }
 
-    public override IEnumerable<Inline> GetPlaceholderText(string? value, bool isRTL)
+    public override IEnumerable<Inline> GetInlineElements(string? value, bool isRTL)
     {
         value ??= string.Empty;
         var isEmpty = value.Length == 0;
@@ -38,6 +38,11 @@ public sealed class TextInputStringPlaceholder : TextInputPlaceholder
     public override string? FilterInputText(string? value)
     {
         return value;
+    }
+
+    public override string? GetAccessibilityText(string? value)
+    {
+        return value.IsNullOrEmpty() ? _text : null;
     }
 
     private readonly string _text;

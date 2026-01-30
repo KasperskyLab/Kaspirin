@@ -13,12 +13,12 @@
 // limitations under the License.
 
 using System.Windows;
-using System.Windows.Controls.Primitives;
+using System.Windows.Controls;
 using Kaspirin.UI.Framework.UiKit.Controls.Internals;
 
 namespace Kaspirin.UI.Framework.UiKit.Controls;
 
-public sealed class BigButton : ButtonBase
+public sealed class BigButton : Button
 {
     #region IconLocation
 

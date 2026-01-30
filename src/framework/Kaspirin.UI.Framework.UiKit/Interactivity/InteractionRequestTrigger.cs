@@ -13,11 +13,21 @@
 // limitations under the License.
 
 using System.Windows;
+using System.Windows.Data;
 
 namespace Kaspirin.UI.Framework.UiKit.Interactivity;
 
 public sealed class InteractionRequestTrigger : EventTriggerBase<InteractionRequestBase>
 {
+    public override string ToString()
+    {
+        return $"{nameof(InteractionRequestTrigger)} [" +
+            $"SourceObject:{SourceObject?.GetType().Name ?? "<null>"}; " +
+            $"SourceObjectPath:{SourceObjectPath?.Path ?? "<null>"}; " +
+            $"AssociatedObject:{AssociatedObject?.GetType().Name ?? "<null>"}; " +
+            $"Hash:{GetHashCode()}]";
+    }
+
     protected override string GetEventName()
     {
         return nameof(InteractionRequestBase<InteractionObject>.TriggerActionRaised);
@@ -30,33 +40,41 @@ public sealed class InteractionRequestTrigger : EventTriggerBase<InteractionRequ
         var parent = (FrameworkElement?)AssociatedObject;
         if (parent != null)
         {
-            _tracer.TraceDebug($"Trigger[{GetHashCode()}] attached to {parent.GetType().Name}");
-
             _parent = parent;
-            _parent.Unloaded += ParentUnloaded;
+            _parent.WhenUnloaded(OnParentUnloaded);
         }
+
+        _tracer.TraceInformation($"{this} attached.");
     }
 
-    private void ParentUnloaded(object sender, RoutedEventArgs e)
+    protected override void OnDetaching()
+    {
+        base.OnDetaching();
+
+        _tracer.TraceInformation($"{this} detached.");
+    }
+
+    private void OnParentUnloaded()
     {
         Guard.IsNotNull(_parent);
 
-        _tracer.TraceDebug($"Trigger[{GetHashCode()}] parent {_parent.GetType().Name} unloaded");
+        _tracer.TraceInformation($"{this} parent unloaded.");
 
-        _parent.Unloaded -= ParentUnloaded;
-        _parent.Loaded += ParentReloaded;
+        _parent.WhenLoaded(OnParentLoaded);
+
         Detach();
     }
 
-    private void ParentReloaded(object sender, RoutedEventArgs e)
+    private void OnParentLoaded()
     {
         Guard.IsNotNull(_parent);
 
-        _tracer.TraceDebug($"Trigger[{GetHashCode()}] parent {_parent.GetType().Name} reloaded");
+        _tracer.TraceInformation($"{this} parent loaded.");
 
-        _parent.Loaded -= ParentReloaded;
         Attach(_parent);
     }
+
+    private PropertyPath? SourceObjectPath => (BindingOperations.GetBindingExpression(this, SourceObjectProperty)?.ParentBindingBase as Binding)?.Path;
 
     private FrameworkElement? _parent;
 

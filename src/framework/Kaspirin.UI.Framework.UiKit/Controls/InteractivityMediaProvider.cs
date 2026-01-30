@@ -57,7 +57,7 @@ internal sealed class InteractivityMediaProvider
         _storyboard.Remove();
         _storyboard.Children.Clear();
 
-        var isAnimationEnabled = _animationSettingsProvider.Value.IsAnimationEnabled;
+        var isAnimationEnabled = _animationManager.Value.State == AnimationState.Enabled;
         if (isAnimationEnabled)
         {
             var opacityAnimation = new DoubleAnimation
@@ -67,7 +67,11 @@ internal sealed class InteractivityMediaProvider
                 Duration = _animationDuration
             };
 
-            opacityAnimation.Completed += (o, e) => onCompletedAction?.Invoke();
+            opacityAnimation.Completed += (o, e) =>
+            {
+                onCompletedAction?.Invoke();
+                onCompletedAction = null;
+            };
             opacityAnimation.SetValue(Storyboard.TargetProperty, target);
             opacityAnimation.SetValue(Storyboard.TargetPropertyProperty, _opacityPropertyPath);
             opacityAnimation.Freeze();
@@ -87,5 +91,5 @@ internal sealed class InteractivityMediaProvider
 
     private static readonly PropertyPath _opacityPropertyPath = new(UIElement.OpacityProperty);
     private static readonly Duration _animationDuration = new(TimeSpan.FromMilliseconds(200));
-    private static readonly Lazy<IAnimationSettingsProvider> _animationSettingsProvider = new(() => ServiceLocator.GetService<IAnimationSettingsProvider>());
+    private static readonly Lazy<IAnimationManager> _animationManager = new(() => ServiceLocator.GetService<IAnimationManager>());
 }

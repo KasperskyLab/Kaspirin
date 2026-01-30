@@ -24,15 +24,15 @@ public sealed class BaseCommandTests
     [TestInitialize]
     public void InitializeTests()
     {
-        _originExecutor = Executers.Implementation;
+        _originExecutor = Executers.DispatcherExecutor;
 
-        Executers.Implementation = new TestExecutor();
+        Executers.DispatcherExecutor = new TestExecutor();
     }
 
     [TestCleanup]
     public void CleanupTests()
     {
-        Executers.Implementation = Guard.EnsureIsNotNull(_originExecutor);
+        Executers.DispatcherExecutor = Guard.EnsureIsNotNull(_originExecutor);
     }
 
     [TestMethod]
@@ -43,10 +43,10 @@ public sealed class BaseCommandTests
         var testThreadId = Thread.CurrentThread.ManagedThreadId;
         var textExecutor = new TestExecutor
         {
-            IsUiThread = true
+            IsDispatcherThread = true
         };
 
-        Executers.Implementation = textExecutor;
+        Executers.DispatcherExecutor = textExecutor;
 
         var commandThreadId = 0;
         var command = new TestCommand();
@@ -72,10 +72,10 @@ public sealed class BaseCommandTests
         var testThreadId = Thread.CurrentThread.ManagedThreadId;
         var textExecutor = new TestExecutor
         {
-            IsUiThread = false
+            IsDispatcherThread = false
         };
 
-        Executers.Implementation = textExecutor;
+        Executers.DispatcherExecutor = textExecutor;
 
         var commandThreadId = 0;
         var command = new TestCommand();
@@ -94,5 +94,5 @@ public sealed class BaseCommandTests
         Assert.AreNotEqual(commandThreadId, testThreadId);
     }
 
-    private IUiThreadExecutor? _originExecutor;
+    private IDispatcherExecutor? _originExecutor;
 }

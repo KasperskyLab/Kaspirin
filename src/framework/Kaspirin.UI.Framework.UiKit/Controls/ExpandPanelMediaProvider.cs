@@ -45,7 +45,7 @@ internal sealed class ExpandPanelMediaProvider
             return;
         }
 
-        var isAnimationEnabled = _animationSettingsProvider.Value.IsAnimationEnabled;
+        var isAnimationEnabled = _animationManager.Value.State == AnimationState.Enabled;
         if (isAnimationEnabled)
         {
             ExpandWithAnimation(direction);
@@ -64,7 +64,7 @@ internal sealed class ExpandPanelMediaProvider
             return;
         }
 
-        var isAnimationEnabled = _animationSettingsProvider.Value.IsAnimationEnabled;
+        var isAnimationEnabled = _animationManager.Value.State == AnimationState.Enabled;
         if (isAnimationEnabled)
         {
             CollapseWithAnimation(direction);
@@ -439,7 +439,7 @@ internal sealed class ExpandPanelMediaProvider
     private const string CollapseHeight = nameof(CollapseHeight);
     private const string CollapseWidth = nameof(CollapseWidth);
 
-    private static readonly Lazy<IAnimationSettingsProvider> _animationSettingsProvider = new(() => ServiceLocator.GetService<IAnimationSettingsProvider>());
+    private static readonly Lazy<IAnimationManager> _animationManager = new(() => ServiceLocator.GetService<IAnimationManager>());
     private static readonly KeyTime _visibilityFrameTime = KeyTime.FromTimeSpan(TimeSpan.Zero);
     private static readonly EasingFunctionBase _resizeEasing = new ExponentialEase()
     {

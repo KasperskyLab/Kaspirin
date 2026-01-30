@@ -14,7 +14,6 @@
 
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Media;
 using Kaspirin.UI.Framework.UiKit.Controls.Internals;
@@ -32,7 +31,7 @@ namespace Kaspirin.UI.Framework.UiKit.Controls;
 [TemplatePart(Name = PART_TextInput, Type = typeof(TextInput))]
 [TemplatePart(Name = PART_Placeholder, Type = typeof(TextInput))]
 [TemplatePart(Name = PART_RightBar, Type = typeof(ContentPresenter))]
-internal sealed class SelectPresenter : ButtonBase
+internal sealed class SelectPresenter : Button
 {
     public const string PART_ItemIcon = "PART_ItemIcon";
     public const string PART_ItemImage = "PART_ItemImage";
@@ -361,6 +360,10 @@ internal sealed class SelectPresenter : ButtonBase
             {
                 Focus();
             }
+        }
+        else
+        {
+            Focus();
         }
     }
 

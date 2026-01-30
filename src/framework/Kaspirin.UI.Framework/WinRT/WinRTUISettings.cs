@@ -15,6 +15,7 @@
 #pragma warning disable  CA1416 // This call site is reachable on all platforms
 
 using System;
+using System.Windows.Media;
 
 #if WINDOWS10_0_17763_0_OR_GREATER
 using Windows.UI.ViewManagement;
@@ -43,6 +44,7 @@ public sealed class WinRTUISettings : IWinRTUISettings
         {
             _uiSettings = new UISettings();
             _uiSettings.TextScaleFactorChanged += OnTextScaleFactorChanged;
+            _uiSettings.ColorValuesChanged += OnColorValuesChanged;
         }
     }
 
@@ -58,9 +60,35 @@ public sealed class WinRTUISettings : IWinRTUISettings
     /// <inheritdoc cref="IWinRTUISettings.TextScaleFactorChanged" />
     public event EventHandler? TextScaleFactorChanged;
 
+    /// <inheritdoc cref="IWinRTUISettings.ColorValuesChanged" />
+    public event EventHandler? ColorValuesChanged;
+
+    /// <inheritdoc cref="IWinRTUISettings.GetColorValue" />
+    public Color? GetColorValue(WinRTUIColorType colorType)
+    {
+        var result = _uiSettings?.GetColorValue((UIColorType)colorType);
+        if (result != null)
+        {
+            return new()
+            {
+                A = result.Value.A,
+                R = result.Value.R,
+                G = result.Value.G,
+                B = result.Value.B
+            };
+        }
+
+        return null;
+    }
+
     private void OnTextScaleFactorChanged(UISettings sender, object args)
     {
         TextScaleFactorChanged?.Invoke(this, EventArgs.Empty);
+    }
+
+    private void OnColorValuesChanged(UISettings sender, object args)
+    {
+        ColorValuesChanged?.Invoke(this, EventArgs.Empty);
     }
 
     private readonly UISettings? _uiSettings;
@@ -76,5 +104,12 @@ public sealed class WinRTUISettings : IWinRTUISettings
 
     /// <inheritdoc cref="IWinRTUISettings.TextScaleFactorChanged" />
     public event EventHandler? TextScaleFactorChanged = (o, e) => { };
-#endif   
+
+    /// <inheritdoc cref="IWinRTUISettings.ColorValuesChanged" />
+    public event EventHandler? ColorValuesChanged = (o, e) => { };
+
+    /// <inheritdoc cref="IWinRTUISettings.GetColorValue" />
+    public Color? GetColorValue(WinRTUIColorType colorType) 
+        => null;
+#endif
 }

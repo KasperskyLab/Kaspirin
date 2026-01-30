@@ -14,6 +14,7 @@
 
 using System;
 using System.Windows;
+using System.Windows.Automation;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
@@ -22,7 +23,7 @@ using Kaspirin.UI.Framework.UiKit.Controls.Internals;
 
 namespace Kaspirin.UI.Framework.UiKit.Controls;
 
-public abstract class TextIconButtonBase<TUIKitIcons, TIconButtonElement> : TextInlineBase
+public abstract class TextIconButtonBase<TUIKitIcons, TIconButtonElement> : TextInlineBase, IAccessibilityAware
     where TUIKitIcons : Enum
     where TIconButtonElement : IconButtonBase, new()
 {
@@ -31,6 +32,19 @@ public abstract class TextIconButtonBase<TUIKitIcons, TIconButtonElement> : Text
         IconButtonElement = new TIconButtonElement();
         IconButtonElement.SetBinding(IconButtonBase.CommandProperty, new Binding { Source = this, Path = CommandProperty.AsPath() });
         IconButtonElement.SetBinding(IconButtonBase.CommandParameterProperty, new Binding { Source = this, Path = CommandParameterProperty.AsPath() });
+        IconButtonElement.SetBinding(AccessibilityProperties.LabelProperty, new Binding { Source = this, Path = AccessibilityProperties.LabelProperty.AsPath() });
+        IconButtonElement.SetBinding(AutomationProperties.NameProperty, new Binding { Source = this, Path = AutomationProperties.NameProperty.AsPath() });
+        IconButtonElement.SetBinding(AutomationProperties.LabeledByProperty, new Binding { Source = this, Path = AutomationProperties.LabeledByProperty.AsPath() });
+        IconButtonElement.SetBinding(AutomationProperties.HelpTextProperty, new MultiBinding
+        {
+            Bindings =
+            {
+                new Binding { Source = this, Path = AutomationProperties.HelpTextProperty.AsPath() },
+                new Binding { Source = this, Path = ToolTipProperty.AsPath() }
+            },
+            Converter = new DelegateMultiConverter(values =>
+                !string.IsNullOrEmpty(values[0] as string) ? values[0] : values[1] ?? string.Empty)
+        });
     }
 
     #region Command
@@ -120,5 +134,10 @@ public abstract class TextIconButtonBase<TUIKitIcons, TIconButtonElement> : Text
         {
             IconButtonElement.SetValue(IconButtonBase.IconBrushProperty, IconBrush);
         }
+    }
+
+    bool IAccessibilityAware.Validate()
+    {
+        return IconButtonElement.Validate();
     }
 }

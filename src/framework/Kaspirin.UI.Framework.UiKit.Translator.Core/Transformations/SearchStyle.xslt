@@ -61,47 +61,47 @@
 			<!--Style.Resources-->
 			<xsl:element name ="Style.Resources">
 
-				<!--Search_TextInputStyle-->
+				<!--Search_SearchInputStyle-->
 				<xsl:call-template name="generateStyle">
-					<xsl:with-param name="targetType">visuals:TextInput</xsl:with-param>
-					<xsl:with-param name="key">TextInputStyle</xsl:with-param>
+					<xsl:with-param name="targetType">visuals:SearchInput</xsl:with-param>
+					<xsl:with-param name="key">SearchInputStyle</xsl:with-param>
 					<xsl:with-param name="setters">
 
-						<!--Search_TextInput_CaretBrush-->
+						<!--Search_SearchInput_CaretBrush-->
 						<xsl:call-template name="generateBrushSetter">
-							<xsl:with-param name="propertyId">Search_TextInput_CaretBrush</xsl:with-param>
+							<xsl:with-param name="propertyId">Search_SearchInput_CaretBrush</xsl:with-param>
 							<xsl:with-param name="brushName">CaretBrush</xsl:with-param>
 							<xsl:with-param name="scopeName" select="$id" />
 						</xsl:call-template>
 
-						<!--Search_TextInput_Padding-->
+						<!--Search_SearchInput_Padding-->
 						<xsl:call-template name="generatePaddingSetter">
-							<xsl:with-param name="propertyId">Search_TextInput_Padding</xsl:with-param>
+							<xsl:with-param name="propertyId">Search_SearchInput_Padding</xsl:with-param>
 						</xsl:call-template>
 
-						<!--Search_TextInput_PlaceholderForeground-->
+						<!--Search_SearchInput_PlaceholderForeground-->
 						<xsl:call-template name="generateBrushSetter">
-							<xsl:with-param name="propertyId">Search_TextInput_PlaceholderForeground</xsl:with-param>
+							<xsl:with-param name="propertyId">Search_SearchInput_PlaceholderForeground</xsl:with-param>
 							<xsl:with-param name="brushName">PlaceholderForeground</xsl:with-param>
 							<xsl:with-param name="scopeName" select="$id" />
 						</xsl:call-template>
 
-						<!--Search_TextInput_PlaceholderStyle-->
+						<!--Search_SearchInput_PlaceholderStyle-->
 						<xsl:call-template name="generateStaticResourceSetter">
-							<xsl:with-param name="propertyId">Search_TextInput_PlaceholderStyle</xsl:with-param>
+							<xsl:with-param name="propertyId">Search_SearchInput_PlaceholderStyle</xsl:with-param>
 							<xsl:with-param name="resourceName" select="@PlaceholderStyleId" />
 						</xsl:call-template>
 
-						<!--Search_TextInput_TextForeground-->
+						<!--Search_SearchInput_TextForeground-->
 						<xsl:call-template name="generateBrushSetter">
-							<xsl:with-param name="propertyId">Search_TextInput_TextForeground</xsl:with-param>
+							<xsl:with-param name="propertyId">Search_SearchInput_TextForeground</xsl:with-param>
 							<xsl:with-param name="brushName">TextForeground</xsl:with-param>
 							<xsl:with-param name="scopeName" select="$id" />
 						</xsl:call-template>
 
-						<!--Search_TextInput_TextStyle-->
+						<!--Search_SearchInput_TextStyle-->
 						<xsl:call-template name="generateStaticResourceSetter">
-							<xsl:with-param name="propertyId">Search_TextInput_TextStyle</xsl:with-param>
+							<xsl:with-param name="propertyId">Search_SearchInput_TextStyle</xsl:with-param>
 							<xsl:with-param name="resourceName" select="@TextStyleId" />
 						</xsl:call-template>
 
@@ -113,16 +113,16 @@
 								<xsl:with-param name="propertyValue">Disabled</xsl:with-param>
 								<xsl:with-param name="setters">
 
-									<!--Search_TextInput_PlaceholderForeground-->
+									<!--Search_SearchInput_PlaceholderForeground-->
 									<xsl:call-template name="generateBrushSetter">
-										<xsl:with-param name="propertyId">Search_TextInput_PlaceholderForeground</xsl:with-param>
+										<xsl:with-param name="propertyId">Search_SearchInput_PlaceholderForeground</xsl:with-param>
 										<xsl:with-param name="brushName">PlaceholderForegroundDisabled</xsl:with-param>
 										<xsl:with-param name="scopeName" select="$id" />
 									</xsl:call-template>
 
-									<!--Search_TextInput_TextForeground-->
+									<!--Search_SearchInput_TextForeground-->
 									<xsl:call-template name="generateBrushSetter">
-										<xsl:with-param name="propertyId">Search_TextInput_TextForeground</xsl:with-param>
+										<xsl:with-param name="propertyId">Search_SearchInput_TextForeground</xsl:with-param>
 										<xsl:with-param name="brushName">TextForegroundDisabled</xsl:with-param>
 										<xsl:with-param name="scopeName" select="$id" />
 									</xsl:call-template>
@@ -207,8 +207,8 @@
 
 			<!--Search_InputStyle-->
 			<xsl:call-template name="generateStaticResourceSetter">
-				<xsl:with-param name="propertyId">Search_TextInputStyle</xsl:with-param>
-				<xsl:with-param name="resourceName">TextInputStyle</xsl:with-param>
+				<xsl:with-param name="propertyId">Search_SearchInputStyle</xsl:with-param>
+				<xsl:with-param name="resourceName">SearchInputStyle</xsl:with-param>
 			</xsl:call-template>
 
 			<!--Search_SpinnerMargin-->

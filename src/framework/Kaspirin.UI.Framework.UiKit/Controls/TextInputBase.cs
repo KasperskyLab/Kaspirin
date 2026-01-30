@@ -16,11 +16,13 @@ using System;
 using System.Globalization;
 using System.Linq;
 using System.Windows;
+using System.Windows.Automation.Peers;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Threading;
+using Kaspirin.UI.Framework.UiKit.Controls.Automation;
 using Kaspirin.UI.Framework.UiKit.Controls.Internals;
 using Kaspirin.UI.Framework.UiKit.Extensions.Internals;
 
@@ -245,7 +247,8 @@ public abstract class TextInputBase : TextBox
         if (_contentStubTextBlock != null)
         {
             this.LinkTextStyle(_contentStubTextBlock);
-            this.SetBinding(CaretBrushProperty, new Binding()
+
+            SetBinding(CaretBrushProperty, new Binding()
             {
                 Source = _contentStubTextBlock,
                 Path = TextBlock.BackgroundProperty.AsPath(),
@@ -344,6 +347,11 @@ public abstract class TextInputBase : TextBox
         _lastFilteredText = default;
     }
 
+    protected override AutomationPeer OnCreateAutomationPeer()
+    {
+        return new TextInputAutomationPeer(this);
+    }
+
     internal void InvalidateText()
         => InvalidateProperty(TextProperty);
 
@@ -380,10 +388,16 @@ public abstract class TextInputBase : TextBox
 
         var isWindowRtl = GetRootWindowFlowDirection() == FlowDirection.RightToLeft;
 
-        var placeholderTextInlines = placeholder.GetPlaceholderText(Text, isRTL: isWindowRtl);
+        var placeholderTextInlines = placeholder.GetInlineElements(Text, isRTL: isWindowRtl);
 
         _placeholderTextBlock.Inlines.Clear();
         _placeholderTextBlock.Inlines.AddRange(placeholderTextInlines);
+    }
+
+    internal void InvalidateImeState()
+    {
+        var placeholder = TextInputBaseInternals.GetPlaceholder(this);
+        InputMethod.SetIsInputMethodEnabled(this, placeholder is not TextInputMaskPlaceholder);
     }
 
     private void InvalidateCursorPosition(TextChangedEventArgs e)
@@ -441,12 +455,6 @@ public abstract class TextInputBase : TextBox
         {
             SetCurrentValue(TextProperty, Text);
         }
-    }
-
-    internal void InvalidateImeState()
-    {
-        var placeholder = TextInputBaseInternals.GetPlaceholder(this);
-        InputMethod.SetIsInputMethodEnabled(this, placeholder is not TextInputMaskPlaceholder);
     }
 
     private static object? CoerceText(DependencyObject d, object? baseValue)

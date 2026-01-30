@@ -17,6 +17,7 @@
 using System;
 using System.Windows;
 using System.Windows.Input;
+using InputType = Kaspirin.UI.Framework.NativeMethods.Api.User32.Enums.InputType;
 
 namespace Kaspirin.UI.Framework.UiKit.Controls;
 
@@ -24,7 +25,7 @@ public sealed class PasswordInputCapsLockAction : InputActionBase
 {
     public PasswordInputCapsLockAction()
     {
-        _hidePopupAction = new DeferredAction(() => IsPopupOpen = false, TimeSpan.FromMilliseconds(2000));
+        _hidePopupAction = DeferredActionFactory.CreateDebouncerOnUi(() => IsPopupOpen = false, TimeSpan.FromSeconds(2));
 
         this.WhenLoaded(() =>
         {
@@ -61,6 +62,11 @@ public sealed class PasswordInputCapsLockAction : InputActionBase
 
     #endregion
 
+    protected override void OnClick()
+    {
+        ToggleCapsLock();
+    }
+
     private void PasswordBoxOnPreviewKeyDown(object sender, KeyEventArgs e)
     {
         if (e.Key == Key.CapsLock)
@@ -93,7 +99,22 @@ public sealed class PasswordInputCapsLockAction : InputActionBase
         }
     }
 
-    private readonly DeferredAction _hidePopupAction;
+    private static void ToggleCapsLock()
+    {
+        var inputs = new InputInfo[2];
+
+        inputs[0].Type = InputType.Keyboard;
+        inputs[0].Data.Keyboard.VirtualKey = VirtualKey.Capital;
+        inputs[0].Data.Keyboard.Flags = KeyboardInputFlags.None;
+
+        inputs[1].Type = InputType.Keyboard;
+        inputs[1].Data.Keyboard.VirtualKey = VirtualKey.Capital;
+        inputs[1].Data.Keyboard.Flags = KeyboardInputFlags.KeyUp;
+
+        User32Dll.SendInput((uint)inputs.Length, inputs, InputInfo.Size);
+    }
+
+    private readonly IDeferredAction _hidePopupAction;
 
     private PasswordInput? _passwordInput;
     private PropertyChangeNotifier<PasswordInput, bool>? _passwordInputIsKeyboardFocusWithinPropertyNotifier;

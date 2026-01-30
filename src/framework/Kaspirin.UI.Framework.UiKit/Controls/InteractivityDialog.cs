@@ -18,10 +18,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Windows;
+using System.Windows.Automation.Peers;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
+using Kaspirin.UI.Framework.UiKit.Controls.Automation;
 using Kaspirin.UI.Framework.UiKit.Controls.Internals;
 
 namespace Kaspirin.UI.Framework.UiKit.Controls;
@@ -29,7 +31,7 @@ namespace Kaspirin.UI.Framework.UiKit.Controls;
 [TemplatePart(Name = PART_CloseButton, Type = typeof(Button))]
 [TemplatePart(Name = PART_Overlay, Type = typeof(InteractivityOverlay))]
 [TemplatePart(Name = PART_Dialog, Type = typeof(FrameworkElement))]
-public class InteractivityDialog : ContentControl, INotificationAnimatable
+public class InteractivityDialog : ContentControl, INotificationAnimatable, IAccessibilityAware
 {
     public const string PART_CloseButton = "PART_CloseButton";
     public const string PART_Overlay = "PART_Overlay";
@@ -458,7 +460,15 @@ public class InteractivityDialog : ContentControl, INotificationAnimatable
     {
         if (_overlay != null)
         {
-            _overlay.ShowContent(continueCallback);
+            _overlay.ShowContent(completedCallback: () =>
+            {
+                if (UIElementAutomationPeer.FromElement(this) is InteractivityDialogAutomationPeer peer)
+                {
+                    peer.RaiseShown();
+                }
+
+                continueCallback?.Invoke();
+            });
         }
         else
         {
@@ -483,6 +493,11 @@ public class InteractivityDialog : ContentControl, INotificationAnimatable
 
     internal void HideOverlay()
         => _overlay?.HideOverlay();
+
+    protected override AutomationPeer OnCreateAutomationPeer()
+    {
+        return new InteractivityDialogAutomationPeer(this);
+    }
 
     private void OnLoaded()
     {
@@ -557,9 +572,15 @@ public class InteractivityDialog : ContentControl, INotificationAnimatable
         DialogActualWidth = dialog.ActualWidth;
     }
 
+    bool IAccessibilityAware.Validate()
+    {
+        return this.Validate();
+    }
+
     private Button? _closeButton;
     private InteractivityOverlay? _overlay;
     private FrameworkElement? _dialog;
+
     private readonly List<Button> _cancelButtons = new();
 
     private const string EscKey = "\u001b";

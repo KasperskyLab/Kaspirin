@@ -54,6 +54,33 @@ public sealed class ServiceLocator
     public static TService GetService<TService>()
         => Instance.GetServiceImpl<TService>();
 
+    /// <summary>
+    ///     Retrieves an instance of the specified service from the IoC container.
+    /// </summary>
+    /// <param name="type">
+    ///     The type of service requested.
+    /// </param>
+    /// <returns>
+    ///     An instance of the requested service.
+    /// </returns>
+    public static object GetService(Type type)
+        => Instance.GetServiceImpl(type);
+
+    /// <summary>
+    ///     Retrieves an instance of the specified service from the IoC container.
+    /// </summary>
+    /// <typeparam name="TService">
+    ///     The type that the requested service will be reduced to.
+    /// </typeparam>
+    /// <param name="typeName">
+    ///     A string representation of the type of requested service.
+    /// </param>
+    /// <returns>
+    ///     An instance of the requested service.
+    /// </returns>
+    public static TService GetService<TService>(string typeName)
+        => Instance.GetServiceImpl<TService>(typeName);
+
     private static ServiceLocator Instance => Guard.EnsureIsNotNull(_instance).Value;
 
     private ServiceLocator(IUnityContainer unityContainer)
@@ -61,6 +88,12 @@ public sealed class ServiceLocator
 
     private TService GetServiceImpl<TService>()
         => _unityContainer.Resolve<TService>();
+
+    private object GetServiceImpl(Type type)
+        => _unityContainer.Resolve(type);
+
+    private TService GetServiceImpl<TService>(string typeName)
+        => _unityContainer.Resolve<TService>(typeName);
 
     private static Lazy<ServiceLocator>? _instance;
     private readonly IUnityContainer _unityContainer;

@@ -51,6 +51,8 @@
 
 		<xsl:variable name="isBig" select="contains($id, 'Big')"/>
 
+		<xsl:variable name="isSmall" select="contains($id, 'Small')"/>
+
 		<xsl:variable name="basedOn">
 			<xsl:choose>
 				<xsl:when test="$isGhost">ButtonGhostUniversal</xsl:when>
@@ -61,6 +63,7 @@
 		<xsl:variable name="targetType">
 			<xsl:choose>
 				<xsl:when test="$isBig">visuals:BigButton</xsl:when>
+				<xsl:when test="$isSmall">visuals:SmallButton</xsl:when>
 				<xsl:otherwise>ButtonBase</xsl:otherwise>
 			</xsl:choose>
 		</xsl:variable>
@@ -596,7 +599,7 @@
 			</xsl:with-param>
 		</xsl:call-template>
 
-		<xsl:if test="not($isBig)">
+		<xsl:if test="not($isBig) and not($isSmall)">
 
 			<!--Also generate ToggleButton style for every Button style.-->
 

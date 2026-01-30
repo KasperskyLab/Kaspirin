@@ -22,11 +22,13 @@ public abstract class InteractionRequestBase<T> : InteractionRequestBase, IInter
     protected InteractionRequestBase()
     {
         _trace = ComponentTracer.Get(UIKitComponentTracers.Interactivity, this);
+
+        Raised += InvokeTriggerAction;
     }
 
-    public event EventHandler<InteractionRequestedEventArgs> TriggerActionRaised = (s, a) => { };
+    public event EventHandler<InteractionRequestedEventArgs>? TriggerActionRaised;
 
-    public event EventHandler<InteractionRequestedEventArgs> Raised = (s, a) => { };
+    public event EventHandler<InteractionRequestedEventArgs> Raised;
 
     public bool IsRaised { get; private set; }
 
@@ -34,19 +36,9 @@ public abstract class InteractionRequestBase<T> : InteractionRequestBase, IInter
 
     public Task<T>? InteractionTask { get; private set; }
 
-    public void SetSilentMode()
-    {
-        _silentMode = true;
+    public bool SkipTriggerAction { get; set; } = false;
 
-        _trace.TraceInformation("Silent mode is active");
-    }
-
-    public void SetSynchronizedMode()
-    {
-        _synchronizedMode = true;
-
-        _trace.TraceInformation("Synchronized mode is active");
-    }
+    public bool IsAsync { get; set; } = true;
 
     public void Close()
     {
@@ -87,13 +79,15 @@ public abstract class InteractionRequestBase<T> : InteractionRequestBase, IInter
 
         InteractionTask = CreateInteractionTask();
 
-        if (_synchronizedMode)
+        if (IsAsync)
         {
-            DispatcherFrameAction.Run(RaiseEvents);
+            RaiseEvents();
         }
         else
         {
-            RaiseEvents();
+            _trace.TraceInformation("Interaction events raised in sync mode.");
+
+            DispatcherFrameAction.Run(RaiseEvents);
         }
     }
 
@@ -110,9 +104,6 @@ public abstract class InteractionRequestBase<T> : InteractionRequestBase, IInter
 
         _callback.Invoke(InteractionObject);
         _callback = null;
-
-        _silentMode = false;
-        _synchronizedMode = false;
 
         _interactionFrameContext?.CloseFrame();
         _interactionFrameContext = null;
@@ -138,15 +129,24 @@ public abstract class InteractionRequestBase<T> : InteractionRequestBase, IInter
 
         var eventArgs = new InteractionRequestedEventArgs(InteractionObject);
 
-        if (_silentMode)
+        Raised.Invoke(this, eventArgs);
+    }
+
+    private void InvokeTriggerAction(object? sender, InteractionRequestedEventArgs eventArgs)
+    {
+        if (TriggerActionRaised == null)
         {
-            Raised.Invoke(this, eventArgs);
+            _trace.TraceWarning($"Skip {nameof(TriggerActionRaised)}. No handlers have been set for event.");
+            return;
         }
-        else
+
+        if (SkipTriggerAction)
         {
-            TriggerActionRaised.Invoke(this, eventArgs);
-            Raised.Invoke(this, eventArgs);
+            _trace.TraceWarning($"Skip {nameof(TriggerActionRaised)}. {nameof(SkipTriggerAction)} is active.");
+            return;
         }
+
+        TriggerActionRaised.Invoke(sender, eventArgs);
     }
 
     private IInteractionObjects GetStorage()
@@ -159,8 +159,6 @@ public abstract class InteractionRequestBase<T> : InteractionRequestBase, IInter
         return _interactionTaskCompletionSource.Task;
     }
 
-    private bool _silentMode;
-    private bool _synchronizedMode;
     private Action<T>? _callback;
     private TaskCompletionSource<T>? _interactionTaskCompletionSource;
     private DispatcherFrameContext? _interactionFrameContext;

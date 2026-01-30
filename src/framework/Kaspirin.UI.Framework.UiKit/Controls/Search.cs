@@ -18,21 +18,24 @@ using System;
 using System.Globalization;
 using System.Linq;
 using System.Windows;
+using System.Windows.Automation.Peers;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Threading;
+using Kaspirin.UI.Framework.UiKit.Controls.Automation;
 using Kaspirin.UI.Framework.UiKit.Controls.Internals;
-
-using TextInputControl = Kaspirin.UI.Framework.UiKit.Controls.TextInput;
 
 namespace Kaspirin.UI.Framework.UiKit.Controls;
 
-[TemplatePart(Name = "PART_ClearButton", Type = typeof(ButtonBase))]
-[TemplatePart(Name = "PART_TextInput", Type = typeof(TextInput))]
+[TemplatePart(Name = PART_ClearButton, Type = typeof(ButtonBase))]
+[TemplatePart(Name = PART_SearchInput, Type = typeof(SearchInput))]
 public sealed class Search : Control
 {
+    public const string PART_ClearButton = "PART_ClearButton";
+    public const string PART_SearchInput = "PART_SearchInput";
+
     public Search()
     {
         MouseLeftButtonDown += (o, e) =>
@@ -274,20 +277,20 @@ public sealed class Search : Control
 
     public override void OnApplyTemplate()
     {
-        _textInput = (TextInput)GetTemplateChild("PART_TextInput");
-        _textInput.SetBinding(TextInputControl.TextProperty, new Binding() { Source = this, Path = TextProperty.AsPath(), UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged });
-        _textInput.SetBinding(TextInputControl.MaxLengthProperty, new Binding() { Source = this, Path = MaxLengthProperty.AsPath() });
-        _textInput.SetBinding(TextInputControl.GetFocusBehaviorProperty, new Binding() { Source = this, Path = GetFocusBehaviorProperty.AsPath() });
-        _textInput.SetBinding(TextInputControl.LostFocusBehaviorProperty, new Binding() { Source = this, Path = LostFocusBehaviorProperty.AsPath() });
+        _textInput = (SearchInput)GetTemplateChild(PART_SearchInput);
+        _textInput.SetBinding(SearchInput.TextProperty, new Binding() { Source = this, Path = TextProperty.AsPath(), UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged });
+        _textInput.SetBinding(SearchInput.MaxLengthProperty, new Binding() { Source = this, Path = MaxLengthProperty.AsPath() });
+        _textInput.SetBinding(SearchInput.GetFocusBehaviorProperty, new Binding() { Source = this, Path = GetFocusBehaviorProperty.AsPath() });
+        _textInput.SetBinding(SearchInput.LostFocusBehaviorProperty, new Binding() { Source = this, Path = LostFocusBehaviorProperty.AsPath() });
 
         var placeholderBinding = new MultiBinding() { Converter = new PlaceholderWithShortcutConverter() };
         placeholderBinding.Bindings.Add(new Binding() { Source = this, Path = PlaceholderProperty.AsPath() });
         placeholderBinding.Bindings.Add(new Binding() { Source = this, Path = _shortcutDisplayTextPropertyKey.AsPath() });
-        _textInput.SetBinding(TextInputControl.PlaceholderProperty, placeholderBinding);
+        _textInput.SetBinding(SearchInput.PlaceholderProperty, placeholderBinding);
 
         _textInput.WhenLoaded(() => _textInput.InputBindings.AddRange(InputBindings));
 
-        _clearButton = (ButtonBase)GetTemplateChild("PART_ClearButton");
+        _clearButton = (ButtonBase)GetTemplateChild(PART_ClearButton);
         _clearButton.GotKeyboardFocus += OnClearButtonGetKeyboardFocus;
         _clearButton.LostKeyboardFocus += OnClearButtonLostKeyboardFocus;
         _clearButton.Click += OnClearButtonClick;
@@ -295,6 +298,11 @@ public sealed class Search : Control
 
         GotFocus += OnGotFocus;
         LostFocus += OnLostFocus;
+    }
+
+    protected override AutomationPeer OnCreateAutomationPeer()
+    {
+        return new SearchAutomationPeer(this);
     }
 
     private void SetFocus()
@@ -493,7 +501,7 @@ public sealed class Search : Control
     private const string EscCode = "\x001B";
 
     private ButtonBase? _clearButton;
-    private TextInput? _textInput;
+    private SearchInput? _textInput;
     private WeakReference? _parentWindowRef;
     private bool _setFocusOnClear;
 }

@@ -23,9 +23,9 @@ namespace Kaspirin.UI.Framework.UiKit.Animation.Internals;
 
 internal sealed class AnimatedBindingFactory
 {
-    public AnimatedBindingFactory(IAnimationSettingsProvider animationSettingsProvider)
+    public AnimatedBindingFactory(IAnimationManager animationManager)
     {
-        _animationSettingsProvider = animationSettingsProvider;
+        _animationManager = animationManager;
     }
 
     public BindingBase CreateBinding(
@@ -110,7 +110,7 @@ internal sealed class AnimatedBindingFactory
             var isInstant = properties?.Duration == TimeSpan.Zero &&
                             properties?.Delay == TimeSpan.Zero;
 
-            var isDisabled = !_animationSettingsProvider.IsAnimationEnabled;
+            var isDisabled = _animationManager.State == AnimationState.Disabled;
 
             var isUnset = properties == null ||
                           newValue == null ||
@@ -174,9 +174,8 @@ internal sealed class AnimatedBindingFactory
         AnimationProperties? properties,
         Action? onCompletedCallback)
     {
-        var animationProperties = properties ?? _animationSettingsProvider.DefaultAnimationProperties;
-        var animationFrameRate = _animationSettingsProvider.GetDesiredFrameRate();
-        var animation = AnimationFactory.CreateAnimation(targetObject, targetProperty, animationFrameRate, animationProperties, value, onCompletedCallback);
+        var animationProperties = properties ?? _animationManager.GetAnimationProperties();
+        var animation = AnimationFactory.CreateAnimation(targetObject, targetProperty, animationProperties, value, onCompletedCallback);
 
         var bindingProperties = GetBindingProperties(targetObject, targetProperty);
         bindingProperties.AnimatingValue = value;
@@ -184,6 +183,7 @@ internal sealed class AnimatedBindingFactory
         bindingProperties.Storyboard?.Children.Clear();
         bindingProperties.Storyboard?.Remove();
         bindingProperties.Storyboard = new Storyboard();
+        bindingProperties.Storyboard.SetFrameRate();
         bindingProperties.Storyboard.Children.Add(animation);
         bindingProperties.Storyboard.Begin();
     }
@@ -229,5 +229,5 @@ internal sealed class AnimatedBindingFactory
 
     #endregion
 
-    private readonly IAnimationSettingsProvider _animationSettingsProvider;
+    private readonly IAnimationManager _animationManager;
 }

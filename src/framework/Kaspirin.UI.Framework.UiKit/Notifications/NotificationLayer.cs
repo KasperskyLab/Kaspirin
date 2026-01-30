@@ -33,6 +33,8 @@ public sealed class NotificationLayer : ContentControl
     {
         _tracer = ComponentTracer.Get(UIKitComponentTracers.Notification, this);
         _adornerFactory = new NotificationAdornerFactory(this);
+
+        this.WhenUnloaded(OnUnloaded);
     }
 
     public override void OnApplyTemplate()
@@ -291,10 +293,10 @@ public sealed class NotificationLayer : ContentControl
         KeyboardNavigation.SetTabNavigation(backwardLayer, KeyboardNavigationMode.None);
         KeyboardNavigation.SetDirectionalNavigation(backwardLayer, KeyboardNavigationMode.None);
 
-        var isFocusOnNotification = visibleModals.Last().Notification.FindVisualChildren<UIElement>().Any(o => o.IsFocused);
-        if (isFocusOnNotification is false)
+        var notification = visibleModals.Last().Notification;
+        if (notification.FindVisualChildren<UIElement>().None(o => o.IsFocused))
         {
-            InputFocusManager.ClearInputFocus(this);
+            notification.WhenLoaded(() => notification.Focus());
         }
 
         IsModalState = visibleModals.Length > 0;
@@ -313,6 +315,22 @@ public sealed class NotificationLayer : ContentControl
         KeyboardNavigation.SetDirectionalNavigation(backwardLayer, KeyboardNavigationMode.Continue);
 
         IsModalState = visibleModals.Length > 0;
+    }
+
+    private void OnUnloaded()
+    {
+        _tracer.TraceInformation($"{this} unloaded.");
+
+        var notifications = new HashSet<NotificationView>();
+        notifications.AddRange(_visibleNotifications.Select(n => n.Notification));
+        notifications.AddRange(_modalNotificationQueue.Select(n => n.Notification));
+        notifications.AddRange(_modalNotificationStack.Select(n => n.Notification));
+
+        if (notifications.Any())
+        {
+            _tracer.TraceInformation($"Closing {notifications.Count} notifications.");
+            notifications.ForEach(n => n.Close());
+        }
     }
 
     private static void HandleAccessKey(object sender, AccessKeyPressedEventArgs e)

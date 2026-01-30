@@ -36,5 +36,7 @@
 		<xs:attribute name="Id" type="xs:string" use="required"/>
 		<xs:attribute name="LineHeight" type="xs:decimal" use="optional"/>
 		<xs:attribute name="TextDecorations" type="TextDecorations" use="optional"/>
+		<xs:attribute name="FontPriority" type="xs:decimal" use="required"/>
+		<xs:attribute name="IsHeader" type="xs:boolean" use="required"/>
 	</xs:attributeGroup>
 </xs:schema>

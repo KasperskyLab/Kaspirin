@@ -12,10 +12,21 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using System.Windows.Controls.Primitives;
+using System.Windows.Automation.Peers;
+using System.Windows.Controls;
+using Kaspirin.UI.Framework.UiKit.Controls.Automation;
 
 namespace Kaspirin.UI.Framework.UiKit.Controls;
 
-public sealed class ContentButton : ButtonBase
+public sealed class ContentButton : Button, IAccessibilityAware
 {
+    protected override AutomationPeer OnCreateAutomationPeer()
+    {
+        return new ContentButtonAutomationPeer(this);
+    }
+
+    bool IAccessibilityAware.Validate()
+    {
+        return this.Validate();
+    }
 }
