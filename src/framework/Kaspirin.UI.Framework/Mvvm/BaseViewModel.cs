@@ -16,6 +16,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Threading;
 
@@ -26,7 +27,9 @@ namespace Kaspirin.UI.Framework.Mvvm;
 /// </summary>
 public abstract class BaseViewModel : BaseAppObject, INotifyPropertyChanged
 {
-    /// <inheritdoc cref="BaseViewModel(string)"/>
+    /// <summary>
+    ///     Creates a new instance of the <see cref="BaseViewModel" /> class.
+    /// </summary>
     protected BaseViewModel()
     {
     }
@@ -127,7 +130,7 @@ public abstract class BaseViewModel : BaseAppObject, INotifyPropertyChanged
     ///     Returns <see langword="true" /> if the property value has been changed, otherwise - <see langword="false" />.
     /// </returns>
     protected virtual bool SetProperty<T>(ref T storage, T value, [CallerMemberName] string? propertyName = default)
-        => SetProperty(ref storage, value, onChanged: default(Action<T?>), propertyName);
+        => SetProperty(ref storage, value, null, null, propertyName);
 
     /// <summary>
     ///     Sets the value of the property and generates a property change event if the value has changed.
@@ -145,13 +148,13 @@ public abstract class BaseViewModel : BaseAppObject, INotifyPropertyChanged
     ///     The action that will be performed after the property is changed.
     /// </param>
     /// <param name="propertyName">
-    ///     The name of the property.
+    ///     The name of the property. It is substituted automatically from the <see cref="CallerMemberNameAttribute" /> attribute.
     /// </param>
     /// <returns>
     ///     Returns <see langword="true" /> if the property value has been changed, otherwise - <see langword="false" />.
     /// </returns>
-    protected virtual bool SetProperty<T>(ref T storage, T value, Action? onChanged, [CallerMemberName] string? propertyName = default)
-        => SetProperty(ref storage, value, onChanged: v => onChanged?.Invoke(), propertyName);
+    protected virtual bool SetProperty<T>(ref T storage, T value, Action onChanged, [CallerMemberName] string? propertyName = default)
+        => SetProperty(ref storage, value, v => onChanged.Invoke(), null, propertyName);
 
     /// <summary>
     ///     Sets the value of the property and generates a property change event if the value has changed.
@@ -169,14 +172,44 @@ public abstract class BaseViewModel : BaseAppObject, INotifyPropertyChanged
     ///     The action that will be performed after the property is changed.
     /// </param>
     /// <param name="propertyName">
-    ///     The name of the property.
+    ///     The name of the property. It is substituted automatically from the <see cref="CallerMemberNameAttribute" /> attribute.
     /// </param>
     /// <returns>
     ///     Returns <see langword="true" /> if the property value has been changed, otherwise - <see langword="false" />.
     /// </returns>
-    protected virtual bool SetProperty<T>(ref T storage, T value, Action<T>? onChanged, [CallerMemberName] string? propertyName = default)
+    protected virtual bool SetProperty<T>(ref T storage, T value, Action<T> onChanged, [CallerMemberName] string? propertyName = default)
+        => SetProperty(ref storage, value, onChanged, null, propertyName);
+
+    /// <summary>
+    ///     Sets the value of the property and generates a property change event if the value has changed.
+    /// </summary>
+    /// <typeparam name="T">
+    ///     The type of the property.
+    /// </typeparam>
+    /// <param name="storage">
+    ///     A reference to the property.
+    /// </param>
+    /// <param name="value">
+    ///     The new value of the property.
+    /// </param>
+    /// <param name="onChanged">
+    ///     The action that will be performed after the property is changed.
+    /// </param>
+    /// <param name="equalityComparer">
+    ///     The logic of comparing the equality of a property with a new value. If <see langword="null" />,
+    ///     then <see cref="EqualityComparer{T}.Default" /> is used as the implementation.
+    /// </param>
+    /// <param name="propertyName">
+    ///     The name of the property. It is substituted automatically from the <see cref="CallerMemberNameAttribute" /> attribute.
+    /// </param>
+    /// <returns>
+    ///     Returns <see langword="true" /> if the property value has been changed, otherwise - <see langword="false" />.
+    /// </returns>
+    protected virtual bool SetProperty<T>(ref T storage, T value, Action<T>? onChanged, IEqualityComparer<T>? equalityComparer, [CallerMemberName] string? propertyName = default)
     {
-        if (EqualityComparer<T>.Default.Equals(storage, value))
+        equalityComparer ??= EqualityComparer<T>.Default;
+
+        if (equalityComparer.Equals(storage, value))
         {
             return false;
         }
@@ -189,16 +222,23 @@ public abstract class BaseViewModel : BaseAppObject, INotifyPropertyChanged
         return true;
     }
 
-    /// <inheritdoc cref="Executers.InUiAsync(Action, DispatcherPriority)"/>
-    protected Task InUiAsync(Action action, DispatcherPriority priority = DispatcherPriority.Normal)
-        => Executers.InUiAsync(action, priority);
+    /// <inheritdoc cref="Executers.InUiAsync(Action, DispatcherPriority?, TimeSpan?, CancellationToken?)"/>
+    protected Task InUiAsync(Action action, DispatcherPriority? priority = null, TimeSpan? delay = null, CancellationToken? cancellationToken = null)
+        => Executers.InUiAsync(action, priority, delay, cancellationToken);
+
+    /// <inheritdoc cref="Executers.InTpAsync(Action, TaskCreationOptions?, TimeSpan?, CancellationToken?)"/>
+    protected Task InTpAsync(Action action, TaskCreationOptions? options = null, TimeSpan? delay = null, CancellationToken? cancellationToken = null)
+        => Executers.InTpAsync(action, options, delay, cancellationToken);
 
     private void RaisePropertyChangedCore(string? propertyName)
     {
-        var executer = Executers.Implementation;
-        if (executer.IsAvailable && executer.IsUiThread is false)
+        var executor = Executers.DispatcherExecutor;
+        if (executor.IsAvailable && executor.VerifyThread() is false)
         {
-            executer.ExecuteInUiThreadAsync(() => RaiseEvent(this, propertyName));
+            executor.ExecuteAsync(
+                action: () => RaiseEvent(this, propertyName),
+                priority: DispatcherPriority.Normal,
+                cancellationToken: CancellationToken.None);
         }
         else
         {

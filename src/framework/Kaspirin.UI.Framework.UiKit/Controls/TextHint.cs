@@ -225,6 +225,7 @@ public sealed class TextHint : TextInlineBase
         hintButton.SetBinding(IconButtonBase.CommandProperty, new Binding { Source = this, Path = CommandProperty.AsPath() });
         hintButton.SetBinding(IconButtonBase.CommandParameterProperty, new Binding { Source = this, Path = CommandParameterProperty.AsPath() });
         hintButton.SetBinding(Control.IsTabStopProperty, new Binding { Source = this, Path = IsTabStopProperty.AsPath() });
+        hintButton.SetBinding(Control.ToolTipProperty, new Binding { Source = this, Path = ToolTipProperty.AsPath() });
         hintButton.WhenLoaded(UpdateHintIconBrush);
 
         _hintPopup.SetValue(Popup.PopupTargetProperty, hintButton);

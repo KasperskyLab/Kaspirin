@@ -24,16 +24,15 @@ public sealed class TextInputLocPlaceholder : TextInputPlaceholder
         _locExtension = locExtension;
     }
 
-    public override IEnumerable<Inline> GetPlaceholderText(string? value, bool isRTL)
+    public override IEnumerable<Inline> GetInlineElements(string? value, bool isRTL)
     {
         var placeholderRun = new Run();
 
-        var isEmpty = (value ?? string.Empty).Length == 0;
-        if (isEmpty)
+        if (value.IsNullOrEmpty())
         {
-            var placeholderText = _locExtension.ProvideValue(placeholderRun, Run.TextProperty);
-
-            placeholderRun.SetValue(Run.TextProperty, placeholderText);
+            placeholderRun.SetValue(
+                dp: Run.TextProperty,
+                value: _locExtension.ProvideValue(placeholderRun, Run.TextProperty));
         }
 
         return new[] { placeholderRun };
@@ -42,6 +41,11 @@ public sealed class TextInputLocPlaceholder : TextInputPlaceholder
     public override string? FilterInputText(string? value)
     {
         return value;
+    }
+
+    public override string? GetAccessibilityText(string? value)
+    {
+        return value.IsNullOrEmpty() ? _locExtension.ProvideConstantStringValue() : null;
     }
 
     private readonly LocExtension _locExtension;

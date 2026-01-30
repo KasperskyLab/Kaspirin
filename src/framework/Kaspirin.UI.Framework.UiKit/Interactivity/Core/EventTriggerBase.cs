@@ -119,19 +119,21 @@ public abstract class EventTriggerBase : TriggerBase
     {
         if (AssociatedObject != null)
         {
-            if (string.IsNullOrEmpty(GetEventName()))
+            var eventName = GetEventName();
+
+            if (eventName.IsNullOrEmpty())
             {
                 return;
             }
 
             if (oldSource != null && SourceTypeConstraint.IsAssignableFrom(oldSource.GetType()))
             {
-                UnregisterEvent(oldSource, GetEventName());
+                UnregisterEvent(oldSource, eventName);
             }
 
             if (newSource != null && SourceTypeConstraint.IsAssignableFrom(newSource.GetType()))
             {
-                RegisterEvent(newSource, GetEventName());
+                RegisterEvent(newSource, eventName);
             }
         }
     }

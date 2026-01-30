@@ -111,19 +111,19 @@ public sealed class NotificationAction : TriggerAction<FrameworkElement>
 
         interactionObject.Decided += () => OnDecided(view);
 
-        view.Opened += (s, e) => OnOpened(interactionObject);
-        view.Closed += (s, e) => OnClosed(interactionObject);
+        view.Opening += (s, e) => OnOpening(interactionObject);
+        view.Closing += (s, e) => OnClosing(interactionObject);
 
         view.SetInteractionObject(interactionObject);
         view.Show();
     }
 
-    private void OnOpened(InteractionObject interactionObject)
+    private void OnOpening(InteractionObject interactionObject)
     {
         interactionObject.InteractionStarted();
     }
 
-    private void OnClosed(InteractionObject interactionObject)
+    private void OnClosing(InteractionObject interactionObject)
     {
         if (interactionObject.IsDecided is false)
         {

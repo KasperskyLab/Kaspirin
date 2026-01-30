@@ -52,4 +52,5 @@ global using Kaspirin.UI.Framework.UiKit.Localization.Resources.ResourceBrowsers
 global using Kaspirin.UI.Framework.UiKit.Notifications;
 global using Kaspirin.UI.Framework.UiKit.Services;
 global using Kaspirin.UI.Framework.UiKit.Statistics;
+global using Kaspirin.UI.Framework.UiKit.Theme;
 global using Kaspirin.UI.Framework.UiKit.Windows;

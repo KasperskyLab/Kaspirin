@@ -13,6 +13,8 @@
 // limitations under the License.
 
 using System;
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using System.Security;
 
 namespace Kaspirin.UI.Framework.Extensions.Strings;
@@ -66,6 +68,21 @@ public static class StringExtensions
     }
 
     /// <summary>
+    ///     Checks that the string <paramref name="source" /> is empty, contains only spaces, or is equal to <see langword="null" />.
+    /// </summary>
+    /// <param name="source">
+    ///     The original string.
+    /// </param>
+    /// <returns>
+    ///     Returns <see langword="true" /> if the string is empty, contains only spaces, or is <see langword="null" />,
+    ///     otherwise <see langword="false" />.
+    /// </returns>
+    public static bool IsNullOrWhiteSpace(this string? source)
+    {
+        return source?.All(char.IsWhiteSpace) ?? true;
+    }
+
+    /// <summary>
     ///     Checks that the string <paramref name="source" /> is not empty.
     /// </summary>
     /// <param name="source">
@@ -89,9 +106,25 @@ public static class StringExtensions
     ///     Returns <see langword="true" /> if the string is not empty and is not equal to <see langword="null" />,
     ///     otherwise - <see langword="false" />.
     /// </returns>
-    public static bool IsNotNullOrEmpty(this string? source)
+    public static bool IsNotNullOrEmpty([NotNullWhen(true)] this string? source)
     {
         return source?.Length > 0;
+    }
+
+    /// <summary>
+    ///     Checks that the string <paramref name="source" /> is not empty, does not contain only spaces,
+    ///     and is not equal to <see langword="null" />.
+    /// </summary>
+    /// <param name="source">
+    ///     The original string.
+    /// </param>
+    /// <returns>
+    ///     Returns <see langword="true" /> if the string is not empty, does not contain only spaces and
+    ///     is not equal to <see langword="null" />, otherwise - <see langword="false" />.
+    /// </returns>
+    public static bool IsNotNullOrWhiteSpace([NotNullWhen(true)] this string? source)
+    {
+        return source?.Any(c => !char.IsWhiteSpace(c)) ?? false;
     }
 
     /// <summary>

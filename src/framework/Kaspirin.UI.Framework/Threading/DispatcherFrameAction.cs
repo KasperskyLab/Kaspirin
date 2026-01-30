@@ -13,72 +13,72 @@
 // limitations under the License.
 
 using System;
+using System.Threading;
 using System.Windows.Interop;
 using System.Windows.Threading;
 
-namespace Kaspirin.UI.Framework.Threading
+namespace Kaspirin.UI.Framework.Threading;
+
+/// <summary>
+///     Implements a mechanism for asynchronous delegate execution in the UI thread, with the execution
+///     of the current stack suspended.
+/// </summary>
+public sealed class DispatcherFrameAction
 {
     /// <summary>
-    ///     Implements a mechanism for asynchronous delegate execution in the UI thread, with the execution
-    ///     of the current stack suspended.
+    ///     Asynchronously executes the delegate <paramref name="action" /> in the UI thread. In this case,
+    ///     the execution of the current stack is suspended until the <see cref="DispatcherFrameContext.CloseFrame" /> method is called.
     /// </summary>
-    public sealed class DispatcherFrameAction
+    /// <param name="action">
+    ///     A delegate to execute.
+    /// </param>
+    /// <param name="priority">
+    ///     Execution priority in the thread manager.
+    /// </param>
+    /// <remarks>
+    ///     This method does not block the UI thread and must be called in the UI thread.
+    /// </remarks>
+    public static void Run(Action<DispatcherFrameContext> action, DispatcherPriority priority = DispatcherPriority.Normal)
     {
-        /// <summary>
-        ///     Asynchronously executes the delegate <paramref name="action" /> in the UI thread. In this case,
-        ///     the execution of the current stack is suspended until the <see cref="DispatcherFrameContext.CloseFrame" /> method is called.
-        /// </summary>
-        /// <param name="action">
-        ///     A delegate to execute.
-        /// </param>
-        /// <param name="priority">
-        ///     Priority of execution.
-        /// </param>
-        /// <remarks>
-        ///     This method does not block the UI thread and must be called in the UI thread.
-        /// </remarks>
-        public static void Run(Action<DispatcherFrameContext> action, DispatcherPriority priority = DispatcherPriority.Normal)
-        {
-            new DispatcherFrameAction(action, priority).Execute();
-        }
-
-        private DispatcherFrameAction(Action<DispatcherFrameContext> action, DispatcherPriority priority = DispatcherPriority.Normal)
-        {
-            _action = Guard.EnsureArgumentIsNotNull(action);
-            _priority = priority;
-            _tracer = ComponentTracer.Get(ComponentTracers.Threading, this);
-        }
-
-        private void Execute()
-        {
-            var executer = Executers.Implementation;
-
-            Guard.Assert(executer.IsAvailable);
-            Guard.Assert(executer.IsUiThread);
-
-            ComponentDispatcher.PushModal();
-            _tracer.TraceMethodDebug("Modal state entered.");
-
-            try
-            {
-                var dispatcherFrame = new DispatcherFrame();
-                var dispatchedFrameContext = new DispatcherFrameContext(dispatcherFrame);
-
-                void DispatcherCallback() => _action(dispatchedFrameContext);
-
-                executer.ExecuteInUiThreadAsync(DispatcherCallback, _priority);
-
-                Dispatcher.PushFrame(dispatcherFrame);
-            }
-            finally
-            {
-                ComponentDispatcher.PopModal();
-                _tracer.TraceMethodDebug("Modal state exited.");
-            }
-        }
-
-        private readonly ComponentTracer _tracer;
-        private readonly Action<DispatcherFrameContext> _action;
-        private readonly DispatcherPriority _priority;
+        new DispatcherFrameAction(action, priority).Execute();
     }
+
+    private DispatcherFrameAction(Action<DispatcherFrameContext> action, DispatcherPriority priority)
+    {
+        _action = Guard.EnsureArgumentIsNotNull(action);
+        _priority = priority;
+        _tracer = ComponentTracer.Get(ComponentTracers.Threading, this);
+    }
+
+    private void Execute()
+    {
+        var executer = Executers.DispatcherExecutor;
+
+        Guard.Assert(executer.IsAvailable);
+        Guard.Assert(executer.VerifyThread());
+
+        ComponentDispatcher.PushModal();
+        _tracer.TraceMethodDebug("Modal state entered.");
+
+        try
+        {
+            var dispatcherFrame = new DispatcherFrame();
+            var dispatchedFrameContext = new DispatcherFrameContext(dispatcherFrame);
+
+            void DispatcherCallback() => _action(dispatchedFrameContext);
+
+            executer.ExecuteAsync(DispatcherCallback, _priority, CancellationToken.None);
+
+            Dispatcher.PushFrame(dispatcherFrame);
+        }
+        finally
+        {
+            ComponentDispatcher.PopModal();
+            _tracer.TraceMethodDebug("Modal state exited.");
+        }
+    }
+
+    private readonly ComponentTracer _tracer;
+    private readonly Action<DispatcherFrameContext> _action;
+    private readonly DispatcherPriority _priority;
 }

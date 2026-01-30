@@ -104,6 +104,8 @@ internal sealed class XmlIconSource
             throw new InvalidOperationException($"Unsupported number of icon vectors: {Environment.NewLine}{iconElement}.");
         }
 
+        var hash = default(string);
+        var hashRTL = default(string);
         var svg = default(string);
         var svgRTL = default(string);
 
@@ -114,6 +116,8 @@ internal sealed class XmlIconSource
                 throw new InvalidOperationException(
                     $"Unable to parse boolean value of attribute '{Const.VectorIsRTLAttributeName}' of icon with id '{iconId}': {Environment.NewLine}{vector}");
             }
+
+            var hashData = vector.Attribute(Const.VectorHashAttributeName)?.Value;
 
             var svgData = vector
                 .Element(Const.VectorDataElementName)
@@ -128,10 +132,12 @@ internal sealed class XmlIconSource
             if (isRTL)
             {
                 svgRTL = svgData;
+                hashRTL = hashData;
             }
             else
             {
                 svg = svgData;
+                hash = hashData;
             }
         }
 
@@ -140,6 +146,8 @@ internal sealed class XmlIconSource
             IsColorfull = isColorfull,
             IsAutoRTL = isAutoRTL,
             Size = size,
+            Hash = hash,
+            HashRTL = hashRTL,
             Name = name,
             Svg = svg,
             SvgRTL = svgRTL

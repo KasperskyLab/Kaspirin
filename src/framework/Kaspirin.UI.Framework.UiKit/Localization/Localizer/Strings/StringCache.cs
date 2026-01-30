@@ -65,7 +65,7 @@ public sealed class StringCache
 
     private Task ClearNotUsedStrings()
     {
-        return Task.Factory.StartNew(() =>
+        return Executers.InTpAsync(() =>
         {
             var keysToRemove = new List<int>();
             foreach (var itm in _stringCache)

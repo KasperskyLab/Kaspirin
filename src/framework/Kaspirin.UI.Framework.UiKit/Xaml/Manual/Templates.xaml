@@ -63,6 +63,37 @@
 
     <!--  endregion  -->
 
+    <!--  region ContentControl  -->
+
+    <Style x:Key="ContentControlUniversal"
+           TargetType="{x:Type ContentControl}">
+        <Setter Property="Focusable" Value="False" />
+    </Style>
+
+    <!--  endregion  -->
+
+    <!--  region ExpandButton  -->
+
+    <Style x:Key="ExpandButtonUniversal"
+           TargetType="{x:Type controls:ExpandButton}">
+        <Setter Property="Focusable" Value="False" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="HorizontalAlignment" Value="Left" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type controls:ExpandButton}">
+                    <ToggleButton x:Name="PART_ExpandToggle"
+                                  Command="{markupCommon:UIKitTemplateBinding Command}"
+                                  CommandParameter="{markupCommon:UIKitTemplateBinding CommandParameter}"
+                                  Content="{markupCommon:UIKitTemplateBinding Content}"
+                                  ContentTemplate="{markupCommon:UIKitTemplateBinding ContentTemplate}" />
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--  endregion  -->
+
     <!--  region ExpandPanel  -->
 
     <Style x:Key="ExpandPanelUniversal"
@@ -254,6 +285,15 @@
 
     <!--  endregion  -->
 
+    <!--  region ItemsControl  -->
+
+    <Style x:Key="ItemsControlUniversal"
+           TargetType="{x:Type ItemsControl}">
+        <Setter Property="Focusable" Value="False" />
+    </Style>
+
+    <!--  endregion  -->
+
     <!--  region NotificationLayer  -->
 
     <Style x:Key="NotificationLayerUniversal"
@@ -277,7 +317,9 @@
 
     <Style x:Key="NotificationViewUniversal"
            TargetType="{x:Type notifications:NotificationView}">
-        <Setter Property="Focusable" Value="False" />
+        <Setter Property="Focusable" Value="True" />
+        <Setter Property="IsTabStop" Value="False" />
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
 
         <Setter Property="Template">
             <Setter.Value>
@@ -302,7 +344,6 @@
         <Setter Property="Focusable" Value="False" />
         <Setter Property="VerticalAlignment" Value="Center" />
         <Setter Property="HorizontalAlignment" Value="Center" />
-        <Setter Property="ToolTip" Value="{xl:Loc PasswordInputCapsLockAction_CapsLockOnToolTip, Scope=UiKit}" />
 
         <Setter Property="Template">
             <Setter.Value>
@@ -310,12 +351,13 @@
                     <Grid Background="Transparent"
                           Cursor="Arrow">
                         <controls:IconButton x:Name="PART_ActionButton"
-                                             Focusable="False"
                                              Icon="TextCapsLockSolid"
-                                             IsHitTestVisible="False" />
+                                             ToolTip="{xl:Loc PasswordInputCapsLockAction_UntoggleCapsLockToolTip,
+                                                              Scope=UiKit}" />
 
                         <controls:Popup IsPopupOpen="{markupCommon:UIKitTemplateBinding IsPopupOpen}"
-                                        PopupContent="{markupCommon:UIKitTemplateBinding ToolTip}"
+                                        PopupContent="{xl:Loc PasswordInputCapsLockAction_CapsLockOnToolTip,
+                                                              Scope=UiKit}"
                                         PopupPosition="Top"
                                         PopupTarget="{Binding ElementName=PART_ActionButton}" />
                     </Grid>
@@ -333,13 +375,14 @@
         <Setter Property="Focusable" Value="False" />
         <Setter Property="VerticalAlignment" Value="Center" />
         <Setter Property="HorizontalAlignment" Value="Center" />
-        <Setter Property="ToolTip" Value="{xl:Loc PasswordInputCopyAction_CopyToolTip, Scope=UiKit}" />
 
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type controls:PasswordInputCopyAction}">
                     <controls:IconButton x:Name="PART_ActionButton"
-                                         Icon="Copy" />
+                                         Icon="Copy"
+                                         ToolTip="{xl:Loc PasswordInputCopyAction_CopyToolTip,
+                                                          Scope=UiKit}" />
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
@@ -362,11 +405,11 @@
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsRevealed" Value="True">
                             <Setter Property="Icon" TargetName="PART_ActionButton" Value="EyeHide" />
-                            <Setter Property="ToolTip" Value="{xl:Loc PasswordInputRevealAction_HideToolTip, Scope=UiKit}" />
+                            <Setter Property="ToolTip" TargetName="PART_ActionButton" Value="{xl:Loc PasswordInputRevealAction_HideToolTip, Scope=UiKit}" />
                         </Trigger>
                         <Trigger Property="IsRevealed" Value="False">
                             <Setter Property="Icon" TargetName="PART_ActionButton" Value="EyeShow" />
-                            <Setter Property="ToolTip" Value="{xl:Loc PasswordInputRevealAction_ShowToolTip, Scope=UiKit}" />
+                            <Setter Property="ToolTip" TargetName="PART_ActionButton" Value="{xl:Loc PasswordInputRevealAction_ShowToolTip, Scope=UiKit}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -532,6 +575,7 @@
     <Style x:Key="TextHintUniversal"
            TargetType="{x:Type controls:TextHint}">
         <Setter Property="BaselineAlignment" Value="Center" />
+        <Setter Property="ToolTip" Value="{xl:Loc TextHint_DetailsToolTip, Scope=UiKit}" />
     </Style>
 
     <!--  endregion  -->
@@ -597,13 +641,14 @@
         <Setter Property="Focusable" Value="False" />
         <Setter Property="HorizontalAlignment" Value="Center" />
         <Setter Property="VerticalAlignment" Value="Center" />
-        <Setter Property="ToolTip" Value="{xl:Loc TextInputCopyAction_CopyToolTip, Scope=UiKit}" />
 
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type controls:TextInputCopyAction}">
                     <controls:IconButton x:Name="PART_ActionButton"
-                                         Icon="Copy" />
+                                         Icon="Copy"
+                                         ToolTip="{xl:Loc TextInputCopyAction_CopyToolTip,
+                                                          Scope=UiKit}" />
                 </ControlTemplate>
             </Setter.Value>
         </Setter>

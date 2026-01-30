@@ -14,6 +14,7 @@
 
 using System;
 using System.Windows;
+using Kaspirin.UI.Framework.Services.Internals;
 
 namespace Kaspirin.UI.Framework.UiKit.Extensions;
 
@@ -21,43 +22,21 @@ public static class UiElementExtensions
 {
     public static void WhenVisible(this UIElement uIElement, Action action)
     {
-        void OnVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
-        {
-            if (e.NewValue is true)
-            {
-                ((UIElement)sender).IsVisibleChanged -= OnVisibleChanged;
-                action();
-            }
-        }
-
-        if (uIElement.IsVisible)
-        {
-            action();
-        }
-        else
-        {
-            uIElement.IsVisibleChanged += OnVisibleChanged;
-        }
+        EventSubscriber.OnceOrNow(
+            source: uIElement,
+            condition: uIElement => uIElement.IsVisible,
+            subscribeCallback: eh => uIElement.IsVisibleChanged += eh,
+            unsubscribeCallback: eh => uIElement.IsVisibleChanged -= eh,
+            action: action);
     }
 
     public static void WhenInvisible(this UIElement uIElement, Action action)
     {
-        void OnVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
-        {
-            if (e.NewValue is false)
-            {
-                ((UIElement)sender).IsVisibleChanged -= OnVisibleChanged;
-                action();
-            }
-        }
-
-        if (uIElement.IsVisible is false)
-        {
-            action();
-        }
-        else
-        {
-            uIElement.IsVisibleChanged += OnVisibleChanged;
-        }
+        EventSubscriber.OnceOrNow(
+            source: uIElement,
+            condition: uIElement => !uIElement.IsVisible,
+            subscribeCallback: eh => uIElement.IsVisibleChanged += eh,
+            unsubscribeCallback: eh => uIElement.IsVisibleChanged -= eh,
+            action: action);
     }
 }

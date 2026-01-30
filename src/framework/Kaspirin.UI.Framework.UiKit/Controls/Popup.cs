@@ -44,8 +44,8 @@ public sealed class Popup : Control
         Loaded += PopupControlLoaded;
         Unloaded += PopupControlUnloaded;
 
-        _animationSettings = ServiceLocator.GetService<IAnimationSettingsProvider>();
-        _timer = WeakDispatcherTimer.Create(UpdatePopupPositionOnTimer, TimeSpan.FromMilliseconds(250), DispatcherPriority.Render);
+        _animationManager = ServiceLocator.GetService<IAnimationManager>();
+        _timer = TimerFactory.CreateOnUi(UpdatePopupPositionOnTimer, TimeSpan.FromMilliseconds(250), DispatcherPriority.Render);
     }
 
     #region Opened Event
@@ -290,9 +290,6 @@ public sealed class Popup : Control
         _popup.MouseDown += (s, e) => e.Handled = true;
         _popup.Placement = PlacementMode.Custom;
         _popup.CustomPopupPlacementCallback = PopupPlacementCallback;
-        _popup.PopupAnimation = _animationSettings.IsAnimationEnabled
-            ? PopupAnimation.Fade
-            : PopupAnimation.None;
 
         _popupArrow = (Image)GetTemplateChild("PART_PopupArrow");
         _popupRoot = (Border)GetTemplateChild("PART_PopupRoot");
@@ -358,12 +355,28 @@ public sealed class Popup : Control
                     var isTargetMouseOver = Guard.EnsureArgumentIsInstanceOfType<bool>(values[1]);
                     var openBehavior = Guard.EnsureArgumentIsInstanceOfType<PopupOpenBehavior>(values[2]);
 
-                    return openBehavior switch
+                    var isOpen = openBehavior switch
                     {
                         PopupOpenBehavior.OnMouseEnter => isTargetMouseOver,
                         PopupOpenBehavior.Explicit => isPopupOpen,
                         _ => throw new UnexpectedValueException(openBehavior)
                     };
+
+                    if (_popup != null)
+                    {
+                        var isAnimationEnabled = _animationManager.State == AnimationState.Enabled;
+                        if (isAnimationEnabled && isOpen)
+                        {
+                            _popup.PopupAnimation = PopupAnimation.Fade;
+                        }
+                        else
+                        {
+                            _popup.PopupAnimation = PopupAnimation.None;
+                        }
+                    }
+
+                    return isOpen;
+
                 }),
                 Mode = BindingMode.OneWay
             };
@@ -426,10 +439,11 @@ public sealed class Popup : Control
 
         var isTopmostPopup = _notificationLayer?.TopmostNotification == _notificationView;
         var isTargetVisible = IsPopupTargetVisible();
+        var isWindowForeground = IsWindowForeground();
         var isWindowActive = _currentWindow?.IsActive == true;
         var isWindowNotMinimized = _currentWindow?.WindowState != WindowState.Minimized;
 
-        var canShowPopup = isTargetVisible && isTopmostPopup && isWindowActive && isWindowNotMinimized;
+        var canShowPopup = isTargetVisible && isTopmostPopup && isWindowForeground && isWindowActive && isWindowNotMinimized;
 
         _popupRoot.IsHitTestVisible = canShowPopup;
         _popupRoot.Visibility = canShowPopup
@@ -453,7 +467,7 @@ public sealed class Popup : Control
         }
     }
 
-    private void UpdatePopupPositionOnTimer(object? sender, EventArgs e)
+    private void UpdatePopupPositionOnTimer()
         => UpdatePopupPosition();
 
     private void OnPopupOpened(object? sender, EventArgs e)
@@ -573,6 +587,17 @@ public sealed class Popup : Control
         }
     }
 
+    private bool IsWindowForeground()
+    {
+        var hWnd = _currentWindow?.GetHandle();
+        if (hWnd.HasValue && hWnd != IntPtr.Zero)
+        {
+            return hWnd.Value.IsForeground();
+        }
+
+        return false;
+    }
+
     private void SubscribeToWindowEvents()
     {
         var currentWindow = this.GetWindow();
@@ -620,7 +645,7 @@ public sealed class Popup : Control
             return;
         }
 
-        _notificationView = _popupTarget.FindVisualParent<NotificationView>();
+        _notificationView = _popupTarget.FindVisualParent<NotificationView>() ?? this.FindVisualParent<NotificationView>();
 
         var notificationLayer = NotificationLayer.FindLayer(_popupTarget, isModal: true);
         if (notificationLayer is not null)
@@ -723,6 +748,6 @@ public sealed class Popup : Control
     private FrameworkElement? _popupTarget;
     private NotificationView? _notificationView;
 
-    private readonly IAnimationSettingsProvider _animationSettings;
-    private readonly DispatcherTimer _timer;
+    private readonly IAnimationManager _animationManager;
+    private readonly ITimer _timer;
 }

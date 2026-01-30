@@ -20,11 +20,6 @@ namespace Kaspirin.UI.Framework.NativeMethods.Api.User32.Enums;
 public enum WindowCompositionAttribute
 {
     /// <summary>
-    ///     The WCA_ACCENT_POLICY constant.
-    /// </summary>
-    AccentPolicy = 19,
-
-    /// <summary>
     ///     The WCA_EXCLUDED_FROM_DDA constant.
     /// </summary>
     ExcludedFromDda = 24,

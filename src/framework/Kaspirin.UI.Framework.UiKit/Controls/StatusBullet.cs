@@ -13,7 +13,9 @@
 // limitations under the License.
 
 using System.Windows;
+using System.Windows.Automation.Peers;
 using System.Windows.Controls;
+using Kaspirin.UI.Framework.UiKit.Controls.Automation;
 
 namespace Kaspirin.UI.Framework.UiKit.Controls;
 
@@ -34,4 +36,9 @@ public sealed class StatusBullet : ContentControl
         new PropertyMetadata(default(StatusBulletType)));
 
     #endregion
+
+    protected override AutomationPeer OnCreateAutomationPeer()
+    {
+        return new StatusBulletAutomationPeer(this);
+    }
 }

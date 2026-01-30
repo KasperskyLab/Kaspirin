@@ -13,9 +13,11 @@
 // limitations under the License.
 
 using System.Windows;
+using System.Windows.Automation.Peers;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
+using Kaspirin.UI.Framework.UiKit.Controls.Automation;
 
 namespace Kaspirin.UI.Framework.UiKit.Controls;
 
@@ -86,6 +88,11 @@ public class Switch : ToggleButton
         // user input is handled in Switch.OnPreviewMouseUp
     }
 
+    protected override AutomationPeer OnCreateAutomationPeer()
+    {
+        return new SwitchAutomationPeer(this);
+    }
+
     protected virtual void BeforeCheck() { }
     protected virtual void BeforeUncheck() { }
 
@@ -134,6 +141,8 @@ public class Switch : ToggleButton
                 break;
         }
 #pragma warning restore IDE0010 // Add missing cases
+
+        eventArgs.Handled = eventArgs.Key.In(Key.Up, Key.Down, Key.Left, Key.Right, Key.Space, Key.Enter);
     }
 
     private void OnPreviewMouseDown(object sender, MouseButtonEventArgs eventArgs)

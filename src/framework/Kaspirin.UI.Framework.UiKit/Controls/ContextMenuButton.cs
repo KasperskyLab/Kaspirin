@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
@@ -32,6 +33,10 @@ public class ContextMenuButton : ContentControl
         ContextMenuProperty.OverrideMetadata(
             typeof(ContextMenuButton),
             new FrameworkPropertyMetadata(null, OnContextMenuChanged));
+
+        ToolTipProperty.OverrideMetadata(
+            typeof(ContextMenuButton),
+            new FrameworkPropertyMetadata(null, OnToolTipChanged));
     }
 
     public ContextMenuButton()
@@ -103,6 +108,22 @@ public class ContextMenuButton : ContentControl
         typeof(UIKitIcon_16),
         typeof(ContextMenuButton),
         new PropertyMetadata(default(UIKitIcon_16)));
+
+    #endregion
+
+    #region ContextMenuButtonToolTip
+
+    public object ContextMenuButtonToolTip
+    {
+        get => GetValue(ContextMenuButtonToolTipProperty);
+        set => SetValue(ContextMenuButtonToolTipProperty, value);
+    }
+
+    public static readonly DependencyProperty ContextMenuButtonToolTipProperty = DependencyProperty.Register(
+        nameof(ContextMenuButtonToolTip),
+        typeof(object),
+        typeof(ContextMenuButton),
+        new PropertyMetadata(default(object)));
 
     #endregion
 
@@ -178,6 +199,11 @@ public class ContextMenuButton : ContentControl
         contextMenuButton.AttachContextMenu((ContextMenu?)e.NewValue);
 
         contextMenuButton.SetToggleHitTestVisible(true);
+    }
+
+    private static void OnToolTipChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+    {
+        throw new InvalidOperationException($"ToolTip property must be changed via {nameof(ContextMenuButtonToolTip)} property");
     }
 
     private void CloseContextMenu()

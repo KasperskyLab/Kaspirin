@@ -34,7 +34,7 @@ public static class AnimationExtensions
     /// </returns>
     public static Duration CoerceDuration(this Duration duration)
     {
-        return ServiceLocator.GetService<IAnimationSettingsProvider>().IsAnimationEnabled
+        return ServiceLocator.GetService<IAnimationManager>().State == AnimationState.Enabled
             ? duration
             : _instant;
     }
@@ -50,7 +50,7 @@ public static class AnimationExtensions
     /// </returns>
     public static Duration CoerceDuration(this TimeSpan duration)
     {
-        return ServiceLocator.GetService<IAnimationSettingsProvider>().IsAnimationEnabled
+        return ServiceLocator.GetService<IAnimationManager>().State == AnimationState.Enabled
             ? new Duration(duration)
             : _instant;
     }
@@ -64,9 +64,9 @@ public static class AnimationExtensions
     /// <param name="quality">
     ///     Animation quality.
     /// </param>
-    public static void SetFrameRate(this Storyboard storyboard, AnimationRenderQuality quality = AnimationRenderQuality.Auto)
+    public static void SetFrameRate(this Storyboard storyboard, AnimationRenderQuality quality = AnimationRenderQuality.Default)
     {
-        var frameRate = ServiceLocator.GetService<IAnimationSettingsProvider>().GetDesiredFrameRate(quality);
+        var frameRate = ServiceLocator.GetService<IAnimationManager>().GetDesiredFrameRate(quality);
 
         storyboard.SetValue(Timeline.DesiredFrameRateProperty, frameRate);
     }

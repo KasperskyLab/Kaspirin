@@ -13,12 +13,14 @@
 // limitations under the License.
 
 using System.Windows;
+using System.Windows.Automation.Peers;
 using System.Windows.Controls;
 using System.Windows.Media;
+using Kaspirin.UI.Framework.UiKit.Controls.Automation;
 
 namespace Kaspirin.UI.Framework.UiKit.Controls;
 
-public abstract class IconButtonBase : Button
+public abstract class IconButtonBase : Button, IAccessibilityAware
 {
     #region IconBrush
 
@@ -35,4 +37,10 @@ public abstract class IconButtonBase : Button
         new PropertyMetadata(default(Brush)));
 
     #endregion
+
+    protected override AutomationPeer OnCreateAutomationPeer()
+        => new IconButtonAutomationPeer(this);
+
+    bool IAccessibilityAware.Validate()
+        => this.Validate();
 }

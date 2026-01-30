@@ -20,4 +20,5 @@ public enum NotificationHintType
     Warning,
     Danger,
     Info,
+    Neutral,
 }

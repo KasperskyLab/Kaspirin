@@ -33,7 +33,7 @@ public sealed class WinRegistryTracker : IRegistryTracker
         Guard.ArgumentIsNotNullOrEmpty(regPath);
         Guard.ArgumentIsNotNull(changed);
 
-        return Task.Factory.StartNew(() =>
+        return Executers.InTpAsync(() =>
         {
             using var key = RegistryKey.OpenBaseKey(hive, view).OpenSubKey(regPath);
 
@@ -61,7 +61,7 @@ public sealed class WinRegistryTracker : IRegistryTracker
 
                     if (WaitHandle.WaitAny(handlers) == Array.IndexOf(handlers, keyChanged))
                     {
-                        Task.Factory.StartNew(changed);
+                        Executers.InTpAsync(changed);
                     }
                 }
             }
@@ -69,7 +69,7 @@ public sealed class WinRegistryTracker : IRegistryTracker
             {
                 _tracer.TraceInformation($"Stopped tracking '{key}' of registry changes");
             }
-        }, cancellationToken, TaskCreationOptions.LongRunning, TaskScheduler.Default);
+        }, TaskCreationOptions.LongRunning, cancellationToken: cancellationToken);
     }
 
     private static void TrackKeyChanges(RegistryKey key, WaitHandle waitHandle)

@@ -14,8 +14,10 @@
 
 using System;
 using System.Windows;
+using System.Windows.Automation.Peers;
 using System.Windows.Controls;
 using System.Windows.Input;
+using Kaspirin.UI.Framework.UiKit.Controls.Automation;
 using Kaspirin.UI.Framework.UiKit.Controls.Internals;
 
 namespace Kaspirin.UI.Framework.UiKit.Controls;
@@ -26,7 +28,7 @@ public sealed class InteractivityNotification : ContentControl, INotificationAni
 
     public InteractivityNotification()
     {
-        _deferredClose = new DeferredAction(() => Close(forced: false));
+        _automationPeer = new Lazy<InteractivityNotificationAutomationPeer>(() => new(this));
 
         this.WhenLoaded(OnLoaded);
     }
@@ -191,7 +193,15 @@ public sealed class InteractivityNotification : ContentControl, INotificationAni
 
     internal void ShowContent(Action? continueCallback)
     {
-        _mediaProvider.LaunchShowAnimation(this, continueCallback);
+        _mediaProvider.LaunchShowAnimation(this, onCompletedAction: () =>
+        {
+            if (_automationPeer.IsValueCreated)
+            {
+                _automationPeer.Value.RaiseShown();
+            }
+
+            continueCallback?.Invoke();
+        });
     }
 
     internal void HideContent(Action? continueCallback)
@@ -209,6 +219,11 @@ public sealed class InteractivityNotification : ContentControl, INotificationAni
         {
             _notificationView?.Close();
         }
+    }
+
+    protected override AutomationPeer OnCreateAutomationPeer()
+    {
+        return _automationPeer.Value;
     }
 
     private void OnLoaded()
@@ -234,16 +249,19 @@ public sealed class InteractivityNotification : ContentControl, INotificationAni
 
     private void StartAutoClose()
     {
-        _deferredClose.Execute(AutoCloseTimeout);
+        _deferredClose?.Cancel();
+        _deferredClose = DeferredActionFactory.CreateDebouncerOnUi(() => Close(forced: false), AutoCloseTimeout);
+        _deferredClose.Execute();
     }
 
     private void StopAutoClose()
     {
-        _deferredClose.Cancel();
+        _deferredClose?.Cancel();
     }
 
-    private readonly DeferredAction _deferredClose;
     private readonly InteractivityMediaProvider _mediaProvider = new();
+    private readonly Lazy<InteractivityNotificationAutomationPeer> _automationPeer;
 
+    private IDeferredAction? _deferredClose;
     private NotificationView? _notificationView;
 }

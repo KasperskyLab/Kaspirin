@@ -14,6 +14,8 @@
 
 using System;
 using System.Windows;
+using System.Windows.Automation.Peers;
+using System.Windows.Data;
 using System.Windows.Markup;
 
 namespace Kaspirin.UI.Framework.UiKit.Controls.Internals;
@@ -40,9 +42,25 @@ internal sealed class FrameworkObject
         }
     }
 
+    public static AutomationPeer CreatePeerForElement(DependencyObject dependencyObject)
+    {
+        if (dependencyObject is FrameworkElement fe)
+        {
+            return FrameworkElementAutomationPeer.CreatePeerForElement(fe);
+        }
+        else if (dependencyObject is FrameworkContentElement fce)
+        {
+            return FrameworkContentElementAutomationPeer.CreatePeerForElement(fce);
+        }
+        else
+        {
+            throw new ArgumentException("DependencyObject must be FrameworkElement or FrameworkContentElement", nameof(dependencyObject));
+        }
+    }
+
     public FrameworkElement? FE { get; }
     public FrameworkContentElement? FCE { get; }
-    public DependencyObject? DO { get; }
+    public DependencyObject DO { get; }
 
     public bool IsFE => FE != null;
     public bool IsFCE => FCE != null;
@@ -56,13 +74,9 @@ internal sealed class FrameworkObject
             {
                 return FE!.Parent;
             }
-            else if (IsFCE)
+            else // if (IsFCE)
             {
                 return FCE!.Parent;
-            }
-            else
-            {
-                return null;
             }
         }
     }
@@ -75,13 +89,9 @@ internal sealed class FrameworkObject
             {
                 return FE!.TemplatedParent;
             }
-            else if (IsFCE)
+            else // if (IsFCE)
             {
                 return FCE!.TemplatedParent;
-            }
-            else
-            {
-                return null;
             }
         }
     }
@@ -94,13 +104,9 @@ internal sealed class FrameworkObject
             {
                 return FE!.Language;
             }
-            else if (IsFCE)
+            else // if (IsFCE)
             {
                 return FCE!.Language;
-            }
-            else
-            {
-                return null;
             }
         }
     }
@@ -113,13 +119,9 @@ internal sealed class FrameworkObject
             {
                 return FE!.DataContext;
             }
-            else if (IsFCE)
+            else // if (IsFCE)
             {
                 return FCE!.DataContext;
-            }
-            else
-            {
-                return null;
             }
         }
     }
@@ -132,13 +134,9 @@ internal sealed class FrameworkObject
             {
                 return FE!.Style;
             }
-            else if (IsFCE)
+            else // if (IsFCE)
             {
                 return FCE!.Style;
-            }
-            else
-            {
-                return null;
             }
         }
         set
@@ -147,7 +145,7 @@ internal sealed class FrameworkObject
             {
                 FE!.Style = value;
             }
-            else if (IsFCE)
+            else // if (IsFCE)
             {
                 FCE!.Style = value;
             }
@@ -162,13 +160,9 @@ internal sealed class FrameworkObject
             {
                 return FE!.IsLoaded;
             }
-            else if (IsFCE)
+            else // if (IsFCE)
             {
                 return FCE!.IsLoaded;
-            }
-            else
-            {
-                return false;
             }
         }
     }
@@ -181,63 +175,10 @@ internal sealed class FrameworkObject
             {
                 return FE!.IsInitialized;
             }
-            else if (IsFCE)
+            else // if (IsFCE)
             {
                 return FCE!.IsInitialized;
             }
-            else
-            {
-                return false;
-            }
-        }
-    }
-
-    public void WhenLoaded(Action action)
-    {
-        void OnLoaded(object sender, RoutedEventArgs e)
-        {
-            new FrameworkObject(Guard.EnsureIsInstanceOfType<DependencyObject>(sender)).Loaded -= OnLoaded;
-
-            action();
-        }
-
-        if (IsLoaded)
-        {
-            action();
-        }
-        else
-        {
-            Loaded += OnLoaded;
-        }
-    }
-
-    public void WhenUnloaded(Action action)
-    {
-        void OnUnloaded(object sender, RoutedEventArgs e)
-        {
-            new FrameworkObject(Guard.EnsureIsInstanceOfType<DependencyObject>(sender)).Unloaded -= OnUnloaded;
-
-            action();
-        }
-
-        Unloaded += OnUnloaded;
-    }
-
-    public void WhenInitialized(Action action)
-    {
-        void OnInitialized(object? sender, EventArgs e)
-        {
-            new FrameworkObject(Guard.EnsureIsInstanceOfType<DependencyObject>(sender)).Initialized -= OnInitialized;
-            action();
-        }
-
-        if (IsInitialized)
-        {
-            action();
-        }
-        else
-        {
-            Initialized += OnInitialized;
         }
     }
 
@@ -247,7 +188,7 @@ internal sealed class FrameworkObject
         {
             FE!.RaiseEvent(args);
         }
-        else if (IsFCE)
+        else // if (IsFCE)
         {
             FCE!.RaiseEvent(args);
         }
@@ -259,12 +200,70 @@ internal sealed class FrameworkObject
         {
             return FE!.ToString();
         }
-        else if (IsFCE)
+        else // if (IsFCE)
         {
             return FCE!.ToString();
         }
+    }
 
-        return "Null";
+    public object FindResource(string resourceKey)
+    {
+        if (IsFE)
+        {
+            return FE!.FindResource(resourceKey);
+        }
+        else // if (IsFCE)
+        {
+            return FCE!.FindResource(resourceKey);
+        }
+    }
+
+    public object? GetValue(DependencyProperty property)
+    {
+        if (IsFE)
+        {
+            return FE!.GetValue(property);
+        }
+        else // if (IsFCE)
+        {
+            return FCE!.GetValue(property);
+        }
+    }
+
+    public TValue? GetValue<TValue>(DependencyProperty property)
+    {
+        if (IsFE)
+        {
+            return FE!.GetValue<TValue>(property);
+        }
+        else // if (IsFCE)
+        {
+            return FCE!.GetValue<TValue>(property);
+        }
+    }
+
+    public void SetValue(DependencyProperty property, object? value)
+    {
+        if (IsFE)
+        {
+            FE!.SetValue(property, value);
+        }
+        else // if (IsFCE)
+        {
+            FCE!.SetValue(property, value);
+        }
+    }
+
+    public void SetBinding(DependencyProperty property, BindingBase binding)
+    {
+        if (IsFE)
+        {
+            FE!.SetBinding(property, binding);
+        }
+        else // if (IsFCE)
+        {
+            FCE!.SetBinding(property, binding);
+        }
     }
 
     public event RoutedEventHandler Loaded
@@ -275,7 +274,7 @@ internal sealed class FrameworkObject
             {
                 FE!.Loaded += value;
             }
-            else if (IsFCE)
+            else // if (IsFCE)
             {
                 FCE!.Loaded += value;
             }
@@ -286,7 +285,7 @@ internal sealed class FrameworkObject
             {
                 FE!.Loaded -= value;
             }
-            else if (IsFCE)
+            else // if (IsFCE)
             {
                 FCE!.Loaded -= value;
             }
@@ -301,7 +300,7 @@ internal sealed class FrameworkObject
             {
                 FE!.Unloaded += value;
             }
-            else if (IsFCE)
+            else // if (IsFCE)
             {
                 FCE!.Unloaded += value;
             }
@@ -312,7 +311,7 @@ internal sealed class FrameworkObject
             {
                 FE!.Unloaded -= value;
             }
-            else if (IsFCE)
+            else // if (IsFCE)
             {
                 FCE!.Unloaded -= value;
             }
@@ -327,7 +326,7 @@ internal sealed class FrameworkObject
             {
                 FE!.Initialized += value;
             }
-            else if (IsFCE)
+            else // if (IsFCE)
             {
                 FCE!.Initialized += value;
             }
@@ -338,7 +337,7 @@ internal sealed class FrameworkObject
             {
                 FE!.Initialized -= value;
             }
-            else if (IsFCE)
+            else // if (IsFCE)
             {
                 FCE!.Initialized -= value;
             }

@@ -25,8 +25,6 @@ public class SecureClipboard : ISecureClipboard
 {
     public SecureClipboard()
     {
-        _clipboardClearAction = new DeferredAction(ClearClipboard);
-
         Tracer = ComponentTracer.Get(ComponentTracers.Clipboard, this);
     }
 
@@ -81,7 +79,8 @@ public class SecureClipboard : ISecureClipboard
         else
         {
             CleanupDeferredBuffer();
-            _clipboardClearAction.Cancel();
+
+            _clipboardClearAction?.Cancel();
         }
     }
 
@@ -103,7 +102,7 @@ public class SecureClipboard : ISecureClipboard
     protected virtual TimeSpan? GetClipboardClearInterval()
         => _defaultClipboardClearInterval;
 
-    protected bool IsClipboardClearTimerEnabled => _clipboardClearAction.IsEnabled;
+    protected bool IsClipboardClearTimerEnabled => _clipboardClearAction?.State != DeferredActionState.Idle;
 
     protected void RestartClipboardClearTimer()
     {
@@ -111,11 +110,13 @@ public class SecureClipboard : ISecureClipboard
 
         if (interval.HasValue)
         {
-            _clipboardClearAction.Execute(interval.Value);
+            _clipboardClearAction?.Cancel();
+            _clipboardClearAction = DeferredActionFactory.CreateDebouncerOnUi(ClearClipboard, interval.Value);
+            _clipboardClearAction?.Execute();
         }
         else
         {
-            _clipboardClearAction.Cancel();
+            _clipboardClearAction?.Cancel();
         }
     }
 
@@ -253,8 +254,7 @@ public class SecureClipboard : ISecureClipboard
 
     private string? _deferredCleanupBuffer;
     private int _lastClipboardSequenceNumber;
-
-    private readonly DeferredAction _clipboardClearAction;
+    private IDeferredAction? _clipboardClearAction;
 
     private const int OpenClipboardRetries = 10;
     private const int OpenClipboardRetryMillisecondsTimeout = 100;

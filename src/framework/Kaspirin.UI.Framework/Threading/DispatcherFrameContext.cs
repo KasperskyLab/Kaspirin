@@ -14,30 +14,29 @@
 
 using System.Windows.Threading;
 
-namespace Kaspirin.UI.Framework.Threading
+namespace Kaspirin.UI.Framework.Threading;
+
+/// <summary>
+///     The context of a suspended stack that allows you to resume its execution.
+/// </summary>
+public sealed class DispatcherFrameContext
 {
-    /// <summary>
-    ///     The context of a suspended stack that allows you to resume its execution.
-    /// </summary>
-    public sealed class DispatcherFrameContext
+    internal DispatcherFrameContext(DispatcherFrame dispatcherFrame)
     {
-        internal DispatcherFrameContext(DispatcherFrame dispatcherFrame)
-        {
-            _dispatcherFrame = dispatcherFrame;
-        }
-
-        /// <summary>
-        ///     Resumes stack execution from the place where the <see cref="DispatcherFrameAction.Run" /> method was previously called.
-        /// </summary>
-        public void CloseFrame()
-        {
-            if (_dispatcherFrame != null)
-            {
-                _dispatcherFrame.Continue = false;
-                _dispatcherFrame = null;
-            }
-        }
-
-        private DispatcherFrame? _dispatcherFrame;
+        _dispatcherFrame = dispatcherFrame;
     }
+
+    /// <summary>
+    ///     Resumes stack execution from the place where the <see cref="DispatcherFrameAction.Run" /> method was previously called.
+    /// </summary>
+    public void CloseFrame()
+    {
+        if (_dispatcherFrame != null)
+        {
+            _dispatcherFrame.Continue = false;
+            _dispatcherFrame = null;
+        }
+    }
+
+    private DispatcherFrame? _dispatcherFrame;
 }

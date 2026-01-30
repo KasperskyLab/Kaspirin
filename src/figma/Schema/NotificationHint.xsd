@@ -26,10 +26,12 @@
 		<xs:all>
 			<xs:element name="ForegroundDanger" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
 			<xs:element name="ForegroundInfo" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="ForegroundNeutral" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
 			<xs:element name="ForegroundPositive" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
 			<xs:element name="ForegroundWarning" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
 			<xs:element name="IconBrushDanger" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
 			<xs:element name="IconBrushInfo" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="IconBrushNeutral" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
 			<xs:element name="IconBrushPositive" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
 			<xs:element name="IconBrushWarning" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
 			<xs:element name="IconMargin" type="Thickness" minOccurs="1" maxOccurs="1"/>
@@ -39,6 +41,7 @@
 	<xs:attributeGroup name="attributes_NotificationHint">
 		<xs:attribute name="IconNameDanger" type="xs:string" use="required"/>
 		<xs:attribute name="IconNameInfo" type="xs:string" use="required"/>
+		<xs:attribute name="IconNameNeutral" type="xs:string" use="required"/>
 		<xs:attribute name="IconNamePositive" type="xs:string" use="required"/>
 		<xs:attribute name="IconNameWarning" type="xs:string" use="required"/>
 		<xs:attribute name="Id" type="xs:string" use="required"/>

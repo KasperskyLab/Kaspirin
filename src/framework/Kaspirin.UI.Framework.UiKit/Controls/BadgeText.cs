@@ -13,6 +13,8 @@
 // limitations under the License.
 
 using System.Windows;
+using System.Windows.Automation.Peers;
+using Kaspirin.UI.Framework.UiKit.Controls.Automation;
 
 namespace Kaspirin.UI.Framework.UiKit.Controls;
 
@@ -33,4 +35,9 @@ public sealed class BadgeText : Badge
         new PropertyMetadata(default(string)));
 
     #endregion
+
+    protected override AutomationPeer OnCreateAutomationPeer()
+    {
+        return new BadgeTextAutomationPeer(this);
+    }
 }

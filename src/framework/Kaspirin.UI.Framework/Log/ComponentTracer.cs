@@ -168,17 +168,19 @@ public sealed class ComponentTracer
     {
         Guard.ArgumentIsNotNull(parameters);
 
+        var tracerPrefix = GetTracerPrefix(parameters);
+
         var hasHash = parameters.HashSource != null && parameters.HashFunc != null;
         if (hasHash)
         {
-            return new ComponentTracer(parameters);
+            return new ComponentTracer(tracerPrefix);
         }
         else
         {
             var tracerKey = GetTracerKey(parameters);
 
             // if tracer has no hash part is message, we can cache tracer instance.
-            return _tracersMap.GetOrAdd(tracerKey, _ => new ComponentTracer(parameters));
+            return _tracersMap.GetOrAdd(tracerKey, _ => new ComponentTracer(tracerPrefix));
         }
     }
 
@@ -428,27 +430,9 @@ public sealed class ComponentTracer
         TraceError($"{method}: {interpolatedStringHandler.ToStringAndClear()}");
     }
 
-    private ComponentTracer(ComponentTracerParameters parameters)
+    private ComponentTracer(string tracePrefix)
     {
-        _tracePrefix = $"{parameters.TraceComponent}\t";
-
-        if (parameters.HashSource != null)
-        {
-            var hash = parameters.HashFunc?.Invoke(parameters.HashSource);
-            if (hash.IsNotNullOrEmpty())
-            {
-                _tracePrefix += $"hash:{hash}\t";
-            }
-        }
-
-        if (parameters.PrefixSource != null)
-        {
-            var prefix = parameters.PrefixFunc?.Invoke(parameters.PrefixSource);
-            if (prefix.IsNotNullOrEmpty())
-            {
-                _tracePrefix += $"{prefix} ";
-            }
-        }
+        _tracePrefix = tracePrefix;
     }
 
     private static void UpdateTraceLevels()
@@ -474,6 +458,31 @@ public sealed class ComponentTracer
         }
 
         return key;
+    }
+
+    private static string GetTracerPrefix(ComponentTracerParameters parameters)
+    {
+        var tracePrefix = $"{parameters.TraceComponent}\t";
+
+        if (parameters.HashSource != null)
+        {
+            var hash = parameters.HashFunc?.Invoke(parameters.HashSource);
+            if (hash.IsNotNullOrEmpty())
+            {
+                tracePrefix += $"hash:{hash}\t";
+            }
+        }
+
+        if (parameters.PrefixSource != null)
+        {
+            var prefix = parameters.PrefixFunc?.Invoke(parameters.PrefixSource);
+            if (prefix.IsNotNullOrEmpty())
+            {
+                tracePrefix += $"{prefix} ";
+            }
+        }
+
+        return tracePrefix;
     }
 
     private readonly string _tracePrefix;

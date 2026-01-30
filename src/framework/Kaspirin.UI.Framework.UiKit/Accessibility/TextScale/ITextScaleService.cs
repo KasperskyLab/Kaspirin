@@ -20,11 +20,6 @@ namespace Kaspirin.UI.Framework.UiKit.Accessibility.TextScale;
 public interface ITextScaleService
 {
     /// <summary>
-    ///     Indicates whether the text scaling service is enabled.
-    /// </summary>
-    bool IsEnabled { get; set; }
-
-    /// <summary>
     ///     Gets the current text zoom factor.
     /// </summary>
     double ScaleFactor { get; }

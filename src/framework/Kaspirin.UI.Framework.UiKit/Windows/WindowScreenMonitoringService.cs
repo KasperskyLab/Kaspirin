@@ -60,7 +60,7 @@ public sealed class WindowScreenMonitoringService
         }
         else
         {
-            service.Deinitialize();
+            service.Dispose(service, EventArgs.Empty);
         }
     }
 
@@ -105,7 +105,7 @@ public sealed class WindowScreenMonitoringService
 
     public event ScreenResolutionChangedDelegate ScreenResolutionChanged = (sender, args) => { };
 
-    public event Action Initialized = () => { };
+    public event EventHandler Initialized = (o, e) => { };
 
     private void Initialize()
     {
@@ -117,7 +117,7 @@ public sealed class WindowScreenMonitoringService
         IsInitialized = true;
 
         TargetWindow = _window;
-        TargetWindow.Closed += (s, e) => Deinitialize();
+        TargetWindow.Closed += Dispose;
 
         OriginDpi = WindowDpi = GetWindowDpi();
         ScreenResolution = GetScreenResolution();
@@ -131,12 +131,12 @@ public sealed class WindowScreenMonitoringService
 
         WindowHookStorage.AddHook(_window, hook, WindowHooks.DpiDisplayChangedHook);
 
-        Initialized.Invoke();
+        Initialized.Invoke(this, EventArgs.Empty);
 
         _tracer.TraceInformation($"Service initialized. {DumpState()}");
     }
 
-    private void Deinitialize()
+    private void Dispose(object? sender, EventArgs? e)
     {
         if (!IsInitialized)
         {
@@ -147,9 +147,9 @@ public sealed class WindowScreenMonitoringService
 
         _window = null;
         IsInitialized = false;
-        Initialized = () => { };
+        Initialized = (o, e) => { };
 
-        _tracer.TraceInformation($"Service deinitialized. {DumpState()}");
+        _tracer.TraceInformation($"Service disposed. {DumpState()}");
     }
 
     private IntPtr WndProcOnGetMinMaxInfo(IntPtr hwnd, IntPtr wParam, IntPtr? wStruct, IntPtr lParam, MinMaxInfo? lStruct, ref bool handled)

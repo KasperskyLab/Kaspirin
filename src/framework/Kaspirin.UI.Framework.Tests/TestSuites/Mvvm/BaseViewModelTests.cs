@@ -23,15 +23,15 @@ public sealed class BaseViewModelTests
     [TestInitialize]
     public void InitializeTests()
     {
-        _originExecutor = Executers.Implementation;
+        _originExecutor = Executers.DispatcherExecutor;
 
-        Executers.Implementation = new TestExecutor();
+        Executers.DispatcherExecutor = new TestExecutor();
     }
 
     [TestCleanup]
     public void CleanupTests()
     {
-        Executers.Implementation = Guard.EnsureIsNotNull(_originExecutor);
+        Executers.DispatcherExecutor = Guard.EnsureIsNotNull(_originExecutor);
     }
 
     [TestMethod]
@@ -90,10 +90,10 @@ public sealed class BaseViewModelTests
         var testThreadId = Thread.CurrentThread.ManagedThreadId;
         var textExecutor = new TestExecutor
         {
-            IsUiThread = true
+            IsDispatcherThread = true
         };
 
-        Executers.Implementation = textExecutor;
+        Executers.DispatcherExecutor = textExecutor;
         var viewModelThreadId = 0;
         var viewModel = new TestViewModel();
         viewModel.PropertyChanged += (sender, args) =>
@@ -118,10 +118,10 @@ public sealed class BaseViewModelTests
         var testThreadId = Thread.CurrentThread.ManagedThreadId;
         var textExecutor = new TestExecutor
         {
-            IsUiThread = false
+            IsDispatcherThread = false
         };
 
-        Executers.Implementation = textExecutor;
+        Executers.DispatcherExecutor = textExecutor;
 
         var viewModelThreadId = 0;
         var viewModel = new TestViewModel();
@@ -179,5 +179,5 @@ public sealed class BaseViewModelTests
         Assert.IsTrue(propertyChangedRaised);
     }
 
-    private IUiThreadExecutor? _originExecutor;
+    private IDispatcherExecutor? _originExecutor;
 }

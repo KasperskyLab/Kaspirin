@@ -20,9 +20,11 @@ public interface IInteractionRequest<T> where T : InteractionObject
 {
     event EventHandler<InteractionRequestedEventArgs> Raised;
 
+    bool SkipTriggerAction { get; set; }
+
+    bool IsAsync { get; set; }
+
     bool IsRaised { get; }
 
     T? InteractionObject { get; }
-
-    void SetSilentMode();
 }

@@ -13,11 +13,13 @@
 // limitations under the License.
 
 using System.Windows;
-using System.Windows.Controls.Primitives;
+using System.Windows.Automation.Peers;
+using System.Windows.Controls;
+using Kaspirin.UI.Framework.UiKit.Controls.Automation;
 
 namespace Kaspirin.UI.Framework.UiKit.Controls;
 
-public sealed class IslandButton : ButtonBase
+public sealed class IslandButton : Button, IAccessibilityAware
 {
     public IslandButton()
     {
@@ -41,4 +43,14 @@ public sealed class IslandButton : ButtonBase
         UIKitIslandHelper.TypePropertyKey.DependencyProperty.AddOwner(typeof(IslandButton));
 
     #endregion
+
+    protected override AutomationPeer OnCreateAutomationPeer()
+    {
+        return new IslandButtonAutomationPeer(this);
+    }
+
+    bool IAccessibilityAware.Validate()
+    {
+        return this.Validate();
+    }
 }

@@ -13,7 +13,9 @@
 // limitations under the License.
 
 using System.Windows;
+using System.Windows.Automation.Peers;
 using System.Windows.Controls;
+using Kaspirin.UI.Framework.UiKit.Controls.Automation;
 
 namespace Kaspirin.UI.Framework.UiKit.Controls;
 
@@ -94,6 +96,16 @@ public sealed class BadgeCounter : Badge
         UpdateCounterText();
     }
 
+    internal int GetActualCounter()
+    {
+        return IsOverflow ? MaxCounter - 1 : Counter;
+    }
+
+    protected override AutomationPeer OnCreateAutomationPeer()
+    {
+        return new BadgeCounterAutomationPeer(this);
+    }
+
     private static void OnCounterChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
     {
         ((BadgeCounter)d).UpdateCounterText();
@@ -105,7 +117,7 @@ public sealed class BadgeCounter : Badge
 
         if (_counterTb != null)
         {
-            _counterTb.Text = (IsOverflow ? MaxCounter - 1 : Counter).ToString();
+            _counterTb.Text = $"{GetActualCounter()}";
         }
     }
 

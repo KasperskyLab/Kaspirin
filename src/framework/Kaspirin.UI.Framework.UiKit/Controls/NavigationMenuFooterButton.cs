@@ -13,13 +13,15 @@
 // limitations under the License.
 
 using System.Windows;
+using System.Windows.Automation.Peers;
 using System.Windows.Data;
+using Kaspirin.UI.Framework.UiKit.Controls.Automation;
 using Kaspirin.UI.Framework.UiKit.Controls.Internals;
 using WpfContextMenu = System.Windows.Controls.ContextMenu;
 
 namespace Kaspirin.UI.Framework.UiKit.Controls;
 
-public sealed class NavigationMenuFooterButton : NavigationMenuButtonBase
+public sealed class NavigationMenuFooterButton : NavigationMenuButtonBase, IAccessibilityAware
 {
     static NavigationMenuFooterButton()
     {
@@ -53,6 +55,11 @@ public sealed class NavigationMenuFooterButton : NavigationMenuButtonBase
         {
             ContextMenu.IsOpen = true;
         }
+    }
+
+    protected override AutomationPeer OnCreateAutomationPeer()
+    {
+        return new NavigationMenuFooterButtonAutomationPeer(this);
     }
 
     private void AttachContextMenu(WpfContextMenu? contextMenu)
@@ -114,4 +121,9 @@ public sealed class NavigationMenuFooterButton : NavigationMenuButtonBase
 
     private void SetHitTestVisible(bool value)
         => IsHitTestVisible = value;
+
+    bool IAccessibilityAware.Validate()
+    {
+        return this.Validate();
+    }
 }

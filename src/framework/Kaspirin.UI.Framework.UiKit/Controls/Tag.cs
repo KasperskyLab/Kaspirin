@@ -13,6 +13,8 @@
 // limitations under the License.
 
 using System.Windows;
+using System.Windows.Automation.Peers;
+using Kaspirin.UI.Framework.UiKit.Controls.Automation;
 
 namespace Kaspirin.UI.Framework.UiKit.Controls;
 
@@ -49,4 +51,9 @@ public sealed class Tag : TagBase
         new PropertyMetadata(default(UIKitIcon_16)));
 
     #endregion
+
+    protected override AutomationPeer OnCreateAutomationPeer()
+    {
+        return new TagAutomationPeer(this);
+    }
 }

@@ -33,6 +33,8 @@ public sealed class DictionaryConverter : IValueConverter
 
     public bool ShouldTraceOnNotFound { get; set; } = true;
 
+    public object? Fallback { get; set; } = null;
+
     public DictionaryConverterValueMode ProvideValueMode { get; set; } = DictionaryConverterValueMode.Default;
 
     public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
@@ -111,7 +113,7 @@ public sealed class DictionaryConverter : IValueConverter
             return Resources[Default];
         }
 
-        return null;
+        return Fallback;
     }
 
     private static readonly ComponentTracer _trace = ComponentTracer.Get(UIKitComponentTracers.Converters);

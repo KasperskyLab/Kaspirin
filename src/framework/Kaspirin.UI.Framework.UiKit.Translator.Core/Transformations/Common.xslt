@@ -1457,10 +1457,10 @@
 	</xsl:template>
 
 	<xsl:template name="generateFontSetters">
-		<xsl:param name="fontFamilyPropertyName">FontFamily</xsl:param>
-		<xsl:param name="fontSizePropertyName">FontSize</xsl:param>
-		<xsl:param name="fontStylePropertyName">FontStyle</xsl:param>
-		<xsl:param name="fontWeightPropertyName">FontWeight</xsl:param>
+		<xsl:param name="fontFamilyPropertyName">TextElement.FontFamily</xsl:param>
+		<xsl:param name="fontSizePropertyName">TextElement.FontSize</xsl:param>
+		<xsl:param name="fontStylePropertyName">TextElement.FontStyle</xsl:param>
+		<xsl:param name="fontWeightPropertyName">TextElement.FontWeight</xsl:param>
 		<xsl:param name="fontNode" select="Font"/>
 
 		<!--FontFamily-->
@@ -1499,6 +1499,25 @@
 				<xsl:with-param name="propertyValue" select="$fontNode/@FontWeight"/>
 			</xsl:call-template>
 		</xsl:if>
+	</xsl:template>
+
+	<xsl:template name="generateFontAccessibilitySetters">
+		<xsl:param name="fontPriorityPropertyName">visuals:AccessibilityProperties.FontPriority</xsl:param>
+		<xsl:param name="isHeaderPropertyName">visuals:AccessibilityProperties.IsHeader</xsl:param>
+		<xsl:param name="fontNode" select="Font"/>
+
+		<!--AccessibilityProperties.FontPriority-->
+		<xsl:call-template name="generateAttributeSetter">
+			<xsl:with-param name="propertyName" select="$fontPriorityPropertyName"/>
+			<xsl:with-param name="propertyValue" select="$fontNode/@FontPriority"/>
+		</xsl:call-template>
+
+		<!--visuals:AccessibilityProperties.IsHeader-->
+		<xsl:call-template name="generateAttributeSetter">
+			<xsl:with-param name="propertyName" select="$isHeaderPropertyName"/>
+			<xsl:with-param name="propertyValue" select="$fontNode/@IsHeader"/>
+		</xsl:call-template>
+
 	</xsl:template>
 
 </xsl:transform>

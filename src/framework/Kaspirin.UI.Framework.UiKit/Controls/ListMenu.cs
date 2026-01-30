@@ -13,8 +13,10 @@
 // limitations under the License.
 
 using System.Windows;
+using System.Windows.Automation.Peers;
 using System.Windows.Controls;
 using System.Windows.Data;
+using Kaspirin.UI.Framework.UiKit.Controls.Automation;
 using Kaspirin.UI.Framework.UiKit.Controls.Internals;
 using Kaspirin.UI.Framework.UiKit.Controls.Properties;
 
@@ -78,6 +80,11 @@ public sealed class ListMenu : SelectorList<ListMenuItem>
         _scrollViewer.IsDeferredScrollingEnabled = false;
 
         ApplyIsScrollEnabled();
+    }
+
+    protected override AutomationPeer OnCreateAutomationPeer()
+    {
+        return new ListMenuAutomationPeer(this);
     }
 
     private void OnIsScrollEnabledChanged()

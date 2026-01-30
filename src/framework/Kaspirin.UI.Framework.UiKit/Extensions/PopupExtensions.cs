@@ -14,6 +14,7 @@
 
 using System;
 using System.Windows.Controls.Primitives;
+using Kaspirin.UI.Framework.Services.Internals;
 
 namespace Kaspirin.UI.Framework.UiKit.Extensions;
 
@@ -21,41 +22,21 @@ public static class PopupExtensions
 {
     public static void WhenOpened(this Popup popup, Action action)
     {
-        void OnIsOpenChanged(object? sender, EventArgs e)
-        {
-            var popup = Guard.EnsureArgumentIsInstanceOfType<Popup>(sender);
-
-            popup.Opened -= OnIsOpenChanged;
-            action();
-        }
-
-        if (popup.IsOpen)
-        {
-            action();
-        }
-        else
-        {
-            popup.Opened += OnIsOpenChanged;
-        }
+        EventSubscriber.OnceOrNow(
+            source: popup,
+            condition: popup => popup.IsOpen,
+            subscribeCallback: eh => popup.Opened += eh,
+            unsubscribeCallback: eh => popup.Opened -= eh,
+            action: action);
     }
 
     public static void WhenClosed(this Popup popup, Action action)
     {
-        void OnIsClosedChanged(object? sender, EventArgs e)
-        {
-            var popup = Guard.EnsureArgumentIsInstanceOfType<Popup>(sender);
-
-            popup.Closed -= OnIsClosedChanged;
-            action();
-        }
-
-        if (!popup.IsOpen)
-        {
-            action();
-        }
-        else
-        {
-            popup.Closed += OnIsClosedChanged;
-        }
+        EventSubscriber.OnceOrNow(
+            source: popup,
+            condition: popup => !popup.IsOpen,
+            subscribeCallback: eh => popup.Closed += eh,
+            unsubscribeCallback: eh => popup.Closed -= eh,
+            action: action);
     }
 }

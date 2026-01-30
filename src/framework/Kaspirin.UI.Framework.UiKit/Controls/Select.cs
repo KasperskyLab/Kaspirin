@@ -19,6 +19,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Automation.Peers;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Threading;
@@ -32,7 +33,7 @@ namespace Kaspirin.UI.Framework.UiKit.Controls;
 [StyleTypedProperty(Property = "ItemContainerStyle", StyleTargetType = typeof(SelectItem))]
 [TemplatePart(Name = PART_Popup, Type = typeof(WpfPopup))]
 [TemplatePart(Name = PART_SelectPresenter, Type = typeof(SelectPresenter))]
-public sealed class Select : SelectorList<SelectItem>
+public sealed class Select : Selector
 {
     public const string PART_Popup = "PART_Popup";
     public const string PART_SelectPresenter = "PART_SelectPresenter";
@@ -40,7 +41,6 @@ public sealed class Select : SelectorList<SelectItem>
     static Select()
     {
         IsTabStopProperty.OverrideMetadata(typeof(Select), new FrameworkPropertyMetadata(true));
-        SelectionModeProperty.OverrideMetadata(typeof(Select), new FrameworkPropertyMetadata(SelectionMode.Single, FrameworkPropertyMetadataOptions.None, null, CoerceSelectionMode));
     }
 
     public Select()
@@ -202,6 +202,32 @@ public sealed class Select : SelectorList<SelectItem>
         new PropertyMetadata(true));
 
     public static readonly DependencyProperty IsFilterHasResultProperty = _isFilterHasResultPropertyKey.DependencyProperty;
+
+    #endregion
+
+    #region ItemElement
+
+    public DataTemplate ItemElement
+    {
+        get => (DataTemplate)GetValue(ItemElementProperty);
+        set => SetValue(ItemElementProperty, value);
+    }
+
+    public static readonly DependencyProperty ItemElementProperty =
+        UIKitItemsControlHelper.ItemElementProperty.AddOwner(typeof(SelectItem));
+
+    #endregion
+
+    #region ItemElementSelector
+
+    public DataTemplateSelector ItemElementSelector
+    {
+        get => (DataTemplateSelector)GetValue(ItemElementSelectorProperty);
+        set => SetValue(ItemElementSelectorProperty, value);
+    }
+
+    public static readonly DependencyProperty ItemElementSelectorProperty =
+        UIKitItemsControlHelper.ItemElementSelectorProperty.AddOwner(typeof(SelectItem));
 
     #endregion
 
@@ -405,40 +431,46 @@ public sealed class Select : SelectorList<SelectItem>
 
     #endregion
 
-    #region Accessibility
+    internal SelectPresenter? Presenter { get; private set; }
 
-    protected override AutomationPeer OnCreateAutomationPeer()
+    public void ScrollIntoView(object item)
     {
-        return new SelectAutomationPeer(this);
-    }
+        if (item == null)
+        {
+            return;
+        }
 
-    #endregion
+        if (ItemContainerGenerator.ContainerFromItem(item) is SelectorItem container)
+        {
+            container.BringIntoView();
+        }
+    }
 
     public override void OnApplyTemplate()
     {
         base.OnApplyTemplate();
 
-        _presenter = (SelectPresenter)GetTemplateChild(PART_SelectPresenter);
-        _presenter.Click += OnPresenterClick;
-        _presenter.FilterTextChanged += OnPresenterFilterTextChanged;
-        _presenter.SetBinding(SelectPresenter.InputFilterProperty, new Binding()
+        Presenter = (SelectPresenter)GetTemplateChild(PART_SelectPresenter);
+        Presenter.Click += OnPresenterClick;
+        Presenter.FilterTextChanged += OnPresenterFilterTextChanged;
+        Presenter.SetBinding(SelectPresenter.InputFilterProperty, new Binding()
         {
             Source = this,
             Path = InputFilterProperty.AsPath(),
         });
-        _presenter.SetBinding(SelectPresenter.IsInvalidStateProperty, new Binding()
+        Presenter.SetBinding(SelectPresenter.IsInvalidStateProperty, new Binding()
         {
             Source = this,
             Path = IsInvalidStateProperty.AsPath(),
         });
-        _presenter.SetBinding(SelectPresenter.IsFilterEnabledProperty, new Binding()
+        Presenter.SetBinding(SelectPresenter.IsFilterEnabledProperty, new Binding()
         {
             Source = this,
             Path = IsFilterEnabledProperty.AsPath(),
         });
 
         _popup = Guard.EnsureIsInstanceOfType<WpfPopup>(GetTemplateChild(PART_Popup));
-        _popup.PlacementTarget = _presenter;
+        _popup.PlacementTarget = Presenter;
         _popup.StaysOpen = false;
         _popup.AllowsTransparency = true;
         _popup.Opened += OnPopupOpened;
@@ -465,6 +497,11 @@ public sealed class Select : SelectorList<SelectItem>
 
     internal void NotifySelectItemMouseEnter(SelectItem selectItem)
         => _infoProvider.SetHighlightedInfo(selectItem);
+
+    protected override AutomationPeer OnCreateAutomationPeer()
+    {
+        return new SelectAutomationPeer(this, _infoProvider);
+    }
 
     protected override void OnSelectionChanged(SelectionChangedEventArgs e)
     {
@@ -498,7 +535,7 @@ public sealed class Select : SelectorList<SelectItem>
 
     protected override void OnGotFocus(RoutedEventArgs e)
     {
-        _presenter?.Focus();
+        Presenter?.Focus();
 
         base.OnGotFocus(e);
     }
@@ -653,12 +690,38 @@ public sealed class Select : SelectorList<SelectItem>
         base.OnIsKeyboardFocusWithinChanged(e);
     }
 
+    protected override bool IsItemItsOwnContainerOverride(object item)
+    {
+        _processingItem = item;
+
+        return UIKitItemsControlHelper.IsItemContainer<SelectItem>(item);
+    }
+
+    protected override DependencyObject GetContainerForItemOverride()
+    {
+        var processingItem = _processingItem;
+        _processingItem = null;
+
+        return UIKitItemsControlHelper.CreateItemContainer<SelectItem>(this, processingItem);
+    }
+
+    protected override void PrepareContainerForItemOverride(DependencyObject element, object item)
+    {
+        element = UIKitItemsControlHelper.IsSimpleItemContainer(element)
+            ? element
+            : new SelectItem();
+
+        base.PrepareContainerForItemOverride(element, item);
+    }
+
     private void OnIsDropDownOpenChanged()
     {
         if (IsDropDownOpen || IsKeyboardFocusWithin)
         {
             Focus();
         }
+
+        RaiseExpandCollapseAutomationEvent();
 
         if (!IsDropDownOpen)
         {
@@ -715,7 +778,7 @@ public sealed class Select : SelectorList<SelectItem>
 
     private void ApplyFilter()
     {
-        var filterText = _presenter?.FilterText ?? string.Empty;
+        var filterText = Presenter?.FilterText ?? string.Empty;
 
         UpdateFilteredItems(filterText);
     }
@@ -888,15 +951,15 @@ public sealed class Select : SelectorList<SelectItem>
             return;
         }
 
-        if (_presenter != null)
+        if (Presenter != null)
         {
             var itemInfo = _infoProvider.GetTargetInfo(SelectedItem, fromSource: true);
             var hasRightBar = RightBar != null || RightBarTemplate != null;
 
             SelectedItemContainer = itemInfo?.GetContainer();
 
-            _presenter.UpdatePresenter(SelectedItemContainer, hasRightBar);
-            _presenter.IsActive = IsDropDownOpen;
+            Presenter.UpdatePresenter(SelectedItemContainer, hasRightBar);
+            Presenter.IsActive = IsDropDownOpen;
         }
     }
 
@@ -957,14 +1020,14 @@ public sealed class Select : SelectorList<SelectItem>
                 return;
             }
 
-            if (_presenter == null)
+            if (Presenter == null)
             {
                 return;
             }
 
             BringIntoView();
 
-            InputFocusManager.SetInputFocus(_presenter);
+            InputFocusManager.SetInputFocus(Presenter);
         },
         DispatcherPriority.Input);
     }
@@ -983,8 +1046,13 @@ public sealed class Select : SelectorList<SelectItem>
         _popup.UpdateLayout();
     }
 
-    private static object CoerceSelectionMode(DependencyObject d, object baseValue)
-        => SelectionMode.Single;
+    private void RaiseExpandCollapseAutomationEvent()
+    {
+        if (UIElementAutomationPeer.FromElement(this) is SelectAutomationPeer peer)
+        {
+            peer.RaiseExpandCollapseAutomationEvent(IsDropDownOpen);
+        }
+    }
 
     private static class SelectLostFocusHandler
     {
@@ -1040,9 +1108,9 @@ public sealed class Select : SelectorList<SelectItem>
         Last
     }
 
+    private object? _processingItem;
     private bool _isFilterApplying;
     private WpfPopup? _popup;
-    private SelectPresenter? _presenter;
     private NotificationLayer? _notificationLayer;
 
     private readonly SelectInfoProvider _infoProvider;

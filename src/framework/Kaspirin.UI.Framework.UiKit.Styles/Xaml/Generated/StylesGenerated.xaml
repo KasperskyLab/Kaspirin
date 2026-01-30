@@ -1,12 +1,12 @@
 <!--
     Copyright © 2024 AO Kaspersky Lab.
-    
+
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
     You may obtain a copy of the License at
-    
-    http://www.apache.org/licenses/LICENSE-2.0
-    
+
+        http://www.apache.org/licenses/LICENSE-2.0
+
     Unless required by applicable law or agreed to in writing, software
     distributed under the License is distributed on an "AS IS" BASIS,
     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -31,131 +31,157 @@
     <Style x:Key="UiKitTextStyleBaseText">
         <Setter Property="TextBlock.LineHeight" Value="20" />
         <Setter Property="TextBlock.LineStackingStrategy" Value="BlockLineHeight" />
+        <Setter Property="TextElement.Foreground" Value="{Res Foreground, Scope=UiKitTextStyleBaseText}" />
         <Setter Property="TextElement.FontFamily" Value="{Res TextFontFamily, Scope=Fonts}" />
         <Setter Property="TextElement.FontSize" Value="14" />
         <Setter Property="TextElement.FontStyle" Value="NORMAL" />
         <Setter Property="TextElement.FontWeight" Value="REGULAR" />
-        <Setter Property="TextElement.Foreground" Value="{Res Foreground, Scope=UiKitTextStyleBaseText}" />
+        <Setter Property="visuals:AccessibilityProperties.FontPriority" Value="11" />
+        <Setter Property="visuals:AccessibilityProperties.IsHeader" Value="false" />
     </Style>
     <!--  [UiKitTextStyleBaseTextMonospace]  -->
     <Style x:Key="UiKitTextStyleBaseTextMonospace">
         <Setter Property="TextBlock.LineHeight" Value="20" />
         <Setter Property="TextBlock.LineStackingStrategy" Value="BlockLineHeight" />
+        <Setter Property="TextElement.Foreground" Value="{Res Foreground, Scope=UiKitTextStyleBaseTextMonospace}" />
         <Setter Property="TextElement.FontFamily" Value="{Res MonoFontFamily, Scope=Fonts}" />
         <Setter Property="TextElement.FontSize" Value="14" />
         <Setter Property="TextElement.FontStyle" Value="NORMAL" />
         <Setter Property="TextElement.FontWeight" Value="REGULAR" />
-        <Setter Property="TextElement.Foreground" Value="{Res Foreground, Scope=UiKitTextStyleBaseTextMonospace}" />
+        <Setter Property="visuals:AccessibilityProperties.FontPriority" Value="10" />
+        <Setter Property="visuals:AccessibilityProperties.IsHeader" Value="false" />
     </Style>
     <!--  [UiKitTextStyleBaseTextSemibold]  -->
     <Style x:Key="UiKitTextStyleBaseTextSemibold">
         <Setter Property="TextBlock.LineHeight" Value="20" />
         <Setter Property="TextBlock.LineStackingStrategy" Value="BlockLineHeight" />
+        <Setter Property="TextElement.Foreground" Value="{Res Foreground, Scope=UiKitTextStyleBaseTextSemibold}" />
         <Setter Property="TextElement.FontFamily" Value="{Res TextFontFamily, Scope=Fonts}" />
         <Setter Property="TextElement.FontSize" Value="14" />
         <Setter Property="TextElement.FontStyle" Value="NORMAL" />
         <Setter Property="TextElement.FontWeight" Value="SEMIBOLD" />
-        <Setter Property="TextElement.Foreground" Value="{Res Foreground, Scope=UiKitTextStyleBaseTextSemibold}" />
+        <Setter Property="visuals:AccessibilityProperties.FontPriority" Value="9" />
+        <Setter Property="visuals:AccessibilityProperties.IsHeader" Value="false" />
     </Style>
     <!--  [UiKitTextStyleButton]  -->
     <Style x:Key="UiKitTextStyleButton">
         <Setter Property="TextBlock.LineHeight" Value="20" />
         <Setter Property="TextBlock.LineStackingStrategy" Value="BlockLineHeight" />
+        <Setter Property="TextElement.Foreground" Value="{Res Foreground, Scope=UiKitTextStyleButton}" />
         <Setter Property="TextElement.FontFamily" Value="{Res TextFontFamily, Scope=Fonts}" />
         <Setter Property="TextElement.FontSize" Value="14" />
         <Setter Property="TextElement.FontStyle" Value="NORMAL" />
         <Setter Property="TextElement.FontWeight" Value="SEMIBOLD" />
-        <Setter Property="TextElement.Foreground" Value="{Res Foreground, Scope=UiKitTextStyleButton}" />
+        <Setter Property="visuals:AccessibilityProperties.FontPriority" Value="8" />
+        <Setter Property="visuals:AccessibilityProperties.IsHeader" Value="false" />
     </Style>
     <!--  [UiKitTextStyleHeader1]  -->
     <Style x:Key="UiKitTextStyleHeader1">
         <Setter Property="TextBlock.LineHeight" Value="32" />
         <Setter Property="TextBlock.LineStackingStrategy" Value="BlockLineHeight" />
+        <Setter Property="TextElement.Foreground" Value="{Res Foreground, Scope=UiKitTextStyleHeader1}" />
         <Setter Property="TextElement.FontFamily" Value="{Res TextFontFamily, Scope=Fonts}" />
         <Setter Property="TextElement.FontSize" Value="28" />
         <Setter Property="TextElement.FontStyle" Value="NORMAL" />
         <Setter Property="TextElement.FontWeight" Value="SEMIBOLD" />
-        <Setter Property="TextElement.Foreground" Value="{Res Foreground, Scope=UiKitTextStyleHeader1}" />
+        <Setter Property="visuals:AccessibilityProperties.FontPriority" Value="1" />
+        <Setter Property="visuals:AccessibilityProperties.IsHeader" Value="true" />
     </Style>
     <!--  [UiKitTextStyleHeader2]  -->
     <Style x:Key="UiKitTextStyleHeader2">
         <Setter Property="TextBlock.LineHeight" Value="28" />
         <Setter Property="TextBlock.LineStackingStrategy" Value="BlockLineHeight" />
+        <Setter Property="TextElement.Foreground" Value="{Res Foreground, Scope=UiKitTextStyleHeader2}" />
         <Setter Property="TextElement.FontFamily" Value="{Res TextFontFamily, Scope=Fonts}" />
         <Setter Property="TextElement.FontSize" Value="24" />
         <Setter Property="TextElement.FontStyle" Value="NORMAL" />
         <Setter Property="TextElement.FontWeight" Value="SEMIBOLD" />
-        <Setter Property="TextElement.Foreground" Value="{Res Foreground, Scope=UiKitTextStyleHeader2}" />
+        <Setter Property="visuals:AccessibilityProperties.FontPriority" Value="2" />
+        <Setter Property="visuals:AccessibilityProperties.IsHeader" Value="true" />
     </Style>
     <!--  [UiKitTextStyleHeader3]  -->
     <Style x:Key="UiKitTextStyleHeader3">
         <Setter Property="TextBlock.LineHeight" Value="24" />
         <Setter Property="TextBlock.LineStackingStrategy" Value="BlockLineHeight" />
+        <Setter Property="TextElement.Foreground" Value="{Res Foreground, Scope=UiKitTextStyleHeader3}" />
         <Setter Property="TextElement.FontFamily" Value="{Res TextFontFamily, Scope=Fonts}" />
         <Setter Property="TextElement.FontSize" Value="18" />
         <Setter Property="TextElement.FontStyle" Value="NORMAL" />
         <Setter Property="TextElement.FontWeight" Value="SEMIBOLD" />
-        <Setter Property="TextElement.Foreground" Value="{Res Foreground, Scope=UiKitTextStyleHeader3}" />
+        <Setter Property="visuals:AccessibilityProperties.FontPriority" Value="4" />
+        <Setter Property="visuals:AccessibilityProperties.IsHeader" Value="true" />
     </Style>
     <!--  [UiKitTextStyleHeader3Monospace]  -->
     <Style x:Key="UiKitTextStyleHeader3Monospace">
         <Setter Property="TextBlock.LineHeight" Value="24" />
         <Setter Property="TextBlock.LineStackingStrategy" Value="BlockLineHeight" />
+        <Setter Property="TextElement.Foreground" Value="{Res Foreground, Scope=UiKitTextStyleHeader3Monospace}" />
         <Setter Property="TextElement.FontFamily" Value="{Res MonoFontFamily, Scope=Fonts}" />
         <Setter Property="TextElement.FontSize" Value="18" />
         <Setter Property="TextElement.FontStyle" Value="NORMAL" />
         <Setter Property="TextElement.FontWeight" Value="BOLD" />
-        <Setter Property="TextElement.Foreground" Value="{Res Foreground, Scope=UiKitTextStyleHeader3Monospace}" />
+        <Setter Property="visuals:AccessibilityProperties.FontPriority" Value="3" />
+        <Setter Property="visuals:AccessibilityProperties.IsHeader" Value="true" />
     </Style>
     <!--  [UiKitTextStyleHeader4]  -->
     <Style x:Key="UiKitTextStyleHeader4">
         <Setter Property="TextBlock.LineHeight" Value="20" />
         <Setter Property="TextBlock.LineStackingStrategy" Value="BlockLineHeight" />
+        <Setter Property="TextElement.Foreground" Value="{Res Foreground, Scope=UiKitTextStyleHeader4}" />
         <Setter Property="TextElement.FontFamily" Value="{Res TextFontFamily, Scope=Fonts}" />
         <Setter Property="TextElement.FontSize" Value="16" />
         <Setter Property="TextElement.FontStyle" Value="NORMAL" />
         <Setter Property="TextElement.FontWeight" Value="SEMIBOLD" />
-        <Setter Property="TextElement.Foreground" Value="{Res Foreground, Scope=UiKitTextStyleHeader4}" />
+        <Setter Property="visuals:AccessibilityProperties.FontPriority" Value="5" />
+        <Setter Property="visuals:AccessibilityProperties.IsHeader" Value="true" />
     </Style>
     <!--  [UiKitTextStyleHeader5]  -->
     <Style x:Key="UiKitTextStyleHeader5">
         <Setter Property="TextBlock.LineHeight" Value="20" />
         <Setter Property="TextBlock.LineStackingStrategy" Value="BlockLineHeight" />
+        <Setter Property="TextElement.Foreground" Value="{Res Foreground, Scope=UiKitTextStyleHeader5}" />
         <Setter Property="TextElement.FontFamily" Value="{Res TextFontFamily, Scope=Fonts}" />
         <Setter Property="TextElement.FontSize" Value="14" />
         <Setter Property="TextElement.FontStyle" Value="NORMAL" />
         <Setter Property="TextElement.FontWeight" Value="SEMIBOLD" />
-        <Setter Property="TextElement.Foreground" Value="{Res Foreground, Scope=UiKitTextStyleHeader5}" />
+        <Setter Property="visuals:AccessibilityProperties.FontPriority" Value="6" />
+        <Setter Property="visuals:AccessibilityProperties.IsHeader" Value="true" />
     </Style>
     <!--  [UiKitTextStyleSmallText]  -->
     <Style x:Key="UiKitTextStyleSmallText">
         <Setter Property="TextBlock.LineHeight" Value="16" />
         <Setter Property="TextBlock.LineStackingStrategy" Value="BlockLineHeight" />
+        <Setter Property="TextElement.Foreground" Value="{Res Foreground, Scope=UiKitTextStyleSmallText}" />
         <Setter Property="TextElement.FontFamily" Value="{Res TextFontFamily, Scope=Fonts}" />
         <Setter Property="TextElement.FontSize" Value="12" />
         <Setter Property="TextElement.FontStyle" Value="NORMAL" />
         <Setter Property="TextElement.FontWeight" Value="REGULAR" />
-        <Setter Property="TextElement.Foreground" Value="{Res Foreground, Scope=UiKitTextStyleSmallText}" />
+        <Setter Property="visuals:AccessibilityProperties.FontPriority" Value="13" />
+        <Setter Property="visuals:AccessibilityProperties.IsHeader" Value="false" />
     </Style>
     <!--  [UiKitTextStyleSmallTextMedium]  -->
     <Style x:Key="UiKitTextStyleSmallTextMedium">
         <Setter Property="TextBlock.LineHeight" Value="16" />
         <Setter Property="TextBlock.LineStackingStrategy" Value="BlockLineHeight" />
+        <Setter Property="TextElement.Foreground" Value="{Res Foreground, Scope=UiKitTextStyleSmallTextMedium}" />
         <Setter Property="TextElement.FontFamily" Value="{Res TextFontFamily, Scope=Fonts}" />
         <Setter Property="TextElement.FontSize" Value="12" />
         <Setter Property="TextElement.FontStyle" Value="NORMAL" />
         <Setter Property="TextElement.FontWeight" Value="MEDIUM" />
-        <Setter Property="TextElement.Foreground" Value="{Res Foreground, Scope=UiKitTextStyleSmallTextMedium}" />
+        <Setter Property="visuals:AccessibilityProperties.FontPriority" Value="12" />
+        <Setter Property="visuals:AccessibilityProperties.IsHeader" Value="false" />
     </Style>
     <!--  [UiKitTextStyleSubheader]  -->
     <Style x:Key="UiKitTextStyleSubheader">
         <Setter Property="TextBlock.LineHeight" Value="24" />
         <Setter Property="TextBlock.LineStackingStrategy" Value="BlockLineHeight" />
+        <Setter Property="TextElement.Foreground" Value="{Res Foreground, Scope=UiKitTextStyleSubheader}" />
         <Setter Property="TextElement.FontFamily" Value="{Res TextFontFamily, Scope=Fonts}" />
         <Setter Property="TextElement.FontSize" Value="20" />
         <Setter Property="TextElement.FontStyle" Value="NORMAL" />
         <Setter Property="TextElement.FontWeight" Value="SEMIBOLD" />
-        <Setter Property="TextElement.Foreground" Value="{Res Foreground, Scope=UiKitTextStyleSubheader}" />
+        <Setter Property="visuals:AccessibilityProperties.FontPriority" Value="7" />
+        <Setter Property="visuals:AccessibilityProperties.IsHeader" Value="true" />
     </Style>
     <!--#endregion-->
     <!--#region Spinners-->
@@ -2380,6 +2406,351 @@
            BasedOn="{StaticResource ContextMenuButtonUniversal}"
            TargetType="{x:Type visuals:ContextMenuSelect}">
         <uikit:UIKitSetter Id="ContextMenuButton_ToggleButton_Style" Value="{StaticResource UiKitToggleButtonStaticWhiteOutlineSecondary}" />
+    </Style>
+    <!--  [UiKitSmallButtonBaseOutlineSecondary]  -->
+    <Style x:Key="UiKitSmallButtonBaseOutlineSecondary"
+           BasedOn="{StaticResource ButtonUniversal}"
+           TargetType="{x:Type visuals:SmallButton}">
+        <Style.Resources>
+            <Style x:Key="TextStyle"
+                   BasedOn="{StaticResource UiKitTextStyleSmallTextMedium}"
+                   TargetType="{x:Type TextBlock}">
+                <Setter Property="TextElement.Foreground" Value="{Res ForegroundNormal, Scope=UiKitSmallButtonBaseOutlineSecondary}" />
+            </Style>
+            <Style x:Key="TextStyleDisabled"
+                   BasedOn="{StaticResource UiKitTextStyleSmallTextMedium}"
+                   TargetType="{x:Type TextBlock}">
+                <Setter Property="TextElement.Foreground" Value="{Res ForegroundDisabled, Scope=UiKitSmallButtonBaseOutlineSecondary}" />
+            </Style>
+            <Style x:Key="TextStyleHover"
+                   BasedOn="{StaticResource UiKitTextStyleSmallTextMedium}"
+                   TargetType="{x:Type TextBlock}">
+                <Setter Property="TextElement.Foreground" Value="{Res ForegroundHover, Scope=UiKitSmallButtonBaseOutlineSecondary}" />
+            </Style>
+            <Style x:Key="TextStylePressed"
+                   BasedOn="{StaticResource UiKitTextStyleSmallTextMedium}"
+                   TargetType="{x:Type TextBlock}">
+                <Setter Property="TextElement.Foreground" Value="{Res ForegroundPressed, Scope=UiKitSmallButtonBaseOutlineSecondary}" />
+            </Style>
+        </Style.Resources>
+        <uikit:UIKitSetter Id="Button_Container_Background" Value="{Res BackgroundNormal, Scope=UiKitSmallButtonBaseOutlineSecondary}" />
+        <uikit:UIKitSetter Id="Button_Container_BorderBrush" Value="{Res BorderNormal, Scope=UiKitSmallButtonBaseOutlineSecondary}" />
+        <uikit:UIKitSetter Id="Button_Container_BorderThickness" Value="1" />
+        <uikit:UIKitSetter Id="Button_Container_CornerRadius" Value="4" />
+        <uikit:UIKitSetter Id="Button_Icon_Brush" Value="{Res IconBrushNormalSideLocation, Scope=UiKitSmallButtonBaseOutlineSecondary}" />
+        <uikit:UIKitSetter Id="Button_Icon_MarginLeft" Value="0,0,4,0" />
+        <uikit:UIKitSetter Id="Button_Icon_MarginRight" Value="4,0,0,0" />
+        <uikit:UIKitSetter Id="Button_Icon_Opacity" Value="1" />
+        <uikit:UIKitSetter Id="Button_Spinner_Brush" Value="{Res ForegroundNormal, Scope=UiKitSmallButtonBaseOutlineSecondary}" />
+        <uikit:UIKitSetter Id="Button_Spinner_Style" Value="{StaticResource UiKitSpinner12}" />
+        <uikit:UIKitSetter Id="Button_FocusVisualStyle">
+            <uikit:UIKitSetter.Value>
+                <visuals:FocusVisual Brush="{Res FocusVisualBrush, Scope=UiKitSmallButtonBaseOutlineSecondary}"
+                                     CornerRadius="8"
+                                     Margin="-4"
+                                     Thickness="2"
+                                     Type="RECTANGLE" />
+            </uikit:UIKitSetter.Value>
+        </uikit:UIKitSetter>
+        <uikit:UIKitSetter Id="Button_Height" Value="24" />
+        <uikit:UIKitSetter Id="Button_Opacity" Value="1" />
+        <uikit:UIKitSetter Id="Button_Padding" Value="8,4" />
+        <uikit:UIKitSetter Id="Button_TextStyle" Value="{StaticResource TextStyle}" />
+        <uikit:UIKitSetter Id="Button_TextStyleDisabled" Value="{StaticResource TextStyleDisabled}" />
+        <uikit:UIKitSetter Id="Button_TextStyleHover" Value="{StaticResource TextStyleHover}" />
+        <uikit:UIKitSetter Id="Button_TextStylePressed" Value="{StaticResource TextStylePressed}" />
+        <Style.Triggers>
+            <Trigger Property="visuals:StateService.State" Value="Disabled">
+                <uikit:UIKitSetter Id="Button_Container_Background" Value="{Res BackgroundDisabled, Scope=UiKitSmallButtonBaseOutlineSecondary}" />
+                <uikit:UIKitSetter Id="Button_Container_BorderBrush" Value="{Res BorderDisabled, Scope=UiKitSmallButtonBaseOutlineSecondary}" />
+                <uikit:UIKitSetter Id="Button_Container_BorderThickness" Value="1" />
+                <uikit:UIKitSetter Id="Button_Icon_Brush" Value="{Res IconBrushDisabledSideLocation, Scope=UiKitSmallButtonBaseOutlineSecondary}" />
+                <uikit:UIKitSetter Id="Button_Icon_Opacity" Value="1" />
+                <uikit:UIKitSetter Id="Button_Opacity" Value="1" />
+                <uikit:UIKitSetter Id="Button_Spinner_Brush" Value="{Res ForegroundDisabled, Scope=UiKitSmallButtonBaseOutlineSecondary}" />
+            </Trigger>
+            <Trigger Property="visuals:StateService.State" Value="Hover">
+                <uikit:UIKitSetter Id="Button_Container_Background" Value="{Res BackgroundHover, Scope=UiKitSmallButtonBaseOutlineSecondary}" />
+                <uikit:UIKitSetter Id="Button_Container_BorderBrush" Value="{Res BorderHover, Scope=UiKitSmallButtonBaseOutlineSecondary}" />
+                <uikit:UIKitSetter Id="Button_Container_BorderThickness" Value="1" />
+                <uikit:UIKitSetter Id="Button_Icon_Brush" Value="{Res IconBrushHoverSideLocation, Scope=UiKitSmallButtonBaseOutlineSecondary}" />
+                <uikit:UIKitSetter Id="Button_Icon_Opacity" Value="1" />
+                <uikit:UIKitSetter Id="Button_Opacity" Value="1" />
+                <uikit:UIKitSetter Id="Button_Spinner_Brush" Value="{Res ForegroundHover, Scope=UiKitSmallButtonBaseOutlineSecondary}" />
+            </Trigger>
+            <Trigger Property="visuals:StateService.State" Value="Pressed">
+                <uikit:UIKitSetter Id="Button_Container_Background" Value="{Res BackgroundPressed, Scope=UiKitSmallButtonBaseOutlineSecondary}" />
+                <uikit:UIKitSetter Id="Button_Container_BorderBrush" Value="{Res BorderPressed, Scope=UiKitSmallButtonBaseOutlineSecondary}" />
+                <uikit:UIKitSetter Id="Button_Container_BorderThickness" Value="1" />
+                <uikit:UIKitSetter Id="Button_Icon_Brush" Value="{Res IconBrushPressedSideLocation, Scope=UiKitSmallButtonBaseOutlineSecondary}" />
+                <uikit:UIKitSetter Id="Button_Icon_Opacity" Value="1" />
+                <uikit:UIKitSetter Id="Button_Opacity" Value="1" />
+                <uikit:UIKitSetter Id="Button_Spinner_Brush" Value="{Res ForegroundPressed, Scope=UiKitSmallButtonBaseOutlineSecondary}" />
+            </Trigger>
+            <Trigger Property="Content" Value="{x:Null}">
+                <uikit:UIKitSetter Id="Button_Padding" Value="0" />
+                <uikit:UIKitSetter Id="Button_Icon_MarginLeft" Value="4" />
+                <uikit:UIKitSetter Id="Button_Icon_MarginRight" Value="4" />
+            </Trigger>
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="Content" Value="{x:Null}" />
+                    <Condition Property="visuals:StateService.State" Value="Disabled" />
+                </MultiTrigger.Conditions>
+                <uikit:UIKitSetter Id="Button_Icon_Brush" Value="{Res IconBrushDisabledCenterLocation, Scope=UiKitSmallButtonBaseOutlineSecondary}" />
+            </MultiTrigger>
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="Content" Value="{x:Null}" />
+                    <Condition Property="visuals:StateService.State" Value="Hover" />
+                </MultiTrigger.Conditions>
+                <uikit:UIKitSetter Id="Button_Icon_Brush" Value="{Res IconBrushHoverCenterLocation, Scope=UiKitSmallButtonBaseOutlineSecondary}" />
+            </MultiTrigger>
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="Content" Value="{x:Null}" />
+                    <Condition Property="visuals:StateService.State" Value="Normal" />
+                </MultiTrigger.Conditions>
+                <uikit:UIKitSetter Id="Button_Icon_Brush" Value="{Res IconBrushNormalCenterLocation, Scope=UiKitSmallButtonBaseOutlineSecondary}" />
+            </MultiTrigger>
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="Content" Value="{x:Null}" />
+                    <Condition Property="visuals:StateService.State" Value="Pressed" />
+                </MultiTrigger.Conditions>
+                <uikit:UIKitSetter Id="Button_Icon_Brush" Value="{Res IconBrushPressedCenterLocation, Scope=UiKitSmallButtonBaseOutlineSecondary}" />
+            </MultiTrigger>
+        </Style.Triggers>
+    </Style>
+    <!--  [UiKitSmallButtonBasePrimary]  -->
+    <Style x:Key="UiKitSmallButtonBasePrimary"
+           BasedOn="{StaticResource ButtonUniversal}"
+           TargetType="{x:Type visuals:SmallButton}">
+        <Style.Resources>
+            <Style x:Key="TextStyle"
+                   BasedOn="{StaticResource UiKitTextStyleSmallTextMedium}"
+                   TargetType="{x:Type TextBlock}">
+                <Setter Property="TextElement.Foreground" Value="{Res ForegroundNormal, Scope=UiKitSmallButtonBasePrimary}" />
+            </Style>
+            <Style x:Key="TextStyleDisabled"
+                   BasedOn="{StaticResource UiKitTextStyleSmallTextMedium}"
+                   TargetType="{x:Type TextBlock}">
+                <Setter Property="TextElement.Foreground" Value="{Res ForegroundDisabled, Scope=UiKitSmallButtonBasePrimary}" />
+            </Style>
+            <Style x:Key="TextStyleHover"
+                   BasedOn="{StaticResource UiKitTextStyleSmallTextMedium}"
+                   TargetType="{x:Type TextBlock}">
+                <Setter Property="TextElement.Foreground" Value="{Res ForegroundHover, Scope=UiKitSmallButtonBasePrimary}" />
+            </Style>
+            <Style x:Key="TextStylePressed"
+                   BasedOn="{StaticResource UiKitTextStyleSmallTextMedium}"
+                   TargetType="{x:Type TextBlock}">
+                <Setter Property="TextElement.Foreground" Value="{Res ForegroundPressed, Scope=UiKitSmallButtonBasePrimary}" />
+            </Style>
+        </Style.Resources>
+        <uikit:UIKitSetter Id="Button_Container_Background" Value="{Res BackgroundNormal, Scope=UiKitSmallButtonBasePrimary}" />
+        <uikit:UIKitSetter Id="Button_Container_BorderBrush" Value="{Res BorderNormal, Scope=UiKitSmallButtonBasePrimary}" />
+        <uikit:UIKitSetter Id="Button_Container_BorderThickness" Value="0" />
+        <uikit:UIKitSetter Id="Button_Container_CornerRadius" Value="4" />
+        <uikit:UIKitSetter Id="Button_Icon_Brush" Value="{Res IconBrushNormalSideLocation, Scope=UiKitSmallButtonBasePrimary}" />
+        <uikit:UIKitSetter Id="Button_Icon_MarginLeft" Value="0,0,4,0" />
+        <uikit:UIKitSetter Id="Button_Icon_MarginRight" Value="4,0,0,0" />
+        <uikit:UIKitSetter Id="Button_Icon_Opacity" Value="1" />
+        <uikit:UIKitSetter Id="Button_Spinner_Brush" Value="{Res ForegroundNormal, Scope=UiKitSmallButtonBasePrimary}" />
+        <uikit:UIKitSetter Id="Button_Spinner_Style" Value="{StaticResource UiKitSpinner12}" />
+        <uikit:UIKitSetter Id="Button_FocusVisualStyle">
+            <uikit:UIKitSetter.Value>
+                <visuals:FocusVisual Brush="{Res FocusVisualBrush, Scope=UiKitSmallButtonBasePrimary}"
+                                     CornerRadius="8"
+                                     Margin="-4"
+                                     Thickness="2"
+                                     Type="RECTANGLE" />
+            </uikit:UIKitSetter.Value>
+        </uikit:UIKitSetter>
+        <uikit:UIKitSetter Id="Button_Height" Value="24" />
+        <uikit:UIKitSetter Id="Button_Opacity" Value="1" />
+        <uikit:UIKitSetter Id="Button_Padding" Value="8,4" />
+        <uikit:UIKitSetter Id="Button_TextStyle" Value="{StaticResource TextStyle}" />
+        <uikit:UIKitSetter Id="Button_TextStyleDisabled" Value="{StaticResource TextStyleDisabled}" />
+        <uikit:UIKitSetter Id="Button_TextStyleHover" Value="{StaticResource TextStyleHover}" />
+        <uikit:UIKitSetter Id="Button_TextStylePressed" Value="{StaticResource TextStylePressed}" />
+        <Style.Triggers>
+            <Trigger Property="visuals:StateService.State" Value="Disabled">
+                <uikit:UIKitSetter Id="Button_Container_Background" Value="{Res BackgroundDisabled, Scope=UiKitSmallButtonBasePrimary}" />
+                <uikit:UIKitSetter Id="Button_Container_BorderBrush" Value="{Res BorderDisabled, Scope=UiKitSmallButtonBasePrimary}" />
+                <uikit:UIKitSetter Id="Button_Container_BorderThickness" Value="1" />
+                <uikit:UIKitSetter Id="Button_Icon_Brush" Value="{Res IconBrushDisabledSideLocation, Scope=UiKitSmallButtonBasePrimary}" />
+                <uikit:UIKitSetter Id="Button_Icon_Opacity" Value="1" />
+                <uikit:UIKitSetter Id="Button_Opacity" Value="1" />
+                <uikit:UIKitSetter Id="Button_Spinner_Brush" Value="{Res ForegroundDisabled, Scope=UiKitSmallButtonBasePrimary}" />
+            </Trigger>
+            <Trigger Property="visuals:StateService.State" Value="Hover">
+                <uikit:UIKitSetter Id="Button_Container_Background" Value="{Res BackgroundHover, Scope=UiKitSmallButtonBasePrimary}" />
+                <uikit:UIKitSetter Id="Button_Container_BorderBrush" Value="{Res BorderHover, Scope=UiKitSmallButtonBasePrimary}" />
+                <uikit:UIKitSetter Id="Button_Container_BorderThickness" Value="0" />
+                <uikit:UIKitSetter Id="Button_Icon_Brush" Value="{Res IconBrushHoverSideLocation, Scope=UiKitSmallButtonBasePrimary}" />
+                <uikit:UIKitSetter Id="Button_Icon_Opacity" Value="1" />
+                <uikit:UIKitSetter Id="Button_Opacity" Value="1" />
+                <uikit:UIKitSetter Id="Button_Spinner_Brush" Value="{Res ForegroundHover, Scope=UiKitSmallButtonBasePrimary}" />
+            </Trigger>
+            <Trigger Property="visuals:StateService.State" Value="Pressed">
+                <uikit:UIKitSetter Id="Button_Container_Background" Value="{Res BackgroundPressed, Scope=UiKitSmallButtonBasePrimary}" />
+                <uikit:UIKitSetter Id="Button_Container_BorderBrush" Value="{Res BorderPressed, Scope=UiKitSmallButtonBasePrimary}" />
+                <uikit:UIKitSetter Id="Button_Container_BorderThickness" Value="0" />
+                <uikit:UIKitSetter Id="Button_Icon_Brush" Value="{Res IconBrushPressedSideLocation, Scope=UiKitSmallButtonBasePrimary}" />
+                <uikit:UIKitSetter Id="Button_Icon_Opacity" Value="1" />
+                <uikit:UIKitSetter Id="Button_Opacity" Value="1" />
+                <uikit:UIKitSetter Id="Button_Spinner_Brush" Value="{Res ForegroundPressed, Scope=UiKitSmallButtonBasePrimary}" />
+            </Trigger>
+            <Trigger Property="Content" Value="{x:Null}">
+                <uikit:UIKitSetter Id="Button_Padding" Value="0" />
+                <uikit:UIKitSetter Id="Button_Icon_MarginLeft" Value="4" />
+                <uikit:UIKitSetter Id="Button_Icon_MarginRight" Value="4" />
+            </Trigger>
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="Content" Value="{x:Null}" />
+                    <Condition Property="visuals:StateService.State" Value="Disabled" />
+                </MultiTrigger.Conditions>
+                <uikit:UIKitSetter Id="Button_Icon_Brush" Value="{Res IconBrushDisabledCenterLocation, Scope=UiKitSmallButtonBasePrimary}" />
+            </MultiTrigger>
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="Content" Value="{x:Null}" />
+                    <Condition Property="visuals:StateService.State" Value="Hover" />
+                </MultiTrigger.Conditions>
+                <uikit:UIKitSetter Id="Button_Icon_Brush" Value="{Res IconBrushHoverCenterLocation, Scope=UiKitSmallButtonBasePrimary}" />
+            </MultiTrigger>
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="Content" Value="{x:Null}" />
+                    <Condition Property="visuals:StateService.State" Value="Normal" />
+                </MultiTrigger.Conditions>
+                <uikit:UIKitSetter Id="Button_Icon_Brush" Value="{Res IconBrushNormalCenterLocation, Scope=UiKitSmallButtonBasePrimary}" />
+            </MultiTrigger>
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="Content" Value="{x:Null}" />
+                    <Condition Property="visuals:StateService.State" Value="Pressed" />
+                </MultiTrigger.Conditions>
+                <uikit:UIKitSetter Id="Button_Icon_Brush" Value="{Res IconBrushPressedCenterLocation, Scope=UiKitSmallButtonBasePrimary}" />
+            </MultiTrigger>
+        </Style.Triggers>
+    </Style>
+    <!--  [UiKitSmallButtonBaseSecondary]  -->
+    <Style x:Key="UiKitSmallButtonBaseSecondary"
+           BasedOn="{StaticResource ButtonUniversal}"
+           TargetType="{x:Type visuals:SmallButton}">
+        <Style.Resources>
+            <Style x:Key="TextStyle"
+                   BasedOn="{StaticResource UiKitTextStyleSmallTextMedium}"
+                   TargetType="{x:Type TextBlock}">
+                <Setter Property="TextElement.Foreground" Value="{Res ForegroundNormal, Scope=UiKitSmallButtonBaseSecondary}" />
+            </Style>
+            <Style x:Key="TextStyleDisabled"
+                   BasedOn="{StaticResource UiKitTextStyleSmallTextMedium}"
+                   TargetType="{x:Type TextBlock}">
+                <Setter Property="TextElement.Foreground" Value="{Res ForegroundDisabled, Scope=UiKitSmallButtonBaseSecondary}" />
+            </Style>
+            <Style x:Key="TextStyleHover"
+                   BasedOn="{StaticResource UiKitTextStyleSmallTextMedium}"
+                   TargetType="{x:Type TextBlock}">
+                <Setter Property="TextElement.Foreground" Value="{Res ForegroundHover, Scope=UiKitSmallButtonBaseSecondary}" />
+            </Style>
+            <Style x:Key="TextStylePressed"
+                   BasedOn="{StaticResource UiKitTextStyleSmallTextMedium}"
+                   TargetType="{x:Type TextBlock}">
+                <Setter Property="TextElement.Foreground" Value="{Res ForegroundPressed, Scope=UiKitSmallButtonBaseSecondary}" />
+            </Style>
+        </Style.Resources>
+        <uikit:UIKitSetter Id="Button_Container_Background" Value="{Res BackgroundNormal, Scope=UiKitSmallButtonBaseSecondary}" />
+        <uikit:UIKitSetter Id="Button_Container_BorderBrush" Value="{Res BorderNormal, Scope=UiKitSmallButtonBaseSecondary}" />
+        <uikit:UIKitSetter Id="Button_Container_BorderThickness" Value="1" />
+        <uikit:UIKitSetter Id="Button_Container_CornerRadius" Value="4" />
+        <uikit:UIKitSetter Id="Button_Icon_Brush" Value="{Res IconBrushNormalSideLocation, Scope=UiKitSmallButtonBaseSecondary}" />
+        <uikit:UIKitSetter Id="Button_Icon_MarginLeft" Value="0,0,4,0" />
+        <uikit:UIKitSetter Id="Button_Icon_MarginRight" Value="4,0,0,0" />
+        <uikit:UIKitSetter Id="Button_Icon_Opacity" Value="1" />
+        <uikit:UIKitSetter Id="Button_Spinner_Brush" Value="{Res ForegroundNormal, Scope=UiKitSmallButtonBaseSecondary}" />
+        <uikit:UIKitSetter Id="Button_Spinner_Style" Value="{StaticResource UiKitSpinner12}" />
+        <uikit:UIKitSetter Id="Button_FocusVisualStyle">
+            <uikit:UIKitSetter.Value>
+                <visuals:FocusVisual Brush="{Res FocusVisualBrush, Scope=UiKitSmallButtonBaseSecondary}"
+                                     CornerRadius="8"
+                                     Margin="-4"
+                                     Thickness="2"
+                                     Type="RECTANGLE" />
+            </uikit:UIKitSetter.Value>
+        </uikit:UIKitSetter>
+        <uikit:UIKitSetter Id="Button_Height" Value="24" />
+        <uikit:UIKitSetter Id="Button_Opacity" Value="1" />
+        <uikit:UIKitSetter Id="Button_Padding" Value="8,4" />
+        <uikit:UIKitSetter Id="Button_TextStyle" Value="{StaticResource TextStyle}" />
+        <uikit:UIKitSetter Id="Button_TextStyleDisabled" Value="{StaticResource TextStyleDisabled}" />
+        <uikit:UIKitSetter Id="Button_TextStyleHover" Value="{StaticResource TextStyleHover}" />
+        <uikit:UIKitSetter Id="Button_TextStylePressed" Value="{StaticResource TextStylePressed}" />
+        <Style.Triggers>
+            <Trigger Property="visuals:StateService.State" Value="Disabled">
+                <uikit:UIKitSetter Id="Button_Container_Background" Value="{Res BackgroundDisabled, Scope=UiKitSmallButtonBaseSecondary}" />
+                <uikit:UIKitSetter Id="Button_Container_BorderBrush" Value="{Res BorderDisabled, Scope=UiKitSmallButtonBaseSecondary}" />
+                <uikit:UIKitSetter Id="Button_Container_BorderThickness" Value="1" />
+                <uikit:UIKitSetter Id="Button_Icon_Brush" Value="{Res IconBrushDisabledSideLocation, Scope=UiKitSmallButtonBaseSecondary}" />
+                <uikit:UIKitSetter Id="Button_Icon_Opacity" Value="1" />
+                <uikit:UIKitSetter Id="Button_Opacity" Value="1" />
+                <uikit:UIKitSetter Id="Button_Spinner_Brush" Value="{Res ForegroundDisabled, Scope=UiKitSmallButtonBaseSecondary}" />
+            </Trigger>
+            <Trigger Property="visuals:StateService.State" Value="Hover">
+                <uikit:UIKitSetter Id="Button_Container_Background" Value="{Res BackgroundHover, Scope=UiKitSmallButtonBaseSecondary}" />
+                <uikit:UIKitSetter Id="Button_Container_BorderBrush" Value="{Res BorderHover, Scope=UiKitSmallButtonBaseSecondary}" />
+                <uikit:UIKitSetter Id="Button_Container_BorderThickness" Value="1" />
+                <uikit:UIKitSetter Id="Button_Icon_Brush" Value="{Res IconBrushHoverSideLocation, Scope=UiKitSmallButtonBaseSecondary}" />
+                <uikit:UIKitSetter Id="Button_Icon_Opacity" Value="1" />
+                <uikit:UIKitSetter Id="Button_Opacity" Value="1" />
+                <uikit:UIKitSetter Id="Button_Spinner_Brush" Value="{Res ForegroundHover, Scope=UiKitSmallButtonBaseSecondary}" />
+            </Trigger>
+            <Trigger Property="visuals:StateService.State" Value="Pressed">
+                <uikit:UIKitSetter Id="Button_Container_Background" Value="{Res BackgroundPressed, Scope=UiKitSmallButtonBaseSecondary}" />
+                <uikit:UIKitSetter Id="Button_Container_BorderBrush" Value="{Res BorderPressed, Scope=UiKitSmallButtonBaseSecondary}" />
+                <uikit:UIKitSetter Id="Button_Container_BorderThickness" Value="1" />
+                <uikit:UIKitSetter Id="Button_Icon_Brush" Value="{Res IconBrushPressedSideLocation, Scope=UiKitSmallButtonBaseSecondary}" />
+                <uikit:UIKitSetter Id="Button_Icon_Opacity" Value="1" />
+                <uikit:UIKitSetter Id="Button_Opacity" Value="1" />
+                <uikit:UIKitSetter Id="Button_Spinner_Brush" Value="{Res ForegroundPressed, Scope=UiKitSmallButtonBaseSecondary}" />
+            </Trigger>
+            <Trigger Property="Content" Value="{x:Null}">
+                <uikit:UIKitSetter Id="Button_Padding" Value="0" />
+                <uikit:UIKitSetter Id="Button_Icon_MarginLeft" Value="4" />
+                <uikit:UIKitSetter Id="Button_Icon_MarginRight" Value="4" />
+            </Trigger>
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="Content" Value="{x:Null}" />
+                    <Condition Property="visuals:StateService.State" Value="Disabled" />
+                </MultiTrigger.Conditions>
+                <uikit:UIKitSetter Id="Button_Icon_Brush" Value="{Res IconBrushDisabledCenterLocation, Scope=UiKitSmallButtonBaseSecondary}" />
+            </MultiTrigger>
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="Content" Value="{x:Null}" />
+                    <Condition Property="visuals:StateService.State" Value="Hover" />
+                </MultiTrigger.Conditions>
+                <uikit:UIKitSetter Id="Button_Icon_Brush" Value="{Res IconBrushHoverCenterLocation, Scope=UiKitSmallButtonBaseSecondary}" />
+            </MultiTrigger>
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="Content" Value="{x:Null}" />
+                    <Condition Property="visuals:StateService.State" Value="Normal" />
+                </MultiTrigger.Conditions>
+                <uikit:UIKitSetter Id="Button_Icon_Brush" Value="{Res IconBrushNormalCenterLocation, Scope=UiKitSmallButtonBaseSecondary}" />
+            </MultiTrigger>
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="Content" Value="{x:Null}" />
+                    <Condition Property="visuals:StateService.State" Value="Pressed" />
+                </MultiTrigger.Conditions>
+                <uikit:UIKitSetter Id="Button_Icon_Brush" Value="{Res IconBrushPressedCenterLocation, Scope=UiKitSmallButtonBaseSecondary}" />
+            </MultiTrigger>
+        </Style.Triggers>
     </Style>
     <!--#endregion-->
     <!--#region IconButtons-->
@@ -5680,51 +6051,121 @@
     </Style>
     <!--#endregion-->
     <!--#region NotificationHints-->
-    <!--  [UiKitNotificationHint]  -->
-    <Style x:Key="UiKitNotificationHint"
+    <!--  [UiKitNotificationHintColor]  -->
+    <Style x:Key="UiKitNotificationHintColor"
            BasedOn="{StaticResource NotificationHintUniversal}"
            TargetType="{x:Type visuals:NotificationHint}">
         <Style.Resources>
             <Style x:Key="TextStyleDanger"
                    BasedOn="{StaticResource UiKitTextStyleBaseText}"
                    TargetType="{x:Type TextBlock}">
-                <Setter Property="TextElement.Foreground" Value="{Res ForegroundDanger, Scope=UiKitNotificationHint}" />
+                <Setter Property="TextElement.Foreground" Value="{Res ForegroundDanger, Scope=UiKitNotificationHintColor}" />
             </Style>
             <Style x:Key="TextStyleInfo"
                    BasedOn="{StaticResource UiKitTextStyleBaseText}"
                    TargetType="{x:Type TextBlock}">
-                <Setter Property="TextElement.Foreground" Value="{Res ForegroundInfo, Scope=UiKitNotificationHint}" />
+                <Setter Property="TextElement.Foreground" Value="{Res ForegroundInfo, Scope=UiKitNotificationHintColor}" />
+            </Style>
+            <Style x:Key="TextStyleNeutral"
+                   BasedOn="{StaticResource UiKitTextStyleBaseText}"
+                   TargetType="{x:Type TextBlock}">
+                <Setter Property="TextElement.Foreground" Value="{Res ForegroundNeutral, Scope=UiKitNotificationHintColor}" />
             </Style>
             <Style x:Key="TextStylePositive"
                    BasedOn="{StaticResource UiKitTextStyleBaseText}"
                    TargetType="{x:Type TextBlock}">
-                <Setter Property="TextElement.Foreground" Value="{Res ForegroundPositive, Scope=UiKitNotificationHint}" />
+                <Setter Property="TextElement.Foreground" Value="{Res ForegroundPositive, Scope=UiKitNotificationHintColor}" />
             </Style>
             <Style x:Key="TextStyleWarning"
                    BasedOn="{StaticResource UiKitTextStyleBaseText}"
                    TargetType="{x:Type TextBlock}">
-                <Setter Property="TextElement.Foreground" Value="{Res ForegroundWarning, Scope=UiKitNotificationHint}" />
+                <Setter Property="TextElement.Foreground" Value="{Res ForegroundWarning, Scope=UiKitNotificationHintColor}" />
             </Style>
         </Style.Resources>
         <uikit:UIKitSetter Id="NotificationHint_Icon_Margin" Value="0,2,8,0" />
         <Style.Triggers>
             <Trigger Property="Type" Value="Danger">
-                <uikit:UIKitSetter Id="NotificationHint_Icon_Color" Value="{Res IconBrushDanger, Scope=UiKitNotificationHint}" />
+                <uikit:UIKitSetter Id="NotificationHint_Icon_Color" Value="{Res IconBrushDanger, Scope=UiKitNotificationHintColor}" />
                 <uikit:UIKitSetter Id="NotificationHint_Icon_Name" Value="StatusDanger" />
                 <uikit:UIKitSetter Id="NotificationHint_TextStyle" Value="{StaticResource TextStyleDanger}" />
             </Trigger>
             <Trigger Property="Type" Value="Info">
-                <uikit:UIKitSetter Id="NotificationHint_Icon_Color" Value="{Res IconBrushInfo, Scope=UiKitNotificationHint}" />
+                <uikit:UIKitSetter Id="NotificationHint_Icon_Color" Value="{Res IconBrushInfo, Scope=UiKitNotificationHintColor}" />
                 <uikit:UIKitSetter Id="NotificationHint_Icon_Name" Value="StatusInfo" />
                 <uikit:UIKitSetter Id="NotificationHint_TextStyle" Value="{StaticResource TextStyleInfo}" />
             </Trigger>
+            <Trigger Property="Type" Value="Neutral">
+                <uikit:UIKitSetter Id="NotificationHint_Icon_Color" Value="{Res IconBrushNeutral, Scope=UiKitNotificationHintColor}" />
+                <uikit:UIKitSetter Id="NotificationHint_Icon_Name" Value="StatusInfo" />
+                <uikit:UIKitSetter Id="NotificationHint_TextStyle" Value="{StaticResource TextStyleNeutral}" />
+            </Trigger>
             <Trigger Property="Type" Value="Positive">
-                <uikit:UIKitSetter Id="NotificationHint_Icon_Color" Value="{Res IconBrushPositive, Scope=UiKitNotificationHint}" />
+                <uikit:UIKitSetter Id="NotificationHint_Icon_Color" Value="{Res IconBrushPositive, Scope=UiKitNotificationHintColor}" />
                 <uikit:UIKitSetter Id="NotificationHint_Icon_Name" Value="StatusPositive" />
                 <uikit:UIKitSetter Id="NotificationHint_TextStyle" Value="{StaticResource TextStylePositive}" />
             </Trigger>
             <Trigger Property="Type" Value="Warning">
-                <uikit:UIKitSetter Id="NotificationHint_Icon_Color" Value="{Res IconBrushWarning, Scope=UiKitNotificationHint}" />
+                <uikit:UIKitSetter Id="NotificationHint_Icon_Color" Value="{Res IconBrushWarning, Scope=UiKitNotificationHintColor}" />
+                <uikit:UIKitSetter Id="NotificationHint_Icon_Name" Value="StatusWarning" />
+                <uikit:UIKitSetter Id="NotificationHint_TextStyle" Value="{StaticResource TextStyleWarning}" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+    <!--  [UiKitNotificationHintDefault]  -->
+    <Style x:Key="UiKitNotificationHintDefault"
+           BasedOn="{StaticResource NotificationHintUniversal}"
+           TargetType="{x:Type visuals:NotificationHint}">
+        <Style.Resources>
+            <Style x:Key="TextStyleDanger"
+                   BasedOn="{StaticResource UiKitTextStyleBaseText}"
+                   TargetType="{x:Type TextBlock}">
+                <Setter Property="TextElement.Foreground" Value="{Res ForegroundDanger, Scope=UiKitNotificationHintDefault}" />
+            </Style>
+            <Style x:Key="TextStyleInfo"
+                   BasedOn="{StaticResource UiKitTextStyleBaseText}"
+                   TargetType="{x:Type TextBlock}">
+                <Setter Property="TextElement.Foreground" Value="{Res ForegroundInfo, Scope=UiKitNotificationHintDefault}" />
+            </Style>
+            <Style x:Key="TextStyleNeutral"
+                   BasedOn="{StaticResource UiKitTextStyleBaseText}"
+                   TargetType="{x:Type TextBlock}">
+                <Setter Property="TextElement.Foreground" Value="{Res ForegroundNeutral, Scope=UiKitNotificationHintDefault}" />
+            </Style>
+            <Style x:Key="TextStylePositive"
+                   BasedOn="{StaticResource UiKitTextStyleBaseText}"
+                   TargetType="{x:Type TextBlock}">
+                <Setter Property="TextElement.Foreground" Value="{Res ForegroundPositive, Scope=UiKitNotificationHintDefault}" />
+            </Style>
+            <Style x:Key="TextStyleWarning"
+                   BasedOn="{StaticResource UiKitTextStyleBaseText}"
+                   TargetType="{x:Type TextBlock}">
+                <Setter Property="TextElement.Foreground" Value="{Res ForegroundWarning, Scope=UiKitNotificationHintDefault}" />
+            </Style>
+        </Style.Resources>
+        <uikit:UIKitSetter Id="NotificationHint_Icon_Margin" Value="0,2,8,0" />
+        <Style.Triggers>
+            <Trigger Property="Type" Value="Danger">
+                <uikit:UIKitSetter Id="NotificationHint_Icon_Color" Value="{Res IconBrushDanger, Scope=UiKitNotificationHintDefault}" />
+                <uikit:UIKitSetter Id="NotificationHint_Icon_Name" Value="StatusDanger" />
+                <uikit:UIKitSetter Id="NotificationHint_TextStyle" Value="{StaticResource TextStyleDanger}" />
+            </Trigger>
+            <Trigger Property="Type" Value="Info">
+                <uikit:UIKitSetter Id="NotificationHint_Icon_Color" Value="{Res IconBrushInfo, Scope=UiKitNotificationHintDefault}" />
+                <uikit:UIKitSetter Id="NotificationHint_Icon_Name" Value="StatusInfo" />
+                <uikit:UIKitSetter Id="NotificationHint_TextStyle" Value="{StaticResource TextStyleInfo}" />
+            </Trigger>
+            <Trigger Property="Type" Value="Neutral">
+                <uikit:UIKitSetter Id="NotificationHint_Icon_Color" Value="{Res IconBrushNeutral, Scope=UiKitNotificationHintDefault}" />
+                <uikit:UIKitSetter Id="NotificationHint_Icon_Name" Value="StatusInfo" />
+                <uikit:UIKitSetter Id="NotificationHint_TextStyle" Value="{StaticResource TextStyleNeutral}" />
+            </Trigger>
+            <Trigger Property="Type" Value="Positive">
+                <uikit:UIKitSetter Id="NotificationHint_Icon_Color" Value="{Res IconBrushPositive, Scope=UiKitNotificationHintDefault}" />
+                <uikit:UIKitSetter Id="NotificationHint_Icon_Name" Value="StatusPositive" />
+                <uikit:UIKitSetter Id="NotificationHint_TextStyle" Value="{StaticResource TextStylePositive}" />
+            </Trigger>
+            <Trigger Property="Type" Value="Warning">
+                <uikit:UIKitSetter Id="NotificationHint_Icon_Color" Value="{Res IconBrushWarning, Scope=UiKitNotificationHintDefault}" />
                 <uikit:UIKitSetter Id="NotificationHint_Icon_Name" Value="StatusWarning" />
                 <uikit:UIKitSetter Id="NotificationHint_TextStyle" Value="{StaticResource TextStyleWarning}" />
             </Trigger>
@@ -6461,18 +6902,18 @@
            BasedOn="{StaticResource SearchUniversal}"
            TargetType="{x:Type visuals:Search}">
         <Style.Resources>
-            <Style x:Key="TextInputStyle"
-                   TargetType="{x:Type visuals:TextInput}">
-                <uikit:UIKitSetter Id="Search_TextInput_CaretBrush" Value="{Res CaretBrush, Scope=UiKitSearch}" />
-                <uikit:UIKitSetter Id="Search_TextInput_Padding" Value="8,6" />
-                <uikit:UIKitSetter Id="Search_TextInput_PlaceholderForeground" Value="{Res PlaceholderForeground, Scope=UiKitSearch}" />
-                <uikit:UIKitSetter Id="Search_TextInput_PlaceholderStyle" Value="{StaticResource UiKitTextStyleBaseText}" />
-                <uikit:UIKitSetter Id="Search_TextInput_TextForeground" Value="{Res TextForeground, Scope=UiKitSearch}" />
-                <uikit:UIKitSetter Id="Search_TextInput_TextStyle" Value="{StaticResource UiKitTextStyleBaseText}" />
+            <Style x:Key="SearchInputStyle"
+                   TargetType="{x:Type visuals:SearchInput}">
+                <uikit:UIKitSetter Id="Search_SearchInput_CaretBrush" Value="{Res CaretBrush, Scope=UiKitSearch}" />
+                <uikit:UIKitSetter Id="Search_SearchInput_Padding" Value="8,6" />
+                <uikit:UIKitSetter Id="Search_SearchInput_PlaceholderForeground" Value="{Res PlaceholderForeground, Scope=UiKitSearch}" />
+                <uikit:UIKitSetter Id="Search_SearchInput_PlaceholderStyle" Value="{StaticResource UiKitTextStyleBaseText}" />
+                <uikit:UIKitSetter Id="Search_SearchInput_TextForeground" Value="{Res TextForeground, Scope=UiKitSearch}" />
+                <uikit:UIKitSetter Id="Search_SearchInput_TextStyle" Value="{StaticResource UiKitTextStyleBaseText}" />
                 <Style.Triggers>
                     <Trigger Property="visuals:StateService.TextInputState" Value="Disabled">
-                        <uikit:UIKitSetter Id="Search_TextInput_PlaceholderForeground" Value="{Res PlaceholderForegroundDisabled, Scope=UiKitSearch}" />
-                        <uikit:UIKitSetter Id="Search_TextInput_TextForeground" Value="{Res TextForegroundDisabled, Scope=UiKitSearch}" />
+                        <uikit:UIKitSetter Id="Search_SearchInput_PlaceholderForeground" Value="{Res PlaceholderForegroundDisabled, Scope=UiKitSearch}" />
+                        <uikit:UIKitSetter Id="Search_SearchInput_TextForeground" Value="{Res TextForegroundDisabled, Scope=UiKitSearch}" />
                     </Trigger>
                 </Style.Triggers>
             </Style>
@@ -6488,7 +6929,7 @@
         <uikit:UIKitSetter Id="Search_Icon" Value="Search" />
         <uikit:UIKitSetter Id="Search_IconBrush" Value="{Res SearchIconBrush, Scope=UiKitSearch}" />
         <uikit:UIKitSetter Id="Search_IconMargin" Value="12,8,0,8" />
-        <uikit:UIKitSetter Id="Search_TextInputStyle" Value="{StaticResource TextInputStyle}" />
+        <uikit:UIKitSetter Id="Search_SearchInputStyle" Value="{StaticResource SearchInputStyle}" />
         <uikit:UIKitSetter Id="Search_SpinnerMargin" Value="12,8,0,8" />
         <uikit:UIKitSetter Id="Search_SpinnerStyle" Value="{StaticResource UiKitSpinner16}" />
         <Style.Triggers>
@@ -6520,6 +6961,15 @@
             <Style x:Key="HyperlinkStyle"
                    BasedOn="{StaticResource HyperlinkUniversal}"
                    TargetType="{x:Type Hyperlink}">
+                <uikit:UIKitSetter Id="Hyperlink_FocusVisualStyle">
+                    <uikit:UIKitSetter.Value>
+                        <visuals:FocusVisual Brush="{Res FocusVisualBrush, Scope=UiKitSelectableText}"
+                                             CornerRadius="8"
+                                             Margin="-6,-4"
+                                             Thickness="2"
+                                             Type="RECTANGLE" />
+                    </uikit:UIKitSetter.Value>
+                </uikit:UIKitSetter>
                 <uikit:UIKitSetter Id="Hyperlink_Background" Value="{Res BackgroundNormal, Scope=UiKitSelectableText}" />
                 <uikit:UIKitSetter Id="Hyperlink_Foreground" Value="{Res ForegroundNormal, Scope=UiKitSelectableText}" />
                 <Style.Triggers>
@@ -8605,8 +9055,8 @@
            TargetType="{x:Type visuals:TextViewer}">
         <Style.Resources>
             <Style x:Key="TextStyle"
-                   BasedOn="{StaticResource UiKitTextStyleBaseText}"
-                   TargetType="{x:Type TextBox}">
+                   BasedOn="{visuals:MultiStyle TextViewerBoxUniversal UiKitTextStyleBaseText}"
+                   TargetType="{x:Type visuals:TextViewerBox}">
                 <Setter Property="TextElement.Foreground" Value="{Res TextForeground, Scope=UiKitTextViewer}" />
             </Style>
         </Style.Resources>

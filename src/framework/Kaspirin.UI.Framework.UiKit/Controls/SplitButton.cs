@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System;
 using System.Windows;
 using System.Windows.Input;
 
@@ -19,6 +20,13 @@ namespace Kaspirin.UI.Framework.UiKit.Controls;
 
 public sealed class SplitButton : ContextMenuButton
 {
+    static SplitButton()
+    {
+        ToolTipProperty.OverrideMetadata(
+            typeof(SplitButton),
+            new FrameworkPropertyMetadata(null, OnToolTipChanged));
+    }
+
     #region State
 
     public SplitButtonState State
@@ -149,8 +157,29 @@ public sealed class SplitButton : ContextMenuButton
 
     #endregion
 
+    #region MainButtonToolTip
+
+    public object MainButtonToolTip
+    {
+        get => GetValue(MainButtonToolTipProperty);
+        set => SetValue(MainButtonToolTipProperty, value);
+    }
+
+    public static readonly DependencyProperty MainButtonToolTipProperty = DependencyProperty.Register(
+        nameof(MainButtonToolTip),
+        typeof(object),
+        typeof(SplitButton),
+        new PropertyMetadata(default(object)));
+
+    #endregion
+
     internal void SetState(SplitButtonState state)
     {
         State = state;
+    }
+
+    private static void OnToolTipChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+    {
+        throw new InvalidOperationException($"ToolTip property must be changed via {nameof(ContextMenuButtonToolTip)} or {nameof(MainButtonToolTip)} properties");
     }
 }

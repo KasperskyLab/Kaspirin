@@ -13,39 +13,118 @@
 // limitations under the License.
 
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Threading;
 
 namespace Kaspirin.UI.Framework.Tests.TestSuites.Mvvm;
 
-internal sealed class TestExecutor : IUiThreadExecutor
+internal sealed class TestExecutor : IDispatcherExecutor
 {
     public bool IsAvailable => true;
-    public bool IsUiThread { get; set; } = true;
-
+    public bool IsDispatcherThread { get; set; } = true;
     public bool ActionRaisedAsync { get; private set; }
     public bool ActionRaisedSync { get; private set; }
+    public Dispatcher? TaskFactory => null;
 
-    public bool ThrowIfNotAvailable { get; set; } = true;
+    public event EventHandler IsAvailableChanged = (o, e) => { };
 
-    public void ExecuteInUiThreadSync(Action action, DispatcherPriority priority = DispatcherPriority.Normal)
+    public void ExecuteSync(Action action, DispatcherPriority priority, CancellationToken cancellationToken)
     {
         ActionRaisedSync = true;
 
         action();
     }
 
-    public Task ExecuteInUiThreadAsync(Action action, DispatcherPriority priority = DispatcherPriority.Normal)
+    public Task ExecuteAsync(Action action, DispatcherPriority priority, CancellationToken cancellationToken)
     {
         ActionRaisedAsync = true;
 
         return Task.Run(action);
     }
 
-    public TResult ExecuteInUiThreadSync<TResult>(Func<TResult> action, DispatcherPriority priority = DispatcherPriority.Normal)
+    public TResult ExecuteSync<TResult>(Func<TResult> action, DispatcherPriority priority, CancellationToken cancellationToken)
     {
         ActionRaisedSync = true;
 
         return action();
     }
+
+    public Task<TResult> ExecuteAsync<TResult>(Func<TResult> action, DispatcherPriority priority, CancellationToken cancellationToken)
+    {
+        ActionRaisedAsync = true;
+
+        return Task.Run(action);
+    }
+
+    public Task ExecuteAsyncWithDelay(Action action, TimeSpan delay, DispatcherPriority priority, CancellationToken cancellationToken)
+    {
+        ActionRaisedAsync = true;
+
+        return Task.Run(action);
+    }
+
+    public Task<TResult> ExecuteAsyncWithDelay<TResult>(Func<TResult> action, TimeSpan delay, DispatcherPriority priority, CancellationToken cancellationToken)
+    {
+        ActionRaisedAsync = true;
+
+        return Task.Run(action);
+    }
+
+    public Task ExecuteAsyncWithDelay(Action action, TimeSpan delay, CancellationToken cancellationToken)
+    {
+        ActionRaisedAsync = true;
+
+        return Task.Run(action);
+    }
+
+    public Task<TResult> ExecuteAsyncWithDelay<TResult>(Func<TResult> action, TimeSpan delay, CancellationToken cancellationToken)
+    {
+        ActionRaisedAsync = true;
+
+        return Task.Run(action);
+    }
+
+    public void ExecuteSync(Action action, CancellationToken cancellationToken)
+        => ExecuteSync(action, DispatcherPriority.Normal, cancellationToken);
+
+    public TResult ExecuteSync<TResult>(Func<TResult> action, CancellationToken cancellationToken)
+        => ExecuteSync(action, DispatcherPriority.Normal, cancellationToken);
+
+    public Task ExecuteAsync(Action action, CancellationToken cancellationToken)
+        => ExecuteAsync(action, DispatcherPriority.Normal, cancellationToken);
+
+    public Task<TResult> ExecuteAsync<TResult>(Func<TResult> action, CancellationToken cancellationToken)
+        => ExecuteAsync(action, DispatcherPriority.Normal, cancellationToken);
+
+    public void ExecuteSync(Action action, DispatcherPriority priority)
+        => ExecuteSync(action, priority, CancellationToken.None);
+
+    public TResult ExecuteSync<TResult>(Func<TResult> action, DispatcherPriority priority)
+        => ExecuteSync(action, priority, CancellationToken.None);
+
+    public Task ExecuteAsync(Action action, DispatcherPriority priority)
+        => ExecuteAsync(action, priority, CancellationToken.None);
+
+    public Task<TResult> ExecuteAsync<TResult>(Func<TResult> action, DispatcherPriority priority)
+        => ExecuteAsync(action, priority, CancellationToken.None);
+
+    public void ExecuteSync(Action action)
+        => ExecuteSync(action, DispatcherPriority.Normal, CancellationToken.None);
+
+    public TResult ExecuteSync<TResult>(Func<TResult> action)
+        => ExecuteSync(action, DispatcherPriority.Normal, CancellationToken.None);
+
+    public Task ExecuteAsync(Action action)
+        => ExecuteAsync(action, DispatcherPriority.Normal, CancellationToken.None);
+
+    public Task<TResult> ExecuteAsync<TResult>(Func<TResult> action)
+        => ExecuteAsync(action, DispatcherPriority.Normal, CancellationToken.None);
+
+    public void SetTaskFactory(Dispatcher dispatcher)
+    {
+    }
+
+    public bool VerifyThread()
+        => IsDispatcherThread;
 }

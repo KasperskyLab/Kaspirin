@@ -63,6 +63,12 @@
 						<xsl:with-param name="brushNode" select="ForegroundInfo"/>
 					</xsl:call-template>
 
+					<!--ForegroundNeutral-->
+					<xsl:call-template name="generateBrush">
+						<xsl:with-param name="key">ForegroundNeutral</xsl:with-param>
+						<xsl:with-param name="brushNode" select="ForegroundNeutral"/>
+					</xsl:call-template>
+
 					<!--ForegroundPositive-->
 					<xsl:call-template name="generateBrush">
 						<xsl:with-param name="key">ForegroundPositive</xsl:with-param>
@@ -85,6 +91,12 @@
 					<xsl:call-template name="generateBrush">
 						<xsl:with-param name="key">IconBrushInfo</xsl:with-param>
 						<xsl:with-param name="brushNode" select="IconBrushInfo"/>
+					</xsl:call-template>
+
+					<!--IconBrushNeutral-->
+					<xsl:call-template name="generateBrush">
+						<xsl:with-param name="key">IconBrushNeutral</xsl:with-param>
+						<xsl:with-param name="brushNode" select="IconBrushNeutral"/>
 					</xsl:call-template>
 
 					<!--IconBrushPositive-->

@@ -117,7 +117,7 @@ public static class Shell32Dll
     [DllImport(DllName, CharSet = CharSet.Auto, SetLastError = true)]
     public static extern bool SHGetPathFromIDListEx(
         IntPtr pidl,
-        [MarshalAs(UnmanagedType.LPTStr)] StringBuilder pathBuffer,
+        [MarshalAs(UnmanagedType.LPWStr)] StringBuilder pathBuffer,
         int bufferSize,
         uint flags);
 

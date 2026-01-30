@@ -578,7 +578,7 @@ public sealed class RapidUnityContainer : IUnityContainer
     {
         public InitializationPlanner()
         {
-            Task.Factory.StartNew(WorkerThread, TaskCreationOptions.LongRunning);
+            Executers.InTpAsync(WorkerThread, TaskCreationOptions.LongRunning);
         }
 
         #region IDisposable

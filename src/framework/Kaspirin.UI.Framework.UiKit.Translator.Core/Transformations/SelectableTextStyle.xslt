@@ -59,13 +59,19 @@
 
 				<!--Style.Resources-->
 				<xsl:element name ="Style.Resources">
-					
+
 					<!--HyperlinkStyle-->
 					<xsl:call-template name="generateStyle">
 						<xsl:with-param name="targetType">Hyperlink</xsl:with-param>
 						<xsl:with-param name="basedOn">HyperlinkUniversal</xsl:with-param>
 						<xsl:with-param name="key">HyperlinkStyle</xsl:with-param>
 						<xsl:with-param name="setters">
+
+							<!--Hyperlink_FocusVisualStyle-->
+							<xsl:call-template name="generateFocusVisualStyleSetter">
+								<xsl:with-param name="propertyId">Hyperlink_FocusVisualStyle</xsl:with-param>
+								<xsl:with-param name="scope" select="$id"/>
+							</xsl:call-template>
 
 							<!--Hyperlink_Background-->
 							<xsl:call-template name="generateBrushSetter">
@@ -133,7 +139,7 @@
 
 						</xsl:with-param>
 					</xsl:call-template>
-				
+
 				</xsl:element>
 
 				<!--SelectableText_FontStyle-->

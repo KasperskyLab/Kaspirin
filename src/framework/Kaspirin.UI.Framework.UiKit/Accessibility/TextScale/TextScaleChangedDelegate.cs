@@ -23,4 +23,4 @@ namespace Kaspirin.UI.Framework.UiKit.Accessibility.TextScale;
 /// <param name="e">
 ///     Event data.
 /// </param>
-public delegate void TextScaleChangedDelegate(TextScaleService sender, TextScaleChangedEventArgs e);
+public delegate void TextScaleChangedDelegate(ITextScaleService sender, TextScaleChangedEventArgs e);

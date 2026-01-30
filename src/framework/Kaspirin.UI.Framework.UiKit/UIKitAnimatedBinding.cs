@@ -23,7 +23,7 @@ internal sealed class UIKitAnimatedBinding : UIKitBinding
     public UIKitAnimatedBinding(string id)
         : base(id)
     {
-        Properties = ServiceLocator.GetService<IAnimationSettingsProvider>().DefaultAnimationProperties;
+        Properties = ServiceLocator.GetService<IAnimationManager>().GetAnimationProperties();
     }
 
     public AnimationProperties Properties { get; set; }

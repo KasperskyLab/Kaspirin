@@ -4,6 +4,10 @@
 // Scope of modification:
 //   - Code adaptation to project requirements.
 
+// This file has been modified by AO Kaspersky Lab in 10/27/2025.
+// Scope of modification:
+//   - Simplify AssociatedObject cast to T type.
+
 // Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
@@ -20,5 +24,5 @@ public abstract class Behavior<T> : Behavior where T : DependencyObject
     {
     }
 
-    public new T? AssociatedObject => Guard.EnsureIsInstanceOfType<T?>(base.AssociatedObject);
+    public new T? AssociatedObject => base.AssociatedObject as T;
 }

@@ -31,7 +31,7 @@ public sealed class TextInputMaskPlaceholder : TextInputPlaceholder
     public TextInputMaskItem[] GetMaskItems()
         => _maskItems.ToArray();
 
-    public override IEnumerable<Inline> GetPlaceholderText(string? value, bool isRTL)
+    public override IEnumerable<Inline> GetInlineElements(string? value, bool isRTL)
     {
         value ??= string.Empty;
 
@@ -99,6 +99,11 @@ public sealed class TextInputMaskPlaceholder : TextInputPlaceholder
         }
 
         return inputStringBuilder.ToString();
+    }
+
+    public override string? GetAccessibilityText(string? value)
+    {
+        return null;
     }
 
     private readonly TextInputMaskItem[] _maskItems;

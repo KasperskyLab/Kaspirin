@@ -14,11 +14,13 @@
 
 
 using System.Windows;
+using System.Windows.Automation.Peers;
 using System.Windows.Controls;
+using Kaspirin.UI.Framework.UiKit.Controls.Automation;
 
 namespace Kaspirin.UI.Framework.UiKit.Controls;
 
-public class Island : ContentControl
+public class Island : ContentControl, IAccessibilityAware
 {
     public Island()
     {
@@ -42,4 +44,14 @@ public class Island : ContentControl
         UIKitIslandHelper.TypePropertyKey.DependencyProperty.AddOwner(typeof(Island));
 
     #endregion
+
+    protected override AutomationPeer? OnCreateAutomationPeer()
+    {
+        return new IslandAutomationPeer(this);
+    }
+
+    bool IAccessibilityAware.Validate()
+    {
+        return this.Validate();
+    }
 }

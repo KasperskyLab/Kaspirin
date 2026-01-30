@@ -63,7 +63,7 @@ public abstract class BaseResourceBrowser : IResourceBrowser
     {
         Guard.ArgumentIsNotNull(action);
 
-        var updateTask = new TaskFactory(TaskScheduler.Default).StartNew(() => UpdateResources(action));
+        var updateTask = Executers.InTpAsync(() => UpdateResources(action));
         _updateResourceTasks.TryAdd(updateTask, updateTask);
     }
 

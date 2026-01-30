@@ -13,11 +13,13 @@
 // limitations under the License.
 
 using System.Windows;
+using System.Windows.Automation.Peers;
 using System.Windows.Controls.Primitives;
+using Kaspirin.UI.Framework.UiKit.Controls.Automation;
 
 namespace Kaspirin.UI.Framework.UiKit.Controls;
 
-public sealed class IslandToggleButton : ToggleButton
+public sealed class IslandToggleButton : ToggleButton, IAccessibilityAware
 {
     public IslandToggleButton()
     {
@@ -41,4 +43,14 @@ public sealed class IslandToggleButton : ToggleButton
         UIKitIslandHelper.TypePropertyKey.DependencyProperty.AddOwner(typeof(IslandToggleButton));
 
     #endregion
+
+    protected override AutomationPeer OnCreateAutomationPeer()
+    {
+        return new IslandToggleButtonAutomationPeer(this);
+    }
+
+    bool IAccessibilityAware.Validate()
+    {
+        return this.Validate();
+    }
 }
