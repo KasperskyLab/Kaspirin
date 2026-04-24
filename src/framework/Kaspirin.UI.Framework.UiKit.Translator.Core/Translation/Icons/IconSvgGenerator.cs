@@ -16,6 +16,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Xml;
 using Microsoft.Build.Framework;
 using Microsoft.Build.Utilities;
@@ -40,31 +41,25 @@ internal sealed class IconSvgGenerator : GeneratorBase
 
     public override bool Generate(string uiKitContent, out string[] generatedFilePaths)
     {
-        var svgStorageName = $"Icons_Common";
-        var svgStorage = new SvgStorage(svgStorageName, _outputDirectory, _lineEndingMode, _log);
+        var generatedFilePathList = new List<string>();
 
         try
         {
+            Directory.CreateDirectory(_outputDirectory);
+
             var icons = new XmlIconSource(msg => _log.LogWarning(msg))
                 .GetIcons(uiKitContent)
                 .ToArray();
 
             foreach (var icon in icons)
             {
-                svgStorage.Add(icon.Svg, icon.Hash, GetSvgPaths(icon.Name, icon.Size, isRTL: false));
-
-                var hasRtl = !string.IsNullOrWhiteSpace(icon.SvgRTL);
-                if (hasRtl)
-                {
-                    svgStorage.Add(icon.SvgRTL, icon.HashRTL, GetSvgPaths(icon.Name, icon.Size, isRTL: true));
-                }
+                generatedFilePathList.AddRange(SaveSvg(icon.Svg, GetSvgPaths(icon.Name, icon.Size, isRTL: false)));
+                generatedFilePathList.AddRange(SaveSvg(icon.SvgRTL, GetSvgPaths(icon.Name, icon.Size, isRTL: true)));
             }
-
-            svgStorage.Store();
 
             _log.LogMessage(
                 MessageImportance.High,
-                $"Icon SVG files generation completed: {svgStorage.Files.Count()} file(s) created.");
+                $"Icon SVG files generation completed: {generatedFilePathList.Count} file(s) created.");
         }
         catch (Exception ex)
         {
@@ -74,7 +69,7 @@ internal sealed class IconSvgGenerator : GeneratorBase
             return false;
         }
 
-        generatedFilePaths = svgStorage.Files;
+        generatedFilePaths = generatedFilePathList.ToArray();
         return true;
     }
 
@@ -95,7 +90,24 @@ internal sealed class IconSvgGenerator : GeneratorBase
         }
     }
 
+    private IEnumerable<string> SaveSvg(string svg, IEnumerable<string> paths)
+    {
+        if (string.IsNullOrWhiteSpace(svg))
+        {
+            yield break;
+        }
 
+        var svgFileContent = LineEndingHelper.NormalizeLineEndings(svg, _lineEndingMode);
+
+        foreach (var path in paths)
+        {
+            _log.LogMessage(MessageImportance.Normal, $"Creating icon SVG: '{path}'.");
+
+            File.WriteAllText(path, svgFileContent, Encoding.UTF8);
+
+            yield return path;
+        }
+    }
 
     private readonly string _outputDirectory;
 }

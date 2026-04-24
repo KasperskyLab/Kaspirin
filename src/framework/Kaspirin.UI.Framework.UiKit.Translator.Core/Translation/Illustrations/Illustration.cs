@@ -39,7 +39,5 @@ public sealed class Illustration
         public bool IsRTL { get; set; }
 
         public string Vector { get; set; }
-
-        public string Hash { get; set; }
     }
 }

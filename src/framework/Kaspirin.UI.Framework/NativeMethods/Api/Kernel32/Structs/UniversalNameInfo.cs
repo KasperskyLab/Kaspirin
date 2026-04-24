@@ -1,4 +1,4 @@
-// Copyright © 2025 AO Kaspersky Lab.
+// Copyright © 2026 AO Kaspersky Lab.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,16 +12,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using System.Collections.Generic;
-using System.Xml;
-using System.Xml.Serialization;
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
 
-namespace Kaspirin.UI.Framework.UiKit.Translator.Core.Translation
+using System;
+using System.Runtime.InteropServices;
+
+namespace Kaspirin.UI.Framework.NativeMethods.Api.Kernel32.Structs;
+
+/// <summary>
+///     <seealso href="https://learn.microsoft.com/en-us/windows/win32/api/winnetwk/ns-winnetwk-universal_name_infoa">Learn more</seealso>.
+/// </summary>
+[StructLayout(LayoutKind.Sequential)]
+public struct UniversalNameInfo
 {
-    [XmlRoot("SvgStorageItems")]
-    public class SvgStorageItems
-    {
-        [XmlElement("SvgStorageItem")]
-        public List<SvgStorageItem> Items { get; set; } = new List<SvgStorageItem>();
-    }
+    public IntPtr lpUniversalName;
 }

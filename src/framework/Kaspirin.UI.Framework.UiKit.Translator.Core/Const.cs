@@ -40,7 +40,6 @@ internal static class Const
 
     public const string SchemaResourcesDirectory = "Schema";
     public const string UiKitSchemaFilename = "UiKit.xsd";
-    public const string SvgStorageEmbeddedConfigurationKey = "SvgStorageDirectory";
     public const string SchemasDirectoryEmbeddedConfigurationKey = "SchemasDirectory";
     public const string RootNamespaceEmbeddedConfigurationKey = "RootNamespace";
 
@@ -100,7 +99,6 @@ internal static class Const
     public const string VectorElementName = "Vector";
     public const string VectorIsRTLAttributeName = "IsRTL";
     public const string VectorThemeAttributeName = "Theme";
-    public const string VectorHashAttributeName = "Hash";
     public const string VectorDataElementName = "Data";
     public const string SvgElementName = "Svg";
 

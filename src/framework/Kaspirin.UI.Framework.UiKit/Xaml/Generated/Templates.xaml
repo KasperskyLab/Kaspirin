@@ -1830,7 +1830,7 @@
                                                              Visibility="{markupCommon:UIKitTemplateBinding HasHelpButton,
                                                                                                             Converter={booleanConverters:BooleanToVisibilityConverter False=Hidden}}" />
                                         <controls:IconButton x:Name="PART_CloseButton"
-                                                             notifications:NotificationViewBehavior.IsCloseButton="True"
+                                                             notifications:NotificationViewBehavior.IsCloseButton="{markupCommon:UIKitTemplateBinding RaiseCommandAndClose}"
                                                              AutomationProperties.AutomationId="{x:Static automation:AutomationIds.ButtonClose}"
                                                              Command="{markupCommon:UIKitTemplateBinding CloseButtonCommand}"
                                                              Icon="{uikit:UIKitBinding InteractivityDialog_Button_CloseIcon}"
@@ -2266,7 +2266,8 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type controls:Island}">
-                    <controls:RoundedPanel Background="{uikit:UIKitBinding Island_Background}"
+                    <controls:RoundedPanel x:Name="PART_Panel"
+                                           Background="{uikit:UIKitBinding Island_Background}"
                                            BorderBrush="{uikit:UIKitBinding Island_BorderBrush}"
                                            BorderThickness="{uikit:UIKitBinding Island_BorderThickness}"
                                            CornerRadius="{uikit:UIKitBinding Island_CornerRadius}"
@@ -2275,6 +2276,12 @@
                         <ContentPresenter HorizontalAlignment="{markupCommon:UIKitTemplateBinding HorizontalContentAlignment}"
                                           VerticalAlignment="{markupCommon:UIKitTemplateBinding VerticalContentAlignment}" />
                     </controls:RoundedPanel>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsTransparent" Value="True">
+                            <Setter Property="Background" TargetName="PART_Panel" Value="Transparent" />
+                            <Setter Property="BorderBrush" TargetName="PART_Panel" Value="Transparent" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
@@ -3087,6 +3094,10 @@
                                 <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
 
                             <controls:Icon24 x:Name="PART_Icon"
                                              Grid.Column="0"
@@ -3144,10 +3155,10 @@
                                     </uikit:UIKitContentPresenter.ContentImpicitStyles>
                                 </uikit:UIKitContentPresenter>
 
-                                <uikit:UIKitContentPresenter x:Name="PART_ContentPresenter"
-                                                             ContentSource="Content"
+                                <uikit:UIKitContentPresenter x:Name="PART_DescriptionPresenter"
+                                                             ContentSource="Description"
                                                              HorizontalAlignment="Stretch"
-                                                             Margin="{uikit:UIKitBinding NotificationPanel_Text_Margin}">
+                                                             Margin="{uikit:UIKitBinding NotificationPanel_Description_Margin}">
                                     <uikit:UIKitContentPresenter.ContentImpicitStyles>
                                         <uikit:UIKitStyleHolder StyleRef="{uikit:UIKitImplicitStyle NotificationPanel_TextStyle,
                                                                                                     BasedOnStyle={StaticResource TextWrappingTextBlock},
@@ -3181,6 +3192,25 @@
                                                                                                 StateAwareAncestorType={x:Type controls:NotificationPanel}}" />
                                 </uikit:UIKitContentPresenter.ContentImpicitStyles>
                             </uikit:UIKitContentPresenter>
+
+                            <uikit:UIKitContentPresenter x:Name="PART_ContentPresenter"
+                                                         Grid.Row="1"
+                                                         Grid.ColumnSpan="3"
+                                                         ContentSource="Content"
+                                                         HorizontalAlignment="Stretch"
+                                                         Margin="{uikit:UIKitBinding NotificationPanel_Content_Margin}">
+                                <uikit:UIKitContentPresenter.ContentImpicitStyles>
+                                    <uikit:UIKitStyleHolder StyleRef="{uikit:UIKitImplicitStyle NotificationPanel_TextStyle,
+                                                                                                BasedOnStyle={StaticResource TextWrappingTextBlock},
+                                                                                                StateAwareAncestorType={x:Type controls:NotificationPanel}}" />
+                                    <uikit:UIKitStyleHolder StyleRef="{uikit:UIKitImplicitStyle NotificationPanel_ButtonStyle,
+                                                                                                TargetType={x:Type Button},
+                                                                                                StateAwareAncestorType={x:Type controls:NotificationPanel}}" />
+                                    <uikit:UIKitStyleHolder StyleRef="{uikit:UIKitImplicitStyle NotificationPanel_SplitButtonStyle,
+                                                                                                TargetType={x:Type controls:SplitButton},
+                                                                                                StateAwareAncestorType={x:Type controls:NotificationPanel}}" />
+                                </uikit:UIKitContentPresenter.ContentImpicitStyles>
+                            </uikit:UIKitContentPresenter>
                         </Grid>
                     </Border>
                     <ControlTemplate.Triggers>
@@ -3196,6 +3226,12 @@
                         <Trigger Property="SubHeader" Value="{x:Static system:String.Empty}">
                             <Setter Property="Visibility" TargetName="PART_SubHeaderPresenter" Value="Collapsed" />
                         </Trigger>
+                        <Trigger Property="Description" Value="{x:Null}">
+                            <Setter Property="Visibility" TargetName="PART_DescriptionPresenter" Value="Collapsed" />
+                        </Trigger>
+                        <Trigger Property="Description" Value="{x:Static system:String.Empty}">
+                            <Setter Property="Visibility" TargetName="PART_DescriptionPresenter" Value="Collapsed" />
+                        </Trigger>
                         <Trigger Property="Content" Value="{x:Null}">
                             <Setter Property="Visibility" TargetName="PART_ContentPresenter" Value="Collapsed" />
                         </Trigger>
@@ -3205,12 +3241,12 @@
                         <Trigger Property="Header" Value="{x:Null}">
                             <Setter Property="Visibility" TargetName="PART_HeaderPresenter" Value="Collapsed" />
                             <Setter Property="Visibility" TargetName="PART_SubHeaderPresenter" Value="Collapsed" />
-                            <Setter Property="Margin" TargetName="PART_ContentPresenter" Value="0" />
+                            <Setter Property="Margin" TargetName="PART_DescriptionPresenter" Value="0" />
                         </Trigger>
                         <Trigger Property="Header" Value="{x:Static system:String.Empty}">
                             <Setter Property="Visibility" TargetName="PART_HeaderPresenter" Value="Collapsed" />
                             <Setter Property="Visibility" TargetName="PART_SubHeaderPresenter" Value="Collapsed" />
-                            <Setter Property="Margin" TargetName="PART_ContentPresenter" Value="0" />
+                            <Setter Property="Margin" TargetName="PART_DescriptionPresenter" Value="0" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -3599,6 +3635,7 @@
                                 <Condition Binding="{Binding FlowBehavior, RelativeSource={RelativeSource Self}}" Value="RtlSimulation" />
                                 <Condition Binding="{Binding FlowDirection, RelativeSource={RelativeSource AncestorType={x:Type Window}}}" Value="RightToLeft" />
                             </MultiDataTrigger.Conditions>
+                            <Setter Property="FlowDirection" TargetName="PART_ValidationPopup" Value="{Binding FlowDirection, RelativeSource={RelativeSource AncestorType={x:Type Window}}}" />
                             <Setter Property="Padding" TargetName="PART_OpenPasswordTextBlock" Value="{uikit:UIKitBinding PasswordInput_Padding, Converter={thicknessConverters:ThicknessComponentsSwapConverter Mode=Horizontal}, Type={x:Type Thickness}}" />
                         </MultiDataTrigger>
                     </ControlTemplate.Triggers>
@@ -5469,6 +5506,7 @@
                             <Setter Property="Margin" TargetName="PART_ContentStub" Value="{uikit:UIKitBinding TextInput_Padding, Converter={thicknessConverters:ThicknessComponentsSwapConverter Mode=Horizontal}, Type={x:Type Thickness}}" />
                             <Setter Property="Margin" TargetName="PART_Placeholder" Value="{uikit:UIKitBinding TextInput_Padding, Converter={thicknessConverters:ThicknessComponentsSwapConverter Mode=Horizontal}, Type={x:Type Thickness}}" />
                             <Setter Property="Margin" TargetName="PART_ActionBar" Value="{uikit:UIKitBinding TextInput_ActionBar_Margin, Converter={thicknessConverters:ThicknessComponentsSwapConverter Mode=Horizontal}, Type={x:Type Thickness}}" />
+                            <Setter Property="FlowDirection" TargetName="PART_ValidationPopup" Value="{Binding FlowDirection, RelativeSource={RelativeSource AncestorType={x:Type Window}}}" />
                         </MultiDataTrigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

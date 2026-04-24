@@ -1,4 +1,4 @@
-// Copyright © 2025 AO Kaspersky Lab.
+// Copyright © 2026 AO Kaspersky Lab.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,23 +12,4 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using System;
-using System.Xml;
-using System.Xml.Serialization;
-
-namespace Kaspirin.UI.Framework.UiKit.Translator.Core.Translation
-{
-    [Serializable]
-    [XmlType("SvgStorageItem")]
-    public class SvgStorageItem
-    {
-        [XmlElement("Path")]
-        public string Path { get; set; }
-
-        [XmlElement("Hash")]
-        public string Hash { get; set; }
-
-        [XmlElement("Content")]
-        public string Content { get; set; }
-    }
-}
+global using Microsoft.VisualStudio.TestTools.UnitTesting;

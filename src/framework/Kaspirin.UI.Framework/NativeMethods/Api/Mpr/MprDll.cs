@@ -14,8 +14,8 @@
 
 #pragma warning disable CA1401 // P/Invokes should not be visible
 
+using System;
 using System.Runtime.InteropServices;
-using System.Text;
 
 namespace Kaspirin.UI.Framework.NativeMethods.Api.Mpr;
 
@@ -31,15 +31,13 @@ public static class MprDll
     ///     <br /><seealso href="https://learn.microsoft.com/en-us/windows/win32/api/winnetwk/nf-winnetwk-wnetgetuniversalnamew">Learn more</seealso>.
     /// </summary>
     [DllImport(DllName, SetLastError = false, CharSet = CharSet.Unicode)]
-    [return: MarshalAs(UnmanagedType.U4)]
     public static extern int WNetGetUniversalName(
         string lpLocalPath,
-        [MarshalAs(UnmanagedType.U4)] InfoLevel infoLevel,
-        StringBuilder lpBuffer,
-        [MarshalAs(UnmanagedType.U4)] ref int lpBufferSize);
+        InfoLevel infoLevel,
+        IntPtr lpBuffer,
+        ref int lpBufferSize);
 
     #endregion
 
     private const string DllName = "mpr.dll";
 }
-

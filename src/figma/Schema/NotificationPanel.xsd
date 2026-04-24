@@ -36,6 +36,7 @@
 			<xs:element name="BorderThicknessInfo" type="Thickness" minOccurs="1" maxOccurs="1"/>
 			<xs:element name="BorderThicknessPositive" type="Thickness" minOccurs="1" maxOccurs="1"/>
 			<xs:element name="BorderThicknessWarning" type="Thickness" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="ContentMargin" type="Thickness" minOccurs="1" maxOccurs="1"/>
 			<xs:element name="CornerRadius" type="CornerRadius" minOccurs="1" maxOccurs="1"/>
 			<xs:element name="HeaderForeground" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
 			<xs:element name="HeaderMargin" type="Thickness" minOccurs="1" maxOccurs="1"/>
@@ -50,7 +51,6 @@
 			<xs:element name="SubHeaderMargin" type="Thickness" minOccurs="1" maxOccurs="1"/>
 			<xs:element name="TextContainerMargin" type="Thickness" minOccurs="1" maxOccurs="1"/>
 			<xs:element name="TextForeground" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
-			<xs:element name="TextMargin" type="Thickness" minOccurs="1" maxOccurs="1"/>
 		</xs:all>
 	</xs:group>
 

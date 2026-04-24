@@ -23,8 +23,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{AC49C8DF
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Translation", "Translation", "{FEE4812E-5806-45BC-970A-F3EA3E74D1EF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kaspirin.UI.Framework.Tests.Services", "Kaspirin.UI.Framework.Tests.Services\Kaspirin.UI.Framework.Tests.Services.csproj", "{62439DE8-DBB0-4BA7-5C12-18DD8F8646D1}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -59,10 +57,6 @@ Global
 		{CE6AABA2-E0D9-460E-A062-0066A5757967}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CE6AABA2-E0D9-460E-A062-0066A5757967}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CE6AABA2-E0D9-460E-A062-0066A5757967}.Release|Any CPU.Build.0 = Release|Any CPU
-		{62439DE8-DBB0-4BA7-5C12-18DD8F8646D1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{62439DE8-DBB0-4BA7-5C12-18DD8F8646D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{62439DE8-DBB0-4BA7-5C12-18DD8F8646D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{62439DE8-DBB0-4BA7-5C12-18DD8F8646D1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -72,7 +66,6 @@ Global
 		{6963F48F-BFF0-419A-8809-F1F7E9C54EDA} = {AC49C8DF-A5BC-494D-9BE0-B097AE9EF3A2}
 		{967B8501-A199-453E-A5B7-A661F3246FE1} = {FEE4812E-5806-45BC-970A-F3EA3E74D1EF}
 		{F972F729-CD58-4192-A0B1-B6DC93AF108F} = {FEE4812E-5806-45BC-970A-F3EA3E74D1EF}
-		{62439DE8-DBB0-4BA7-5C12-18DD8F8646D1} = {AC49C8DF-A5BC-494D-9BE0-B097AE9EF3A2}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {2019FFF1-6402-42A7-B7FF-9FE438B051C9}

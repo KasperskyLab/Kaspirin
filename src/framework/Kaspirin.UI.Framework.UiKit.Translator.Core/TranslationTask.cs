@@ -54,7 +54,8 @@ public sealed class TranslationTask : ConfigurableTask
 
             var uiKitContent = File.ReadAllText(_configuration.UiKitPath);
 
-            if (!GenerateStyles(uiKitContent) ||
+            if (
+                !GenerateStyles(uiKitContent) ||
                 !GenerateCustomizationDictionaries(uiKitContent) ||
                 !GeneratePalettes(uiKitContent) ||
                 !GeneratePalettesEnums(uiKitContent) ||

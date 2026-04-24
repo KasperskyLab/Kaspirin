@@ -375,14 +375,14 @@ public sealed class TracerTests
 
     private string AssertGetPrefixFunc(object arg)
     {
-        Assert.Equals(arg, _traceObj2);
+        Assert.AreEqual(arg, _traceObj2);
 
         return _objPrefix2;
     }
 
     private string AssertGetHashFunc(object arg)
     {
-        Assert.Equals(arg, _traceObj2);
+        Assert.AreEqual(arg, _traceObj2);
 
         return _objHash2;
     }

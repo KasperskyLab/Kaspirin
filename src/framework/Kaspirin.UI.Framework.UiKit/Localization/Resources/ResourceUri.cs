@@ -18,8 +18,6 @@ namespace Kaspirin.UI.Framework.UiKit.Localization.Resources;
 
 public sealed class ResourceUri : IEquatable<ResourceUri>
 {
-    public static readonly ResourceUri[] EmptyArray = new ResourceUri[0];
-
     public ResourceUri(Uri absoluteUri, Uri relativeUri)
     {
         AbsoluteUri = absoluteUri;

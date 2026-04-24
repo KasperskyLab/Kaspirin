@@ -12,10 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System;
 using System.Linq;
 using System.Windows;
 using System.Windows.Automation.Peers;
 using System.Windows.Controls;
+using System.Windows.Documents;
 using Kaspirin.UI.Framework.UiKit.Controls.Automation.Internals;
 using Kaspirin.UI.Framework.UiKit.Controls.Internals;
 
@@ -74,6 +76,11 @@ public static class AccessibilityExtensions
 
         if (headerText.IsNotNullOrEmpty() && pronounceableText.IsNotNullOrEmpty())
         {
+            if (headerText.Equals(pronounceableText, StringComparison.OrdinalIgnoreCase))
+            {
+                return headerText;
+            }
+
             return $"{headerText}, {pronounceableText}";
         }
         else if (headerText.IsNotNullOrEmpty())
@@ -149,10 +156,8 @@ public static class AccessibilityExtensions
     private static AutomationPeer? GetHeaderElement(this DependencyObject dependencyObject)
     {
         return TraverseService
-            .TraverseVisualChildren(dependencyObject, ContinueTraverse, TraverseChildrenOptions.IncludeConditionLeaf)
-            .Where(IsVisible)
-            .Where(t => AccessibilityProperties.GetIsHeader(t) &&
-                        AccessibilityProperties.GetIsPronounceable(t) != false)
+            .TraverseVisualChildren(dependencyObject, ContinueHeaderTraverse, TraverseChildrenOptions.IncludeConditionLeaf)
+            .Where(IsValidHeaderElement)
             .OrderBy(AccessibilityProperties.GetFontPriority)
             .Select(FrameworkObject.CreatePeerForElement)
             .FirstOrDefault();
@@ -162,10 +167,20 @@ public static class AccessibilityExtensions
     {
         return TraverseService
             .TraverseVisualChildren(dependencyObject, ContinueTraverse, TraverseChildrenOptions.IncludeConditionLeaf)
-            .Where(IsVisible)
-            .Where(t => AccessibilityProperties.GetIsPronounceable(t) == true)
+            .Where(IsValidPronounceableElement)
             .Select(FrameworkObject.CreatePeerForElement)
             .ToArray();
+    }
+
+    private static bool ContinueHeaderTraverse(DependencyObject dependencyObject)
+    {
+        var isInteractive = IsInteractive(dependencyObject);
+        if (isInteractive)
+        {
+            return AccessibilityProperties.GetIsPronounceable(dependencyObject) == true;
+        }
+
+        return ContinueTraverse(dependencyObject);
     }
 
     private static bool ContinueTraverse(DependencyObject dependencyObject)
@@ -181,6 +196,55 @@ public static class AccessibilityExtensions
         return true;
     }
 
+    private static bool IsValidHeaderElement(DependencyObject dependencyObject)
+    {
+        var isVisible = IsVisible(dependencyObject);
+        if (isVisible != true)
+        {
+            return false;
+        }
+
+        if (!AccessibilityProperties.GetIsHeader(dependencyObject))
+        {
+            return false;
+        }
+
+        var isPronounceable = AccessibilityProperties.GetIsPronounceable(dependencyObject);
+        if (isPronounceable == false)
+        {
+            return false;
+        }
+
+        var hasPeer = FrameworkObject.CreatePeerForElement(dependencyObject) != null;
+
+        var isInteractive = IsInteractive(dependencyObject);
+        if (isInteractive)
+        {
+            return isPronounceable == true && hasPeer;
+        }
+
+        return hasPeer;
+    }
+
+    private static bool IsValidPronounceableElement(DependencyObject dependencyObject)
+    {
+        var isVisible = IsVisible(dependencyObject);
+        if (isVisible != true)
+        {
+            return false;
+        }
+
+        var isPronounceable = AccessibilityProperties.GetIsPronounceable(dependencyObject);
+        if (isPronounceable != true)
+        {
+            return false;
+        }
+
+        var hasPeer = FrameworkObject.CreatePeerForElement(dependencyObject) != null;
+
+        return hasPeer;
+    }
+
     private static bool IsVisible(DependencyObject dependencyObject)
     {
         if (dependencyObject is FrameworkElement fe && fe.IsVisible == false)
@@ -189,5 +253,27 @@ public static class AccessibilityExtensions
         }
 
         return true;
+    }
+
+    private static bool IsInteractive(DependencyObject dependencyObject)
+    {
+        if (dependencyObject is FrameworkElement or FrameworkContentElement)
+        {
+            var fo = new FrameworkObject(dependencyObject);
+
+            var isInteractive = fo.Focusable && fo.FocusVisualStyle != null;
+            if (isInteractive)
+            {
+                return true;
+            }
+
+            var isTextBlockWithHyperlink = dependencyObject is TextBlock textBlock && textBlock.FindVisualChild<Hyperlink>() != null;
+            if (isTextBlockWithHyperlink)
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

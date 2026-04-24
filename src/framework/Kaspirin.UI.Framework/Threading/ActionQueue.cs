@@ -15,7 +15,6 @@
 using System;
 using System.Collections.Concurrent;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace Kaspirin.UI.Framework.Threading;
 
@@ -36,6 +35,20 @@ public sealed class ActionQueue
     }
 
     /// <summary>
+    ///     The number of delegates in the queue for execution.
+    /// </summary>
+    public int Count
+    {
+        get
+        {
+            lock (_syncRoot)
+            {
+                return _actionQueue.Count;
+            }
+        }
+    }
+
+    /// <summary>
     ///     Adds a delegate to the execution queue.
     /// </summary>
     /// <param name="action">
@@ -52,7 +65,7 @@ public sealed class ActionQueue
         {
             _actionQueue.Enqueue(action);
 
-            if (_queueProcessor == null)
+            if (!_isProcessing)
             {
                 StartProcessing();
             }
@@ -61,7 +74,9 @@ public sealed class ActionQueue
 
     private void StartProcessing()
     {
-        _queueProcessor = _executor.ExecuteAsync(
+        _isProcessing = true;
+
+        _executor.ExecuteAsync(
             action: ProcessQueue,
             cancellationToken: CancellationToken.None);
     }
@@ -75,8 +90,9 @@ public sealed class ActionQueue
 
         lock (_syncRoot)
         {
-            _queueProcessor = null;
-            if (_actionQueue.Count > 0)
+            _isProcessing = false;
+
+            if (!_actionQueue.IsEmpty)
             {
                 StartProcessing();
             }
@@ -87,5 +103,5 @@ public sealed class ActionQueue
     private readonly ConcurrentQueue<Action> _actionQueue = new();
     private readonly IExecutor _executor;
 
-    private Task? _queueProcessor;
+    private bool _isProcessing;
 }

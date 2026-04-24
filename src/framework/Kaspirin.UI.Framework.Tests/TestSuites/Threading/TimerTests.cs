@@ -210,29 +210,27 @@ public sealed class TimerTests
     [TestMethod]
     public void Timer_ContinuesAfterException()
     {
-        //var tickEvent = new ManualResetEvent(false);
-        //var firstExceptionFired = false;
+        var tickEvent = new ManualResetEvent(false);
+        var firstExceptionFired = false;
 
-        //var timer = TimerFactory.CreateOnTp(
-        //    onTimer: () =>
-        //    {
-        //        if (!firstExceptionFired)
-        //        {
-        //            firstExceptionFired = true;
-        //            throw new InvalidOperationException("Test exception in onTimer");
-        //        }
+        var timer = TimerFactory.CreateOnTp(
+            onTimer: () =>
+            {
+                if (!firstExceptionFired)
+                {
+                    firstExceptionFired = true;
+                    throw new InvalidOperationException("Test exception in onTimer");
+                }
 
-        //        tickEvent.Set();
-        //    },
-        //    interval: TimeSpan.FromMilliseconds(500),
-        //    name: "TestContinuesAfterException");
+                tickEvent.Set();
+            },
+            interval: TimeSpan.FromMilliseconds(500),
+            name: "TestContinuesAfterException");
 
-        //timer.Start();
-        //Assert.IsFalse(tickEvent.WaitOne(200), "Initial tick triggered.");
+        timer.Start();
 
-        //Assert.IsTrue(tickEvent.WaitOne(1000), "Timer should continue firing ticks after an exception in onTimer.");
-        //tickEvent.Reset();
-
-        //Assert.IsTrue(tickEvent.WaitOne(1000), "Timer should continue firing ticks after an exception in onTimer.");
+        Assert.IsFalse(tickEvent.WaitOne(300), "Initial tick triggered.");
+        Assert.IsTrue(firstExceptionFired, "Exception should have been fired at least once.");
+        Assert.IsTrue(tickEvent.WaitOne(1000), "Timer should continue firing ticks after an exception in onTimer.");
     }
 }

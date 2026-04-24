@@ -14,3 +14,5 @@
 
 global using Kaspirin.UI.Framework.UiKit.Tests.Asserts;
 global using Kaspirin.UI.Framework.UiKit.Tests.Common;
+
+global using Microsoft.VisualStudio.TestTools.UnitTesting;

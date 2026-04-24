@@ -882,7 +882,11 @@ public sealed class RapidUnityContainer : IUnityContainer
             initializationPlanner.Plan(this);
         }
 
-        public bool IsInitialized { get; private set; }
+        public bool IsInitialized
+        {
+            get => _isInitialized;
+            private set => _isInitialized = value;
+        }
 
         public void Initialize()
         {
@@ -947,6 +951,7 @@ public sealed class RapidUnityContainer : IUnityContainer
         private readonly InitializationPlanner _initializationPlanner;
         private readonly ReflectionCache _reflectionCache;
         private readonly Type _type;
+        private volatile bool _isInitialized;
     }
 
     private sealed class InjectionConstructorBasedValueFactory : IValueFactory, IInitializer
@@ -967,7 +972,11 @@ public sealed class RapidUnityContainer : IUnityContainer
             initializationPlanner.Plan(this);
         }
 
-        public bool IsInitialized { get; private set; }
+        public bool IsInitialized
+        {
+            get => _isInitialized;
+            set => _isInitialized = value;
+        }
 
         public void Initialize()
         {
@@ -1057,6 +1066,7 @@ public sealed class RapidUnityContainer : IUnityContainer
         private readonly ReflectionCache _reflectionCache;
         private readonly Type _type;
         private readonly InjectionConstructor _injectionConstructor;
+        private volatile bool _isInitialized;
     }
 
     private sealed class InjectionFactoryBasedValueFactory : IValueFactory

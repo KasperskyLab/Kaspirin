@@ -182,6 +182,36 @@ internal sealed class FrameworkObject
         }
     }
 
+    public bool Focusable
+    {
+        get
+        {
+            if (IsFE)
+            {
+                return FE!.Focusable;
+            }
+            else // if (IsFCE)
+            {
+                return FCE!.Focusable;
+            }
+        }
+    }
+
+    public Style? FocusVisualStyle
+    {
+        get
+        {
+            if (IsFE)
+            {
+                return FE!.FocusVisualStyle;
+            }
+            else // if (IsFCE)
+            {
+                return FCE!.FocusVisualStyle;
+            }
+        }
+    }
+
     public void RaiseEvent(RoutedEventArgs args)
     {
         if (IsFE)

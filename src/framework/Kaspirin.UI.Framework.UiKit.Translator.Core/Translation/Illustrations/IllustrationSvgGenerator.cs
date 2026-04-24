@@ -16,6 +16,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Xml;
 using Microsoft.Build.Framework;
 using Microsoft.Build.Utilities;
@@ -54,15 +55,13 @@ internal sealed class IllustrationSvgGenerator : GeneratorBase
                     .ThenBy(i => i.Name)
                     .ToArray();
 
-                var productInfo = _productMediaProjectInfoProvider(product);
-                var productIllustrationSvgDirectory = productInfo.IllustrationSvgDirectory;
+                var productIllustrationSvgDirectory = _productMediaProjectInfoProvider(product).IllustrationSvgDirectory;
                 if (string.IsNullOrWhiteSpace(productIllustrationSvgDirectory))
                 {
                     throw new InvalidOperationException($"Illustration SVG directory for product '{product}' is not configured");
                 }
 
-                var svgStorageName = $"Illustrations_{productInfo.ProductNamespacePart}_{product}";
-                var svgStorage = new SvgStorage(svgStorageName, productIllustrationSvgDirectory, _lineEndingMode, _log);
+                Directory.CreateDirectory(productIllustrationSvgDirectory);
 
                 foreach (var illustration in productIllustrations)
                 {
@@ -76,17 +75,13 @@ internal sealed class IllustrationSvgGenerator : GeneratorBase
                             vector.IsRTL,
                             vector.Theme);
 
-                        svgStorage.Add(vector.Vector, vector.Hash, svgPaths);
+                        generatedFilePathList.AddRange(SaveSvg(vector.Vector, svgPaths));
                     }
                 }
 
-                svgStorage.Store();
-
-                generatedFilePathList.AddRange(svgStorage.Files);
-
                 _log.LogMessage(
                     MessageImportance.High,
-                    $"Illustration SVG files generation for product '{product}' completed: {svgStorage.Files.Count()} file(s) created.");
+                    $"Illustration SVG files generation for product '{product}' completed: {generatedFilePathList.Count} file(s) created.");
             }
         }
         catch (Exception ex)
@@ -130,6 +125,25 @@ internal sealed class IllustrationSvgGenerator : GeneratorBase
             Directory.CreateDirectory(directory);
 
             yield return Path.Combine(directory, filename);
+        }
+    }
+
+    private IEnumerable<string> SaveSvg(string svg, IEnumerable<string> paths)
+    {
+        if (string.IsNullOrWhiteSpace(svg))
+        {
+            yield break;
+        }
+
+        var svgFileContent = LineEndingHelper.NormalizeLineEndings(svg, _lineEndingMode);
+
+        foreach (var path in paths)
+        {
+            _log.LogMessage(MessageImportance.Normal, $"Creating illustration SVG: '{path}'.");
+
+            File.WriteAllText(path, svgFileContent, Encoding.UTF8);
+
+            yield return path;
         }
     }
 

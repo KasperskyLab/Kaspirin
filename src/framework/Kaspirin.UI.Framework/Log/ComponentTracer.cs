@@ -168,19 +168,17 @@ public sealed class ComponentTracer
     {
         Guard.ArgumentIsNotNull(parameters);
 
-        var tracerPrefix = GetTracerPrefix(parameters);
-
         var hasHash = parameters.HashSource != null && parameters.HashFunc != null;
         if (hasHash)
         {
-            return new ComponentTracer(tracerPrefix);
+            return new ComponentTracer(parameters);
         }
         else
         {
             var tracerKey = GetTracerKey(parameters);
 
             // if tracer has no hash part is message, we can cache tracer instance.
-            return _tracersMap.GetOrAdd(tracerKey, _ => new ComponentTracer(tracerPrefix));
+            return _tracersMap.GetOrAdd(tracerKey, _ => new ComponentTracer(parameters));
         }
     }
 
@@ -430,9 +428,9 @@ public sealed class ComponentTracer
         TraceError($"{method}: {interpolatedStringHandler.ToStringAndClear()}");
     }
 
-    private ComponentTracer(string tracePrefix)
+    private ComponentTracer(ComponentTracerParameters parameters)
     {
-        _tracePrefix = tracePrefix;
+        _tracePrefix = GetTracerPrefix(parameters);
     }
 
     private static void UpdateTraceLevels()

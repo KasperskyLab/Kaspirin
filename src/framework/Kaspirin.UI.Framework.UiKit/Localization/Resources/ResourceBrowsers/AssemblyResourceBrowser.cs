@@ -46,7 +46,7 @@ public sealed class AssemblyResourceBrowser : BaseResourceBrowser
             _appDomain.AssemblyLoad += OnAssemblyLoad;
         }
 
-        UpdateResourcesAsync(resources => ScanResources(resources, AppDomain.CurrentDomain.GetAssemblies()));
+        UpdateResourcesAsync(resources => AppDomain.CurrentDomain.GetAssemblies().ForEach(a => ScanResources(resources, a)));
     }
 
     protected override Stream Read(ResourceUri uri)
@@ -72,15 +72,22 @@ public sealed class AssemblyResourceBrowser : BaseResourceBrowser
         UpdateResourcesAsync(resources => ScanResources(resources, args.LoadedAssembly));
     }
 
-    private void ScanResources(HashSet<ResourceUri> resources, params Assembly[] assemblies)
+    private void ScanResources(HashSet<ResourceUri> resources, Assembly assembly)
     {
         try
         {
-            _tracer.TraceDebug($"Resources scanning in assemblies in folder '{_root}'.");
+            if (ShouldSkipAssembly(assembly))
+            {
+                return;
+            }
 
-            var assemblyResources = assemblies.SelectMany(ScanAssemblyResources);
+            _tracer.TraceDebug($"Resources scanning in assembly '{assembly.FullName}' in folder '{_root}'.");
+
+            var assemblyResources = ScanAssemblyResources(assembly);
             if (assemblyResources.Any())
             {
+                _tracer.TraceInformation($"Resources found in assembly '{assembly.FullName}'. Resources count: {assemblyResources.Length}.");
+
                 UpdateResources(resources, assemblyResources);
 
                 RaiseResourcesLoaded(assemblyResources);
@@ -88,7 +95,7 @@ public sealed class AssemblyResourceBrowser : BaseResourceBrowser
         }
         catch (Exception e)
         {
-            e.TraceException($"Failed to scan resources in assemblies in folder '{_root}'.");
+            e.TraceException($"Failed to scan resources in assembly '{assembly.FullName}' in folder '{_root}'.");
 
             throw;
         }
@@ -96,40 +103,17 @@ public sealed class AssemblyResourceBrowser : BaseResourceBrowser
 
     private ResourceUri[] ScanAssemblyResources(Assembly assembly)
     {
-        if (ShouldSkipAssembly(assembly))
-        {
-            return ResourceUri.EmptyArray;
-        }
-
-        try
-        {
-            _tracer.TraceDebug($"Resources scanning in assembly '{assembly.FullName}'.");
-
-            var assemblyResources = assembly
-                .GetManifestResourceNames()
-                .Where(r => r.EndsWith(".resources"))
-                .Select(r => r.Replace(".resources", ""))
-                .Select(r => new ResourceManager(r, assembly))
-                .SelectMany(rm => rm.GetResourceSet(CultureInfo.InvariantCulture, true, false)?.Cast<DictionaryEntry>() ?? new DictionaryEntry[0])
-                .Select(rkv => rkv.Key.ToString())
-                .Where(key => key?.StartsWith(_root.ToLowerInvariant()) == true)
-                .WhereNotNull()
-                .Select(key => CreateUri(key, assembly, _root))
-                .ToArray();
-
-            if (assemblyResources.Length > 0)
-            {
-                _tracer.TraceInformation($"Resources found in assembly '{assembly.FullName}'. Resources count: {assemblyResources.Length}.");
-            }
-
-            return assemblyResources;
-        }
-        catch (Exception e)
-        {
-            e.TraceException($"Failed to scan resources in assembly '{assembly.FullName}'.");
-
-            throw;
-        }
+        return assembly
+            .GetManifestResourceNames()
+            .Where(r => r.EndsWith(".resources"))
+            .Select(r => r.Replace(".resources", ""))
+            .Select(r => new ResourceManager(r, assembly))
+            .SelectMany(rm => rm.GetResourceSet(CultureInfo.InvariantCulture, true, false)?.Cast<DictionaryEntry>() ?? new DictionaryEntry[0])
+            .Select(rkv => rkv.Key.ToString())
+            .Where(key => key?.StartsWith(_root.ToLowerInvariant()) == true)
+            .WhereNotNull()
+            .Select(key => CreateUri(key, assembly, _root))
+            .ToArray();
     }
 
     private void UpdateResources(HashSet<ResourceUri> set, IEnumerable<ResourceUri> resources)
