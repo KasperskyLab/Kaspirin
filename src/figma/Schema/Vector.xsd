@@ -37,6 +37,5 @@
 	<xs:attributeGroup name="vectorAttributes">
 		<xs:attribute name="IsRTL" type="xs:boolean" use="required"/>
 		<xs:attribute name="Theme" type="xs:string" use="optional"/>
-		<xs:attribute name="Hash" type="xs:string" use="optional"/>
 	</xs:attributeGroup>
 </xs:schema>

@@ -13,6 +13,4 @@
 
 	<Import Project="$(MSTestProps)" />
 	<Import Project="$(FrameworkProps)" />
-	<Import Project="$(FrameworkTestServicesProps)" />
-
 </Project>

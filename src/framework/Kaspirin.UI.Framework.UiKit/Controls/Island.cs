@@ -45,6 +45,22 @@ public class Island : ContentControl, IAccessibilityAware
 
     #endregion
 
+    #region IsTransparent
+
+    public bool IsTransparent
+    {
+        get => (bool)GetValue(IsTransparentProperty);
+        set => SetValue(IsTransparentProperty, value);
+    }
+
+    public static readonly DependencyProperty IsTransparentProperty = DependencyProperty.Register(
+        nameof(IsTransparent),
+        typeof(bool),
+        typeof(Island),
+        new PropertyMetadata(default(bool)));
+
+    #endregion
+
     protected override AutomationPeer? OnCreateAutomationPeer()
     {
         return new IslandAutomationPeer(this);

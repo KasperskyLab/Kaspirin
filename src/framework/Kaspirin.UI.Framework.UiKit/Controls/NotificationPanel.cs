@@ -77,6 +77,22 @@ public sealed class NotificationPanel : ContentControl
 
     #endregion
 
+    #region Description
+
+    public object Description
+    {
+        get => GetValue(DescriptionProperty);
+        set => SetValue(DescriptionProperty, value);
+    }
+
+    public static readonly DependencyProperty DescriptionProperty = DependencyProperty.Register(
+        nameof(Description),
+        typeof(object),
+        typeof(NotificationPanel),
+        new PropertyMetadata(default(object)));
+
+    #endregion
+
     #region Type
 
     public NotificationPanelType Type

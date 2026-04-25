@@ -67,14 +67,10 @@ internal sealed class MockSyncedExecutor : IThreadPoolExecutor, IDispatcherExecu
         => ExecuteCore(action, cancellationToken);
 
     public Task ExecuteAsyncWithDelay(Action action, TimeSpan delay, TaskCreationOptions options, CancellationToken cancellationToken)
-    {
-        throw new NotImplementedException();
-    }
+        => ExecuteCoreWithDelay(() => ActionWrap(action), delay, cancellationToken);
 
     public Task<TResult> ExecuteAsyncWithDelay<TResult>(Func<TResult> action, TimeSpan delay, TaskCreationOptions options, CancellationToken cancellationToken)
-    {
-        throw new NotImplementedException();
-    }
+        => ExecuteCoreWithDelay(action, delay, cancellationToken);
 
     public Task ExecuteAsyncWithDelay(Action action, TimeSpan delay, DispatcherPriority priority, CancellationToken cancellationToken)
         => ExecuteCoreWithDelay(() => ActionWrap(action), delay, cancellationToken);

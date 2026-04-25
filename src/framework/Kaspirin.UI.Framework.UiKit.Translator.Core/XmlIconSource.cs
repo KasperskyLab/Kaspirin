@@ -82,12 +82,13 @@ internal sealed class XmlIconSource
                 $"Unable to parse boolean value of attribute '{Const.SvgIconIsColorfullAttributeName}': {Environment.NewLine}{iconElement}");
         }
 
-        if (!int.TryParse(match.Groups[1].Value, out var size))
+        if (!double.TryParse(match.Groups["size"].Value, out var rawSize))
         {
             throw new InvalidOperationException($"Unable to get icon size from icon id: '{iconId}'.");
         }
 
-        var name = match.Groups[2].Value.Replace(" ", "");
+        var size = (int)Math.Round(rawSize);
+        var name = match.Groups["name"].Value.Replace(" ", "");
 
         var vectors = iconElement
             .Elements(Const.VectorsElementName)
@@ -104,8 +105,6 @@ internal sealed class XmlIconSource
             throw new InvalidOperationException($"Unsupported number of icon vectors: {Environment.NewLine}{iconElement}.");
         }
 
-        var hash = default(string);
-        var hashRTL = default(string);
         var svg = default(string);
         var svgRTL = default(string);
 
@@ -116,8 +115,6 @@ internal sealed class XmlIconSource
                 throw new InvalidOperationException(
                     $"Unable to parse boolean value of attribute '{Const.VectorIsRTLAttributeName}' of icon with id '{iconId}': {Environment.NewLine}{vector}");
             }
-
-            var hashData = vector.Attribute(Const.VectorHashAttributeName)?.Value;
 
             var svgData = vector
                 .Element(Const.VectorDataElementName)
@@ -132,12 +129,10 @@ internal sealed class XmlIconSource
             if (isRTL)
             {
                 svgRTL = svgData;
-                hashRTL = hashData;
             }
             else
             {
                 svg = svgData;
-                hash = hashData;
             }
         }
 
@@ -146,14 +141,12 @@ internal sealed class XmlIconSource
             IsColorfull = isColorfull,
             IsAutoRTL = isAutoRTL,
             Size = size,
-            Hash = hash,
-            HashRTL = hashRTL,
             Name = name,
             Svg = svg,
             SvgRTL = svgRTL
         };
     }
 
-    private readonly Regex _iconIdRegex = new("^(\\d+) \\/.*? ([\\w ]+)$");
+    private readonly Regex _iconIdRegex = new("^(?<size>\\d+.?\\d+) -.*? (?<name>[\\w ]+)$");
     private readonly Action<string> _warn;
 }

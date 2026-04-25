@@ -551,11 +551,14 @@ public sealed class Popup : Control
 
     private CustomPopupPlacement[] PopupPlacementCallback(Size popupSize, Size targetSize, Point offset)
     {
+        var popupFlowDirection = FlowDirection;
+        var targetFlowDirection = _popupTarget?.FlowDirection ?? popupFlowDirection;
+
         var effectivePosition = PopupPosition;
 
-        var placementProvider = new PopupPositionProvider(popupSize, targetSize, FlowDirection, PopupOffset, _popupShadowOffset);
+        var placementProvider = new PopupPositionProvider(popupSize, targetSize, targetFlowDirection, PopupOffset, _popupShadowOffset);
 
-        if (FlowDirection == FlowDirection.RightToLeft)
+        if (popupFlowDirection == FlowDirection.RightToLeft)
         {
             effectivePosition = FlipPosition(PopupPosition);
         }

@@ -15,7 +15,6 @@
 using System;
 using System.IO;
 using System.Linq;
-using Kaspirin.UI.Framework.UiKit.Translator.Core.Translation;
 using Kaspirin.UI.Framework.UiKit.Translator.Core.Translation.Icons;
 using Kaspirin.UI.Framework.UiKit.Translator.Core.Translation.Illustrations;
 using Microsoft.Build.Framework;
@@ -47,7 +46,6 @@ public sealed class CleanupTask : ConfigurableTask
             CleanupSvg();
             CleanupIcons();
             CleanupIllustrations();
-            CleanupSvgStorage();
 
             Log.LogMessage(MessageImportance.High, "UI Kit cleanup successfully completed.");
         }
@@ -155,15 +153,6 @@ public sealed class CleanupTask : ConfigurableTask
                 nameof(productMediaProjectInfo.IllustrationMarkupExtensionPath),
                 $"Illustration markup extension file (product '{product}')");
         }
-    }
-
-    private void CleanupSvgStorage()
-    {
-        CleanupFiles(
-            SvgStorage.RootDirectory,
-            $"{nameof(SvgStorage)}.{nameof(SvgStorage.RootDirectory)}",
-            "*.*",
-            $"SVG Storage files");
     }
 
     private void CleanupFile(string configurationParameterValue, string configurationParameterName, string fileDescription)

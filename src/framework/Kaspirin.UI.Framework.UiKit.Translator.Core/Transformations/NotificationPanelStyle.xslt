@@ -129,6 +129,12 @@
 					</xsl:with-param>
 				</xsl:call-template>
 
+				<!--NotificationPanel_Content_Margin-->
+				<xsl:call-template name="generateMarginSetter">
+					<xsl:with-param name="propertyId">NotificationPanel_Content_Margin</xsl:with-param>
+					<xsl:with-param name="marginNode" select="ContentMargin" />
+				</xsl:call-template>
+
 				<!--NotificationPanel_CornerRadius-->
 				<xsl:call-template name="generateCornerRadiusSetter">
 					<xsl:with-param name="propertyId">NotificationPanel_CornerRadius</xsl:with-param>
@@ -209,12 +215,6 @@
 				<xsl:call-template name="generateMarginSetter">
 					<xsl:with-param name="propertyId">NotificationPanel_TextContainer_Margin</xsl:with-param>
 					<xsl:with-param name="marginNode" select="TextContainerMargin" />
-				</xsl:call-template>
-				
-				<!--NotificationPanel_Text_Margin-->
-				<xsl:call-template name="generateMarginSetter">
-					<xsl:with-param name="propertyId">NotificationPanel_Text_Margin</xsl:with-param>
-					<xsl:with-param name="marginNode" select="TextMargin" />
 				</xsl:call-template>
 
 				<!--NotificationPanel_TextStyle-->

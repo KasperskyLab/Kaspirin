@@ -361,6 +361,25 @@ public class InteractivityDialog : ContentControl, INotificationAnimatable, IAcc
 
     #endregion
 
+    #region RaiseCommandAndClose
+
+    public bool RaiseCommandAndClose
+    {
+        get => (bool)GetValue(RaiseCommandAndCloseProperty);
+        set => SetValue(RaiseCommandAndCloseProperty, value);
+    }
+
+    public static readonly DependencyProperty RaiseCommandAndCloseProperty = DependencyProperty.Register(
+        nameof(RaiseCommandAndClose),
+        typeof(bool),
+        typeof(InteractivityDialog),
+        new PropertyMetadata(true, OnRaiseCommandAndCloseChanged));
+
+    private static void OnRaiseCommandAndCloseChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        => ((InteractivityDialog)d).OnHasCloseButtonChanged();
+
+    #endregion
+
     #region CloseButtonCommand
 
     public ICommand CloseButtonCommand

@@ -121,7 +121,6 @@ internal sealed class XmlIllustrationSource
             }
 
             var theme = vector.Attribute(Const.VectorThemeAttributeName)?.Value;
-            var hash = vector.Attribute(Const.VectorHashAttributeName)?.Value;
 
             var svgData = vector
                 .Element(Const.VectorDataElementName)
@@ -133,7 +132,7 @@ internal sealed class XmlIllustrationSource
                 throw new InvalidOperationException($"Unable to get vector's SVG inside illustration with id '{illustrationId}': {Environment.NewLine}{vector}");
             }
 
-            illustrationVectors.Add(new Illustration.IllustrationVector() { IsRTL = isRTL, Theme = theme, Vector = svgData, Hash = hash });
+            illustrationVectors.Add(new Illustration.IllustrationVector() { IsRTL = isRTL, Theme = theme, Vector = svgData });
         }
 
         return new Illustration()

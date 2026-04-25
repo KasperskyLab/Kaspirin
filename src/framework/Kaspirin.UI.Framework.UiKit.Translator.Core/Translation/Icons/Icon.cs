@@ -27,8 +27,4 @@ public sealed class Icon
     public string Svg { get; set; }
 
     public string SvgRTL { get; set; }
-
-    public string Hash { get; set; }
-
-    public string HashRTL { get; set; }
 }
