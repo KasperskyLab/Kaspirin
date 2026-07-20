@@ -101,7 +101,7 @@ internal sealed class CornerRoundingHelper
 
     private static void InvalidateCornerRadius(DependencyObject d, DependencyPropertyChangedEventArgs e)
     {
-        d.GetValue<CornerRoundingHelper>(_cornerRoundingHelperHolderProperty).RaiseCornerRadiusChanged();
+        d.GetValue<CornerRoundingHelper>(_cornerRoundingHelperHolderProperty)?.RaiseCornerRadiusChanged();
     }
 
     private static readonly Dictionary<string, DependencyProperty> _cornerRadiusPropertyStorage = new();

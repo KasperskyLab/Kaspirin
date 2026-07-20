@@ -22,14 +22,14 @@ namespace Kaspirin.UI.Framework.Tests.Mocks;
 
 internal sealed class MockTimerFactory : ITimerFactory
 {
-    public ITimer CreateOnTp(Action onTimer, TimeSpan? interval, string name, TimerOptions options)
+    public ITimer CreateOnTp(Action? onTimer, TimeSpan? interval, string name, TimerOptions options)
     {
         var timer = new MockTimer(this, onTimer, interval, name, options);
         _timers.Add(timer);
         return timer;
     }
 
-    public ITimer CreateOnUi(Action onTimer, TimeSpan? interval, string name, TimerOptions options, DispatcherPriority priority)
+    public ITimer CreateOnUi(Action? onTimer, TimeSpan? interval, string name, TimerOptions options, DispatcherPriority priority)
     {
         var timer = new MockTimer(this, onTimer, interval, name, options);
         _timers.Add(timer);
@@ -62,7 +62,7 @@ internal sealed class MockTimerFactory : ITimerFactory
         private long _nextTickTime;
         private bool _isRunning;
 
-        public MockTimer(MockTimerFactory factory, Action tickAction, TimeSpan? interval, string name, TimerOptions options)
+        public MockTimer(MockTimerFactory factory, Action? tickAction, TimeSpan? interval, string name, TimerOptions options)
             : base(tickAction, interval, name, options)
         {
             _factory = factory;

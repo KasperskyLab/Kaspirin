@@ -236,6 +236,22 @@ public abstract class TextInputBase : TextBox
 
     #endregion
 
+    #region SelectAllOnFocus
+
+    public bool SelectAllOnFocus
+    {
+        get => (bool)GetValue(SelectAllOnFocusProperty);
+        set => SetValue(SelectAllOnFocusProperty, value);
+    }
+
+    public static readonly DependencyProperty SelectAllOnFocusProperty = DependencyProperty.Register(
+        nameof(SelectAllOnFocus),
+        typeof(bool),
+        typeof(TextInputBase),
+        new PropertyMetadata(default(bool)));
+
+    #endregion
+
     public override void OnApplyTemplate()
     {
         base.OnApplyTemplate();
@@ -345,6 +361,13 @@ public abstract class TextInputBase : TextBox
         base.OnTextChanged(e);
 
         _lastFilteredText = default;
+    }
+
+    protected override void OnGotKeyboardFocus(KeyboardFocusChangedEventArgs e)
+    {
+        base.OnGotKeyboardFocus(e);
+
+        InvalidateTextSelection();
     }
 
     protected override AutomationPeer OnCreateAutomationPeer()
@@ -628,6 +651,29 @@ public abstract class TextInputBase : TextBox
             : caretIndex;
 
         Select(caretIndex, length);
+    }
+
+    private void InvalidateTextSelection()
+    {
+        if (SelectAllOnFocus && IsKeyboardFocusWithin && Text?.Length > 0)
+        {
+            SetSelection(caretIndex: 0, length: Text.Length);
+
+            // If focus was set from mouse click, we need to set focus again because of
+            // internal MouseUp event handler, that sets selection to the clicked position.
+            if (InputManager.Current.PrimaryMouseDevice.LeftButton == MouseButtonState.Pressed)
+            {
+                SelectionChanged -= OnSelectionChanged;
+                SelectionChanged += OnSelectionChanged;
+            }
+        }
+
+        void OnSelectionChanged(object sender, RoutedEventArgs e)
+        {
+            SelectionChanged -= OnSelectionChanged;
+
+            SetSelection(caretIndex: 0, length: Text.Length);
+        }
     }
 
     private string ProcessInput(string input)

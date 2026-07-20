@@ -27,13 +27,7 @@
     <SolidColorBrush x:Key="ForegroundNormal" Color="{Res Text-Icons-Elements_Emerald, Scope=Palette}" />
     <SolidColorBrush x:Key="ForegroundPressed" Color="{Res ControlsBG_Emerald-Pressed, Scope=Palette}" />
     <TextDecorationCollection x:Key="TextDecorationsDisabled" />
-    <TextDecorationCollection x:Key="TextDecorationsHover">
-        <TextDecoration Location="UNDERLINE"
-                        PenOffset="0" />
-    </TextDecorationCollection>
+    <TextDecorationCollection x:Key="TextDecorationsHover" />
     <TextDecorationCollection x:Key="TextDecorationsNormal" />
-    <TextDecorationCollection x:Key="TextDecorationsPressed">
-        <TextDecoration Location="UNDERLINE"
-                        PenOffset="0" />
-    </TextDecorationCollection>
+    <TextDecorationCollection x:Key="TextDecorationsPressed" />
 </ResourceDictionary>

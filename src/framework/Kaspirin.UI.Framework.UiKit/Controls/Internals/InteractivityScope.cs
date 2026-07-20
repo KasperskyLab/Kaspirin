@@ -46,10 +46,10 @@ internal abstract class InteractivityScope<TInteractivityControl> where TInterac
 
     #region AssociatedNotificationView
 
-    public static NotificationView GetAssociatedNotificationView(DependencyObject obj)
+    public static NotificationView? GetAssociatedNotificationView(DependencyObject obj)
         => (NotificationView)obj.GetValue(_associatedNotificationViewProperty);
 
-    public static void SetAssociatedNotificationView(DependencyObject obj, NotificationView value)
+    private static void SetAssociatedNotificationView(DependencyObject obj, NotificationView value)
         => obj.SetValue(_associatedNotificationViewProperty, value);
 
     private static readonly DependencyProperty _associatedNotificationViewProperty = DependencyProperty.RegisterAttached(
@@ -131,7 +131,9 @@ internal abstract class InteractivityScope<TInteractivityControl> where TInterac
         if (_scopeDictionary.TryGetValue(scope, out var scopeCollection))
         {
             _scopeDictionary[scope] = scopeCollection
-                .Select(control => GetAssociatedNotificationView(control).FindVisualChild<TInteractivityControl>(d => d.IsVisible))
+                .Select(control => GetAssociatedNotificationView(control))
+                .WhereNotNull()
+                .Select(view => view.FindVisualChild<TInteractivityControl>(d => d.IsVisible))
                 .WhereNotNull()
                 .ToList();
 

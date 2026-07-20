@@ -72,32 +72,39 @@ public sealed class Spinner : Control
         loaderIcon.RenderTransform = _rotateTransform;
     }
 
-    private void SetDispatcherTimer()
+    private void SetAnimationTimer()
     {
-        if (_animationTimer is null)
+        lock (_sync)
         {
-            _animationTimer = new DispatcherTimer(DispatcherPriority.Render) { Interval = _animationTimerInterval };
-            _animationTimer.Start();
-        }
+            _activeSpinnersRotationTimer ??= TimerFactory.CreateOnUi(
+                interval: _animationTimerInterval,
+                priority: DispatcherPriority.Render);
 
-        _animationTimer.Tick -= OnAnimationTimerTick;
-        _animationTimer.Tick += OnAnimationTimerTick;
-        _activeSpinnersCount++;
+            _activeSpinnersRotationTimer.Tick -= OnTick;
+            _activeSpinnersRotationTimer.Tick += OnTick;
+            _activeSpinnersRotationTimer.Start();
+
+            _activeSpinnersCount++;
+        }
     }
 
-    private void StopDispatcherTimer()
+    private void StopAnimationTimer()
     {
-        if (_animationTimer == null)
+        lock (_sync)
         {
-            return;
-        }
+            if (_activeSpinnersRotationTimer == null)
+            {
+                return;
+            }
 
-        _activeSpinnersCount--;
-        _animationTimer.Tick -= OnAnimationTimerTick;
-        if (_animationTimer.IsEnabled && _activeSpinnersCount == 0)
-        {
-            _animationTimer.Stop();
-            _animationTimer = null;
+            _activeSpinnersRotationTimer.Tick -= OnTick;
+            _activeSpinnersCount--;
+
+            if (_activeSpinnersRotationTimer.IsRunning &&
+                _activeSpinnersCount == 0)
+            {
+                _activeSpinnersRotationTimer.Stop();
+            }
         }
     }
 
@@ -105,15 +112,15 @@ public sealed class Spinner : Control
     {
         if (newValue)
         {
-            SetDispatcherTimer();
+            SetAnimationTimer();
         }
         else
         {
-            StopDispatcherTimer();
+            StopAnimationTimer();
         }
     }
 
-    private void OnAnimationTimerTick(object? sender, EventArgs e)
+    private void OnTick(ITimer timer)
     {
         if (_rotateTransform == null)
         {
@@ -132,6 +139,7 @@ public sealed class Spinner : Control
     private readonly int _frameRate;
     private readonly TimeSpan _animationTimerInterval;
 
-    private static DispatcherTimer? _animationTimer;
+    private static ITimer? _activeSpinnersRotationTimer;
     private static int _activeSpinnersCount = 0;
+    private static readonly object _sync = new();
 }

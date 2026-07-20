@@ -211,14 +211,14 @@ public sealed class TextHint : TextInlineBase
         if (double.IsNaN(textBlock.LineHeight) is false)
         {
             hintButton = textBlock.LineHeight <= 24
-                ? new IconButton() { Icon = UIKitIcon_16.StatusQuestion }
-                : new BigIconButton() { Icon = UIKitIcon_24.StatusQuestion };
+                ? new IconButton() { Icon = UIKitIcon_16.StatusQuestionOutline }
+                : new BigIconButton() { Icon = UIKitIcon_24.StatusQuestionOutline };
         }
         else
         {
             hintButton = textBlock.FontSize <= 18
-                ? new IconButton() { Icon = UIKitIcon_16.StatusQuestion }
-                : new BigIconButton() { Icon = UIKitIcon_24.StatusQuestion };
+                ? new IconButton() { Icon = UIKitIcon_16.StatusQuestionOutline }
+                : new BigIconButton() { Icon = UIKitIcon_24.StatusQuestionOutline };
         }
 
         hintButton.Click += OnButtonClick;

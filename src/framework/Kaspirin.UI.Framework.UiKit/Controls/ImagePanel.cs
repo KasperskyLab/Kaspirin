@@ -15,40 +15,68 @@
 using System;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
+using Kaspirin.UI.Framework.UiKit.Controls.Internals;
 
 namespace Kaspirin.UI.Framework.UiKit.Controls;
 
-public sealed class ImagePanel : Grid
+[TemplatePart(Name = PART_Panel, Type = typeof(Panel))]
+public sealed class ImagePanel : Control
 {
+    public const string PART_Panel = "PART_Panel";
+
     public ImagePanel()
     {
-        _fadeOutContainer = new Grid();
-        _fadeInContainer = new Grid();
-        _currentImageHolder = new Grid();
-        _storyboard = new Storyboard();
-
-        Children.Add(_fadeOutContainer);
-        Children.Add(_currentImageHolder);
-        Children.Add(_fadeInContainer);
-
         this.WhenLoaded(() =>
         {
             LaunchChangeImageAnimation();
         });
     }
 
-    #region Source
+    #region ImageFlowDirection
 
-    public ImageSource? Source
+    public FlowDirection ImageFlowDirection
     {
-        get => (ImageSource?)GetValue(SourceProperty);
-        set => SetValue(SourceProperty, value);
+        get => (FlowDirection)GetValue(ImageFlowDirectionProperty);
+        set => SetValue(ImageFlowDirectionProperty, value);
     }
 
-    public static readonly DependencyProperty SourceProperty = DependencyProperty.Register(
-        nameof(Source),
+    public static readonly DependencyProperty ImageFlowDirectionProperty = DependencyProperty.Register(
+        nameof(ImageFlowDirection),
+        typeof(FlowDirection),
+        typeof(ImagePanel),
+        new PropertyMetadata(FlowDirection.LeftToRight));
+
+    #endregion
+
+    #region ImageStretch
+
+    public Stretch ImageStretch
+    {
+        get => (Stretch)GetValue(ImageStretchProperty);
+        set => SetValue(ImageStretchProperty, value);
+    }
+
+    public static readonly DependencyProperty ImageStretchProperty = DependencyProperty.Register(
+        nameof(ImageStretch),
+        typeof(Stretch),
+        typeof(ImagePanel),
+        new PropertyMetadata(Stretch.None));
+
+    #endregion
+
+    #region Source
+
+    public ImageSource? ImageSource
+    {
+        get => (ImageSource?)GetValue(ImageSourceProperty);
+        set => SetValue(ImageSourceProperty, value);
+    }
+
+    public static readonly DependencyProperty ImageSourceProperty = DependencyProperty.Register(
+        nameof(ImageSource),
         typeof(ImageSource),
         typeof(ImagePanel),
         new PropertyMetadata(default(ImageSource), OnImageSourceChanged));
@@ -66,6 +94,15 @@ public sealed class ImagePanel : Grid
     public ImagePanelFadeType FadeType { get; set; } = ImagePanelFadeType.FadeIn;
 
     public Func<ImageSource, Image>? CreateImageCallback { get; set; }
+
+    public override void OnApplyTemplate()
+    {
+        var panel = Guard.EnsureIsInstanceOfType<Grid>(GetTemplateChild(PART_Panel));
+
+        panel.Children.Add(_fadeOutContainer);
+        panel.Children.Add(_currentImageHolder);
+        panel.Children.Add(_fadeInContainer);
+    }
 
     private void StoreImageSources(ImageSource? oldImage, ImageSource? newImage)
     {
@@ -95,7 +132,7 @@ public sealed class ImagePanel : Grid
         var image = CreateImageCallback?.Invoke(imageSource);
         if (image == null)
         {
-            return;
+            image = CreateImage(imageSource);
         }
 
         var animation = new DoubleAnimation
@@ -130,7 +167,7 @@ public sealed class ImagePanel : Grid
         var image = CreateImageCallback?.Invoke(imageSource);
         if (image == null)
         {
-            return;
+            image = CreateImage(imageSource);
         }
 
         var storyboard = new Storyboard();
@@ -155,11 +192,23 @@ public sealed class ImagePanel : Grid
         _fadeOutContainer.Children.Add(image);
     }
 
-    private readonly Grid _fadeOutContainer;
-    private readonly Grid _fadeInContainer;
-    private readonly Grid _currentImageHolder;
+    private Image CreateImage(ImageSource imageSource)
+    {
+        var image = new Image();
+        image.SetBinding(Image.FlowDirectionProperty, new Binding() { Source = this, Path = ImagePanel.ImageFlowDirectionProperty.AsPath() });
+        image.SetBinding(Image.StretchProperty, new Binding() { Source = this, Path = ImagePanel.ImageStretchProperty.AsPath() });
+        image.HorizontalAlignment = HorizontalAlignment.Center;
+        image.VerticalAlignment = VerticalAlignment.Center;
+        image.Source = imageSource;
 
-    private Storyboard _storyboard;
+        return image;
+    }
+
+    private readonly Grid _fadeOutContainer = new();
+    private readonly Grid _fadeInContainer = new();
+    private readonly Grid _currentImageHolder = new();
+
+    private Storyboard _storyboard = new();
     private ImageSource? _oldImage;
     private ImageSource? _newImage;
     private static readonly PropertyPath _opacityPath = new(OpacityProperty);

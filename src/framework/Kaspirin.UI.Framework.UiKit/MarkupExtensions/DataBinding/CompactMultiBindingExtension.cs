@@ -20,61 +20,38 @@ public sealed class CompactMultiBindingExtension : MultiBinding
 {
     public BindingBase Binding1
     {
-        set
-        {
-            if (Bindings.Count > 0)
-            {
-                Bindings[0] = value;
-            }
-            else
-            {
-                Bindings.Add(value);
-            }
-        }
+        set => SetBinding(index: 0, value);
     }
 
     public BindingBase Binding2
     {
-        set
-        {
-            if (Bindings.Count > 1)
-            {
-                Bindings[1] = value;
-            }
-            else
-            {
-                Bindings.Add(value);
-            }
-        }
+        set => SetBinding(index: 1, value);
     }
 
     public BindingBase Binding3
     {
-        set
-        {
-            if (Bindings.Count > 2)
-            {
-                Bindings[2] = value;
-            }
-            else
-            {
-                Bindings.Add(value);
-            }
-        }
+        set => SetBinding(index: 2, value);
     }
 
     public BindingBase Binding4
     {
-        set
+        set => SetBinding(index: 3, value);
+    }
+
+    public BindingBase Binding5
+    {
+        set => SetBinding(index: 4, value);
+    }
+
+    private void SetBinding(int index, BindingBase binding)
+    {
+        if (Bindings.Count > index)
         {
-            if (Bindings.Count > 3)
-            {
-                Bindings[3] = value;
-            }
-            else
-            {
-                Bindings.Add(value);
-            }
+            Bindings[index] = binding;
+        }
+        else
+        {
+            Bindings.Add(binding);
         }
     }
 }

@@ -28,7 +28,7 @@ public enum UIKitIcon_12
 {
     UIKitUnset = 0,
     Bullet,
-    Check,
+    BulletCheck,
     IconStub
 }
 
@@ -36,71 +36,75 @@ public enum UIKitIcon_12
 public enum UIKitIcon_16
 {
     UIKitUnset = 0,
-    Add,
-    ArrowChange,
+    ArrowBack,
     ArrowDown,
-    ArrowDown3,
-    ArrowLeft,
-    ArrowLeft3,
-    ArrowRight,
-    ArrowRight3,
-    ArrowToLineDown,
-    ArrowToLineLeft,
-    ArrowToLineRight,
-    ArrowToLineUp,
+    ArrowDownSmall,
+    ArrowForward,
+    ArrowLeftSmall,
+    ArrowRightSmall,
     ArrowUp,
-    ArrowUp3,
+    ArrowUpSmall,
     Calendar,
-    Check,
-    Clear,
+    CapsLock,
+    CapsLockSolid,
+    Change,
+    Clock,
     Copy,
+    CrossM,
+    CrossS,
+    CrossXS,
     Cut,
-    DeviceLaptop,
-    EyeHide,
-    EyeShow,
-    FrameImage,
     Grid,
-    IconStub,
+    Laptop,
     LinkExternal,
-    Minus,
+    MinusM,
+    MinusS,
     Moon,
+    NamespaceK8s,
+    OkM,
+    OkS,
+    OkXS,
+    OnlineOfflineToggle,
     PageDown,
     PageLeft,
     PageRight,
     PageUp,
-    Paste,
+    PasswordHide,
+    PasswordShow,
+    PasteFile,
+    PhotoFrame,
     Placeholder,
-    Placeholder2,
+    Play,
+    PlusM,
     Pointer,
-    RingClock,
-    RingDot,
-    RingPlay,
+    Rec,
     Sandbox,
     Search,
     Settings,
-    Settings2,
-    StatusDanger,
-    StatusDanger2,
+    SettingsGear,
+    StatusDangerOutlineCircle,
+    StatusDangerOutlineSquare,
     StatusDangerSolid,
-    StatusDangerSolid2,
-    StatusError,
+    StatusDangerSquareSolid,
+    StatusErrorOutline,
     StatusErrorSolid,
-    StatusInfo,
+    StatusHighOutline,
+    StatusHighSolid,
+    StatusInfoOutline,
     StatusInfoSolid,
-    StatusPositive,
-    StatusPositiveSolid,
-    StatusQuestion,
+    StatusNewOutline,
+    StatusOKOutline,
+    StatusOKSolid,
+    StatusQuestionOutline,
     StatusQuestionSolid,
-    StatusWarning,
-    StatusWarning2,
+    StatusWarningOutline,
     StatusWarningSolid,
-    StatusWarningSolid2,
-    Sun,
-    TextCapsLock,
-    TextCapsLockSolid,
-    TextSize,
-    Timer2,
-    ToggleLightDark,
+    Stopwatch,
+    Text2,
+    ToTheBottom,
+    ToTheLeft,
+    ToTheRight,
+    ToTheTop,
     Wizard
 }
 
@@ -108,71 +112,70 @@ public enum UIKitIcon_16
 public enum UIKitIcon_24
 {
     UIKitUnset = 0,
-    Add,
-    ArrowChange,
+    ArrowBack,
     ArrowDown,
-    ArrowDown3,
-    ArrowLeft,
-    ArrowLeft3,
-    ArrowRight,
-    ArrowRight3,
-    ArrowToLineDown,
-    ArrowToLineLeft,
-    ArrowToLineRight,
-    ArrowToLineUp,
+    ArrowDownSmall,
+    ArrowForward,
+    ArrowLeftSmall,
+    ArrowRightSmall,
     ArrowUp,
-    ArrowUp3,
+    ArrowUpSmall,
     Calendar,
-    Check,
-    Clear,
+    CapsLock,
+    CapsLockSolid,
+    Change,
+    Clock,
     Copy,
+    Cross,
     Cut,
-    DeviceLaptop,
-    EyeHide,
-    EyeShow,
-    FrameImage,
     Grid,
-    IconStub,
+    Laptop,
     LinkExternal,
     Minus,
     Moon,
+    NamespaceK8s,
+    Ok,
+    OnlineOfflineToggle,
     PageDown,
     PageLeft,
     PageRight,
     PageUp,
-    Paste,
+    PasswordHide,
+    PasswordShow,
+    PasteFile,
+    PhotoFrame,
     Placeholder,
-    Placeholder2,
+    Play,
+    Plus,
     Pointer,
-    RingClock,
-    RingDot,
-    RingPlay,
+    Rec,
     Sandbox,
     Search,
     Settings,
-    Settings2,
-    StatusDanger,
-    StatusDanger2,
+    SettingsGear,
+    StatusDangerOutlineCircle,
+    StatusDangerOutlineSquare,
     StatusDangerSolid,
-    StatusDangerSolid2,
-    StatusError,
+    StatusDangerSquareSolid,
+    StatusErrorOutline,
     StatusErrorSolid,
-    StatusInfo,
+    StatusHighOutline,
+    StatusHighSolid,
+    StatusInfoOutline,
     StatusInfoSolid,
-    StatusPositive,
-    StatusPositiveSolid,
-    StatusQuestion,
+    StatusNewOutline,
+    StatusOKOutline,
+    StatusOKSolid,
+    StatusQuestionOutline,
     StatusQuestionSolid,
-    StatusWarning,
-    StatusWarning2,
+    StatusWarningOutline,
     StatusWarningSolid,
-    StatusWarningSolid2,
-    Sun,
-    TextCapsLock,
-    TextCapsLockSolid,
-    TextSize,
-    Timer2,
-    ToggleLightDark,
+    Stopwatch,
+    Text2,
+    ToTheBottom,
+    ToTheLeft,
+    ToTheRight,
+    ToTheTop,
     Wizard
 }
 
@@ -187,7 +190,7 @@ public enum UIKitIcon_32
 public enum UIKitIcon_48
 {
     UIKitUnset = 0,
-    IconStub
+
 }
 
 internal static class UIKitIconMetadataRegistrar
@@ -199,28 +202,26 @@ internal static class UIKitIconMetadataRegistrar
     {
         if (Interlocked.CompareExchange(ref _isRegistered, 1, 0) == 0)
         {
-            UIKitIconMetadataStorage.Register(UIKitIcon_16.ArrowChange, isAutoRTL: true, isColorfull: false);
-            UIKitIconMetadataStorage.Register(UIKitIcon_16.ArrowLeft, isAutoRTL: true, isColorfull: false);
-            UIKitIconMetadataStorage.Register(UIKitIcon_16.ArrowLeft3, isAutoRTL: true, isColorfull: false);
-            UIKitIconMetadataStorage.Register(UIKitIcon_16.ArrowRight, isAutoRTL: true, isColorfull: false);
-            UIKitIconMetadataStorage.Register(UIKitIcon_16.ArrowRight3, isAutoRTL: true, isColorfull: false);
-            UIKitIconMetadataStorage.Register(UIKitIcon_16.ArrowToLineLeft, isAutoRTL: true, isColorfull: false);
-            UIKitIconMetadataStorage.Register(UIKitIcon_16.ArrowToLineRight, isAutoRTL: true, isColorfull: false);
+            UIKitIconMetadataStorage.Register(UIKitIcon_16.ArrowBack, isAutoRTL: true, isColorfull: false);
+            UIKitIconMetadataStorage.Register(UIKitIcon_16.ArrowForward, isAutoRTL: true, isColorfull: false);
+            UIKitIconMetadataStorage.Register(UIKitIcon_16.ArrowLeftSmall, isAutoRTL: true, isColorfull: false);
+            UIKitIconMetadataStorage.Register(UIKitIcon_16.ArrowRightSmall, isAutoRTL: true, isColorfull: false);
             UIKitIconMetadataStorage.Register(UIKitIcon_16.PageLeft, isAutoRTL: true, isColorfull: false);
             UIKitIconMetadataStorage.Register(UIKitIcon_16.PageRight, isAutoRTL: true, isColorfull: false);
-            UIKitIconMetadataStorage.Register(UIKitIcon_16.StatusQuestion, isAutoRTL: true, isColorfull: false);
+            UIKitIconMetadataStorage.Register(UIKitIcon_16.StatusQuestionOutline, isAutoRTL: true, isColorfull: false);
             UIKitIconMetadataStorage.Register(UIKitIcon_16.StatusQuestionSolid, isAutoRTL: true, isColorfull: false);
-            UIKitIconMetadataStorage.Register(UIKitIcon_24.ArrowChange, isAutoRTL: true, isColorfull: false);
-            UIKitIconMetadataStorage.Register(UIKitIcon_24.ArrowLeft, isAutoRTL: true, isColorfull: false);
-            UIKitIconMetadataStorage.Register(UIKitIcon_24.ArrowLeft3, isAutoRTL: true, isColorfull: false);
-            UIKitIconMetadataStorage.Register(UIKitIcon_24.ArrowRight, isAutoRTL: true, isColorfull: false);
-            UIKitIconMetadataStorage.Register(UIKitIcon_24.ArrowRight3, isAutoRTL: true, isColorfull: false);
-            UIKitIconMetadataStorage.Register(UIKitIcon_24.ArrowToLineLeft, isAutoRTL: true, isColorfull: false);
-            UIKitIconMetadataStorage.Register(UIKitIcon_24.ArrowToLineRight, isAutoRTL: true, isColorfull: false);
+            UIKitIconMetadataStorage.Register(UIKitIcon_16.ToTheLeft, isAutoRTL: true, isColorfull: false);
+            UIKitIconMetadataStorage.Register(UIKitIcon_16.ToTheRight, isAutoRTL: true, isColorfull: false);
+            UIKitIconMetadataStorage.Register(UIKitIcon_24.ArrowBack, isAutoRTL: true, isColorfull: false);
+            UIKitIconMetadataStorage.Register(UIKitIcon_24.ArrowForward, isAutoRTL: true, isColorfull: false);
+            UIKitIconMetadataStorage.Register(UIKitIcon_24.ArrowLeftSmall, isAutoRTL: true, isColorfull: false);
+            UIKitIconMetadataStorage.Register(UIKitIcon_24.ArrowRightSmall, isAutoRTL: true, isColorfull: false);
             UIKitIconMetadataStorage.Register(UIKitIcon_24.PageLeft, isAutoRTL: true, isColorfull: false);
             UIKitIconMetadataStorage.Register(UIKitIcon_24.PageRight, isAutoRTL: true, isColorfull: false);
-            UIKitIconMetadataStorage.Register(UIKitIcon_24.StatusQuestion, isAutoRTL: true, isColorfull: false);
+            UIKitIconMetadataStorage.Register(UIKitIcon_24.StatusQuestionOutline, isAutoRTL: true, isColorfull: false);
             UIKitIconMetadataStorage.Register(UIKitIcon_24.StatusQuestionSolid, isAutoRTL: true, isColorfull: false);
+            UIKitIconMetadataStorage.Register(UIKitIcon_24.ToTheLeft, isAutoRTL: true, isColorfull: false);
+            UIKitIconMetadataStorage.Register(UIKitIcon_24.ToTheRight, isAutoRTL: true, isColorfull: false);
         }
     }
 

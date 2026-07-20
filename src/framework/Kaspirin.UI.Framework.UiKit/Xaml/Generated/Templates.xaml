@@ -53,7 +53,7 @@
         <controls:MenuItem Command="ApplicationCommands.Paste"
                            Header="{xl:Loc InputContextMenu_Paste,
                                            Scope=UiKit}"
-                           Icon="{x:Static icons:UIKitIcon_16.Paste}" />
+                           Icon="{x:Static icons:UIKitIcon_16.PasteFile}" />
     </controls:ContextMenu>
 
     <controls:ContextMenu x:Key="InputReadOnlyContextMenu"
@@ -78,13 +78,13 @@
                                                    RelativeSource={RelativeSource AncestorType={x:Type controls:ContextMenu}}}"
                            Header="{Loc ScrollBarContextMenu_ScrollToTop,
                                         Scope=UiKit}"
-                           Icon="{x:Static icons:UIKitIcon_16.ArrowToLineUp}" />
+                           Icon="{x:Static icons:UIKitIcon_16.ToTheTop}" />
         <controls:MenuItem Command="ScrollBar.ScrollToBottomCommand"
                            CommandTarget="{Binding PlacementTarget,
                                                    RelativeSource={RelativeSource AncestorType={x:Type controls:ContextMenu}}}"
                            Header="{Loc ScrollBarContextMenu_ScrollToBottom,
                                         Scope=UiKit}"
-                           Icon="{x:Static icons:UIKitIcon_16.ArrowToLineDown}" />
+                           Icon="{x:Static icons:UIKitIcon_16.ToTheBottom}" />
         <controls:MenuItemDivider />
         <controls:MenuItem Command="ScrollBar.PageUpCommand"
                            CommandTarget="{Binding PlacementTarget,
@@ -104,13 +104,13 @@
                                                    RelativeSource={RelativeSource AncestorType={x:Type controls:ContextMenu}}}"
                            Header="{Loc ScrollBarContextMenu_LineUp,
                                         Scope=UiKit}"
-                           Icon="{x:Static icons:UIKitIcon_16.ArrowUp3}" />
+                           Icon="{x:Static icons:UIKitIcon_16.ArrowUp}" />
         <controls:MenuItem Command="ScrollBar.LineDownCommand"
                            CommandTarget="{Binding PlacementTarget,
                                                    RelativeSource={RelativeSource AncestorType={x:Type controls:ContextMenu}}}"
                            Header="{Loc ScrollBarContextMenu_LineDown,
                                         Scope=UiKit}"
-                           Icon="{x:Static icons:UIKitIcon_16.ArrowDown3}" />
+                           Icon="{x:Static icons:UIKitIcon_16.ArrowDown}" />
     </controls:ContextMenu>
 
     <controls:ContextMenu x:Key="HorizontalContextMenu"
@@ -130,7 +130,7 @@
                                                    RelativeSource={RelativeSource AncestorType={x:Type controls:ContextMenu}}}"
                            Header="{Loc ScrollBarContextMenu_ScrollToLeft,
                                         Scope=UiKit}"
-                           Icon="{x:Static icons:UIKitIcon_16.ArrowToLineLeft}" />
+                           Icon="{x:Static icons:UIKitIcon_16.ToTheLeft}" />
         <controls:MenuItem Command="{Binding FlowDirection,
                                              RelativeSource={RelativeSource Self},
                                              Converter={flowDirectionConverters:FlowDirectionToObjectConverter LeftToRight={x:Static ScrollBar.ScrollToRightEndCommand},
@@ -139,7 +139,7 @@
                                                    RelativeSource={RelativeSource AncestorType={x:Type controls:ContextMenu}}}"
                            Header="{Loc ScrollBarContextMenu_ScrollToRight,
                                         Scope=UiKit}"
-                           Icon="{x:Static icons:UIKitIcon_16.ArrowToLineRight}" />
+                           Icon="{x:Static icons:UIKitIcon_16.ToTheRight}" />
         <controls:MenuItemDivider />
         <controls:MenuItem Command="{Binding FlowDirection,
                                              RelativeSource={RelativeSource Self},
@@ -168,7 +168,7 @@
                                                    RelativeSource={RelativeSource AncestorType={x:Type controls:ContextMenu}}}"
                            Header="{Loc ScrollBarContextMenu_LineLeft,
                                         Scope=UiKit}"
-                           Icon="{x:Static icons:UIKitIcon_16.ArrowLeft3}" />
+                           Icon="{x:Static icons:UIKitIcon_16.ArrowBack}" />
         <controls:MenuItem Command="{Binding FlowDirection,
                                              RelativeSource={RelativeSource Self},
                                              Converter={flowDirectionConverters:FlowDirectionToObjectConverter LeftToRight={x:Static ScrollBar.LineRightCommand},
@@ -177,7 +177,7 @@
                                                    RelativeSource={RelativeSource AncestorType={x:Type controls:ContextMenu}}}"
                            Header="{Loc ScrollBarContextMenu_LineRight,
                                         Scope=UiKit}"
-                           Icon="{x:Static icons:UIKitIcon_16.ArrowRight3}" />
+                           Icon="{x:Static icons:UIKitIcon_16.ArrowForward}" />
     </controls:ContextMenu>
 
     <Style x:Key="TextWrappingTextBlock"
@@ -810,7 +810,7 @@
                                                    VerticalAlignment="Center" />
 
                             <controls:Icon16 x:Name="PART_Close"
-                                             Icon="Clear"
+                                             Icon="CrossM"
                                              IconBrush="{uikit:UIKitBinding ChipsItem_CloseIcon_Fill}"
                                              Margin="{uikit:UIKitBinding ChipsItem_CloseIcon_Margin}"
                                              VerticalAlignment="Center"
@@ -1830,7 +1830,6 @@
                                                              Visibility="{markupCommon:UIKitTemplateBinding HasHelpButton,
                                                                                                             Converter={booleanConverters:BooleanToVisibilityConverter False=Hidden}}" />
                                         <controls:IconButton x:Name="PART_CloseButton"
-                                                             notifications:NotificationViewBehavior.IsCloseButton="{markupCommon:UIKitTemplateBinding RaiseCommandAndClose}"
                                                              AutomationProperties.AutomationId="{x:Static automation:AutomationIds.ButtonClose}"
                                                              Command="{markupCommon:UIKitTemplateBinding CloseButtonCommand}"
                                                              Icon="{uikit:UIKitBinding InteractivityDialog_Button_CloseIcon}"
@@ -2136,32 +2135,31 @@
                                 <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
 
-                            <StackPanel Grid.Column="0"
-                                        Margin="{uikit:UIKitBinding InteractivityNotification_Content_Margin}"
-                                        Orientation="Horizontal">
+                            <DockPanel Margin="{uikit:UIKitBinding InteractivityNotification_Content_Margin}">
 
-                                <controls:Icon24 x:Name="PART_StatusIcon"
-                                                 Icon="{uikit:UIKitBinding InteractivityNotification_Status_IconName}"
-                                                 IconBrush="{uikit:UIKitBinding InteractivityNotification_Status_Foreground}"
-                                                 Margin="{uikit:UIKitBinding InteractivityNotification_Icon_Margin}"
-                                                 SnapsToDevicePixels="False"
-                                                 UseLayoutRounding="False"
-                                                 Visibility="{markupCommon:UIKitTemplateBinding Type,
-                                                                                                Converter={equalityConverters:EqualityToVisibilityInverseConverter},
-                                                                                                ConverterParameter={x:Static controls:InteractivityNotificationType.Neutral}}" />
-
-                                <controls:Icon24 x:Name="PART_Icon"
-                                                 Icon="{markupCommon:UIKitTemplateBinding Icon}"
-                                                 IconBrush="{uikit:UIKitBinding InteractivityNotification_Icon_Brush}"
-                                                 Margin="{uikit:UIKitBinding InteractivityNotification_Icon_Margin}"
-                                                 SnapsToDevicePixels="False"
-                                                 UseLayoutRounding="False"
-                                                 Visibility="{markupBinding:CompactMultiBinding Binding1={Binding IsUnset,
-                                                                                                                  RelativeSource={RelativeSource Self}},
-                                                                                                Binding2={markupCommon:UIKitTemplateBinding Type,
-                                                                                                                                            Converter={equalityConverters:EqualityToBooleanInverseConverter},
-                                                                                                                                            ConverterParameter={x:Static controls:InteractivityNotificationType.Neutral}},
-                                                                                                Converter={booleanConverters:MultiBooleanToVisibilityInverseConverter Operation=Or}}" />
+                                <Grid DockPanel.Dock="Left">
+                                    <controls:Icon24 x:Name="PART_StatusIcon"
+                                                     Icon="{uikit:UIKitBinding InteractivityNotification_Status_IconName}"
+                                                     IconBrush="{uikit:UIKitBinding InteractivityNotification_Status_Foreground}"
+                                                     Margin="{uikit:UIKitBinding InteractivityNotification_Icon_Margin}"
+                                                     SnapsToDevicePixels="False"
+                                                     UseLayoutRounding="False"
+                                                     Visibility="{markupCommon:UIKitTemplateBinding Type,
+                                                                                                    Converter={equalityConverters:EqualityToVisibilityInverseConverter},
+                                                                                                    ConverterParameter={x:Static controls:InteractivityNotificationType.Neutral}}" />
+                                    <controls:Icon24 x:Name="PART_Icon"
+                                                     Icon="{markupCommon:UIKitTemplateBinding Icon}"
+                                                     IconBrush="{uikit:UIKitBinding InteractivityNotification_Icon_Brush}"
+                                                     Margin="{uikit:UIKitBinding InteractivityNotification_Icon_Margin}"
+                                                     SnapsToDevicePixels="False"
+                                                     UseLayoutRounding="False"
+                                                     Visibility="{markupBinding:CompactMultiBinding Binding1={Binding IsUnset,
+                                                                                                                      RelativeSource={RelativeSource Self}},
+                                                                                                    Binding2={markupCommon:UIKitTemplateBinding Type,
+                                                                                                                                                Converter={equalityConverters:EqualityToBooleanInverseConverter},
+                                                                                                                                                ConverterParameter={x:Static controls:InteractivityNotificationType.Neutral}},
+                                                                                                    Converter={booleanConverters:MultiBooleanToVisibilityInverseConverter Operation=Or}}" />
+                                </Grid>
 
                                 <uikit:UIKitContentPresenter x:Name="PART_Content"
                                                              Content="{markupCommon:UIKitTemplateBinding Content}"
@@ -2176,7 +2174,7 @@
                                                                                                     StateAwareAncestorType={x:Type controls:InteractivityNotification}}" />
                                     </uikit:UIKitContentPresenter.ContentImpicitStyles>
                                 </uikit:UIKitContentPresenter>
-                            </StackPanel>
+                            </DockPanel>
 
                             <Button x:Name="PART_ActionButton"
                                     Grid.Column="1"
@@ -3793,7 +3791,6 @@
                 <ControlTemplate TargetType="{x:Type controls:ProgressBar}">
                     <StackPanel>
                         <controls:RoundedPanel x:Name="PART_RootPanel"
-                                               Background="{uikit:UIKitBinding ProgressBar_Track_Background}"
                                                CornerRadius="{uikit:UIKitBinding ProgressBar_CornerRadius}"
                                                Height="{uikit:UIKitBinding ProgressBar_Track_Height}">
                             <Grid>

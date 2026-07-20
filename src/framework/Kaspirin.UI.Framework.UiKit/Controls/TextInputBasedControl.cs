@@ -170,6 +170,22 @@ public abstract class TextInputBasedControl : Control
 
     #endregion
 
+    #region SelectAllOnFocus
+
+    public bool SelectAllOnFocus
+    {
+        get => (bool)GetValue(SelectAllOnFocusProperty);
+        set => SetValue(SelectAllOnFocusProperty, value);
+    }
+
+    public static readonly DependencyProperty SelectAllOnFocusProperty = DependencyProperty.Register(
+        nameof(SelectAllOnFocus),
+        typeof(bool),
+        typeof(TextInputBasedControl),
+        new PropertyMetadata(default(bool)));
+
+    #endregion
+
     public override void OnApplyTemplate()
     {
         base.OnApplyTemplate();
@@ -184,6 +200,7 @@ public abstract class TextInputBasedControl : Control
         _textInput.SetBinding(TextInputControl.IsInvalidStateProperty, new Binding() { Source = this, Path = IsInvalidStateProperty.AsPath() });
         _textInput.SetBinding(TextInputControl.IsReadOnlyProperty, new Binding() { Source = this, Path = IsReadOnlyProperty.AsPath() });
         _textInput.SetBinding(TextInputControl.LabelProperty, new Binding() { Source = this, Path = LabelProperty.AsPath() });
+        _textInput.SetBinding(TextInputControl.SelectAllOnFocusProperty, new Binding() { Source = this, Path = SelectAllOnFocusProperty.AsPath() });
     }
 
     private TextInput? _textInput;

@@ -30,10 +30,8 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<EmbeddedResource Include="$(RepoRoot)src\figma\Schema\*.xsd">
-			<Link>Schema\%(Filename).xsd</Link>
-			<SubType>Designer</SubType>
-		</EmbeddedResource>
+		<None Remove="Schema\*.xslt" />
+		<EmbeddedResource Include="Schema\**\*.xsd" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -49,7 +47,7 @@
 	<ItemGroup>
 		<AssemblyAttributes Include="Kaspirin.UI.Framework.UiKit.Translator.Core.EmbeddedConfigurationAttribute">
 			<_Parameter1>SchemasDirectory</_Parameter1>
-			<_Parameter2>$(RepoRoot)src\figma\Schema</_Parameter2>
+			<_Parameter2>$(MSBuildProjectDirectory)\Schema</_Parameter2>
 		</AssemblyAttributes>
 		<AssemblyAttributes Include="Kaspirin.UI.Framework.UiKit.Translator.Core.EmbeddedConfigurationAttribute">
 			<_Parameter1>RootNamespace</_Parameter1>

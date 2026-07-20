@@ -40,7 +40,7 @@ internal static class UIKitConstants
     public static Thickness BarCodeBorderThickness { get; } = new Thickness(4);
 
     //Bullet
-    public static UIKitIcon_12 BulletIcon { get; } = UIKitIcon_12.Check;
+    public static UIKitIcon_12 BulletIcon { get; } = UIKitIcon_12.BulletCheck;
 
     //Button
     public static double ButtonMinWidth { get; } = 80;

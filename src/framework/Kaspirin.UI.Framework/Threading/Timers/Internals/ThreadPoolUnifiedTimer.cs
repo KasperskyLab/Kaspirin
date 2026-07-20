@@ -19,10 +19,9 @@ namespace Kaspirin.UI.Framework.Threading.Timers.Internals;
 
 internal sealed class ThreadPoolUnifiedTimer : BaseTimer
 {
-    public ThreadPoolUnifiedTimer(Action tickAction, TimeSpan? interval, string name, TimerOptions options)
+    public ThreadPoolUnifiedTimer(Action? tickAction, TimeSpan? interval, string name, TimerOptions options)
         : base(tickAction, interval, name, options)
     {
-
         var enableTraces = Options.HasFlag(TimerOptions.EnableTraces);
 
         var actionThrottlerName = Name.IsNotEmpty() ? $"{Name}_Action_Throttler" : string.Empty;

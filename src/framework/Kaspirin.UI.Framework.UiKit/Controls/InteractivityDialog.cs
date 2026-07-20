@@ -361,22 +361,19 @@ public class InteractivityDialog : ContentControl, INotificationAnimatable, IAcc
 
     #endregion
 
-    #region RaiseCommandAndClose
+    #region CloseButtonAction
 
-    public bool RaiseCommandAndClose
+    public InteractivityDialogCloseButtonAction CloseButtonAction
     {
-        get => (bool)GetValue(RaiseCommandAndCloseProperty);
-        set => SetValue(RaiseCommandAndCloseProperty, value);
+        get => (InteractivityDialogCloseButtonAction)GetValue(CloseButtonActionProperty);
+        set => SetValue(CloseButtonActionProperty, value);
     }
 
-    public static readonly DependencyProperty RaiseCommandAndCloseProperty = DependencyProperty.Register(
-        nameof(RaiseCommandAndClose),
-        typeof(bool),
+    public static readonly DependencyProperty CloseButtonActionProperty = DependencyProperty.Register(
+        nameof(CloseButtonAction),
+        typeof(InteractivityDialogCloseButtonAction),
         typeof(InteractivityDialog),
-        new PropertyMetadata(true, OnRaiseCommandAndCloseChanged));
-
-    private static void OnRaiseCommandAndCloseChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        => ((InteractivityDialog)d).OnHasCloseButtonChanged();
+        new PropertyMetadata(InteractivityDialogCloseButtonAction.RaiseCommandAndClose));
 
     #endregion
 
@@ -429,6 +426,12 @@ public class InteractivityDialog : ContentControl, INotificationAnimatable, IAcc
     public override void OnApplyTemplate()
     {
         _closeButton = Guard.EnsureIsInstanceOfType<Button>(GetTemplateChild(PART_CloseButton));
+        _closeButton.SetBinding(NotificationViewBehavior.IsCloseButtonProperty, new Binding()
+        {
+            Source = this,
+            Path = CloseButtonActionProperty.AsPath(),
+            Converter = new DelegateConverter<InteractivityDialogCloseButtonAction>(value => value == InteractivityDialogCloseButtonAction.RaiseCommandAndClose)
+        });
         _overlay = Guard.EnsureIsInstanceOfType<InteractivityOverlay>(GetTemplateChild(PART_Overlay));
         _dialog = Guard.EnsureIsInstanceOfType<FrameworkElement>(GetTemplateChild(PART_Dialog));
         _dialog.SizeChanged += OnDialogSizeChanged;

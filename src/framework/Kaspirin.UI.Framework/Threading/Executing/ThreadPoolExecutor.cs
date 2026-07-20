@@ -142,7 +142,7 @@ public sealed class ThreadPoolExecutor : BaseExecutor<TaskFactory>, IThreadPoolE
             options: TimerOptions.None);
 
         timer.Tick += (t) => t.Dispose();
-        timer.Start(delay);
+        timer.StartAfterDelay(delay);
 
         return tcs.Task;
     }
@@ -162,7 +162,7 @@ public sealed class ThreadPoolExecutor : BaseExecutor<TaskFactory>, IThreadPoolE
             options: TimerOptions.None);
 
         timer.Tick += (t) => t.Dispose();
-        timer.Start(delay);
+        timer.StartAfterDelay(delay);
 
         return tcs.Task;
     }

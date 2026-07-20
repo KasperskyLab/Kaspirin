@@ -176,6 +176,11 @@ public sealed class InteractivityOverlay : ContentControl, INotificationAnimatab
         _overlayBackground.MouseLeftButtonDown += OnBackgroundPressed;
     }
 
+    public void InvalidateOverlayCuts()
+    {
+        InvalidateMeasure();
+    }
+
     internal void ShowContent(Action? completedCallback)
     {
         Guard.IsNotNull(_content);
@@ -202,7 +207,6 @@ public sealed class InteractivityOverlay : ContentControl, INotificationAnimatab
         Guard.IsNotNull(_overlayBackground);
 
         _overlayMediaProvider.LaunchHideAnimation(_overlayBackground);
-
     }
 
     protected override Size ArrangeOverride(Size arrangeBounds)

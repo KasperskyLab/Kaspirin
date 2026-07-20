@@ -18,15 +18,17 @@ namespace Kaspirin.UI.Framework.Threading.Timers.Internals;
 
 internal abstract class BaseTimer : ITimer
 {
-    protected BaseTimer(Action tickAction, TimeSpan? interval, string name, TimerOptions options)
+    protected BaseTimer(Action? tickAction, TimeSpan? interval, string name, TimerOptions options)
     {
         Guard.Argument(interval == null || interval >= TimeSpan.Zero);
-        Guard.ArgumentIsNotNull(tickAction);
         Guard.ArgumentIsNotNull(name);
 
-        _tickAction = options.HasFlag(TimerOptions.Weak)
-            ? WeakEventHandler.Wrap(tickAction, OnTickActionCollected)
-            : tickAction;
+        if (tickAction != null)
+        {
+            _tickAction = options.HasFlag(TimerOptions.Weak)
+                ? WeakEventHandler.Wrap(tickAction, OnTickActionCollected)
+                : tickAction;
+        }
 
         _interval = interval;
 
@@ -85,39 +87,32 @@ internal abstract class BaseTimer : ITimer
 
     public TimerState State { get; private set; }
 
-    public bool Start(TimeSpan? delay = null)
+    public object? Tag { get; set; }
+
+    public bool IsRunning
     {
-        Guard.Argument(delay == null || delay >= TimeSpan.Zero);
-
-        var result = false;
-
-        lock (_sync)
+        get
         {
-            if (State == TimerState.Disposed)
+            lock (_sync)
             {
-                _tracer?.TraceError($"Attempting to start already disposed Timer.");
-                result = false;
-            }
-
-            else if (State == TimerState.Running)
-            {
-                _tracer?.TraceWarning($"Attempting to start already started Timer.");
-                result = false;
-            }
-            else
-            {
-                State = TimerState.Running;
-
-                TimerStart(delay: delay ?? TimeSpan.Zero);
-
-                _tracer?.TraceInformation($"Timer started with delay [{delay?.ToString() ?? "<null>"}] and interval [{Interval?.ToString() ?? "<null>"}].");
-
-                result = true;
+                return State == TimerState.Running;
             }
         }
+    }
 
-        Started?.Invoke(this);
-        return result;
+    public bool Start()
+    {
+        return Start(delay: null);
+    }
+
+    public bool StartAfterDelay(TimeSpan delay)
+    {
+        return Start(delay: delay);
+    }
+
+    public bool StartAfterInterval()
+    {
+        return Start(delay: Interval);
     }
 
     public bool Stop()
@@ -177,11 +172,11 @@ internal abstract class BaseTimer : ITimer
 
     protected void OnTimerTick()
     {
-        Tick?.Invoke(this);
-
         try
         {
-            _tickAction.Invoke();
+            Tick?.Invoke(this);
+
+            _tickAction?.Invoke();
         }
         catch (Exception e)
         {
@@ -209,9 +204,44 @@ internal abstract class BaseTimer : ITimer
         Dispose();
     }
 
+    private bool Start(TimeSpan? delay = null)
+    {
+        Guard.Argument(delay == null || delay >= TimeSpan.Zero);
+
+        var result = false;
+
+        lock (_sync)
+        {
+            if (State == TimerState.Disposed)
+            {
+                _tracer?.TraceError($"Attempting to start already disposed Timer.");
+                result = false;
+            }
+
+            else if (State == TimerState.Running)
+            {
+                _tracer?.TraceWarning($"Attempting to start already started Timer.");
+                result = false;
+            }
+            else
+            {
+                State = TimerState.Running;
+
+                TimerStart(delay: delay ?? TimeSpan.Zero);
+
+                _tracer?.TraceInformation($"Timer started with delay [{delay?.ToString() ?? "<null>"}] and interval [{Interval?.ToString() ?? "<null>"}].");
+
+                result = true;
+            }
+        }
+
+        Started?.Invoke(this);
+        return result;
+    }
+
     private readonly object _sync = new();
     private readonly ComponentTracer? _tracer;
-    private readonly Action _tickAction;
+    private readonly Action? _tickAction;
 
     private TimeSpan? _interval;
 }

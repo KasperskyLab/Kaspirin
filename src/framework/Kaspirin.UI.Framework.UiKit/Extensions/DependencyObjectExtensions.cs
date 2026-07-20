@@ -107,12 +107,18 @@ public static class DependencyObjectExtensions
         return Window.GetWindow(dependencyObject);
     }
 
-    public static T GetValue<T>(this DependencyObject dependencyObject, DependencyProperty dependencyProperty)
+    public static T? GetValue<T>(this DependencyObject dependencyObject, DependencyProperty dependencyProperty)
     {
         Guard.ArgumentIsNotNull(dependencyObject);
         Guard.ArgumentIsNotNull(dependencyProperty);
 
-        return Guard.EnsureIsInstanceOfType<T>(dependencyObject.GetValue(dependencyProperty));
+        var value = dependencyObject.GetValue(dependencyProperty);
+        if (value is T valueAsT)
+        {
+            return valueAsT;
+        }
+
+        return default;
     }
 
     public static void SetResource(this DependencyObject dependencyObject, DependencyProperty dependencyProperty, BaseLocalizationMarkupExtension resource)

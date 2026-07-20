@@ -25,7 +25,7 @@ public sealed class BooleanToIcon24ConverterTests
     public void Convert_TrueValue_ReturnsTrueIcon()
     {
         // Arrange
-        var converter = new BooleanToIcon24Converter { True = UIKitIcon_24.StatusPositive };
+        var converter = new BooleanToIcon24Converter { True = UIKitIcon_24.StatusOKOutline };
         var value = true;
         var targetType = typeof(UIKitIcon_24);
         var parameter = default(object);
@@ -43,7 +43,7 @@ public sealed class BooleanToIcon24ConverterTests
     public void Convert_FalseValue_ReturnsFalseIcon()
     {
         // Arrange
-        var converter = new BooleanToIcon24Converter { False = UIKitIcon_24.StatusDanger };
+        var converter = new BooleanToIcon24Converter { False = UIKitIcon_24.StatusDangerOutlineCircle };
         var value = false;
         var targetType = typeof(UIKitIcon_24);
         var parameter = default(object);
@@ -61,7 +61,7 @@ public sealed class BooleanToIcon24ConverterTests
     public void Convert_NullValue_ReturnsFalseIcon()
     {
         // Arrange
-        var converter = new BooleanToIcon24Converter { False = UIKitIcon_24.StatusDanger };
+        var converter = new BooleanToIcon24Converter { False = UIKitIcon_24.StatusDangerOutlineCircle };
         var value = default(object);
         var targetType = typeof(UIKitIcon_24);
         var parameter = default(object);

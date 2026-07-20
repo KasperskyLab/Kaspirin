@@ -111,7 +111,7 @@ internal sealed class MockSyncedExecutor : IThreadPoolExecutor, IDispatcherExecu
             options: TimerOptions.None);
 
         timer.Tick += (t) => t.Dispose();
-        timer.Start(delay);
+        timer.StartAfterDelay(delay);
 
         return tcs.Task;
     }

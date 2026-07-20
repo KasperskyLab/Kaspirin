@@ -1084,12 +1084,20 @@
            BasedOn="{StaticResource UiKitSsoButtonGoogleWhite}"
            TargetType="{x:Type visuals:SsoButton}" />
 
+    <Style x:Key="SsoButtonQQColor"
+           BasedOn="{StaticResource UiKitSsoButtonQqColor}"
+           TargetType="{x:Type visuals:SsoButton}" />
+
+    <Style x:Key="SsoButtonQQWhite"
+           BasedOn="{StaticResource UiKitSsoButtonQqWhite}"
+           TargetType="{x:Type visuals:SsoButton}" />
+
     <Style x:Key="SsoButtonVKColor"
-           BasedOn="{StaticResource UiKitSsoButtonVKColor}"
+           BasedOn="{StaticResource UiKitSsoButtonVkColor}"
            TargetType="{x:Type visuals:SsoButton}" />
 
     <Style x:Key="SsoButtonVKWhite"
-           BasedOn="{StaticResource UiKitSsoButtonVKWhite}"
+           BasedOn="{StaticResource UiKitSsoButtonVkWhite}"
            TargetType="{x:Type visuals:SsoButton}" />
 
     <Style x:Key="SsoButtonYandexIntColor"
@@ -1109,11 +1117,11 @@
            TargetType="{x:Type visuals:SsoButton}" />
 
     <Style x:Key="SsoButtonWeChatColor"
-           BasedOn="{StaticResource UiKitSsoButtonWeChatColor}"
+           BasedOn="{StaticResource UiKitSsoButtonWechatColor}"
            TargetType="{x:Type visuals:SsoButton}" />
 
     <Style x:Key="SsoButtonWeChatWhite"
-           BasedOn="{StaticResource UiKitSsoButtonWeChatWhite}"
+           BasedOn="{StaticResource UiKitSsoButtonWechatWhite}"
            TargetType="{x:Type visuals:SsoButton}" />
 
     <Style x:Key="SsoButtonWeiboColor"

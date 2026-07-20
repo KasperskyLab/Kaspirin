@@ -190,4 +190,72 @@ public static class DictionaryExtensions
 
         return dictionary.TryGetValue(key, out var value) ? value : defaultValueFactory();
     }
+
+    /// <summary>
+    ///     Adds a new key-value pair to the dictionary or updates an existing key value.
+    /// </summary>
+    /// <typeparam name="TKey">
+    ///     The type of key.
+    /// </typeparam>
+    /// <typeparam name="TValue">
+    ///     The type of value.
+    /// </typeparam>
+    /// <param name="dictionary">
+    ///     Dictionary.
+    /// </param>
+    /// <param name="key">
+    ///     The key to add or update the value.
+    /// </param>
+    /// <param name="value">
+    ///     The value to add or update.
+    /// </param>
+    public static void AddOrUpdate<TKey, TValue>(this IDictionary<TKey, TValue?> dictionary, TKey key, TValue? value)
+    {
+        Guard.ArgumentIsNotNull(dictionary);
+
+        if (dictionary.ContainsKey(key))
+        {
+            dictionary[key] = value;
+        }
+        else
+        {
+            dictionary.Add(key, value);
+        }
+    }
+
+    /// <summary>
+    ///     Adds a new key-value pair to the dictionary or updates an existing key value using the update function.
+    /// </summary>
+    /// <typeparam name="TKey">
+    ///     The type of key.
+    /// </typeparam>
+    /// <typeparam name="TValue">
+    ///     The type of value.
+    /// </typeparam>
+    /// <param name="dictionary">
+    ///     Dictionary.
+    /// </param>
+    /// <param name="key">
+    ///     The key to add or update the value.
+    /// </param>
+    /// <param name="addValue">
+    ///     The value to add if the key is missing.
+    /// </param>
+    /// <param name="updateValueFactory">
+    ///     The value update function that is called when there is a key.
+    /// </param>
+    public static void AddOrUpdate<TKey, TValue>(this IDictionary<TKey, TValue?> dictionary, TKey key, TValue? addValue, Func<TKey, TValue?, TValue?> updateValueFactory)
+    {
+        Guard.ArgumentIsNotNull(dictionary);
+        Guard.ArgumentIsNotNull(updateValueFactory);
+
+        if (dictionary.ContainsKey(key))
+        {
+            dictionary[key] = updateValueFactory(key, dictionary[key]);
+        }
+        else
+        {
+            dictionary.Add(key, addValue);
+        }
+    }
 }

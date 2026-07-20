@@ -27,7 +27,7 @@ namespace Kaspirin.UI.Framework.Threading.Throttlers;
 public interface IBaseDeferredAction : IDisposable
 {
     /// <summary>
-    ///     The status of the action.
+    ///     The state of the action.
     /// </summary>
     DeferredActionState State { get; }
 

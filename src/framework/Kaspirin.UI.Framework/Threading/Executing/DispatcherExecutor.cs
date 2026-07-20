@@ -189,7 +189,7 @@ public sealed class DispatcherExecutor : BaseExecutor<Dispatcher>, IDispatcherEx
             priority: priority);
 
         timer.Tick += (t) => t.Dispose();
-        timer.Start(delay);
+        timer.StartAfterDelay(delay);
 
         return tcs.Task;
     }
@@ -213,7 +213,7 @@ public sealed class DispatcherExecutor : BaseExecutor<Dispatcher>, IDispatcherEx
             priority: priority);
 
         timer.Tick += (t) => t.Dispose();
-        timer.Start(delay);
+        timer.StartAfterDelay(delay);
 
         return tcs.Task;
     }
