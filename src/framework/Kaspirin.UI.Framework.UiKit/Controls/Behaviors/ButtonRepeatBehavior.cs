@@ -15,7 +15,6 @@
 using System;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Threading;
 
 namespace Kaspirin.UI.Framework.UiKit.Controls.Behaviors;
 
@@ -23,8 +22,7 @@ public sealed class ButtonRepeatBehavior : Behavior<Button, ButtonRepeatBehavior
 {
     public ButtonRepeatBehavior()
     {
-        _timer = new DispatcherTimer();
-        _timer.Tick += new EventHandler(OnTimeout);
+        _timer = TimerFactory.CreateOnUi(OnTimeout);
     }
 
     #region Interval
@@ -119,13 +117,13 @@ public sealed class ButtonRepeatBehavior : Behavior<Button, ButtonRepeatBehavior
     {
         Guard.IsNotNull(AssociatedObject);
 
-        if (_timer.IsEnabled)
+        if (_timer.IsRunning)
         {
             return;
         }
 
         _timer.Interval = GetDelay(AssociatedObject);
-        _timer.Start();
+        _timer.StartAfterInterval();
     }
 
     private void StopTimer()
@@ -133,15 +131,11 @@ public sealed class ButtonRepeatBehavior : Behavior<Button, ButtonRepeatBehavior
         _timer.Stop();
     }
 
-    private void OnTimeout(object? sender, EventArgs e)
+    private void OnTimeout()
     {
         Guard.IsNotNull(AssociatedObject);
 
-        var interval = GetInterval(AssociatedObject);
-        if (_timer.Interval != interval)
-        {
-            _timer.Interval = interval;
-        }
+        _timer.Interval = GetInterval(AssociatedObject);
 
         Guard.IsNotNull(AssociatedObject);
 
@@ -183,5 +177,5 @@ public sealed class ButtonRepeatBehavior : Behavior<Button, ButtonRepeatBehavior
     }
 
     private PropertyChangeNotifier<Button, bool>? _buttonPressedNotifier;
-    private readonly DispatcherTimer _timer;
+    private readonly ITimer _timer;
 }

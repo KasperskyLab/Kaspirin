@@ -17,7 +17,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<None Include="$(RepoRoot)src\figma\plugin_output\UI_KIT.xml" Link="UI_KIT.xml" />
+		<None Include="$(RepoRoot)src\translator\Revisions\UI_KIT.xml" Link="UI_KIT.xml" />
 	</ItemGroup>
 
 	<Import Project="Sdk.targets" Sdk="Microsoft.NET.Sdk" />

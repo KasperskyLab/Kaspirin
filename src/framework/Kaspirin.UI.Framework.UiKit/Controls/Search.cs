@@ -219,6 +219,22 @@ public sealed class Search : Control
 
     #endregion
 
+    #region SelectAllOnFocus
+
+    public bool SelectAllOnFocus
+    {
+        get => (bool)GetValue(SelectAllOnFocusProperty);
+        set => SetValue(SelectAllOnFocusProperty, value);
+    }
+
+    public static readonly DependencyProperty SelectAllOnFocusProperty = DependencyProperty.Register(
+        nameof(SelectAllOnFocus),
+        typeof(bool),
+        typeof(Search),
+        new PropertyMetadata(default(bool)));
+
+    #endregion
+
     #region Shortcuts
 
     public ShortcutCollection Shortcuts
@@ -282,6 +298,7 @@ public sealed class Search : Control
         _textInput.SetBinding(SearchInput.MaxLengthProperty, new Binding() { Source = this, Path = MaxLengthProperty.AsPath() });
         _textInput.SetBinding(SearchInput.GetFocusBehaviorProperty, new Binding() { Source = this, Path = GetFocusBehaviorProperty.AsPath() });
         _textInput.SetBinding(SearchInput.LostFocusBehaviorProperty, new Binding() { Source = this, Path = LostFocusBehaviorProperty.AsPath() });
+        _textInput.SetBinding(SearchInput.SelectAllOnFocusProperty, new Binding() { Source = this, Path = SelectAllOnFocusProperty.AsPath() });
 
         var placeholderBinding = new MultiBinding() { Converter = new PlaceholderWithShortcutConverter() };
         placeholderBinding.Bindings.Add(new Binding() { Source = this, Path = PlaceholderProperty.AsPath() });

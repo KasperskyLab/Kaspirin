@@ -9,9 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kaspirin.UI.Framework.Tests
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kaspirin.UI.Framework.UiKit.Tests", "Kaspirin.UI.Framework.UiKit.Tests\Kaspirin.UI.Framework.UiKit.Tests.csproj", "{6963F48F-BFF0-419A-8809-F1F7E9C54EDA}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kaspirin.UI.Framework.UiKit.Translator.Core", "Kaspirin.UI.Framework.UiKit.Translator.Core\Kaspirin.UI.Framework.UiKit.Translator.Core.csproj", "{967B8501-A199-453E-A5B7-A661F3246FE1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kaspirin.UI.Framework.UiKit.Translator.Core", "..\translator\Kaspirin.UI.Framework.UiKit.Translator.Core\Kaspirin.UI.Framework.UiKit.Translator.Core.csproj", "{967B8501-A199-453E-A5B7-A661F3246FE1}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kaspirin.UI.Framework.UiKit.Translator.Launcher", "Kaspirin.UI.Framework.UiKit.Translator.Launcher\Kaspirin.UI.Framework.UiKit.Translator.Launcher.csproj", "{F972F729-CD58-4192-A0B1-B6DC93AF108F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kaspirin.UI.Framework.UiKit.Translator.Launcher", "..\translator\Kaspirin.UI.Framework.UiKit.Translator.Launcher\Kaspirin.UI.Framework.UiKit.Translator.Launcher.csproj", "{F972F729-CD58-4192-A0B1-B6DC93AF108F}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kaspirin.UI.Framework.UiKit.Styles", "Kaspirin.UI.Framework.UiKit.Styles\Kaspirin.UI.Framework.UiKit.Styles.csproj", "{510579A8-563C-456A-AA7C-078442C74CBE}"
 EndProject

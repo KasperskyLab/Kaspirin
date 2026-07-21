@@ -20,6 +20,25 @@ namespace Kaspirin.UI.Framework.UiKit.Controls.Properties;
 
 public static class TextBlockProps
 {
+    #region HideOnEmpty
+
+    public static bool GetHideOnEmpty(DependencyObject obj)
+        => (bool)obj.GetValue(HideOnEmptyProperty);
+
+    public static void SetHideOnEmpty(DependencyObject obj, bool value)
+        => obj.SetValue(HideOnEmptyProperty, value);
+
+    public static readonly DependencyProperty HideOnEmptyProperty = DependencyProperty.RegisterAttached(
+        "HideOnEmpty",
+        typeof(bool),
+        typeof(TextBlockProps),
+        UIKitPropertyMetadataFactory.CreatePropsMetadata(typeof(TextBlock), nameof(HideOnEmptyProperty), OnHideOnEmptyChanged));
+
+    private static void OnHideOnEmptyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        => d.SetValue(TextBlockHideOnEmptyBehavior.IsEnabledProperty, (bool)e.NewValue);
+
+    #endregion
+
     #region ShowToolTipOnTrim
 
     public static bool GetShowToolTipOnTrim(DependencyObject obj)

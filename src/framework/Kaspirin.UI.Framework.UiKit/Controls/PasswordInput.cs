@@ -305,6 +305,22 @@ public sealed class PasswordInput : Control, ISecureInputClient
 
     #endregion
 
+    #region SelectAllOnFocus
+
+    public bool SelectAllOnFocus
+    {
+        get => (bool)GetValue(SelectAllOnFocusProperty);
+        set => SetValue(SelectAllOnFocusProperty, value);
+    }
+
+    public static readonly DependencyProperty SelectAllOnFocusProperty = DependencyProperty.Register(
+        nameof(SelectAllOnFocus),
+        typeof(bool),
+        typeof(PasswordInput),
+        new PropertyMetadata(default(bool)));
+
+    #endregion
+
     #region Placeholder
 
     public string? Placeholder
@@ -559,6 +575,8 @@ public sealed class PasswordInput : Control, ISecureInputClient
     {
         base.OnGotKeyboardFocus(e);
 
+        InvalidateTextSelection();
+
         RegisterInputClient();
     }
 
@@ -655,6 +673,36 @@ public sealed class PasswordInput : Control, ISecureInputClient
             // The reason is that underlying PasswordBox/TextBox doesn't actually receive keyboard focus. Looks like a bug in WPF.
             // To mitigate this issue, we should clear focus from the input when it's disabled.
             InputFocusManager.ClearInputFocus((PasswordInput)d);
+        }
+    }
+
+    private void InvalidateTextSelection()
+    {
+        if (SelectAllOnFocus && IsKeyboardFocusWithin && Password?.Length > 0)
+        {
+            if (IsPasswordRevealed && _openPasswordTextBox != null)
+            {
+                SetSelection(caretIndex: 0, length: Password.Length);
+
+                // If focus was set from mouse click, we need to set focus again because of
+                // internal MouseUp event handler, that sets selection to the clicked position.
+                if (InputManager.Current.PrimaryMouseDevice.LeftButton == MouseButtonState.Pressed)
+                {
+                    _openPasswordTextBox.SelectionChanged -= OnSelectionChanged;
+                    _openPasswordTextBox.SelectionChanged += OnSelectionChanged;
+                }
+            }
+            else if (!IsPasswordRevealed && _inputPasswordElement != null)
+            {
+                Executers.InUiAsync(() => SetSelection(caretIndex: 0, length: Password.Length));
+            }
+        }
+
+        void OnSelectionChanged(object sender, RoutedEventArgs e)
+        {
+            ((TextBox)sender).SelectionChanged -= OnSelectionChanged;
+
+            SetSelection(caretIndex: 0, length: Password.Length);
         }
     }
 

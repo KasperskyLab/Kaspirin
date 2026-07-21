@@ -182,7 +182,7 @@ public sealed class TimerTests
             interval: TimeSpan.FromMilliseconds(500),
             name: "TestStartWithDelay");
 
-        timer.Start(TimeSpan.FromMilliseconds(500));
+        timer.StartAfterDelay(TimeSpan.FromMilliseconds(500));
         Assert.IsFalse(tickEvent.WaitOne(100), "Initial tick triggered.");
 
         Assert.IsTrue(tickEvent.WaitOne(600), "Tick not triggered after delay.");
@@ -198,7 +198,7 @@ public sealed class TimerTests
             interval: null,
             name: "TestSingleShot");
 
-        timer.Start(TimeSpan.FromMilliseconds(500));
+        timer.StartAfterDelay(TimeSpan.FromMilliseconds(500));
         Assert.IsFalse(tickEvent.WaitOne(100), "Initial tick triggered.");
 
         Assert.IsTrue(tickEvent.WaitOne(1000), "First tick not triggered.");

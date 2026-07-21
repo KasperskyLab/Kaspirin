@@ -30,7 +30,7 @@ public static class TimerFactory
 
     /// <inheritdoc cref="ITimerFactory.CreateOnTp" />
     public static ITimer CreateOnTp(
-        Action onTimer,
+        Action? onTimer = null,
         TimeSpan? interval = null,
         TimerOptions options = TimerOptions.None,
         string? name = null)
@@ -42,7 +42,7 @@ public static class TimerFactory
 
     /// <inheritdoc cref="ITimerFactory.CreateOnUi" />
     public static ITimer CreateOnUi(
-        Action onTimer,
+        Action? onTimer = null,
         TimeSpan? interval = null,
         DispatcherPriority priority = DispatcherPriority.Background,
         TimerOptions options = TimerOptions.None,
@@ -55,12 +55,12 @@ public static class TimerFactory
 
     private sealed class TimerFactoryImpl : ITimerFactory
     {
-        public ITimer CreateOnTp(Action onTimer, TimeSpan? interval, string name, TimerOptions options)
+        public ITimer CreateOnTp(Action? onTimer, TimeSpan? interval, string name, TimerOptions options)
         {
             return new ThreadPoolUnifiedTimer(onTimer, interval, name, options);
         }
 
-        public ITimer CreateOnUi(Action onTimer, TimeSpan? interval, string name, TimerOptions options, DispatcherPriority priority)
+        public ITimer CreateOnUi(Action? onTimer, TimeSpan? interval, string name, TimerOptions options, DispatcherPriority priority)
         {
             var dispatcher = Guard.EnsureIsNotNull(WpfThread.Current?.CurrentDispatcher);
 

@@ -27,13 +27,7 @@
     <SolidColorBrush x:Key="ForegroundNormal" Color="{Res Text-Icons-Elements_Red, Scope=Palette}" />
     <SolidColorBrush x:Key="ForegroundPressed" Color="{Res Elements_SeparatorRed-Invert, Scope=Palette}" />
     <TextDecorationCollection x:Key="TextDecorationsDisabled" />
-    <TextDecorationCollection x:Key="TextDecorationsHover">
-        <TextDecoration Location="UNDERLINE"
-                        PenOffset="0" />
-    </TextDecorationCollection>
+    <TextDecorationCollection x:Key="TextDecorationsHover" />
     <TextDecorationCollection x:Key="TextDecorationsNormal" />
-    <TextDecorationCollection x:Key="TextDecorationsPressed">
-        <TextDecoration Location="UNDERLINE"
-                        PenOffset="0" />
-    </TextDecorationCollection>
+    <TextDecorationCollection x:Key="TextDecorationsPressed" />
 </ResourceDictionary>

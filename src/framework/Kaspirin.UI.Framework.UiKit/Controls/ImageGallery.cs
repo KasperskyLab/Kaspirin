@@ -209,7 +209,7 @@ public sealed class ImageGallery : Control
 
         _imagePanel = (ImagePanel)GetTemplateChild(PART_ImagePanel);
         _imagePanel.CreateImageCallback = CreateImage;
-        _imagePanel.SetBinding(ImagePanel.SourceProperty, new Binding() { Source = this, Path = SelectedImageProperty.AsPath() });
+        _imagePanel.SetBinding(ImagePanel.ImageSourceProperty, new Binding() { Source = this, Path = SelectedImageProperty.AsPath() });
 
         _counter = (TextBlock)GetTemplateChild(PART_Counter);
 

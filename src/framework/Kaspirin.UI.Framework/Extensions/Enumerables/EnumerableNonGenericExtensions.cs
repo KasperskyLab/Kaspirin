@@ -29,7 +29,7 @@ public static class EnumerableNonGenericExtensions
     ///     The enumeration being checked.
     /// </param>
     /// <returns>
-    ///     Returns <see langword="true" /> if the enumeration is empty, otherwise <see langword="false" />.
+    ///     Returns <see langword="true" /> if the enumeration is not empty, otherwise <see langword="false" />.
     /// </returns>
     public static bool AnyNonGeneric(this IEnumerable source)
         => AnyNonGeneric(source, _ => true);

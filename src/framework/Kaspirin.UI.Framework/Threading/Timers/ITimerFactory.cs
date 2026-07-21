@@ -43,7 +43,7 @@ public interface ITimerFactory
     ///     The created timer is in the stopped state.
     /// </returns>
     ITimer CreateOnTp(
-        Action onTimer,
+        Action? onTimer,
         TimeSpan? interval,
         string name,
         TimerOptions options);
@@ -71,7 +71,7 @@ public interface ITimerFactory
     ///     The created timer is in the stopped state.
     /// </returns>
     ITimer CreateOnUi(
-        Action onTimer,
+        Action? onTimer,
         TimeSpan? interval,
         string name,
         TimerOptions options,

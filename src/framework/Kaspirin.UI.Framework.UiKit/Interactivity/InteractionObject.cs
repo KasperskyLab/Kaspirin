@@ -49,12 +49,8 @@ public class InteractionObject : BaseViewModel
 
     public bool IsDecided
     {
-        get { return _isDecided; }
-        private set
-        {
-            _isDecided = value;
-            RaisePropertyChanged(nameof(IsDecided));
-        }
+        get => _isDecided;
+        private set => SetProperty(ref _isDecided, value);
     }
 
     public void Handle()

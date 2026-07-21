@@ -83,6 +83,30 @@
 
     <!--  endregion  -->
 
+    <!--  region FlowGrid  -->
+
+    <Style x:Key="FlowGridDefault"
+           BasedOn="{StaticResource FlowGridUniversal}"
+           TargetType="{x:Type controls:FlowGrid}" />
+
+    <Style x:Key="{x:Type controls:FlowGrid}"
+           BasedOn="{StaticResource FlowGridDefault}"
+           TargetType="{x:Type controls:FlowGrid}" />
+
+    <!--  endregion  -->
+
+    <!--  region FlowGridItem  -->
+
+    <Style x:Key="FlowGridItemDefault"
+           BasedOn="{StaticResource FlowGridItemUniversal}"
+           TargetType="{x:Type controls:FlowGridItem}" />
+
+    <Style x:Key="{x:Type controls:FlowGridItem}"
+           BasedOn="{StaticResource FlowGridItemDefault}"
+           TargetType="{x:Type controls:FlowGridItem}" />
+
+    <!--  endregion  -->
+
     <!--  region Illustration  -->
 
     <Style x:Key="IllustrationDefault"
@@ -104,6 +128,18 @@
     <Style x:Key="{x:Type Image}"
            BasedOn="{StaticResource ImageDefault}"
            TargetType="{x:Type Image}" />
+
+    <!--  endregion  -->
+
+    <!--  region ImagePanel  -->
+
+    <Style x:Key="ImagePanelDefault"
+           BasedOn="{StaticResource ImagePanelUniversal}"
+           TargetType="{x:Type controls:ImagePanel}" />
+
+    <Style x:Key="{x:Type controls:ImagePanel}"
+           BasedOn="{StaticResource ImagePanelDefault}"
+           TargetType="{x:Type controls:ImagePanel}" />
 
     <!--  endregion  -->
 
@@ -416,18 +452,6 @@
     <Style x:Key="{x:Type Window}"
            BasedOn="{StaticResource WindowDefault}"
            TargetType="{x:Type Window}" />
-
-    <!--  endregion  -->
-
-    <!--  region WrapPanelAdaptable  -->
-
-    <Style x:Key="WrapPanelAdaptableDefault"
-           BasedOn="{StaticResource WrapPanelAdaptableUniversal}"
-           TargetType="{x:Type controls:WrapPanelAdaptable}" />
-
-    <Style x:Key="{x:Type controls:WrapPanelAdaptable}"
-           BasedOn="{StaticResource WrapPanelAdaptableDefault}"
-           TargetType="{x:Type controls:WrapPanelAdaptable}" />
 
     <!--  endregion  -->
 

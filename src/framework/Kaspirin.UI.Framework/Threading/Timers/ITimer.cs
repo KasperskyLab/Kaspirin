@@ -45,6 +45,11 @@ public interface ITimer : IDisposable
     TimeSpan? Interval { get; set; }
 
     /// <summary>
+    ///     Retrieves or sets a user-defined data object for the timer.
+    /// </summary>
+    object? Tag { get; set; }
+
+    /// <summary>
     ///     Additional timer options.
     /// </summary>
     TimerOptions Options { get; }
@@ -55,6 +60,11 @@ public interface ITimer : IDisposable
     TimerState State { get; }
 
     /// <summary>
+    ///     Gets a value indicating whether the timer is running.
+    /// </summary>
+    bool IsRunning { get; }
+
+    /// <summary>
     ///     The name of the timer for identification.
     /// </summary>
     string Name { get; }
@@ -62,16 +72,32 @@ public interface ITimer : IDisposable
     /// <summary>
     ///     Starts the timer.
     /// </summary>
-    /// <param name="delay">
-    ///     The delay before the first tick.
-    /// </param>
     /// <remarks>
-    ///     If the delay <paramref name="delay" /> is not specified, the first tick will occur immediately after the method is called.
+    ///     The first timer tick will occur immediately after the method is called.
     /// </remarks>
     /// <returns>
     ///     Returns <see langword="true" /> if the timer is successfully started, otherwise - <see langword="false" />.
     /// </returns>
-    bool Start(TimeSpan? delay = null);
+    bool Start();
+
+    /// <summary>
+    ///     Starts the timer using <paramref name="delay" /> as the delay before the first tick.
+    /// </summary>
+    /// <param name="delay">
+    ///     The delay before the first tick.
+    /// </param>
+    /// <returns>
+    ///     Returns <see langword="true" /> if the timer is successfully started, otherwise - <see langword="false" />.
+    /// </returns>
+    bool StartAfterDelay(TimeSpan delay);
+
+    /// <summary>
+    ///     Starts the timer using <see cref="Interval" /> as the delay before the first tick.
+    /// </summary>
+    /// <returns>
+    ///     Returns <see langword="true" /> if the timer is successfully started, otherwise - <see langword="false" />.
+    /// </returns>
+    bool StartAfterInterval();
 
     /// <summary>
     ///     Stops the timer, preventing further ticks.

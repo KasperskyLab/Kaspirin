@@ -38,8 +38,8 @@
         <Setter Property="visuals:ToggleButtonProps.IconLocation" Value="Right" />
         <Setter Property="visuals:ToggleButtonProps.Icon">
             <Setter.Value>
-                <Binding Converter="{visuals:BooleanToIcon16Converter True=ArrowUp,
-                                                                      False=ArrowDown}"
+                <Binding Converter="{visuals:BooleanToIcon16Converter True=ArrowUpSmall,
+                                                                      False=ArrowDownSmall}"
                          Path="IsChecked"
                          RelativeSource="{RelativeSource Self}" />
             </Setter.Value>
@@ -49,15 +49,15 @@
     <Style x:Key="ContextMenuButtonGhostArrow"
            BasedOn="{StaticResource ContextMenuButtonGhost}"
            TargetType="{x:Type visuals:ContextMenuButton}">
-        <Setter Property="IconMenuClosed" Value="ArrowDown" />
-        <Setter Property="IconMenuOpened" Value="ArrowUp" />
+        <Setter Property="IconMenuClosed" Value="ArrowDownSmall" />
+        <Setter Property="IconMenuOpened" Value="ArrowUpSmall" />
     </Style>
 
     <Style x:Key="ContextMenuSelectGhostArrow"
            BasedOn="{StaticResource ContextMenuSelectGhost}"
            TargetType="{x:Type visuals:ContextMenuSelect}">
-        <Setter Property="IconMenuClosed" Value="ArrowDown" />
-        <Setter Property="IconMenuOpened" Value="ArrowUp" />
+        <Setter Property="IconMenuClosed" Value="ArrowDownSmall" />
+        <Setter Property="IconMenuOpened" Value="ArrowUpSmall" />
     </Style>
 
 </ResourceDictionary>

@@ -19,7 +19,7 @@ namespace Kaspirin.UI.Framework.Threading.Timers.Internals;
 
 internal sealed class DispatcherUnifiedTimer : BaseTimer
 {
-    public DispatcherUnifiedTimer(Action tickAction, TimeSpan? interval, string name, TimerOptions options, Dispatcher dispatcher, DispatcherPriority priority)
+    public DispatcherUnifiedTimer(Action? tickAction, TimeSpan? interval, string name, TimerOptions options, Dispatcher dispatcher, DispatcherPriority priority)
         : base(tickAction, interval, name, options)
     {
         Guard.ArgumentIsNotNull(dispatcher);
@@ -85,11 +85,9 @@ internal sealed class DispatcherUnifiedTimer : BaseTimer
             _delayTimer.Stop();
         }
 
-        if (Interval == null)
-        {
-            OnTimerTick();
-        }
-        else
+        OnTimerTick();
+
+        if (Interval != null)
         {
             OnTimerStart();
         }

@@ -1,12 +1,12 @@
 <!--
     Copyright © 2024 AO Kaspersky Lab.
-    
+
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
     You may obtain a copy of the License at
-    
-    http://www.apache.org/licenses/LICENSE-2.0
-    
+
+        http://www.apache.org/licenses/LICENSE-2.0
+
     Unless required by applicable law or agreed to in writing, software
     distributed under the License is distributed on an "AS IS" BASIS,
     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -3196,8 +3196,8 @@
             <Style x:Key="FadeLineStyle"
                    BasedOn="{StaticResource FadeLineUniversal}"
                    TargetType="{x:Type visuals:FadeLine}">
-                <uikit:UIKitSetter Id="FadeLine_IconButton_LeftIcon" Value="ArrowLeft" />
-                <uikit:UIKitSetter Id="FadeLine_IconButton_RightIcon" Value="ArrowRight" />
+                <uikit:UIKitSetter Id="FadeLine_IconButton_LeftIcon" Value="ArrowLeftSmall" />
+                <uikit:UIKitSetter Id="FadeLine_IconButton_RightIcon" Value="ArrowRightSmall" />
                 <uikit:UIKitSetter Id="FadeLine_IconButtonStyle" Value="{StaticResource IconButtonStyle}" />
             </Style>
         </Style.Resources>
@@ -3223,8 +3223,8 @@
             <Style x:Key="FadeLineStyle"
                    BasedOn="{StaticResource FadeLineUniversal}"
                    TargetType="{x:Type visuals:FadeLine}">
-                <uikit:UIKitSetter Id="FadeLine_IconButton_LeftIcon" Value="ArrowLeft" />
-                <uikit:UIKitSetter Id="FadeLine_IconButton_RightIcon" Value="ArrowRight" />
+                <uikit:UIKitSetter Id="FadeLine_IconButton_LeftIcon" Value="ArrowLeftSmall" />
+                <uikit:UIKitSetter Id="FadeLine_IconButton_RightIcon" Value="ArrowRightSmall" />
                 <uikit:UIKitSetter Id="FadeLine_IconButtonStyle" Value="{StaticResource IconButtonStyle}" />
             </Style>
         </Style.Resources>
@@ -3250,8 +3250,8 @@
             <Style x:Key="FadeLineStyle"
                    BasedOn="{StaticResource FadeLineUniversal}"
                    TargetType="{x:Type visuals:FadeLine}">
-                <uikit:UIKitSetter Id="FadeLine_IconButton_LeftIcon" Value="ArrowLeft" />
-                <uikit:UIKitSetter Id="FadeLine_IconButton_RightIcon" Value="ArrowRight" />
+                <uikit:UIKitSetter Id="FadeLine_IconButton_LeftIcon" Value="ArrowLeftSmall" />
+                <uikit:UIKitSetter Id="FadeLine_IconButton_RightIcon" Value="ArrowRightSmall" />
                 <uikit:UIKitSetter Id="FadeLine_IconButtonStyle" Value="{StaticResource IconButtonStyle}" />
             </Style>
         </Style.Resources>
@@ -3277,8 +3277,8 @@
             <Style x:Key="FadeLineStyle"
                    BasedOn="{StaticResource FadeLineUniversal}"
                    TargetType="{x:Type visuals:FadeLine}">
-                <uikit:UIKitSetter Id="FadeLine_IconButton_LeftIcon" Value="ArrowLeft" />
-                <uikit:UIKitSetter Id="FadeLine_IconButton_RightIcon" Value="ArrowRight" />
+                <uikit:UIKitSetter Id="FadeLine_IconButton_LeftIcon" Value="ArrowLeftSmall" />
+                <uikit:UIKitSetter Id="FadeLine_IconButton_RightIcon" Value="ArrowRightSmall" />
                 <uikit:UIKitSetter Id="FadeLine_IconButtonStyle" Value="{StaticResource IconButtonStyle}" />
             </Style>
         </Style.Resources>
@@ -3568,8 +3568,8 @@
             <Style x:Key="FadeLineStyle"
                    BasedOn="{StaticResource FadeLineUniversal}"
                    TargetType="{x:Type visuals:FadeLine}">
-                <uikit:UIKitSetter Id="FadeLine_IconButton_LeftIcon" Value="ArrowLeft" />
-                <uikit:UIKitSetter Id="FadeLine_IconButton_RightIcon" Value="ArrowRight" />
+                <uikit:UIKitSetter Id="FadeLine_IconButton_LeftIcon" Value="ArrowLeftSmall" />
+                <uikit:UIKitSetter Id="FadeLine_IconButton_RightIcon" Value="ArrowRightSmall" />
                 <uikit:UIKitSetter Id="FadeLine_IconButtonStyle" Value="{StaticResource IconButtonStyle}" />
             </Style>
         </Style.Resources>
@@ -3590,8 +3590,8 @@
             <Style x:Key="FadeLineStyle"
                    BasedOn="{StaticResource FadeLineUniversal}"
                    TargetType="{x:Type visuals:FadeLine}">
-                <uikit:UIKitSetter Id="FadeLine_IconButton_LeftIcon" Value="ArrowLeft" />
-                <uikit:UIKitSetter Id="FadeLine_IconButton_RightIcon" Value="ArrowRight" />
+                <uikit:UIKitSetter Id="FadeLine_IconButton_LeftIcon" Value="ArrowLeftSmall" />
+                <uikit:UIKitSetter Id="FadeLine_IconButton_RightIcon" Value="ArrowRightSmall" />
                 <uikit:UIKitSetter Id="FadeLine_IconButtonStyle" Value="{StaticResource IconButtonStyle}" />
             </Style>
         </Style.Resources>
@@ -3836,17 +3836,17 @@
             <Style x:Key="CloseButtonStyle"
                    BasedOn="{StaticResource UiKitImageGalleryButton}"
                    TargetType="{x:Type visuals:ImageGalleryButton}">
-                <Setter Property="Icon" Value="Clear" />
+                <Setter Property="Icon" Value="Cross" />
             </Style>
             <Style x:Key="LeftButtonStyle"
                    BasedOn="{StaticResource UiKitImageGalleryButton}"
                    TargetType="{x:Type visuals:ImageGalleryButton}">
-                <Setter Property="Icon" Value="ArrowLeft" />
+                <Setter Property="Icon" Value="ArrowLeftSmall" />
             </Style>
             <Style x:Key="RightButtonStyle"
                    BasedOn="{StaticResource UiKitImageGalleryButton}"
                    TargetType="{x:Type visuals:ImageGalleryButton}">
-                <Setter Property="Icon" Value="ArrowRight" />
+                <Setter Property="Icon" Value="ArrowRightSmall" />
             </Style>
         </Style.Resources>
         <uikit:UIKitSetter Id="ImageGallery_CarouselContainer_Background" Value="{Res CarouselContainerBackground, Scope=UiKitImageGallery}" />
@@ -3910,12 +3910,12 @@
             <Style x:Key="LeftButtonStyle"
                    BasedOn="{StaticResource UiKitImageGalleryButton}"
                    TargetType="{x:Type visuals:ImageGalleryButton}">
-                <Setter Property="Icon" Value="ArrowLeft" />
+                <Setter Property="Icon" Value="ArrowLeftSmall" />
             </Style>
             <Style x:Key="RightButtonStyle"
                    BasedOn="{StaticResource UiKitImageGalleryButton}"
                    TargetType="{x:Type visuals:ImageGalleryButton}">
-                <Setter Property="Icon" Value="ArrowRight" />
+                <Setter Property="Icon" Value="ArrowRightSmall" />
             </Style>
         </Style.Resources>
         <uikit:UIKitSetter Id="ImageGalleryList_ImageButtonStyle" Value="{StaticResource ImageButtonStyle}" />
@@ -3997,9 +3997,9 @@
                 <Setter Property="TextElement.Foreground" Value="{Res ItemButtonTextForeground, Scope=UiKitDateTimePopupPresenter}" />
             </Style>
         </Style.Resources>
-        <uikit:UIKitSetter Id="DateTimePopupPresenter_FooterButton_Cancel_IconName" Value="Clear" />
+        <uikit:UIKitSetter Id="DateTimePopupPresenter_FooterButton_Cancel_IconName" Value="Cross" />
         <uikit:UIKitSetter Id="DateTimePopupPresenter_FooterButton_Cancel_Margin" Value="2,4,4,4" />
-        <uikit:UIKitSetter Id="DateTimePopupPresenter_FooterButton_Confirm_IconName" Value="Check" />
+        <uikit:UIKitSetter Id="DateTimePopupPresenter_FooterButton_Confirm_IconName" Value="Ok" />
         <uikit:UIKitSetter Id="DateTimePopupPresenter_FooterButton_Confirm_Margin" Value="4,4,2,4" />
         <uikit:UIKitSetter Id="DateTimePopupPresenter_FooterButtonStyle" Value="{StaticResource UiKitDateTimePopupFooterButton}" />
         <uikit:UIKitSetter Id="DateTimePopupPresenter_SelectionMarker_Background" Value="{Res MarkerBackground, Scope=UiKitDateTimePopupPresenter}" />
@@ -4033,7 +4033,7 @@
             </Style>
         </Style.Resources>
         <uikit:UIKitSetter Id="DateTimeInput_ActionDate_IconName" Value="Calendar" />
-        <uikit:UIKitSetter Id="DateTimeInput_ActionTime_IconName" Value="RingClock" />
+        <uikit:UIKitSetter Id="DateTimeInput_ActionTime_IconName" Value="Clock" />
         <uikit:UIKitSetter Id="DateTimeInput_PopupDecoratorStyle" Value="{StaticResource PopupDecoratorStyle}" />
         <uikit:UIKitSetter Id="DateTimeInput_PopupPresenterStyle" Value="{StaticResource UiKitDateTimePopupPresenter}" />
     </Style>
@@ -4108,10 +4108,10 @@
         <uikit:UIKitSetter Id="SelectPresenter_TextInputStyle" Value="{StaticResource TextInputStyle}" />
         <Style.Triggers>
             <Trigger Property="IsActive" Value="True">
-                <uikit:UIKitSetter Id="SelectPresenter_ArrowIcon_Name" Value="ArrowUp" />
+                <uikit:UIKitSetter Id="SelectPresenter_ArrowIcon_Name" Value="ArrowUpSmall" />
             </Trigger>
             <Trigger Property="IsActive" Value="False">
-                <uikit:UIKitSetter Id="SelectPresenter_ArrowIcon_Name" Value="ArrowDown" />
+                <uikit:UIKitSetter Id="SelectPresenter_ArrowIcon_Name" Value="ArrowDownSmall" />
             </Trigger>
             <Trigger Property="visuals:StateService.TextInputState" Value="Disabled">
                 <uikit:UIKitSetter Id="SelectPresenter_Background" Value="{Res BackgroundDisabled, Scope=UiKitSelectPresenter}" />
@@ -4238,8 +4238,8 @@
         <uikit:UIKitSetter Id="InteractivityDialog_Background" Value="{Res Background, Scope=UiKitInteractivityDialog}" />
         <uikit:UIKitSetter Id="InteractivityDialog_BorderBrush" Value="{Res BorderColor, Scope=UiKitInteractivityDialog}" />
         <uikit:UIKitSetter Id="InteractivityDialog_BorderThickness" Value="0" />
-        <uikit:UIKitSetter Id="InteractivityDialog_Button_CloseIcon" Value="Clear" />
-        <uikit:UIKitSetter Id="InteractivityDialog_Button_HelpIcon" Value="StatusQuestion" />
+        <uikit:UIKitSetter Id="InteractivityDialog_Button_CloseIcon" Value="CrossS" />
+        <uikit:UIKitSetter Id="InteractivityDialog_Button_HelpIcon" Value="StatusQuestionOutline" />
         <uikit:UIKitSetter Id="InteractivityDialog_Button_Margin" Value="12,0,0,0" />
         <uikit:UIKitSetter Id="InteractivityDialog_Button_Style" Value="{StaticResource ButtonStyle}" />
         <uikit:UIKitSetter Id="InteractivityDialog_ButtonsContainer_Margin" Value="12" />
@@ -4280,7 +4280,7 @@
             <Trigger Property="Type" Value="Positive">
                 <uikit:UIKitSetter Id="InteractivityDialog_Status_Background" Value="{Res StatusBackgroundPositive, Scope=UiKitInteractivityDialog}" />
                 <uikit:UIKitSetter Id="InteractivityDialog_Status_Foreground" Value="{Res StatusForegroundPositive, Scope=UiKitInteractivityDialog}" />
-                <uikit:UIKitSetter Id="InteractivityDialog_Status_IconName" Value="StatusPositiveSolid" />
+                <uikit:UIKitSetter Id="InteractivityDialog_Status_IconName" Value="StatusOKSolid" />
             </Trigger>
             <Trigger Property="Type" Value="Warning">
                 <uikit:UIKitSetter Id="InteractivityDialog_Status_Background" Value="{Res StatusBackgroundWarning, Scope=UiKitInteractivityDialog}" />
@@ -4313,7 +4313,7 @@
             <Style x:Key="CloseButtonStyle"
                    BasedOn="{StaticResource UiKitIconButton16}"
                    TargetType="{x:Type visuals:IconButton}">
-                <Setter Property="Icon" Value="Clear" />
+                <Setter Property="Icon" Value="CrossS" />
                 <Setter Property="IconBrush" Value="{Res CloseButtonForeground, Scope=UiKitInteractivityNotification}" />
             </Style>
         </Style.Resources>
@@ -4347,7 +4347,7 @@
             </Trigger>
             <Trigger Property="Type" Value="Positive">
                 <uikit:UIKitSetter Id="InteractivityNotification_Status_Foreground" Value="{Res StatusForegroundPositive, Scope=UiKitInteractivityNotification}" />
-                <uikit:UIKitSetter Id="InteractivityNotification_Status_IconName" Value="StatusPositiveSolid" />
+                <uikit:UIKitSetter Id="InteractivityNotification_Status_IconName" Value="StatusOKSolid" />
             </Trigger>
             <Trigger Property="Type" Value="Warning">
                 <uikit:UIKitSetter Id="InteractivityNotification_Status_Foreground" Value="{Res StatusForegroundWarning, Scope=UiKitInteractivityNotification}" />
@@ -4785,7 +4785,7 @@
                 <visuals:FocusVisual Brush="{Res FocusVisualBrush, Scope=UiKitHyperlinkDanger}"
                                      CornerRadius="8"
                                      Margin="-8,-4"
-                                     Thickness="2"
+                                     Thickness="1"
                                      Type="RECTANGLE" />
             </uikit:UIKitSetter.Value>
         </uikit:UIKitSetter>
@@ -4815,7 +4815,7 @@
                 <visuals:FocusVisual Brush="{Res FocusVisualBrush, Scope=UiKitHyperlinkDefault}"
                                      CornerRadius="8"
                                      Margin="-8,-4"
-                                     Thickness="2"
+                                     Thickness="1"
                                      Type="RECTANGLE" />
             </uikit:UIKitSetter.Value>
         </uikit:UIKitSetter>
@@ -5868,7 +5868,7 @@
         <uikit:UIKitSetter Id="MenuItem_Badge_Margin" Value="8,0,0,0" />
         <uikit:UIKitSetter Id="MenuItem_CheckBoxMarkIcon_Brush" Value="{Res CheckBoxMarkIconBrushNormal, Scope=UiKitMenuItem}" />
         <uikit:UIKitSetter Id="MenuItem_CheckBoxMarkIcon_Margin" Value="8,0,0,0" />
-        <uikit:UIKitSetter Id="MenuItem_CheckBoxMarkIcon_Name" Value="Check" />
+        <uikit:UIKitSetter Id="MenuItem_CheckBoxMarkIcon_Name" Value="OkM" />
         <uikit:UIKitSetter Id="MenuItem_Description_Margin" Value="0,2,0,0" />
         <uikit:UIKitSetter Id="MenuItem_DescriptionStyle" Value="{StaticResource DescriptionStyle}" />
         <uikit:UIKitSetter Id="MenuItem_DescriptionStyleDisabled" Value="{StaticResource DescriptionStyleDisabled}" />
@@ -5881,7 +5881,7 @@
         <uikit:UIKitSetter Id="MenuItem_MinHeight" Value="36" />
         <uikit:UIKitSetter Id="MenuItem_Padding" Value="12,8" />
         <uikit:UIKitSetter Id="MenuItem_PopupDecoratorStyle" Value="{StaticResource PopupDecoratorStyle}" />
-        <uikit:UIKitSetter Id="MenuItem_SubmenuIcon_Name" Value="ArrowRight" />
+        <uikit:UIKitSetter Id="MenuItem_SubmenuIcon_Name" Value="ArrowRightSmall" />
         <uikit:UIKitSetter Id="MenuItem_SubmenuIcon_Brush" Value="{Res SubmenuIconBrushNormal, Scope=UiKitMenuItem}" />
         <uikit:UIKitSetter Id="MenuItem_SubmenuIcon_Margin" Value="8,0,0,0" />
         <uikit:UIKitSetter Id="MenuItem_TextStyle" Value="{StaticResource TextStyle}" />
@@ -6086,27 +6086,27 @@
         <Style.Triggers>
             <Trigger Property="Type" Value="Danger">
                 <uikit:UIKitSetter Id="NotificationHint_Icon_Color" Value="{Res IconBrushDanger, Scope=UiKitNotificationHintColor}" />
-                <uikit:UIKitSetter Id="NotificationHint_Icon_Name" Value="StatusDanger" />
+                <uikit:UIKitSetter Id="NotificationHint_Icon_Name" Value="StatusDangerSolid" />
                 <uikit:UIKitSetter Id="NotificationHint_TextStyle" Value="{StaticResource TextStyleDanger}" />
             </Trigger>
             <Trigger Property="Type" Value="Info">
                 <uikit:UIKitSetter Id="NotificationHint_Icon_Color" Value="{Res IconBrushInfo, Scope=UiKitNotificationHintColor}" />
-                <uikit:UIKitSetter Id="NotificationHint_Icon_Name" Value="StatusInfo" />
+                <uikit:UIKitSetter Id="NotificationHint_Icon_Name" Value="StatusInfoSolid" />
                 <uikit:UIKitSetter Id="NotificationHint_TextStyle" Value="{StaticResource TextStyleInfo}" />
             </Trigger>
             <Trigger Property="Type" Value="Neutral">
                 <uikit:UIKitSetter Id="NotificationHint_Icon_Color" Value="{Res IconBrushNeutral, Scope=UiKitNotificationHintColor}" />
-                <uikit:UIKitSetter Id="NotificationHint_Icon_Name" Value="StatusInfo" />
+                <uikit:UIKitSetter Id="NotificationHint_Icon_Name" Value="StatusInfoSolid" />
                 <uikit:UIKitSetter Id="NotificationHint_TextStyle" Value="{StaticResource TextStyleNeutral}" />
             </Trigger>
             <Trigger Property="Type" Value="Positive">
                 <uikit:UIKitSetter Id="NotificationHint_Icon_Color" Value="{Res IconBrushPositive, Scope=UiKitNotificationHintColor}" />
-                <uikit:UIKitSetter Id="NotificationHint_Icon_Name" Value="StatusPositive" />
+                <uikit:UIKitSetter Id="NotificationHint_Icon_Name" Value="StatusOKSolid" />
                 <uikit:UIKitSetter Id="NotificationHint_TextStyle" Value="{StaticResource TextStylePositive}" />
             </Trigger>
             <Trigger Property="Type" Value="Warning">
                 <uikit:UIKitSetter Id="NotificationHint_Icon_Color" Value="{Res IconBrushWarning, Scope=UiKitNotificationHintColor}" />
-                <uikit:UIKitSetter Id="NotificationHint_Icon_Name" Value="StatusWarning" />
+                <uikit:UIKitSetter Id="NotificationHint_Icon_Name" Value="StatusWarningSolid" />
                 <uikit:UIKitSetter Id="NotificationHint_TextStyle" Value="{StaticResource TextStyleWarning}" />
             </Trigger>
         </Style.Triggers>
@@ -6146,27 +6146,27 @@
         <Style.Triggers>
             <Trigger Property="Type" Value="Danger">
                 <uikit:UIKitSetter Id="NotificationHint_Icon_Color" Value="{Res IconBrushDanger, Scope=UiKitNotificationHintDefault}" />
-                <uikit:UIKitSetter Id="NotificationHint_Icon_Name" Value="StatusDanger" />
+                <uikit:UIKitSetter Id="NotificationHint_Icon_Name" Value="StatusDangerSolid" />
                 <uikit:UIKitSetter Id="NotificationHint_TextStyle" Value="{StaticResource TextStyleDanger}" />
             </Trigger>
             <Trigger Property="Type" Value="Info">
                 <uikit:UIKitSetter Id="NotificationHint_Icon_Color" Value="{Res IconBrushInfo, Scope=UiKitNotificationHintDefault}" />
-                <uikit:UIKitSetter Id="NotificationHint_Icon_Name" Value="StatusInfo" />
+                <uikit:UIKitSetter Id="NotificationHint_Icon_Name" Value="StatusInfoSolid" />
                 <uikit:UIKitSetter Id="NotificationHint_TextStyle" Value="{StaticResource TextStyleInfo}" />
             </Trigger>
             <Trigger Property="Type" Value="Neutral">
                 <uikit:UIKitSetter Id="NotificationHint_Icon_Color" Value="{Res IconBrushNeutral, Scope=UiKitNotificationHintDefault}" />
-                <uikit:UIKitSetter Id="NotificationHint_Icon_Name" Value="StatusInfo" />
+                <uikit:UIKitSetter Id="NotificationHint_Icon_Name" Value="StatusInfoSolid" />
                 <uikit:UIKitSetter Id="NotificationHint_TextStyle" Value="{StaticResource TextStyleNeutral}" />
             </Trigger>
             <Trigger Property="Type" Value="Positive">
                 <uikit:UIKitSetter Id="NotificationHint_Icon_Color" Value="{Res IconBrushPositive, Scope=UiKitNotificationHintDefault}" />
-                <uikit:UIKitSetter Id="NotificationHint_Icon_Name" Value="StatusPositive" />
+                <uikit:UIKitSetter Id="NotificationHint_Icon_Name" Value="StatusOKSolid" />
                 <uikit:UIKitSetter Id="NotificationHint_TextStyle" Value="{StaticResource TextStylePositive}" />
             </Trigger>
             <Trigger Property="Type" Value="Warning">
                 <uikit:UIKitSetter Id="NotificationHint_Icon_Color" Value="{Res IconBrushWarning, Scope=UiKitNotificationHintDefault}" />
-                <uikit:UIKitSetter Id="NotificationHint_Icon_Name" Value="StatusWarning" />
+                <uikit:UIKitSetter Id="NotificationHint_Icon_Name" Value="StatusWarningSolid" />
                 <uikit:UIKitSetter Id="NotificationHint_TextStyle" Value="{StaticResource TextStyleWarning}" />
             </Trigger>
         </Style.Triggers>
@@ -6249,7 +6249,7 @@
            TargetType="{x:Type visuals:NotificationSpinner}">
         <Style.Resources>
             <Style x:Key="HeaderStyle"
-                   BasedOn="{StaticResource UiKitTextStyleBaseText}"
+                   BasedOn="{StaticResource UiKitTextStyleHeader5}"
                    TargetType="{x:Type TextBlock}">
                 <Setter Property="TextBlock.TextAlignment" Value="CENTER" />
             </Style>
@@ -6275,8 +6275,8 @@
     <Style x:Key="UiKitNumberInput"
            BasedOn="{StaticResource NumberInputUniversal}"
            TargetType="{x:Type visuals:NumberInput}">
-        <uikit:UIKitSetter Id="NumberInput_ActionDecrease_IconName" Value="ArrowDown" />
-        <uikit:UIKitSetter Id="NumberInput_ActionIncrease_IconName" Value="ArrowUp" />
+        <uikit:UIKitSetter Id="NumberInput_ActionDecrease_IconName" Value="ArrowDownSmall" />
+        <uikit:UIKitSetter Id="NumberInput_ActionIncrease_IconName" Value="ArrowUpSmall" />
     </Style>
     <!--#endregion-->
     <!--#region PasswordInputs-->
@@ -6921,7 +6921,7 @@
         <uikit:UIKitSetter Id="Search_Background" Value="{Res BackgroundNormal, Scope=UiKitSearch}" />
         <uikit:UIKitSetter Id="Search_BorderBrush" Value="{Res BorderColorNormal, Scope=UiKitSearch}" />
         <uikit:UIKitSetter Id="Search_BorderThickness" Value="0" />
-        <uikit:UIKitSetter Id="Search_ClearButtonIcon" Value="Clear" />
+        <uikit:UIKitSetter Id="Search_ClearButtonIcon" Value="CrossS" />
         <uikit:UIKitSetter Id="Search_ClearButtonMargin" Value="0,4,8,4" />
         <uikit:UIKitSetter Id="Search_ClearButtonStyle" Value="{StaticResource UiKitIconButton16}" />
         <uikit:UIKitSetter Id="Search_CornerRadius" Value="5" />
@@ -7081,8 +7081,8 @@
         </Style.Resources>
         <uikit:UIKitSetter Id="SplitButton_Divider_Style" Value="{StaticResource DividerStyle}" />
         <uikit:UIKitSetter Id="SplitButton_MainButton_Style" Value="{StaticResource MainButtonStyle}" />
-        <uikit:UIKitSetter Id="SplitButton_ToggleButton_MenuClosedIcon" Value="ArrowDown" />
-        <uikit:UIKitSetter Id="SplitButton_ToggleButton_MenuOpenedIcon" Value="ArrowUp" />
+        <uikit:UIKitSetter Id="SplitButton_ToggleButton_MenuClosedIcon" Value="ArrowDownSmall" />
+        <uikit:UIKitSetter Id="SplitButton_ToggleButton_MenuOpenedIcon" Value="ArrowUpSmall" />
         <uikit:UIKitSetter Id="SplitButton_ToggleButton_Style" Value="{StaticResource ToggleButtonStyle}" />
         <Style.Triggers>
             <Trigger Property="State" Value="Disabled">
@@ -7192,8 +7192,8 @@
         </Style.Resources>
         <uikit:UIKitSetter Id="SplitButton_Divider_Style" Value="{StaticResource DividerStyle}" />
         <uikit:UIKitSetter Id="SplitButton_MainButton_Style" Value="{StaticResource MainButtonStyle}" />
-        <uikit:UIKitSetter Id="SplitButton_ToggleButton_MenuClosedIcon" Value="ArrowDown" />
-        <uikit:UIKitSetter Id="SplitButton_ToggleButton_MenuOpenedIcon" Value="ArrowUp" />
+        <uikit:UIKitSetter Id="SplitButton_ToggleButton_MenuClosedIcon" Value="ArrowDownSmall" />
+        <uikit:UIKitSetter Id="SplitButton_ToggleButton_MenuOpenedIcon" Value="ArrowUpSmall" />
         <uikit:UIKitSetter Id="SplitButton_ToggleButton_Style" Value="{StaticResource ToggleButtonStyle}" />
         <Style.Triggers>
             <Trigger Property="State" Value="Disabled">
@@ -7303,8 +7303,8 @@
         </Style.Resources>
         <uikit:UIKitSetter Id="SplitButton_Divider_Style" Value="{StaticResource DividerStyle}" />
         <uikit:UIKitSetter Id="SplitButton_MainButton_Style" Value="{StaticResource MainButtonStyle}" />
-        <uikit:UIKitSetter Id="SplitButton_ToggleButton_MenuClosedIcon" Value="ArrowDown" />
-        <uikit:UIKitSetter Id="SplitButton_ToggleButton_MenuOpenedIcon" Value="ArrowUp" />
+        <uikit:UIKitSetter Id="SplitButton_ToggleButton_MenuClosedIcon" Value="ArrowDownSmall" />
+        <uikit:UIKitSetter Id="SplitButton_ToggleButton_MenuOpenedIcon" Value="ArrowUpSmall" />
         <uikit:UIKitSetter Id="SplitButton_ToggleButton_Style" Value="{StaticResource ToggleButtonStyle}" />
         <Style.Triggers>
             <Trigger Property="State" Value="Disabled">
@@ -7414,8 +7414,8 @@
         </Style.Resources>
         <uikit:UIKitSetter Id="SplitButton_Divider_Style" Value="{StaticResource DividerStyle}" />
         <uikit:UIKitSetter Id="SplitButton_MainButton_Style" Value="{StaticResource MainButtonStyle}" />
-        <uikit:UIKitSetter Id="SplitButton_ToggleButton_MenuClosedIcon" Value="ArrowDown" />
-        <uikit:UIKitSetter Id="SplitButton_ToggleButton_MenuOpenedIcon" Value="ArrowUp" />
+        <uikit:UIKitSetter Id="SplitButton_ToggleButton_MenuClosedIcon" Value="ArrowDownSmall" />
+        <uikit:UIKitSetter Id="SplitButton_ToggleButton_MenuOpenedIcon" Value="ArrowUpSmall" />
         <uikit:UIKitSetter Id="SplitButton_ToggleButton_Style" Value="{StaticResource ToggleButtonStyle}" />
         <Style.Triggers>
             <Trigger Property="State" Value="Disabled">
@@ -7525,8 +7525,8 @@
         </Style.Resources>
         <uikit:UIKitSetter Id="SplitButton_Divider_Style" Value="{StaticResource DividerStyle}" />
         <uikit:UIKitSetter Id="SplitButton_MainButton_Style" Value="{StaticResource MainButtonStyle}" />
-        <uikit:UIKitSetter Id="SplitButton_ToggleButton_MenuClosedIcon" Value="ArrowDown" />
-        <uikit:UIKitSetter Id="SplitButton_ToggleButton_MenuOpenedIcon" Value="ArrowUp" />
+        <uikit:UIKitSetter Id="SplitButton_ToggleButton_MenuClosedIcon" Value="ArrowDownSmall" />
+        <uikit:UIKitSetter Id="SplitButton_ToggleButton_MenuOpenedIcon" Value="ArrowUpSmall" />
         <uikit:UIKitSetter Id="SplitButton_ToggleButton_Style" Value="{StaticResource ToggleButtonStyle}" />
         <Style.Triggers>
             <Trigger Property="State" Value="Disabled">
@@ -7824,18 +7824,18 @@
             </Trigger>
         </Style.Triggers>
     </Style>
-    <!--  [UiKitSsoButtonVKColor]  -->
-    <Style x:Key="UiKitSsoButtonVKColor"
+    <!--  [UiKitSsoButtonQqColor]  -->
+    <Style x:Key="UiKitSsoButtonQqColor"
            BasedOn="{StaticResource SsoButtonUniversal}"
            TargetType="{x:Type visuals:SsoButton}">
-        <uikit:UIKitSetter Id="Button_Container_Background" Value="{Res BackgroundNormal, Scope=UiKitSsoButtonVKColor}" />
-        <uikit:UIKitSetter Id="Button_Container_BorderBrush" Value="{Res BorderNormal, Scope=UiKitSsoButtonVKColor}" />
+        <uikit:UIKitSetter Id="Button_Container_Background" Value="{Res BackgroundNormal, Scope=UiKitSsoButtonQqColor}" />
+        <uikit:UIKitSetter Id="Button_Container_BorderBrush" Value="{Res BorderNormal, Scope=UiKitSsoButtonQqColor}" />
         <uikit:UIKitSetter Id="Button_Container_BorderThickness" Value="0" />
         <uikit:UIKitSetter Id="Button_Container_CornerRadius" Value="6" />
         <uikit:UIKitSetter Id="Button_Icon_Opacity" Value="1" />
         <uikit:UIKitSetter Id="Button_FocusVisualStyle">
             <uikit:UIKitSetter.Value>
-                <visuals:FocusVisual Brush="{Res FocusVisualBrush, Scope=UiKitSsoButtonVKColor}"
+                <visuals:FocusVisual Brush="{Res FocusVisualBrush, Scope=UiKitSsoButtonQqColor}"
                                      CornerRadius="8"
                                      Margin="-4"
                                      Thickness="2"
@@ -7848,40 +7848,40 @@
         <uikit:UIKitSetter Id="SsoButton_Icon_Name" Value="UIKitUnset" />
         <Style.Triggers>
             <Trigger Property="visuals:StateService.State" Value="Disabled">
-                <uikit:UIKitSetter Id="Button_Container_Background" Value="{Res BackgroundDisabled, Scope=UiKitSsoButtonVKColor}" />
-                <uikit:UIKitSetter Id="Button_Container_BorderBrush" Value="{Res BorderDisabled, Scope=UiKitSsoButtonVKColor}" />
-                <uikit:UIKitSetter Id="Button_Container_BorderThickness" Value="0" />
+                <uikit:UIKitSetter Id="Button_Container_Background" Value="{Res BackgroundDisabled, Scope=UiKitSsoButtonQqColor}" />
+                <uikit:UIKitSetter Id="Button_Container_BorderBrush" Value="{Res BorderDisabled, Scope=UiKitSsoButtonQqColor}" />
+                <uikit:UIKitSetter Id="Button_Container_BorderThickness" Value="1" />
                 <uikit:UIKitSetter Id="Button_Icon_Opacity" Value="1" />
                 <uikit:UIKitSetter Id="Button_Opacity" Value="1" />
             </Trigger>
             <Trigger Property="visuals:StateService.State" Value="Hover">
-                <uikit:UIKitSetter Id="Button_Container_Background" Value="{Res BackgroundHover, Scope=UiKitSsoButtonVKColor}" />
-                <uikit:UIKitSetter Id="Button_Container_BorderBrush" Value="{Res BorderHover, Scope=UiKitSsoButtonVKColor}" />
+                <uikit:UIKitSetter Id="Button_Container_Background" Value="{Res BackgroundHover, Scope=UiKitSsoButtonQqColor}" />
+                <uikit:UIKitSetter Id="Button_Container_BorderBrush" Value="{Res BorderHover, Scope=UiKitSsoButtonQqColor}" />
                 <uikit:UIKitSetter Id="Button_Container_BorderThickness" Value="0" />
                 <uikit:UIKitSetter Id="Button_Icon_Opacity" Value="1" />
                 <uikit:UIKitSetter Id="Button_Opacity" Value="1" />
             </Trigger>
             <Trigger Property="visuals:StateService.State" Value="Pressed">
-                <uikit:UIKitSetter Id="Button_Container_Background" Value="{Res BackgroundPressed, Scope=UiKitSsoButtonVKColor}" />
-                <uikit:UIKitSetter Id="Button_Container_BorderBrush" Value="{Res BorderPressed, Scope=UiKitSsoButtonVKColor}" />
+                <uikit:UIKitSetter Id="Button_Container_Background" Value="{Res BackgroundPressed, Scope=UiKitSsoButtonQqColor}" />
+                <uikit:UIKitSetter Id="Button_Container_BorderBrush" Value="{Res BorderPressed, Scope=UiKitSsoButtonQqColor}" />
                 <uikit:UIKitSetter Id="Button_Container_BorderThickness" Value="0" />
                 <uikit:UIKitSetter Id="Button_Icon_Opacity" Value="1" />
                 <uikit:UIKitSetter Id="Button_Opacity" Value="1" />
             </Trigger>
         </Style.Triggers>
     </Style>
-    <!--  [UiKitSsoButtonVKWhite]  -->
-    <Style x:Key="UiKitSsoButtonVKWhite"
+    <!--  [UiKitSsoButtonQqWhite]  -->
+    <Style x:Key="UiKitSsoButtonQqWhite"
            BasedOn="{StaticResource SsoButtonUniversal}"
            TargetType="{x:Type visuals:SsoButton}">
-        <uikit:UIKitSetter Id="Button_Container_Background" Value="{Res BackgroundNormal, Scope=UiKitSsoButtonVKWhite}" />
-        <uikit:UIKitSetter Id="Button_Container_BorderBrush" Value="{Res BorderNormal, Scope=UiKitSsoButtonVKWhite}" />
+        <uikit:UIKitSetter Id="Button_Container_Background" Value="{Res BackgroundNormal, Scope=UiKitSsoButtonQqWhite}" />
+        <uikit:UIKitSetter Id="Button_Container_BorderBrush" Value="{Res BorderNormal, Scope=UiKitSsoButtonQqWhite}" />
         <uikit:UIKitSetter Id="Button_Container_BorderThickness" Value="1" />
         <uikit:UIKitSetter Id="Button_Container_CornerRadius" Value="6" />
         <uikit:UIKitSetter Id="Button_Icon_Opacity" Value="1" />
         <uikit:UIKitSetter Id="Button_FocusVisualStyle">
             <uikit:UIKitSetter.Value>
-                <visuals:FocusVisual Brush="{Res FocusVisualBrush, Scope=UiKitSsoButtonVKWhite}"
+                <visuals:FocusVisual Brush="{Res FocusVisualBrush, Scope=UiKitSsoButtonQqWhite}"
                                      CornerRadius="8"
                                      Margin="-4"
                                      Thickness="2"
@@ -7894,40 +7894,40 @@
         <uikit:UIKitSetter Id="SsoButton_Icon_Name" Value="UIKitUnset" />
         <Style.Triggers>
             <Trigger Property="visuals:StateService.State" Value="Disabled">
-                <uikit:UIKitSetter Id="Button_Container_Background" Value="{Res BackgroundDisabled, Scope=UiKitSsoButtonVKWhite}" />
-                <uikit:UIKitSetter Id="Button_Container_BorderBrush" Value="{Res BorderDisabled, Scope=UiKitSsoButtonVKWhite}" />
+                <uikit:UIKitSetter Id="Button_Container_Background" Value="{Res BackgroundDisabled, Scope=UiKitSsoButtonQqWhite}" />
+                <uikit:UIKitSetter Id="Button_Container_BorderBrush" Value="{Res BorderDisabled, Scope=UiKitSsoButtonQqWhite}" />
                 <uikit:UIKitSetter Id="Button_Container_BorderThickness" Value="1" />
                 <uikit:UIKitSetter Id="Button_Icon_Opacity" Value="1" />
                 <uikit:UIKitSetter Id="Button_Opacity" Value="1" />
             </Trigger>
             <Trigger Property="visuals:StateService.State" Value="Hover">
-                <uikit:UIKitSetter Id="Button_Container_Background" Value="{Res BackgroundHover, Scope=UiKitSsoButtonVKWhite}" />
-                <uikit:UIKitSetter Id="Button_Container_BorderBrush" Value="{Res BorderHover, Scope=UiKitSsoButtonVKWhite}" />
+                <uikit:UIKitSetter Id="Button_Container_Background" Value="{Res BackgroundHover, Scope=UiKitSsoButtonQqWhite}" />
+                <uikit:UIKitSetter Id="Button_Container_BorderBrush" Value="{Res BorderHover, Scope=UiKitSsoButtonQqWhite}" />
                 <uikit:UIKitSetter Id="Button_Container_BorderThickness" Value="1" />
                 <uikit:UIKitSetter Id="Button_Icon_Opacity" Value="1" />
                 <uikit:UIKitSetter Id="Button_Opacity" Value="1" />
             </Trigger>
             <Trigger Property="visuals:StateService.State" Value="Pressed">
-                <uikit:UIKitSetter Id="Button_Container_Background" Value="{Res BackgroundPressed, Scope=UiKitSsoButtonVKWhite}" />
-                <uikit:UIKitSetter Id="Button_Container_BorderBrush" Value="{Res BorderPressed, Scope=UiKitSsoButtonVKWhite}" />
+                <uikit:UIKitSetter Id="Button_Container_Background" Value="{Res BackgroundPressed, Scope=UiKitSsoButtonQqWhite}" />
+                <uikit:UIKitSetter Id="Button_Container_BorderBrush" Value="{Res BorderPressed, Scope=UiKitSsoButtonQqWhite}" />
                 <uikit:UIKitSetter Id="Button_Container_BorderThickness" Value="1" />
                 <uikit:UIKitSetter Id="Button_Icon_Opacity" Value="1" />
                 <uikit:UIKitSetter Id="Button_Opacity" Value="1" />
             </Trigger>
         </Style.Triggers>
     </Style>
-    <!--  [UiKitSsoButtonWeChatColor]  -->
-    <Style x:Key="UiKitSsoButtonWeChatColor"
+    <!--  [UiKitSsoButtonVkColor]  -->
+    <Style x:Key="UiKitSsoButtonVkColor"
            BasedOn="{StaticResource SsoButtonUniversal}"
            TargetType="{x:Type visuals:SsoButton}">
-        <uikit:UIKitSetter Id="Button_Container_Background" Value="{Res BackgroundNormal, Scope=UiKitSsoButtonWeChatColor}" />
-        <uikit:UIKitSetter Id="Button_Container_BorderBrush" Value="{Res BorderNormal, Scope=UiKitSsoButtonWeChatColor}" />
+        <uikit:UIKitSetter Id="Button_Container_Background" Value="{Res BackgroundNormal, Scope=UiKitSsoButtonVkColor}" />
+        <uikit:UIKitSetter Id="Button_Container_BorderBrush" Value="{Res BorderNormal, Scope=UiKitSsoButtonVkColor}" />
         <uikit:UIKitSetter Id="Button_Container_BorderThickness" Value="0" />
         <uikit:UIKitSetter Id="Button_Container_CornerRadius" Value="6" />
         <uikit:UIKitSetter Id="Button_Icon_Opacity" Value="1" />
         <uikit:UIKitSetter Id="Button_FocusVisualStyle">
             <uikit:UIKitSetter.Value>
-                <visuals:FocusVisual Brush="{Res FocusVisualBrush, Scope=UiKitSsoButtonWeChatColor}"
+                <visuals:FocusVisual Brush="{Res FocusVisualBrush, Scope=UiKitSsoButtonVkColor}"
                                      CornerRadius="8"
                                      Margin="-4"
                                      Thickness="2"
@@ -7940,40 +7940,40 @@
         <uikit:UIKitSetter Id="SsoButton_Icon_Name" Value="UIKitUnset" />
         <Style.Triggers>
             <Trigger Property="visuals:StateService.State" Value="Disabled">
-                <uikit:UIKitSetter Id="Button_Container_Background" Value="{Res BackgroundDisabled, Scope=UiKitSsoButtonWeChatColor}" />
-                <uikit:UIKitSetter Id="Button_Container_BorderBrush" Value="{Res BorderDisabled, Scope=UiKitSsoButtonWeChatColor}" />
-                <uikit:UIKitSetter Id="Button_Container_BorderThickness" Value="1" />
+                <uikit:UIKitSetter Id="Button_Container_Background" Value="{Res BackgroundDisabled, Scope=UiKitSsoButtonVkColor}" />
+                <uikit:UIKitSetter Id="Button_Container_BorderBrush" Value="{Res BorderDisabled, Scope=UiKitSsoButtonVkColor}" />
+                <uikit:UIKitSetter Id="Button_Container_BorderThickness" Value="0" />
                 <uikit:UIKitSetter Id="Button_Icon_Opacity" Value="1" />
                 <uikit:UIKitSetter Id="Button_Opacity" Value="1" />
             </Trigger>
             <Trigger Property="visuals:StateService.State" Value="Hover">
-                <uikit:UIKitSetter Id="Button_Container_Background" Value="{Res BackgroundHover, Scope=UiKitSsoButtonWeChatColor}" />
-                <uikit:UIKitSetter Id="Button_Container_BorderBrush" Value="{Res BorderHover, Scope=UiKitSsoButtonWeChatColor}" />
+                <uikit:UIKitSetter Id="Button_Container_Background" Value="{Res BackgroundHover, Scope=UiKitSsoButtonVkColor}" />
+                <uikit:UIKitSetter Id="Button_Container_BorderBrush" Value="{Res BorderHover, Scope=UiKitSsoButtonVkColor}" />
                 <uikit:UIKitSetter Id="Button_Container_BorderThickness" Value="0" />
                 <uikit:UIKitSetter Id="Button_Icon_Opacity" Value="1" />
                 <uikit:UIKitSetter Id="Button_Opacity" Value="1" />
             </Trigger>
             <Trigger Property="visuals:StateService.State" Value="Pressed">
-                <uikit:UIKitSetter Id="Button_Container_Background" Value="{Res BackgroundPressed, Scope=UiKitSsoButtonWeChatColor}" />
-                <uikit:UIKitSetter Id="Button_Container_BorderBrush" Value="{Res BorderPressed, Scope=UiKitSsoButtonWeChatColor}" />
+                <uikit:UIKitSetter Id="Button_Container_Background" Value="{Res BackgroundPressed, Scope=UiKitSsoButtonVkColor}" />
+                <uikit:UIKitSetter Id="Button_Container_BorderBrush" Value="{Res BorderPressed, Scope=UiKitSsoButtonVkColor}" />
                 <uikit:UIKitSetter Id="Button_Container_BorderThickness" Value="0" />
                 <uikit:UIKitSetter Id="Button_Icon_Opacity" Value="1" />
                 <uikit:UIKitSetter Id="Button_Opacity" Value="1" />
             </Trigger>
         </Style.Triggers>
     </Style>
-    <!--  [UiKitSsoButtonWeChatWhite]  -->
-    <Style x:Key="UiKitSsoButtonWeChatWhite"
+    <!--  [UiKitSsoButtonVkWhite]  -->
+    <Style x:Key="UiKitSsoButtonVkWhite"
            BasedOn="{StaticResource SsoButtonUniversal}"
            TargetType="{x:Type visuals:SsoButton}">
-        <uikit:UIKitSetter Id="Button_Container_Background" Value="{Res BackgroundNormal, Scope=UiKitSsoButtonWeChatWhite}" />
-        <uikit:UIKitSetter Id="Button_Container_BorderBrush" Value="{Res BorderNormal, Scope=UiKitSsoButtonWeChatWhite}" />
+        <uikit:UIKitSetter Id="Button_Container_Background" Value="{Res BackgroundNormal, Scope=UiKitSsoButtonVkWhite}" />
+        <uikit:UIKitSetter Id="Button_Container_BorderBrush" Value="{Res BorderNormal, Scope=UiKitSsoButtonVkWhite}" />
         <uikit:UIKitSetter Id="Button_Container_BorderThickness" Value="1" />
         <uikit:UIKitSetter Id="Button_Container_CornerRadius" Value="6" />
         <uikit:UIKitSetter Id="Button_Icon_Opacity" Value="1" />
         <uikit:UIKitSetter Id="Button_FocusVisualStyle">
             <uikit:UIKitSetter.Value>
-                <visuals:FocusVisual Brush="{Res FocusVisualBrush, Scope=UiKitSsoButtonWeChatWhite}"
+                <visuals:FocusVisual Brush="{Res FocusVisualBrush, Scope=UiKitSsoButtonVkWhite}"
                                      CornerRadius="8"
                                      Margin="-4"
                                      Thickness="2"
@@ -7986,22 +7986,114 @@
         <uikit:UIKitSetter Id="SsoButton_Icon_Name" Value="UIKitUnset" />
         <Style.Triggers>
             <Trigger Property="visuals:StateService.State" Value="Disabled">
-                <uikit:UIKitSetter Id="Button_Container_Background" Value="{Res BackgroundDisabled, Scope=UiKitSsoButtonWeChatWhite}" />
-                <uikit:UIKitSetter Id="Button_Container_BorderBrush" Value="{Res BorderDisabled, Scope=UiKitSsoButtonWeChatWhite}" />
+                <uikit:UIKitSetter Id="Button_Container_Background" Value="{Res BackgroundDisabled, Scope=UiKitSsoButtonVkWhite}" />
+                <uikit:UIKitSetter Id="Button_Container_BorderBrush" Value="{Res BorderDisabled, Scope=UiKitSsoButtonVkWhite}" />
                 <uikit:UIKitSetter Id="Button_Container_BorderThickness" Value="1" />
                 <uikit:UIKitSetter Id="Button_Icon_Opacity" Value="1" />
                 <uikit:UIKitSetter Id="Button_Opacity" Value="1" />
             </Trigger>
             <Trigger Property="visuals:StateService.State" Value="Hover">
-                <uikit:UIKitSetter Id="Button_Container_Background" Value="{Res BackgroundHover, Scope=UiKitSsoButtonWeChatWhite}" />
-                <uikit:UIKitSetter Id="Button_Container_BorderBrush" Value="{Res BorderHover, Scope=UiKitSsoButtonWeChatWhite}" />
+                <uikit:UIKitSetter Id="Button_Container_Background" Value="{Res BackgroundHover, Scope=UiKitSsoButtonVkWhite}" />
+                <uikit:UIKitSetter Id="Button_Container_BorderBrush" Value="{Res BorderHover, Scope=UiKitSsoButtonVkWhite}" />
                 <uikit:UIKitSetter Id="Button_Container_BorderThickness" Value="1" />
                 <uikit:UIKitSetter Id="Button_Icon_Opacity" Value="1" />
                 <uikit:UIKitSetter Id="Button_Opacity" Value="1" />
             </Trigger>
             <Trigger Property="visuals:StateService.State" Value="Pressed">
-                <uikit:UIKitSetter Id="Button_Container_Background" Value="{Res BackgroundPressed, Scope=UiKitSsoButtonWeChatWhite}" />
-                <uikit:UIKitSetter Id="Button_Container_BorderBrush" Value="{Res BorderPressed, Scope=UiKitSsoButtonWeChatWhite}" />
+                <uikit:UIKitSetter Id="Button_Container_Background" Value="{Res BackgroundPressed, Scope=UiKitSsoButtonVkWhite}" />
+                <uikit:UIKitSetter Id="Button_Container_BorderBrush" Value="{Res BorderPressed, Scope=UiKitSsoButtonVkWhite}" />
+                <uikit:UIKitSetter Id="Button_Container_BorderThickness" Value="1" />
+                <uikit:UIKitSetter Id="Button_Icon_Opacity" Value="1" />
+                <uikit:UIKitSetter Id="Button_Opacity" Value="1" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+    <!--  [UiKitSsoButtonWechatColor]  -->
+    <Style x:Key="UiKitSsoButtonWechatColor"
+           BasedOn="{StaticResource SsoButtonUniversal}"
+           TargetType="{x:Type visuals:SsoButton}">
+        <uikit:UIKitSetter Id="Button_Container_Background" Value="{Res BackgroundNormal, Scope=UiKitSsoButtonWechatColor}" />
+        <uikit:UIKitSetter Id="Button_Container_BorderBrush" Value="{Res BorderNormal, Scope=UiKitSsoButtonWechatColor}" />
+        <uikit:UIKitSetter Id="Button_Container_BorderThickness" Value="0" />
+        <uikit:UIKitSetter Id="Button_Container_CornerRadius" Value="6" />
+        <uikit:UIKitSetter Id="Button_Icon_Opacity" Value="1" />
+        <uikit:UIKitSetter Id="Button_FocusVisualStyle">
+            <uikit:UIKitSetter.Value>
+                <visuals:FocusVisual Brush="{Res FocusVisualBrush, Scope=UiKitSsoButtonWechatColor}"
+                                     CornerRadius="8"
+                                     Margin="-4"
+                                     Thickness="2"
+                                     Type="RECTANGLE" />
+            </uikit:UIKitSetter.Value>
+        </uikit:UIKitSetter>
+        <uikit:UIKitSetter Id="Button_Height" Value="32" />
+        <uikit:UIKitSetter Id="Button_Opacity" Value="1" />
+        <uikit:UIKitSetter Id="Button_Padding" Value="8" />
+        <uikit:UIKitSetter Id="SsoButton_Icon_Name" Value="UIKitUnset" />
+        <Style.Triggers>
+            <Trigger Property="visuals:StateService.State" Value="Disabled">
+                <uikit:UIKitSetter Id="Button_Container_Background" Value="{Res BackgroundDisabled, Scope=UiKitSsoButtonWechatColor}" />
+                <uikit:UIKitSetter Id="Button_Container_BorderBrush" Value="{Res BorderDisabled, Scope=UiKitSsoButtonWechatColor}" />
+                <uikit:UIKitSetter Id="Button_Container_BorderThickness" Value="1" />
+                <uikit:UIKitSetter Id="Button_Icon_Opacity" Value="1" />
+                <uikit:UIKitSetter Id="Button_Opacity" Value="1" />
+            </Trigger>
+            <Trigger Property="visuals:StateService.State" Value="Hover">
+                <uikit:UIKitSetter Id="Button_Container_Background" Value="{Res BackgroundHover, Scope=UiKitSsoButtonWechatColor}" />
+                <uikit:UIKitSetter Id="Button_Container_BorderBrush" Value="{Res BorderHover, Scope=UiKitSsoButtonWechatColor}" />
+                <uikit:UIKitSetter Id="Button_Container_BorderThickness" Value="0" />
+                <uikit:UIKitSetter Id="Button_Icon_Opacity" Value="1" />
+                <uikit:UIKitSetter Id="Button_Opacity" Value="1" />
+            </Trigger>
+            <Trigger Property="visuals:StateService.State" Value="Pressed">
+                <uikit:UIKitSetter Id="Button_Container_Background" Value="{Res BackgroundPressed, Scope=UiKitSsoButtonWechatColor}" />
+                <uikit:UIKitSetter Id="Button_Container_BorderBrush" Value="{Res BorderPressed, Scope=UiKitSsoButtonWechatColor}" />
+                <uikit:UIKitSetter Id="Button_Container_BorderThickness" Value="0" />
+                <uikit:UIKitSetter Id="Button_Icon_Opacity" Value="1" />
+                <uikit:UIKitSetter Id="Button_Opacity" Value="1" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+    <!--  [UiKitSsoButtonWechatWhite]  -->
+    <Style x:Key="UiKitSsoButtonWechatWhite"
+           BasedOn="{StaticResource SsoButtonUniversal}"
+           TargetType="{x:Type visuals:SsoButton}">
+        <uikit:UIKitSetter Id="Button_Container_Background" Value="{Res BackgroundNormal, Scope=UiKitSsoButtonWechatWhite}" />
+        <uikit:UIKitSetter Id="Button_Container_BorderBrush" Value="{Res BorderNormal, Scope=UiKitSsoButtonWechatWhite}" />
+        <uikit:UIKitSetter Id="Button_Container_BorderThickness" Value="1" />
+        <uikit:UIKitSetter Id="Button_Container_CornerRadius" Value="6" />
+        <uikit:UIKitSetter Id="Button_Icon_Opacity" Value="1" />
+        <uikit:UIKitSetter Id="Button_FocusVisualStyle">
+            <uikit:UIKitSetter.Value>
+                <visuals:FocusVisual Brush="{Res FocusVisualBrush, Scope=UiKitSsoButtonWechatWhite}"
+                                     CornerRadius="8"
+                                     Margin="-4"
+                                     Thickness="2"
+                                     Type="RECTANGLE" />
+            </uikit:UIKitSetter.Value>
+        </uikit:UIKitSetter>
+        <uikit:UIKitSetter Id="Button_Height" Value="32" />
+        <uikit:UIKitSetter Id="Button_Opacity" Value="1" />
+        <uikit:UIKitSetter Id="Button_Padding" Value="8" />
+        <uikit:UIKitSetter Id="SsoButton_Icon_Name" Value="UIKitUnset" />
+        <Style.Triggers>
+            <Trigger Property="visuals:StateService.State" Value="Disabled">
+                <uikit:UIKitSetter Id="Button_Container_Background" Value="{Res BackgroundDisabled, Scope=UiKitSsoButtonWechatWhite}" />
+                <uikit:UIKitSetter Id="Button_Container_BorderBrush" Value="{Res BorderDisabled, Scope=UiKitSsoButtonWechatWhite}" />
+                <uikit:UIKitSetter Id="Button_Container_BorderThickness" Value="1" />
+                <uikit:UIKitSetter Id="Button_Icon_Opacity" Value="1" />
+                <uikit:UIKitSetter Id="Button_Opacity" Value="1" />
+            </Trigger>
+            <Trigger Property="visuals:StateService.State" Value="Hover">
+                <uikit:UIKitSetter Id="Button_Container_Background" Value="{Res BackgroundHover, Scope=UiKitSsoButtonWechatWhite}" />
+                <uikit:UIKitSetter Id="Button_Container_BorderBrush" Value="{Res BorderHover, Scope=UiKitSsoButtonWechatWhite}" />
+                <uikit:UIKitSetter Id="Button_Container_BorderThickness" Value="1" />
+                <uikit:UIKitSetter Id="Button_Icon_Opacity" Value="1" />
+                <uikit:UIKitSetter Id="Button_Opacity" Value="1" />
+            </Trigger>
+            <Trigger Property="visuals:StateService.State" Value="Pressed">
+                <uikit:UIKitSetter Id="Button_Container_Background" Value="{Res BackgroundPressed, Scope=UiKitSsoButtonWechatWhite}" />
+                <uikit:UIKitSetter Id="Button_Container_BorderBrush" Value="{Res BorderPressed, Scope=UiKitSsoButtonWechatWhite}" />
                 <uikit:UIKitSetter Id="Button_Container_BorderThickness" Value="1" />
                 <uikit:UIKitSetter Id="Button_Icon_Opacity" Value="1" />
                 <uikit:UIKitSetter Id="Button_Opacity" Value="1" />
@@ -8417,7 +8509,7 @@
                 <uikit:UIKitSetter Id="StatusTag_BorderBrush" Value="{Res BorderColorPositive, Scope=UiKitStatusTag}" />
                 <uikit:UIKitSetter Id="StatusTag_BorderThickness" Value="0" />
                 <uikit:UIKitSetter Id="StatusTag_Icon_Color" Value="{Res IconBrushPositive, Scope=UiKitStatusTag}" />
-                <uikit:UIKitSetter Id="StatusTag_Icon_Name" Value="StatusPositiveSolid" />
+                <uikit:UIKitSetter Id="StatusTag_Icon_Name" Value="StatusOKSolid" />
                 <uikit:UIKitSetter Id="StatusTag_TextStyle" Value="{StaticResource TextStylePositive}" />
             </Trigger>
             <Trigger Property="Type" Value="Warning">
@@ -9108,7 +9200,7 @@
             </Style>
         </Style.Resources>
         <uikit:UIKitSetter Id="NotificationPanel_ButtonStyle" Value="{StaticResource UiKitButtonBaseOutlineSecondary}" />
-        <uikit:UIKitSetter Id="NotificationPanel_Content_Margin" Value="0,12,0,0" />
+        <uikit:UIKitSetter Id="NotificationPanel_Content_Margin" Value="0,8,0,0" />
         <uikit:UIKitSetter Id="NotificationPanel_CornerRadius" Value="12" />
         <uikit:UIKitSetter Id="NotificationPanel_Header_Margin" Value="0,2,0,0" />
         <uikit:UIKitSetter Id="NotificationPanel_HeaderStyle" Value="{StaticResource HeaderStyle}" />
@@ -9142,7 +9234,7 @@
                 <uikit:UIKitSetter Id="NotificationPanel_BorderBrush" Value="{Res BorderColorPositive, Scope=UiKitNotificationPanelColorful}" />
                 <uikit:UIKitSetter Id="NotificationPanel_BorderThickness" Value="0" />
                 <uikit:UIKitSetter Id="NotificationPanel_Icon_Color" Value="{Res IconBrushPositive, Scope=UiKitNotificationPanelColorful}" />
-                <uikit:UIKitSetter Id="NotificationPanel_Icon_Name" Value="StatusPositiveSolid" />
+                <uikit:UIKitSetter Id="NotificationPanel_Icon_Name" Value="StatusOKSolid" />
             </Trigger>
             <Trigger Property="Type" Value="Warning">
                 <uikit:UIKitSetter Id="NotificationPanel_Background" Value="{Res BackgroundWarning, Scope=UiKitNotificationPanelColorful}" />
@@ -9175,7 +9267,7 @@
             </Style>
         </Style.Resources>
         <uikit:UIKitSetter Id="NotificationPanel_ButtonStyle" Value="{StaticResource UiKitButtonBaseOutlineSecondary}" />
-        <uikit:UIKitSetter Id="NotificationPanel_Content_Margin" Value="0,12,0,0" />
+        <uikit:UIKitSetter Id="NotificationPanel_Content_Margin" Value="0,8,0,0" />
         <uikit:UIKitSetter Id="NotificationPanel_CornerRadius" Value="12" />
         <uikit:UIKitSetter Id="NotificationPanel_Header_Margin" Value="0,2,0,0" />
         <uikit:UIKitSetter Id="NotificationPanel_HeaderStyle" Value="{StaticResource HeaderStyle}" />
@@ -9209,7 +9301,7 @@
                 <uikit:UIKitSetter Id="NotificationPanel_BorderBrush" Value="{Res BorderColorPositive, Scope=UiKitNotificationPanelPlain}" />
                 <uikit:UIKitSetter Id="NotificationPanel_BorderThickness" Value="0" />
                 <uikit:UIKitSetter Id="NotificationPanel_Icon_Color" Value="{Res IconBrushPositive, Scope=UiKitNotificationPanelPlain}" />
-                <uikit:UIKitSetter Id="NotificationPanel_Icon_Name" Value="StatusPositiveSolid" />
+                <uikit:UIKitSetter Id="NotificationPanel_Icon_Name" Value="StatusOKSolid" />
             </Trigger>
             <Trigger Property="Type" Value="Warning">
                 <uikit:UIKitSetter Id="NotificationPanel_Background" Value="{Res BackgroundWarning, Scope=UiKitNotificationPanelPlain}" />

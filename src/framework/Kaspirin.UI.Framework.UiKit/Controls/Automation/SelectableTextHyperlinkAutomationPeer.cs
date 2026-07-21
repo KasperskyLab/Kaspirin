@@ -35,7 +35,7 @@ public sealed class SelectableTextHyperlinkAutomationPeer : BaseHyperlinkAutomat
             result = GetLocalizer().GetString("SelectableText_Ready_AutomationHelpText")!;
         }
 
-        return result;
+        return result ?? string.Empty;
     }
 
     public void RaiseShown()
