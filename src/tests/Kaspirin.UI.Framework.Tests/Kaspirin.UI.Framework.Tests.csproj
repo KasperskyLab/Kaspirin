@@ -1,0 +1,16 @@
+<Project>
+	<PropertyGroup>
+		<TargetFramework>net6.0-windows10.0.17763.0</TargetFramework>
+		<UseWPF>true</UseWPF>
+		<RootNamespace>Kaspirin.UI.Framework.Tests</RootNamespace>
+		<AssemblyName>kaspirin.ui.framework.tests</AssemblyName>
+		<IsTestProject>true</IsTestProject>
+	</PropertyGroup>
+
+	<Import Project="$(SolutionDir)kaspirin.props" />
+
+	<Import Project="Sdk.props" Sdk="Microsoft.NET.Sdk" />
+	<Import Project="Sdk.targets" Sdk="Microsoft.NET.Sdk" />
+
+	<Import Project="$(FrameworkProps)" />
+</Project>

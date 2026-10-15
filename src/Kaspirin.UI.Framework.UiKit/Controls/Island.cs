@@ -1,0 +1,83 @@
+// Copyright © 2024 AO Kaspersky Lab.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+
+using System.Windows;
+using System.Windows.Automation.Peers;
+using System.Windows.Controls;
+using System.Windows.Media;
+using Kaspirin.UI.Framework.UiKit.Controls.Automation;
+
+namespace Kaspirin.UI.Framework.UiKit.Controls;
+
+public class Island : ContentControl, IAccessibilityAware
+{
+    public Island()
+    {
+        UIKitIslandHelper.Initialize(this);
+    }
+
+    #region Level
+
+    public IslandLevel Level => (IslandLevel)GetValue(LevelProperty);
+
+    public static readonly DependencyProperty LevelProperty =
+        UIKitIslandHelper.LevelPropertyKey.DependencyProperty.AddOwner(typeof(Island));
+
+    #endregion
+
+    #region Type
+
+    public IslandType Type => (IslandType)GetValue(TypeProperty);
+
+    public static readonly DependencyProperty TypeProperty =
+        UIKitIslandHelper.TypePropertyKey.DependencyProperty.AddOwner(typeof(Island));
+
+    #endregion
+
+    #region CornerRadius
+
+    public CornerRadius CornerRadius => (CornerRadius)GetValue(CornerRadiusProperty);
+
+    public static readonly DependencyProperty CornerRadiusProperty =
+        UIKitIslandHelper.CornerRadiusPropertyKey.DependencyProperty.AddOwner(typeof(Island));
+
+    #endregion
+
+    #region BorderDashArray
+
+    public DoubleCollection? BorderDashArray
+    {
+        get => (DoubleCollection?)GetValue(BorderDashArrayProperty);
+        set => SetValue(BorderDashArrayProperty, value);
+    }
+
+    public static readonly DependencyProperty BorderDashArrayProperty = DependencyProperty.Register(
+        nameof(BorderDashArray),
+        typeof(DoubleCollection),
+        typeof(Island),
+        new PropertyMetadata(null));
+
+    #endregion
+
+    protected override AutomationPeer? OnCreateAutomationPeer()
+    {
+        return new IslandAutomationPeer(this);
+    }
+
+    bool IAccessibilityAware.Validate()
+    {
+        return this.Validate();
+    }
+}

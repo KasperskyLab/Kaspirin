@@ -1,0 +1,29 @@
+<Project>
+	<PropertyGroup>
+		<TargetFramework>net8.0-windows10.0.17763.0</TargetFramework>
+		<RootNamespace>Kaspirin.UI.Framework.CodeAnalysis.Tests</RootNamespace>
+		<AssemblyName>kaspirin.ui.framework.codeanalysis.tests</AssemblyName>
+		<IsTestProject>true</IsTestProject>
+		<GenerateDocumentationFile>true</GenerateDocumentationFile>
+		<NoWarn>
+			CS1591 <!-- Missing XML comment for publicly visible type or member -->
+		</NoWarn>
+	</PropertyGroup>
+
+	<Import Project="$(SolutionDir)kaspirin.props" />
+
+	<Import Project="Sdk.props" Sdk="Microsoft.NET.Sdk" />
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.CodeAnalysis.CSharp.Analyzer.Testing" Version="1.1.4" />
+		<PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="4.14.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\..\utilities\Kaspirin.UI.Framework.CodeAnalysis\Kaspirin.UI.Framework.CodeAnalysis.csproj" />
+	</ItemGroup>
+
+	<Import Project="Sdk.targets" Sdk="Microsoft.NET.Sdk" />
+
+	<Import Project="$(FrameworkProps)" />
+</Project>

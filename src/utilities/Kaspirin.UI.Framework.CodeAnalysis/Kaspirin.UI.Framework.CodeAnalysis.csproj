@@ -1,0 +1,24 @@
+<Project>
+	<PropertyGroup>
+		<TargetFramework>netstandard2.0</TargetFramework>
+		<IsRoslynComponent>true</IsRoslynComponent>
+		<RootNamespace>Kaspirin.UI.Framework.CodeAnalysis</RootNamespace>
+		<AssemblyName>kaspirin.ui.framework.codeanalysis</AssemblyName>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
+			<_Parameter1>kaspirin.ui.framework.codeanalysis.tests</_Parameter1>
+		</AssemblyAttribute>
+	</ItemGroup>
+
+	<Import Project="$(SolutionDir)kaspirin.props" />
+
+	<Import Project="Sdk.props" Sdk="Microsoft.NET.Sdk" />
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.2.0" />
+	</ItemGroup>
+
+	<Import Project="Sdk.targets" Sdk="Microsoft.NET.Sdk" />
+</Project>

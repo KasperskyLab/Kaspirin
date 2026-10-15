@@ -1,0 +1,38 @@
+// Copyright © 2024 AO Kaspersky Lab.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+using System.Windows;
+
+namespace Kaspirin.UI.Framework.UiKit.Navigation;
+
+public sealed class RegionViewFactory : IRegionViewFactory
+{
+    public RegionViewFactory(IUnityContainer container)
+    {
+        _container = Guard.EnsureArgumentIsNotNull(container);
+    }
+
+    public FrameworkElement CreateView<TParameters>(string viewName, TParameters? parameters)
+    {
+        Guard.ArgumentIsNotNullOrEmpty(viewName);
+
+        var view = parameters != null
+            ? _container.Resolve<object>(viewName, new DependencyOverride<TParameters>(parameters))
+            : _container.Resolve<object>(viewName);
+
+        return (FrameworkElement)view;
+    }
+
+    private readonly IUnityContainer _container;
+}

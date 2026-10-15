@@ -1,0 +1,63 @@
+// Copyright © 2024 AO Kaspersky Lab.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+using System;
+using System.Windows.Controls.Primitives;
+using Kaspirin.UI.Framework.Services.Internals;
+
+namespace Kaspirin.UI.Framework.UiKit.Extensions;
+
+/// <summary>
+///     Extension methods for <see cref="Popup" />.
+/// </summary>
+public static class PopupExtensions
+{
+    /// <summary>
+    ///     Performs the action once after opening the popup window, or immediately if it is already open.
+    /// </summary>
+    /// <param name="popup">
+    ///     A pop-up window.
+    /// </param>
+    /// <param name="action">
+    ///     The action being performed.
+    /// </param>
+    public static void WhenOpened(this Popup popup, Action action)
+    {
+        EventSubscriber.OnceOrNow(
+            source: popup,
+            condition: popup => popup.IsOpen,
+            subscribeCallback: eh => popup.Opened += eh,
+            unsubscribeCallback: eh => popup.Opened -= eh,
+            action: action);
+    }
+
+    /// <summary>
+    ///     Performs the action once after the popup window is closed, or immediately if it is already closed.
+    /// </summary>
+    /// <param name="popup">
+    ///     A pop-up window.
+    /// </param>
+    /// <param name="action">
+    ///     The action being performed.
+    /// </param>
+    public static void WhenClosed(this Popup popup, Action action)
+    {
+        EventSubscriber.OnceOrNow(
+            source: popup,
+            condition: popup => !popup.IsOpen,
+            subscribeCallback: eh => popup.Closed += eh,
+            unsubscribeCallback: eh => popup.Closed -= eh,
+            action: action);
+    }
+}
