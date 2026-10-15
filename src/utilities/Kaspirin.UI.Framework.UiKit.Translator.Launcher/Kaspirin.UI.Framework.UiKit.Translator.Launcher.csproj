@@ -1,0 +1,39 @@
+<Project>
+	<PropertyGroup>
+		<TargetFramework Condition="'$(MSBuildRuntimeType)' != 'Core'">net40</TargetFramework>
+		<TargetFramework Condition="'$(MSBuildRuntimeType)' == 'Core'">net6.0-windows10.0.17763.0</TargetFramework>
+		<AssemblyName>kaspirin.ui.framework.uikit.translator.launcher</AssemblyName>
+	</PropertyGroup>
+
+	<Import Project="$(SolutionDir)kaspirin.props" />
+
+	<Import Project="Sdk.props" Sdk="Microsoft.NET.Sdk" />
+
+	<PropertyGroup>
+		<ConfigPath>config.json</ConfigPath>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\Kaspirin.UI.Framework.UiKit.Translator.Core\Kaspirin.UI.Framework.UiKit.Translator.Core.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Include="UI_KIT.xml" />
+	</ItemGroup>
+
+	<Import Project="Sdk.targets" Sdk="Microsoft.NET.Sdk" />
+
+	<Target Name="Build" DependsOnTargets="TranslationTask" />
+	<Target Name="Rebuild" DependsOnTargets="CleanupTask;TranslationTask" />
+	<Target Name="Clean" DependsOnTargets="CleanupTask" />
+
+	<UsingTask TaskFactory="TaskHostFactory" TaskName="Kaspirin.UI.Framework.UiKit.Translator.Core.TranslationTask" AssemblyFile="$(OutDir)kaspirin.ui.framework.uikit.translator.core.dll" />
+	<Target Name="TranslationTask">
+		<TranslationTask ConfigPath="$(ConfigPath)" />
+	</Target>
+
+	<UsingTask TaskFactory="TaskHostFactory" TaskName="Kaspirin.UI.Framework.UiKit.Translator.Core.CleanupTask" AssemblyFile="$(OutDir)kaspirin.ui.framework.uikit.translator.core.dll" />
+	<Target Name="CleanupTask">
+		<CleanupTask ConfigPath="$(ConfigPath)" />
+	</Target>
+</Project>

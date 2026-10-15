@@ -10,6 +10,8 @@ This documentation provides a brief overview of the key functionality provided b
 * Kaspirin.UI.Framework.UiKit.Styles
 * Kaspirin.UI.Framework.UiKit.Translator.Core
 * Kaspirin.UI.Framework.UiKit.Translator.Launcher
+* Kaspirin.UI.Framework.CodeAnalysis
+* Kaspirin.UI.Framework.Snippets
 
 Kaspirin is an extension of the WPF platform, so all solutions implemented in Kaspirin will also work in other WPF projects.
 
@@ -59,6 +61,20 @@ Figma plugin that performs page parsing will be published at a later date.
 
 Currently, the resulting file UI_KIT.xml is available, which demonstrates all the data loaded from Figma.
 
+## Kaspirin.UI.Framework.CodeAnalysis
+
+Kaspirin.UI.Framework.CodeAnalysis is a set of Roslyn analyzers that help to catch common coding mistakes at build time. The analyzers are automatically applied to all Kaspirin projects during build.
+
+### Key Features
+
+* Analyzers for correct usage of timers and threading primitives
+* Analyzers for collection extension methods usage
+* Code style analyzers
+
+## Kaspirin.UI.Framework.Snippets
+
+Kaspirin.UI.Framework.Snippets is a Visual Studio extension (VSIX) with a collection of useful code snippets for declaring dependency properties. Building the VSIX container requires Visual Studio; when the solution is built with the .NET SDK, the project is compiled without producing the VSIX.
+
 ## Getting Started
 
 To get started with Kaspirin, you need to:
@@ -74,7 +90,7 @@ To get started with Kaspirin, you need to:
 <Project>
     ...
 
-    <Import Project="$(SolutionDir)kaspirin.net.props" />
+    <Import Project="$(SolutionDir)kaspirin.props" />
 
     ...
 

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright © 2026 AO Kaspersky Lab.
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+        http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+-->
+
+<CodeSnippets
+    xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+	<CodeSnippet Format="1.0.0">
+		<Header>
+			<Title>Attached DependencyProperty with callback</Title>
+			<Shortcut>propdepac</Shortcut>
+			<Description>Inserts Attached DependencyProperty (with ValueChanged callback) in #Region and with CLR property wrapper</Description>
+			<Author>Kaspirin</Author>
+			<SnippetTypes>
+				<SnippetType>Expansion</SnippetType>
+			</SnippetTypes>
+		</Header>
+		<Snippet>
+			<Code Language="CSharp" Kind="method decl">
+				<![CDATA[#region $PropertyName$
+
+public static $PropertyType$ Get$PropertyName$(DependencyObject obj)
+    => ($PropertyType$)obj.GetValue($PropertyName$Property);
+
+public static void Set$PropertyName$(DependencyObject obj, $PropertyType$ value)
+    => obj.SetValue($PropertyName$Property, value);
+
+public static readonly DependencyProperty $PropertyName$Property = DependencyProperty.RegisterAttached(
+    "$PropertyName$",
+    typeof($PropertyType$),
+    typeof($OwnerType$),
+    new PropertyMetadata(default($PropertyType$), On$PropertyName$Changed));
+
+private static void On$PropertyName$Changed(DependencyObject d, DependencyPropertyChangedEventArgs e)
+    => (($OwnerType$)d).On$PropertyName$Changed();
+
+#endregion
+
+private void On$PropertyName$Changed()
+{
+    throw new NotImplementedException();
+}]]>
+			</Code>
+			<Declarations>
+				<Literal>
+					<ID>PropertyType</ID>
+					<ToolTip>Property type</ToolTip>
+					<Default>object</Default>
+				</Literal>
+				<Literal>
+					<ID>PropertyName</ID>
+					<ToolTip>Property name</ToolTip>
+					<Default>Value</Default>
+				</Literal>
+				<Literal>
+					<ID>OwnerType</ID>
+					<ToolTip>Property owner type</ToolTip>
+					<Default>ownerclass</Default>
+				</Literal>
+			</Declarations>
+			<Imports>
+				<Import>
+					<Namespace>System.Windows</Namespace>
+				</Import>
+			</Imports>
+		</Snippet>
+	</CodeSnippet>
+</CodeSnippets>

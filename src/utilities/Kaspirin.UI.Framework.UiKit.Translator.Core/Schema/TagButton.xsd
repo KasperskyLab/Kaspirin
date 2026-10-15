@@ -1,0 +1,141 @@
+<!--
+    Copyright © 2026 AO Kaspersky Lab.
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+        http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+-->
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<xs:include schemaLocation="Common.xsd"/>
+
+	<xs:complexType name="TagButton">
+		<xs:group ref="elements_TagButton"/>
+		<xs:attributeGroup ref="attributes_TagButton"/>
+	</xs:complexType>
+
+	<xs:group name="elements_TagButton">
+		<xs:all>
+			<xs:element name="BackgroundEmerald" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BackgroundEmeraldDisabled" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BackgroundGrass" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BackgroundGrassDisabled" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BackgroundMarina" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BackgroundMarinaDisabled" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BackgroundMarengo" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BackgroundMarengoDisabled" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BackgroundNeutral" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BackgroundNeutralDisabled" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BackgroundOrange" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BackgroundOrangeDisabled" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BackgroundPurple" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BackgroundPurpleDisabled" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BackgroundRed" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BackgroundRedDisabled" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BackgroundViolet" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BackgroundVioletDisabled" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BackgroundYellow" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BackgroundYellowDisabled" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BorderColorEmerald" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BorderColorEmeraldDisabled" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BorderColorGrass" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BorderColorGrassDisabled" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BorderColorMarina" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BorderColorMarinaDisabled" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BorderColorMarengo" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BorderColorMarengoDisabled" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BorderColorNeutral" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BorderColorNeutralDisabled" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BorderColorOrange" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BorderColorOrangeDisabled" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BorderColorPurple" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BorderColorPurpleDisabled" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BorderColorRed" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BorderColorRedDisabled" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BorderColorViolet" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BorderColorVioletDisabled" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BorderColorYellow" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BorderColorYellowDisabled" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BorderThicknessEmerald" type="Thickness" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BorderThicknessEmeraldDisabled" type="Thickness" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BorderThicknessGrass" type="Thickness" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BorderThicknessGrassDisabled" type="Thickness" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BorderThicknessMarina" type="Thickness" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BorderThicknessMarinaDisabled" type="Thickness" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BorderThicknessMarengo" type="Thickness" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BorderThicknessMarengoDisabled" type="Thickness" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BorderThicknessNeutral" type="Thickness" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BorderThicknessNeutralDisabled" type="Thickness" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BorderThicknessOrange" type="Thickness" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BorderThicknessOrangeDisabled" type="Thickness" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BorderThicknessPurple" type="Thickness" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BorderThicknessPurpleDisabled" type="Thickness" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BorderThicknessRed" type="Thickness" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BorderThicknessRedDisabled" type="Thickness" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BorderThicknessViolet" type="Thickness" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BorderThicknessVioletDisabled" type="Thickness" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BorderThicknessYellow" type="Thickness" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BorderThicknessYellowDisabled" type="Thickness" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="CornerRadius" type="CornerRadius" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="Focus" type="Focus" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="ForegroundEmerald" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="ForegroundEmeraldDisabled" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="ForegroundGrass" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="ForegroundGrassDisabled" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="ForegroundMarina" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="ForegroundMarinaDisabled" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="ForegroundMarengo" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="ForegroundMarengoDisabled" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="ForegroundNeutral" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="ForegroundNeutralDisabled" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="ForegroundOrange" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="ForegroundOrangeDisabled" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="ForegroundPurple" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="ForegroundPurpleDisabled" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="ForegroundRed" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="ForegroundRedDisabled" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="ForegroundViolet" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="ForegroundVioletDisabled" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="ForegroundYellow" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="ForegroundYellowDisabled" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="IconBrushEmerald" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="IconBrushEmeraldDisabled" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="IconBrushGrass" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="IconBrushGrassDisabled" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="IconBrushMarina" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="IconBrushMarinaDisabled" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="IconBrushMarengo" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="IconBrushMarengoDisabled" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="IconBrushNeutral" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="IconBrushNeutralDisabled" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="IconBrushOrange" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="IconBrushOrangeDisabled" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="IconBrushPurple" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="IconBrushPurpleDisabled" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="IconBrushRed" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="IconBrushRedDisabled" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="IconBrushViolet" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="IconBrushVioletDisabled" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="IconBrushYellow" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="IconBrushYellowDisabled" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="IconMargin" type="Thickness" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="Padding" type="Thickness" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="TopLayerHover" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="TopLayerPressed" type="SpecificBrush" minOccurs="1" maxOccurs="1"/>
+		</xs:all>
+	</xs:group>
+
+	<xs:attributeGroup name="attributes_TagButton">
+		<xs:attribute name="Height" type="xs:decimal" use="required"/>
+		<xs:attribute name="Id" type="xs:string" use="required"/>
+		<xs:attribute name="TextStyleId" type="xs:string" use="required"/>
+	</xs:attributeGroup>
+</xs:schema>

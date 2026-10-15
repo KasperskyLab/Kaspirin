@@ -1,0 +1,260 @@
+// Copyright © 2025 AO Kaspersky Lab.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
+using System.Threading;
+using System.Threading.Tasks;
+using System.Windows.Threading;
+using Kaspirin.UI.Framework.Threading.Timers.Internals;
+
+namespace Kaspirin.UI.Framework.Mvvm;
+
+/// <summary>
+///     Provides a basic implementation for the ViewModel and implements the <see cref="INotifyPropertyChanged" /> interface.
+/// </summary>
+public abstract class BaseViewModel : BaseAppObject, INotifyPropertyChanged
+{
+    /// <summary>
+    ///     Creates a new instance of the <see cref="BaseViewModel" /> class.
+    /// </summary>
+    protected BaseViewModel()
+    {
+    }
+
+    /// <summary>
+    ///     Initializes a new instance of the <see cref="BaseViewModel" /> class.
+    /// </summary>
+    /// <param name="traceComponent">
+    ///     The name of the component for the message tracer.
+    /// </param>
+    protected BaseViewModel(string traceComponent)
+        : base(traceComponent)
+    {
+    }
+
+    /// <summary>
+    ///     Initializes a new instance of the <see cref="BaseViewModel" /> class.
+    /// </summary>
+    /// <param name="tracer">
+    ///     The message tracer.
+    /// </param>
+    protected BaseViewModel(ComponentTracer tracer)
+        : base(tracer)
+    {
+    }
+
+    /// <summary>
+    ///     Initializes a new instance of the <see cref="BaseViewModel" /> class.
+    /// </summary>
+    /// <param name="tracerParameters">
+    ///     Message tracer parameters.
+    /// </param>
+    /// <remarks>
+    ///     If the properties <see cref="ComponentTracerParameters.HashSource" /> or <see cref="ComponentTracerParameters.PrefixSource" />
+    ///     of the <paramref name="tracerParameters" /> object are <see langword="null" />, then <see langword="this" />
+    ///     is automatically inserted there.
+    /// </remarks>
+    protected BaseViewModel(ComponentTracerParameters tracerParameters)
+        : base(tracerParameters)
+    {
+    }
+
+    /// <summary>
+    ///     The event that is triggered when the property is changed.
+    /// </summary>
+    public event PropertyChangedEventHandler? PropertyChanged;
+
+    internal sealed override ITimer CreateTimerCore(Action tickAction, MutableParameter<TimeSpan> interval)
+        => new DispatcherServiceTimer(this, tickAction, interval);
+
+    /// <summary>
+    ///     Called when the <paramref name="propertyName" /> property is changed.
+    /// </summary>
+    /// <param name="propertyName">
+    ///     The name of the property.
+    /// </param>
+    protected virtual void OnPropertyChanged(string? propertyName)
+    {
+    }
+
+    /// <summary>
+    ///     Generates events about property changes <paramref name="propertyNames" />.
+    /// </summary>
+    /// <param name="propertyNames">
+    ///     The names of the properties.
+    /// </param>
+    protected void RaisePropertyChanged(params string[] propertyNames)
+    {
+        Guard.ArgumentCollectionIsNotNullOrEmpty(propertyNames);
+
+        foreach (var propertyName in propertyNames)
+        {
+            Guard.IsNotNullOrEmpty(propertyName);
+
+            RaisePropertyChangedCore(propertyName);
+        }
+    }
+
+    /// <summary>
+    ///     Generates an event about changing all properties.
+    /// </summary>
+    protected void RaiseAllPropertiesChanged()
+        => RaisePropertyChangedCore(string.Empty);
+
+    /// <summary>
+    ///     Sets the value of the property and generates a property change event if the value has changed.
+    /// </summary>
+    /// <typeparam name="T">
+    ///     The type of the property.
+    /// </typeparam>
+    /// <param name="storage">
+    ///     A reference to the property.
+    /// </param>
+    /// <param name="value">
+    ///     The new value of the property.
+    /// </param>
+    /// <param name="propertyName">
+    ///     The name of the property.
+    /// </param>
+    /// <returns>
+    ///     Returns <see langword="true" /> if the property value has been changed, otherwise - <see langword="false" />.
+    /// </returns>
+    protected virtual bool SetProperty<T>(ref T storage, T value, [CallerMemberName] string? propertyName = default)
+        => SetProperty(ref storage, value, null, null, propertyName);
+
+    /// <summary>
+    ///     Sets the value of the property and generates a property change event if the value has changed.
+    /// </summary>
+    /// <typeparam name="T">
+    ///     The type of the property.
+    /// </typeparam>
+    /// <param name="storage">
+    ///     A reference to the property.
+    /// </param>
+    /// <param name="value">
+    ///     The new value of the property.
+    /// </param>
+    /// <param name="onChanged">
+    ///     The action that will be performed after the property is changed.
+    /// </param>
+    /// <param name="propertyName">
+    ///     The name of the property. It is substituted automatically from the <see cref="CallerMemberNameAttribute" /> attribute.
+    /// </param>
+    /// <returns>
+    ///     Returns <see langword="true" /> if the property value has been changed, otherwise - <see langword="false" />.
+    /// </returns>
+    protected virtual bool SetProperty<T>(ref T storage, T value, Action onChanged, [CallerMemberName] string? propertyName = default)
+        => SetProperty(ref storage, value, v => onChanged.Invoke(), null, propertyName);
+
+    /// <summary>
+    ///     Sets the value of the property and generates a property change event if the value has changed.
+    /// </summary>
+    /// <typeparam name="T">
+    ///     The type of the property.
+    /// </typeparam>
+    /// <param name="storage">
+    ///     A reference to the property.
+    /// </param>
+    /// <param name="value">
+    ///     The new value of the property.
+    /// </param>
+    /// <param name="onChanged">
+    ///     The action that will be performed after the property is changed.
+    /// </param>
+    /// <param name="propertyName">
+    ///     The name of the property. It is substituted automatically from the <see cref="CallerMemberNameAttribute" /> attribute.
+    /// </param>
+    /// <returns>
+    ///     Returns <see langword="true" /> if the property value has been changed, otherwise - <see langword="false" />.
+    /// </returns>
+    protected virtual bool SetProperty<T>(ref T storage, T value, Action<T> onChanged, [CallerMemberName] string? propertyName = default)
+        => SetProperty(ref storage, value, onChanged, null, propertyName);
+
+    /// <summary>
+    ///     Sets the value of the property and generates a property change event if the value has changed.
+    /// </summary>
+    /// <typeparam name="T">
+    ///     The type of the property.
+    /// </typeparam>
+    /// <param name="storage">
+    ///     A reference to the property.
+    /// </param>
+    /// <param name="value">
+    ///     The new value of the property.
+    /// </param>
+    /// <param name="onChanged">
+    ///     The action that will be performed after the property is changed.
+    /// </param>
+    /// <param name="equalityComparer">
+    ///     The logic of comparing the equality of a property with a new value. If <see langword="null" />,
+    ///     then <see cref="EqualityComparer{T}.Default" /> is used as the implementation.
+    /// </param>
+    /// <param name="propertyName">
+    ///     The name of the property. It is substituted automatically from the <see cref="CallerMemberNameAttribute" /> attribute.
+    /// </param>
+    /// <returns>
+    ///     Returns <see langword="true" /> if the property value has been changed, otherwise - <see langword="false" />.
+    /// </returns>
+    protected virtual bool SetProperty<T>(ref T storage, T value, Action<T>? onChanged, IEqualityComparer<T>? equalityComparer, [CallerMemberName] string? propertyName = default)
+    {
+        equalityComparer ??= EqualityComparer<T>.Default;
+
+        if (equalityComparer.Equals(storage, value))
+        {
+            return false;
+        }
+
+        storage = value;
+        onChanged?.Invoke(value);
+
+        RaisePropertyChangedCore(propertyName);
+
+        return true;
+    }
+
+    /// <inheritdoc cref="Executers.InUiAsync(Action, DispatcherPriority?, TimeSpan?, CancellationToken?)"/>
+    protected Task InUiAsync(Action action, DispatcherPriority? priority = null, TimeSpan? delay = null, CancellationToken? cancellationToken = null)
+        => Executers.InUiAsync(action, priority, delay, cancellationToken);
+
+    /// <inheritdoc cref="Executers.InTpAsync(Action, TaskCreationOptions?, TimeSpan?, CancellationToken?)"/>
+    protected Task InTpAsync(Action action, TaskCreationOptions? options = null, TimeSpan? delay = null, CancellationToken? cancellationToken = null)
+        => Executers.InTpAsync(action, options, delay, cancellationToken);
+
+    private void RaisePropertyChangedCore(string? propertyName)
+    {
+        var executor = Executers.DispatcherExecutor;
+        if (executor.IsAvailable && executor.VerifyThread() is false)
+        {
+            executor.ExecuteAsync(
+                action: () => RaiseEvent(this, propertyName),
+                priority: DispatcherPriority.Normal,
+                cancellationToken: CancellationToken.None);
+        }
+        else
+        {
+            RaiseEvent(this, propertyName);
+        }
+
+        static void RaiseEvent(BaseViewModel sender, string? propertyName)
+        {
+            var propertyChangedArgs = new PropertyChangedEventArgs(propertyName);
+
+            sender.PropertyChanged?.Invoke(sender, propertyChangedArgs);
+            sender.OnPropertyChanged(propertyName);
+        }
+    }
+}

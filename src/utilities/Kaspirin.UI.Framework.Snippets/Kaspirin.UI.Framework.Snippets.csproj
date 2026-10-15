@@ -1,0 +1,38 @@
+<Project>
+	<PropertyGroup>
+		<TargetFramework>net472</TargetFramework>
+		<VsSDKBuildToolsVersion>17.9.3173</VsSDKBuildToolsVersion>
+		<GeneratePkgDefFile>false</GeneratePkgDefFile>
+		<CreateVsixContainer>true</CreateVsixContainer>
+		<DeployExtension>false</DeployExtension>
+		<CopyBuildOutputToOutputDirectory>false</CopyBuildOutputToOutputDirectory>
+		<IncludeAssemblyInVSIXContainer>false</IncludeAssemblyInVSIXContainer>
+		<IncludeDebugSymbolsInVSIXContainer>false</IncludeDebugSymbolsInVSIXContainer>
+		<IncludeDebugSymbolsInLocalVSIXDeployment>false</IncludeDebugSymbolsInLocalVSIXDeployment>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.VSSDK.BuildTools" Version="$(VsSDKBuildToolsVersion)" PrivateAssets="all" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Remove="DependencyProperties\*.snippet;DependencyProperties\*.pkgdef" />
+		<Content Include="DependencyProperties\*.snippet;DependencyProperties\*.pkgdef" IncludeInVSIX="true" />
+	</ItemGroup>
+
+	<Import Project="$(SolutionDir)kaspirin.props" />
+
+	<Import Project="Sdk.props" Sdk="Microsoft.NET.Sdk" />
+	<Import Project="Sdk.targets" Sdk="Microsoft.NET.Sdk" />
+
+	<PropertyGroup>
+		<NuGetPackageRoot Condition="'$(NuGetPackageRoot)' == ''">$(USERPROFILE)\.nuget\packages\</NuGetPackageRoot>
+		<VsSDKTargetsFromPackage>$(NuGetPackageRoot)microsoft.vssdk.buildtools\$(VsSDKBuildToolsVersion)\tools\VSSDK\Microsoft.VsSDK.targets</VsSDKTargetsFromPackage>
+	</PropertyGroup>
+
+	<Import Project="$(VsSDKTargetsFromPackage)" Condition="'$(MSBuildRuntimeType)' != 'Core' And Exists('$(VsSDKTargetsFromPackage)')" />
+
+	<Target Name="EnsureVsSDKTargetsImported" BeforeTargets="PrepareForBuild" Condition="'$(MSBuildRuntimeType)' != 'Core' And !Exists('$(VsSDKTargetsFromPackage)')">
+		<Error Text="Microsoft.VsSDK.targets not found. Run msbuild /restore and than retry to build project again." />
+	</Target>
+</Project>
